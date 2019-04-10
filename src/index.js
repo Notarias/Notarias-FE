@@ -2,16 +2,24 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
+import { Provider } from 'react-redux';
+import { createStore, combineReducers } from 'redux';
+import SessionReducer from './Components/Reducers/SessionReducer';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 const history = createBrowserHistory() 
+let store = createStore(combineReducers({
+  sessionToken: SessionReducer,
+}));
 
 ReactDOM.render(
-  <Router history={history}>
-    <App />
-  </Router>,
+  <Provider store={store}>
+    <Router history={history}>
+      <App />
+    </Router>
+  </Provider>,
   document.getElementById('root')
 );
 

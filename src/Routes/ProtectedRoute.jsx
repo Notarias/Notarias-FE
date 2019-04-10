@@ -7,7 +7,7 @@ export default function ProtectedRoute({ component: Component, ...rest }) {
     <Route exact
       {...rest}
       render={props =>
-        localStorage.session ? (
+        localStorage.jwtToken ? (
           <Component {...props} />
         ) : (
           <Redirect
