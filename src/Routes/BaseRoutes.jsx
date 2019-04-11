@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 
-import SignInPage from '../Components/Pages/SignInPage';
-import SignOutPage from '../Components/Pages/SignOutPage';
+import SignInPage from '../Components/Pages/Session/SignInPage';
+import SignOutPage from '../Components/Pages/Session/SignOutPage';
 import ProtectedRoute from './ProtectedRoute';
 
 import Home from '../Components/Pages/Home';
