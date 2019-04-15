@@ -5,13 +5,15 @@ import { withRouter } from 'react-router-dom'
 import './App.css';
 import BaseRoutes from './Routes/BaseRoutes';
 import { signIn } from './Components/Reducers/SessionReducer';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import 'typeface-roboto';
 
 class App extends Component {
   render() {
-    console.log("afuera")
-    console.log(this.props)
     return (
       <div className="App">
+        <CssBaseline />
+        
         { this.props.sessionToken ? this.props.sessionToken : "SIN SESION"}
         <BaseRoutes/>
       </div>

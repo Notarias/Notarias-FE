@@ -3,7 +3,7 @@ import React from 'react'
 import { Field, reduxForm } from 'redux-form'
 import InputLabel from '@material-ui/core/InputLabel';
 import Button from '@material-ui/core/Button';
-import TextField from '../../CustomInputs/TextField'
+import renderTextField from '../../CustomInputs/renderTextField'
 import AsyncValidate from '../../CustomInputs/AsyncValidate'
 
 const validate = values => {
@@ -27,16 +27,26 @@ const validate = values => {
 }
 
 let SessionForm = props => {
-  let { handleSubmit, classes, pristine, submitting } = props;
+  let { submitSignin, handleSubmit, classes, pristine, submitting } = props;
   return(
-    <form className={classes.form} onSubmit={ handleSubmit }>
+    <form className={ classes.form } onSubmit={ handleSubmit(submitSignin) }>
       <FormControl margin="normal" required fullWidth>
-        <InputLabel htmlFor="email">Correo electrónico</InputLabel>
-        <TextField id="email" name="email" autoComplete="email" autoFocus />
+        <Field name="email" 
+               type="email" 
+               id="email"
+               required
+               label="Correo Electrónico"
+               autoComplete="email" 
+               component={renderTextField} />
       </FormControl>
       <FormControl margin="normal" required fullWidth>
-        <InputLabel htmlFor="password">Contraseña</InputLabel>
-        <TextField name="password" type="password" id="password" autoComplete="current-password" />
+        <Field name="password" 
+               type="password" 
+               id="password" 
+               required
+               autoComplete="current-password"
+               label="Contraseña" 
+               component={renderTextField} />
       </FormControl>
       <Button
         type="submit"
@@ -53,6 +63,9 @@ let SessionForm = props => {
   )
 }
 
-SessionForm = reduxForm({ form: "session" }, validate, AsyncValidate)(SessionForm);
+SessionForm = reduxForm({
+  form: "SessionForm",
+  validate,
+})(SessionForm);
 
 export default SessionForm;

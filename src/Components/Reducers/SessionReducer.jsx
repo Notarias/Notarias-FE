@@ -6,13 +6,13 @@ export function signIn(sessionToken) {
   return { type: SIGNIN, sessionToken };
 }
 
-export default function SessionReducer(state, action) {
+export default function SessionReducer(state = null, action) {
   switch(action.type) {
     case SIGNIN:
       return action.sessionToken
     case SIGNOUT:
-      return null
+      return state
     default:
-      return null
+      return state
   }
 }

@@ -5,7 +5,7 @@ import { createBrowserHistory } from 'history';
 import { Provider } from 'react-redux';
 import { createStore, combineReducers } from 'redux';
 import SessionReducer from './Components/Reducers/SessionReducer';
-import { reducer as sessionFormReducer } from 'redux-form'
+import { reducer as formReducer } from 'redux-form'
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
@@ -13,7 +13,7 @@ import * as serviceWorker from './serviceWorker';
 const history = createBrowserHistory() 
 let store = createStore(combineReducers({
   sessionToken: SessionReducer,
-  sessionForm: sessionFormReducer,
+  form: formReducer,
 }));
 
 ReactDOM.render(

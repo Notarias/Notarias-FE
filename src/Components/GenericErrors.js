@@ -1,0 +1,1 @@
+export const GENERIC_CONNECTION_ERROR = "Hubo un error en la conexión. Intente de nuevo o Llame a asistencia técnica si el error persiste";
