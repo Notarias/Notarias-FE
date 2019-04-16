@@ -6,7 +6,7 @@ import SignOutPage from '../Components/Pages/Session/SignOutPage';
 import ProtectedRoute from './ProtectedRoute';
 
 import Home from '../Components/Pages/Home';
-import Users from '../Components/Pages/Users';
+import Users from '../Components/Pages/Users/Users';
 
 
 class BaseRoutes extends Component {

@@ -13,8 +13,6 @@ class App extends Component {
     return (
       <div className="App">
         <CssBaseline />
-        
-        { this.props.sessionToken ? this.props.sessionToken : "SIN SESION"}
         <BaseRoutes/>
       </div>
     );

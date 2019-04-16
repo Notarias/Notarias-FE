@@ -35,11 +35,10 @@ class SignInPage extends Component {
           this.props.history.push('/')
         }
       ).catch((error) => {
-        // Error
         if (error.response) {
           if (error.response.status === 401) {
             this.setState({ errorMessage: error.response.data.error.user_authentication.join("") })
-          } else if(error.response.status === 500) {
+          } else {
             this.setState({ errorMessage: GENERIC_CONNECTION_ERROR })
           }
         } else if (error.request) {
