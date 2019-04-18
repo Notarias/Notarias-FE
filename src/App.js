@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import API from './axiosConfig';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom'
 import './App.css';

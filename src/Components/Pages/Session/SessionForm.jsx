@@ -1,10 +1,8 @@
 import FormControl from '@material-ui/core/FormControl';
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
-import InputLabel from '@material-ui/core/InputLabel';
 import Button from '@material-ui/core/Button';
-import renderTextField from '../../CustomInputs/renderTextField'
-import AsyncValidate from '../../CustomInputs/AsyncValidate'
+import renderTextField from '../../Ui/renderTextField'
 
 const validate = values => {
   const errors = {}

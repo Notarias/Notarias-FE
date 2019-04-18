@@ -82,4 +82,4 @@ function CustomSnackbarMessage(props) {
   );
 }
 
-export default CustomSnackbarMessage = withStyles(styles1)(CustomSnackbarMessage);
+export default withStyles(styles1)(CustomSnackbarMessage);

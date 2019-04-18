@@ -4,7 +4,8 @@ import { connect }          from 'react-redux';
 import { withRouter }       from 'react-router-dom'
 import API                  from '../../../axiosConfig';
 import compose              from 'recompose/compose';
-import { signIn }           from '../../Reducers/SessionReducer';
+import { signIn, signOut }           from '../../Reducers/SessionReducer';
+import CustomSnackbarMessage from '../../Ui/CustomSnackbarMessage';
 import {GENERIC_CONNECTION_ERROR} from '../../GenericErrors';
 
 import { styles } from './sessionStyles';
@@ -15,7 +16,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Paper            from '@material-ui/core/Paper';
 import Typography       from '@material-ui/core/Typography';
 import withStyles       from '@material-ui/core/styles/withStyles';
-import CustomSnackbarMessage from '../../CustomInputs/CustomSnackbarMessage';
+
 
 class SignInPage extends Component {
   constructor() {
@@ -23,6 +24,11 @@ class SignInPage extends Component {
     this.state = {
       errorMessage: null
     }
+  }
+
+  signOut() {
+    console.log(this.props)
+    this.props.signOut()
   }
 
   submitSignin = emailAndPassword => {
@@ -51,6 +57,7 @@ class SignInPage extends Component {
 
   render() {
     const { classes } = this.props;
+
     return (
       <main className={classes.main}>
         <Paper className={classes.paper}>
@@ -76,6 +83,7 @@ class SignInPage extends Component {
 SignInPage.propTypes = {
   classes: PropTypes.object.isRequired,
   signIn: PropTypes.func.isRequired,
+  signOut: PropTypes.func.isRequired,
   sessionToken: PropTypes.string,
 };
 
@@ -84,7 +92,8 @@ const mapStateToProps = props => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  signIn: payload => dispatch(signIn(payload))
+  signIn: payload => dispatch(signIn(payload)),
+  signOut: payload => dispatch(signOut(payload))
 })
 
 export default compose(

@@ -1,9 +1,12 @@
-import axios from 'axios';
 const SIGNIN = 'SIGNIN';
 const SIGNOUT = 'SIGNOUT';
 
 export function signIn(sessionToken) {
   return { type: SIGNIN, sessionToken };
+}
+
+export function signOut() {
+  return { type: SIGNOUT };
 }
 
 export default function SessionReducer(state = null, action) {
