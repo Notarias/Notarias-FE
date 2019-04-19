@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom'
+import { connect }          from 'react-redux';
+import { withRouter }       from 'react-router-dom';
+import BaseRoutes           from './Routes/BaseRoutes';
+import { signIn }           from './Components/Reducers/SessionTokenReducer';
+import CssBaseline          from '@material-ui/core/CssBaseline';
 import './App.css';
-import BaseRoutes from './Routes/BaseRoutes';
-import { signIn } from './Components/Reducers/SessionReducer';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import 'typeface-roboto';
 
 class App extends Component {

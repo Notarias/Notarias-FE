@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { withStyles }       from '@material-ui/core/styles';
 import LoadingTopBar        from '../../Ui/LoadingTopBar'
-import API from '../../../axiosConfig'
-import Table from '@material-ui/core/Table';
+import API       from '../../../axiosConfig'
+import Table     from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import styles from './styles'
+import TableRow  from '@material-ui/core/TableRow';
+import Paper     from '@material-ui/core/Paper';
+import styles    from './styles'
 
 class Users extends Component {
   constructor() {

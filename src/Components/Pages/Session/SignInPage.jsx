@@ -4,9 +4,10 @@ import { connect }          from 'react-redux';
 import { withRouter }       from 'react-router-dom'
 import API                  from '../../../axiosConfig';
 import compose              from 'recompose/compose';
-import { signIn, signOut }           from '../../Reducers/SessionReducer';
+import { signIn, signOut }           from '../../Reducers/SessionTokenReducer';
 import CustomSnackbarMessage from '../../Ui/CustomSnackbarMessage';
 import {GENERIC_CONNECTION_ERROR} from '../../GenericErrors';
+import { signInUser } from '../../Reducers/CurrentUserReducer';
 
 import { styles } from './sessionStyles';
 import SessionForm from './SessionForm';
@@ -31,6 +32,14 @@ class SignInPage extends Component {
     this.props.signOut()
   }
 
+  getCurrentUser = () => {
+    API.defaults.headers.common['Authorization'] = localStorage.jwtToken
+    API.get(`/current_profile`).then(res => {
+      this.props.signInUser(res.data)
+      localStorage.setItem('currentUser', JSON.stringify(res.data))
+    });
+  }
+
   submitSignin = emailAndPassword => {
     let token;
     API.post('/authenticate', emailAndPassword)
@@ -40,7 +49,8 @@ class SignInPage extends Component {
           this.props.signIn(token)
           this.props.history.push('/')
         }
-      ).catch((error) => {
+      ).then(this.getCurrentUser)
+      .catch((error) => {
         if (error.response) {
           if (error.response.status === 401) {
             this.setState({ errorMessage: error.response.data.error.user_authentication.join("") })
@@ -88,12 +98,13 @@ SignInPage.propTypes = {
 };
 
 const mapStateToProps = props => {
-  return { sessionToken: props.sessionToken }
+  return { sessionToken: props.sessionToken, currentUser: props.currentUser }
 }
 
 const mapDispatchToProps = dispatch => ({
   signIn: payload => dispatch(signIn(payload)),
-  signOut: payload => dispatch(signOut(payload))
+  signOut: payload => dispatch(signOut(payload)),
+  signInUser: payload => dispatch(signInUser(payload))
 })
 
 export default compose(
