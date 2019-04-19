@@ -12,8 +12,10 @@ API.interceptors.response.use(function (response) {
     return response;
   }, function (error) {
   // Do something with response error
-    localStorage.clear('jwtToken');
-    store.dispatch(signOut());
+    if (error.response.status === 401) {
+      localStorage.clear('jwtToken');
+      store.dispatch(signOut());
+    }
     throw error;
   }
 );
