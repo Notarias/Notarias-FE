@@ -28,12 +28,10 @@ class SignInPage extends Component {
   }
 
   signOut() {
-    console.log(this.props)
     this.props.signOut()
   }
 
   getCurrentUser = () => {
-    API.defaults.headers.common['Authorization'] = localStorage.jwtToken
     API.get(`/current_profile`).then(res => {
       this.props.signInUser(res.data)
       localStorage.setItem('currentUser', JSON.stringify(res.data))
@@ -47,10 +45,13 @@ class SignInPage extends Component {
           token = res.data.auth_token
           localStorage.setItem('jwtToken', token)
           this.props.signIn(token)
-          this.props.history.push('/')
+          return new Promise((resolve) => resolve())
         }
-      ).then(this.getCurrentUser)
-      .catch((error) => {
+      ).then(() => {
+          this.props.history.push(this.props.location.state.from.pathname)
+          this.getCurrentUser()
+        }
+      ).catch((error) => {
         if (error.response) {
           if (error.response.status === 401) {
             this.setState({ errorMessage: error.response.data.error.user_authentication.join("") })
@@ -67,7 +68,6 @@ class SignInPage extends Component {
 
   render() {
     const { classes } = this.props;
-
     return (
       <main className={classes.main}>
         <Paper className={classes.paper}>
@@ -95,6 +95,7 @@ SignInPage.propTypes = {
   signIn: PropTypes.func.isRequired,
   signOut: PropTypes.func.isRequired,
   sessionToken: PropTypes.string,
+  from: PropTypes.string
 };
 
 const mapStateToProps = props => {
