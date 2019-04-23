@@ -1,4 +1,4 @@
-export default theme => ({
+export const styles = theme => ({
   root: {
     display: "flex",
     overflow: 'auto',
@@ -10,7 +10,7 @@ export default theme => ({
     display: "flex",
     padding: theme.spacing.unit * 3,
     overflow: 'auto',
-    flexDirection: "column",
+    flexFlow: "column wrap",
     height: "100%",
     flexWrap: "nowrap"
   },
