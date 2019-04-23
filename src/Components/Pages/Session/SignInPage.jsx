@@ -13,7 +13,7 @@ import { styles } from './sessionStyles';
 import SessionForm from './SessionForm';
 
 import Avatar           from '@material-ui/core/Avatar';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import logo_momentary from './../../../images/logo_momentary.png'
 import Paper            from '@material-ui/core/Paper';
 import Typography       from '@material-ui/core/Typography';
 import withStyles       from '@material-ui/core/styles/withStyles';
@@ -78,7 +78,7 @@ class SignInPage extends Component {
             actionable={false}
           />}
           <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
+            <img className={classes.logo} src={logo_momentary} alt="Logo"/>
           </Avatar>
           <Typography component="h1" variant="h5">
             Inicia sesión
