@@ -24,11 +24,11 @@ API.interceptors.response.use(function (response) {
   }, function (error) {
   // Do something with response error
     console.log("fdsafdsafdsa")
-    if (error.response.status === 401) {
+    if (error.response.status == 401) {
       localStorage.clear('jwtToken');
       store.dispatch(signOut());
       store.dispatch(signOutUser());
-    } else if (error.response.status === 500) {
+    } else if (error.response.status == 500) {
 
     }
     throw error;

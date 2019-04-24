@@ -12,7 +12,7 @@ import { styles }           from './NavigationBarStyles'
 
 class NavigationBar extends Component {
   render() {
-    const { classes, openMenu } = this.props;
+    const { classes, shiftMenu } = this.props;
     return(
       <AppBar
           position="absolute"
@@ -22,11 +22,8 @@ class NavigationBar extends Component {
           <IconButton
               color="inherit"
               aria-label="Open drawer"
-              onClick={openMenu}
-              className={classNames(
-                classes.menuButton,
-                this.props.open && classes.menuButtonHidden,
-              )}
+              onClick={shiftMenu}
+              className={classes.menuButton}
             >
             <MenuIcon />
           </IconButton>

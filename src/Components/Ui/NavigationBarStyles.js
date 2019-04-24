@@ -8,13 +8,13 @@ export const styles = theme => ({
   },
   appBarShift: {
     marginLeft: 240,
-    width: `calc(100% - ${240}px)`,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
   toolbar: {
+    paddingLeft: 0,
     paddingRight: 24, // keep right padding when drawer closed
   },
   menuButton: {

@@ -9,6 +9,7 @@ import withStyles           from '@material-ui/core/styles/withStyles';
 import classNames           from 'classnames';
 import compose              from 'recompose/compose';
 import NavigationBar        from './Components/Ui/NavigationBar';
+import NavigationMenu       from './Components/Ui/NavigationMenu';
 
 import './App.css';
 import 'typeface-roboto';
@@ -21,19 +22,37 @@ class App extends Component {
     }
   }
 
-  openMenu() {
+  shiftMenu() {
     this.setState({ open: !this.state.open });
+  }
+
+  setOpenMenu() {
+    if(!this.state.open) {
+      this.setState({ open: true });
+    }
+  }
+
+  setCloseMenu() {
+    if(this.state.open) {
+      this.setState({ open: false });
+    }
   }
 
   render() {
     const { classes } = this.props;
     return (
       <div className={classNames(classes.root, "App")}>
-        {localStorage.jwtToken ? <NavigationBar open={ this.state.open } openMenu={this.openMenu.bind(this)}/> : null}
+        {localStorage.jwtToken ? <NavigationBar open={ this.state.open } shiftMenu={this.shiftMenu.bind(this)}/> : null}
+        {localStorage.jwtToken ? <NavigationMenu 
+          open={ this.state.open }
+          setOpenMenu={this.setOpenMenu.bind(this)}
+          setCloseMenu={this.setCloseMenu.bind(this)}
+          /> : null}
         <CssBaseline />
-        <div className={classes.content}>
+        <main className={classes.content}>
+          <div className={classes.appBarSpacer} />
           <BaseRoutes/>
-        </div>
+        </main>
       </div>
     );
   }
