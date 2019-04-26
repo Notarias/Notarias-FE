@@ -1,7 +1,7 @@
 export const styles = theme => ({
   main: {
     width: 'auto',
-    display: 'block', // Fix IE 11 issue.
+    display: 'inline-block', //it's replaced 'block' for 'inline-block' because the 'block' overflowing the information wen the window was small.
     marginLeft: theme.spacing.unit * 3,
     marginRight: theme.spacing.unit * 3,
     [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
@@ -18,8 +18,9 @@ export const styles = theme => ({
     padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
   },
   avatar: {
-    margin: theme.spacing.unit,
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: 'white',
+    width: '100px',
+    height: '100px',
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -27,5 +28,11 @@ export const styles = theme => ({
   },
   submit: {
     marginTop: theme.spacing.unit * 3,
+  },
+  logo: {
+    maxWidth: '80%',
+    maxHeight: '80%',    
+    width: 'auto',
+    height: 'auto',
   }
 });
