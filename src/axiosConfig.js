@@ -4,7 +4,7 @@ import { signOut } from './Components/Reducers/SessionTokenReducer';
 import { signOutUser } from './Components/Reducers/CurrentUserReducer'
 
 let API = axios.create({
-  baseURL: `http://localhost:3000`
+  baseURL: `https://peaceful-eyrie-59851.herokuapp.com`
 });
 
 API.defaults.headers.common['Authorization'] = localStorage.jwtToken
@@ -23,7 +23,6 @@ API.interceptors.response.use(function (response) {
     return response;
   }, function (error) {
   // Do something with response error
-    console.log("fdsafdsafdsa")
     if (error.response.status == 401) {
       localStorage.clear('jwtToken');
       store.dispatch(signOut());
