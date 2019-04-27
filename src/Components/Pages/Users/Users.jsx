@@ -49,7 +49,7 @@ class Users extends Component {
                       {n.id}
                     </TableCell>
                     <TableCell align="right">{n.first_name}</TableCell>
-                    <TableCell align="right">{n.father_last_name}</TableCell>
+                    <TableCell align="right">{n.last_name}</TableCell>
                     <TableCell align="right">{n.email}</TableCell>
                   </TableRow>
                 ))}
