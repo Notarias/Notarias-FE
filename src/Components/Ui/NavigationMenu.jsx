@@ -9,13 +9,14 @@ import PeopleIcon           from '@material-ui/icons/People';
 import BarChartIcon         from '@material-ui/icons/BarChart';
 import LayersIcon           from '@material-ui/icons/Layers';
 import AssignmentIcon       from '@material-ui/icons/Assignment';
+import PersonIcon           from '@material-ui/icons/Person';
 import Drawer               from '@material-ui/core/Drawer';
 import Divider              from '@material-ui/core/Divider';
 import List                 from '@material-ui/core/List';
 import withStyles           from '@material-ui/core/styles/withStyles';
 import classNames           from 'classnames';
-
-import { styles } from './NavigationMenuStyles';
+import { Link }             from 'react-router-dom';
+import { styles }           from './NavigationMenuStyles';
 
 class NavigationMenu extends Component {
   render() {
@@ -63,6 +64,14 @@ class NavigationMenu extends Component {
               </ListItemIcon>
               <ListItemText primary="Integrations" />
             </ListItem>
+            <Link to="/users" style={{ textDecoration: 'none' }}>
+              <ListItem button>
+                <ListItemIcon>
+                  <PersonIcon />
+                </ListItemIcon>
+                <ListItemText primary="Users" />
+              </ListItem>
+            </Link>
           </div>
         </List>
         <Divider />
