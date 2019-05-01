@@ -13,6 +13,7 @@ import Button      from '@material-ui/core/Button';
 import { Link }    from 'react-router-dom';
 import Grid        from '@material-ui/core/Grid';
 import PersonAddIcon        from '@material-ui/icons/PersonAdd';
+import MaxHeightmMnus from './MenuOptionsUser/Maxheightmenus';
 
 class Users extends Component {
   constructor() {
@@ -33,14 +34,14 @@ class Users extends Component {
   render() {
     const { classes } = this.props
     return(
-      <div className={classes.root} >
+      <div className={classes.root}>
         <div>
-          <Grid   container  direction="row"  justify="flex-end"  alignItems="flex-end" style={{ paddingRight:'23px'}}>
-            <Button component={Link} to="/users/new" variant="contained" color="primary" className={classes.button} >
+          <Grid container  direction="row"  justify="flex-end"  alignItems="flex-end" style={{ paddingRight:'23px'}}>
+            <Button component={Link} to="/users/new" variant="contained" color="primary" className={classes.button}>
               <PersonAddIcon className={classes.rightIcon} />
             </Button>
           </Grid>
-        </div> 
+        </div>
         { this.state.loading && <LoadingTopBar/> }
         <div className={classes.tableWrapper}>
           <Paper >
@@ -51,6 +52,7 @@ class Users extends Component {
                   <TableCell align="right">Nombre</TableCell>
                   <TableCell align="right">Apellido</TableCell>
                   <TableCell align="right">Correo</TableCell>
+                  <TableCell align="right">Opciones</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -62,6 +64,7 @@ class Users extends Component {
                     <TableCell align="right">{n.first_name}</TableCell>
                     <TableCell align="right">{n.last_name}</TableCell>
                     <TableCell align="right">{n.email}</TableCell>
+                    <TableCell align="right"><MaxHeightmMnus /></TableCell>
                   </TableRow>
                 ))}
               </TableBody>
