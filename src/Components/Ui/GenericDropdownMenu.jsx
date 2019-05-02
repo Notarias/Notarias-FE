@@ -3,16 +3,11 @@ import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-
-const options = [
-  'Seleccione',
-  'Editar',
-  'Bloquear',
-];
+// import { withStyles } from '@material-ui/core/styles';
 
 const ITEM_HEIGHT = 48;
 
-class LongMenu extends React.Component {
+export default class GenericDropdownMenu extends React.Component {
   state = {
     anchorEl: null,
   };
@@ -27,6 +22,8 @@ class LongMenu extends React.Component {
 
   render() {
     const { anchorEl } = this.state;
+    const { optionsComponents, classes } = this.props;
+
     const open = Boolean(anchorEl);
 
     return (
@@ -51,8 +48,8 @@ class LongMenu extends React.Component {
             },
           }}
         >
-          {options.map(option => (
-            <MenuItem key={option} selected={option === 'Pyxis'} onClick={this.handleClose}>
+          {optionsComponents.map(option => (
+            <MenuItem key={option} onClick={this.handleClose}>
               {option}
             </MenuItem>
           ))}
@@ -62,4 +59,16 @@ class LongMenu extends React.Component {
   }
 }
 
-export default LongMenu;
+// export default withStyles(theme => ({
+//   dropdownSelectedElement: {
+//     '&:focus': {
+//       backgroundColor: theme.palette.primary.main,
+//       '& $primary, & $icon': {
+//         color: theme.palette.common.white,
+//       }
+//     }
+//   },
+//   primary: {},
+//   icon: {},
+// }))(GenericDropdownMenu)
+

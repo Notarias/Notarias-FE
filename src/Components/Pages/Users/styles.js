@@ -19,4 +19,8 @@ export const styles = theme => ({
     paddingTop: theme.spacing.unit * 2,
     paddingBottom: theme.spacing.unit * 2,
   },
+  usersTableBarWrapper: {
+    paddingRight:'23px'
+  },
 });
+
