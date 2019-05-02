@@ -7,8 +7,10 @@ import store from './store';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { setupAxiosRouter } from './axiosConfig';
 
-const history = createBrowserHistory() 
+const history = createBrowserHistory()
+setupAxiosRouter(history)
 
 ReactDOM.render(
   <Provider store={store}>
