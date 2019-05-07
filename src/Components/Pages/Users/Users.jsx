@@ -27,7 +27,7 @@ class Users extends Component {
   componentDidMount() {
     API.get('/users')
       .then(response => {
-        this.setState({ users: response.data, loading: false })
+        this.setState({ users: response.data.users, loading: false })
       })
   }
 
@@ -63,7 +63,7 @@ class Users extends Component {
                     <TableCell align="right">{n.last_name}</TableCell>
                     <TableCell align="right">{n.email}</TableCell>
                     <TableCell align="right">
-                      <GenericDropdownMenu optionsComponents={['Editar','Bloquear']} />
+                      <GenericDropdownMenu optionsComponents={['Editar','Bloquear']} dropdownSelectedStyle />
                     </TableCell>
                   </TableRow>
                 ))}
