@@ -34,6 +34,8 @@ export const setupAxiosRouter = (history) => {
         history.push('/sign_in');
       } else if (error.response.status === 500) {
         store.dispatch(setMessage({ type: "error", text: SERVER_ERROR_MESSAGE }))
+      } else if (error.response.status === 403) {
+        store.dispatch(setMessage({ type: "error", text: SERVER_ERROR_MESSAGE }))
       }
       throw error;
     }
