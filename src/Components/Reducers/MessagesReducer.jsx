@@ -19,6 +19,6 @@ export default function MessagesReducer(state = {}, action) {
     case CLEAR_MESSAGES:
       return null
     default:
-      return null
+      return state
   }
 }

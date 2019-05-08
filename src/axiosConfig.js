@@ -28,9 +28,9 @@ export const setupAxiosRouter = (history) => {
       if (!error.response) {
         store.dispatch(setMessage({ type: "error", text: GENERIC_ERROR_MESSAGE }))
       } else if(error.response.status === 401) {
-        store.dispatch(setMessage({ type: "error", text: SESSION_TIMEOUT_MESSAGE }))
         localStorage.clear('jwtToken');
         store.dispatch(signOutUser());
+        store.dispatch(setMessage({ type: "error", text: SESSION_TIMEOUT_MESSAGE }))
         history.push('/sign_in');
       } else if (error.response.status === 500) {
         store.dispatch(setMessage({ type: "error", text: SERVER_ERROR_MESSAGE }))

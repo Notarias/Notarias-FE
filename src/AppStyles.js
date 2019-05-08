@@ -1,5 +1,4 @@
 export const styles = theme => {
-  console.log(theme.spacing)
   return({
   root: {
     display: "flex"

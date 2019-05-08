@@ -101,7 +101,7 @@ SignInPage.propTypes = {
 };
 
 const mapStateToProps = props => {
-  return { currentUser: props.currentUser }
+  return props
 }
 
 const mapDispatchToProps = dispatch => ({

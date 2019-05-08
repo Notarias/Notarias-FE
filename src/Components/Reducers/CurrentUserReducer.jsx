@@ -9,12 +9,12 @@ export function signOutUser() {
   return { type: SIGNOUTUSER };
 }
 
-export default function CurrentUserReducer(state = "", action) {
+export default function CurrentUserReducer(state = {}, action) {
   switch(action.type) {
     case SIGNINUSER:
       return action.userProperties
     case SIGNOUTUSER:
-      return state
+      return null
     default:
       return state
   }

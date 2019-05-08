@@ -16,6 +16,6 @@ export default function LoadingReducer(state = {}, action) {
     case STOP_LOADING:
       return false
     default:
-      return false
+      return state
   }
 }

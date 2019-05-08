@@ -3,6 +3,7 @@ import CurrentUserReducer from './Components/Reducers/CurrentUserReducer';
 import MessagesReducer    from './Components/Reducers/MessagesReducer';
 import LoadingReducer     from './Components/Reducers/LoadingReducer';
 import { reducer as formReducer } from 'redux-form';
+import compose                    from 'recompose/compose';
 
 const store = createStore(
   combineReducers({
@@ -15,6 +16,7 @@ const store = createStore(
     message: null,
     loading: false,
     currentUser: localStorage.currentUser ? JSON.parse(localStorage.currentUser) : null
-  }
+  },
+  compose(window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 );
 export default store;
