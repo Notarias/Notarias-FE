@@ -1,18 +1,20 @@
 import { createStore, combineReducers } from 'redux';
-import SessionTokenReducer from './Components/Reducers/SessionTokenReducer';
 import CurrentUserReducer from './Components/Reducers/CurrentUserReducer';
-import { reducer as formReducer } from 'redux-form'
+import MessagesReducer    from './Components/Reducers/MessagesReducer';
+import LoadingReducer     from './Components/Reducers/LoadingReducer';
+import { reducer as formReducer } from 'redux-form';
 
 const store = createStore(
   combineReducers({
-    sessionToken: SessionTokenReducer,
     currentUser: CurrentUserReducer,
+    message: MessagesReducer,
+    loading: LoadingReducer,
     form: formReducer,
   }),
   {
-    sessionToken: localStorage.jwtToken,
+    message: null,
+    loading: false,
     currentUser: localStorage.currentUser ? JSON.parse(localStorage.currentUser) : null
   }
 );
-
 export default store;

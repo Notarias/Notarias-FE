@@ -12,9 +12,11 @@ import Users from '../Components/Pages/Users/Users';
 class BaseRoutes extends Component {
   render() {
     return(
-      <div>
-        <Route path="/sign_in" component={SignInPage}/>
-        <Route path="/sign_out" component={SignOutPage}/>
+      <div className={this.props.routesContainerClass} >
+        { localStorage.jwtToken ?
+          (<Route path="/sign_out" component={SignOutPage}/>) :
+          (<Route path="/sign_in" component={SignInPage}/>)
+        }
         <ProtectedRoute path='/users' component={Users}/>
         <ProtectedRoute path="/" component={Home}/>
       </div>

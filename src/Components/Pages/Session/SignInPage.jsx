@@ -1,19 +1,18 @@
-import React, { Component } from 'react';
-import PropTypes            from 'prop-types';
-import { connect }          from 'react-redux';
-import { withRouter }       from 'react-router-dom'
-import API                  from '../../../axiosConfig';
-import compose              from 'recompose/compose';
-import { signIn, signOut }           from '../../Reducers/SessionTokenReducer';
-import CustomSnackbarMessage from '../../Ui/CustomSnackbarMessage';
+import React, { Component }       from 'react';
+import PropTypes                  from 'prop-types';
+import { connect }                from 'react-redux';
+import { withRouter }             from 'react-router-dom'
+import API                        from '../../../axiosConfig';
+import compose                    from 'recompose/compose';
+import CustomSnackbarMessage      from '../../Ui/CustomSnackbarMessage';
 import {GENERIC_CONNECTION_ERROR} from '../../GenericErrors';
-import { signInUser } from '../../Reducers/CurrentUserReducer';
+import { signInUser }             from '../../Reducers/CurrentUserReducer';
 
-import { styles } from './sessionStyles';
+import { styles }  from './sessionStyles';
 import SessionForm from './SessionForm';
 
 import Avatar           from '@material-ui/core/Avatar';
-import logo_momentary from './../../../images/logo_momentary.png'
+import logo_momentary   from './../../../images/logo_momentary.png'
 import Paper            from '@material-ui/core/Paper';
 import Typography       from '@material-ui/core/Typography';
 import withStyles       from '@material-ui/core/styles/withStyles';
@@ -28,7 +27,7 @@ class SignInPage extends Component {
   }
 
   signOut() {
-    this.props.signOut()
+    localStorage.clear('jwtToken');
   }
 
   getCurrentUser = () => {
@@ -44,15 +43,21 @@ class SignInPage extends Component {
       .then(res => {
           token = res.data.auth_token
           localStorage.setItem('jwtToken', token)
-          this.props.signIn(token)
           return new Promise((resolve) => resolve())
         }
       ).then(() => {
-          this.props.history.push(this.props.location.state.from.pathname)
+          if (this.props.location.state) {
+            this.props.history.push(this.props.location.state.from.pathname)
+          } else {
+            this.props.history.push("/")
+          }
           this.getCurrentUser()
         }
       ).catch((error) => {
-        if (error.response) {
+        if (!error.response) {
+          this.setState({ errorMessage: GENERIC_CONNECTION_ERROR })
+          this.signOut()
+        } else if (error.response) {
           if (error.response.status === 401) {
             this.setState({ errorMessage: error.response.data.error.user_authentication.join("") })
           } else {
@@ -92,19 +97,14 @@ class SignInPage extends Component {
 
 SignInPage.propTypes = {
   classes: PropTypes.object.isRequired,
-  signIn: PropTypes.func.isRequired,
-  signOut: PropTypes.func.isRequired,
-  sessionToken: PropTypes.string,
   from: PropTypes.string
 };
 
 const mapStateToProps = props => {
-  return { sessionToken: props.sessionToken, currentUser: props.currentUser }
+  return { currentUser: props.currentUser }
 }
 
 const mapDispatchToProps = dispatch => ({
-  signIn: payload => dispatch(signIn(payload)),
-  signOut: payload => dispatch(signOut(payload)),
   signInUser: payload => dispatch(signInUser(payload))
 })
 

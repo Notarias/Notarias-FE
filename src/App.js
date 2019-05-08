@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect }          from 'react-redux';
 import { withRouter }       from 'react-router-dom';
 import BaseRoutes           from './Routes/BaseRoutes';
-import { signIn }           from './Components/Reducers/SessionTokenReducer';
 import CssBaseline          from '@material-ui/core/CssBaseline';
 import { styles }           from './AppStyles';
 import withStyles           from '@material-ui/core/styles/withStyles';
@@ -10,7 +9,10 @@ import classNames           from 'classnames';
 import compose              from 'recompose/compose';
 import NavigationBar        from './Components/Ui/NavigationBar';
 import NavigationMenu       from './Components/Ui/NavigationMenu';
-
+import CustomSnackbarMessage          from './Components/Ui/CustomSnackbarMessage';
+import { clearMessage, setMessage }   from './Components/Reducers/MessagesReducer';
+import { stopLoading, startLoading }  from './Components/Reducers/LoadingReducer';
+import LoadingTopBar from './Components/Ui/LoadingTopBar';
 import './App.css';
 import 'typeface-roboto';
 
@@ -38,20 +40,32 @@ class App extends Component {
     }
   }
 
+  closeMessage() {
+    this.props.clearMessage()
+  }
+
   render() {
-    const { classes } = this.props;
+    const { classes, message, loading } = this.props;
     return (
       <div className={classNames(classes.root, "App")}>
-        {localStorage.jwtToken ? <NavigationBar open={ this.state.open } shiftMenu={this.shiftMenu.bind(this)}/> : null}
-        {localStorage.jwtToken ? <NavigationMenu 
+        { localStorage.jwtToken ? <NavigationBar open={ this.state.open } shiftMenu={ this.shiftMenu.bind(this) }/> : null }
+        { localStorage.jwtToken ? <NavigationMenu 
           open={ this.state.open }
-          setOpenMenu={this.setOpenMenu.bind(this)}
-          setCloseMenu={this.setCloseMenu.bind(this)}
-          /> : null}
+          setOpenMenu={ this.setOpenMenu.bind(this) }
+          setCloseMenu={ this.setCloseMenu.bind(this) }
+          /> : null }
         <CssBaseline />
+
         <main className={classes.content}>
-          <div className={classes.appBarSpacer} />
-          <BaseRoutes/>
+          { loading && <LoadingTopBar/> }
+          { message && <CustomSnackbarMessage
+            variant={ message.type }
+            className={ classes.floatingMessage }
+            message={ message.text }
+            actionable={ true }
+            onClose={ this.closeMessage.bind(this) }
+          /> }
+          <BaseRoutes routesContainerClass={ classes.routesContainerClass }/>
         </main>
       </div>
     );
@@ -63,7 +77,10 @@ const mapStateToProps = props => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  signIn: payload => dispatch(signIn(payload))
+  clearMessage: () => dispatch(clearMessage()),
+  setMessage: payload => dispatch(setMessage(payload)),
+  startLoading:  () => dispatch(startLoading()),
+  stopLoading:  () => dispatch(stopLoading()),
 })
 
 export default compose(
