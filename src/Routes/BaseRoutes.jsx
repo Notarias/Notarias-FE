@@ -7,6 +7,7 @@ import ProtectedRoute from './ProtectedRoute';
 
 import Home from '../Components/Pages/Home';
 import Users from '../Components/Pages/Users/Users';
+import New from '../Components/Pages/Users/New';
 
 
 class BaseRoutes extends Component {
@@ -18,6 +19,7 @@ class BaseRoutes extends Component {
           (<Route path="/sign_in" component={SignInPage}/>)
         }
         <ProtectedRoute path='/users' component={Users}/>
+        <ProtectedRoute path='/users/new' component={New}/>
         <ProtectedRoute path="/" component={Home}/>
       </div>
     )
