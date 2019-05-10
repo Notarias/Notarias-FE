@@ -3,7 +3,9 @@ export const CLEAR_MESSAGES = 'CLEAR_MESSAGES';
 export const GENERIC_ERROR = 'GENERIC_ERROR';
 export const GENERIC_ERROR_MESSAGE = "Algo ha sucedido, intenta de nuevo o contacta a tu administrador";
 export const SERVER_ERROR_MESSAGE = "Ha sucedido un error con el servidor, intente de nuevo o contacte a su administrador";
-export const SESSION_TIMEOUT_MESSAGE = "La sesión ha terminado por inactividad, vuelva a iniciar sesión."
+export const SESSION_TIMEOUT_MESSAGE = "La sesión ha terminado por inactividad, vuelva a iniciar sesión.";
+export const GENERIC_FORM_ERROR = "Hay uno o mas errores presentes en el formulario, revise de nuevo el formulario.";
+
 export function setMessage(message) {
   return { type: SET_MESSAGES, message };
 }

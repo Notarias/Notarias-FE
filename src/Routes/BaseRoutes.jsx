@@ -6,7 +6,7 @@ import SignOutPage from '../Components/Pages/Session/SignOutPage';
 import ProtectedRoute from './ProtectedRoute';
 
 import Home from '../Components/Pages/Home';
-import Users from '../Components/Pages/Users/Users';
+import Users from '../Components/Pages/Users/Index';
 import New from '../Components/Pages/Users/New';
 
 

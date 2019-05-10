@@ -1,4 +1,3 @@
-import FormControl from '@material-ui/core/FormControl';
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
 import Button from '@material-ui/core/Button';
@@ -28,24 +27,20 @@ let SessionForm = props => {
   let { submitSignin, handleSubmit, classes, pristine, submitting } = props;
   return(
     <form className={ classes.form } onSubmit={ handleSubmit(submitSignin) }>
-      <FormControl margin="normal" required fullWidth>
-        <Field name="email" 
-               type="email" 
-               id="email"
-               required
-               label="Correo Electrónico"
-               autoComplete="email" 
-               component={renderTextField} />
-      </FormControl>
-      <FormControl margin="normal" required fullWidth>
-        <Field name="password" 
-               type="password" 
-               id="password" 
-               required
-               autoComplete="current-password"
-               label="Contraseña" 
-               component={renderTextField} />
-      </FormControl>
+      <Field name="email" 
+              type="email" 
+              id="email"
+              required
+              label="Correo Electrónico"
+              autoComplete="email" 
+              component={renderTextField} />
+      <Field name="password" 
+              type="password" 
+              id="password" 
+              required
+              autoComplete="current-password"
+              label="Contraseña" 
+              component={renderTextField} />
       <Button
         type="submit"
         fullWidth

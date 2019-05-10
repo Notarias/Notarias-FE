@@ -40,13 +40,11 @@ class Users extends Component {
             <PersonAddIcon/>
           </Button>
         </Grid>
-        { this.state.loading && <LoadingTopBar/> }
         <div className={classes.tableWrapper}>
           <Paper >
             <Table className={classes.table}>
               <TableHead>
                 <TableRow>
-                  <TableCell>Dessert (100g serving)</TableCell>
                   <TableCell align="right">Nombre</TableCell>
                   <TableCell align="right">Apellido</TableCell>
                   <TableCell align="right">Correo</TableCell>
@@ -56,9 +54,6 @@ class Users extends Component {
               <TableBody>
                 {this.state.users.map(n => (
                   <TableRow key={n.id}>
-                    <TableCell component="th" scope="row">
-                      {n.id}
-                    </TableCell>
                     <TableCell align="right">{n.first_name}</TableCell>
                     <TableCell align="right">{n.last_name}</TableCell>
                     <TableCell align="right">{n.email}</TableCell>

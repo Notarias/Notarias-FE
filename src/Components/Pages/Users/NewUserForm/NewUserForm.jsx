@@ -1,63 +1,48 @@
-import React                from 'react';
-import FormControl          from '@material-ui/core/FormControl';
+import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import renderTextField      from './../../../Ui/renderTextField';
 import Button               from '@material-ui/core/Button';
 
-const NewUser = props => {
-  const { handleSubmit, pristine, submitting } = props;
-  return (
-    <form onSubmit={handleSubmit}>
-      <FormControl margin="normal" required fullWidth>
-        <Field name="email"
-              type="email"
-              id="email"
-              required
-              label="Correo Electrónico"
-              component={renderTextField} />
-      </FormControl>
-      <FormControl margin="normal" required fullWidth>
-        <Field name="password"
-              type="password"
-              id="password"
-              required
-              label="Contraseña"
-              component={renderTextField} />
-      </FormControl>
-      <FormControl margin="normal" required fullWidth>
-        <Field name="password_confirmation"
-              type="password" 
-              id="password_confirmation"
-              required
-              label="Confirmar Contraseña"
-              component={renderTextField} />
-      </FormControl>
-      <FormControl margin="normal" required fullWidth>
-        <Field name="first_name"
-              type="first_name"
-              id="first_name"
-              label="Nombre"
-              component={renderTextField} />
-      </FormControl>
-      <FormControl margin="normal" required fullWidth>
-        <Field name="last_name"
-              type="last_name"
-              id="last_name"
-              label="Apellido"
-              component={renderTextField} />
-      </FormControl>
-      <Button
-        type="submit"
-        fullWidth
-        variant="contained"
-        color="primary"
-        disabled={pristine || submitting}
-        //onClick={this.signinClick}
-      >
-        Entrar
-      </Button>
-    </form>
-  );
+const requiredFields = {
+  "email": "Correo Electrónico",
+  "password": "Contraseña",
+  "password_confirmation": "Confirmar Contraseña",
+  "first_name": "Nombre",
+  "last_name": "Apellido",
+}
+
+class  NewUser extends Component {
+  render() {
+    const { handleSubmit, pristine, submitting, errors } = this.props;
+    return (
+      <form onSubmit={handleSubmit}>
+        {
+          Object.keys(requiredFields).map((field) => {
+            return(
+              <Field
+                    key={field} 
+                    name={field}
+                    type={field === "password" ? "password" : "text"}
+                    id={field}
+                    label={requiredFields[field]}
+                    meta={{ error: errors[field], touched: errors[field] }}
+                    required={true}
+                    component={renderTextField} />
+            )
+          })
+        }
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          color="primary"
+          disabled={pristine || submitting}
+        >
+          Guardar
+        </Button>
+      </form>
+    );
+  }
 }
 
 export default reduxForm({
