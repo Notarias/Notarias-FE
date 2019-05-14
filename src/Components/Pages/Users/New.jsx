@@ -7,7 +7,6 @@ import API                  from './../../../axiosConfig';
 import ErrorMessage         from './../../Ui/CustomSnackbarMessage';
 import Button               from '@material-ui/core/Button';
 import { Link }             from 'react-router-dom';
-import Grid                 from '@material-ui/core/Grid';
 import { GENERIC_FORM_ERROR } from './../../Reducers/MessagesReducer';
 
 class NewUser extends Component {
