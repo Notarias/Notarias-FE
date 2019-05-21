@@ -15,6 +15,8 @@ import Grid                 from '@material-ui/core/Grid';
 import PersonAddIcon        from '@material-ui/icons/PersonAdd';
 import GenericDropdownMenu  from '../../Ui/GenericDropdownMenu';
 import TablePagination      from '@material-ui/core/TablePagination';
+import update               from 'react-addons-update';
+import MenuItem             from '@material-ui/core/MenuItem';
 
 class Users extends Component {
   constructor() {
@@ -59,6 +61,19 @@ class Users extends Component {
     })
   }
 
+  lockUser(user) {
+    API.patch(`/users/${user.id}/lock`)
+      .then((response) => {
+        let users = this.state.users
+        let index = users.findIndex(oldUser => oldUser.id === user.id)
+        let updateObj = {}
+        updateObj[index] = { $set: response.data.user } 
+        this.setState({
+          users: update(users, updateObj)
+        })
+      })
+  }
+
   render() {
     const { classes } = this.props
     return(
@@ -73,20 +88,30 @@ class Users extends Component {
             <Table className={classes.table}>
               <TableHead>
                 <TableRow>
-                  <TableCell align="right">Nombre</TableCell>
-                  <TableCell align="right">Apellido</TableCell>
-                  <TableCell align="right">Correo</TableCell>
-                  <TableCell align="right">Opciones</TableCell>
+                  <TableCell align="center">Nombre</TableCell>
+                  <TableCell align="center">Apellido</TableCell>
+                  <TableCell align="center">Correo</TableCell>
+                  <TableCell align="center">Opciones</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {this.state.users.map(n => (
-                  <TableRow key={n.id}>
-                    <TableCell align="right">{n.first_name}</TableCell>
-                    <TableCell align="right">{n.last_name}</TableCell>
-                    <TableCell align="right">{n.email}</TableCell>
-                    <TableCell align="right">
-                      <GenericDropdownMenu optionsComponents={['Editar','Bloquear']} dropdownSelectedStyle />
+                  <TableRow key={n.id} className={ n.locked_at && classes.lockedUserRow }>
+                    <TableCell align="left">
+                      {n.first_name}
+                    </TableCell>
+                    <TableCell align="center">{n.last_name}</TableCell>
+                    <TableCell align="center">{n.email}</TableCell>
+                    <TableCell align="center">
+                      <GenericDropdownMenu user={n} 
+                                           dropdownSelectedStyle>
+                        <MenuItem key="Editar">
+                          Editar
+                        </MenuItem>
+                        <MenuItem key="Bloquear" onClick={this.lockUser.bind(this)}>
+                          Bloquear
+                        </MenuItem>
+                      </GenericDropdownMenu>
                     </TableCell>
                   </TableRow>
                 ))}

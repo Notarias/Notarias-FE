@@ -1,7 +1,6 @@
 import React from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 // import { withStyles } from '@material-ui/core/styles';
 
@@ -22,7 +21,7 @@ export default class GenericDropdownMenu extends React.Component {
 
   render() {
     const { anchorEl } = this.state;
-    const { optionsComponents } = this.props;
+    const { children, user } = this.props;
 
     const open = Boolean(anchorEl);
 
@@ -48,10 +47,16 @@ export default class GenericDropdownMenu extends React.Component {
             },
           }}
         >
-          {optionsComponents.map(option => (
-            <MenuItem key={option} onClick={this.handleClose}>
-              {option}
-            </MenuItem>
+          {children.map(child => (
+            React.cloneElement(
+              child,
+              {
+                onClick: () => {
+                  child.props.onClick(user);
+                  this.handleClose();
+                }
+              }
+            )
           ))}
         </Menu>
       </div>

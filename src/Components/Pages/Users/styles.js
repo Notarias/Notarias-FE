@@ -1,4 +1,8 @@
-export const styles = theme => ({
+export const styles = theme => {
+  console.log(theme)
+  return (
+  
+  {
   root: {
     display: "flex",
     overflow: 'auto',
@@ -22,5 +26,8 @@ export const styles = theme => ({
   usersTableBarWrapper: {
     paddingRight:'23px'
   },
-});
-
+  lockedUserRow: {
+    boxShadow: `inset 10px 0px 0px -5px ${theme.palette.error.dark}`,
+  }
+})
+}
