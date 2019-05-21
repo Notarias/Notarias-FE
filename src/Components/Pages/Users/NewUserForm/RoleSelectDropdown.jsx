@@ -17,10 +17,6 @@ const errorMessage = function(error) {
 }
 
 export default class RoleSelectDropdown extends Component {
-  constructor() {
-    super()
-  }
-
   render(){
     const { input, required, children, label } = this.props
     const { meta: { touched, error }, ...custom } = this.props

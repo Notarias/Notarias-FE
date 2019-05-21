@@ -3,6 +3,7 @@ import { withStyles }       from '@material-ui/core/styles';
 import API                  from '../../../axiosConfig';
 import Table                from '@material-ui/core/Table';
 import TableBody            from '@material-ui/core/TableBody';
+import TableFooter          from '@material-ui/core/TableFooter';
 import TableCell            from '@material-ui/core/TableCell';
 import TableHead            from '@material-ui/core/TableHead';
 import TableRow             from '@material-ui/core/TableRow';
@@ -21,10 +22,10 @@ class Users extends Component {
     this.state = {
       loading: true,
       users: [],
-      page: 0,
+      page: 1,
       per: 5,
-      pages: 1,
-      total_records: 0,
+      pages: 2,
+      total_records: 10,
     }
   }
 
@@ -41,7 +42,6 @@ class Users extends Component {
   };
 
   callServer(page = this.state.page, per = this.state.per) {
-    if (page === -page){ page= page+1 }
     API.get('/users',{
           params: {
             per,
@@ -91,15 +91,19 @@ class Users extends Component {
                   </TableRow>
                 ))}
               </TableBody>
-              <TablePagination
-                page={this.state.page}
-                rowsPerPage={this.state.per}
-                pages={this.state.pages}
-                rowsPerPageOptions={[5, 10, 15, 20]}
-                onChangePage={this.ChangePage} //ese de change rows per page me suena a que no debe ir por que significa "cuando se cambian las filas por paginakk" eso significa que se ejecuta cuando cambia la cantidad de filas en la tabla y pues eso no nos sirve por que queremos que se triggeree cuando cambias el dropdown del "per" ssiolamente
-                onChangeRowsPerPage={this.handleChangeRowsPerPage}
-                count={this.state.total_records}
-              />     
+              <TableFooter>
+                <TableRow>
+                  <TablePagination
+                    page={this.state.page}
+                    rowsPerPage={parseInt(this.state.per)}
+                    pages={this.state.pages}
+                    rowsPerPageOptions={[5, 10, 15, 20]}
+                    onChangePage={this.ChangePage} //ese de change rows per page me suena a que no debe ir por que significa "cuando se cambian las filas por paginakk" eso significa que se ejecuta cuando cambia la cantidad de filas en la tabla y pues eso no nos sirve por que queremos que se triggeree cuando cambias el dropdown del "per" ssiolamente
+                    onChangeRowsPerPage={this.handleChangeRowsPerPage}
+                    count={this.state.total_records}
+                  />
+                </TableRow>
+              </TableFooter>
             </Table>
           </Paper>
         </div>
