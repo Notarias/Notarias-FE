@@ -49,6 +49,10 @@ export const styles = theme => {
       alignItems: 'center',
       justifyContent: 'center',
     },
+    loadingTableCell: {
+      paddingTop: "40px",
+      paddingBottom: "40px"
+    },
     searchInputRoot: {
       color: 'inherit',
       width: '100%',

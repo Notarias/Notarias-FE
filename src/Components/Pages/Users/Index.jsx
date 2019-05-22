@@ -57,6 +57,8 @@ class Users extends Component {
     let params = { params: { per, page } }
     searchText && (params["params"]["search"] = { "all_fields.cont": searchText })
 
+    this.setState({ loading: true })
+
     API.get('/users', params).then(response => {
       let newPage = parseInt(response.data.meta.page)
       newPage--
@@ -66,7 +68,8 @@ class Users extends Component {
         per: parseInt(response.data.meta.per),
         pages: parseInt(response.data.meta.pages),
         total_records: parseInt(response.data.meta.total_records),
-        searchLoading: false
+        searchLoading: false,
+        loading: false
       })
     })
   }
@@ -76,11 +79,13 @@ class Users extends Component {
     const searchText =  event.target.value
     const { page, per } = this.state
     const callServer = this.callServer.bind(this)
-    this.setState({ searchLoading: true })
-    this.setState({
-      searchText,
-      timeout: setTimeout(() => { callServer({ page, per, searchText }) }, 2000)
-    });
+    searchText ?
+      this.setState({
+        searchText,
+        searchLoading: true,
+        timeout: setTimeout(() => { callServer({ page, per, searchText }) }, 2000)
+      }) :
+      callServer({ page, per, searchText })
     return searchText
   }
 
@@ -141,31 +146,39 @@ class Users extends Component {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {this.state.users.map(n => (
-                  <TableRow key={n.id} className={ n.locked_at && classes.lockedUserRow }>
-                    <TableCell align="left">
-                      {n.first_name}
+                
+                { this.state.loading ? 
+                  <TableRow>
+                    <TableCell align="center" colspan={4} className={classes.loadingTableCell}>
+                      <CircularProgress className={classes.searchLoadingIcon} size={100}/>
                     </TableCell>
-                    <TableCell align="center">{n.last_name}</TableCell>
-                    <TableCell align="center">{n.email}</TableCell>
-                    <TableCell align="center">
-                      <GenericDropdownMenu user={n} 
-                                           dropdownSelectedStyle>
-                        <MenuItem key="Editar">
-                          Editar
-                        </MenuItem>
-                        { n.locked_at ?
-                            <MenuItem key="Bloquear" onClick={this.unlockUser.bind(this)}>
-                              Desbloquear
-                            </MenuItem> :
-                            <MenuItem key="Bloquear" onClick={this.lockUser.bind(this)}>
-                              Bloquear
-                            </MenuItem>
-                        }
-                      </GenericDropdownMenu>
-                    </TableCell>
-                  </TableRow>
-                ))}
+                  </TableRow> :
+                  this.state.users.map(n => (
+                    <TableRow key={n.id} className={ n.locked_at && classes.lockedUserRow }>
+                      <TableCell align="left">
+                        {n.first_name}
+                      </TableCell>
+                      <TableCell align="center">{n.last_name}</TableCell>
+                      <TableCell align="center">{n.email}</TableCell>
+                      <TableCell align="center">
+                        <GenericDropdownMenu user={n} 
+                                            dropdownSelectedStyle>
+                          <MenuItem key="Editar">
+                            Editar
+                          </MenuItem>
+                          { n.locked_at ?
+                              <MenuItem key="Bloquear" onClick={this.unlockUser.bind(this)}>
+                                Desbloquear
+                              </MenuItem> :
+                              <MenuItem key="Bloquear" onClick={this.lockUser.bind(this)}>
+                                Bloquear
+                              </MenuItem>
+                          }
+                        </GenericDropdownMenu>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                }
               </TableBody>
               <TableFooter>
                 <TableRow>
