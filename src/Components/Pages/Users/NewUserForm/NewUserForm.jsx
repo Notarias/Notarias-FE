@@ -48,7 +48,6 @@ class  NewUser extends Component {
 
   render() {
     const { handleSubmit, pristine, submitting, errors } = this.props;
-    console.log(this.state.roles)
     return (
       <form onSubmit={handleSubmit}>
         {this.requiredFields(errors)}

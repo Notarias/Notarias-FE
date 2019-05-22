@@ -13,13 +13,12 @@ import Button               from '@material-ui/core/Button';
 import { Link }             from 'react-router-dom';
 import Grid                 from '@material-ui/core/Grid';
 import PersonAddIcon        from '@material-ui/icons/PersonAdd';
-import GenericDropdownMenu  from '../../Ui/GenericDropdownMenu';
 import TablePagination      from '@material-ui/core/TablePagination';
 import update               from 'react-addons-update';
-import MenuItem             from '@material-ui/core/MenuItem';
 import InputBase            from '@material-ui/core/InputBase';
 import SearchIcon           from '@material-ui/icons/Search';
 import CircularProgress     from '@material-ui/core/CircularProgress';
+import UsersRows            from './UsersRows';
 
 class Users extends Component {
   constructor() {
@@ -153,31 +152,11 @@ class Users extends Component {
                       <CircularProgress className={classes.searchLoadingIcon} size={100}/>
                     </TableCell>
                   </TableRow> :
-                  this.state.users.map(n => (
-                    <TableRow key={n.id} className={ n.locked_at && classes.lockedUserRow }>
-                      <TableCell align="left">
-                        {n.first_name}
-                      </TableCell>
-                      <TableCell align="center">{n.last_name}</TableCell>
-                      <TableCell align="center">{n.email}</TableCell>
-                      <TableCell align="center">
-                        <GenericDropdownMenu user={n} 
-                                            dropdownSelectedStyle>
-                          <MenuItem key="Editar">
-                            Editar
-                          </MenuItem>
-                          { n.locked_at ?
-                              <MenuItem key="Bloquear" onClick={this.unlockUser.bind(this)}>
-                                Desbloquear
-                              </MenuItem> :
-                              <MenuItem key="Bloquear" onClick={this.lockUser.bind(this)}>
-                                Bloquear
-                              </MenuItem>
-                          }
-                        </GenericDropdownMenu>
-                      </TableCell>
-                    </TableRow>
-                  ))
+                  <UsersRows
+                    users={this.state.users}
+                    lockUser={this.lockUser.bind(this)}
+                    unlockUser={this.unlockUser.bind(this)}
+                  />
                 }
               </TableBody>
               <TableFooter>
