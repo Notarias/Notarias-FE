@@ -145,7 +145,6 @@ class Users extends Component {
                 </TableRow>
               </TableHead>
               <TableBody>
-                
                 { this.state.loading ? 
                   <TableRow>
                     <TableCell align="center" colspan={4} className={classes.loadingTableCell}>
@@ -165,9 +164,10 @@ class Users extends Component {
                     page={this.state.page}
                     rowsPerPage={this.state.per}
                     rowsPerPageOptions={[5, 10, 15, 20]}
-                    onChangePage={this.ChangePage} //ese de change rows per page me suena a que no debe ir por que significa "cuando se cambian las filas por paginakk" eso significa que se ejecuta cuando cambia la cantidad de filas en la tabla y pues eso no nos sirve por que queremos que se triggeree cuando cambias el dropdown del "per" ssiolamente
+                    onChangePage={this.ChangePage}
                     onChangeRowsPerPage={this.handleChangeRowsPerPage}
                     count={this.state.total_records}
+                    labelRowsPerPage={"Filas por página:"}
                   />
                 </TableRow>
               </TableFooter>
