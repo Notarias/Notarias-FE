@@ -6,6 +6,7 @@ import MenuItem             from '@material-ui/core/MenuItem';
 import { withStyles }       from '@material-ui/core/styles';
 import { styles }           from './styles';
 import Typography           from '@material-ui/core/Typography';
+import { Link }             from 'react-router-dom';
 
 class UsersRows extends Component {
   constructor() {
@@ -26,9 +27,11 @@ class UsersRows extends Component {
           <TableCell align="center">
             <GenericDropdownMenu user={user} 
                                 dropdownSelectedStyle>
-              <MenuItem key="Editar">
-                Editar
-              </MenuItem>
+              <Link key="Editar" to={`/users/${user.id}/edit`} style={{ textDecoration: 'none' }}>
+                <MenuItem>
+                  Editar
+                </MenuItem>
+              </Link>
               { user.locked_at ?
                   <MenuItem key="Bloquear" onClick={unlockUser}>
                     Desbloquear

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import NewUserForm          from './NewUserForm/NewUserForm';
+import UserForm             from './UserForm/UserForm';
 import { withStyles }       from '@material-ui/core/styles';
 import Paper                from '@material-ui/core/Paper';
-import { styles }           from './NewUserForm/styles';
+import { styles }           from './UserForm/styles';
 import API                  from './../../../axiosConfig';
 import ErrorMessage         from './../../Ui/CustomSnackbarMessage';
 import Button               from '@material-ui/core/Button';
@@ -15,12 +15,18 @@ class NewUser extends Component {
     super()
     this.state = {
       errorMessage: null,
-      errors: {}
+      errors: {},
+      requiredFields: {
+        "email": "Correo Electrónico",
+        "password": "Contraseña",
+        "password_confirmation": "Confirmar Contraseña",
+        "first_name": "Nombre",
+        "last_name": "Apellido",
+      },
     }
   }
 
   submitUser = NewUserInfo => {
-    console.log(NewUserInfo)
     API.post('users',
       {
         user: NewUserInfo
@@ -35,9 +41,6 @@ class NewUser extends Component {
         })
       }
     });
-  }
-
-  processErrors(errorsHash) {
   }
 
   render(){
@@ -56,7 +59,11 @@ class NewUser extends Component {
             message={this.state.errorMessage}
             actionable={false}
           />}
-          <NewUserForm onSubmit={this.submitUser} errors={this.state.errors}/>
+          <UserForm
+            onSubmit={this.submitUser}
+            errors={this.state.errors}
+            requiredFields={this.state.requiredFields}
+            />
         </Paper>
       </div>
     );

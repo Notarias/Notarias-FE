@@ -4,21 +4,18 @@ import renderTextField      from './../../../Ui/renderTextField';
 import RoleSelectDropdown   from './RoleSelectDropdown';
 import Button               from '@material-ui/core/Button';
 import API                  from './../../../../axiosConfig';
-import MenuItem from '@material-ui/core/MenuItem';
+import MenuItem             from '@material-ui/core/MenuItem';
+import { connect }          from 'react-redux'
+import store                from '../../../../store';
 
-
-class  NewUser extends Component {
-  constructor() {
-    super()
+class  UserForm extends Component {
+  constructor(props) {
+    super(props)
     this.state = {
-      requiredFields: {
-        "email": "Correo Electrónico",
-        "password": "Contraseña",
-        "password_confirmation": "Confirmar Contraseña",
-        "first_name": "Nombre",
-        "last_name": "Apellido",
-      },
-      roles: []
+      requiredFields: this.props.requiredFields,
+      notRequiredFields: this.props.notRequiredFields,
+      roles: [],
+      errors: this.props.errors
     }
   }
 
@@ -28,18 +25,26 @@ class  NewUser extends Component {
     });
   }
 
-  requiredFields(errors) {
-    let requiredFields = this.state.requiredFields;
-    return Object.keys(requiredFields).reduce((result, key) => {
+  requiredFields() {
+    return this.state.requiredFields && this.buildFields(this.state.requiredFields, true)
+  }
+
+  notRequiredFields() {
+    return this.state.notRequiredFields && this.buildFields(this.state.notRequiredFields, false)
+  }
+
+  buildFields(fields, required) {
+    let { userData, errors } = this.props
+    return Object.keys(fields).reduce((result, key) => {
       result.push(
         <Field
         key={key} 
         name={key}
         type={key === "password" ? "password" : "text"}
         id={key}
-        label={requiredFields[key]}
+        label={fields[key]}
         meta={{ error: errors[key], touched: errors[key] }}
-        required={true}
+        required={required}
         component={renderTextField} />
       )
       return result;
@@ -47,15 +52,16 @@ class  NewUser extends Component {
   }
 
   render() {
-    const { handleSubmit, pristine, submitting, errors } = this.props;
+    const { handleSubmit, pristine, submitting, userData, errors } = this.props
     return (
-      <form onSubmit={handleSubmit}>
-        {this.requiredFields(errors)}
+      <form onSubmit={handleSubmit} >
+        {this.requiredFields()}
+        {this.notRequiredFields()}
         <Field
           key={"role_permanent_link"} 
           name={"role_permanent_link"}
           label={"Rol"}
-          selected={""}
+          selected={(userData && userData.role_permanent_link || "")}
           meta={{ error: errors["role"], touched: errors["role"] }}
           required={true}
           component={RoleSelectDropdown}>
@@ -81,7 +87,12 @@ class  NewUser extends Component {
   }
 }
 
-export default reduxForm({
-  form: 'NewUserForm', // a unique identifier for this form
-})(NewUser);
-  
+const mapStateToProps = (state, props) => (
+  {
+    initialValues: state.editRecordData,
+  }
+)
+
+export default connect(
+  mapStateToProps,
+)(reduxForm({ form: 'userForm', enableReinitialize: true })(UserForm))

@@ -147,7 +147,7 @@ class Users extends Component {
               <TableBody>
                 { this.state.loading ? 
                   <TableRow>
-                    <TableCell align="center" colspan={4} className={classes.loadingTableCell}>
+                    <TableCell align="center" colSpan={4} className={classes.loadingTableCell}>
                       <CircularProgress className={classes.searchLoadingIcon} size={100}/>
                     </TableCell>
                   </TableRow> :

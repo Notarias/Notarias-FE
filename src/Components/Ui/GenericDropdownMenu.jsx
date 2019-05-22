@@ -52,10 +52,11 @@ export default class GenericDropdownMenu extends React.Component {
               child,
               {
                 onClick: () => {
-                  child.props.onClick(user);
+                  child.props.onClick && child.props.onClick(user);
                   this.handleClose();
                 }
-              }
+              },
+              child.props.children
             )
           ))}
         </Menu>
