@@ -63,15 +63,20 @@ class Users extends Component {
 
   lockUser(user) {
     API.patch(`/users/${user.id}/lock`)
-      .then((response) => {
-        let users = this.state.users
-        let index = users.findIndex(oldUser => oldUser.id === user.id)
-        let updateObj = {}
-        updateObj[index] = { $set: response.data.user } 
-        this.setState({
-          users: update(users, updateObj)
-        })
-      })
+      .then((response) => { this.updateUserInList(response, user) })
+  }
+
+  unlockUser(user) {
+    API.patch(`/users/${user.id}/unlock`)
+      .then((response) => { this.updateUserInList(response, user) })
+  }
+
+  updateUserInList(response, user) {
+    let users = this.state.users
+    let index = users.findIndex(oldUser => oldUser.id === user.id)
+    let updateObj = {}
+    updateObj[index] = { $set: response.data.user } 
+    this.setState({ users: update(users, updateObj) })
   }
 
   render() {
@@ -108,9 +113,14 @@ class Users extends Component {
                         <MenuItem key="Editar">
                           Editar
                         </MenuItem>
-                        <MenuItem key="Bloquear" onClick={this.lockUser.bind(this)}>
-                          Bloquear
-                        </MenuItem>
+                        { n.locked_at ?
+                            <MenuItem key="Bloquear" onClick={this.unlockUser.bind(this)}>
+                              Desbloquear
+                            </MenuItem> :
+                            <MenuItem key="Bloquear" onClick={this.lockUser.bind(this)}>
+                              Bloquear
+                            </MenuItem>
+                        }
                       </GenericDropdownMenu>
                     </TableCell>
                   </TableRow>
