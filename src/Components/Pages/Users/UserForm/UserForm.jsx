@@ -57,8 +57,6 @@ class  UserForm extends Component {
 
   render() {
     const { handleSubmit, pristine, submitting, userData, errors, classes, loading } = this.props
-    console.log("vvvvvvv")
-    console.log(loading)
     return (
       <form onSubmit={handleSubmit} >
         {this.requiredFields()}
@@ -94,13 +92,11 @@ class  UserForm extends Component {
   }
 }
 
-const mapStateToProps = (state, props) => {
-  return(
-  
+const mapStateToProps = (state, props) => (
   {
     initialValues: state.editRecordData,
   }
-)}
+)
 
 export default compose(
   withStyles(styles),

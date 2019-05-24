@@ -9,7 +9,9 @@ import { Link }             from 'react-router-dom';
 import Paper                from '@material-ui/core/Paper';
 import ErrorMessage         from './../../Ui/CustomSnackbarMessage';
 import { connect }          from 'react-redux'
-import { loadRecordData }     from '../../Reducers/RecordFormReducer'
+import { loadRecordData }    from '../../Reducers/RecordFormReducer'
+import store                from '../../../store';
+import { setMessage }       from './../../Reducers/MessagesReducer';
 
 class Edit extends Component {
   constructor() {
@@ -48,8 +50,9 @@ class Edit extends Component {
         user: NewUserInfo
       }
     ).then((data) => {
+      store.dispatch(setMessage({ type: "success", text: "Usuario actualizado, redirigiendo..." }))
       this.setState({ loading: false })
-      setTimeout(() => { this.props.history.push('/users') }, 3000)
+      setTimeout(() => { this.props.history.push('/users') }, 2000)
     }).catch((error) => {
       if (error.response && error.response.status === 422 ) {
         this.setState({

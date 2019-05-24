@@ -52,9 +52,15 @@ const styles1 = theme => ({
   }
 });
 
+const startCloseTimeout = (closeFunction) => {
+  setTimeout(() => { closeFunction && closeFunction() }, 6000)
+}
+
 function CustomSnackbarMessage(props) {
   const { actionable, classes, className, message, onClose, variant, ...other } = props;
   const Icon = variantIcon[variant];
+  startCloseTimeout(onClose);
+
   return (
     <SnackbarContent
       classes={{ action: classes.action }}

@@ -8,9 +8,10 @@ import ErrorMessage         from './../../Ui/CustomSnackbarMessage';
 import Button               from '@material-ui/core/Button';
 import { Link }             from 'react-router-dom';
 import { GENERIC_FORM_ERROR } from './../../Reducers/MessagesReducer';
+import store                from './../../../store';
+import { setMessage }       from './../../Reducers/MessagesReducer';
 
 class NewUser extends Component {
-
   constructor() {
     super()
     this.state = {
@@ -34,8 +35,9 @@ class NewUser extends Component {
         user: NewUserInfo
       }
     ).then((data) => {
+      store.dispatch(setMessage({ type: "success", text: "Usuario guardado, redirigiendo..." }))
       this.setState({ loading: false })
-      this.props.history.push('/users')
+      setTimeout(() => { this.props.history.push('/users') }, 2000)
     }).catch((error) => {
       if (error.response && error.response.status === 422 ) {
         this.setState({
