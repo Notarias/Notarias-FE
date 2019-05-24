@@ -7,6 +7,10 @@ import API                  from './../../../../axiosConfig';
 import MenuItem             from '@material-ui/core/MenuItem';
 import { connect }          from 'react-redux'
 import store                from '../../../../store';
+import compose              from 'recompose/compose';
+import withStyles           from '@material-ui/core/styles/withStyles';
+import { styles }           from './styles';
+import CircularProgress     from '@material-ui/core/CircularProgress';
 
 class  UserForm extends Component {
   constructor(props) {
@@ -52,7 +56,9 @@ class  UserForm extends Component {
   }
 
   render() {
-    const { handleSubmit, pristine, submitting, userData, errors } = this.props
+    const { handleSubmit, pristine, submitting, userData, errors, classes, loading } = this.props
+    console.log("vvvvvvv")
+    console.log(loading)
     return (
       <form onSubmit={handleSubmit} >
         {this.requiredFields()}
@@ -61,7 +67,7 @@ class  UserForm extends Component {
           key={"role_permanent_link"} 
           name={"role_permanent_link"}
           label={"Rol"}
-          selected={(userData && userData.role_permanent_link || "")}
+          selected={(userData && userData.role_permanent_link) || ""}
           meta={{ error: errors["role"], touched: errors["role"] }}
           required={true}
           component={RoleSelectDropdown}>
@@ -78,21 +84,25 @@ class  UserForm extends Component {
           fullWidth
           variant="contained"
           color="primary"
-          disabled={pristine || submitting || !this.state.roles.length}
+          disabled={loading || pristine || submitting || !this.state.roles.length}
         >
           Guardar
+          { loading && <CircularProgress size={24} className={classes.buttonProgress}/> }
         </Button>
       </form>
     );
   }
 }
 
-const mapStateToProps = (state, props) => (
+const mapStateToProps = (state, props) => {
+  return(
+  
   {
     initialValues: state.editRecordData,
   }
-)
+)}
 
-export default connect(
-  mapStateToProps,
-)(reduxForm({ form: 'userForm', enableReinitialize: true })(UserForm))
+export default compose(
+  withStyles(styles),
+  connect(mapStateToProps)
+)(reduxForm({ form: 'userForm', enableReinitialize: true })(UserForm));

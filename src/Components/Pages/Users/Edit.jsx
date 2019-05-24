@@ -18,6 +18,7 @@ class Edit extends Component {
       user: {},
       errorMessage: null,
       errors: {},
+      loading: false,
       requiredFields: {
         "email": "Correo Electrónico",
         "first_name": "Nombre",
@@ -41,17 +42,20 @@ class Edit extends Component {
   }
 
   submitUser = NewUserInfo => {
+    this.setState({ loading: true })
     API.patch(`/users/${this.state.user.id}`,
       {
         user: NewUserInfo
       }
     ).then((data) => {
+      this.setState({ loading: false })
       setTimeout(() => { this.props.history.push('/users') }, 3000)
     }).catch((error) => {
       if (error.response && error.response.status === 422 ) {
         this.setState({
           errorMessage: GENERIC_FORM_ERROR,
-          errors: error.response.data.pointers
+          errors: error.response.data.pointers,
+          loading: false
         })
       }
     });
@@ -79,6 +83,7 @@ class Edit extends Component {
             errors={this.state.errors}
             requiredFields={this.state.requiredFields}
             notRequiredFields={this.state.notRequiredFields}
+            loading={this.state.loading}
             />
         </Paper>
       </div>

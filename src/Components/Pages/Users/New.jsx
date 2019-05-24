@@ -16,6 +16,7 @@ class NewUser extends Component {
     this.state = {
       errorMessage: null,
       errors: {},
+      loading: false,
       requiredFields: {
         "email": "Correo Electrónico",
         "password": "Contraseña",
@@ -27,17 +28,20 @@ class NewUser extends Component {
   }
 
   submitUser = NewUserInfo => {
+    this.setState({ loading: true })
     API.post('users',
       {
         user: NewUserInfo
       }
     ).then((data) => {
+      this.setState({ loading: false })
       this.props.history.push('/users')
     }).catch((error) => {
       if (error.response && error.response.status === 422 ) {
         this.setState({
           errorMessage: GENERIC_FORM_ERROR,
-          errors: error.response.data.pointers
+          errors: error.response.data.pointers,
+          loading: false
         })
       }
     });
@@ -63,6 +67,7 @@ class NewUser extends Component {
             onSubmit={this.submitUser}
             errors={this.state.errors}
             requiredFields={this.state.requiredFields}
+            loading={this.state.loading}
             />
         </Paper>
       </div>
