@@ -53,7 +53,7 @@ const styles1 = theme => ({
 });
 
 const startCloseTimeout = (closeFunction) => {
-  setTimeout(() => { closeFunction && closeFunction() }, 6000)
+  closeFunction && setTimeout(() => { closeFunction() }, 6000)
 }
 
 function CustomSnackbarMessage(props) {
