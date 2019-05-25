@@ -6,19 +6,42 @@ import RecordFormReducer  from './Components/Reducers/RecordFormReducer';
 import { reducer as formReducer } from 'redux-form';
 import compose                    from 'recompose/compose';
 
-const store = createStore(
-  combineReducers({
-    currentUser: CurrentUserReducer,
-    message: MessagesReducer,
-    loading: LoadingReducer,
-    form: formReducer,
-    editRecordData: RecordFormReducer,
-  }),
-  {
-    message: null,
-    loading: false,
-    currentUser: localStorage.currentUser ? JSON.parse(localStorage.currentUser) : null
-  },
-  compose(window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
-);
-export default store;
+const buildStore = (reduxDevtools, compositeReduxDevtools) => {
+  if(reduxDevtools) { 
+    compositeReduxDevtools = compose(reduxDevtools())
+  }
+  if(compositeReduxDevtools) {
+    return createStore(
+      combineReducers({
+        currentUser: CurrentUserReducer,
+        message: MessagesReducer,
+        loading: LoadingReducer,
+        form: formReducer,
+        editRecordData: RecordFormReducer,
+      }),
+      {
+        message: null,
+        loading: false,
+        currentUser: localStorage.currentUser ? JSON.parse(localStorage.currentUser) : null
+      },
+      compositeReduxDevtools
+    );
+  } else {
+    return createStore(
+      combineReducers({
+        currentUser: CurrentUserReducer,
+        message: MessagesReducer,
+        loading: LoadingReducer,
+        form: formReducer,
+        editRecordData: RecordFormReducer,
+      }),
+      {
+        message: null,
+        loading: false,
+        currentUser: localStorage.currentUser ? JSON.parse(localStorage.currentUser) : null
+      }
+    );
+  }
+}
+
+export default buildStore(window.__REDUX_DEVTOOLS_EXTENSION__);
