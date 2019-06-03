@@ -44,7 +44,7 @@ class  UserForm extends Component {
         <Field
         key={key} 
         name={key}
-        type={key === "password" ? "password" : "text"}
+        type={this.fieldType(key)}
         id={key}
         label={fields[key]}
         meta={{ error: errors[key], touched: errors[key] }}
@@ -53,6 +53,10 @@ class  UserForm extends Component {
       )
       return result;
     }, [])
+  }
+
+  fieldType(key) {
+    return key === "password" ? "password" : "text" && key === "password_confirmation" ? "password" : "text"
   }
 
   render() {
