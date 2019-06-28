@@ -17,6 +17,7 @@ import withStyles           from '@material-ui/core/styles/withStyles';
 import classNames           from 'classnames';
 import { Link }             from 'react-router-dom';
 import { styles }           from './NavigationMenuStyles';
+import Clients              from './../../icons/CLIENTES.svg';
 
 class NavigationMenu extends Component {
   render() {
@@ -40,30 +41,14 @@ class NavigationMenu extends Component {
               </ListItemIcon>
               <ListItemText primary="Dashboard" />
             </ListItem>
-            <ListItem button>
-              <ListItemIcon>
-                <ShoppingCartIcon />
-              </ListItemIcon>
-              <ListItemText primary="Orders" />
-            </ListItem>
-            <ListItem button>
-              <ListItemIcon>
-                <PeopleIcon />
-              </ListItemIcon>
-              <ListItemText primary="Customers" />
-            </ListItem>
-            <ListItem button>
-              <ListItemIcon>
-                <BarChartIcon />
-              </ListItemIcon>
-              <ListItemText primary="Reports" />
-            </ListItem>
-            <ListItem button>
-              <ListItemIcon>
-                <LayersIcon />
-              </ListItemIcon>
-              <ListItemText primary="Integrations" />
-            </ListItem>
+            <Link to="/clients" style={{ textDecoration: 'none' }}>
+              <ListItem button>
+                <ListItemIcon>
+                  <img src={Clients}  className={classes.iconMenu}/>
+                 </ListItemIcon>
+                <ListItemText primary="Clientes" />
+              </ListItem>
+            </Link>
             <Link to="/users" style={{ textDecoration: 'none' }}>
               <ListItem button>
                 <ListItemIcon>
@@ -76,27 +61,6 @@ class NavigationMenu extends Component {
         </List>
         <Divider />
         <List>
-          <div>
-            <ListSubheader inset>Saved reports</ListSubheader>
-            <ListItem button>
-              <ListItemIcon>
-                <AssignmentIcon />
-              </ListItemIcon>
-              <ListItemText primary="Current month" />
-            </ListItem>
-            <ListItem button>
-              <ListItemIcon>
-                <AssignmentIcon />
-              </ListItemIcon>
-              <ListItemText primary="Last quarter" />
-            </ListItem>
-            <ListItem button>
-              <ListItemIcon>
-                <AssignmentIcon />
-              </ListItemIcon>
-              <ListItemText primary="Year-end sale" />
-            </ListItem>
-          </div>
         </List>
       </Drawer>
     )

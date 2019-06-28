@@ -27,4 +27,9 @@ export const styles = theme => ({
     padding: '0 8px',
     ...theme.mixins.toolbar,
   },
+  iconMenu: {
+    width: '24px',
+    height: '24px',
+    textDecoration: 'none',
+  }
   });

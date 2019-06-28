@@ -9,6 +9,7 @@ import Home from '../Components/Pages/Home';
 import Users from '../Components/Pages/Users/Index';
 import NewUser from '../Components/Pages/Users/New';
 import EditUser from '../Components/Pages/Users/Edit';
+import Clients from '../Components/Pages/Clients/Index';
 
 
 class BaseRoutes extends Component {
@@ -23,6 +24,7 @@ class BaseRoutes extends Component {
         <ProtectedRoute path='/users/new' component={NewUser}/>
         <ProtectedRoute path='/users/:id/edit' component={EditUser}/>
         <ProtectedRoute path="/" component={Home}/>
+        <ProtectedRoute path="/clients" component={Clients}/>
       </div>
     )
   }
