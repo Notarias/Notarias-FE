@@ -11,6 +11,7 @@ import NewUser from '../Components/Pages/Users/New';
 import EditUser from '../Components/Pages/Users/Edit';
 import Clients from '../Components/Pages/Clients/Index';
 import Procedures from '../Components/Pages/Procedures/Index';
+import Appointments from '../Components/Pages/Appointments/Index';
 
 
 class BaseRoutes extends Component {
@@ -27,6 +28,7 @@ class BaseRoutes extends Component {
         <ProtectedRoute path="/" component={Home}/>
         <ProtectedRoute path="/clients" component={Clients}/>
         <ProtectedRoute path="/procedures" component={Procedures}/>
+        <ProtectedRoute path="/appointments" component={Appointments}/>
       </div>
     )
   }
