@@ -18,6 +18,7 @@ import classNames           from 'classnames';
 import { Link }             from 'react-router-dom';
 import { styles }           from './NavigationMenuStyles';
 import Clients              from './../../icons/CLIENTES.svg';
+import Budgets              from './../../icons/presupuestos.svg';
 import Procedures           from './../../icons/tramites.svg';
 import Appointments         from './../../icons/calendario.svg';
 
@@ -49,6 +50,14 @@ class NavigationMenu extends Component {
                   <img src={Clients}  className={classes.iconMenu}/>
                  </ListItemIcon>
                 <ListItemText primary="Clientes" />
+              </ListItem>
+            </Link>
+            <Link to="/budgets" style={{ textDecoration: 'none' }}>
+              <ListItem button>
+                <ListItemIcon>
+                  <img src={Budgets}  className={classes.iconMenu}/>
+                 </ListItemIcon>
+                <ListItemText primary="Presupuestos" />
               </ListItem>
             </Link>
             <Link to="/users" style={{ textDecoration: 'none' }}>
