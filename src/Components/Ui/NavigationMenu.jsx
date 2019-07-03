@@ -21,6 +21,7 @@ import Clients              from './../../icons/CLIENTES.svg';
 import Budgets              from './../../icons/presupuestos.svg';
 import Procedures           from './../../icons/tramites.svg';
 import Appointments         from './../../icons/calendario.svg';
+import Reports              from './../../icons/reportes.svg';
 
 class NavigationMenu extends Component {
   render() {
@@ -88,6 +89,14 @@ class NavigationMenu extends Component {
         </List>
         <Divider />
         <List>
+          <Link to="/reports" style={{ textDecoration: 'none' }}>
+            <ListItem button>
+              <ListItemIcon>
+                <img src={Reports}  className={classes.iconMenu}/>
+                </ListItemIcon>
+              <ListItemText primary="Reportes" />
+            </ListItem>
+          </Link>
         </List>
       </Drawer>
     )
