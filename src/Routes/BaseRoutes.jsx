@@ -14,6 +14,7 @@ import Budgets      from '../Components/Pages/Budgets/Index';
 import Procedures   from '../Components/Pages/Procedures/Index';
 import Appointments from '../Components/Pages/Appointments/Index';
 import Reports      from '../Components/Pages/Reports/Index';
+import Profile      from  '../Components/Pages/Profile/Index';
 
 
 class BaseRoutes extends Component {
@@ -33,6 +34,7 @@ class BaseRoutes extends Component {
         <ProtectedRoute path="/procedures" component={Procedures}/>
         <ProtectedRoute path="/appointments" component={Appointments}/>
         <ProtectedRoute path="/reports" component={Reports}/>
+        <ProtectedRoute path="/profile" component={Profile}/>
       </div>
     )
   }
