@@ -22,6 +22,8 @@ import Budgets              from './../../icons/presupuestos.svg';
 import Procedures           from './../../icons/tramites.svg';
 import Appointments         from './../../icons/calendario.svg';
 import Reports              from './../../icons/reportes.svg';
+import Avatar               from '@material-ui/core/Avatar';
+import Grid                 from '@material-ui/core/Grid';
 
 class NavigationMenu extends Component {
   render() {
@@ -88,15 +90,27 @@ class NavigationMenu extends Component {
           </div>
         </List>
         <Divider />
-        <List>
-          <Link to="/reports" style={{ textDecoration: 'none' }}>
-            <ListItem button>
-              <ListItemIcon>
-                <img src={Reports}  className={classes.iconMenu}/>
-                </ListItemIcon>
-              <ListItemText primary="Reportes" />
-            </ListItem>
-          </Link>
+          <List>
+            <div>
+              <Link to="/reports" style={{ textDecoration: 'none' }}>
+                <ListItem button>
+                  <ListItemIcon>
+                    <img src={Reports}  className={classes.iconMenu}/>
+                  </ListItemIcon>
+                <ListItemText primary="Reportes" />
+              </ListItem>
+            </Link>
+            <Link to="/profile" style={{ textDecoration: 'none', position: 'relative', top: '180px'}}>
+              <ListItem button>
+                <ListItemIcon >
+                    <Grid>
+                      <Avatar src="" className={classes.avatar} />
+                    </Grid>
+                  </ListItemIcon>
+                <ListItemText primary="Perfil" />
+              </ListItem>
+            </Link>
+          </div>
         </List>
       </Drawer>
     )

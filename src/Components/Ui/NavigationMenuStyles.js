@@ -31,5 +31,11 @@ export const styles = theme => ({
     width: '24px',
     height: '24px',
     textDecoration: 'none',
+  },
+  box: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    padding: '0 8px',
   }
   });
