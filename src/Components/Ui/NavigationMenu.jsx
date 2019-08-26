@@ -9,7 +9,7 @@ import PeopleIcon           from '@material-ui/icons/People';
 import BarChartIcon         from '@material-ui/icons/BarChart';
 import LayersIcon           from '@material-ui/icons/Layers';
 import AssignmentIcon       from '@material-ui/icons/Assignment';
-import PersonIcon           from '@material-ui/icons/Person';
+import Users                 from './../../icons/usuarios.svg';
 import Drawer               from '@material-ui/core/Drawer';
 import Divider              from '@material-ui/core/Divider';
 import List                 from '@material-ui/core/List';
@@ -63,14 +63,6 @@ class NavigationMenu extends Component {
                 <ListItemText primary="Presupuestos" />
               </ListItem>
             </Link>
-            <Link to="/users" style={{ textDecoration: 'none' }}>
-              <ListItem button>
-                <ListItemIcon>
-                  <PersonIcon />
-                </ListItemIcon>
-                <ListItemText primary="Users" />
-              </ListItem>
-            </Link>
             <Link to="/procedures" style={{ textDecoration: 'none' }}>
               <ListItem button>
                 <ListItemIcon>
@@ -92,6 +84,14 @@ class NavigationMenu extends Component {
         <Divider />
           <List>
             <div>
+              <Link to="/users" style={{ textDecoration: 'none' }}>
+                <ListItem button>
+                  <ListItemIcon>
+                    <img src={Users}  className={classes.iconMenu}/>
+                  </ListItemIcon>
+                  <ListItemText primary="Usuarios" />
+                </ListItem>
+              </Link>
               <Link to="/reports" style={{ textDecoration: 'none' }}>
                 <ListItem button>
                   <ListItemIcon>
