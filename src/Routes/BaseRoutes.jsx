@@ -11,6 +11,7 @@ import NewUser              from '../Components/Pages/Users/New';
 import EditUser             from '../Components/Pages/Users/Edit';
 import Clients              from '../Components/Pages/Clients/Index';
 import BudgetConstructor    from '../Components/Pages/BudgetConstructor/Index';
+import ProceduresConstructor    from '../Components/Pages/ProceduresConstructor/Index';
 import Budgets              from '../Components/Pages/Budgets/Index';
 import Procedures           from '../Components/Pages/Procedures/Index';
 import Appointments         from '../Components/Pages/Appointments/Index';
@@ -31,7 +32,8 @@ class BaseRoutes extends Component {
         <ProtectedRoute path='/users/:id/edit' component={EditUser}/>
         <ProtectedRoute path="/" component={Home}/>
         <ProtectedRoute path="/clients" component={Clients}/>
-        <ProtectedRoute path="/budgets/templates" component={BudgetConstructor} />
+        <ProtectedRoute path="/budgets/templates" component={BudgetConstructor}/>
+        <ProtectedRoute path="/procedures/templates" component={ProceduresConstructor}/>
         <ProtectedRoute path='/budgets' component={Budgets} />
         <ProtectedRoute path="/procedures" component={Procedures}/>
         <ProtectedRoute path="/appointments" component={Appointments}/>

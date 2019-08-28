@@ -11,6 +11,7 @@ import LayersIcon           from '@material-ui/icons/Layers';
 import AssignmentIcon       from '@material-ui/icons/Assignment';
 import Users                from './../../icons/usuarios.svg';
 import BudgetConstructor    from './../../icons/plantilla_presupuestos.svg';
+import ProceduresConstructor from './../../icons/plantillas_tramites.svg';
 import Drawer               from '@material-ui/core/Drawer';
 import Divider              from '@material-ui/core/Divider';
 import List                 from '@material-ui/core/List';
@@ -99,6 +100,14 @@ class NavigationMenu extends Component {
                     <img src={BudgetConstructor}  className={classes.iconMenu}/>
                   </ListItemIcon>
                   <ListItemText primary="Presupuestos" />
+                </ListItem>
+              </Link>
+              <Link to="/procedures/templates" style={{ textDecoration: 'none' }}>
+                <ListItem button>
+                  <ListItemIcon>
+                    <img src={ProceduresConstructor}  className={classes.iconMenu}/>
+                  </ListItemIcon>
+                  <ListItemText primary="Trámites" />
                 </ListItem>
               </Link>
               <Link to="/reports" style={{ textDecoration: 'none' }}>
