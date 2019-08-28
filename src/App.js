@@ -7,7 +7,6 @@ import { styles }           from './AppStyles';
 import withStyles           from '@material-ui/core/styles/withStyles';
 import classNames           from 'classnames';
 import compose              from 'recompose/compose';
-import NavigationBar        from './Components/Ui/NavigationBar';
 import NavigationMenu       from './Components/Ui/NavigationMenu';
 import CustomSnackbarMessage          from './Components/Ui/CustomSnackbarMessage';
 import { clearMessage, setMessage }   from './Components/Reducers/MessagesReducer';
@@ -48,8 +47,8 @@ class App extends Component {
     const { classes, message, loading } = this.props;
     return (
       <div className={classNames(classes.root, "App")}>
-        { localStorage.jwtToken ? <NavigationBar open={ this.state.open } shiftMenu={ this.shiftMenu.bind(this) }/> : null }
-        { localStorage.jwtToken ? <NavigationMenu 
+        { localStorage.jwtToken ? <NavigationMenu
+          shiftMenu={ this.shiftMenu.bind(this) }
           open={ this.state.open }
           setOpenMenu={ this.setOpenMenu.bind(this) }
           setCloseMenu={ this.setCloseMenu.bind(this) }

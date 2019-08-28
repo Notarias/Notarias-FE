@@ -1,4 +1,12 @@
 export const styles = theme => ({
+  menuButton: {
+    marginLeft: 12,
+    marginRight: 36,
+  },
+  toolbar: {
+    paddingLeft: 0,
+    paddingRight: 24, // keep right padding when drawer closed
+  },
   drawerPaper: {
     position: 'relative',
     whiteSpace: 'nowrap',
@@ -31,6 +39,7 @@ export const styles = theme => ({
     width: '24px',
     height: '24px',
     textDecoration: 'none',
+    marginLeft: '8px'
   },
   box: {
     display: 'flex',
