@@ -11,7 +11,7 @@ export const styles = theme => {
     },
     tableWrapper: {
       display: "flex",
-      padding: theme.spacing.unit * 3,
+      padding: theme.spacing(3),
       overflow: 'auto',
       flexFlow: "column wrap",
       height: "100%",
@@ -19,8 +19,8 @@ export const styles = theme => {
     },
     tableGutter: {
       ...theme.mixins.gutters(),
-      paddingTop: theme.spacing.unit * 2,
-      paddingBottom: theme.spacing.unit * 2,
+      paddingTop: theme.spacing(2),
+      paddingBottom: theme.spacing(2),
     },
     usersTableBarWrapper: {
       paddingRight:'23px'
@@ -41,7 +41,7 @@ export const styles = theme => {
       },
     },
     searchIcon: {
-      width: theme.spacing.unit * 9,
+      width: theme.spacing(9),
       height: '100%',
       position: 'absolute',
       pointerEvents: 'none',
@@ -61,7 +61,7 @@ export const styles = theme => {
       paddingTop: theme.spacing.unit,
       paddingRight: theme.spacing.unit,
       paddingBottom: theme.spacing.unit,
-      paddingLeft: theme.spacing.unit * 10,
+      paddingLeft: theme.spacing(10),
       transition: theme.transitions.create('width'),
       width: '100%',
       [theme.breakpoints.up('sm')]: {

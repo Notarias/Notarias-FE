@@ -10,4 +10,4 @@ class Profile extends Component {
         )
       }
     }
-export default withStyles()(Profile);
+export default withStyles(()=>{})(Profile);

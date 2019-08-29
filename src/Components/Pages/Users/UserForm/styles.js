@@ -2,7 +2,7 @@ import green from '@material-ui/core/colors/green';
 
 export const styles = theme => ({
     formWrapper: {
-      padding: theme.spacing.unit * 3,
+      padding: theme.spacing(3),
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
@@ -13,7 +13,7 @@ export const styles = theme => ({
       display: "flex",
       width: "100%",
       maxWidth: theme.breakpoints.values.md,
-      paddingBottom: theme.spacing.unit * 3,
+      paddingBottom: theme.spacing(3),
     },
     paper: {
       width: "100%",
@@ -21,7 +21,7 @@ export const styles = theme => ({
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
+      padding: `${theme.spacing(2)}px ${theme.spacing(3)}px ${theme.spacing(3)}px`,
     },
     buttonProgress: {
       color: green[500],

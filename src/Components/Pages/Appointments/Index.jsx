@@ -10,4 +10,4 @@ class Appointments extends Component {
         )
       }
     }
-export default withStyles()(Appointments);
+export default withStyles(()=>{})(Appointments);

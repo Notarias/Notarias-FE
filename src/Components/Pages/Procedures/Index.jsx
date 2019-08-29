@@ -10,4 +10,4 @@ class Procedures extends Component {
         )
       }
     }
-export default withStyles()(Procedures);
+export default withStyles(()=>{})(Procedures);

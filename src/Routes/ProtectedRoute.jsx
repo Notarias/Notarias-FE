@@ -6,6 +6,7 @@ export default function ProtectedRoute({ component: Component, ...rest }) {
   return (
     <Route exact
       {...rest}
+     
       render={props =>
         localStorage.jwtToken ? (
           <Component {...props} />

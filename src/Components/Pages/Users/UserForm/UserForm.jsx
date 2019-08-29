@@ -6,7 +6,6 @@ import Button               from '@material-ui/core/Button';
 import API                  from './../../../../axiosConfig';
 import MenuItem             from '@material-ui/core/MenuItem';
 import { connect }          from 'react-redux'
-import store                from '../../../../store';
 import compose              from 'recompose/compose';
 import withStyles           from '@material-ui/core/styles/withStyles';
 import { styles }           from './styles';
@@ -38,7 +37,7 @@ class  UserForm extends Component {
   }
 
   buildFields(fields, required) {
-    let { userData, errors } = this.props
+    let { errors } = this.props
     return Object.keys(fields).reduce((result, key) => {
       result.push(
         <Field

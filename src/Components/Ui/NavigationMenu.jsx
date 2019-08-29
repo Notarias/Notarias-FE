@@ -19,7 +19,7 @@ import FormsBuilderIcon     from './../../icons/plantillas_tramites.svg';
 
 class NavigationMenu extends Component {
   render() {
-    const { classes, setOpenMenu, setCloseMenu, shiftMenu } = this.props;
+    const { classes, setOpenMenu, setCloseMenu } = this.props;
     return(
       <Drawer
         variant="permanent"

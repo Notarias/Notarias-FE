@@ -10,4 +10,4 @@ class Reports extends Component {
         )
       }
     }
-export default withStyles()(Reports);
+export default withStyles(()=>{})(Reports);

@@ -10,4 +10,4 @@ class Budgets extends Component {
         )
       }
     }
-export default withStyles()(Budgets);
+export default withStyles(()=>{})(Budgets);

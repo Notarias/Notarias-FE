@@ -18,8 +18,8 @@ const errorMessage = function(error) {
 
 export default class RoleSelectDropdown extends Component {
   render(){
-    const { input, required, children, label } = this.props
-    const { meta: { touched, error }, ...custom } = this.props
+    const { input, children, label } = this.props
+    const { meta: { touched, error } } = this.props
     return(
       <FormControl required margin="normal" fullWidth>
         <InputLabel htmlFor={label}>{label}</InputLabel>

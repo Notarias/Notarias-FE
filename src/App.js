@@ -64,7 +64,7 @@ class App extends Component {
             actionable={ true }
             onClose={ this.closeMessage.bind(this) }
           /> }
-          <BaseRoutes routesContainerClass={ classes.routesContainerClass }/>
+          <BaseRoutes styles={classes}/>
         </main>
       </div>
     );

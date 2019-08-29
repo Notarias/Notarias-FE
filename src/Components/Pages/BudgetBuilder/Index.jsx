@@ -10,4 +10,4 @@ class BudgetConstructor extends Component {
         )
       }
     }
-export default withStyles()(BudgetConstructor);
+export default withStyles(()=>{})(BudgetConstructor);

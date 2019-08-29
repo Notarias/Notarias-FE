@@ -5,17 +5,21 @@ export const styles = theme => {
   },
   content: {
     flexGrow: 1,
-    paddingTop: theme.spacing.unit * 8,
+
     height: '100vh',
     overflow: 'auto',
   },
   appBarSpacer: theme.mixins.toolbar,
   floatingMessage: {
-    maxWidth: `calc(100% - ${theme.spacing.unit * 6}px)`,
-    marginTop: theme.spacing.unit * 3,
-    marginLeft: theme.spacing.unit * 3,
+    maxWidth: `calc(100% - ${theme.spacing(6)}px)`,
+    marginTop: theme.spacing(3),
+    marginLeft: theme.spacing(3),
   },
-  routesContainerClass: {
-    paddingTop: theme.spacing.unit * 3
-  }
+  breadcrumbsContainer: {
+    flexWrap: 'wrap',
+  },
+  breadcrumbsPaper: {
+    padding: theme.spacing(1, 2),
+    borderRadius: '0'
+  },
 })};

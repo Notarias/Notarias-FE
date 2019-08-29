@@ -10,4 +10,4 @@ class Clients extends Component {
         )
       }
     }
-export default withStyles()(Clients);
+export default withStyles(()=>{})(Clients);

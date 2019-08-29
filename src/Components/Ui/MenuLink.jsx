@@ -12,7 +12,7 @@ export default withStyles(styles)((props) => {
     <Link to={linkPath} style={{ textDecoration: 'none' }}>
       <ListItem button>
         <ListItemIcon>
-          <img src={iconComponent}  className={classes.iconMenu}/>
+          <img alt={menuText} src={iconComponent}  className={classes.iconMenu}/>
           </ListItemIcon>
         <ListItemText primary={menuText} />
       </ListItem>

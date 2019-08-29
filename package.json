@@ -7,6 +7,8 @@
     "@material-ui/icons": "^4.2.1",
     "@material-ui/styles": "^4.3.3",
     "axios": "^0.18.0",
+    "caniuse-lite": "^1.0.30000989",
+    "classnames": "^2.2.6",
     "react": "^16.8.6",
     "react-addons-update": "^15.6.2",
     "react-dom": "^16.8.6",
