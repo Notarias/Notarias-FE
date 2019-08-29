@@ -21,7 +21,7 @@ import CircularProgress     from '@material-ui/core/CircularProgress';
 import UsersRows            from './UsersRows';
 import TableSortLabel       from '@material-ui/core/TableSortLabel';
 import store                from '../../../store';
-import { setBreadcrumbsList, goToBreadcrumb } from './../../Reducers/BreadcrumbsReducer';
+import { setBreadcrumbsList } from './../../Reducers/BreadcrumbsReducer';
 
 const BREADCRUMBS = [
   { name: "Inicio", path: "/" },

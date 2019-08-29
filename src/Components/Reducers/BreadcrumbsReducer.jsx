@@ -5,10 +5,6 @@ export function setBreadcrumbsList(breadcrumbsList) {
   return { type: SET_BREADCRUMBS_LIST, breadcrumbsList };
 }
 
-export function goToBreadcrumb(toBreadcrumb) {
-  return { type: GO_TO_BREADCRUMB, toBreadcrumb };
-}
-
 // Loads the list of breadcrumbs from first to last
 // Asumes that it will return all starting from index 0 
 // until it finds one that matches
@@ -24,25 +20,8 @@ const loadCurrentBreadcrumb = (breadcrumbsList, toBreadcrumb) => {
 export default function CurrentUserReducer(state = {}, action) {
   switch(action.type) {
     case SET_BREADCRUMBS_LIST:
-      return {
-        breadcrumbsList: action.breadcrumbsList,
-        currentBreadcrumbs: loadCurrentBreadcrumb(
-          action.breadcrumbsList,
-          action.breadcrumbsList[action.breadcrumbsList.length - 1]
-        )
-      }
-    case GO_TO_BREADCRUMB:
-      return {
-        breadcrumbsList: action.breadcrumbsList,
-        currentBreadcrumbs: loadCurrentBreadcrumb(
-          state.breadcrumbsList,
-          action.toBreadcrumb
-        )
-      }
+      return action.breadcrumbsList
     default:
-      return {
-        breadcrumbsList: [],
-        currentBreadcrumbs: []
-      }
+      return []
   }
 }

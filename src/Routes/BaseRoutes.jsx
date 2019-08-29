@@ -4,7 +4,7 @@ import { Route } from 'react-router-dom';
 import SignInPage     from '../Components/Pages/Session/SignInPage';
 import SignOutPage    from '../Components/Pages/Session/SignOutPage';
 import ProtectedRoute from './ProtectedRoute';
-import BreadCrumbs    from './../Components/Ui/BreadCrumbs';
+import Breadcrumbs    from './../Components/Ui/Breadcrumbs';
 
 import Home           from '../Components/Pages/Home';
 import Users          from '../Components/Pages/Users/Index';
@@ -27,7 +27,7 @@ export default (props) => {
         (<Route path="/sign_out" component={SignOutPage}/>) :
         (<Route path="/sign_in" component={SignInPage}/>)
       }
-      <BreadCrumbs styles={styles} />
+      <Breadcrumbs styles={styles} />
       <ProtectedRoute path='/users' component={Users}/>
       <ProtectedRoute path='/users/new' component={NewUser}/>
       <ProtectedRoute path='/users/:id/edit' component={EditUser}/>
