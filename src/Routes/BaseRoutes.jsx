@@ -18,16 +18,18 @@ import Procedures     from '../Components/Pages/Procedures/Index';
 import Appointments   from '../Components/Pages/Appointments/Index';
 import Reports        from '../Components/Pages/Reports/Index';
 import Profile        from  '../Components/Pages/Profile/Index';
+import store          from '../store';
 
 export default (props) => {
   const { styles } = props
+  let { breadcrumbs } = store.getState()
   return(
     <div>
       { localStorage.jwtToken ?
         (<Route path="/sign_out" component={SignOutPage}/>) :
         (<Route path="/sign_in" component={SignInPage}/>)
       }
-      <Breadcrumbs styles={styles} />
+      { !!breadcrumbs.length && <Breadcrumbs styles={styles} /> }
       <ProtectedRoute path='/users' component={Users}/>
       <ProtectedRoute path='/users/new' component={NewUser}/>
       <ProtectedRoute path='/users/:id/edit' component={EditUser}/>
