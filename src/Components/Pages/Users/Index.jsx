@@ -21,7 +21,8 @@ import CircularProgress     from '@material-ui/core/CircularProgress';
 import UsersRows            from './UsersRows';
 import TableSortLabel       from '@material-ui/core/TableSortLabel';
 import store                from '../../../store';
-import { setBreadcrumbsList } from './../../Reducers/BreadcrumbsReducer';
+import { setBreadcrumbsList }        from './../../Reducers/BreadcrumbsReducer';
+import { startLoading, stopLoading } from './../../Reducers/LoadingReducer';
 
 const BREADCRUMBS = [
   { name: "Inicio", path: "/" },
@@ -49,6 +50,7 @@ class Users extends Component {
   componentDidMount() {
     this.callServer()
     store.dispatch(setBreadcrumbsList(BREADCRUMBS))
+    store.dispatch(startLoading())
   }
 
   handleChangeRowsPerPage = (event) => {
@@ -68,8 +70,9 @@ class Users extends Component {
     searchText && (params["params"]["search"] = { "all_fields.cont": searchText })
 
     this.setState({ loading: true })
-
+    console.log("someshit")
     API.get('/users', params).then(response => {
+      
       let newPage = parseInt(response.data.meta.page)
       newPage--
       this.setState({

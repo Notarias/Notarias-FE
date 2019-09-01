@@ -58,9 +58,9 @@ export const styles = theme => {
       width: '100%',
     },
     searchInputInput: {
-      paddingTop: theme.spacing.unit,
-      paddingRight: theme.spacing.unit,
-      paddingBottom: theme.spacing.unit,
+      paddingTop: theme.spacing(),
+      paddingRight: theme.spacing(),
+      paddingBottom: theme.spacing(),
       paddingLeft: theme.spacing(10),
       transition: theme.transitions.create('width'),
       width: '100%',

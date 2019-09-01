@@ -10,7 +10,6 @@ import compose              from 'recompose/compose';
 import NavigationMenu       from './Components/Ui/NavigationMenu';
 import CustomSnackbarMessage          from './Components/Ui/CustomSnackbarMessage';
 import { clearMessage, setMessage }   from './Components/Reducers/MessagesReducer';
-import { stopLoading, startLoading }  from './Components/Reducers/LoadingReducer';
 import LoadingTopBar from './Components/Ui/LoadingTopBar';
 import './App.css';
 import 'typeface-roboto';
@@ -56,7 +55,7 @@ class App extends Component {
         <CssBaseline />
 
         <main className={classes.content}>
-          { loading && <LoadingTopBar/> }
+          { loading && <LoadingTopBar/> }
           { message && <CustomSnackbarMessage
             variant={ message.type }
             className={ classes.floatingMessage }
@@ -78,8 +77,6 @@ const mapStateToProps = props => {
 const mapDispatchToProps = dispatch => ({
   clearMessage: () => dispatch(clearMessage()),
   setMessage: payload => dispatch(setMessage(payload)),
-  startLoading:  () => dispatch(startLoading()),
-  stopLoading:  () => dispatch(stopLoading()),
 })
 
 export default compose(
