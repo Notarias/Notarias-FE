@@ -21,8 +21,10 @@ import CircularProgress     from '@material-ui/core/CircularProgress';
 import UsersRows            from './UsersRows';
 import TableSortLabel       from '@material-ui/core/TableSortLabel';
 import store                from '../../../store';
-import { setBreadcrumbsList }        from './../../Reducers/BreadcrumbsReducer';
-import { startLoading, stopLoading } from './../../Reducers/LoadingReducer';
+import { setBreadcrumbsList }                            from './../../Reducers/BreadcrumbsReducer';
+import { startLoading, stopLoading }                     from './../../Reducers/LoadingReducer';
+import { setParamsInterface, sortHandler }               from './../../Interfaces/ParameterManager';
+import { managePaginationAfter, managePaginationBefore } from './../../Interfaces/ParameterManager';
 
 const BREADCRUMBS = [
   { name: "Inicio", path: "/" },
@@ -35,72 +37,68 @@ class Users extends Component {
     this.state = {
       loading: true,
       users: [],
-      page: 0,
-      per: 5,
-      pages: 1,
-      total_records: 1,
-      searchText: "",
+      request_params: {
+        page: 0,
+        per: 5,
+        pages: 1,
+        total_records: 1,
+        sort: {
+          "first_name": "desc"
+        }
+      },
+      sort_field: "first_name",
+      sort_direction: "desc",
       timeout: 0,
       searchLoading: false,
-      sort_field: "first_name",
-      sort_direction: "desc"
     }
   }
 
   componentDidMount() {
-    this.callServer()
-    store.dispatch(setBreadcrumbsList(BREADCRUMBS))
     store.dispatch(startLoading())
+    store.dispatch(setBreadcrumbsList(BREADCRUMBS))
+    this.callServer()
   }
 
   handleChangeRowsPerPage = (event) => {
     let per  = event.target.value
-    let { page, searchText, sort_direction, sort_field } = this.state
-    this.callServer({ page, per, searchText, sort_direction, sort_field })
+    this.callServer({ per })
   };
 
   ChangePage = (event, page) => {
-    let { per, searchText, sort_direction, sort_field } = this.state
-    this.callServer({ page, per, searchText, sort_direction, sort_field })
+    this.callServer({ page  })
   };
 
-  callServer({ page, per, searchText, sort_direction, sort_field } = this.state) {
-    page++
-    let params = { params: { per, page, sort: { [sort_field] : sort_direction } } }
-    searchText && (params["params"]["search"] = { "all_fields.cont": searchText })
-
+  callServer(new_params = {}, extra_data = {}) {
+    let deliverable_params = Object.assign({}, this.state.request_params)
+    setParamsInterface(new_params, deliverable_params)
+    managePaginationBefore(deliverable_params)
     this.setState({ loading: true })
-    console.log("someshit")
-    API.get('/users', params).then(response => {
-      
-      let newPage = parseInt(response.data.meta.page)
-      newPage--
+    API.get('/users', { params: deliverable_params }).then(response => {
+      let meta = managePaginationAfter(response.data.meta)
       this.setState({
         users: response.data.users,
-        page: newPage,
-        per: parseInt(response.data.meta.per),
-        pages: parseInt(response.data.meta.pages),
-        total_records: parseInt(response.data.meta.total_records),
         searchLoading: false,
         loading: false,
-        sort_field: sort_field || this.state.sort_field,
-        sort_direction: sort_direction || this.state.sort_direction,
+        request_params: {
+          page: meta.page,
+          per: meta.per,
+          pages: meta.pages,
+          total_records: meta.total_records,
+        },
+        ...extra_data
       })
     })
   }
 
   onChangeSearch(event) {
     this.state.timeout && clearTimeout(this.state.timeout)
-    const searchText =  event.target.value
-    const { page, per, sort_direction, sort_field } = this.state
+    let searchText = event.target.value
+    const search = { search: { "all_fields.cont": searchText } }
     const callServer = this.callServer.bind(this)
-    searchText ?
-      this.setState({
-        searchText,
-        searchLoading: true,
-        timeout: setTimeout(() => { callServer({ page, per, searchText, sort_direction, sort_field }) }, 2000)
-      }) :
-      callServer({ page, per, searchText, sort_direction, sort_field })
+    this.setState({
+      searchLoading: true,
+      timeout: setTimeout(() => { callServer(search) }, 2000)
+    })
     return searchText
   }
 
@@ -122,18 +120,10 @@ class Users extends Component {
     this.setState({ users: update(users, updateObj) })
   }
 
-  sortHandler(field) {
-    let { page, per, searchText, sort_direction, sort_field } = this.state
-    sort_field === field ?
-      (sort_direction === "asc" ? (sort_direction = "desc") : (sort_direction = "asc")) :
-      (sort_direction = "desc")
-    return (event) => {
-      sort_field = field
-      this.callServer({ page, per, searchText, sort_direction, sort_field })
-    } 
-  } 
   render() {
     const { classes } = this.props
+    const { sort_field, sort_direction } = this.state
+    console.log(sort_direction)
     return(
       <div className={classes.root}>
         <Grid container  direction="row"  justify="flex-end"  alignItems="flex-end" className={classes.usersTableBarWrapper}>
@@ -148,7 +138,6 @@ class Users extends Component {
             <InputBase
               placeholder="Buscar…"
               onChange={this.onChangeSearch.bind(this)}
-              defaultValue={this.state.searchText}
               classes={{
                 root: classes.searchInputRoot,
                 input: classes.searchInputInput,
@@ -167,25 +156,25 @@ class Users extends Component {
                   <TableCell align="center">
                     Nombre
                     <TableSortLabel
-                      active={this.state.sort_field === "first_name"}
-                      direction={this.state.sort_direction}
-                      onClick={this.sortHandler("first_name")}
+                      active={sort_field === "first_name"}
+                      direction={sort_direction}
+                      onClick={sortHandler("first_name", sort_field, sort_direction, this.callServer.bind(this))}
                     />                   
                   </TableCell>
                   <TableCell align="center">
                     Apellido
                     <TableSortLabel
-                      active={this.state.sort_field === "last_name"}
-                      direction={this.state.sort_direction}
-                      onClick={this.sortHandler("last_name")}
+                      active={sort_field === "last_name"}
+                      direction={sort_direction}
+                      onClick={sortHandler("last_name", sort_field, sort_direction, this.callServer.bind(this))}
                     /> 
                   </TableCell>
                   <TableCell align="center">
                     Correo
                     <TableSortLabel
-                      active={this.state.sort_field === "email"}
-                      direction={this.state.sort_direction}
-                      onClick={this.sortHandler("email")}
+                      active={sort_field === "email"}
+                      direction={sort_direction}
+                      onClick={sortHandler("email", sort_field, sort_direction, this.callServer.bind(this))}
                     /> 
                     </TableCell>
                   <TableCell align="center">Opciones</TableCell>
@@ -208,12 +197,12 @@ class Users extends Component {
               <TableFooter>
                 <TableRow>
                   <TablePagination
-                    page={this.state.page}
-                    rowsPerPage={this.state.per}
+                    page={this.state.request_params.page}
+                    rowsPerPage={this.state.request_params.per}
                     rowsPerPageOptions={[5, 10, 15, 20]}
                     onChangePage={this.ChangePage}
                     onChangeRowsPerPage={this.handleChangeRowsPerPage}
-                    count={this.state.total_records}
+                    count={this.state.request_params.total_records}
                     labelRowsPerPage={"Filas por página:"}
                   />
                 </TableRow>
