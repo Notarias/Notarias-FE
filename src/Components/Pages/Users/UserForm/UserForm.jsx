@@ -58,6 +58,14 @@ class  UserForm extends Component {
     return key === "password" ? "password" : "text" && key === "password_confirmation" ? "password" : "text"
   }
 
+  loadRoles() {
+    return this.state.roles.map((item, key) =>
+      <MenuItem key={key} value={item.permanent_link}>
+        <em>{item.name}</em>
+      </MenuItem>
+    )
+  }
+
   render() {
     const { handleSubmit, pristine, submitting, userData, errors, classes, loading } = this.props
     return (
@@ -72,13 +80,7 @@ class  UserForm extends Component {
           meta={{ error: errors["role"], touched: errors["role"] }}
           required={true}
           component={RoleSelectDropdown}>
-            {
-              this.state.roles.map((item, key) =>
-                <MenuItem key={key} value={item.permanent_link}>
-                  <em>{item.name}</em>
-                </MenuItem>
-              )
-            }
+          { this.loadRoles() }
           </Field>
         <Button
           type="submit"
@@ -95,13 +97,6 @@ class  UserForm extends Component {
   }
 }
 
-const mapStateToProps = (state, props) => (
-  {
-    initialValues: state.editRecordData,
-  }
-)
-
 export default compose(
   withStyles(styles),
-  connect(mapStateToProps)
 )(reduxForm({ form: 'userForm', enableReinitialize: true })(UserForm));

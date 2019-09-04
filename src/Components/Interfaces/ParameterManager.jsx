@@ -1,8 +1,6 @@
-import React from 'react';
-
 export const setParamsInterface = (new_params, deliverable_params) => {
-  Object.keys(new_params).map((key) => {
-    deliverable_params[key] = new_params[key]
+  Object.keys(new_params).map(function(key) {
+    return deliverable_params[key] = new_params[key]
   })
   return deliverable_params
 }
@@ -33,6 +31,7 @@ export const sortHandler = (sort_field, current_sort_field, sort_direction, call
     case "desc":
       sort_direction = "asc"
       break;
+    default:
     }
   } else {
     sort_direction = "desc"

@@ -8,9 +8,9 @@ import withStyles           from '@material-ui/core/styles/withStyles';
 import classNames           from 'classnames';
 import compose              from 'recompose/compose';
 import NavigationMenu       from './Components/Ui/NavigationMenu';
-import CustomSnackbarMessage          from './Components/Ui/CustomSnackbarMessage';
-import { clearMessage, setMessage }   from './Components/Reducers/MessagesReducer';
-import LoadingTopBar from './Components/Ui/LoadingTopBar';
+import CustomSnackbarMessage  from './Components/Ui/CustomSnackbarMessage';
+import { clearMessage }       from './Components/Interfaces/MessagesSi';
+import LoadingTopBar          from './Components/Ui/LoadingTopBar';
 import './App.css';
 import 'typeface-roboto';
 
@@ -38,10 +38,6 @@ class App extends Component {
     }
   }
 
-  closeMessage() {
-    this.props.clearMessage()
-  }
-
   render() {
     const { classes, message, loading } = this.props;
     return (
@@ -61,7 +57,7 @@ class App extends Component {
             className={ classes.floatingMessage }
             message={ message.text }
             actionable={ true }
-            onClose={ this.closeMessage.bind(this) }
+            onClose={ clearMessage }
           /> }
           <BaseRoutes styles={classes}/>
         </main>
@@ -74,12 +70,7 @@ const mapStateToProps = props => {
   return props
 }
 
-const mapDispatchToProps = dispatch => ({
-  clearMessage: () => dispatch(clearMessage()),
-  setMessage: payload => dispatch(setMessage(payload)),
-})
-
 export default compose(
   withStyles(styles),
-  connect(mapStateToProps, mapDispatchToProps)
+  connect(mapStateToProps)
 )(withRouter(App));

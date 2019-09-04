@@ -8,8 +8,15 @@ import ErrorMessage         from './../../Ui/CustomSnackbarMessage';
 import Button               from '@material-ui/core/Button';
 import { Link }             from 'react-router-dom';
 import { GENERIC_FORM_ERROR } from './../../Reducers/MessagesReducer';
-import store                from './../../../store';
-import { setMessage }       from './../../Reducers/MessagesReducer';
+import store                  from './../../../store';
+import { setMessage }         from './../../Interfaces/MessagesSi';
+import { setBreadcrumbsList } from './../../Interfaces/BreadcrumbsSi';
+
+const BREADCRUMBS = [
+  { name: "Inicio", path: "/" },
+  { name: "Usuarios", path: "/users" },
+  { name: "Nuevo", path: null }
+]
 
 class NewUser extends Component {
   constructor() {
@@ -28,6 +35,10 @@ class NewUser extends Component {
     }
   }
 
+  componentDidMount() {
+    setBreadcrumbsList(BREADCRUMBS)
+  }
+
   submitUser = NewUserInfo => {
     this.setState({ loading: true })
     API.post('users',
@@ -35,7 +46,7 @@ class NewUser extends Component {
         user: NewUserInfo
       }
     ).then((data) => {
-      store.dispatch(setMessage({ type: "success", text: "Usuario guardado, redirigiendo..." }))
+      setMessage({ type: "success", text: "Usuario guardado, redirigiendo..." })
       this.setState({ loading: false })
       setTimeout(() => { this.props.history.push('/users') }, 2000)
     }).catch((error) => {
@@ -53,11 +64,6 @@ class NewUser extends Component {
     const { classes } = this.props;
     return(
       <div className={classes.formWrapper}>
-        <div className={classes.barItemsWrapper}>
-          <Button component={Link} to="/users" variant="contained" color="primary">
-            Regresar
-          </Button>
-        </div>
         <Paper className={classes.paper}>
           {this.state.errorMessage && <ErrorMessage
             variant="error"

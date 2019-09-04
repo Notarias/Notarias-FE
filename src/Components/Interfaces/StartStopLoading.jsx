@@ -1,11 +1,10 @@
-import React from 'react';
 import store from './../../store'
 import { startLoading, stopLoading } from './../Reducers/LoadingReducer'
 
-export const startLoading = () => {
+export const startLoadingBar = () => {
   store.dispatch(startLoading())
 }
 
-export const stopLoading = () => {
+export const stopLoadingBar = () => {
   store.dispatch(stopLoading())
 }

@@ -20,9 +20,8 @@ import SearchIcon           from '@material-ui/icons/Search';
 import CircularProgress     from '@material-ui/core/CircularProgress';
 import UsersRows            from './UsersRows';
 import TableSortLabel       from '@material-ui/core/TableSortLabel';
-import store                from '../../../store';
-import { setBreadcrumbsList }                            from './../../Reducers/BreadcrumbsReducer';
-import { startLoading, stopLoading }                     from './../../Reducers/LoadingReducer';
+import { setBreadcrumbsList }                            from './../../Interfaces/BreadcrumbsSi';
+import { startLoadingBar, stopLoadingBar }               from './../../Interfaces/StartStopLoading';
 import { setParamsInterface, sortHandler }               from './../../Interfaces/ParameterManager';
 import { managePaginationAfter, managePaginationBefore } from './../../Interfaces/ParameterManager';
 
@@ -37,6 +36,10 @@ class Users extends Component {
     this.state = {
       loading: true,
       users: [],
+      sort_field: "first_name",
+      sort_direction: "desc",
+      timeout: 0,
+      searchLoading: false,
       request_params: {
         page: 0,
         per: 5,
@@ -45,17 +48,13 @@ class Users extends Component {
         sort: {
           "first_name": "desc"
         }
-      },
-      sort_field: "first_name",
-      sort_direction: "desc",
-      timeout: 0,
-      searchLoading: false,
+      }
     }
   }
 
   componentDidMount() {
-    store.dispatch(startLoading())
-    store.dispatch(setBreadcrumbsList(BREADCRUMBS))
+    startLoadingBar()
+    setBreadcrumbsList(BREADCRUMBS)
     this.callServer()
   }
 
@@ -87,6 +86,7 @@ class Users extends Component {
         },
         ...extra_data
       })
+      stopLoadingBar()
     })
   }
 
@@ -123,7 +123,6 @@ class Users extends Component {
   render() {
     const { classes } = this.props
     const { sort_field, sort_direction } = this.state
-    console.log(sort_direction)
     return(
       <div className={classes.root}>
         <Grid container  direction="row"  justify="flex-end"  alignItems="flex-end" className={classes.usersTableBarWrapper}>

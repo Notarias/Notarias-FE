@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import store                from '../../store';
-import { setBreadcrumbsList } from './../Reducers/BreadcrumbsReducer';
+import { setBreadcrumbsList } from './../Interfaces/BreadcrumbsSi';
 
 class Home extends Component {
   componentDidMount() {
-    store.dispatch(setBreadcrumbsList([]))
+    setBreadcrumbsList([])
   }
 
   render() {

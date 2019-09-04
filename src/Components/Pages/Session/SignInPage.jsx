@@ -7,6 +7,7 @@ import compose                    from 'recompose/compose';
 import CustomSnackbarMessage      from '../../Ui/CustomSnackbarMessage';
 import {GENERIC_CONNECTION_ERROR} from '../../GenericErrors';
 import { signInUser }             from '../../Reducers/CurrentUserReducer';
+import { setBreadcrumbsList }     from './../../Interfaces/BreadcrumbsSi';
 
 import { styles }  from './sessionStyles';
 import SessionForm from './SessionForm';
@@ -24,6 +25,10 @@ class SignInPage extends Component {
     this.state = {
       errorMessage: null
     }
+  }
+
+  componentDidMount() {
+    setBreadcrumbsList([])
   }
 
   signOut() {

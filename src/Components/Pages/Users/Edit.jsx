@@ -9,9 +9,16 @@ import { Link }             from 'react-router-dom';
 import Paper                from '@material-ui/core/Paper';
 import ErrorMessage         from './../../Ui/CustomSnackbarMessage';
 import { connect }          from 'react-redux'
-import { loadRecordData }    from '../../Reducers/RecordFormReducer'
 import store                from '../../../store';
-import { setMessage }       from './../../Reducers/MessagesReducer';
+import { setMessage }                      from './../../Interfaces/MessagesSi';
+import { setBreadcrumbsList }              from './../../Interfaces/BreadcrumbsSi';
+import { startLoadingBar, stopLoadingBar } from './../../Interfaces/StartStopLoading';
+
+const BREADCRUMBS = [
+  { name: "Inicio", path: "/" },
+  { name: "Usuarios", path: "/users" },
+  { name: "Nuevo", path: null }
+]
 
 class Edit extends Component {
   constructor() {
@@ -34,11 +41,13 @@ class Edit extends Component {
   }
 
   componentDidMount() {
+    setBreadcrumbsList(BREADCRUMBS)
+    startLoadingBar()
     if(this.props && this.props.match && this.props.match.params.id) {
       API.get(`/users/${this.props.match.params.id}`)
         .then((response) => {
+          stopLoadingBar()
           this.setState({ user: response.data.user })
-          this.props.loadRecordData(response.data.user)
         })
     }
   }
@@ -50,7 +59,7 @@ class Edit extends Component {
         user: NewUserInfo
       }
     ).then((data) => {
-      store.dispatch(setMessage({ type: "success", text: "Usuario actualizado, redirigiendo..." }))
+      setMessage({ type: "success", text: "Usuario actualizado, redirigiendo..." })
       this.setState({ loading: false })
       setTimeout(() => { this.props.history.push('/users') }, 2000)
     }).catch((error) => {
@@ -68,11 +77,6 @@ class Edit extends Component {
     const { classes } = this.props;
     return(
       <div className={classes.formWrapper}>
-        <div className={classes.barItemsWrapper}>
-          <Button component={Link} to="/users" variant="contained" color="primary">
-            Regresar
-          </Button>
-        </div>
         <Paper className={classes.paper}>
           {this.state.errorMessage && <ErrorMessage
             variant="error"
@@ -81,7 +85,7 @@ class Edit extends Component {
             actionable={false}
           />}
           <UserForm
-            userData={this.state.user}
+            initialValues={this.state.user}
             onSubmit={this.submitUser.bind(this)}
             errors={this.state.errors}
             requiredFields={this.state.requiredFields}
@@ -97,11 +101,6 @@ const mapStateToProps = props => {
   return props
 }
 
-const mapDispatchToProps = dispatch => ({
-  loadRecordData: (payload) => dispatch(loadRecordData(payload)),
-})
-
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(withStyles(styles)(Edit));
