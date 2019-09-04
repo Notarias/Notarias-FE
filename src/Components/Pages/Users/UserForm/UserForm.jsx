@@ -5,7 +5,6 @@ import RoleSelectDropdown   from './RoleSelectDropdown';
 import Button               from '@material-ui/core/Button';
 import API                  from './../../../../axiosConfig';
 import MenuItem             from '@material-ui/core/MenuItem';
-import { connect }          from 'react-redux'
 import compose              from 'recompose/compose';
 import withStyles           from '@material-ui/core/styles/withStyles';
 import { styles }           from './styles';

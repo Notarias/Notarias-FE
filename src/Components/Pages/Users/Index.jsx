@@ -43,7 +43,6 @@ class Users extends Component {
       request_params: {
         page: 0,
         per: 5,
-        pages: 1,
         total_records: 1,
         sort: {
           "first_name": "desc"
@@ -67,11 +66,16 @@ class Users extends Component {
     this.callServer({ page  })
   };
 
-  callServer(new_params = {}, extra_data = {}) {
+  prepareParams = (new_params) => {
     let deliverable_params = Object.assign({}, this.state.request_params)
     setParamsInterface(new_params, deliverable_params)
     managePaginationBefore(deliverable_params)
+    return deliverable_params
+  }
+
+  callServer(new_params = {}, extra_state_data = {}) {
     this.setState({ loading: true })
+    let deliverable_params = this.prepareParams(new_params)
     API.get('/users', { params: deliverable_params }).then(response => {
       let meta = managePaginationAfter(response.data.meta)
       this.setState({
@@ -81,10 +85,11 @@ class Users extends Component {
         request_params: {
           page: meta.page,
           per: meta.per,
-          pages: meta.pages,
           total_records: meta.total_records,
+          sort: deliverable_params.sort,
+          search: deliverable_params.search
         },
-        ...extra_data
+        ...extra_state_data
       })
       stopLoadingBar()
     })

@@ -5,10 +5,7 @@ import Paper                from '@material-ui/core/Paper';
 import { styles }           from './UserForm/styles';
 import API                  from './../../../axiosConfig';
 import ErrorMessage         from './../../Ui/CustomSnackbarMessage';
-import Button               from '@material-ui/core/Button';
-import { Link }             from 'react-router-dom';
 import { GENERIC_FORM_ERROR } from './../../Reducers/MessagesReducer';
-import store                  from './../../../store';
 import { setMessage }         from './../../Interfaces/MessagesSi';
 import { setBreadcrumbsList } from './../../Interfaces/BreadcrumbsSi';
 
