@@ -23,7 +23,7 @@ export const styles = theme => {
       paddingBottom: theme.spacing(2),
     },
     usersTableBarWrapper: {
-      paddingRight:'23px'
+      padding:'23px 23px 0 23px'
     },
     lockedUserRow: {
       boxShadow: `inset 10px 0px 0px -5px ${theme.palette.error.dark}`,

@@ -9,20 +9,15 @@ import TableHead            from '@material-ui/core/TableHead';
 import TableRow             from '@material-ui/core/TableRow';
 import Paper                from '@material-ui/core/Paper';
 import { styles }           from './styles';
-import Button               from '@material-ui/core/Button';
-import { Link }             from 'react-router-dom';
-import Grid                 from '@material-ui/core/Grid';
-import PersonAddIcon        from '@material-ui/icons/PersonAdd';
 import TablePagination      from '@material-ui/core/TablePagination';
 import update               from 'react-addons-update';
-import InputBase            from '@material-ui/core/InputBase';
-import SearchIcon           from '@material-ui/icons/Search';
 import CircularProgress     from '@material-ui/core/CircularProgress';
 import UsersRows            from './UsersRows';
-import TableSortLabel       from '@material-ui/core/TableSortLabel';
+import ControlsBar          from './ControlsBar';
+import SortHeader           from './../../Ui/SortHeader';
 import { setBreadcrumbsList }                            from './../../Interfaces/BreadcrumbsSi';
 import { startLoadingBar, stopLoadingBar }               from './../../Interfaces/StartStopLoading';
-import { setParamsInterface, sortHandler }               from './../../Interfaces/ParameterManager';
+import { setParamsInterface }                            from './../../Interfaces/ParameterManager';
 import { managePaginationAfter, managePaginationBefore } from './../../Interfaces/ParameterManager';
 
 const BREADCRUMBS = [
@@ -128,59 +123,39 @@ class Users extends Component {
   render() {
     const { classes } = this.props
     const { sort_field, sort_direction } = this.state
+    const callServer = this.callServer.bind(this)
     return(
       <div className={classes.root}>
-        <Grid container  direction="row"  justify="flex-end"  alignItems="flex-end" className={classes.usersTableBarWrapper}>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              { 
-                this.state.searchLoading ?
-                <CircularProgress className={classes.searchLoadingIcon} size={25}/> :
-                <SearchIcon /> 
-              }
-            </div>
-            <InputBase
-              placeholder="Buscar…"
-              onChange={this.onChangeSearch.bind(this)}
-              classes={{
-                root: classes.searchInputRoot,
-                input: classes.searchInputInput,
-              }}
-            />
-          </div>
-          <Button component={Link} to="/users/new" variant="contained" color="primary">
-            <PersonAddIcon/>
-          </Button>
-        </Grid>
+        <ControlsBar
+          classes={classes}
+          searchLoading={this.state.searchLoading}
+          onChangeSearch={this.onChangeSearch.bind(this)}/>
         <div className={classes.tableWrapper}>
           <Paper >
             <Table className={classes.table}>
               <TableHead>
                 <TableRow>
-                  <TableCell align="center">
-                    Nombre
-                    <TableSortLabel
-                      active={sort_field === "first_name"}
-                      direction={sort_direction}
-                      onClick={sortHandler("first_name", sort_field, sort_direction, this.callServer.bind(this))}
-                    />                   
-                  </TableCell>
-                  <TableCell align="center">
-                    Apellido
-                    <TableSortLabel
-                      active={sort_field === "last_name"}
-                      direction={sort_direction}
-                      onClick={sortHandler("last_name", sort_field, sort_direction, this.callServer.bind(this))}
-                    /> 
-                  </TableCell>
-                  <TableCell align="center">
-                    Correo
-                    <TableSortLabel
-                      active={sort_field === "email"}
-                      direction={sort_direction}
-                      onClick={sortHandler("email", sort_field, sort_direction, this.callServer.bind(this))}
-                    /> 
-                    </TableCell>
+                  <SortHeader
+                    text={"Nombre"}
+                    field_property={"first_name"}
+                    current_field={sort_field}
+                    sort_direction={sort_direction}
+                    callback={callServer}
+                  />
+                  <SortHeader
+                    text={"Apellido"}
+                    field_property={"last_name"}
+                    current_field={sort_field}
+                    sort_direction={sort_direction}
+                    callback={callServer}
+                  />
+                  <SortHeader
+                    text={"Correo"}
+                    field_property={"email"}
+                    current_field={sort_field}
+                    sort_direction={sort_direction}
+                    callback={callServer}
+                  />
                   <TableCell align="center">Opciones</TableCell>
                 </TableRow>
               </TableHead>
