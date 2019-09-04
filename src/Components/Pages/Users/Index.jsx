@@ -40,7 +40,7 @@ class Users extends Component {
         per: 5,
         total_records: 1,
         sort: {
-          "first_name": "desc"
+          "first_name": "asc"
         }
       }
     }
