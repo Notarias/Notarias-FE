@@ -94,10 +94,4 @@ class Edit extends Component {
     )
   }
 }
-const mapStateToProps = props => {
-  return props
-}
-
-export default connect(
-  mapStateToProps
-)(withStyles(styles)(Edit));
+export default withStyles(styles)(Edit);

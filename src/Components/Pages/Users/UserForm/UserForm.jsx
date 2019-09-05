@@ -96,6 +96,6 @@ class  UserForm extends Component {
   }
 }
 
-export default compose(
-  withStyles(styles),
-)(reduxForm({ form: 'userForm', enableReinitialize: true })(UserForm));
+export default withStyles(styles)(
+  reduxForm({ form: 'userForm', enableReinitialize: true })(UserForm)
+);
