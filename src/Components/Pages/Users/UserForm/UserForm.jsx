@@ -5,7 +5,6 @@ import RoleSelectDropdown   from './RoleSelectDropdown';
 import Button               from '@material-ui/core/Button';
 import API                  from './../../../../axiosConfig';
 import MenuItem             from '@material-ui/core/MenuItem';
-import compose              from 'recompose/compose';
 import withStyles           from '@material-ui/core/styles/withStyles';
 import { styles }           from './styles';
 import CircularProgress     from '@material-ui/core/CircularProgress';

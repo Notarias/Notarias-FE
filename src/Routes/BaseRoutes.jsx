@@ -2,7 +2,6 @@ import React     from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import SignInPage     from '../Components/Pages/Session/SignInPage';
-import SignOutPage    from '../Components/Pages/Session/SignOutPage';
 import ProtectedRoute from './ProtectedRoute';
 import Breadcrumbs    from './../Components/Ui/Breadcrumbs';
 

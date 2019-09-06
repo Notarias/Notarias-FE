@@ -6,7 +6,6 @@ import UserForm             from './UserForm/UserForm';
 import { GENERIC_FORM_ERROR } from './../../Reducers/MessagesReducer';
 import Paper                from '@material-ui/core/Paper';
 import ErrorMessage         from './../../Ui/CustomSnackbarMessage';
-import { connect }          from 'react-redux'
 import { setMessage }                      from './../../Interfaces/MessagesSi';
 import { setBreadcrumbsList }              from './../../Interfaces/BreadcrumbsSi';
 import { startLoadingBar, stopLoadingBar } from './../../Interfaces/StartStopLoading';
