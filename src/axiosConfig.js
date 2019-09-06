@@ -6,11 +6,14 @@ import { GENERIC_ERROR_MESSAGE,
          SESSION_TIMEOUT_MESSAGE,
         } from './Components/Reducers/MessagesReducer';
 import { setMessage } from './Components/Interfaces/MessagesSi';
-         
+
 
 let API = axios.create({
   baseURL: `https://peaceful-eyrie-59851.herokuapp.com`
 });
+
+export const cancelToken = axios.CancelToken;
+export const cancelSource = cancelToken.source();
 
 export const setupAxiosRouter = (history) => {
   API.interceptors.request.use(function(config){

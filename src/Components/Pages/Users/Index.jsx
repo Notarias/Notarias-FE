@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withStyles }       from '@material-ui/core/styles';
-import API                  from '../../../axiosConfig';
+import API, { cancelSource, cancelToken } from '../../../axiosConfig';
 import Table                from '@material-ui/core/Table';
 import TableBody            from '@material-ui/core/TableBody';
 import TableFooter          from '@material-ui/core/TableFooter';
@@ -52,6 +52,10 @@ class Users extends Component {
     this.callServer()
   }
 
+  componentWillUnmount() {
+    cancelSource.cancel()
+  }
+
   handleChangeRowsPerPage = (event) => {
     let per  = event.target.value
     this.callServer({ per })
@@ -71,7 +75,11 @@ class Users extends Component {
   callServer(new_params = {}, extra_state_data = {}) {
     this.setState({ loading: true })
     let deliverable_params = this.prepareParams(new_params)
-    API.get('/users', { params: deliverable_params }).then(response => {
+    API.get(
+      '/users',
+      { params: deliverable_params },
+      { cancelToken: cancelToken.token }
+    ).then(response => {
       let meta = managePaginationAfter(response.data.meta)
       this.setState({
         users: response.data.users,
@@ -103,12 +111,12 @@ class Users extends Component {
   }
 
   lockUser(user) {
-    API.patch(`/users/${user.id}/lock`)
+    API.patch(`/users/${user.id}/lock`, { cancelToken: cancelToken.token })
       .then((response) => { this.updateUserInList(response, user) })
   }
 
   unlockUser(user) {
-    API.patch(`/users/${user.id}/unlock`)
+    API.patch(`/users/${user.id}/unlock`, { cancelToken: cancelToken.token })
       .then((response) => { this.updateUserInList(response, user) })
   }
 
