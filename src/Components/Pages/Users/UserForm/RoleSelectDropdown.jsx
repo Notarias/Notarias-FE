@@ -21,7 +21,7 @@ export default class RoleSelectDropdown extends Component {
     const { input, children, label } = this.props
     const { meta: { touched, error } } = this.props
     return(
-      <FormControl required margin="normal" fullWidth>
+      <FormControl margin="normal" fullWidth>
         <InputLabel htmlFor={label}>{label}</InputLabel>
         <Select
           value={input.value}
