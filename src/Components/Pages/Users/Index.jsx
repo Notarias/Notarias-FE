@@ -16,7 +16,6 @@ import UsersRows            from './UsersRows';
 import ControlsBar          from './ControlsBar';
 import SortHeader           from './../../Ui/SortHeader';
 import { setBreadcrumbsList }                            from './../../Interfaces/BreadcrumbsSi';
-import { startLoadingBar, stopLoadingBar }               from './../../Interfaces/StartStopLoading';
 import { setParamsInterface }                            from './../../Interfaces/ParameterManager';
 import { managePaginationAfter, managePaginationBefore } from './../../Interfaces/ParameterManager';
 
@@ -47,7 +46,6 @@ class Users extends Component {
   }
 
   componentDidMount() {
-    startLoadingBar()
     setBreadcrumbsList(BREADCRUMBS)
     this.callServer()
   }
@@ -94,7 +92,6 @@ class Users extends Component {
         },
         ...extra_state_data
       })
-      stopLoadingBar()
     })
   }
 

@@ -8,7 +8,7 @@ import Paper                from '@material-ui/core/Paper';
 import ErrorMessage         from './../../Ui/CustomSnackbarMessage';
 import { setMessage }                      from './../../Interfaces/MessagesSi';
 import { setBreadcrumbsList }              from './../../Interfaces/BreadcrumbsSi';
-import { startLoadingBar, stopLoadingBar } from './../../Interfaces/StartStopLoading';
+
 
 const BREADCRUMBS = [
   { name: "Inicio", path: "/" },
@@ -38,11 +38,9 @@ class Edit extends Component {
 
   componentDidMount() {
     setBreadcrumbsList(BREADCRUMBS)
-    startLoadingBar()
     if(this.props && this.props.match && this.props.match.params.id) {
       API.get(`/users/${this.props.match.params.id}`)
         .then((response) => {
-          stopLoadingBar()
           this.setState({ user: response.data.user })
         })
     }

@@ -10,7 +10,6 @@ import compose              from 'recompose/compose';
 import NavigationMenu       from './Components/Ui/NavigationMenu';
 import CustomSnackbarMessage  from './Components/Ui/CustomSnackbarMessage';
 import { clearMessage }       from './Components/Interfaces/MessagesSi';
-import LoadingTopBar          from './Components/Ui/LoadingTopBar';
 import './App.css';
 import 'typeface-roboto';
 
@@ -39,19 +38,18 @@ class App extends Component {
   }
 
   render() {
-    const { classes, message, loading } = this.props;
+    const { classes, message } = this.props;
     return (
       <div className={classNames(classes.root, "App")}>
-        { localStorage.jwtToken ? <NavigationMenu
+        { localStorage.jwtToken && <NavigationMenu
           shiftMenu={ this.shiftMenu.bind(this) }
           open={ this.state.open }
           setOpenMenu={ this.setOpenMenu.bind(this) }
           setCloseMenu={ this.setCloseMenu.bind(this) }
-          /> : null }
+          /> }
         <CssBaseline />
 
         <main className={classes.content}>
-          { loading && <LoadingTopBar/> }
           { message && <CustomSnackbarMessage
             variant={ message.type }
             className={ classes.floatingMessage }

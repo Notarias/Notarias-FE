@@ -1,7 +1,6 @@
 import { createStore, combineReducers } from 'redux';
 import CurrentUserReducer from './Components/Reducers/CurrentUserReducer';
 import MessagesReducer    from './Components/Reducers/MessagesReducer';
-import LoadingReducer     from './Components/Reducers/LoadingReducer';
 import BreadcrumbsReducer from './Components/Reducers/BreadcrumbsReducer';
 import { reducer as formReducer } from 'redux-form';
 import compose                    from 'recompose/compose';
@@ -9,7 +8,6 @@ import compose                    from 'recompose/compose';
 const REDUCERS_LIST = {
   currentUser: CurrentUserReducer,
   message: MessagesReducer,
-  loading: LoadingReducer,
   form: formReducer,
   breadcrumbs: BreadcrumbsReducer
 }

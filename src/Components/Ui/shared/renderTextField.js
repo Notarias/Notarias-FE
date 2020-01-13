@@ -32,7 +32,7 @@ export default ({
         {...input}
         {...custom}
       />
-      {hasError(error, touched)&& <FormHelperText error>{errorMessage(error)}</FormHelperText> }
+      { hasError(error, touched) && <FormHelperText error>{ errorMessage(error) }</FormHelperText> }
     </FormControl>
   )
 }

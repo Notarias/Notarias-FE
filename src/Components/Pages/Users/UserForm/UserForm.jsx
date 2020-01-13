@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
-import renderTextField      from './../../../Ui/renderTextField';
+import renderTextField      from '../../../Ui/shared/renderTextField';
 import RoleSelectDropdown   from './RoleSelectDropdown';
 import Button               from '@material-ui/core/Button';
 import API                  from './../../../../axiosConfig';
@@ -56,7 +56,7 @@ class  UserForm extends Component {
     return key === "password" ? "password" : "text" && key === "password_confirmation" ? "password" : "text"
   }
 
-  loadRoles() {
+  renderRoles() {
     return this.state.roles.map((item, key) =>
       <MenuItem key={key} value={item.permanent_link}>
         <em>{item.name}</em>
@@ -78,8 +78,8 @@ class  UserForm extends Component {
           meta={{ error: errors["role"], touched: errors["role"] }}
           required={true}
           component={RoleSelectDropdown}>
-          { this.loadRoles() }
-          </Field>
+          { this.renderRoles() }
+        </Field>
         <Button
           type="submit"
           fullWidth
