@@ -6,7 +6,7 @@
     "@material-ui/core": "^4.3.3",
     "@material-ui/icons": "^4.2.1",
     "@material-ui/styles": "^4.3.3",
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "caniuse-lite": "^1.0.30000989",
     "classnames": "^2.2.6",
     "react": "^16.8.6",
