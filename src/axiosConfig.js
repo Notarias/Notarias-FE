@@ -36,7 +36,7 @@ export const setupAxiosRouter = (history) => {
         localStorage.clear('jwtToken');
         store.dispatch(signOutUser());
         setMessage({ type: "error", text: SESSION_TIMEOUT_MESSAGE })
-        history.push('/sign_in');
+        history.location = '/sign_in';
       } else if (error.response.status === 500) {
         setMessage({ type: "error", text: SERVER_ERROR_MESSAGE })
       } else if (error.response.status === 403) {
@@ -46,8 +46,4 @@ export const setupAxiosRouter = (history) => {
     }
   );
 }
-
-
-
-
 export default API;

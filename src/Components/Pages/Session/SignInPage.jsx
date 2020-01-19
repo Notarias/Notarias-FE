@@ -39,6 +39,7 @@ class SignInPage extends Component {
     API.get(`/current_profile`).then(res => {
       this.props.signInUser(res.data)
       localStorage.setItem('currentUser', JSON.stringify(res.data))
+      return new Promise((resolve) => resolve())
     });
   }
 
@@ -51,27 +52,22 @@ class SignInPage extends Component {
           return new Promise((resolve) => resolve())
         }
       ).then(() => {
-          if (this.props.location.state) {
-            this.props.history.push(this.props.location.state.from.pathname)
-          } else {
-            this.props.history.push("/")
-          }
-          this.getCurrentUser()
+        this.getCurrentUser()
+      }).then(() => {
+        if (this.props.history.location.pathname == "/sign_in") {
+          this.props.history.go(-1)
+        } else {
+          this.props.history.location = this.props.history.location
         }
-      ).catch((error) => {
+      })
+      .catch((error) => {
         if (!error.response) {
           this.setState({ errorMessage: GENERIC_CONNECTION_ERROR })
           this.signOut()
         } else if (error.response) {
           if (error.response.status === 401) {
             this.setState({ errorMessage: error.response.data.error.user_authentication.join("") })
-          } else {
-            this.setState({ errorMessage: GENERIC_CONNECTION_ERROR })
           }
-        } else if (error.request) {
-          this.setState({ errorMessage: GENERIC_CONNECTION_ERROR })
-        } else {
-          this.setState({ errorMessage: GENERIC_CONNECTION_ERROR })
         }
     });
   }

@@ -14,7 +14,6 @@ const REDUCERS_LIST = {
 
 const DEFAULT_STORE_VALUES = {
   message: null,
-  loading: false,
   currentUser: localStorage.currentUser ? JSON.parse(localStorage.currentUser) : null
 }
 
