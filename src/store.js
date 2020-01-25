@@ -1,7 +1,7 @@
 import { createStore, combineReducers } from 'redux';
-import CurrentUserReducer from './Components/Reducers/CurrentUserReducer';
-import MessagesReducer    from './Components/Reducers/MessagesReducer';
-import BreadcrumbsReducer from './Components/Reducers/BreadcrumbsReducer';
+import CurrentUserReducer from './components/reducers/current_user_reducer';
+import MessagesReducer    from './components/reducers/messages_reducer';
+import BreadcrumbsReducer from './components/reducers/breadcrumbs_reducer';
 import { reducer as formReducer } from 'redux-form';
 import compose                    from 'recompose/compose';
 

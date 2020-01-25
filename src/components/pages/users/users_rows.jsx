@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import TableCell            from '@material-ui/core/TableCell';
 import TableRow             from '@material-ui/core/TableRow';
-import GenericDropdownMenu  from '../../Ui/GenericDropdownMenu';
+import GenericDropdownMenu  from '../../ui/generic_dropdown_menu';
 import MenuItem             from '@material-ui/core/MenuItem';
 import { withStyles }       from '@material-ui/core/styles';
 import { styles }           from './styles';

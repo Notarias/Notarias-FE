@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { connect }          from 'react-redux';
 import { withRouter }       from 'react-router-dom';
-import BaseRoutes           from './Routes/BaseRoutes';
+import BaseRoutes           from './routes/base_routes';
 import CssBaseline          from '@material-ui/core/CssBaseline';
 import { styles }           from './AppStyles';
 import withStyles           from '@material-ui/core/styles/withStyles';
 import classNames           from 'classnames';
 import compose              from 'recompose/compose';
-import NavigationMenu       from './Components/Ui/NavigationMenu';
-import CustomSnackbarMessage  from './Components/Ui/CustomSnackbarMessage';
-import { clearMessage }       from './Components/Interfaces/MessagesSi';
+import NavigationMenu       from './components/ui/navigation_menu';
+import CustomSnackbarMessage  from './components/ui/custom_snackbar_message';
+import { clearMessage }       from './components/interfaces/messages_interface';
 import './App.css';
 import 'typeface-roboto';
 

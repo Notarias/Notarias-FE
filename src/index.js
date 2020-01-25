@@ -7,7 +7,7 @@ import store from './store';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { setupAxiosRouter } from './axiosConfig';
+import { setupAxiosRouter } from './axios_config';
 
 const history = createBrowserHistory()
 setupAxiosRouter(history)

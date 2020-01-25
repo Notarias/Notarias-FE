@@ -4,7 +4,7 @@ export const setBreadcrumbsList = (breadcrumbsList) => {
   return { type: SET_BREADCRUMBS_LIST, breadcrumbsList };
 }
 
-export default function CurrentUserReducer(state = {}, action) {
+export default function BreadcrumbsReducer(state = {}, action) {
   switch(action.type) {
     case SET_BREADCRUMBS_LIST:
       return action.breadcrumbsList

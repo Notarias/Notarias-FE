@@ -1,7 +1,7 @@
 import React           from 'react';
 import TableCell       from '@material-ui/core/TableCell';
 import TableSortLabel  from '@material-ui/core/TableSortLabel';
-import { sortHandler } from './../Interfaces/ParameterManager';
+import { sortHandler } from '../interfaces/parameter_manager';
 
 export default (props) => {
   let { text, field_property, current_field, sort_direction, callback } = props

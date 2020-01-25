@@ -4,7 +4,7 @@ import ListItemText         from '@material-ui/core/ListItemText';
 import React                from 'react';
 import withStyles           from '@material-ui/core/styles/withStyles';
 import { Link }             from 'react-router-dom';
-import { styles }           from './NavigationMenuStyles'
+import { styles }           from './navigation_menu_styles'
 import Grid                 from '@material-ui/core/Grid';
 import Avatar               from '@material-ui/core/Avatar';
 

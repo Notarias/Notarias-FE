@@ -1,7 +1,7 @@
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
 import Button from '@material-ui/core/Button';
-import renderTextField from '../../Ui/shared/renderTextField'
+import renderTextField from '../../ui/shared/render_text_field'
 
 const validate = values => {
   const errors = {}

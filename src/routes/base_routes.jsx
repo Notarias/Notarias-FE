@@ -1,25 +1,25 @@
 import React     from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-import SignInPage     from '../Components/Pages/Session/SignInPage';
-import ProtectedRoute from './ProtectedRoute';
-import Breadcrumbs    from './../Components/Ui/Breadcrumbs';
+import SignInPage     from '../components/pages/session/sign_in_page';
+import ProtectedRoute from './protected_route';
+import Breadcrumbs    from '../components/ui/breadcrumbs';
 
-import Home           from '../Components/Pages/Home';
-import Users          from '../Components/Pages/Users/Index';
-import NewUser        from '../Components/Pages/Users/New';
-import EditUser       from '../Components/Pages/Users/Edit';
-import Clients        from '../Components/Pages/Clients/Index';
-import BudgetBuilder  from '../Components/Pages/BudgetBuilder/Index';
-import FormsBuilder   from '../Components/Pages/FormsBuilder/Index';
-import Budgets        from '../Components/Pages/Budgets/Index';
-import Procedures     from '../Components/Pages/Procedures/Index';
-import Appointments   from '../Components/Pages/Appointments/Index';
-import Reports        from '../Components/Pages/Reports/Index';
-import Profile        from '../Components/Pages/Profile/Index';
+import Home           from '../components/pages/home';
+import Users          from '../components/pages/users';
+import NewUser        from '../components/pages/users/new';
+import EditUser       from '../components/pages/users/edit';
+import Clients        from '../components/pages/clients';
+import BudgetBuilder  from '../components/pages/budget_builders';
+import FormsBuilder   from '../components/pages/form_builders';
+import Budgets        from '../components/pages/budgets';
+import Procedures     from '../components/pages/procedures';
+import Appointments   from '../components/pages/appointments';
+import Reports        from '../components/pages/reports';
+import Profile        from '../components/pages/profiles';
 import store          from '../store';
 
-export default (props) => {
+export default function BaseRoutes(props) {
   const { styles } = props
   let { breadcrumbs } = store.getState()
   return(

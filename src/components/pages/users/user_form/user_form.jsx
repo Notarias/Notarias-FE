@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
-import renderTextField      from '../../../Ui/shared/renderTextField';
-import RoleSelectDropdown   from './RoleSelectDropdown';
+import renderTextField      from '../../../ui/shared/render_text_field';
+import RoleSelectDropdown   from './role_select_dropdown';
 import Button               from '@material-ui/core/Button';
-import API                  from './../../../../axiosConfig';
+import API                  from '../../../../axios_config';
 import MenuItem             from '@material-ui/core/MenuItem';
 import withStyles           from '@material-ui/core/styles/withStyles';
 import { styles }           from './styles';

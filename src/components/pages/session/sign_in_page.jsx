@@ -2,15 +2,15 @@ import React, { Component }       from 'react';
 import PropTypes                  from 'prop-types';
 import { connect }                from 'react-redux';
 import { withRouter }             from 'react-router-dom'
-import API                        from '../../../axiosConfig';
+import API                        from '../../../axios_config';
 import compose                    from 'recompose/compose';
-import CustomSnackbarMessage      from '../../Ui/CustomSnackbarMessage';
-import {GENERIC_CONNECTION_ERROR} from '../../GenericErrors';
-import { signInUser }             from '../../Reducers/CurrentUserReducer';
-import { setBreadcrumbsList }     from './../../Interfaces/BreadcrumbsSi';
+import CustomSnackbarMessage      from '../../ui/custom_snackbar_message';
+import {GENERIC_CONNECTION_ERROR} from '../../generic_errors';
+import { signInUser }             from '../../reducers/current_user_reducer';
+import { setBreadcrumbsList }     from '../../interfaces/breadcrumbs_interface';
 
-import { styles }  from './sessionStyles';
-import SessionForm from './SessionForm';
+import { styles }  from './session_styles';
+import SessionForm from './session_form';
 
 import Avatar           from '@material-ui/core/Avatar';
 import logo_momentary   from './../../../images/logo_momentary.png'

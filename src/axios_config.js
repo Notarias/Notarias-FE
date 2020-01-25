@@ -1,11 +1,11 @@
 import axios from 'axios';
 import store from './store';
-import { signOutUser } from './Components/Reducers/CurrentUserReducer';
+import { signOutUser } from './components/reducers/current_user_reducer';
 import { GENERIC_ERROR_MESSAGE,
          SERVER_ERROR_MESSAGE,
          SESSION_TIMEOUT_MESSAGE,
-        } from './Components/Reducers/MessagesReducer';
-import { setMessage } from './Components/Interfaces/MessagesSi';
+        } from './components/reducers/messages_reducer';
+import { setMessage } from './components/interfaces/messages_interface';
 
 
 let API = axios.create({

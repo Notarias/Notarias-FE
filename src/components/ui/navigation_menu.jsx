@@ -4,9 +4,9 @@ import Divider              from '@material-ui/core/Divider';
 import List                 from '@material-ui/core/List';
 import withStyles           from '@material-ui/core/styles/withStyles';
 import classNames           from 'classnames';
-import { styles }           from './NavigationMenuStyles';
-import MenuLink             from './MenuLink'
-import ProfileLink          from './ProfileLink'
+import { styles }           from './navigation_menu_styles';
+import MenuLink             from './menu_link'
+import ProfileLink          from './profile_link'
 
 import ReportsIcon          from './../../icons/reportes.svg';
 import ClientsIcon          from './../../icons/CLIENTES.svg';
