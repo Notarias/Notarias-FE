@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withStyles }       from '@material-ui/core/styles';
 
-class Profile extends Component {
+class ProfilesIndex extends Component {
     render() {
         return(
             <div>
@@ -10,4 +10,4 @@ class Profile extends Component {
         )
       }
     }
-export default withStyles(()=>{})(Profile);
+export default withStyles(()=>{})(ProfilesIndex);

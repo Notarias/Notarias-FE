@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withStyles }       from '@material-ui/core/styles';
 
-class ProceduresConstructor extends Component {
+class FormsBuilderIndex extends Component {
     render() {
         return(
             <div>
@@ -10,4 +10,4 @@ class ProceduresConstructor extends Component {
         )
       }
     }
-export default withStyles(()=>{})(ProceduresConstructor);
+export default withStyles(()=>{})(FormsBuilderIndex);

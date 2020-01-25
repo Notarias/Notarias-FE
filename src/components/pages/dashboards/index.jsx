@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { setBreadcrumbsList } from './../interfaces/breadcrumbs_interface';
+import { setBreadcrumbsList } from './../../interfaces/breadcrumbs_interface';
 
-class Home extends Component {
+class DashboardsIndex extends Component {
   componentDidMount() {
     setBreadcrumbsList([])
   }
@@ -13,4 +13,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default DashboardsIndex;

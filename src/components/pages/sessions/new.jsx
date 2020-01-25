@@ -18,8 +18,7 @@ import Paper            from '@material-ui/core/Paper';
 import Typography       from '@material-ui/core/Typography';
 import withStyles       from '@material-ui/core/styles/withStyles';
 
-
-class SignInPage extends Component {
+class SessionsNew extends Component {
   constructor() {
     super()
     this.state = {
@@ -96,7 +95,7 @@ class SignInPage extends Component {
   }
 }
 
-SignInPage.propTypes = {
+SessionsNew.propTypes = {
   classes: PropTypes.object.isRequired,
   from: PropTypes.string
 };
@@ -112,4 +111,4 @@ const mapDispatchToProps = dispatch => ({
 export default compose(
   withStyles(styles),
   connect(mapStateToProps, mapDispatchToProps)
-)(withRouter(SignInPage))
+)(withRouter(SessionsNew))

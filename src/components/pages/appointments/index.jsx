@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withStyles }       from '@material-ui/core/styles';
 
-class Appointments extends Component {
+class AppointmentsIndex extends Component {
     render() {
         return(
             <div>
@@ -10,4 +10,4 @@ class Appointments extends Component {
         )
       }
     }
-export default withStyles(()=>{})(Appointments);
+export default withStyles(()=>{})(AppointmentsIndex);

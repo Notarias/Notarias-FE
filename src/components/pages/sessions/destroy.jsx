@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-export default class SignOutPage extends Component {
+export default class SessionsDestroy extends Component {
   render() {
     return(
       <div>

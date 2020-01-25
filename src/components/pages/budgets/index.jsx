@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withStyles }       from '@material-ui/core/styles';
 
-class Budgets extends Component {
+class BudgetsIndex extends Component {
     render() {
         return(
             <div>
@@ -10,4 +10,4 @@ class Budgets extends Component {
         )
       }
     }
-export default withStyles(()=>{})(Budgets);
+export default withStyles(()=>{})(BudgetsIndex);
