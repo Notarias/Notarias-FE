@@ -161,6 +161,13 @@ class Users extends Component {
                     sort_direction={sort_direction}
                     callback={callServer}
                   />
+                  <SortHeader
+                    text={"Roles"}
+                    field_property={"role"}
+                    current_field={sort_field}
+                    sort_direction={sort_direction}
+                    callback={callServer}
+                  />
                   <TableCell align="center">Opciones</TableCell>
                 </TableRow>
               </TableHead>
