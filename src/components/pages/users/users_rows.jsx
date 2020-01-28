@@ -14,6 +14,14 @@ class UsersRows extends Component {
     this.state = { users: [] }
   }
 
+  roleName(user) {
+    if (user.role) {
+      return user.role.name
+    } else {
+      return "N/A" 
+    }
+  }
+
   usersRows() {
     const { users, lockUser, unlockUser, classes } = this.props;
     return(
@@ -24,6 +32,7 @@ class UsersRows extends Component {
           </TableCell>
           <TableCell align="center">{user.last_name}</TableCell>
           <TableCell align="center">{user.email}</TableCell>
+          <TableCell align="center">{ this.roleName(user) }</TableCell>
           <TableCell align="center">
             <GenericDropdownMenu user={user} 
                                 dropdownSelectedStyle>
