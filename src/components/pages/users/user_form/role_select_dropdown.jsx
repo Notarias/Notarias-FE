@@ -29,6 +29,7 @@ export default class RoleSelectDropdown extends Component {
         >
           {children}
         </Select>
+        <FormHelperText style={{color: "red"}}>El rol no es requerido</FormHelperText>
         {hasError(error, touched)&& <FormHelperText error>{errorMessage(error)}</FormHelperText> }
       </FormControl>
     )
