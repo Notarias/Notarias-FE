@@ -13,7 +13,7 @@ import { styles }  from './session_styles';
 import SessionForm from './session_form';
 
 import Avatar           from '@material-ui/core/Avatar';
-import logo_momentary   from './../../../images/logo_momentary.png'
+import logo_notaria   from './../../../images/logo_notaria.JPG'
 import Paper            from '@material-ui/core/Paper';
 import Typography       from '@material-ui/core/Typography';
 import withStyles       from '@material-ui/core/styles/withStyles';
@@ -83,11 +83,8 @@ class SessionsNew extends Component {
             actionable={false}
           />}
           <Avatar className={classes.avatar}>
-            <img className={classes.logo} src={logo_momentary} alt="Logo"/>
+            <img className={classes.logo} src={logo_notaria} alt="Logo"/>
           </Avatar>
-          <Typography component="h1" variant="h5">
-            Inicia sesión
-          </Typography>
           <SessionForm classes={classes} submitSignin={this.submitSignin} />
         </Paper>
       </main>
