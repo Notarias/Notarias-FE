@@ -19,8 +19,8 @@ export const styles = theme => ({
   },
   avatar: {
     backgroundColor: 'white',
-    width: '100px',
-    height: '100px',
+    width: '180px',
+    height: '180px',
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -30,9 +30,7 @@ export const styles = theme => ({
     marginTop: theme.spacing(3),
   },
   logo: {
-    maxWidth: '80%',
-    maxHeight: '80%',    
-    width: 'auto',
-    height: 'auto',
+    maxWidth: '90%',
+    maxHeight: '90%',
   }
 });
