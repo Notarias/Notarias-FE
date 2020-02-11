@@ -10,6 +10,10 @@ import TableCell                    from '@material-ui/core/TableCell';
 import { setBreadcrumbsList }       from '../../interfaces/breadcrumbs_interface';
 import { styles }                   from './styles';
 import GenericDropdownMenuCliets    from '../../ui/generic_dropdown_menu_clients';
+import ControlBar                   from '../clients/controls_bar';
+import { setParamsInterface }       from '../../interfaces/parameter_manager';
+import { managePaginationBefore }   from '../../interfaces/parameter_manager';
+import CircularProgress             from '@material-ui/core/CircularProgress';
 
 const BREADCRUMBS = [
   { name: "Inicio", path: "/" },
@@ -20,6 +24,8 @@ class Clients extends Component {
     super(props)
     this.state ={
       clients: [ ],
+      timeout: 0,
+      searchLoading: false,
     }
   }
 
@@ -27,19 +33,50 @@ class Clients extends Component {
     setBreadcrumbsList(BREADCRUMBS)
     this.callServer()
   }
-  callServer() {
-    API.get('/clients'
+
+  prepareParams = (new_params) => {
+    let deliverable_params = Object.assign({}, this.state.request_params)
+    setParamsInterface(new_params, deliverable_params)
+    managePaginationBefore(deliverable_params)
+    return deliverable_params
+  }
+
+  callServer(new_params = {}) {
+    this.setState({ loading: true })
+    let deliverable_params = this.prepareParams(new_params)
+    API.get('/clients',
+      { params: deliverable_params },
       ).then(response => {
         this.setState({
-          clients: response.data.clients
+          clients: response.data.clients,
+          searchLoading: false,         
+          loading: false,
+          request_params: {
+            search: deliverable_params.search
+          }
         })
       })
     }
+
+    onChangeSearch(event) {
+      this.state.timeout && clearTimeout(this.state.timeout)
+      let searchText = event.target.value
+      const search = { search: { "first_name_or_last_name.cont": searchText } }
+      const callServer = this.callServer.bind(this)
+      this.setState({
+        searchLoading: true,
+        timeout: setTimeout(() => { callServer(search) }, 2000)
+      })
+      return searchText
+    }
+
     render() {
       const { classes } = this.props
       return(
-        <div>
-          [busqueda]
+        <div className={classes.root}>
+          <ControlBar
+            searchLoading={this.state.searchLoading}
+            onChangeSearch={this.onChangeSearch.bind(this)}/>
           <div className={classes.tableWrapper}>
             <Paper >
               <Table>
@@ -51,17 +88,24 @@ class Clients extends Component {
                   </TableRow>
                 </TableHead>
                 <TableBody >
-                  {this.state.clients.map(row => (
-                  <TableRow>
-                    <TableCell align= "center">{row.first_name}</TableCell>
-                    <TableCell align= "center">{row.last_name}</TableCell>
-                    <TableCell align= "center">
-                      <div>
-                        <GenericDropdownMenuCliets/>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                  ))}
+                  { this.state.loading ? 
+                    <TableRow>
+                      <TableCell align="center" colSpan={4} className={classes.loadingTableCell}>
+                        <CircularProgress className={classes.searchLoadingIcon} size={100}/>
+                      </TableCell>
+                    </TableRow> :
+                    this.state.clients.map(row => (
+                    <TableRow>
+                      <TableCell align= "center">{row.first_name}</TableCell>
+                      <TableCell align= "center">{row.last_name}</TableCell>
+                      <TableCell align= "center">
+                        <div>
+                          <GenericDropdownMenuCliets/>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                    ))
+                  }
                 </TableBody>
               </Table>
             </Paper>
