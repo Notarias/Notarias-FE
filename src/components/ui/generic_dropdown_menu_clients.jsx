@@ -27,7 +27,6 @@ export default class GenericDropdownMenu extends React.Component {
 
   render() {
     const { anchorEl } = this.state;
-    console.log(this.props)
     const open = Boolean(anchorEl);
 
     return (
