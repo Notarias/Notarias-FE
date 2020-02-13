@@ -11,6 +11,7 @@ export const styles = theme => ({
     position: 'relative',
     whiteSpace: 'nowrap',
     width: 240,
+    overflowX: 'hidden',
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
