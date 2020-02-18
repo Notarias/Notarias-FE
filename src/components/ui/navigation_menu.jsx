@@ -30,7 +30,7 @@ class NavigationMenu extends Component {
         onMouseMove={setOpenMenu}
         onMouseLeave={setCloseMenu}
       >
-        <List>
+        <List style={{height: "40%"}}>
           <div>
             <MenuLink iconComponent={ClientsIcon} linkPath="/clients" menuText="Clientes" />
             <MenuLink iconComponent={BudgetsIcon} linkPath="/budgets" menuText="Presupuestos" />
@@ -39,17 +39,20 @@ class NavigationMenu extends Component {
           </div>
         </List>
         <Divider />
-          <List>
-            <div>
-              
-            <MenuLink iconComponent={UsersIcon} linkPath="/users" menuText="Usuarios" />
-            <MenuLink iconComponent={BudgetsBuilderIcon} linkPath="/budgets/templates" menuText="Presupuestos" />
-            <MenuLink iconComponent={FormsBuilderIcon} linkPath="/forms/templates" menuText="Trámites" />
-            <MenuLink iconComponent={ReportsIcon} linkPath="/reports" menuText="Reportes" />
-            <ProfileLink/>
-          </div>
-        </List>
-      </Drawer>
+          <List style={{height: "60%"}}>
+            <div style={{display: "flex", flexDirection: "column", height: "100%", justifyContent: "space-between"}}>
+              <div style={{justifyContent: "normal"}}>              
+                <MenuLink iconComponent={UsersIcon} linkPath="/users" menuText="Usuarios" />
+                <MenuLink iconComponent={BudgetsBuilderIcon} linkPath="/budgets/templates" menuText="Presupuestos" />
+                <MenuLink iconComponent={FormsBuilderIcon} linkPath="/forms/templates" menuText="Trámites" />
+                <MenuLink iconComponent={ReportsIcon} linkPath="/reports" menuText="Reportes" />
+              </div>
+              <div style={{  }}>
+                <ProfileLink/>
+              </div>
+            </div>
+          </List>
+        </Drawer>
     )
   }
 }

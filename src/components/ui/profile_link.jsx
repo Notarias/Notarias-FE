@@ -11,7 +11,7 @@ import Avatar               from '@material-ui/core/Avatar';
 export default withStyles(styles)((props) => {
   const { classes } = props
   return(
-    <Link to="/profile" style={{ textDecoration: 'none', position: 'relative', top: '180px'}}>
+    <Link to="/profile">
       <ListItem button>
         <ListItemIcon >
             <Grid>

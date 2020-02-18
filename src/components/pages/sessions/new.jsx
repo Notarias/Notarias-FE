@@ -15,7 +15,6 @@ import SessionForm from './session_form';
 import Avatar           from '@material-ui/core/Avatar';
 import logo_notaria   from './../../../images/logo_notaria.JPG'
 import Paper            from '@material-ui/core/Paper';
-import Typography       from '@material-ui/core/Typography';
 import withStyles       from '@material-ui/core/styles/withStyles';
 
 class SessionsNew extends Component {
