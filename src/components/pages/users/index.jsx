@@ -16,8 +16,8 @@ import UsersRows            from './users_rows';
 import ControlsBar          from './controls_bar';
 import SortHeader           from '../../ui/sort_header';
 import { setBreadcrumbsList }                            from '../../interfaces/breadcrumbs_interface';
-import { setParamsInterface }                            from '../../interfaces/parameter_manager';
-import { managePaginationAfter, managePaginationBefore } from '../../interfaces/parameter_manager';
+import { managePaginationAfter } from '../../interfaces/parameter_manager';
+import UsersCollection from '../../models/collections/users_collection'
 
 const BREADCRUMBS = [
   { name: "Inicio", path: "/" },
@@ -28,26 +28,17 @@ class Users extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      loading: true,
-      users: [],
-      sort_field: "first_name",
-      sort_direction: "desc",
-      timeout: 0,
-      searchLoading: false,
-      request_params: {
-        page: 0,
-        per: 5,
-        total_records: 1,
-        sort: {
-          "first_name": "asc"
-        }
-      }
+      usersCollection: new UsersCollection(this.dataObserver.bind(this))
     }
+  }
+
+  dataObserver(usersInstance) {
+    this.forceUpdate()
   }
 
   componentDidMount() {
     setBreadcrumbsList(BREADCRUMBS)
-    this.callServer()
+    this.state.usersCollection.load()
   }
 
   componentWillUnmount() {
@@ -55,57 +46,13 @@ class Users extends Component {
   }
 
   handleChangeRowsPerPage = (event) => {
-    let per  = event.target.value
-    this.callServer({ per })
+    let per = event.target.value
+    this.state.usersCollection.load({ per })
   };
 
   ChangePage = (event, page) => {
-    this.callServer({ page  })
+    this.state.usersCollection.load({ page  })
   };
-
-  prepareParams = (new_params) => {
-    let deliverable_params = Object.assign({}, this.state.request_params)
-    setParamsInterface(new_params, deliverable_params)
-    managePaginationBefore(deliverable_params)
-    return deliverable_params
-  }
-
-  callServer(new_params = {}, extra_state_data = {}) {
-    this.setState({ loading: true })
-    let deliverable_params = this.prepareParams(new_params)
-    API.get(
-      '/users',
-      { params: deliverable_params },
-      { cancelToken: cancelToken.token }
-    ).then(response => {
-      let meta = managePaginationAfter(response.data.meta)
-      this.setState({
-        users: response.data.users,
-        searchLoading: false,
-        loading: false,
-        request_params: {
-          page: meta.page,
-          per: meta.per,
-          total_records: meta.total_records,
-          sort: deliverable_params.sort,
-          search: deliverable_params.search
-        },
-        ...extra_state_data
-      })
-    })
-  }
-
-  onChangeSearch(event) {
-    this.state.timeout && clearTimeout(this.state.timeout)
-    let searchText = event.target.value
-    const search = { search: { "all_fields.cont": searchText } }
-    const callServer = this.callServer.bind(this)
-    this.setState({
-      searchLoading: true,
-      timeout: setTimeout(() => { callServer(search) }, 2000)
-    })
-    return searchText
-  }
 
   lockUser(user) {
     API.patch(`/users/${user.id}/lock`, { cancelToken: cancelToken.token })
@@ -125,15 +72,19 @@ class Users extends Component {
     this.setState({ users: update(users, updateObj) })
   }
 
+  onChangeSearch(event) {
+    return this.state.usersCollection.search(event, this)
+  }
+
   render() {
     const { classes } = this.props
-    const { sort_field, sort_direction } = this.state
-    const callServer = this.callServer.bind(this)
+    const { sort_field, sort_direction } = this.state.usersCollection
+    const callServer = this.state.usersCollection.load.bind(this.state.usersCollection)
     return(
       <div className={classes.root}>
         <ControlsBar
           classes={classes}
-          searchLoading={this.state.searchLoading}
+          searchLoading={this.state.usersCollection.searchLoading}
           onChangeSearch={this.onChangeSearch.bind(this)}/>
         <div className={classes.tableWrapper}>
           <Paper >
@@ -172,14 +123,14 @@ class Users extends Component {
                 </TableRow>
               </TableHead>
               <TableBody>
-                { this.state.loading ? 
+                { this.state.usersCollection.loading ? 
                   <TableRow>
                     <TableCell align="center" colSpan={4} className={classes.loadingTableCell}>
                       <CircularProgress className={classes.searchLoadingIcon} size={100}/>
                     </TableCell>
                   </TableRow> :
                   <UsersRows
-                    users={this.state.users}
+                    users={this.state.usersCollection.users}
                     lockUser={this.lockUser.bind(this)}
                     unlockUser={this.unlockUser.bind(this)}
                   />
@@ -188,12 +139,12 @@ class Users extends Component {
               <TableFooter>
                 <TableRow>
                   <TablePagination
-                    page={this.state.request_params.page}
-                    rowsPerPage={this.state.request_params.per}
+                    page={this.state.usersCollection.data.page}
+                    rowsPerPage={this.state.usersCollection.data.per}
                     rowsPerPageOptions={[5, 10, 15, 20]}
                     onChangePage={this.ChangePage}
                     onChangeRowsPerPage={this.handleChangeRowsPerPage}
-                    count={this.state.request_params.total_records}
+                    count={this.state.usersCollection.total_records}
                     labelRowsPerPage={"Filas por página:"}
                   />
                 </TableRow>
