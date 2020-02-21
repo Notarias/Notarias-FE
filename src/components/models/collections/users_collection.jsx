@@ -1,39 +1,47 @@
-import React, { useState } from 'react';
+import React from 'react';
 import API, { cancelSource, cancelToken } from '../../../axios_config';
-import { setParamsInterface }                            from '../../interfaces/parameter_manager';
 import { managePaginationAfter, managePaginationBefore } from '../../interfaces/parameter_manager';
 
 export default class UsersCollection {
-  constructor(parentDataObserver) {
-    this.data = {
-      per: 5
+  constructor(parent) {
+    this.pagination = {
+      per: 5,
+      page: 0,
+      total_records: 0
     }
+    this.sort = {
+      field: "first_name",
+      direction: "desc"
+    }
+    this.search_query = null
     this.searchLoading = false
     this.loading = true
     this.users = []
-    this.sort_field = "first_name"
-    this.sort_direction = "desc"
-    this.parentDataObserver = parentDataObserver
+    this.parent = parent
     this.timeout = 0
   }
 
-  prepareParams(new_params) {
-    let deliverable_params = Object.assign({}, this.data)
-    setParamsInterface(new_params, deliverable_params)
-    managePaginationBefore(deliverable_params)
-    return deliverable_params
+  prepareParams({ page, per, sort, search }) {
+    let params = {
+                   page: page,
+                   per: per || this.pagination.per,
+                   sort: sort || { [this.sort.field]: this.sort.direction },
+                   search: search || this.search_query
+                 }
+    managePaginationBefore(params)
+    return params
   }
 
-  search(event, templateComponent) {
+  search(event) {
     this.timeout && clearTimeout(this.timeout)
-
+    let predicate = event.currentTarget.attributes.predicate.value
     let searchText = event.target.value
-    const search = { search: { "all_fields.cont": searchText } }
+    const search = { search: { [predicate]: searchText } }
     const callServer = this.load.bind(this)
 
     new Promise((resolve, reject) => {
       this.searchLoading = true
-      templateComponent.forceUpdate()
+      this.parent.forceUpdate()
       resolve()
     }).then((val) => {
       this.timeout = setTimeout(() => { callServer(search) }, 2000)
@@ -41,7 +49,11 @@ export default class UsersCollection {
     return searchText
   }
 
-  async load(new_params = {}, extra_data = {}) {
+  cancelLoad() {
+    cancelSource.cancel()
+  }
+
+  async load(new_params = {}) {
     let params = this.prepareParams(new_params)
     await API.get(
             '/users',
@@ -49,20 +61,21 @@ export default class UsersCollection {
             { cancelToken: cancelToken.token }
           ).then(response => {
             let meta = managePaginationAfter(response.data.meta)
-            this.data = {
+            this.pagination = {
               page: meta.page,
               per: meta.per,
-              sort: params.sort,
-              search: params.search
+              total_records:  meta.total_records
             }
-            this.total_records = meta.total_records
-            this.loading = false
-            this.sort_direction = extra_data.sort_direction
-            this.sort_field = extra_data.sort_field
+            this.sort = {
+              field: Object.keys(params["sort"])[0],
+              direction: Object.values(params["sort"])[0]
+            }
             this.users = response.data.users
+            this.search_query = params.search
+            this.loading = false
             this.searchLoading = false
           })
-    this.parentDataObserver(this)
+    this.parent.forceUpdate()
     return this.data
   }
 }

@@ -6,7 +6,9 @@ export const setParamsInterface = (new_params, deliverable_params) => {
 }
 
 export const managePaginationBefore = (deliverable_params) => {
-  if (typeof(deliverable_params["page"]) !== "undefined") {
+  if (typeof(deliverable_params["page"]) === "undefined" || typeof(deliverable_params["page"]) === "null") {
+    deliverable_params["page"] = 1
+  } else if (typeof(deliverable_params["page"]) !== "undefined") {
     deliverable_params["page"] = parseInt(deliverable_params["page"]) + 1 // pagination up because rails is index 1 based
   }
   return deliverable_params
@@ -42,4 +44,8 @@ export const sortHandler = (sort_field, current_sort_field, sort_direction, call
       { sort_direction, sort_field }
     )
   } 
-} 
+}
+
+export const preparePagination = (currentPagination, newPagination) => {
+  
+}

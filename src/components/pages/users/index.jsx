@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withStyles }       from '@material-ui/core/styles';
-import API, { cancelSource, cancelToken } from '../../../axios_config';
+import API, { cancelToken } from '../../../axios_config';
 import Table                from '@material-ui/core/Table';
 import TableBody            from '@material-ui/core/TableBody';
 import TableFooter          from '@material-ui/core/TableFooter';
@@ -28,30 +28,34 @@ class Users extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      usersCollection: new UsersCollection(this.dataObserver.bind(this))
+      usersCollection: new UsersCollection(this)
     }
   }
 
-  dataObserver(usersInstance) {
-    this.forceUpdate()
+  submitData(params) {
+    this.state.usersCollection.load(params)
   }
 
   componentDidMount() {
     setBreadcrumbsList(BREADCRUMBS)
-    this.state.usersCollection.load()
+    this.submitData()
   }
 
   componentWillUnmount() {
-    cancelSource.cancel()
+    this.cancelCall()
   }
 
-  handleChangeRowsPerPage = (event) => {
+  cancelCall() {
+    this.state.usersCollection.cancelLoad()
+  }
+
+  changeRowsPerPage = (event) => {
     let per = event.target.value
-    this.state.usersCollection.load({ per })
+    this.submitData({ per })
   };
 
-  ChangePage = (event, page) => {
-    this.state.usersCollection.load({ page  })
+  changePage = (event, page) => {
+    this.submitData({ page })
   };
 
   lockUser(user) {
@@ -73,12 +77,12 @@ class Users extends Component {
   }
 
   onChangeSearch(event) {
-    return this.state.usersCollection.search(event, this)
+    this.state.usersCollection.search(event)
   }
 
   render() {
     const { classes } = this.props
-    const { sort_field, sort_direction } = this.state.usersCollection
+    const { field, direction } = this.state.usersCollection.sort
     const callServer = this.state.usersCollection.load.bind(this.state.usersCollection)
     return(
       <div className={classes.root}>
@@ -94,29 +98,29 @@ class Users extends Component {
                   <SortHeader
                     text={"Nombre"}
                     field_property={"first_name"}
-                    current_field={sort_field}
-                    sort_direction={sort_direction}
+                    current_field={field}
+                    sort_direction={direction}
                     callback={callServer}
                   />
                   <SortHeader
                     text={"Apellido"}
                     field_property={"last_name"}
-                    current_field={sort_field}
-                    sort_direction={sort_direction}
+                    current_field={field}
+                    sort_direction={direction}
                     callback={callServer}
                   />
                   <SortHeader
                     text={"Correo"}
                     field_property={"email"}
-                    current_field={sort_field}
-                    sort_direction={sort_direction}
+                    current_field={field}
+                    sort_direction={direction}
                     callback={callServer}
                   />
                   <SortHeader
                     text={"Roles"}
                     field_property={"role"}
-                    current_field={sort_field}
-                    sort_direction={sort_direction}
+                    current_field={field}
+                    sort_direction={direction}
                     callback={callServer}
                   />
                   <TableCell align="center">Opciones</TableCell>
@@ -139,12 +143,12 @@ class Users extends Component {
               <TableFooter>
                 <TableRow>
                   <TablePagination
-                    page={this.state.usersCollection.data.page}
-                    rowsPerPage={this.state.usersCollection.data.per}
+                    page={this.state.usersCollection.pagination.page}
+                    rowsPerPage={this.state.usersCollection.pagination.per}
                     rowsPerPageOptions={[5, 10, 15, 20]}
-                    onChangePage={this.ChangePage}
-                    onChangeRowsPerPage={this.handleChangeRowsPerPage}
-                    count={this.state.usersCollection.total_records}
+                    onChangePage={this.changePage}
+                    onChangeRowsPerPage={this.changeRowsPerPage}
+                    count={this.state.usersCollection.pagination.total_records}
                     labelRowsPerPage={"Filas por página:"}
                   />
                 </TableRow>

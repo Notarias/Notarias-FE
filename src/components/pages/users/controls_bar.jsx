@@ -16,12 +16,13 @@ export default (props) => {
           { 
             searchLoading ?
             <CircularProgress className={classes.searchLoadingIcon} size={25}/> :
-            <SearchIcon /> 
+            <SearchIcon />
           }
         </div>
         <InputBase
           placeholder="Buscar…"
           onChange={onChangeSearch}
+          inputProps={{predicate: "all_fields.cont"}}
           classes={{
             root: classes.searchInputRoot,
             input: classes.searchInputInput,
