@@ -1,6 +1,8 @@
 import React from 'react';
 import API, { cancelSource, cancelToken } from '../../../axios_config';
 import { managePaginationAfter, managePaginationBefore } from '../../interfaces/parameter_manager';
+import update from 'react-addons-update';
+import User from '../objects/user'
 
 export default class UsersCollection {
   constructor(parent) {
@@ -53,6 +55,22 @@ export default class UsersCollection {
     cancelSource.cancel()
   }
 
+  updateUserInList(response, user) {
+    let index = this.users.findIndex(oldUser => oldUser.id === user.id)
+    let updateObj = {}
+    updateObj[index] = { $set: new User(response.data.user, this) }
+    this.users = update(this.users, updateObj)
+    this.parent.forceUpdate()
+  }
+
+  buildUsers(users) {
+    return(
+      users.map((user) => {
+        return new User(user, this)
+      })
+    )
+  }
+
   async load(new_params = {}) {
     let params = this.prepareParams(new_params)
     await API.get(
@@ -70,7 +88,7 @@ export default class UsersCollection {
               field: Object.keys(params["sort"])[0],
               direction: Object.values(params["sort"])[0]
             }
-            this.users = response.data.users
+            this.users = this.buildUsers(response.data.users)
             this.search_query = params.search
             this.loading = false
             this.searchLoading = false

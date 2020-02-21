@@ -10,7 +10,6 @@ import TableRow             from '@material-ui/core/TableRow';
 import Paper                from '@material-ui/core/Paper';
 import { styles }           from './styles';
 import TablePagination      from '@material-ui/core/TablePagination';
-import update               from 'react-addons-update';
 import CircularProgress     from '@material-ui/core/CircularProgress';
 import UsersRows            from './users_rows';
 import ControlsBar          from './controls_bar';
@@ -59,21 +58,11 @@ class Users extends Component {
   };
 
   lockUser(user) {
-    API.patch(`/users/${user.id}/lock`, { cancelToken: cancelToken.token })
-      .then((response) => { this.updateUserInList(response, user) })
+    user.lock()
   }
 
   unlockUser(user) {
-    API.patch(`/users/${user.id}/unlock`, { cancelToken: cancelToken.token })
-      .then((response) => { this.updateUserInList(response, user) })
-  }
-
-  updateUserInList(response, user) {
-    let users = this.state.users
-    let index = users.findIndex(oldUser => oldUser.id === user.id)
-    let updateObj = {}
-    updateObj[index] = { $set: response.data.user }
-    this.setState({ users: update(users, updateObj) })
+    user.unlock()
   }
 
   onChangeSearch(event) {
