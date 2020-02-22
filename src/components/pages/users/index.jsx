@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { withStyles }       from '@material-ui/core/styles';
-import API, { cancelToken } from '../../../axios_config';
 import Table                from '@material-ui/core/Table';
 import TableBody            from '@material-ui/core/TableBody';
 import TableFooter          from '@material-ui/core/TableFooter';
@@ -15,7 +14,6 @@ import UsersRows            from './users_rows';
 import ControlsBar          from './controls_bar';
 import SortHeader           from '../../ui/sort_header';
 import { setBreadcrumbsList }                            from '../../interfaces/breadcrumbs_interface';
-import { managePaginationAfter } from '../../interfaces/parameter_manager';
 import UsersCollection from '../../models/collections/users_collection'
 
 const BREADCRUMBS = [
@@ -51,11 +49,11 @@ class Users extends Component {
   changeRowsPerPage = (event) => {
     let per = event.target.value
     this.submitData({ per })
-  };
+  }
 
   changePage = (event, page) => {
     this.submitData({ page })
-  };
+  }
 
   lockUser(user) {
     user.lock()

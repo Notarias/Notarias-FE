@@ -3,11 +3,10 @@ import { styles }           from './user_form/styles';
 import { withStyles }       from '@material-ui/core/styles';
 import API                  from '../../../axios_config';
 import UserForm             from './user_form/user_form';
-import { GENERIC_FORM_ERROR } from '../../reducers/messages_reducer';
 import Paper                from '@material-ui/core/Paper';
 import ErrorMessage         from '../../ui/custom_snackbar_message';
-import { setMessage }                      from '../../interfaces/messages_interface';
 import { setBreadcrumbsList }              from '../../interfaces/breadcrumbs_interface';
+import User from '../../models/objects/user'
 
 
 const BREADCRUMBS = [
@@ -17,13 +16,13 @@ const BREADCRUMBS = [
 ]
 
 class Edit extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
-      user: {},
+      loading: true,
+      user: new User({ id: this.props.match.params.id }, this),
       errorMessage: null,
       errors: {},
-      loading: false,
       requiredFields: {
         "email": "Correo Electrónico",
         "first_name": "Nombre",
@@ -32,39 +31,36 @@ class Edit extends Component {
       notRequiredFields: {
         "password": "Contraseña",
         "password_confirmation": "Confirmar Contraseña",
-      }
+      },
+      fields: [
+        "email",
+        "first_name",
+        "last_name",
+        "password",
+        "password_confirmation",
+        "role_permanent_link"
+      ]
     }
   }
 
   componentDidMount() {
     setBreadcrumbsList(BREADCRUMBS)
-    if(this.props && this.props.match && this.props.match.params.id) {
-      API.get(`/users/${this.props.match.params.id}`)
-        .then((response) => {
-          this.setState({ user: response.data.user })
-        })
+    if(this.state.user.id) {
+      this.state.user.load()
     }
   }
 
-  submitUser = NewUserInfo => {
+  formData() {
+    let data = {}
+    for(let field of this.state.fields){
+      data[field] = this.state.user[field]
+    }
+    return(data)
+  }
+
+  submitUser = params => {
     this.setState({ loading: true })
-    API.patch(`/users/${this.state.user.id}`,
-      {
-        user: NewUserInfo
-      }
-    ).then((data) => {
-      setMessage({ type: "success", text: "Usuario actualizado, redirigiendo..." })
-      this.setState({ loading: false })
-      setTimeout(() => { this.props.history.push('/users') }, 2000)
-    }).catch((error) => {
-      if (error.response && error.response.status === 422 ) {
-        this.setState({
-          errorMessage: GENERIC_FORM_ERROR,
-          errors: error.response.data.pointers,
-          loading: false
-        })
-      }
-    });
+    this.state.user.update(params)
   }
 
   render() {
@@ -76,16 +72,14 @@ class Edit extends Component {
             variant="error"
             className={classes.margin}
             message={this.state.errorMessage}
-            actionable={false}
-          />}
+            actionable={false}/>}
           <UserForm
-            initialValues={this.state.user}
+            initialValues={this.formData()}
             onSubmit={this.submitUser.bind(this)}
             errors={this.state.errors}
             requiredFields={this.state.requiredFields}
             notRequiredFields={this.state.notRequiredFields}
-            loading={this.state.loading}
-            />
+            loading={this.state.loading}/>
         </Paper>
       </div>
     )

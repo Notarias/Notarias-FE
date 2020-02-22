@@ -65,6 +65,7 @@ class  UserForm extends Component {
   }
 
   render() {
+    console.log(this.props)
     const { handleSubmit, pristine, submitting, userData, errors, classes, loading } = this.props
     return (
       <form onSubmit={handleSubmit} >
@@ -85,8 +86,8 @@ class  UserForm extends Component {
           fullWidth
           variant="contained"
           color="primary"
-          disabled={loading || pristine || submitting || !this.state.roles.length}
-        >
+          disabled={loading || pristine || submitting || !this.state.roles.length}>
+
           Guardar
           { loading && <CircularProgress size={24} className={classes.buttonProgress}/> }
         </Button>
