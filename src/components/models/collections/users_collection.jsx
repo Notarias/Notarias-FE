@@ -5,7 +5,7 @@ import update from 'react-addons-update';
 import User from '../objects/user'
 
 export default class UsersCollection {
-  constructor(parent) {
+  constructor() {
     this.pagination = {
       per: 5,
       page: 0,
@@ -19,7 +19,6 @@ export default class UsersCollection {
     this.searchLoading = false
     this.loading = true
     this.users = []
-    this.parent = parent
     this.timeout = 0
   }
 
@@ -34,67 +33,61 @@ export default class UsersCollection {
     return params
   }
 
-  search(event) {
-    this.timeout && clearTimeout(this.timeout)
-    let predicate = event.currentTarget.attributes.predicate.value
-    let searchText = event.target.value
-    const search = { search: { [predicate]: searchText } }
+  search(search_params) {
     const callServer = this.load.bind(this)
-
-    new Promise((resolve, reject) => {
-      this.searchLoading = true
-      this.parent.forceUpdate()
-      resolve()
-    }).then((val) => {
-      this.timeout = setTimeout(() => { callServer(search) }, 2000)
+    return new Promise((resolve, reject) => {
+      callServer(search_params).then(resolve)
     })
-    return searchText
   }
 
   cancelLoad() {
     cancelSource.cancel()
   }
 
-  updateUserInList(response, user) {
-    let index = this.users.findIndex(oldUser => oldUser.id === user.id)
-    let updateObj = {}
-    updateObj[index] = { $set: new User(response.data.user, this) }
-    this.users = update(this.users, updateObj)
-    this.parent.forceUpdate()
+  updateUserInList(user) {
+    return new Promise((resolve, reject) => {
+      let index = this.users.findIndex(oldUser => oldUser.id === user.id)
+      let updateObj = {}
+      updateObj[index] = { $set: user }
+      this.users = update(this.users, updateObj)
+      resolve()
+    })
   }
 
   buildUsers(users) {
     return(
       users.map((user) => {
-        return new User(user, this)
+        return new User(user)
       })
     )
   }
 
-  async load(new_params = {}) {
+  load(new_params = {}) {
     let params = this.prepareParams(new_params)
-    await API.get(
-            '/users',
-            { params: params },
-            { cancelToken: cancelToken.token }
-          ).then(response => {
-            let meta = managePaginationAfter(response.data.meta)
-            this.pagination = {
-              page: meta.page,
-              per: meta.per,
-              total_records:  meta.total_records
-            }
-            this.sort = {
-              field: Object.keys(params["sort"])[0],
-              direction: Object.values(params["sort"])[0]
-            }
-            this.users = this.buildUsers(response.data.users)
-            this.search_query = params.search
-            this.loading = false
-            this.searchLoading = false
-          })
-    this.parent.forceUpdate()
-    return this.data
+    return new Promise((resolve, reject) => {
+      API.get(
+        '/users',
+        { params: params },
+        { cancelToken: cancelToken.token }
+      ).then(response => {
+        let meta = managePaginationAfter(response.data.meta)
+        this.pagination = {
+          page: meta.page,
+          per: meta.per,
+          total_records:  meta.total_records
+        }
+        this.sort = {
+          field: Object.keys(params["sort"])[0],
+          direction: Object.values(params["sort"])[0]
+        }
+        this.users = this.buildUsers(response.data.users)
+        this.search_query = params.search
+        this.loading = false
+        this.searchLoading = false
+
+        resolve()
+      })
+    })
   }
 }
 

@@ -25,12 +25,16 @@ class Users extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      usersCollection: new UsersCollection(this)
+      usersCollection: new UsersCollection(this),
+      searchLoading: false
     }
   }
 
   submitData(params) {
-    this.state.usersCollection.load(params)
+    this.setState({ loading: true })
+    this.state.usersCollection.load(params).then(() => {
+      this.setState({ loading: false })
+    })
   }
 
   componentDidMount() {
@@ -55,27 +59,52 @@ class Users extends Component {
     this.submitData({ page })
   }
 
+  onChangeSearch(event) {
+    this.state.timeout && clearTimeout(this.state.timeout)
+    let predicate = event.currentTarget.attributes.predicate.value
+    let searchText = event.target.value
+    const search_params = { search: { [predicate]: searchText } }
+    const view = this
+
+    let timeout = setTimeout(() => {
+      view.state.usersCollection
+        .search(search_params)
+        .finally((val) => {
+          view.setState({ searchLoading: false })
+        })
+    }, 2000)
+
+    this.setState({ searchLoading: true, timeout: timeout })
+  }
+
+  sort(params) {
+    this.submitData(params)
+  }
+
   lockUser(user) {
-    user.lock()
+    user.lock().then(() => {
+      this.state.usersCollection.updateUserInList(user).then(() => {
+        this.forceUpdate()
+      })
+    })
   }
 
   unlockUser(user) {
-    user.unlock()
-  }
-
-  onChangeSearch(event) {
-    this.state.usersCollection.search(event)
+    user.unlock().then(() => {
+      this.state.usersCollection.updateUserInList(user).then(() => {
+        this.forceUpdate()
+      })
+    })
   }
 
   render() {
     const { classes } = this.props
     const { field, direction } = this.state.usersCollection.sort
-    const callServer = this.state.usersCollection.load.bind(this.state.usersCollection)
     return(
       <div className={classes.root}>
         <ControlsBar
           classes={classes}
-          searchLoading={this.state.usersCollection.searchLoading}
+          searchLoading={this.state.searchLoading}
           onChangeSearch={this.onChangeSearch.bind(this)}/>
         <div className={classes.tableWrapper}>
           <Paper >
@@ -87,34 +116,34 @@ class Users extends Component {
                     field_property={"first_name"}
                     current_field={field}
                     sort_direction={direction}
-                    callback={callServer}
+                    callback={this.sort.bind(this)}
                   />
                   <SortHeader
                     text={"Apellido"}
                     field_property={"last_name"}
                     current_field={field}
                     sort_direction={direction}
-                    callback={callServer}
+                    callback={this.sort.bind(this)}
                   />
                   <SortHeader
                     text={"Correo"}
                     field_property={"email"}
                     current_field={field}
                     sort_direction={direction}
-                    callback={callServer}
+                    callback={this.sort.bind(this)}
                   />
                   <SortHeader
                     text={"Roles"}
                     field_property={"role"}
                     current_field={field}
                     sort_direction={direction}
-                    callback={callServer}
+                    callback={this.sort.bind(this)}
                   />
                   <TableCell align="center">Opciones</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                { this.state.usersCollection.loading ? 
+                { this.state.loading ? 
                   <TableRow>
                     <TableCell align="center" colSpan={4} className={classes.loadingTableCell}>
                       <CircularProgress className={classes.searchLoadingIcon} size={100}/>

@@ -9,11 +9,6 @@ import Typography           from '@material-ui/core/Typography';
 import { Link }             from 'react-router-dom';
 
 class UsersRows extends Component {
-  constructor() {
-    super()
-    this.state = { users: [] }
-  }
-
   roleName(user) {
     if (user.role) {
       return user.role.name
@@ -42,7 +37,7 @@ class UsersRows extends Component {
                 </MenuItem>
               </Link>
               { user.locked_at ?
-                  <MenuItem key="Bloquear" onClick={unlockUser}>
+                  <MenuItem key="Desbloquear" onClick={unlockUser}>
                     Desbloquear
                   </MenuItem> :
                   <MenuItem key="Bloquear" onClick={lockUser}>
@@ -60,7 +55,7 @@ class UsersRows extends Component {
     const { classes } = this.props;
     return(
       <TableRow>
-        <TableCell align="center" colspan={4} className={classes.loadingTableCell}>
+        <TableCell align="center" colSpan={4} className={classes.loadingTableCell}>
           <Typography variant="h4" gutterBottom>
             Nada que mostrar...
           </Typography>

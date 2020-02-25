@@ -65,7 +65,6 @@ class  UserForm extends Component {
   }
 
   render() {
-    console.log(this.props)
     const { handleSubmit, pristine, submitting, userData, errors, classes, loading } = this.props
     return (
       <form onSubmit={handleSubmit} >
