@@ -58,6 +58,36 @@ export const styles = theme => {
           width: 200,
         },
       }
+    },
+    genericGridHeight: {        
+      height: "100%" 
+    },
+    textFieldsForm: {
+      marginTop: "15px", marginRight:"20px", width: "70%" 
+    },
+    submitFormButton: {
+      marginTop: "25px"
+    },
+    gridScrollable: {
+      height: "70%", overflowY: "scroll", borderLeft: "groove"
+    },
+    gridInputComments: {
+      height: "30%", borderLeft: "groove"
+    },
+    clientIcon: {
+      width: "22px", height: "22px", marginTop: "30px", marginRight: "5px"
+    },
+    genericInputIcon: {
+      marginTop: "30px", marginRight: "7px" 
+    },
+    emailIcon: {
+      width: "35px", height: "35px", marginTop: "26px", marginRight: "5px" 
+    },
+    pageWrapper: {
+      backgroundColor:"white", height: "100%" 
+    },
+    textFieldsComments: {
+      width: "500px", paddingLeft:"15px" 
     }
   })
 }
