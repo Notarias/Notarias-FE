@@ -9,21 +9,22 @@ import DashboardsIndex     from '../components/pages/dashboards/index';
 import UsersIndex          from '../components/pages/users/index';
 import UsersNew            from '../components/pages/users/new';
 import UsersEdit           from '../components/pages/users/edit';
+import clientsNew          from  '../components/pages/clients/new';
 import ClientsIndex        from '../components/pages/clients/index';
-import BudgetBuilderIndex from '../components/pages/budget_builders/index';
+import BudgetBuilderIndex  from '../components/pages/budget_builders/index';
 import FormsBuilderIndex   from '../components/pages/form_builders/index';
 import BudgetsIndex        from '../components/pages/budgets/index';
 import ProceduresIndex     from '../components/pages/procedures/index';
 import AppointmentsIndex   from '../components/pages/appointments/index';
 import ReportsIndex        from '../components/pages/reports/index';
-import ProfilesIndex        from '../components/pages/profiles/index';
+import ProfilesIndex       from '../components/pages/profiles/index';
 import store               from '../store';
 
 export default function BaseRoutes(props) {
   const { styles } = props
   let { breadcrumbs } = store.getState()
   return(
-    <div>
+    <div style={{ height: "100%" }}>
       { !!breadcrumbs.length && <Breadcrumbs styles={styles} /> }
       { props.children }
       <Switch>
@@ -33,6 +34,7 @@ export default function BaseRoutes(props) {
         <ProtectedRoute path='/users/:id/edit' component={UsersEdit}/>
         <ProtectedRoute path='/users/new' component={UsersNew}/>
         <ProtectedRoute path='/users' component={UsersIndex}/>
+        <ProtectedRoute path='/clients/new' component={clientsNew}/>
         <ProtectedRoute path="/clients" component={ClientsIndex}/>
         <ProtectedRoute path="/budgets/templates" component={BudgetBuilderIndex}/>
         <ProtectedRoute path="/forms/templates" component={FormsBuilderIndex}/>
