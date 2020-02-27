@@ -1,9 +1,9 @@
 import React from 'react';
 import API, { cancelSource, cancelToken } from '../../../axios_config';
 import { managePaginationAfter, managePaginationBefore } from '../../interfaces/parameter_manager';
-import User from '../objects/user'
+import Client from '../objects/client'
 
-export default class UsersCollection {
+export default class ClientsCollection {
   constructor() {
     this.pagination = {
       per: 5,
@@ -15,7 +15,7 @@ export default class UsersCollection {
       direction: "desc"
     }
     this.search_query = null
-    this.users = []
+    this.clients = []
     this.timeout = 0
   }
 
@@ -41,10 +41,10 @@ export default class UsersCollection {
     cancelSource.cancel()
   }
 
-  buildUsers(users) {
+  buildUsers(clients) {
     return(
-      users.map((user) => {
-        return new User(user)
+      clients.map((client) => {
+        return new Client(client)
       })
     )
   }
@@ -53,7 +53,7 @@ export default class UsersCollection {
     let params = this.prepareParams(new_params)
     return new Promise((resolve, reject) => {
       API.get(
-        '/users',
+        '/clients',
         { params: params },
         { cancelToken: cancelToken.token }
       ).then(response => {
@@ -67,7 +67,7 @@ export default class UsersCollection {
           field: Object.keys(params["sort"])[0],
           direction: Object.values(params["sort"])[0]
         }
-        this.users = this.buildUsers(response.data.users)
+        this.clients = this.buildUsers(response.data.clients)
         this.search_query = params.search
         resolve()
       })

@@ -50,14 +50,15 @@ class App extends Component {
         <CssBaseline />
 
         <main className={classes.content}>
-          { message && <CustomSnackbarMessage
-            variant={ message.type }
-            className={ classes.floatingMessage }
-            message={ message.text }
-            actionable={ true }
-            onClose={ clearMessage }
-          /> }
-          <BaseRoutes styles={classes}/>
+          <BaseRoutes styles={classes}>
+            { message && <CustomSnackbarMessage
+              variant={ message.type }
+              className={ classes.floatingMessage }
+              message={ message.text }
+              actionable={ true }
+              onClose={ clearMessage }
+            /> }
+          </BaseRoutes>
         </main>
       </div>
     );

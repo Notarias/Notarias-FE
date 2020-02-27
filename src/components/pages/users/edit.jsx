@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { styles }           from './user_form/styles';
 import { withStyles }       from '@material-ui/core/styles';
-import API                  from '../../../axios_config';
+import { GENERIC_FORM_ERROR } from '../../reducers/messages_reducer';
+import { setMessage }         from '../../interfaces/messages_interface';
+import { useHistory }       from "react-router-dom";
 import UserForm             from './user_form/user_form';
 import Paper                from '@material-ui/core/Paper';
 import ErrorMessage         from '../../ui/custom_snackbar_message';
@@ -46,7 +48,16 @@ class Edit extends Component {
   componentDidMount() {
     setBreadcrumbsList(BREADCRUMBS)
     if(this.state.user.id) {
-      this.state.user.load()
+      this.state.user.load().then(() => {
+        this.setState({
+          loading: false
+        })
+      }).catch((error) => {
+        this.setState({
+          errorMessage: GENERIC_FORM_ERROR,
+          loading: false
+        })
+      })
     }
   }
 
@@ -60,7 +71,23 @@ class Edit extends Component {
 
   submitUser = params => {
     this.setState({ loading: true })
-    this.state.user.update(params)
+    this.state.user.update(params).then(() => {
+      this.setState({
+        errorMessage: null,
+        errors: {},
+        loading: false
+      })
+      setMessage({ type: "success", text: "Usuario actualizado, redirigiendo..." })
+      setTimeout(() => { this.props.history.push('/users') }, 1500);
+    }).catch((error) => {
+      if (error.response && error.response.status === 422 ) {
+        this.setState({
+          errorMessage: GENERIC_FORM_ERROR,
+          errors: error.response.data.pointers,
+          loading: false
+        })
+      }
+    })
   }
 
   render() {

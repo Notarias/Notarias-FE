@@ -25,7 +25,7 @@ class Users extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      usersCollection: new UsersCollection(this),
+      usersCollection: new UsersCollection(),
       searchLoading: false
     }
   }
@@ -82,18 +82,14 @@ class Users extends Component {
   }
 
   lockUser(user) {
-    user.lock().then(() => {
-      this.state.usersCollection.updateUserInList(user).then(() => {
-        this.forceUpdate()
-      })
+    user.lock().then((locked_user) => {
+      this.forceUpdate()
     })
   }
 
   unlockUser(user) {
-    user.unlock().then(() => {
-      this.state.usersCollection.updateUserInList(user).then(() => {
-        this.forceUpdate()
-      })
+    user.unlock().then((unlocked_user) => {
+      this.forceUpdate()
     })
   }
 

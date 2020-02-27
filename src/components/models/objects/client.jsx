@@ -1,7 +1,7 @@
 import React from 'react';
 import API, { cancelToken } from '../../../axios_config';
 
-export default class User {
+export default class Client {
   constructor(attributes) {
     this.properties = [
       "id",
@@ -10,19 +10,18 @@ export default class User {
       "email",
       "created_at",
       "updated_at",
-      "role_permanent_link",
-      "avatars",
-      "locked_at",
-      "role"
+      "address",
+      "phone",
+      "rfc"
     ]
     this.assignAttributes(attributes)
   }
 
   load() {
     return new Promise((resolve, reject) => {
-        API.get(`/users/${this.id}`)
+        API.get(`/clients/${this.id}`)
            .then((response) => {
-             this.assignAttributes(response.data.user)
+             this.assignAttributes(response.data.client)
              resolve(this)
            }).catch((error) => {
              reject(error)
@@ -38,32 +37,12 @@ export default class User {
 
   update(params) {
     return new Promise((resolve, reject) => {
-      API.patch(`/users/${this.id}`, { user: params })
+      API.patch(`/clients/${this.id}`, { client: params })
          .then((data) => {
            resolve(data)
          }).catch((error) => {
            reject(error)
          });
-      })
-  }
-
-  lock() {
-    return new Promise((resolve, reject) => {
-      API.patch(`/users/${this.id}/lock`, { cancelToken: cancelToken.token })
-         .then((response) => {
-           this.assignAttributes(response.data.user)
-           resolve(this)
-         })
-      })
-  }
-
-  unlock() {
-    return new Promise((resolve, reject) => {
-      API.patch(`/users/${this.id}/unlock`, { cancelToken: cancelToken.token })
-         .then((response) => {
-           this.assignAttributes(response.data.user)
-           resolve(this)
-         })
       })
   }
 }

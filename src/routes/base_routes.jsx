@@ -25,6 +25,7 @@ export default function BaseRoutes(props) {
   return(
     <div>
       { !!breadcrumbs.length && <Breadcrumbs styles={styles} /> }
+      { props.children }
       <Switch>
         { !localStorage.jwtToken &&
           (<Route path="/sign_in" component={SessionsNew}/>)
