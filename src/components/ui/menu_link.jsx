@@ -7,10 +7,10 @@ import { Link }             from 'react-router-dom';
 import { styles }           from './navigation_menu_styles'
 
 export default withStyles(styles)((props) => {
-  const { classes, iconComponent, linkPath, menuText } = props;
+  const { classes, iconComponent, linkPath, menuText, nested } = props;
   return(
-    <Link to={linkPath} style={{ textDecoration: 'none' }}>
-      <ListItem button>
+    <Link to={linkPath} style={{ textDecoration: 'none', color: "black" }}>
+      <ListItem className={ nested ? classes.nested : ""} button>
         <ListItemIcon>
           <img alt={menuText} src={iconComponent}  className={classes.iconMenu}/>
           </ListItemIcon>

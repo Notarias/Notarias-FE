@@ -41,11 +41,12 @@ class App extends Component {
     const { classes, message } = this.props;
     return (
       <div className={classNames(classes.root, "App")}>
-        { localStorage.jwtToken && <NavigationMenu
-          shiftMenu={ this.shiftMenu.bind(this) }
-          open={ this.state.open }
-          setOpenMenu={ this.setOpenMenu.bind(this) }
-          setCloseMenu={ this.setCloseMenu.bind(this) }
+        { localStorage.jwtToken && 
+          <NavigationMenu
+            shiftMenu={ this.shiftMenu.bind(this) }
+            open={ this.state.open }
+            setOpenMenu={ this.setOpenMenu.bind(this) }
+            setCloseMenu={ this.setCloseMenu.bind(this) }
           /> }
         <CssBaseline />
 
