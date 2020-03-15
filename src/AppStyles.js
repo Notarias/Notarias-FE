@@ -20,6 +20,7 @@ export const styles = theme => {
   },
   breadcrumbsPaper: {
     padding: theme.spacing(1, 2),
-    borderRadius: '0'
+    borderRadius: '0',
+    height: "6%",
   },
 })};

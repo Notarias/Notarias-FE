@@ -1,6 +1,7 @@
 import { fade } from '@material-ui/core/styles/colorManipulator';
 
 export const styles = theme => {
+  console.log(theme)
   return ({
     root: {
       display: "flex",
@@ -59,8 +60,12 @@ export const styles = theme => {
         },
       }
     },
-    genericGridHeight: {        
-      height: "100%" 
+    genericGridHeight: {
+      height: "100%",
+      overflowY: "scroll",
+      backgroundColor: theme.palette.background.paper,
+      borderRight: `1px solid ${theme.palette.divider}`,
+      borderTop: `1px solid ${theme.palette.divider}`,
     },
     textFieldsForm: {
       marginTop: "15px", marginRight:"20px", width: "70%" 
@@ -69,10 +74,12 @@ export const styles = theme => {
       marginTop: "25px"
     },
     gridScrollable: {
-      height: "70%", overflowY: "scroll", borderLeft: "groove"
+      height: "80%",
+      overflowY: "scroll",
+      backgroundColor: theme.palette.background.default,
     },
     gridInputComments: {
-      height: "30%", borderLeft: "groove"
+      height: "20%"
     },
     clientIcon: {
       width: "22px", height: "22px", marginTop: "30px", marginRight: "5px"
@@ -84,7 +91,7 @@ export const styles = theme => {
       width: "35px", height: "35px", marginTop: "26px", marginRight: "5px" 
     },
     pageWrapper: {
-      backgroundColor:"white", height: "100%" 
+      height: "94%",
     },
     textFieldsComments: {
       width: "500px", paddingLeft:"15px" 

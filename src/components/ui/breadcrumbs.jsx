@@ -20,7 +20,7 @@ export default (props) => {
     }
   })
   return(
-    <Paper className={styles.breadcrumbsPaper}>
+    <Paper className={styles.breadcrumbsPaper} >
       <Breadcrumbs aria-label="breadcrumb">
         {breadcrumbs}
       </Breadcrumbs>

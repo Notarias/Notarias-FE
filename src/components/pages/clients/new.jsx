@@ -99,9 +99,8 @@ class NewClient extends Component {
   render() {
     const { classes } = this.props;
     return(
-      <div className={classes.pageWrapper}>
-        <Grid container classes={{ container: classes.genericGridHeight }}>
-          <Grid item xs={12} sm={6}  classes={{ root: classes.genericGridHeight}}>
+        <Grid container classes={{ container: classes.pageWrapper }}>
+          <Grid item xs={12} sm={6}  classes={{ root: classes.genericGridHeight }}>
             <form onSubmit={this.handleSubmit}>
               <Grid item>
                 <img src={ClientsIcon} alt="client icon" className={classes.clientIcon}/>
@@ -368,13 +367,13 @@ class NewClient extends Component {
               <List>
                 <ListItem alignItems="flex-start" >
                   <Avatar alt="Jan Che" src="#" />
-                  <TextField classes={{ root: classes.textFieldsComments }} variant="outlined" placeholder="Comentario"/>
+                  <TextField classes={{ root: classes.textFieldsComments }} multiline placeholder="Comentario"/>
                 </ListItem>
               </List>
             </Grid>
           </Grid>
         </Grid>
-      </div>
+
     )
   }
 }
