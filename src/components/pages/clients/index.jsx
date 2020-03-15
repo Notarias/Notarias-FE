@@ -90,6 +90,7 @@ class Clients extends Component {
   render() {
     const { classes } = this.props
     const { field, direction } = this.state.clientsCollection.sort
+    console.log(this.state.clientsCollection.clients)
     return(
       <div className={classes.root}>
         <ControlsBar
@@ -134,9 +135,9 @@ class Clients extends Component {
                   </TableRow> :
                     this.state.clientsCollection.clients.map(client => (
                     <TableRow  key={client.id}>
-                      <TableCell align= "center">{client.first_name}</TableCell>
-                      <TableCell align= "center">{client.last_name}</TableCell>
-                      <TableCell align= "center">{client.rfc}</TableCell>
+                      <TableCell align= "center">{client.attributes.first_name}</TableCell>
+                      <TableCell align= "center">{client.attributes.last_name}</TableCell>
+                      <TableCell align= "center">{client.attributes.rfc}</TableCell>
                       <TableCell align= "center">
                         <div>
                           <GenericDropdownMenu>

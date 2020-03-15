@@ -31,16 +31,20 @@ export default class User {
   }
 
   assignAttributes(attributes) {
-    for (let property of this.properties) {
-      this[property] = attributes[property]
-    }
+    return new Promise((resolve, reject) => {
+      for (let property of this.properties) {
+        this[property] = attributes[property]
+      }
+      resolve()
+    })
   }
 
   update(params) {
     return new Promise((resolve, reject) => {
       API.patch(`/users/${this.id}`, { user: params })
-         .then((data) => {
-           resolve(data)
+         .then((response) => {
+           this.assignAttributes(response.data.user)
+           resolve(response)
          }).catch((error) => {
            reject(error)
          });

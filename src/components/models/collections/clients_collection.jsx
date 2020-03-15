@@ -41,7 +41,7 @@ export default class ClientsCollection {
     cancelSource.cancel()
   }
 
-  buildUsers(clients) {
+  buildClients(clients) {
     return(
       clients.map((client) => {
         return new Client(client)
@@ -67,7 +67,7 @@ export default class ClientsCollection {
           field: Object.keys(params["sort"])[0],
           direction: Object.values(params["sort"])[0]
         }
-        this.clients = this.buildUsers(response.data.clients)
+        this.clients = this.buildClients(response.data.clients)
         this.search_query = params.search
         resolve()
       })
