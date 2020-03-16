@@ -4,6 +4,7 @@ import MessagesReducer    from './components/reducers/messages_reducer';
 import BreadcrumbsReducer from './components/reducers/breadcrumbs_reducer';
 import { reducer as formReducer } from 'redux-form';
 import compose                    from 'recompose/compose';
+import client                     from './apollo'
 
 const REDUCERS_LIST = {
   currentUser: CurrentUserReducer,

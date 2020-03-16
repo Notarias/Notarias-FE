@@ -66,11 +66,6 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = props => {
-  return props
-}
-
 export default compose(
-  withStyles(styles),
-  connect(mapStateToProps)
+  withStyles(styles)
 )(withRouter(App));

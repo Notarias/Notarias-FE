@@ -2,22 +2,20 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
-import { Provider } from 'react-redux';
-import store from './store';
+import { ApolloProvider } from '@apollo/react-hooks'
+import client from './apollo'
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { setupAxiosRouter } from './axios_config';
 
 const history = createBrowserHistory()
-setupAxiosRouter(history)
 
 ReactDOM.render(
-  <Provider store={store}>
+  <ApolloProvider client={client}>
     <Router history={history}>
       <App />
     </Router>
-  </Provider>,
+  </ApolloProvider>,
   document.getElementById('root')
 );
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import API, { cancelSource, cancelToken } from '../../../axios_config';
 import { managePaginationAfter, managePaginationBefore } from '../../interfaces/parameter_manager';
-import Client from '../objects/client'
+import Client       from '../objects/client'
 
 export default class ClientsCollection {
   constructor() {
@@ -9,10 +9,6 @@ export default class ClientsCollection {
       per: 5,
       page: 0,
       total_records: 0
-    }
-    this.sort = {
-      field: "first_name",
-      direction: "desc"
     }
     this.search_query = null
     this.clients = []
@@ -49,29 +45,38 @@ export default class ClientsCollection {
     )
   }
 
-  load(new_params = {}) {
+  load(loading, error, data, new_params = {}) {
     let params = this.prepareParams(new_params)
     return new Promise((resolve, reject) => {
-      API.get(
-        '/clients',
-        { params: params },
-        { cancelToken: cancelToken.token }
-      ).then(response => {
-        let meta = managePaginationAfter(response.data.meta)
-        this.pagination = {
-          page: meta.page,
-          per: meta.per,
-          total_records:  meta.total_records
-        }
-        this.sort = {
-          field: Object.keys(params["sort"])[0],
-          direction: Object.values(params["sort"])[0]
-        }
-        this.clients = this.buildClients(response.data.clients)
-        this.search_query = params.search
-        resolve()
-      })
+      const { loading, error, data } = {}
+
+      if (error.graphQLErrors.length) {
+        reject(error)
+      } else {
+        resolve({ loading, error, data })
+      }
     })
+    // return new Promise((resolve, reject) => {
+    //   API.get(
+    //     '/clients',
+    //     { params: params },
+    //     { cancelToken: cancelToken.token }
+    //   ).then(response => {
+    //     let meta = managePaginationAfter(response.data.meta)
+    //     this.pagination = {
+    //       page: meta.page,
+    //       per: meta.per,
+    //       total_records:  meta.total_records
+    //     }
+    //     this.sort = {
+    //       field: Object.keys(params["sort"])[0],
+    //       direction: Object.values(params["sort"])[0]
+    //     }
+    //     this.clients = this.buildClients(response.data.clients)
+    //     this.search_query = params.search
+    //     resolve()
+    //   })
+    // })
   }
 }
 
