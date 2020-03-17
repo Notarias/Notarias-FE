@@ -1,4 +1,5 @@
 import { fade } from '@material-ui/core/styles/colorManipulator';
+import green from '@material-ui/core/colors/green';
 
 export const styles = theme => {
   return ({
@@ -102,6 +103,14 @@ export const styles = theme => {
     },
     textFieldsComments: {
       width: "500px", paddingLeft:"15px" 
-    }
+    },
+    buttonProgress: {
+      color: green[500],
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      marginTop: -12,
+      marginLeft: -12,
+    },
   })
 }
