@@ -1,64 +1,84 @@
-import React from 'react'
-import { Field, reduxForm } from 'redux-form'
+import React, { useState, useEffect } from 'react'
 import Button from '@material-ui/core/Button';
-import renderTextField from '../../ui/shared/render_text_field'
+import { gql } from 'apollo-boost';
+import { Mutation } from '@apollo/react-components';
+import TextField from '@material-ui/core/TextField';
 
-const validate = values => {
-  const errors = {}
-  const requiredFields = [
-    'email',
-    'password'
-  ]
-  requiredFields.forEach(field => {
-    if (!values[field]) {
-      errors[field] = 'Required'
+const LOGIN_MUTATION = gql`
+  mutation signIn($email:String!, $password:String!) {
+    signIn(input: { email: $email, password: $password }) {
+      authToken
+      error
+      user {
+        firstName
+        lastName
+      }
     }
-  })
-  if (
-    values.email &&
-    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
-  ) {
-    errors.email = 'Dirección inválida'
   }
-  return errors
-}
+`
 
 let SessionForm = props => {
-  let { submitSignin, handleSubmit, classes, pristine, submitting } = props;
+  let { classes } = props
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [pristine, setPristine] = useState(true)
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+  }
+
+  const completeSignIn = (data) => {
+    console.log(data)
+    if (data.signIn.error) {
+      props.setError(data.signIn.error.user_authentication[0])
+    } else {
+      localStorage.setItem("jwtToken", data.signIn.authToken)
+      props.history.push(`/`)
+    }
+  }
+
   return(
-    <form className={ classes.form } onSubmit={ handleSubmit(submitSignin) }>
-      <Field name="email" 
-              type="email" 
-              id="email"
-              required
-              label="Correo Electrónico"
-              autoComplete="email" 
-              component={renderTextField} />
-      <Field name="password" 
-              type="password" 
-              id="password" 
-              required
-              autoComplete="current-password"
-              label="Contraseña" 
-              component={renderTextField} />
-      <Button
-        type="submit"
-        fullWidth
-        variant="contained"
-        color="primary"
-        className={ classes.submit }
-        disabled={pristine || submitting}
-        //onClick={this.signinClick}
-      >
-        Entrar
-      </Button>
+    <form className={ classes.form } onSubmit={ handleSubmit.bind(this) }>
+      <TextField
+        name="email" 
+        type="email" 
+        id="email"
+        style={{ width: "100%", marginBottom: "20px" }}
+        required
+        autoComplete="email"
+        value={email}
+        onChange={ (e)=> { setEmail(e.target.value); setPristine(false) } }
+        label="Correo Electrónico"/>
+      <TextField 
+        name="password"
+        type="password"
+        id="password"
+        style={{ width: "100%", marginBottom: "20px" }}
+        required
+        autoComplete="current-password"
+        value={password}
+        onChange={ (e)=> { setPassword(e.target.value); setPristine(false) } }
+        label="Contraseña"/>
+      <Mutation
+        mutation={LOGIN_MUTATION}
+        variables={{ email, password }}
+        onCompleted={ completeSignIn.bind(this) }>
+        {
+          mutation => (
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={ classes.submit }
+              onClick={ mutation }
+              disabled={ pristine }>
+              Entrar
+            </Button>
+        )}
+      </Mutation>
     </form>
   )
 }
-
-SessionForm = reduxForm({
-  form: "SessionForm",
-  validate,
-})(SessionForm);
 
 export default SessionForm;

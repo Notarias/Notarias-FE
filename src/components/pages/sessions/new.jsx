@@ -70,6 +70,10 @@ class SessionsNew extends Component {
     });
   }
 
+  setError(error) {
+    this.setState({ errorMessage: error })
+  }
+
   render() {
     const { classes } = this.props;
     return (
@@ -84,7 +88,7 @@ class SessionsNew extends Component {
           <Avatar className={classes.avatar}>
             <img className={classes.logo} src={logo_notaria} alt="Logo"/>
           </Avatar>
-          <SessionForm classes={classes} submitSignin={this.submitSignin} />
+          <SessionForm classes={classes} history={this.props.history} setError={this.setError.bind(this)} />
         </Paper>
       </main>
     )
@@ -96,15 +100,6 @@ SessionsNew.propTypes = {
   from: PropTypes.string
 };
 
-const mapStateToProps = props => {
-  return props
-}
-
-const mapDispatchToProps = dispatch => ({
-  signInUser: payload => dispatch(signInUser(payload))
-})
-
 export default compose(
   withStyles(styles),
-  connect(mapStateToProps, mapDispatchToProps)
 )(withRouter(SessionsNew))
