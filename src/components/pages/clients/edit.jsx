@@ -5,8 +5,8 @@ import { setBreadcrumbsList }  from '../../interfaces/breadcrumbs_interface';
 import TextField               from '@material-ui/core/TextField';
 import Button                  from '@material-ui/core/Button';
 import API                     from '../../../axios_config';
-import ClientsIcon             from './../../../icons/CLIENTES.svg';
-import ClientsEmail            from './../../../icons/email.svg';
+import PersonIcon              from '@material-ui/icons/Person';
+import MailOutlineIcon         from '@material-ui/icons/MailOutline';
 import Avatar                  from '@material-ui/core/Avatar';
 import List                    from '@material-ui/core/List';
 import ListItem                from '@material-ui/core/ListItem';
@@ -20,7 +20,6 @@ import AssignmentIndIcon       from '@material-ui/icons/AssignmentInd';
 import EmojiTransportationIcon from '@material-ui/icons/EmojiTransportation';
 import { styles }              from './styles';
 import PermIdentityIcon        from '@material-ui/icons/PermIdentity';
-import FormControl             from '@material-ui/core/FormControl';
 import FormHelperText          from '@material-ui/core/FormHelperText';
 import { setMessage }          from '../../interfaces/messages_interface';
 import CircularProgress        from '@material-ui/core/CircularProgress';
@@ -116,113 +115,142 @@ class EditClient extends Component {
   render() {
     const { classes } = this.props;
     return(
-      <div className={classes.pageWrapper}>
-        <Grid container classes={{ container: classes.genericGridHeight }}>
+      <Grid container classes={{ container: classes.pageWrapper }}>
           <Grid item xs={12} sm={6}  classes={{ root: classes.genericGridHeight}}>
-            <form onSubmit={this.submitClient.bind(this)}>
-              <Grid item>
-                <img src={ClientsIcon} alt="client icon" className={classes.clientIcon}/>
-                <FormControl classes={{ root: classes.textFieldsForm }} required>
+            <form onSubmit={this.submitClient} className={ classes.newClientForm }>
+              <Grid item container>
+                <Grid item xs={1}>
+                  <PersonIcon classes={{root: classes.genericInputIcon}}/>
+                </Grid>
+                <Grid item xs={11}>
                   <TextField
                     id="standard-basic"
                     value={this.state.first_name}
+                    classes={{ root: classes.formTextFields }}
                     onChange={this.handleChange}
                     label="Nombre"
                     error={this.state.errors.first_name}
                     name="first_name"
                   />
                   <FormHelperText error>{this.state.errors.first_name}</FormHelperText>
-                </FormControl>
+                </Grid>
               </Grid>
-              <Grid item >
-                <PermIdentityIcon classes={{root: classes.genericInputIcon}}/>
-                <FormControl classes={{ root: classes.textFieldsForm }} required>
+              <Grid item container>
+                <Grid item xs={1}>
+                  <PermIdentityIcon classes={{root: classes.genericInputIcon}}/>
+                </Grid>
+                <Grid item xs={11}>
                   <TextField
                     id="standard-basic"
                     value={this.state.last_name}
+                    classes={{ root: classes.formTextFields }}
                     onChange={this.handleChange}
                     label="Apellido"
                     error={this.state.errors.last_name}
                     name="last_name"
                   />
                   <FormHelperText error>{this.state.errors.last_name}</FormHelperText>
-                </FormControl>
+                </Grid>
               </Grid>
-              <Grid item>
-                <EmojiTransportationIcon classes={{root: classes.genericInputIcon}}/>
-                <TextField
-                  classes={{ root: classes.textFieldsForm }}
-                  id="standard-basic"
-                  value={this.state.business}
-                  onChange={this.handleChange}
-                  label="Empresa"
-                  error={this.state.errors.business}
-                />
-                <FormHelperText error>{this.state.errors.business}</FormHelperText>
+              <Grid item container>
+                <Grid item xs={1}>
+                  <EmojiTransportationIcon classes={{root: classes.genericInputIcon}}/>
+                </Grid>
+                <Grid item xs={11}>
+                  <TextField
+                    id="standard-basic"
+                    value={this.state.business}
+                    classes={{ root: classes.formTextFields }}
+                    onChange={this.handleChange}
+                    label="Empresa"
+                    error={this.state.errors.business}
+                  />
+                  <FormHelperText error>{this.state.errors.business}</FormHelperText>
+                </Grid>
               </Grid>
-              <Grid item>
-                <AssignmentIndIcon classes={{root: classes.genericInputIcon}}/>
-                <TextField
-                  classes={{ root: classes.textFieldsForm }}
-                  id="standard-basic"
-                  value={this.state.category}
-                  onChange={this.handleChange}
-                  label="Categoría"
-                  erros={this.state.errors.category}
-                  name="category"
-                />
-                <FormHelperText error>{this.state.errors.category}</FormHelperText>
+              <Grid item container>
+                <Grid item xs={1}>
+                  <AssignmentIndIcon classes={{root: classes.genericInputIcon}}/>
+                </Grid>
+                <Grid item xs={11}>
+                  <TextField
+                    id="standard-basic"
+                    value={this.state.category}
+                    classes={{ root: classes.formTextFields }}
+                    onChange={this.handleChange}
+                    label="Categoría"
+                    erros={this.state.errors.category}
+                    name="category"
+                  />
+                  <FormHelperText error>{this.state.errors.category}</FormHelperText>
+                </Grid>
               </Grid>
-              <Grid item>
-                <BusinessIcon classes={{root: classes.genericInputIcon}}/>
-                <TextField
-                  classes={{ root: classes.textFieldsForm }}
-                  id="standard-basic"
-                  value={this.state.address}
-                  onChange={this.handleChange}
-                  label="Dirección"
-                  erros={this.state.errors.address}
-                  name="address"
-                />
-                <FormHelperText error>{this.state.errors.address}</FormHelperText>
+              <Grid item container>
+                <Grid item xs={1}>
+                  <BusinessIcon classes={{root: classes.genericInputIcon}}/>
+                </Grid>
+                <Grid item xs={11}>
+                  <TextField
+                    id="standard-basic"
+                    value={this.state.address}
+                    classes={{ root: classes.formTextFields }}
+                    onChange={this.handleChange}
+                    label="Dirección"
+                    erros={this.state.errors.address}
+                    name="address"
+                  />
+                  <FormHelperText error>{this.state.errors.address}</FormHelperText>
+                </Grid>
               </Grid>
-              <Grid item>
-                <img src={ClientsEmail} alt="Email" className={classes.emailIcon} />
-                <TextField
-                  classes={{ root: classes.textFieldsForm }}
-                  id="standard-basic"
-                  value={this.state.email}
-                  onChange={this.handleChange}
-                  label="usuario@correo.com"
-                  erros={this.state.errors.email}
-                  name="email"
-                />
-                <FormHelperText error>{this.state.errors.email}</FormHelperText>
+              <Grid item container>
+                <Grid item xs={1}>
+                  <MailOutlineIcon classes={{root: classes.genericInputIcon}} />
+                </Grid>
+                <Grid item xs={11}>
+                  <TextField
+                    id="standard-basic"
+                    value={this.state.email}
+                    classes={{ root: classes.formTextFields }}
+                    onChange={this.handleChange}
+                    label="usuario@correo.com"
+                    erros={this.state.errors.email}
+                    name="email"
+                  />
+                  <FormHelperText error>{this.state.errors.email}</FormHelperText>
+                </Grid>
               </Grid>
-              <Grid item>
-                <PhoneRoundedIcon classes={{root: classes.genericInputIcon}}/>
-                <TextField
-                  classes={{ root: classes.textFieldsForm }}
-                  id="standard-basic"
-                  value={this.state.phone}
-                  onChange={this.handleChange}
-                  label="Teléfono"
-                  erros={this.state.errors.phone}
-                  name="phone"
-                />
-                <FormHelperText error>{this.state.errors.phone}</FormHelperText>
+              <Grid item container>
+                <Grid item xs={1}>
+                  <PhoneRoundedIcon classes={{root: classes.genericInputIcon}}/>
+                </Grid>
+                <Grid item xs={11}>
+                  <TextField
+                    id="standard-basic"
+                    value={this.state.phone}
+                    classes={{ root: classes.formTextFields }}
+                    onChange={this.handleChange}
+                    label="Teléfono"
+                    erros={this.state.errors.phone}
+                    name="phone"
+                  />
+                  <FormHelperText error>{this.state.errors.phone}</FormHelperText>
+                </Grid>
               </Grid>
-              <Grid item>
-                <TextField
-                  classes={{ root: classes.textFieldsForm }}
-                  id="standard-basic"
-                  value={this.state.rfc}
-                  onChange={this.handleChange}
-                  label="RFC"
-                  erros={this.state.errors.rfc}
-                  name="rfc"
-                />
-                <FormHelperText error>{this.state.errors.rfc}</FormHelperText>
+              <Grid item container>
+                <Grid item xs={1}>
+                </Grid>
+                <Grid item xs={11}>
+                  <TextField
+                    id="standard-basic"
+                    value={this.state.rfc}
+                    classes={{ root: classes.formTextFields }}
+                    onChange={this.handleChange}
+                    label="RFC"
+                    erros={this.state.errors.rfc}
+                    name="rfc"
+                  />
+                  <FormHelperText error>{this.state.errors.rfc}</FormHelperText>
+                </Grid>
               </Grid>
               <Grid item>
                 <Button
@@ -399,13 +427,12 @@ class EditClient extends Component {
               <List>
                 <ListItem alignItems="flex-start" >
                   <Avatar alt="Jan Che" src="#" />
-                  <TextField classes={{ root: classes.textFieldsComments }} variant="outlined" placeholder="Comentario"/>
+                  <TextField classes={{ root: classes.textFieldsComments }} multiline placeholder="Comentario"/>
                 </ListItem>
               </List>
             </Grid>
           </Grid>
         </Grid>
-      </div>
     )
   }
 }
