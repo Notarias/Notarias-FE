@@ -47,7 +47,7 @@ export default class GenericDropdownMenu extends React.Component {
             },
           }}
         >
-          {children.map(child => (
+          {children && children.map(child => (
             React.cloneElement(
               child,
               {

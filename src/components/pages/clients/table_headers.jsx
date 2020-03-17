@@ -25,7 +25,7 @@ export default (props) => {
         />
         <SortHeader
           text={"RFC"}
-          field_property={"email"}
+          field_property={"rfc"}
           current_field={field}
           sort_direction={direction}
           callback={sortHandler}

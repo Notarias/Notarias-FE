@@ -4,14 +4,12 @@ import Table                        from '@material-ui/core/Table';
 import Paper                        from '@material-ui/core/Paper';
 import TableRow                     from '@material-ui/core/TableRow';
 import TableCell                    from '@material-ui/core/TableCell';
-import TableBody                    from '@material-ui/core/TableBody';
 import { setBreadcrumbsList }       from '../../interfaces/breadcrumbs_interface';
 import { styles }                   from './styles';
-import TableHeader                  from './table_header';
+import TableHeaders                  from './table_headers';
 import ClientRows                   from './client_rows';
 import TableFooter          from '@material-ui/core/TableFooter';
 import TablePagination      from '@material-ui/core/TablePagination';
-import ClientsCollection    from '../../models/collections/clients_collection'
 import ControlsBar          from './controls_bar';
 
 const BREADCRUMBS = [
@@ -69,7 +67,8 @@ const Clients = (props) => {
   }
 
   const sort = (params) => {
-    submitData(params)
+    setSortDirection(Object.values(params["sort"])[0])
+    setSortField(Object.keys(params["sort"])[0])
   }
 
   return(
@@ -81,16 +80,15 @@ const Clients = (props) => {
       <div className={classes.tableWrapper}>
         <Paper >
           <Table className={classes.table}>
-            <TableHeader field={sortField} direction={sortDirection} sortHandler={sort.bind(this) }/>
-            <TableBody>
-              <ClientRows 
-                page={page}
-                per={per}
-                search={{}}
-                sort={sort}
-                setTotalRecords={setTotalRecords}
-                classes={classes} />
-            </TableBody>
+            <TableHeaders field={sortField} direction={sortDirection} sortHandler={sort.bind(this) }/>
+            <ClientRows
+              page={page}
+              per={per}
+              search={{}}
+              sortField={sortField}
+              sortDirection={sortDirection}
+              setTotalRecords={setTotalRecords}
+              classes={classes} />
             <TableFooter>
               <TableRow>
                 <TablePagination
