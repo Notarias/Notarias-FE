@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect }         from 'react';
 import MenuItem                     from '@material-ui/core/MenuItem';
 import VisibilityOutlinedIcon       from '@material-ui/icons/VisibilityOutlined';
 import BudgetsIcon                  from './../../../icons/presupuestos.svg';
@@ -14,8 +14,22 @@ import { gql }                      from 'apollo-boost';
 import { useQuery }                 from '@apollo/react-hooks';
 
 const LOAD_CLIENTS = gql`
-  query searchClients($page: Int, $per: Int, $sortField: String, $sortDirection: String) {
-    clients(page: $page, per: $per, sortField: $sortField, sortDirection: $sortDirection) {
+  query searchClients(
+      $page: Int,
+      $per: Int,
+      $sortField: String,
+      $sortDirection: String,
+      $searchField: String,
+      $searchValue: String
+    ) {
+    clients(
+      page: $page,
+      per: $per,
+      sortField: $sortField,
+      sortDirection: $sortDirection,
+      searchField: $searchField,
+      searchValue: $searchValue
+    ) {
       id
       firstName
       lastName
@@ -24,11 +38,12 @@ const LOAD_CLIENTS = gql`
   }
 `
 export default (props) => {
-  const { page, per, sortDirection, sortField, search, classes } = props
+  const { page, per, sortDirection, sortField, searchField, searchValue, classes } = props
   let variables = {
     page: page + 1,
     per: per,
-    search: search,
+    searchField: searchField,
+    searchValue: searchValue,
     sortDirection: sortDirection,
     sortField: sortField
   }
@@ -39,7 +54,7 @@ export default (props) => {
 
   useEffect(() => {
     refetch(variables);
-  }, [page, per, search, sortField, sortDirection]);
+  }, [page, per, searchField, searchValue, sortField, sortDirection]);
 
   if (loading || !data) {
     return(

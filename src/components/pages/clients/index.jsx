@@ -23,6 +23,9 @@ const Clients = (props) => {
   const [searchLoading, setSearchLoading] = useState(false);
   const [sortField, setSortField]         = useState("first_name")
   const [sortDirection, setSortDirection] = useState("desc")
+  const [searchField, setSearchField]     = useState("first_name_or_last_name_or_rfc_cont")
+  const [searchValue, setSearchValue]     = useState("")
+  const [timeout, setSetTimeout]          = useState(null)
   const [page, setPage]                   = useState(0)
   const [per, setPer]                     = useState(5)
   const [total_records, setTotalRecords]  = useState(10)
@@ -36,10 +39,6 @@ const Clients = (props) => {
     })
   }
 
-  const cancelCall = () => {
-    this.state.clientsCollection.cancelLoad()
-  }
-
   const changeRowsPerPage = (event) => {
     let per = event.target.value
     setPer(per)
@@ -50,20 +49,14 @@ const Clients = (props) => {
   }
 
   const onChangeSearch = (event) => {
-    this.state.timeout && clearTimeout(this.state.timeout)
-    let predicate = event.currentTarget.attributes.predicate.value
-    let searchText = event.target.value
-    const search_params = { search: { [predicate]: searchText } }
-    const view = this
+    timeout && clearTimeout(timeout)
+    setSearchLoading(true)
+    let value = event.target.value
 
-    let timeout = setTimeout(() => {
-      view.state.clientsCollection
-        .search(search_params)
-        .finally((val) => {
-          view.setState({ searchLoading: false })
-        })
-    }, 2000)
-
+    setSetTimeout(setTimeout(() => {
+      setSearchValue(value)
+      setSearchLoading(false)
+    }, 2000))
   }
 
   const sort = (params) => {
@@ -82,13 +75,15 @@ const Clients = (props) => {
           <Table className={classes.table}>
             <TableHeaders field={sortField} direction={sortDirection} sortHandler={sort.bind(this) }/>
             <ClientRows
-              page={page}
-              per={per}
+              page={ page }
+              per={ per }
               search={{}}
-              sortField={sortField}
-              sortDirection={sortDirection}
-              setTotalRecords={setTotalRecords}
-              classes={classes} />
+              sortField={ sortField }
+              sortDirection={ sortDirection }
+              setTotalRecords={ setTotalRecords }
+              searchValue={ searchValue }
+              searchField={ searchField }
+              classes={ classes } />
             <TableFooter>
               <TableRow>
                 <TablePagination
