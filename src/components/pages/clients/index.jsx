@@ -32,13 +32,6 @@ const Clients = (props) => {
 
   const { classes } = props
 
-  const submitData = (params) => {
-    this.setState({ loading: true })
-    this.state.clientsCollection.load(params).then(() => {
-      this.setState({ loading: false })
-    })
-  }
-
   const changeRowsPerPage = (event) => {
     let per = event.target.value
     setPer(per)
