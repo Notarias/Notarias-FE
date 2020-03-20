@@ -5,15 +5,17 @@ export const styles = theme => {
   },
   content: {
     flexGrow: 1,
-
+    maxWidth: `calc(100% - ${72}px)`,
     height: '100vh',
     overflow: 'auto',
   },
   appBarSpacer: theme.mixins.toolbar,
   floatingMessage: {
-    maxWidth: `calc(100% - ${theme.spacing(6)}px)`,
-    marginTop: theme.spacing(3),
-    marginLeft: theme.spacing(3),
+    width: `calc(100% - ${theme.spacing(6) + 72}px)`,
+    left: theme.spacing(3) + 72,
+    top: theme.spacing(3),
+    position: "fixed",
+    zIndex: 1100
   },
   breadcrumbsContainer: {
     flexWrap: 'wrap',

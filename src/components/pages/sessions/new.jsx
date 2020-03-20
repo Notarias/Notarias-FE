@@ -1,12 +1,10 @@
 import React, { Component }       from 'react';
 import PropTypes                  from 'prop-types';
-import { connect }                from 'react-redux';
 import { withRouter }             from 'react-router-dom'
 import API                        from '../../../axios_config';
 import compose                    from 'recompose/compose';
 import CustomSnackbarMessage      from '../../ui/custom_snackbar_message';
 import {GENERIC_CONNECTION_ERROR} from '../../generic_errors';
-import { signInUser }             from '../../reducers/current_user_reducer';
 import { setBreadcrumbsList }     from '../../interfaces/breadcrumbs_interface';
 
 import { styles }  from './session_styles';
@@ -97,7 +95,6 @@ class SessionsNew extends Component {
 
 SessionsNew.propTypes = {
   classes: PropTypes.object.isRequired,
-  from: PropTypes.string
 };
 
 export default compose(

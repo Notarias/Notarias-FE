@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import classNames from 'classnames';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import ErrorIcon from '@material-ui/icons/Error';
@@ -10,6 +10,9 @@ import IconButton from '@material-ui/core/IconButton';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import WarningIcon from '@material-ui/icons/Warning';
 import { withStyles } from '@material-ui/core/styles';
+import { Mutation } from "@apollo/react-components";
+import { REMOVE_MESSAGE_MUTATION } from '../../resolvers/queries'
+import { useMutation }          from '@apollo/react-hooks'
 
 const variantIcon = {
   success: CheckCircleIcon,
@@ -52,39 +55,49 @@ const styles1 = theme => ({
   }
 });
 
-const startCloseTimeout = (closeFunction) => {
-  closeFunction && setTimeout(() => { closeFunction() }, 6000)
+function removeMessageFromCache(e) {
+  useMutation(REMOVE_MESSAGE_MUTATION, { variables: {} })
 }
 
 function CustomSnackbarMessage(props) {
-  const { actionable, classes, className, message, onClose, variant, ...other } = props;
+  const { actionable, classes, className, message, variant, ...other } = props;
   const Icon = variantIcon[variant];
-  startCloseTimeout(onClose);
+  const [hidden, setHidden] = useState(false); 
+
+  setTimeout(() => { setHidden(true) }, 1000)
 
   return (
-    <SnackbarContent
-      classes={{ action: classes.action }}
-      className={classNames(classes[variant], className)}
-      aria-describedby="client-snackbar"
-      message={
-        <span id="client-snackbar" className={classes.message}>
-          <Icon className={classNames(classes.icon, classes.iconVariant)} />
-          {message}
-        </span>
-      }
-      action={actionable && [
-        <IconButton
-          key="close"
-          aria-label="Close"
-          color="inherit"
-          className={classes.close}
-          onClick={onClose}
-        >
-          <CloseIcon className={classes.icon} />
-        </IconButton>,
-      ]}
-      {...other}
-    />
+    !hidden &&
+        <SnackbarContent
+          classes={{ action: classes.action }}
+          className={classNames(classes[variant], className)}
+          aria-describedby="client-snackbar"
+          message={
+            <span id="client-snackbar" className={classes.message}>
+              <Icon className={classNames(classes.icon, classes.iconVariant)} />
+              {message}
+            </span>
+          }
+          action={actionable && [
+            <Mutation mutation={REMOVE_MESSAGE_MUTATION} variables={{}}>
+              { (mutate) => {
+                  return(
+                    <IconButton
+                      key="close"
+                      aria-label="Close"
+                      color="inherit"
+                      className={classes.close}
+                      onClick={mutate}
+                    >
+                      <CloseIcon className={classes.icon} />
+                    </IconButton>
+                  )
+                }
+              }
+            </Mutation>
+          ]}
+          {...other}
+        />
   );
 }
 

@@ -28,7 +28,6 @@ let SessionForm = props => {
   }
 
   const completeSignIn = (data) => {
-    console.log(data)
     if (data.signIn.error) {
       props.setError(data.signIn.error.user_authentication[0])
     } else {

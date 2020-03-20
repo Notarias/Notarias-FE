@@ -20,14 +20,16 @@ import AppointmentsIndex   from '../components/pages/appointments/index';
 import ReportsIndex        from '../components/pages/reports/index';
 import ProfilesIndex       from '../components/pages/profiles/index';
 import store               from '../store';
+import GlobalMessage       from './global_message'
 
 export default function BaseRoutes(props) {
   const { styles } = props
   let { breadcrumbs } = store.getState()
+
   return(
     <div style={{ height: "100%" }}>
+      <GlobalMessage classes={styles}/>
       { !!breadcrumbs.length && <Breadcrumbs styles={styles} /> }
-      { props.children }
       <Switch>
         { !localStorage.jwtToken &&
           (<Route path="/sign_in" component={SessionsNew}/>)

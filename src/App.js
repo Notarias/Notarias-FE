@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect }          from 'react-redux';
 import { withRouter }       from 'react-router-dom';
 import BaseRoutes           from './routes/base_routes';
 import CssBaseline          from '@material-ui/core/CssBaseline';
@@ -8,8 +7,6 @@ import withStyles           from '@material-ui/core/styles/withStyles';
 import classNames           from 'classnames';
 import compose              from 'recompose/compose';
 import NavigationMenu       from './components/ui/navigation_menu';
-import CustomSnackbarMessage  from './components/ui/custom_snackbar_message';
-import { clearMessage }       from './components/interfaces/messages_interface';
 import './App.css';
 import 'typeface-roboto';
 
@@ -38,7 +35,7 @@ class App extends Component {
   }
 
   render() {
-    const { classes, message } = this.props;
+    const { classes } = this.props;
     return (
       <div className={classNames(classes.root, "App")}>
         { localStorage.jwtToken && 
@@ -49,17 +46,8 @@ class App extends Component {
             setCloseMenu={ this.setCloseMenu.bind(this) }
           /> }
         <CssBaseline />
-
         <main className={classes.content}>
-          <BaseRoutes styles={classes}>
-            { message && <CustomSnackbarMessage
-              variant={ message.type }
-              className={ classes.floatingMessage }
-              message={ message.text }
-              actionable={ true }
-              onClose={ clearMessage }
-            /> }
-          </BaseRoutes>
+          <BaseRoutes styles={classes}/>
         </main>
       </div>
     );
