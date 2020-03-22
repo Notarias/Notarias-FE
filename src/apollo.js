@@ -6,8 +6,8 @@ import { resolvers, typeDefs } from './resolvers/resolvers'
 
 const cache = new InMemoryCache();
 const httpLink = new createHttpLink({
-  //uri: 'https://peaceful-eyrie-59851.herokuapp.com/graphql'
-  uri: 'http://localhost:3000/graphql'
+  uri: 'https://peaceful-eyrie-59851.herokuapp.com/graphql'
+  //uri: 'http://localhost:3000/graphql'
 });
 
 const authLink = setContext((_, { headers }) => {
