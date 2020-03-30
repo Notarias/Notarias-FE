@@ -60,11 +60,13 @@ function removeMessageFromCache(e) {
 }
 
 function CustomSnackbarMessage(props) {
-  const { actionable, classes, className, message, variant, ...other } = props;
+  const { actionable, classes, className, message, variant, autohide, ...other } = props;
   const Icon = variantIcon[variant];
   const [hidden, setHidden] = useState(false); 
 
-  setTimeout(() => { setHidden(true) }, 1000)
+  if (autohide) {
+    setTimeout(() => { setHidden(true) }, 1000)
+  }
 
   return (
     !hidden &&

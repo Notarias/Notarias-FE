@@ -82,6 +82,7 @@ class SessionsNew extends Component {
             className={classes.margin}
             message={this.state.errorMessage}
             actionable={false}
+            autohide={false}
           />}
           <Avatar className={classes.avatar}>
             <img className={classes.logo} src={logo_notaria} alt="Logo"/>

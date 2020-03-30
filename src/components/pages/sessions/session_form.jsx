@@ -23,8 +23,9 @@ let SessionForm = props => {
   const [password, setPassword] = useState("")
   const [pristine, setPristine] = useState(true)
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (mutation, e) => {
     e.preventDefault()
+    mutation({ variables: { email, password }})
   }
 
   const completeSignIn = (data) => {
@@ -37,46 +38,45 @@ let SessionForm = props => {
   }
 
   return(
-    <form className={ classes.form } onSubmit={ handleSubmit.bind(this) }>
-      <TextField
-        name="email" 
-        type="email" 
-        id="email"
-        style={{ width: "100%", marginBottom: "20px" }}
-        required
-        autoComplete="email"
-        value={email}
-        onChange={ (e)=> { setEmail(e.target.value); setPristine(false) } }
-        label="Correo Electrónico"/>
-      <TextField 
-        name="password"
-        type="password"
-        id="password"
-        style={{ width: "100%", marginBottom: "20px" }}
-        required
-        autoComplete="current-password"
-        value={password}
-        onChange={ (e)=> { setPassword(e.target.value); setPristine(false) } }
-        label="Contraseña"/>
-      <Mutation
-        mutation={LOGIN_MUTATION}
-        variables={{ email, password }}
-        onCompleted={ completeSignIn.bind(this) }>
-        {
-          mutation => (
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={ classes.submit }
-              onClick={ mutation }
-              disabled={ pristine }>
-              Entrar
-            </Button>
-        )}
-      </Mutation>
-    </form>
+    <Mutation
+      mutation={LOGIN_MUTATION}
+      onCompleted={ completeSignIn.bind(this) }>
+      {
+        (mutation, { loading }) => (
+          <form className={ classes.form } onSubmit={ handleSubmit.bind(this, mutation) }>
+            <TextField
+              name="email" 
+              type="email" 
+              id="email"
+              style={{ width: "100%", marginBottom: "20px" }}
+              required
+              autoComplete="email"
+              value={email}
+              onChange={ (e)=> { setEmail(e.target.value); setPristine(false) } }
+              label="Correo Electrónico"/>
+            <TextField 
+              name="password"
+              type="password"
+              id="password"
+              style={{ width: "100%", marginBottom: "20px" }}
+              required
+              autoComplete="current-password"
+              value={password}
+              onChange={ (e)=> { setPassword(e.target.value); setPristine(false) } }
+              label="Contraseña"/>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={ classes.submit }
+                disabled={ pristine || loading }>
+                Entrar
+              </Button>
+          </form>
+        )
+      }
+    </Mutation>
   )
 }
 
