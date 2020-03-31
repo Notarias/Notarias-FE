@@ -50,7 +50,7 @@ class SessionsNew extends Component {
       ).then(() => {
         this.getCurrentUser()
       }).then(() => {
-        if (this.props.history.location.pathname == "/sign_in") {
+        if (this.props.history.location.pathname === "/sign_in") {
           this.props.history.go(-1)
         } else {
           this.props.history.location = this.props.history.location

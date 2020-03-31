@@ -1,7 +1,6 @@
 import React, { Component }    from 'react';
 import { withStyles }          from '@material-ui/core/styles';
 import Grid                    from '@material-ui/core/Grid';
-import { setBreadcrumbsList }  from '../../interfaces/breadcrumbs_interface';
 import TextField               from '@material-ui/core/TextField';
 import Avatar                  from '@material-ui/core/Avatar';
 import List                    from '@material-ui/core/List';
@@ -12,7 +11,6 @@ import Typography              from '@material-ui/core/Typography';
 import Divider                 from '@material-ui/core/Divider';
 import { styles }              from './styles';
 import NewClientForm           from './new/form'
-import { setMessage }          from '../../interfaces/messages_interface';
 
 const BREADCRUMBS = [
   { name: "Inicio", path: "/" },

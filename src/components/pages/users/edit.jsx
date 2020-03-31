@@ -3,7 +3,6 @@ import { styles }           from './user_form/styles';
 import { withStyles }       from '@material-ui/core/styles';
 import { GENERIC_FORM_ERROR } from '../../reducers/messages_reducer';
 import { setMessage }         from '../../interfaces/messages_interface';
-import { useHistory }       from "react-router-dom";
 import UserForm             from './user_form/user_form';
 import Paper                from '@material-ui/core/Paper';
 import ErrorMessage         from '../../ui/custom_snackbar_message';

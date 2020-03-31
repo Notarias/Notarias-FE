@@ -3,7 +3,6 @@ import { withStyles }               from '@material-ui/core/styles';
 import Table                        from '@material-ui/core/Table';
 import Paper                        from '@material-ui/core/Paper';
 import TableRow                     from '@material-ui/core/TableRow';
-import TableCell                    from '@material-ui/core/TableCell';
 import { setBreadcrumbsList }       from '../../interfaces/breadcrumbs_interface';
 import { styles }                   from './styles';
 import TableHeaders                  from './table_headers';
@@ -23,7 +22,7 @@ const Clients = (props) => {
   const [searchLoading, setSearchLoading] = useState(false);
   const [sortField, setSortField]         = useState("first_name")
   const [sortDirection, setSortDirection] = useState("desc")
-  const [searchField, setSearchField]     = useState("first_name_or_last_name_or_rfc_cont")
+  const [searchField]                    = useState("first_name_or_last_name_or_rfc_cont")
   const [searchValue, setSearchValue]     = useState("")
   const [timeout, setSetTimeout]          = useState(null)
   const [page, setPage]                   = useState(0)

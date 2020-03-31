@@ -1,14 +1,12 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Router } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
+import React              from 'react';
+import ReactDOM           from 'react-dom';
+import { Router }         from 'react-router-dom';
+import history            from './history'
 import { ApolloProvider } from '@apollo/react-hooks'
-import client from './apollo'
-import './index.css';
-import App from './App';
+import client             from './apollo'
+import App                from './App';
 import * as serviceWorker from './serviceWorker';
-
-const history = createBrowserHistory()
+import './index.css';
 
 ReactDOM.render(
   <ApolloProvider client={client}>

@@ -1,4 +1,3 @@
-import React from 'react';
 import API, { cancelSource, cancelToken } from '../../../axios_config';
 import { managePaginationAfter, managePaginationBefore } from '../../interfaces/parameter_manager';
 import User from '../objects/user'

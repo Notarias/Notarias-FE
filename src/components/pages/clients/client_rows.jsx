@@ -48,7 +48,7 @@ export default (props) => {
     sortField: sortField
   }
 
-  const { loading, error, data, refetch } = useQuery(
+  const { loading, data, refetch } = useQuery(
     LOAD_CLIENTS, { vairables: variables, errorPolicy: 'all' }
   );
 

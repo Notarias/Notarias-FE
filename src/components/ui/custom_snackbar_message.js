@@ -12,7 +12,6 @@ import WarningIcon from '@material-ui/icons/Warning';
 import { withStyles } from '@material-ui/core/styles';
 import { Mutation } from "@apollo/react-components";
 import { REMOVE_MESSAGE_MUTATION } from '../../resolvers/queries'
-import { useMutation }          from '@apollo/react-hooks'
 
 const variantIcon = {
   success: CheckCircleIcon,
@@ -54,10 +53,6 @@ const styles1 = theme => ({
     paddingLeft: 0,
   }
 });
-
-function removeMessageFromCache(e) {
-  useMutation(REMOVE_MESSAGE_MUTATION, { variables: {} })
-}
 
 function CustomSnackbarMessage(props) {
   const { actionable, classes, className, message, variant, autohide, ...other } = props;

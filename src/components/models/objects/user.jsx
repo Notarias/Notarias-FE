@@ -1,4 +1,3 @@
-import React from 'react';
 import API, { cancelToken } from '../../../axios_config';
 
 export default class User {

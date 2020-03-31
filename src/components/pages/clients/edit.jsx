@@ -57,8 +57,7 @@ class EditClient extends Component {
 
   handleChange = ({ target }) => {
     const {name, value} = target
-    this.state[name] = value
-    this.setState({pristine: false})
+    this.setState({pristine: false, [name]: value})
     this.forceUpdate()
   }
 
