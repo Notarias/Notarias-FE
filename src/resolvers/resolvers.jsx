@@ -2,19 +2,52 @@ import { gql } from 'apollo-boost';
 //import { GLOBAL_MESSAGE } from './queries'
 
 export const typeDefs = gql`
-  extend type Query {
-    globalMessage: GlobalMessage
-  }
-
   type GlobalMessage {
     message: String
     type: String
   }
 
-  type Mutation {
+  extend type Query {
+    globalMessage: GlobalMessage
+  }
+
+  extend type Mutation {
     removeMessage(message: String, type: String ): GlobalMessage!
   }
+
+  type Breadcrumb {
+    name: String
+    path: String
+  }
+
+  extend type Query {
+    breadcrumbs: [Breadcrumb]
+  }
+
+  input CreateBreadcrumbInput {
+    name: String
+    path: String
+  }
+
+  type CreateBreadcrumbsPayload {
+    breadcrumbs: [Breadcrumb]
+  }
+
+  extend type Mutation {
+    setBreadcrumbs(input: [CreateBreadcrumbInput]): CreateBreadcrumbsPayload
+  }
 `
+
+
+
+// extend type Query {
+//   getBreadcrumbs: [Breadcrumb]
+// }
+
+
+
+
+
 
 export const resolvers = {
   Mutation: {
@@ -28,6 +61,24 @@ export const resolvers = {
             type: null,
             __typename: "GlobalMessage"
           }
+        }
+      });
+    },
+    setBreadcrumbs: (_, { input }, { cache }) => {
+      //const globalMessage = cache.readQuery({ query: GLOBAL_MESSAGE })
+      cache.writeData({
+        data: {
+          __typename: "CreateBreadcrumbsPayload",
+          breadcrumbs: (
+            input.map(breadcrumb => (
+                {
+                  name: breadcrumb.name,
+                  path: breadcrumb.path,
+                  __typename: "Breadcrumb"
+                }
+              )
+            )
+          )
         }
       });
     }

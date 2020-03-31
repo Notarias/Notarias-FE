@@ -9,8 +9,8 @@ import { resolvers, typeDefs } from './resolvers/resolvers';
 
 const cache = new InMemoryCache();
 const httpLink = new createHttpLink({
-  //uri: 'https://peaceful-eyrie-59851.herokuapp.com/graphql'
-  uri: 'http://localhost:3000/graphql'
+  uri: 'https://peaceful-eyrie-59851.herokuapp.com/graphql'
+  //uri: 'http://localhost:3000/graphql'
 });
 
 const authMiddleware = new ApolloLink((operation, forward) => {
@@ -26,7 +26,7 @@ const authMiddleware = new ApolloLink((operation, forward) => {
 })
 
 const logoutLink = onError(({ networkError, forward, operation }) => {
-  if (networkError.statusCode === 401) {
+  if (networkError && networkError.statusCode === 401) {
     localStorage.clear();
     history.push(`/sign_in`)
   }

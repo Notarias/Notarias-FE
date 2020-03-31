@@ -15,3 +15,23 @@ export const REMOVE_MESSAGE_MUTATION = gql`
     removeMessage(message: $message, type: $type) @client
   }
 `
+
+export const SET_BREADCRUMBS = gql`
+  mutation setBreadcrumbs($input: [CreateBreadcrumbInput]) {
+    setBreadcrumbs(input: $input) @client {
+      breadcrumbs {
+        name
+        path
+      }
+    }
+  }
+`
+
+export const GET_BREADCRUMBS = gql`
+  query getBreadcrumbs {
+    breadcrumbs @client {
+      name
+      path
+    }
+  }
+`
