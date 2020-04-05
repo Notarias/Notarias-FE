@@ -3,26 +3,24 @@ import { withStyles }               from '@material-ui/core/styles';
 import Table                        from '@material-ui/core/Table';
 import Paper                        from '@material-ui/core/Paper';
 import TableRow                     from '@material-ui/core/TableRow';
-import { setBreadcrumbsList }       from '../../interfaces/breadcrumbs_interface';
 import { styles }                   from './styles';
-import TableHeaders                  from './table_headers';
+import TableHeaders                 from './table_headers';
 import ClientRows                   from './client_rows';
-import TableFooter          from '@material-ui/core/TableFooter';
-import TablePagination      from '@material-ui/core/TablePagination';
-import ControlsBar          from './controls_bar';
+import TableFooter              from '@material-ui/core/TableFooter';
+import TablePagination          from '@material-ui/core/TablePagination';
+import ControlsBar              from './controls_bar';
+import Breadcrumbs              from '../../ui/breadcrumbs'
 
 const BREADCRUMBS = [
   { name: "Inicio", path: "/" },
   { name: "Clientes", path: null }
 ]
 
-setBreadcrumbsList(BREADCRUMBS)
-
 const Clients = (props) => {
   const [searchLoading, setSearchLoading] = useState(false);
   const [sortField, setSortField]         = useState("first_name")
   const [sortDirection, setSortDirection] = useState("desc")
-  const [searchField]                    = useState("first_name_or_last_name_or_rfc_cont")
+  const [searchField]                     = useState("first_name_or_last_name_or_rfc_cont")
   const [searchValue, setSearchValue]     = useState("")
   const [timeout, setSetTimeout]          = useState(null)
   const [page, setPage]                   = useState(0)
@@ -57,42 +55,45 @@ const Clients = (props) => {
   }
 
   return(
-    <div className={classes.root}>
-      <ControlsBar
-        classes={classes}
-        searchLoading={searchLoading}
-        onChangeSearch={onChangeSearch.bind(this)}/>
-      <div className={classes.tableWrapper}>
-        <Paper >
-          <Table className={classes.table}>
-            <TableHeaders field={sortField} direction={sortDirection} sortHandler={sort.bind(this) }/>
-            <ClientRows
-              page={ page }
-              per={ per }
-              search={{}}
-              sortField={ sortField }
-              sortDirection={ sortDirection }
-              setTotalRecords={ setTotalRecords }
-              searchValue={ searchValue }
-              searchField={ searchField }
-              classes={ classes } />
-            <TableFooter>
-              <TableRow>
-                <TablePagination
-                  page={page}
-                  rowsPerPage={per}
-                  rowsPerPageOptions={[5, 10, 15, 20]}
-                  onChangePage={changePage}
-                  onChangeRowsPerPage={changeRowsPerPage}
-                  count={total_records}
-                  labelRowsPerPage={"Filas por página:"}
-                />
-              </TableRow>
-            </TableFooter>
-          </Table>
-        </Paper>
+    <>
+      <Breadcrumbs breadcrumbs={BREADCRUMBS}/>
+      <div className={classes.root}>
+        <ControlsBar
+          classes={classes}
+          searchLoading={searchLoading}
+          onChangeSearch={onChangeSearch.bind(this)}/>
+        <div className={classes.tableWrapper}>
+          <Paper >
+            <Table className={classes.table}>
+              <TableHeaders field={sortField} direction={sortDirection} sortHandler={sort.bind(this) }/>
+              <ClientRows
+                page={ page }
+                per={ per }
+                search={{}}
+                sortField={ sortField }
+                sortDirection={ sortDirection }
+                setTotalRecords={ setTotalRecords }
+                searchValue={ searchValue }
+                searchField={ searchField }
+                classes={ classes } />
+              <TableFooter>
+                <TableRow>
+                  <TablePagination
+                    page={page}
+                    rowsPerPage={per}
+                    rowsPerPageOptions={[5, 10, 15, 20]}
+                    onChangePage={changePage}
+                    onChangeRowsPerPage={changeRowsPerPage}
+                    count={total_records}
+                    labelRowsPerPage={"Filas por página:"}
+                  />
+                </TableRow>
+              </TableFooter>
+            </Table>
+          </Paper>
+        </div>
       </div>
-    </div>
+    </>
   )
 
 }

@@ -3,7 +3,6 @@ import { Switch, Route } from 'react-router-dom';
 
 import SessionsNew     from '../components/pages/sessions/new';
 import ProtectedRoute from './protected_route';
-import Breadcrumbs    from '../components/ui/breadcrumbs';
 
 import DashboardsIndex     from '../components/pages/dashboards/index';
 import UsersIndex          from '../components/pages/users/index';
@@ -24,12 +23,10 @@ import GlobalMessage       from './global_message'
 
 export default function BaseRoutes(props) {
   const { styles } = props
-  let { breadcrumbs } = store.getState()
 
   return(
     <div style={{ height: "100%" }}>
       <GlobalMessage classes={styles}/>
-      { !!breadcrumbs.length && <Breadcrumbs styles={styles} /> }
       <Switch>
         { !localStorage.jwtToken &&
           (<Route path="/sign_in" component={SessionsNew}/>)

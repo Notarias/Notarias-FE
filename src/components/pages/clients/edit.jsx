@@ -1,7 +1,6 @@
 import React, { Component }    from 'react';
 import { withStyles }          from '@material-ui/core/styles';
 import Grid                    from '@material-ui/core/Grid';
-import { setBreadcrumbsList }  from '../../interfaces/breadcrumbs_interface';
 import TextField               from '@material-ui/core/TextField';
 import Button                  from '@material-ui/core/Button';
 import API                     from '../../../axios_config';
@@ -23,6 +22,7 @@ import PermIdentityIcon        from '@material-ui/icons/PermIdentity';
 import FormHelperText          from '@material-ui/core/FormHelperText';
 import { setMessage }          from '../../interfaces/messages_interface';
 import CircularProgress        from '@material-ui/core/CircularProgress';
+import Breadcrumbs             from '../../ui/breadcrumbs'
 
 const BREADCRUMBS = [
     { name: "Inicio", path: "/" },
@@ -51,7 +51,6 @@ class EditClient extends Component {
   }
 
   componentDidMount() {
-    setBreadcrumbsList(BREADCRUMBS)
     this.getClient()
   }
 
@@ -114,7 +113,9 @@ class EditClient extends Component {
   render() {
     const { classes } = this.props;
     return(
-      <Grid container classes={{ container: classes.pageWrapper }}>
+      <>
+        <Breadcrumbs breadcrumbs={BREADCRUMBS}/>
+        <Grid container classes={{ container: classes.pageWrapper }}>
           <Grid item xs={12} sm={6}  classes={{ root: classes.genericGridHeight}}>
             <form onSubmit={this.submitClient} className={ classes.newClientForm }>
               <Grid item container>
@@ -432,6 +433,7 @@ class EditClient extends Component {
             </Grid>
           </Grid>
         </Grid>
+      </>
     )
   }
 }
