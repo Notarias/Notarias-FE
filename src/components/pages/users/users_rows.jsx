@@ -1,78 +1,85 @@
-import React, { Component } from 'react'
+import React, { useEffect } from 'react'
 import TableCell            from '@material-ui/core/TableCell';
 import TableRow             from '@material-ui/core/TableRow';
 import GenericDropdownMenu  from '../../ui/generic_dropdown_menu';
 import MenuItem             from '@material-ui/core/MenuItem';
-import { withStyles }       from '@material-ui/core/styles';
-import { styles }           from './styles';
-import Typography           from '@material-ui/core/Typography';
-import { Link }             from 'react-router-dom';
+import { gql }                      from 'apollo-boost';
+import { useQuery }                 from '@apollo/react-hooks';
+import TableBody                    from '@material-ui/core/TableBody';
+import CircularProgress             from '@material-ui/core/CircularProgress';
+import UserTableRows         from './userTableRows';
 
-class UsersRows extends Component {
-  roleName(user) {
-    if (user.role) {
-      return user.role.name
-    } else {
-      return "N/A" 
+const LOAD_USERS = gql`
+  query searchClients(
+    $page: Int,
+    $per: Int,
+    $sortField: String,
+    $sortDirection: String,
+    $searchField: String,
+    $searchValue: String
+  ) {
+  users(
+    page: $page,
+    per: $per,
+    sortField: $sortField,
+    sortDirection: $sortDirection,
+    searchField: $searchField,
+    searchValue: $searchValue
+  ) {
+    id
+    firstName
+    lastName
+    email
+    lockedAt
+    roleId
+    role {
+      name
+      permanentLink
+      createdAt
+      updatedAt
     }
   }
+}
+`
 
-  usersRows() {
-    const { users, lockUser, unlockUser, classes } = this.props;
+export default (props) => {
+  const { page, per, sortDirection, sortField, searchField, searchValue, classes } = props
+  let variables = {
+    page: page + 1,
+    per: per,
+    searchField: searchField,
+    searchValue: searchValue,
+    sortDirection: sortDirection,
+    sortField: sortField
+  }
+
+  const { loading, error, data, refetch } = useQuery(
+    LOAD_USERS, { vairables: variables, errorPolicy: 'all' }
+  );
+  
+  useEffect(() => {
+    refetch(variables);
+  }, [page, per, searchField, searchValue, sortField, sortDirection]);
+
+  if (loading || !data) {
     return(
-      users.map(user => (
-        <TableRow key={user.id} className={ user.locked_at && classes.lockedUserRow }>
-          <TableCell align="left">
-            {user.first_name}
-          </TableCell>
-          <TableCell align="center">{user.last_name}</TableCell>
-          <TableCell align="center">{user.email}</TableCell>
-          <TableCell align="center">{ this.roleName(user) }</TableCell>
-          <TableCell align="center">
-            <GenericDropdownMenu user={user} 
-                                dropdownSelectedStyle>
-              <Link key="Editar" to={`/users/${user.id}/edit`} style={{ textDecoration: 'none' }}>
-                <MenuItem>
-                  Editar
-                </MenuItem>
-              </Link>
-              { user.locked_at ?
-                  <MenuItem key="Desbloquear" onClick={unlockUser}>
-                    Desbloquear
-                  </MenuItem> :
-                  <MenuItem key="Bloquear" onClick={lockUser}>
-                    Bloquear
-                  </MenuItem>
-              }
-            </GenericDropdownMenu>
+      <TableBody>
+        <TableRow>
+          <TableCell align="center" colSpan={4} className={classes.loadingTableCell}>
+            <CircularProgress className={classes.searchLoadingIcon} size={100}/>
           </TableCell>
         </TableRow>
-      ))
+      </TableBody>
     )
-  }
-
-  emptyTable() {
-    const { classes } = this.props;
+  } else {
     return(
-      <TableRow>
-        <TableCell align="center" colSpan={4} className={classes.loadingTableCell}>
-          <Typography variant="h4" gutterBottom>
-            Nada que mostrar...
-          </Typography>
-          <Typography variant="subtitle1" gutterBottom>
-            Si usaste la búsqueda, intenta con otros valores.
-          </Typography>
-        </TableCell>
-      </TableRow>
-    )
-  }
-
-  render() {
-    const { users } = this.props;
-    return(
-      users.length ? this.usersRows() : this.emptyTable()
+      <TableBody>
+        {
+          data.users.map(user => (
+            <UserTableRows user={user}/>
+          ))
+        }
+      </TableBody>
     )
   }
 }
-
-export default withStyles(styles)(UsersRows);
