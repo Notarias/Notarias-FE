@@ -70,6 +70,9 @@ export const styles = theme => {
           width: 200,
         },
       }
+    },
+    buttonMaxwidth: {
+      width: '100%'
     }
   })
 }
