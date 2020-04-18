@@ -9,6 +9,7 @@
     "@material-ui/icons": "^4.2.1",
     "@material-ui/styles": "^4.3.3",
     "apollo-boost": "^0.4.7",
+    "apollo-cache-persist": "^0.1.1",
     "apollo-link-context": "^1.0.19",
     "axios": "^0.18.0",
     "caniuse-lite": "^1.0.30000989",

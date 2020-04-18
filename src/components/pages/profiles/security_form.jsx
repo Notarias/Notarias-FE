@@ -12,6 +12,8 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import { gql }                 from 'apollo-boost';
 import { Mutation }            from '@apollo/react-components';
 import CircularProgress        from '@material-ui/core/CircularProgress';
+import { GET_CURRENT_USER }    from '../../../resolvers/queries';
+import { GLOBAL_MESSAGE }      from '../../../resolvers/queries';
 
 const styles = {
   inputBase: {
@@ -24,13 +26,16 @@ const styles = {
 }
 
 const UPDATE_USER_PASSWORD = gql`
-mutation upsateUser($input: UpdateUserInput!) {
+mutation updateUser($input: UpdateUserInput!) {
   updateUser(input: $input) {
     user {
-      id
-      lockedAt
       firstName
       lastName
+      id
+      address
+      email
+      lockedAt
+      phone
       role {
         name
         permanentLink
@@ -46,8 +51,9 @@ class SecurityForm extends Component {
 
   constructor(props) {
     super(props)
+
     this.state = {
-      id: store.getState().currentUser.id,
+      id: props.currentUser.id,
       password: "",
       passwordConfirmation: "",
       errors: {},
@@ -87,6 +93,38 @@ class SecurityForm extends Component {
   handleMouseDownPassword = event => {
     event.preventDefault();
   };
+
+  submitForm(mutation, e) {
+    e.preventDefault()
+    mutation(
+      {
+        variables: {
+          input: {
+            id: this.state.id,
+            authProvider: {
+              credentials: {
+                password: this.state.password,
+                passwordConfirmation: this.state.passwordConfirmation
+              }
+            },
+          }
+        },
+        update: (store, { data: { updateUser } }) => {
+          store.writeQuery({ query: GET_CURRENT_USER, data: { currentUser: updateUser.user } });
+          store.writeQuery({
+            query: GLOBAL_MESSAGE,
+            data: {
+              globalMessage: {
+                message: "Se actualizo el perfil exitosamente",
+                type: "success",
+                __typename: "globalMessage"
+              }
+            }
+          })
+        }
+      }
+    )
+  }
 
   render() {
     const { classes } = this.props
@@ -139,20 +177,7 @@ class SecurityForm extends Component {
             />
             <Mutation
               mutation={UPDATE_USER_PASSWORD}
-              onCompleted={this.onCompleteUpdate.bind(this)}
-              variables={
-                {
-                  input: {
-                    id: this.state.id,
-                    authProvider: {
-                      credentials: {
-                        password: this.state.password,
-                        passwordConfirmation: this.state.passwordConfirmation
-                      }
-                    },
-                  }
-                }
-              }>
+              onCompleted={this.onCompleteUpdate.bind(this)}>
               {
                 (mutation, { loading, error, data }) => {
                   return(
@@ -162,7 +187,7 @@ class SecurityForm extends Component {
                       color="primary"
                       type="submit"
                       className={classes.inputBase}
-                      onClick={ mutation }>
+                      onClick={ this.submitForm.bind(this, mutation) }>
                       Guardar Cambios
                       { loading && <CircularProgress className={classes.buttonProgress} size={24} /> }
                     </Button>

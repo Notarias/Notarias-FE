@@ -18,8 +18,6 @@ import ProceduresIndex     from '../components/pages/procedures/index';
 import AppointmentsIndex   from '../components/pages/appointments/index';
 import ReportsIndex        from '../components/pages/reports/index';
 import ProfilesIndex       from '../components/pages/profiles/index';
-import ProfilesSecurity    from '../components/pages/profiles/security';
-import store               from '../store';
 import GlobalMessage       from './global_message'
 
 export default function BaseRoutes(props) {
@@ -44,8 +42,7 @@ export default function BaseRoutes(props) {
         <ProtectedRoute path="/procedures" component={ProceduresIndex}/>
         <ProtectedRoute path="/appointments" component={AppointmentsIndex}/>
         <ProtectedRoute path="/reports" component={ReportsIndex}/>
-        <ProtectedRoute exact path="/profile" component={ProfilesIndex}/>
-        <ProtectedRoute path="/profile/security" component={ProfilesSecurity}/>
+        <ProtectedRoute path="/profiles" component={ProfilesIndex}/>
         <Route render={() => <DashboardsIndex/>}/>
       </Switch>
     </div>
