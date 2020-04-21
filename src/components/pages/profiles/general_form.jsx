@@ -17,7 +17,7 @@ const styles = {
     margin: '15px 20px ',
   },
   iconStyle: {
-    marginBottom: '19px',
+    marginBottom: '0px',
   }
 }
 

@@ -25,7 +25,7 @@ class InputWithIcon extends React.Component  {
           <Grid item xs={2}>
           { this.props.icon || "" }
           </Grid>
-          <Grid item xs={9}>
+          <Grid item xs={9} >
             <TextField
               type={this.props.type}
               name={this.props.name} 
