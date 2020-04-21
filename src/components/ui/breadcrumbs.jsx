@@ -3,12 +3,24 @@ import Paper          from '@material-ui/core/Paper';
 import Breadcrumbs    from '@material-ui/core/Breadcrumbs';
 import Link           from '@material-ui/core/Link';
 import Typography     from '@material-ui/core/Typography';
-import store          from '../../store';
+import withStyles     from '@material-ui/core/styles/withStyles';
 
-export default (props) => {
-  const { styles } = props;
-  let breadcrumbs = store.getState().breadcrumbs
-  breadcrumbs = breadcrumbs.map((item, index) => {
+const styles = theme => {
+  return({
+    breadcrumbsContainer: {
+      flexWrap: 'wrap',
+    },
+    breadcrumbsPaper: {
+      padding: theme.spacing(1, 2),
+      borderRadius: '0',
+      height: "6%",
+    },
+  })
+};
+
+export default withStyles(styles)((props) => {
+  const { classes, breadcrumbs } = props;
+  let breadcrumbsHtml = breadcrumbs.map((item, index) => {
     if (item.path) {
       return(
         <Link key={item.name} href={item.path} >
@@ -20,10 +32,10 @@ export default (props) => {
     }
   })
   return(
-    <Paper className={styles.breadcrumbsPaper} >
+    <Paper className={classes.breadcrumbsPaper} >
       <Breadcrumbs aria-label="breadcrumb">
-        {breadcrumbs}
+        {breadcrumbsHtml}
       </Breadcrumbs>
     </Paper>
   )
-}
+})

@@ -16,13 +16,5 @@ export const styles = theme => {
     top: theme.spacing(3),
     position: "fixed",
     zIndex: 1100
-  },
-  breadcrumbsContainer: {
-    flexWrap: 'wrap',
-  },
-  breadcrumbsPaper: {
-    padding: theme.spacing(1, 2),
-    borderRadius: '0',
-    height: "6%",
-  },
+  }
 })};

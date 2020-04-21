@@ -11,6 +11,7 @@ import Typography              from '@material-ui/core/Typography';
 import Divider                 from '@material-ui/core/Divider';
 import { styles }              from './styles';
 import NewClientForm           from './new/form'
+import Breadcrumbs             from '../../ui/breadcrumbs'
 
 const BREADCRUMBS = [
   { name: "Inicio", path: "/" },
@@ -23,6 +24,8 @@ class NewClient extends Component {
   render() {
     const { classes } = this.props;
     return(
+      <>
+        <Breadcrumbs breadcrumbs={BREADCRUMBS}/>
         <Grid container classes={{ container: classes.pageWrapper }}>
           <Grid item xs={12} sm={6}  classes={{ root: classes.genericGridHeight }}>
             <NewClientForm classes={ classes }/>
@@ -195,7 +198,7 @@ class NewClient extends Component {
             </Grid>
           </Grid>
         </Grid>
-
+      </>
     )
   }
 }

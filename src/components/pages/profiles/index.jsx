@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import GeneralPanel from './general_panel';
+import ProfilePanel from './profile_panel';
 import { withStyles }       from '@material-ui/core/styles';
+import { GET_CURRENT_USER } from '../../../resolvers/queries'
+import { useQuery }         from '@apollo/react-hooks';
 
 const styles = {
   columsWraper:{
@@ -9,13 +11,13 @@ const styles = {
   }
 }
 
-class ProfilesIndex extends Component {
-  render() {
-    return(
-      <div style={ styles.columsWraper }>
-        <GeneralPanel/>
-      </div>
-    )
-  }
+const ProfilesIndex = (props) => {
+  const { loading, data, refetch } = useQuery(GET_CURRENT_USER);
+
+  return(
+    <div style={ styles.columsWraper }>
+      <ProfilePanel currentUser={data.currentUser} loading={loading} refetch={refetch}/>
+    </div>
+  )
 }
 export default withStyles(()=>{})(ProfilesIndex);

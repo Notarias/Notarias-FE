@@ -3,7 +3,6 @@ import { Switch, Route } from 'react-router-dom';
 
 import SessionsNew     from '../components/pages/sessions/new';
 import ProtectedRoute from './protected_route';
-import Breadcrumbs    from '../components/ui/breadcrumbs';
 
 import DashboardsIndex     from '../components/pages/dashboards/index';
 import UsersIndex          from '../components/pages/users/index';
@@ -19,17 +18,14 @@ import ProceduresIndex     from '../components/pages/procedures/index';
 import AppointmentsIndex   from '../components/pages/appointments/index';
 import ReportsIndex        from '../components/pages/reports/index';
 import ProfilesIndex       from '../components/pages/profiles/index';
-import ProfilesSecurity    from '../components/pages/profiles/security';
-import store               from '../store';
 import GlobalMessage       from './global_message'
 
 export default function BaseRoutes(props) {
   const { styles } = props
-  let { breadcrumbs } = store.getState()
 
   return(
-    <div style={{ height: '100%' }}>
-      { !!breadcrumbs.length && <Breadcrumbs styles={styles} /> }
+    <div style={{ height: "100%" }}>
+      <GlobalMessage classes={styles}/>
       <Switch>
         { !localStorage.jwtToken &&
           (<Route path="/sign_in" component={SessionsNew}/>)
@@ -46,8 +42,7 @@ export default function BaseRoutes(props) {
         <ProtectedRoute path="/procedures" component={ProceduresIndex}/>
         <ProtectedRoute path="/appointments" component={AppointmentsIndex}/>
         <ProtectedRoute path="/reports" component={ReportsIndex}/>
-        <ProtectedRoute exact path="/profile" component={ProfilesIndex}/>
-        <ProtectedRoute path="/profile/security" component={ProfilesSecurity}/>
+        <ProtectedRoute path="/profiles" component={ProfilesIndex}/>
         <Route render={() => <DashboardsIndex/>}/>
       </Switch>
     </div>

@@ -11,6 +11,7 @@ import store from '../../../store';
 import { gql }                 from 'apollo-boost';
 import { Mutation }            from '@apollo/react-components';
 import CircularProgress        from '@material-ui/core/CircularProgress';
+import { GET_CURRENT_USER }    from '../../../resolvers/queries'
 
 const styles = {
   inputBase: {
@@ -22,14 +23,15 @@ const styles = {
 }
 
 const UPDATE_USER_PROFILE = gql`
-mutation upsateUser($input: UpdateUserInput!) {
+mutation updateUser($input: UpdateUserInput!) {
   updateUser(input: $input) {
     user {
-      id
-      lockedAt
       firstName
       lastName
+      id
       address
+      email
+      lockedAt
       phone
       role {
         name
@@ -43,16 +45,21 @@ mutation upsateUser($input: UpdateUserInput!) {
 `
 
 class GeneralForm extends Component {
-  state = {
-    id: store.getState().currentUser.id,
-    firstName: store.getState().currentUser.first_name,
-    lastName: store.getState().currentUser.last_name,
-    address: store.getState().currentUser.address,
-    email: store.getState().currentUser.email,
-    phone: store.getState().currentUser.phone,
-    errors: {},
-    pristine: true,
-    submitting: false,
+
+  constructor(props) {
+    super(props)
+    const { currentUser } = props
+    this.state = {
+      id: currentUser.id,
+      firstName: currentUser.firstName,
+      lastName: currentUser.lastName,
+      address: currentUser.address,
+      email: currentUser.email,
+      phone: currentUser.phone,
+      errors: {},
+      pristine: true,
+      submitting: false,
+    }
   }
 
   onCompleteUpdate(data) {
@@ -78,9 +85,29 @@ class GeneralForm extends Component {
     e.preventDefault()
   }
 
+  submitForm(mutation, e) {
+    e.preventDefault()
+    mutation(
+      {
+        variables: {
+          input: {
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            address: this.state.address,
+            phone: this.state.phone,
+            id: this.state.id,
+          }
+        },
+        update: (store, { data: { updateUser } }) => {
+          store.writeQuery({ query: GET_CURRENT_USER, data: { currentUser: updateUser.user } });
+        }
+      }
+    )
+  }
+
   render() {
-    const { classes } = this.props
-    let user = store.getState().currentUser
+    const { classes, currentUser } = this.props
+
     return(
         <div>
           <form onSubmit={this.onSubmit.bind(this)}>
@@ -91,18 +118,7 @@ class GeneralForm extends Component {
             <InputText errors={this.state.errors} errorsKey={"phone"} name='phone' handleChange={this.handleChange.bind(this)} value={this.state.phone} label="telefono" icon={ <PhoneIcon className={classes.iconStyle}/>}/>
             <Mutation
               mutation={UPDATE_USER_PROFILE}
-              onCompleted={this.onCompleteUpdate.bind(this)}
-              variables={
-                {
-                  input: {
-                    firstName: this.state.firstName,
-                    lastName: this.state.lastName,
-                    address: this.state.address,
-                    phone: this.state.phone,
-                    id: this.state.id,
-                  }
-                }
-              }>
+              onCompleted={this.onCompleteUpdate.bind(this)}>
               {
                 (mutation, { loading, error, data }) => {
                   return(
@@ -112,7 +128,7 @@ class GeneralForm extends Component {
                       color="primary"
                       type="submit"
                       className={classes.inputBase}
-                      onClick={ mutation }>
+                      onClick={ this.submitForm.bind(this, mutation) }>
                       Guardar Cambios
                       { loading && <CircularProgress className={classes.buttonProgress} size={14} /> }
                     </Button>

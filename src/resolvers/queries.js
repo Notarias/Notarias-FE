@@ -16,6 +16,24 @@ export const REMOVE_MESSAGE_MUTATION = gql`
   }
 `
 
+export const GET_CURRENT_USER = gql`
+  query currentUser {
+    currentUser @client {
+      firstName
+      lastName
+      id
+      address
+      email
+      lockedAt
+      phone
+      role {
+        name
+        permanentLink
+      }
+    }
+  }
+`
+
 export const SET_BREADCRUMBS = gql`
   mutation setBreadcrumbs($input: [CreateBreadcrumbInput]) {
     setBreadcrumbs(input: $input) @client {
