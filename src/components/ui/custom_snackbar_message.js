@@ -12,6 +12,8 @@ import WarningIcon from '@material-ui/icons/Warning';
 import { withStyles } from '@material-ui/core/styles';
 import { Mutation } from "@apollo/react-components";
 import { REMOVE_MESSAGE_MUTATION } from '../../resolvers/queries'
+import { GLOBAL_MESSAGE }          from '../../resolvers/queries';
+import client                      from '../../apollo'
 
 const variantIcon = {
   success: CheckCircleIcon,
@@ -60,7 +62,21 @@ function CustomSnackbarMessage(props) {
   const [hidden, setHidden] = useState(false); 
 
   if (autohide) {
-    setTimeout(() => { setHidden(true) }, 1000)
+    setTimeout(() => {
+      client.writeQuery(
+        {
+          query: GLOBAL_MESSAGE,
+          data: {
+            globalMessage: {
+              message: null,
+              type: null,
+              __typename: "globalMessage"
+            }
+          }
+        }
+      )
+      setHidden(true)
+    }, 3000)
   }
 
   return (

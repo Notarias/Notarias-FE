@@ -12,6 +12,7 @@ export default ({ classes }) => {
       className={ classes.floatingMessage }
       message={ data.globalMessage.message }
       actionable={ true }
+      autohide={ true }
     />)|| ""
   )
 }

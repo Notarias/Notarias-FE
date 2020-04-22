@@ -15,6 +15,10 @@ export const typeDefs = gql`
     removeMessage(message: String, type: String ): GlobalMessage!
   }
 
+  extend type Query {
+    currentUser: User
+  }
+
   type Breadcrumb {
     name: String
     path: String
@@ -38,17 +42,6 @@ export const typeDefs = gql`
   }
 `
 
-
-
-// extend type Query {
-//   getBreadcrumbs: [Breadcrumb]
-// }
-
-
-
-
-
-
 export const resolvers = {
   Mutation: {
     removeMessage: (_, { message, type }, { cache }) => {
@@ -63,24 +56,24 @@ export const resolvers = {
           }
         }
       });
-    },
-    setBreadcrumbs: (_, { input }, { cache }) => {
-      //const globalMessage = cache.readQuery({ query: GLOBAL_MESSAGE })
-      cache.writeData({
-        data: {
-          __typename: "CreateBreadcrumbsPayload",
-          breadcrumbs: (
-            input.map(breadcrumb => (
-                {
-                  name: breadcrumb.name,
-                  path: breadcrumb.path,
-                  __typename: "Breadcrumb"
-                }
-              )
-            )
-          )
-        }
-      });
     }
+    // setBreadcrumbs: (_, { input }, { cache }) => {
+    //   //const globalMessage = cache.readQuery({ query: GLOBAL_MESSAGE })
+    //   cache.writeData({
+    //     data: {
+    //       __typename: "CreateBreadcrumbsPayload",
+    //       breadcrumbs: (
+    //         input.map(breadcrumb => (
+    //             {
+    //               name: breadcrumb.name,
+    //               path: breadcrumb.path,
+    //               __typename: "Breadcrumb"
+    //             }
+    //           )
+    //         )
+    //       )
+    //     }
+    //   });
+    // }
   }
 };
