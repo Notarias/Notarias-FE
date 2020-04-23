@@ -12,6 +12,7 @@ import { gql }                 from 'apollo-boost';
 import { Mutation }            from '@apollo/react-components';
 import CircularProgress        from '@material-ui/core/CircularProgress';
 import { GET_CURRENT_USER }    from '../../../resolvers/queries'
+import { GLOBAL_MESSAGE }      from '../../../resolvers/queries';
 
 const styles = {
   inputBase: {
@@ -100,6 +101,16 @@ class GeneralForm extends Component {
         },
         update: (store, { data: { updateUser } }) => {
           store.writeQuery({ query: GET_CURRENT_USER, data: { currentUser: updateUser.user } });
+          store.writeQuery({
+            query: GLOBAL_MESSAGE,
+            data: {
+              globalMessage: {
+                message: "Se actualizo el perfil exitosamente",
+                type: "success",
+                __typename: "globalMessage"
+              }
+            }
+          })
         }
       }
     )
