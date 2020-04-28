@@ -7,108 +7,56 @@ import UserForm             from './user_form/user_form';
 import Paper                from '@material-ui/core/Paper';
 import ErrorMessage         from '../../ui/custom_snackbar_message';
 import { setBreadcrumbsList }              from '../../interfaces/breadcrumbs_interface';
-import User from '../../models/objects/user'
-
+import Breadcrumbs             from '../../ui/breadcrumbs';
+import { useQuery }         from '@apollo/react-hooks';
+import { gql }              from 'apollo-boost';
 
 const BREADCRUMBS = [
   { name: "Inicio", path: "/" },
   { name: "Usuarios", path: "/users" },
-  { name: "Nuevo", path: null }
+  { name: "Editar", path: null }
 ]
 
-class Edit extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      loading: true,
-      user: new User({ id: this.props.match.params.id }, this),
-      errorMessage: null,
-      errors: {},
-      requiredFields: {
-        "email": "Correo Electrónico",
-        "first_name": "Nombre",
-        "last_name": "Apellido",
-      },
-      notRequiredFields: {
-        "password": "Contraseña",
-        "password_confirmation": "Confirmar Contraseña",
-      },
-      fields: [
-        "email",
-        "first_name",
-        "last_name",
-        "password",
-        "password_confirmation",
-        "role_permanent_link"
-      ]
-    }
-  }
-
-  componentDidMount() {
-    setBreadcrumbsList(BREADCRUMBS)
-    if(this.state.user.id) {
-      this.state.user.load().then(() => {
-        this.setState({
-          loading: false
-        })
-      }).catch((error) => {
-        this.setState({
-          errorMessage: GENERIC_FORM_ERROR,
-          loading: false
-        })
-      })
-    }
-  }
-
-  formData() {
-    let data = {}
-    for(let field of this.state.fields){
-      data[field] = this.state.user[field]
-    }
-    return(data)
-  }
-
-  submitUser = params => {
-    this.setState({ loading: true })
-    this.state.user.update(params).then(() => {
-      this.setState({
-        errorMessage: null,
-        errors: {},
-        loading: false
-      })
-      setMessage({ type: "success", text: "Usuario actualizado, redirigiendo..." })
-      setTimeout(() => { this.props.history.push('/users') }, 1500);
-    }).catch((error) => {
-      if (error.response && error.response.status === 422 ) {
-        this.setState({
-          errorMessage: GENERIC_FORM_ERROR,
-          errors: error.response.data.pointers,
-          loading: false
-        })
+const GET_USER = gql`
+  query getuser($id: Int!){
+    user(id: $id) {
+      id
+      firstName
+      lastName
+      email
+      address
+      phone
+      lockedAt
+      roleId
+      role {
+        name
+        permanentLink
+        createdAt
+        updatedAt
       }
-    })
+    }
+    roles{
+      name
+      createdAt
+      permanentLink
+    }
   }
+`
 
-  render() {
-    const { classes } = this.props;
-    return(
-      <div className={classes.formWrapper}>
+const Edit = (props) => {
+  const { classes, match } = props;
+  const { loading, error, data } = useQuery(GET_USER, { variables: { "id": parseInt(match.params.id) }})
+  if(loading) return <p>Loadng...</p>
+  if(error) return <p> { `Error ${error.message}` } </p>
+  //acaba la query eso te va a entregar el user y se lo pasas al form ok igual puedes pasar el loading desde aqui pero separa el loading del mutador del loading de la query ok
+  return(
+      <div>
+        <Breadcrumbs breadcrumbs={BREADCRUMBS}/>
         <Paper className={classes.paper}>
-          {this.state.errorMessage && <ErrorMessage
-            variant="error"
-            className={classes.margin}
-            message={this.state.errorMessage}
-            actionable={false}/>}
-          <UserForm
-            initialValues={this.formData()}
-            onSubmit={this.submitUser.bind(this)}
-            errors={this.state.errors}
-            requiredFields={this.state.requiredFields}
-            notRequiredFields={this.state.notRequiredFields}
-            loading={this.state.loading}/>
+          <UserForm classes={ classes } match={props.match.params} data={data} loadingUser={loading}/>
         </Paper>
       </div>
-    )
-  }
+  )
 }
+
 export default withStyles(styles)(Edit);
