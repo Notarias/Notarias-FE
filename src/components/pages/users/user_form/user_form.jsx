@@ -1,100 +1,217 @@
 import React, { Component } from 'react';
-import { Field, reduxForm } from 'redux-form';
-import renderTextField      from '../../../ui/shared/render_text_field';
-import RoleSelectDropdown   from './role_select_dropdown';
 import Button               from '@material-ui/core/Button';
-import API                  from '../../../../axios_config';
 import MenuItem             from '@material-ui/core/MenuItem';
 import withStyles           from '@material-ui/core/styles/withStyles';
 import { styles }           from './styles';
 import CircularProgress     from '@material-ui/core/CircularProgress';
+import Grid                    from '@material-ui/core/Grid';
+import FormHelperText          from '@material-ui/core/FormHelperText';
+import TextField               from '@material-ui/core/TextField';
+import { gql }                 from 'apollo-boost';
+import { Mutation }            from '@apollo/react-components';
+import Select               from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import { Link } from 'react-router-dom';
+
+const USER_EDIT_MUTATION = gql`
+  mutation updateUser($id: ID!, $firstName:String, $lastName: String, $email: String, $address: String, $phone: String, $rolePermanentLink: String) {
+    updateUser(input: {id: $id, firstName: $firstName, lastName: $lastName, email: $email, address: $address, phone: $phone, rolePermanentLink: $rolePermanentLink}) {
+      user {
+        id
+        firstName
+        lastName
+        email
+        lockedAt
+        address
+        phone
+        role {
+          name
+          permanentLink
+        }
+      }
+      errors
+      pointers
+    }
+  }
+`
 
 class  UserForm extends Component {
   constructor(props) {
     super(props)
+    const { user } = this.props.data
     this.state = {
-      requiredFields: this.props.requiredFields,
-      notRequiredFields: this.props.notRequiredFields,
-      roles: [],
-      errors: this.props.errors
+      id: parseInt(user.id),
+      pristine: true,
+      errors: {},
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      address: user.address,
+      phone: user.phone,
+      rolePermanentLink: user.role && user.role.permanentLink 
     }
   }
 
-  componentDidMount() {
-    API.get("/roles").then((response) => {
-      this.setState({ roles: response.data.roles })
-    });
+  handleChange = ({ target }) => {
+    const {name, value} = target
+    this.setState({ [name]: value, pristine: false })
   }
 
-  requiredFields() {
-    return this.state.requiredFields && this.buildFields(this.state.requiredFields, true)
+  onCompleted(data) {
+    if (data.updateUser.pointers) {
+      this.setState({ errors: data.updateUser.pointers })
+    }
   }
 
-  notRequiredFields() {
-    return this.state.notRequiredFields && this.buildFields(this.state.notRequiredFields, false)
+  setNoAdmin = () => {
+    this.setState({rolePermanentLink: null})
   }
 
-  buildFields(fields, required) {
-    let { errors } = this.props
-    return Object.keys(fields).reduce((result, key) => {
-      result.push(
-        <Field
-        key={key} 
-        name={key}
-        type={this.fieldType(key)}
-        id={key}
-        label={fields[key]}
-        meta={{ error: errors[key], touched: errors[key] }}
-        required={required}
-        component={renderTextField} />
-      )
-      return result;
-    }, [])
-  }
-
-  fieldType(key) {
-    return key === "password" ? "password" : "text" && key === "password_confirmation" ? "password" : "text"
-  }
-
-  renderRoles() {
-    return this.state.roles.map((item, key) =>
-      <MenuItem key={key} value={item.permanent_link}>
-        <em>{item.name}</em>
-      </MenuItem>
-    )
+  submitForm(mutation) {
+    mutation({
+      variables:  {
+        id: this.state.id,
+        firstName: this.state.firstName,
+        lastName: this.state.lastName,
+        email: this.state.email,
+        address: this.state.address,
+        phone: this.state.phone,
+        rolePermanentLink: this.state.rolePermanentLink
+      } 
+    })
   }
 
   render() {
-    const { handleSubmit, pristine, submitting, userData, errors, classes, loading } = this.props
+    const { classes, data, match } = this.props
     return (
-      <form onSubmit={handleSubmit} >
-        {this.requiredFields()}
-        {this.notRequiredFields()}
-        <Field
-          key={"role_permanent_link"} 
-          name={"role_permanent_link"}
-          label={"Rol"}
-          selected={(userData && userData.role_permanent_link) || ""}
-          meta={{ error: errors["role"], touched: errors["role"] }}
-          required={true}
-          component={RoleSelectDropdown}>
-          { this.renderRoles() }
-        </Field>
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          color="primary"
-          disabled={loading || pristine || submitting || !this.state.roles.length}>
-
-          Guardar
-          { loading && <CircularProgress size={24} className={classes.buttonProgress}/> }
-        </Button>
-      </form>
-    );
+      <Grid classes={{root: classes.editUserFormGrid}} >
+        <Mutation
+          mutation={USER_EDIT_MUTATION}
+          onCompleted={this.onCompleted.bind(this)}>
+          {
+            (mutation, { loading, error, data }) => {
+              return(
+                <form onSubmit={(e) => e.preventDefault()}>
+                  <Grid item container classes={{ root: classes.gridTextFieldTop}} >
+                    <Grid item xs={1}>
+                    </Grid>
+                    <Grid item xs={11}>
+                      <TextField
+                        value={this.state.firstName}
+                        classes={{ root: classes.userFormTextFieldEdit }}
+                        onChange={this.handleChange.bind(this)}
+                        label="Nombre"
+                        error={this.state.errors.firstName}
+                        name="firstName"/>
+                      <FormHelperText error>{this.state.errors.first_name}</FormHelperText>
+                    </Grid>
+                  </Grid>
+                  <Grid item container >
+                    <Grid item xs={1}>
+                    </Grid>
+                    <Grid item xs={11}>
+                      <TextField
+                        value={this.state.lastName}
+                        classes={{ root: classes.userFormTextFieldEdit }}
+                        onChange={this.handleChange.bind(this)}
+                        label="Apellido"
+                        error={this.state.errors.lastName}
+                        name="lastName"/>
+                      <FormHelperText error>{this.state.errors.last_name}</FormHelperText>
+                    </Grid>
+                  </Grid>
+                  <Grid item container >
+                    <Grid item xs={1}>
+                    </Grid>
+                    <Grid item xs={11}>
+                      <TextField
+                        value={this.state.email}
+                        classes={{ root: classes.userFormTextFieldEdit }}
+                        onChange={this.handleChange.bind(this)}
+                        label="Correo"
+                        error={this.state.errors.email}
+                        name="email"/>
+                      <FormHelperText error>{this.state.errors.email}</FormHelperText>
+                    </Grid>
+                  </Grid>
+                  <Grid item container >
+                    <Grid item xs={1}>
+                    </Grid>
+                    <Grid item xs={11}>
+                      <TextField
+                        value={this.state.address}
+                        classes={{ root: classes.userFormTextFieldEdit }}
+                        onChange={this.handleChange.bind(this)}
+                        label="Dirección"
+                        error={this.state.errors.address}
+                        name="address"/>
+                      <FormHelperText error>{this.state.errors.address}</FormHelperText>
+                    </Grid>
+                  </Grid>
+                  <Grid item container >
+                    <Grid item xs={1}>
+                    </Grid>
+                    <Grid item xs={11}>
+                      <TextField
+                        value={this.state.phone}
+                        classes={{ root: classes.userFormTextFieldEdit }}
+                        onChange={this.handleChange.bind(this)}
+                        label="Telefono"
+                        error={this.state.errors.phone}
+                        name="phone"/>
+                      <FormHelperText error>{this.state.errors.phone}</FormHelperText>
+                    </Grid>
+                  </Grid>
+                  <Grid item container >
+                    <Grid item xs={1}>
+                    </Grid>
+                    <Grid item xs={11}>
+                      <FormControl  className={classes.formControl, classes.userFormTextFieldEdit}>
+                      <InputLabel id="demo-simple-select-required-label" >Rol</InputLabel>
+                        <Select
+                          labelId="demo-simple-select-required-label"
+                          id="demo-simple-select-required"
+                          name={"rolePermanentLink"}
+                          value={this.state.rolePermanentLink}
+                          onChange={this.handleChange.bind(this)}ejemplo
+                        >
+                          {
+                            this.props.data.roles.map((role)=> {
+                              return(
+                                <MenuItem  value={role.permanentLink}>
+                                  {role.name}
+                                </MenuItem>
+                              )
+                             }
+                            )
+                          }
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                  </Grid>
+                  <Grid item classes={{ root: classes.buttonMarginBottom}}>
+                    <Link to={`/users`} align="center" style= {{textDecoration:"none" }} >
+                      <Button
+                        disabled={this.state.pristine || loading}
+                        variant="contained"
+                        color="primary"
+                        type="submit"
+                        classes={{ root: classes.editUserFormSubmitButton }}
+                        onClick={  this.submitForm.bind(this, mutation) }>
+                        Guardar Cambios
+                        { loading && <CircularProgress className={classes.buttonProgress} size={24} /> }
+                      </Button>
+                    </Link>
+                  </Grid>
+                </form>
+              )
+            }
+          }
+        </Mutation>
+      </Grid>
+    )
   }
 }
 
-export default withStyles(styles)(
-  reduxForm({ form: 'userForm', enableReinitialize: true })(UserForm)
-);
+export default withStyles(styles)(UserForm)
