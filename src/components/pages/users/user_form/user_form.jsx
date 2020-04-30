@@ -4,19 +4,18 @@ import MenuItem             from '@material-ui/core/MenuItem';
 import withStyles           from '@material-ui/core/styles/withStyles';
 import { styles }           from './styles';
 import CircularProgress     from '@material-ui/core/CircularProgress';
-import Grid                    from '@material-ui/core/Grid';
-import FormHelperText          from '@material-ui/core/FormHelperText';
-import TextField               from '@material-ui/core/TextField';
-import { gql }                 from 'apollo-boost';
-import { Mutation }            from '@apollo/react-components';
+import Grid                 from '@material-ui/core/Grid';
+import FormHelperText       from '@material-ui/core/FormHelperText';
+import TextField            from '@material-ui/core/TextField';
+import { gql }              from 'apollo-boost';
+import { Mutation }         from '@apollo/react-components';
 import Select               from '@material-ui/core/Select';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
-import { Link } from 'react-router-dom';
+import InputLabel           from '@material-ui/core/InputLabel';
+import FormControl          from '@material-ui/core/FormControl';
 
 const USER_EDIT_MUTATION = gql`
-  mutation updateUser($id: ID!, $firstName:String, $lastName: String, $email: String, $address: String, $phone: String, $rolePermanentLink: String) {
-    updateUser(input: {id: $id, firstName: $firstName, lastName: $lastName, email: $email, address: $address, phone: $phone, rolePermanentLink: $rolePermanentLink}) {
+  mutation updateUser($id: ID!, $firstName:String, $lastName: String, $email: String, $address: String, $phone: String, $rolePermanentLink: String, $authProvider: AuthProviderSignupData) {
+    updateUser(input: {id: $id, firstName: $firstName, lastName: $lastName, email: $email, address: $address, phone: $phone, rolePermanentLink: $rolePermanentLink, authProvider:  $authProvider }) {
       user {
         id
         firstName
@@ -29,6 +28,7 @@ const USER_EDIT_MUTATION = gql`
           name
           permanentLink
         }
+      
       }
       errors
       pointers
@@ -49,7 +49,9 @@ class  UserForm extends Component {
       email: user.email,
       address: user.address,
       phone: user.phone,
-      rolePermanentLink: user.role && user.role.permanentLink 
+      rolePermanentLink: user.role && user.role.permanentLink,
+      password: "",
+      passwordConfirmation: "",
     }
   }
 
@@ -61,12 +63,11 @@ class  UserForm extends Component {
   onCompleted(data) {
     if (data.updateUser.pointers) {
       this.setState({ errors: data.updateUser.pointers })
+    } else {
+      setTimeout(() => { this.props.history.push(`/users`) }, 3000)
     }
   }
-
-  setNoAdmin = () => {
-    this.setState({rolePermanentLink: null})
-  }
+  
 
   submitForm(mutation) {
     mutation({
@@ -77,7 +78,13 @@ class  UserForm extends Component {
         email: this.state.email,
         address: this.state.address,
         phone: this.state.phone,
-        rolePermanentLink: this.state.rolePermanentLink
+        rolePermanentLink: this.state.rolePermanentLink,
+        authProvider: {
+          credentials: {
+            password: this.state.password,
+            passwordConfirmation: this.state.passwordConfirmation
+          }
+        }
       } 
     })
   }
@@ -167,6 +174,36 @@ class  UserForm extends Component {
                     <Grid item xs={1}>
                     </Grid>
                     <Grid item xs={11}>
+                      <TextField
+                        type={'password'}
+                        value={this.state.password}
+                        classes={{ root: classes.userFormTextFieldEdit }}
+                        onChange={this.handleChange.bind(this)}
+                        label="Contraseña"
+                        error={this.state.errors.password}
+                        name="password"/>
+                      <FormHelperText error>{this.state.errors.password}</FormHelperText>
+                    </Grid>
+                  </Grid>
+                  <Grid item container >
+                    <Grid item xs={1}>
+                    </Grid>
+                    <Grid item xs={11}>
+                      <TextField
+                        type={'password'}
+                        value={this.state.passwordConfirmation}
+                        classes={{ root: classes.userFormTextFieldEdit }}
+                        onChange={this.handleChange.bind(this)}
+                        label="Confirmar Contraseña"
+                        error={this.state.errors.passwordConfirmation}
+                        name="passwordConfirmation"/>
+                      <FormHelperText error>{this.state.errors.password_confirmation}</FormHelperText>
+                    </Grid>
+                  </Grid>
+                  <Grid item container >
+                    <Grid item xs={1}>
+                    </Grid>
+                    <Grid item xs={11}>
                       <FormControl  className={classes.formControl, classes.userFormTextFieldEdit}>
                       <InputLabel id="demo-simple-select-required-label" >Rol</InputLabel>
                         <Select
@@ -174,7 +211,7 @@ class  UserForm extends Component {
                           id="demo-simple-select-required"
                           name={"rolePermanentLink"}
                           value={this.state.rolePermanentLink}
-                          onChange={this.handleChange.bind(this)}ejemplo
+                          onChange={this.handleChange.bind(this)}
                         >
                           {
                             this.props.data.roles.map((role)=> {
@@ -191,18 +228,16 @@ class  UserForm extends Component {
                     </Grid>
                   </Grid>
                   <Grid item classes={{ root: classes.buttonMarginBottom}}>
-                    <Link to={`/users`} align="center" style= {{textDecoration:"none" }} >
-                      <Button
-                        disabled={this.state.pristine || loading}
-                        variant="contained"
-                        color="primary"
-                        type="submit"
-                        classes={{ root: classes.editUserFormSubmitButton }}
-                        onClick={  this.submitForm.bind(this, mutation) }>
-                        Guardar Cambios
-                        { loading && <CircularProgress className={classes.buttonProgress} size={24} /> }
-                      </Button>
-                    </Link>
+                    <Button
+                      disabled={this.state.pristine || loading}
+                      variant="contained"
+                      color="primary"
+                      type="submit"
+                      classes={{ root: classes.editUserFormSubmitButton }}
+                      onClick={  this.submitForm.bind(this, mutation) }>
+                      Guardar Cambios
+                      { loading && <CircularProgress className={classes.buttonProgress} size={24} /> }
+                    </Button>
                   </Grid>
                 </form>
               )
