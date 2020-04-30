@@ -53,7 +53,7 @@ const Edit = (props) => {
       <div>
         <Breadcrumbs breadcrumbs={BREADCRUMBS}/>
         <Paper className={classes.paper}>
-          <UserForm classes={ classes } match={props.match.params} data={data} loadingUser={loading}/>
+          <UserForm classes={ classes } history={props.history} match={props.match.params} data={data} loadingUser={loading}/>
         </Paper>
       </div>
   )
