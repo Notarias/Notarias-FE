@@ -18,7 +18,7 @@ const BREADCRUMBS = [
 ]
 
 const GET_USER = gql`
-  query getuser($id: Int!){
+  query getuser($id: ID!){
     user(id: $id) {
       id
       firstName
@@ -45,7 +45,7 @@ const GET_USER = gql`
 
 const Edit = (props) => {
   const { classes, match } = props;
-  const { loading, error, data } = useQuery(GET_USER, { variables: { "id": parseInt(match.params.id) }})
+  const { loading, error, data } = useQuery(GET_USER, { variables: { "id": match.params.id }})
   if(loading) return <p>Loadng...</p>
   if(error) return <p> { `Error ${error.message}` } </p>
   //acaba la query eso te va a entregar el user y se lo pasas al form ok igual puedes pasar el loading desde aqui pero separa el loading del mutador del loading de la query ok

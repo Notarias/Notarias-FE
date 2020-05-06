@@ -14,8 +14,8 @@ import InputLabel           from '@material-ui/core/InputLabel';
 import FormControl          from '@material-ui/core/FormControl';
 
 const USER_EDIT_MUTATION = gql`
-  mutation updateUser($id: ID!, $firstName:String, $lastName: String, $email: String, $address: String, $phone: String, $rolePermanentLink: String, $authProvider: AuthProviderSignupData) {
-    updateUser(input: {id: $id, firstName: $firstName, lastName: $lastName, email: $email, address: $address, phone: $phone, rolePermanentLink: $rolePermanentLink, authProvider:  $authProvider }) {
+  mutation updateUser($id: ID!, $firstName: String, $lastName: String, $email: String, $address: String, $phone: String, $rolePermanentLink: String, $authProvider: AuthProviderSignupData) {
+    updateUser(input: {id: $id, firstName: $firstName, lastName: $lastName, email: $email, address: $address, phone: $phone, rolePermanentLink: $rolePermanentLink, authProvider: $authProvider}) {
       user {
         id
         firstName
@@ -28,7 +28,6 @@ const USER_EDIT_MUTATION = gql`
           name
           permanentLink
         }
-      
       }
       errors
       pointers

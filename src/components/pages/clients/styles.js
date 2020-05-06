@@ -96,7 +96,8 @@ export const styles = theme => {
       width: "100%"
     },
     newClientForm: {
-      padding: "0 5%"
+      padding: "0 5%",
+      paddingTop: "15px"
     },
     pageWrapper: {
       height: "94%",
