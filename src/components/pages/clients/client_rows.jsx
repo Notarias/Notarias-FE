@@ -12,6 +12,8 @@ import TableCell                    from '@material-ui/core/TableCell';
 import TableBody                    from '@material-ui/core/TableBody';
 import { gql }                      from 'apollo-boost';
 import { useQuery }                 from '@apollo/react-hooks';
+import Link                         from '@material-ui/core/Link';
+import Button                       from '@material-ui/core/Button';
 
 const LOAD_CLIENTS = gql`
   query searchClients(
@@ -107,6 +109,13 @@ export default (props) => {
                       <span style={{paddingLeft: "10px"}}>
                         Trámites
                       </span>
+                    </MenuItem>
+                    <MenuItem key={client.id + "-edit"}>
+                      <Link href={`clients/${client.id}/edit`} align="center" style= {{ width: "100%", textDecoration:"none" }} >
+                        <Button >
+                          Editar
+                        </Button>
+                      </Link>
                     </MenuItem>
                   </GenericDropdownMenu>
                 </div>
