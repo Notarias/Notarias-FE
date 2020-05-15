@@ -42,7 +42,7 @@ export default class GenericDropdownMenu extends React.Component {
           onClose={this.handleClose}
           PaperProps={{
             style: {
-              maxHeight: ITEM_HEIGHT * 4.5,
+              maxHeight: ITEM_HEIGHT * 10,
               width: 200,
             },
           }}

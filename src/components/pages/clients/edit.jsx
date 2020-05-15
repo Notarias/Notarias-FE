@@ -25,7 +25,7 @@ import CircularProgress        from '@material-ui/core/CircularProgress';
 import Breadcrumbs             from '../../ui/breadcrumbs';
 import EditForm                from './edit/form';
 import { useQuery }            from '@apollo/react-hooks';
-import gql                     from 'graphql-tag';
+import { GET_CLIENT }          from './clients_queries_and_mutations/queries';
 
 const BREADCRUMBS = [
     { name: "Inicio", path: "/" },
@@ -33,22 +33,6 @@ const BREADCRUMBS = [
     { name: "Editar", path: null }
   ]
 
-
-const GET_CLIENT = gql`
-  query getClient($id: ID! ){
-    client(id: $id){
-      id
-      firstName
-      lastName
-      email
-      phone
-      address
-      business
-      category
-      rfc
-    }
-  }
-`
 const Edit = (props) => {
 
   const { classes, match } = props;
