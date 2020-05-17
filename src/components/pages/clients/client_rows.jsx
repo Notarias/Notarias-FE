@@ -10,7 +10,7 @@ import CircularProgress             from '@material-ui/core/CircularProgress';
 import TableRow                     from '@material-ui/core/TableRow';
 import TableCell                    from '@material-ui/core/TableCell';
 import TableBody                    from '@material-ui/core/TableBody';
-import { gql }                      from 'apollo-boost';
+import gql                          from 'graphql-tag';
 import { useQuery }                 from '@apollo/react-hooks';
 import Link                         from '@material-ui/core/Link';
 import Button                       from '@material-ui/core/Button';

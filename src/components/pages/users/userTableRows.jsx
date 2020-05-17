@@ -1,16 +1,16 @@
-import React, { Component }         from 'react'
-import TableCell                    from '@material-ui/core/TableCell';
-import TableRow                     from '@material-ui/core/TableRow';
-import MenuItem                     from '@material-ui/core/MenuItem';
-import { gql }                 from 'apollo-boost';
-import { Mutation }            from '@apollo/react-components';
-import Button                  from '@material-ui/core/Button';
+import React, { Component } from 'react'
+import TableCell            from '@material-ui/core/TableCell';
+import TableRow             from '@material-ui/core/TableRow';
+import MenuItem             from '@material-ui/core/MenuItem';
+import gql                  from 'graphql-tag';
+import { Mutation }         from '@apollo/react-components';
+import Button               from '@material-ui/core/Button';
 import { styles }           from './styles';
 import { withStyles }       from '@material-ui/core/styles';
-import IconButton from '@material-ui/core/IconButton';
-import Menu from '@material-ui/core/Menu';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { Link } from 'react-router-dom';
+import IconButton           from '@material-ui/core/IconButton';
+import Menu                 from '@material-ui/core/Menu';
+import MoreVertIcon         from '@material-ui/icons/MoreVert';
+import { Link }             from 'react-router-dom';
 
 const UPDATE_USER = gql`
   mutation updateUser($id: ID!, $locked: Boolean) {

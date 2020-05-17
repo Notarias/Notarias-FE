@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
-import { styles }           from './user_form/styles';
-import { withStyles }       from '@material-ui/core/styles';
+import React, { Component }   from 'react';
+import { styles }             from './user_form/styles';
+import { withStyles }         from '@material-ui/core/styles';
 import { GENERIC_FORM_ERROR } from '../../reducers/messages_reducer';
 import { setMessage }         from '../../interfaces/messages_interface';
-import UserForm             from './user_form/user_form';
-import Paper                from '@material-ui/core/Paper';
-import ErrorMessage         from '../../ui/custom_snackbar_message';
-import { setBreadcrumbsList }              from '../../interfaces/breadcrumbs_interface';
-import Breadcrumbs             from '../../ui/breadcrumbs';
-import { useQuery }         from '@apollo/react-hooks';
-import { gql }              from 'apollo-boost';
+import UserForm               from './user_form/user_form';
+import Paper                  from '@material-ui/core/Paper';
+import ErrorMessage           from '../../ui/custom_snackbar_message';
+import { setBreadcrumbsList } from '../../interfaces/breadcrumbs_interface';
+import Breadcrumbs            from '../../ui/breadcrumbs';
+import { useQuery }           from '@apollo/react-hooks';
+import gql                    from 'graphql-tag';
 
 const BREADCRUMBS = [
   { name: "Inicio", path: "/" },

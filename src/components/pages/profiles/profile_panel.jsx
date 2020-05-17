@@ -2,14 +2,13 @@ import React          from 'react';
 import GeneralForm    from './general_form';
 import SecurityForm   from './security_form';
 import { Link }       from 'react-router-dom';
-import Avatar         from '@material-ui/core/Avatar';
-import UserDefaultImg from '../../../images/user_default_img.png';
 import { withStyles } from '@material-ui/core/styles';
 import Button         from '@material-ui/core/Button';
 import Grid           from '@material-ui/core/Grid';
 import Paper          from '@material-ui/core/Paper';
 import ProtectedRoute from '../../../routes/protected_route';
-import styles         from './styles'
+import styles         from './styles';
+import AvatarUploader from './avatar_uploader';
 
 const ProfilePanel = (props) => {
   const { classes, currentUser } = props
@@ -33,7 +32,7 @@ const ProfilePanel = (props) => {
       <div className={classes.columBody}>
       <Grid container alignItems='center' className={classes.gritFixed}>
         <Grid container item alignItems='center' justify='center' xs={5}>
-          <Avatar alt="default_img" src={UserDefaultImg} className={classes.large} />
+          <AvatarUploader classes={ classes }/>
         </Grid>
         <Grid container item alignItems='center' xs={7}>
           <Grid item>

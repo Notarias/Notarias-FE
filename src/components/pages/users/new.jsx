@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { withStyles }       from '@material-ui/core/styles';
 import Paper                from '@material-ui/core/Paper';
 import { styles }           from './user_form/styles';
-import UserForm from './user_form/user_form_new';
-import Breadcrumbs             from '../../ui/breadcrumbs';
-import { gql }              from 'apollo-boost';
+import UserForm             from './user_form/user_form_new';
+import Breadcrumbs          from '../../ui/breadcrumbs';
+import gql                  from 'graphql-tag';
 import { useQuery }         from '@apollo/react-hooks';
 
 const BREADCRUMBS = [

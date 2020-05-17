@@ -8,7 +8,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import Button from '@material-ui/core/Button';
 import { withStyles }       from '@material-ui/core/styles';
 import store from '../../../store';
-import { gql }                 from 'apollo-boost';
+import gql                     from 'graphql-tag';
 import { Mutation }            from '@apollo/react-components';
 import CircularProgress        from '@material-ui/core/CircularProgress';
 import { GET_CURRENT_USER }    from '../../../resolvers/queries'

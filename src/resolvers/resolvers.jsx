@@ -1,4 +1,4 @@
-import { gql } from 'apollo-boost';
+import gql from 'graphql-tag';
 //import { GLOBAL_MESSAGE } from './queries'
 
 export const typeDefs = gql`

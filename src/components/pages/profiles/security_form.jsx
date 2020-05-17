@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
-import InputText from "./input_with_icon"
-import VpnKeyIcon from '@material-ui/icons/VpnKey';
-import VpnKeyOutlinedIcon from '@material-ui/icons/VpnKeyOutlined';
-import Button from '@material-ui/core/Button';
+import InputText            from "./input_with_icon"
+import VpnKeyIcon           from '@material-ui/icons/VpnKey';
+import VpnKeyOutlinedIcon   from '@material-ui/icons/VpnKeyOutlined';
+import Button               from '@material-ui/core/Button';
 import { withStyles }       from '@material-ui/core/styles';
-import store from '../../../store';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import IconButton from '@material-ui/core/IconButton';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import { gql }                 from 'apollo-boost';
-import { Mutation }            from '@apollo/react-components';
-import CircularProgress        from '@material-ui/core/CircularProgress';
-import { GET_CURRENT_USER }    from '../../../resolvers/queries';
-import { GLOBAL_MESSAGE }      from '../../../resolvers/queries';
+import store                from '../../../store';
+import Visibility           from '@material-ui/icons/Visibility';
+import VisibilityOff        from '@material-ui/icons/VisibilityOff';
+import IconButton           from '@material-ui/core/IconButton';
+import InputAdornment       from '@material-ui/core/InputAdornment';
+import gql                  from 'graphql-tag';
+import { Mutation }         from '@apollo/react-components';
+import CircularProgress     from '@material-ui/core/CircularProgress';
+import { GET_CURRENT_USER } from '../../../resolvers/queries';
+import { GLOBAL_MESSAGE }   from '../../../resolvers/queries';
 
 const styles = {
   inputBase: {

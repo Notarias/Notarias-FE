@@ -1,5 +1,5 @@
 
-import { gql }                from 'apollo-boost';
+import gql from 'graphql-tag';
 
 export const GLOBAL_MESSAGE = gql`
   query {

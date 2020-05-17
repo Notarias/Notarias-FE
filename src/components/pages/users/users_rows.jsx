@@ -3,11 +3,11 @@ import TableCell            from '@material-ui/core/TableCell';
 import TableRow             from '@material-ui/core/TableRow';
 import GenericDropdownMenu  from '../../ui/generic_dropdown_menu';
 import MenuItem             from '@material-ui/core/MenuItem';
-import { gql }                      from 'apollo-boost';
-import { useQuery }                 from '@apollo/react-hooks';
-import TableBody                    from '@material-ui/core/TableBody';
-import CircularProgress             from '@material-ui/core/CircularProgress';
-import UserTableRows         from './userTableRows';
+import gql                  from 'graphql-tag';
+import { useQuery }         from '@apollo/react-hooks';
+import TableBody            from '@material-ui/core/TableBody';
+import CircularProgress     from '@material-ui/core/CircularProgress';
+import UserTableRows        from './userTableRows';
 
 const LOAD_USERS = gql`
   query searchClients(

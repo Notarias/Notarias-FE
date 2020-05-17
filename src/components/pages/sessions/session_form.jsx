@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
-import Button from '@material-ui/core/Button';
-import { gql } from 'apollo-boost';
-import { Mutation } from '@apollo/react-components';
-import TextField from '@material-ui/core/TextField';
+import React, { useState }  from 'react'
+import Button               from '@material-ui/core/Button';
+import gql                  from 'graphql-tag';
+import { Mutation }         from '@apollo/react-components';
+import TextField            from '@material-ui/core/TextField';
 import { GET_CURRENT_USER } from '../../../resolvers/queries'
 
 const LOGIN_MUTATION = gql`
