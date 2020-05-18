@@ -25,9 +25,6 @@ const httpLink = ApolloLink.split(
   batchLinkHttp
 )
 
-console.log(batchLinkHttp)
-console.log("-----------------")
-
 const authMiddleware = new ApolloLink((operation, forward) => {
   // add the authorization to the headers
   operation.setContext(({ headers = {} }) => ({
