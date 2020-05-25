@@ -1,43 +1,21 @@
-import React, { Component }    from 'react';
-import { withRouter }          from 'react-router-dom';
-import { Mutation }            from '@apollo/react-components';
-import PermIdentityIcon        from '@material-ui/icons/PermIdentity';
-import FormHelperText          from '@material-ui/core/FormHelperText';
-import PhoneRoundedIcon        from '@material-ui/icons/PhoneRounded';
-import BusinessIcon            from '@material-ui/icons/Business';
-import AssignmentIndIcon       from '@material-ui/icons/AssignmentInd';
-import EmojiTransportationIcon from '@material-ui/icons/EmojiTransportation';
-import PersonIcon              from '@material-ui/icons/Person';
-import MailOutlineIcon         from '@material-ui/icons/MailOutline';
-import CircularProgress        from '@material-ui/core/CircularProgress';
-import gql                     from 'graphql-tag';
-import Button                  from '@material-ui/core/Button';
-import Grid                    from '@material-ui/core/Grid';
-import TextField               from '@material-ui/core/TextField';
-import withStyles              from '@material-ui/core/styles/withStyles';
-import { styles }              from './../styles';
-import { GET_CURRENT_USER }    from '../../../../resolvers/queries';
-import { GLOBAL_MESSAGE }      from '../../../../resolvers/queries';
-
-const UPDATE_CLIENT_MUTATION = gql`
-mutation updateClient($id: ID!, $firstName: String, $lastName:String,$email: String, $rfc: String, $phone: String, $address: String, $business: String, $category: String){
-  updateClient(input: {id: $id, firstName: $firstName, lastName: $lastName, email: $email, rfc: $rfc, phone: $phone, address: $address, business: $business, category: $category }){
-    client{
-      id
-      firstName
-      lastName
-      email
-      phone
-      address
-      business
-      category
-      rfc
-    }
-    errors
-    pointers
-  }
-}
-`
+import React, { Component }       from 'react';
+import { Mutation }               from '@apollo/react-components';
+import PermIdentityIcon           from '@material-ui/icons/PermIdentity';
+import FormHelperText             from '@material-ui/core/FormHelperText';
+import PhoneRoundedIcon           from '@material-ui/icons/PhoneRounded';
+import BusinessIcon               from '@material-ui/icons/Business';
+import AssignmentIndIcon          from '@material-ui/icons/AssignmentInd';
+import EmojiTransportationIcon    from '@material-ui/icons/EmojiTransportation';
+import PersonIcon                 from '@material-ui/icons/Person';
+import MailOutlineIcon            from '@material-ui/icons/MailOutline';
+import CircularProgress           from '@material-ui/core/CircularProgress';
+import Button                     from '@material-ui/core/Button';
+import Grid                       from '@material-ui/core/Grid';
+import TextField                  from '@material-ui/core/TextField';
+import withStyles                 from '@material-ui/core/styles/withStyles';
+import { styles }                 from './../styles';
+import { GLOBAL_MESSAGE }         from '../../../../resolvers/queries';
+import { UPDATE_CLIENT_MUTATION } from '../clients_queries_and_mutations/queries';
 
 class EditClientForm extends Component {
 
@@ -77,19 +55,7 @@ class EditClientForm extends Component {
           input: { ...this.state }
         },
         update: (store, { data: { updateClient } }) => {
-          if(updateClient.errors){
-            store.writeQuery({
-              query: GLOBAL_MESSAGE,
-              data: {
-                globalMessage: {
-                  message: "Algo salió mal",
-                  type: "error",
-                  __typename: "globalMessage"
-                }
-              }
-            })
-           } 
-           else {
+          if(!updateClient.errors){
             store.writeQuery({
               query: GLOBAL_MESSAGE,
               data: {
@@ -112,7 +78,7 @@ class EditClientForm extends Component {
       <form className={ classes.newClientForm } onSubmit={(e) => e.preventDefault()}>
         <Grid item container >
           <Grid item xs={1}>
-            <PersonIcon classes={{root: classes.genericInputIcon}}/>
+            <PersonIcon classes={{root: classes.paddingInformationClient}}/>
           </Grid>
           <Grid item xs={11}>
             <TextField

@@ -10,7 +10,7 @@ import { createUploadLink }     from 'apollo-upload-client';
 
 export const cache = new InMemoryCache();
 
-const URI = 'http://localhost:3000/graphql' //'https://peaceful-eyrie-59851.herokuapp.com/graphql';
+const URI = 'https://peaceful-eyrie-59851.herokuapp.com/graphql';
 
 const uploadLink = new createUploadLink({
   uri: URI

@@ -13,32 +13,11 @@ import TableBody                    from '@material-ui/core/TableBody';
 import gql                          from 'graphql-tag';
 import { useQuery }                 from '@apollo/react-hooks';
 import Link                         from '@material-ui/core/Link';
-import Button                       from '@material-ui/core/Button';
+import EditOutlinedIcon             from '@material-ui/icons/EditOutlined';
+import Grid                         from '@material-ui/core/Grid';
+import Typography                   from '@material-ui/core/Typography';
+import { LOAD_CLIENTS }             from './clients_queries_and_mutations/queries';
 
-const LOAD_CLIENTS = gql`
-  query searchClients(
-      $page: Int,
-      $per: Int,
-      $sortField: String,
-      $sortDirection: String,
-      $searchField: String,
-      $searchValue: String
-    ) {
-    clients(
-      page: $page,
-      per: $per,
-      sortField: $sortField,
-      sortDirection: $sortDirection,
-      searchField: $searchField,
-      searchValue: $searchValue
-    ) {
-      id
-      firstName
-      lastName
-      rfc
-    }
-  }
-`
 export default (props) => {
   const { page, per, sortDirection, sortField, searchField, searchValue, classes } = props
   let variables = {
@@ -78,13 +57,17 @@ export default (props) => {
               <TableCell align= "center">{client.lastName}</TableCell>
               <TableCell align= "center">{client.rfc}</TableCell>
               <TableCell align= "center">
-                <div>
+                <Grid>
                   <GenericDropdownMenu>
                     <MenuItem key={client.id + "-details"}>
-                      <VisibilityOutlinedIcon/>
-                      <span style={{ paddingLeft: "10px" }}>
-                        Detalles
-                      </span>
+                      <Link href={`/clients/${client.id}`} color="inherit" underline="none" style={{ width: "100%", height: "100%" }} >
+                        <Grid container>
+                          <VisibilityOutlinedIcon/>
+                          <Typography style={{ paddingLeft: "11px" }} >
+                            Detalles
+                          </Typography>
+                        </Grid>
+                      </Link>
                     </MenuItem>
                     <MenuItem key={client.id + "-budgets"}>
                       <img alt={"presupuestos"} src={BudgetsIcon} style={{ width: "25px", height: "25px"}}/>
@@ -111,14 +94,17 @@ export default (props) => {
                       </span>
                     </MenuItem>
                     <MenuItem key={client.id + "-edit"}>
-                      <Link href={`clients/${client.id}/edit`} align="center" style= {{ width: "100%", textDecoration:"none" }} >
-                        <Button >
-                          Editar
-                        </Button>
+                      <Link href={`/clients/${client.id}/edit`} color="inherit" underline="none" style={{ width: "100%", height: "100%" }} >
+                        <Grid container>
+                          <EditOutlinedIcon/>
+                          <Typography style={{ paddingLeft: "11px" }} >
+                            Trámites
+                          </Typography>
+                        </Grid>
                       </Link>
                     </MenuItem>
                   </GenericDropdownMenu>
-                </div>
+                </Grid>
               </TableCell>
             </TableRow>
           ))

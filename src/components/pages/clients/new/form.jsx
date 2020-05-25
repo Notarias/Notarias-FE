@@ -1,33 +1,21 @@
-import React, { Component }    from 'react';
-import { withRouter }          from 'react-router-dom';
-import { Mutation }            from '@apollo/react-components';
-import PermIdentityIcon        from '@material-ui/icons/PermIdentity';
-import FormHelperText          from '@material-ui/core/FormHelperText';
-import PhoneRoundedIcon        from '@material-ui/icons/PhoneRounded';
-import BusinessIcon            from '@material-ui/icons/Business';
-import AssignmentIndIcon       from '@material-ui/icons/AssignmentInd';
-import EmojiTransportationIcon from '@material-ui/icons/EmojiTransportation';
-import PersonIcon              from '@material-ui/icons/Person';
-import MailOutlineIcon         from '@material-ui/icons/MailOutline';
-import CircularProgress        from '@material-ui/core/CircularProgress';
-import gql                     from 'graphql-tag';
-import Button                  from '@material-ui/core/Button';
-import Grid                    from '@material-ui/core/Grid';
-import TextField               from '@material-ui/core/TextField';
+import React, { Component }           from 'react';
+import { withRouter }                 from 'react-router-dom';
+import { Mutation }                   from '@apollo/react-components';
+import PermIdentityIcon               from '@material-ui/icons/PermIdentity';
+import FormHelperText                 from '@material-ui/core/FormHelperText';
+import PhoneRoundedIcon               from '@material-ui/icons/PhoneRounded';
+import BusinessIcon                   from '@material-ui/icons/Business';
+import AssignmentIndIcon              from '@material-ui/icons/AssignmentInd';
+import EmojiTransportationIcon        from '@material-ui/icons/EmojiTransportation';
+import PersonIcon                     from '@material-ui/icons/Person';
+import MailOutlineIcon                from '@material-ui/icons/MailOutline';
+import CircularProgress               from '@material-ui/core/CircularProgress';
+import Button                         from '@material-ui/core/Button';
+import Grid                           from '@material-ui/core/Grid';
+import TextField                      from '@material-ui/core/TextField';
+import { GLOBAL_MESSAGE }         from '../../../../resolvers/queries';
+import { CREATE_CLIENT_MUTATION } from '../clients_queries_and_mutations/queries';
 
-const CREATE_CLIENT_MUTATION = gql`
-  mutation createClient($firstName: String, $lastName: String) {
-    createClient(input: { firstName: $firstName, lastName: $lastName }) {
-      client {
-        id
-        firstName
-        lastName
-      }
-      errors
-      pointers
-    }
-  }
-`
 
 class NewClientForm extends Component {
 
@@ -58,6 +46,30 @@ class NewClientForm extends Component {
     } else {
       setTimeout(() => { this.props.history.push(`/clients`) }, 3000)
     }
+  }
+
+  submitForm(mutation) {
+    mutation(
+      {
+        variables: {
+          input: { ...this.state }
+        },
+        update: (store, { data: { createClient } }) => {
+          if(!createClient.errors){
+            store.writeQuery({
+              query: GLOBAL_MESSAGE,
+              data: {
+                globalMessage: {
+                  message: "Se actualizo el perfil exitosamente",
+                  type: "success",
+                  __typename: "globalMessage"
+                }
+              }
+            })
+          }
+        }
+      }
+    )
   }
 
   render() {
@@ -200,7 +212,7 @@ class NewClientForm extends Component {
                     color="primary"
                     type="submit"
                     classes={{ root: classes.submitFormButton }}
-                    onClick={ mutation }>
+                    onClick={ this.submitForm.bind(this, mutation) }>
                     Guardar Cambios
                     { loading && <CircularProgress className={classes.buttonProgress} size={24} /> }
                   </Button>
