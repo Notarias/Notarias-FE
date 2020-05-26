@@ -71,9 +71,8 @@ export const styles = theme => {
       marginTop: "25px"
     },
     gridScrollable: {
-      height: "80%",
-      overflowY: "scroll",
-      backgroundColor: theme.palette.background.default,
+      height: "30%",
+      overflowY: "scroll"
     },
     commentsList: {
       width: "100%",
@@ -81,7 +80,8 @@ export const styles = theme => {
     },
     gridInputComments: {
       height: "20%",
-      borderTop: `1px solid ${theme.palette.divider}`
+      borderTop: `1px solid ${theme.palette.divider}`,
+      width:"100%"
     },
     clientIcon: {
       width: "22px", height: "22px", marginTop: "25px"
@@ -103,7 +103,7 @@ export const styles = theme => {
       height: "94%",
     },
     textFieldsComments: {
-      width: "500px", paddingLeft:"15px" 
+      width: "100%", paddingLeft:"15px" 
     },
     buttonProgress: {
       color: green[500],
@@ -113,5 +113,8 @@ export const styles = theme => {
       marginTop: -12,
       marginLeft: -12,
     },
+    buttonFetch: {
+      paddingRight: "5%"
+    }
   })
 }
