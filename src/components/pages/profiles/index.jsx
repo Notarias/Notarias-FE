@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React        from 'react';
 import ProfilePanel from './profile_panel';
 import { withStyles }       from '@material-ui/core/styles';
 import { GET_CURRENT_USER } from '../../../resolvers/queries'
 import { useQuery }         from '@apollo/react-hooks';
 
 const styles = {
-  columsWraper:{
+  columsWraper: {
     height: '100%',
     backgroundColor: "white",
   }

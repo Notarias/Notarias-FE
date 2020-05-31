@@ -26,6 +26,9 @@ export const GET_CURRENT_USER = gql`
       email
       lockedAt
       phone
+      avatarThumbUrl
+      avatarMidUrl
+      avatarUrl
       role {
         name
         permanentLink

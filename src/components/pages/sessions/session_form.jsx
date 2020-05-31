@@ -18,6 +18,9 @@ const LOGIN_MUTATION = gql`
         email
         lockedAt
         phone
+        avatarThumbUrl
+        avatarMidUrl
+        avatarUrl
         role {
           name
           permanentLink

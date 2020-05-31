@@ -82,7 +82,7 @@ class  UserFormNew extends Component {
   }
 
   render() {
-    const { classes, data } = this.props
+    const { classes } = this.props
     return (
       <Grid classes={{root: classes.editUserFormGrid}} >
         <Mutation

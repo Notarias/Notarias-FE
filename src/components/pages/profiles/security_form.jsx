@@ -4,7 +4,6 @@ import VpnKeyIcon           from '@material-ui/icons/VpnKey';
 import VpnKeyOutlinedIcon   from '@material-ui/icons/VpnKeyOutlined';
 import Button               from '@material-ui/core/Button';
 import { withStyles }       from '@material-ui/core/styles';
-import store                from '../../../store';
 import Visibility           from '@material-ui/icons/Visibility';
 import VisibilityOff        from '@material-ui/icons/VisibilityOff';
 import IconButton           from '@material-ui/core/IconButton';
@@ -77,11 +76,11 @@ class SecurityForm extends Component {
   }
 
   canSubmit(loading) {
-    if (this.state.pristine == true && !loading) {
+    if (this.state.pristine === true && !loading) {
       return true
-    } else if (this.state.pristine == false && !loading) {
+    } else if (this.state.pristine === false && !loading) {
       return false
-    } else if (this.state.pristine == false && loading) {
+    } else if (this.state.pristine === false && loading) {
       return true
     }
   }

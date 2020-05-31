@@ -22,14 +22,12 @@ const Users = (props) => {
   const [searchLoading, setSearchLoading] = useState(false);
   const [sortField, setSortField]         = useState("first_name")
   const [sortDirection, setSortDirection] = useState("desc")
-  const [searchField, setSearchField]     = useState("first_name_or_last_name_or_email_cont")
+  const [searchField]                     = useState("first_name_or_last_name_or_email_cont")
   const [searchValue, setSearchValue]     = useState("")
   const [timeout, setSetTimeout]          = useState(null)
   const [page, setPage]                   = useState(0)
   const [per, setPer]                     = useState(5)
   const [total_records, setTotalRecords]  = useState(10)
-  const [locked_user, setLockedUser]      = useState(locked_user)
-  const [unlocked_user, setUnlockedUser]      = useState(unlocked_user)
 
   const { classes } = props
 

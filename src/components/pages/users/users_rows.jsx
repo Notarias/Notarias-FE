@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react'
 import TableCell            from '@material-ui/core/TableCell';
 import TableRow             from '@material-ui/core/TableRow';
-import GenericDropdownMenu  from '../../ui/generic_dropdown_menu';
-import MenuItem             from '@material-ui/core/MenuItem';
 import gql                  from 'graphql-tag';
 import { useQuery }         from '@apollo/react-hooks';
 import TableBody            from '@material-ui/core/TableBody';
@@ -53,7 +51,7 @@ export default (props) => {
     sortField: sortField
   }
 
-  const { loading, error, data, refetch } = useQuery(
+  const { loading, data, refetch } = useQuery(
     LOAD_USERS, { vairables: variables, errorPolicy: 'all' }
   );
   

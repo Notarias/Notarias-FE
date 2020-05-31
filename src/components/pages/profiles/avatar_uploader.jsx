@@ -4,6 +4,8 @@ import UserDefaultImg      from '../../../images/user_default_img.png';
 import Dropzone            from 'react-dropzone';
 import gql                 from 'graphql-tag';
 import { Mutation }        from '@apollo/react-components';
+import { GET_CURRENT_USER } from '../../../resolvers/queries';
+import { useQuery }         from '@apollo/react-hooks';
 
 const ADD_AVATAR = gql`
   mutation uploadAvatar($id: ID!, $avatar: Upload!) {
@@ -19,7 +21,11 @@ const ADD_AVATAR = gql`
 
 const AvatarUploader = (props) => {
   const { classes, user } = props
-  const [image, setImage] = useState(null)
+  // const { loading, data, refetch } = useQuery(
+  const { data } = useQuery(
+    GET_CURRENT_USER, { vairables: {}, errorPolicy: 'all' }
+  );
+  const [image, setImage] = useState(data.currentUser.avatarUrl)
 
   const onCompleteUpload = (data) => {
     setImage(data.avatarUpload.url)

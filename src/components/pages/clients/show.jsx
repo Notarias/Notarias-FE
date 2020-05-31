@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
+import React                from 'react';
 import { withStyles }       from '@material-ui/core/styles';
-import Paper                from '@material-ui/core/Paper';
 import { Grid }             from '@material-ui/core';
 import { styles }           from './show/styles';
 import CustomerInformation  from './show/customer_information';
