@@ -4,6 +4,7 @@ import Paper                        from '@material-ui/core/Paper';
 import { styles }                   from '../styles';
 import { withStyles }               from '@material-ui/core/styles';
 import Typography                   from '@material-ui/core/Typography';
+import Link                 from '@material-ui/core/Link';
 
 class LastPayments extends Component {
 
@@ -11,15 +12,23 @@ class LastPayments extends Component {
     const { classes } = this.props;
     return (
       <div>
-        <Grid item container xs={12}>
-          <Typography align="justify" variant="subtitle2" gutterBottom>
-            Útimos Pagos
-          </Typography>
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <Typography variant="h5" align="left">
+              Últimos Presupuestos
+            </Typography>
+          </Grid>
+          <Grid item container justify="center">
+            <Grid item style={{ backgroundColor: "black", width: "180px", height: "200px"}}></Grid>
+          </Grid>
+          <Grid item xs={12} container justify="flex-end">
+            <Typography style={{paddingRight: "1%", paddingTop: "2%"}}>
+                <Link>
+                  Ver más
+                </Link>
+            </Typography>
+          </Grid>
         </Grid>
-        <Grid>
-          
-        </Grid>
-        <Grid></Grid>
       </div>
     );
   }
