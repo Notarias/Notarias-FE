@@ -1,7 +1,7 @@
 import ListItem             from '@material-ui/core/ListItem';
 import ListItemIcon         from '@material-ui/core/ListItemIcon';
 import ListItemText         from '@material-ui/core/ListItemText';
-import React, { useEffect } from 'react';
+import React                from 'react';
 import withStyles           from '@material-ui/core/styles/withStyles';
 import { Link }             from 'react-router-dom';
 import { styles }           from './navigation_menu_styles'
@@ -67,7 +67,7 @@ export default withStyles(styles)((props) => {
                     _subscribeToAvatarChange(subscribeToMore)
                     return(
                       <>
-                        <Avatar src={data.currentUser.avatarThumbUrl} className={classes.avatar} />
+                        <Avatar src={data && data.currentUser && data.currentUser.avatarThumbUrl} className={classes.avatar} />
                       </>
                     )
                   }

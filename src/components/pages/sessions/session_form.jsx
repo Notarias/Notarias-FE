@@ -21,6 +21,7 @@ const LOGIN_MUTATION = gql`
         avatarThumbUrl
         avatarMidUrl
         avatarUrl
+        updatedAt
         role {
           name
           permanentLink
@@ -42,7 +43,7 @@ let SessionForm = props => {
       {
         variables: { email, password },
         update: (store, { data: { signIn } }) => {
-          store.writeQuery({ query: GET_CURRENT_USER, data: { currentUser: signIn.currentUser } });
+          store.writeQuery({ query: GET_CURRENT_USER, data: { currentUser: signIn.currentUser } })
         }
       }
     )

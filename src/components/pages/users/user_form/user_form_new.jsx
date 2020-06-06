@@ -196,7 +196,7 @@ class  UserFormNew extends Component {
                     <Grid item xs={1}>
                     </Grid>
                     <Grid item xs={11}>
-                      <FormControl  className={classes.formControl, classes.userFormTextFieldEdit}>
+                      <FormControl  className={classes.formControl}>
                       <InputLabel id="demo-simple-select-required-label" >Rol</InputLabel>
                         <Select
                           labelId="demo-simple-select-required-label"

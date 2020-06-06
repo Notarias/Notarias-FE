@@ -53,12 +53,12 @@ class GeneralForm extends Component {
     super(props)
     const { currentUser } = props
     this.state = {
-      id: currentUser.id,
-      firstName: currentUser.firstName,
-      lastName: currentUser.lastName,
-      address: currentUser.address,
-      email: currentUser.email,
-      phone: currentUser.phone,
+      id: currentUser && currentUser.id,
+      firstName: currentUser && currentUser.firstName,
+      lastName: currentUser && currentUser.lastName,
+      address: currentUser && currentUser.address,
+      email: currentUser && currentUser.email,
+      phone: currentUser && currentUser.phone,
       errors: {},
       pristine: true,
       submitting: false,
@@ -119,7 +119,7 @@ class GeneralForm extends Component {
   }
 
   render() {
-    const { classes, currentUser } = this.props
+    const { classes } = this.props
 
     return(
         <div>

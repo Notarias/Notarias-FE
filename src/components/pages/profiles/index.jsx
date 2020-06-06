@@ -16,7 +16,7 @@ const ProfilesIndex = (props) => {
 
   return(
     <div style={ styles.columsWraper }>
-      <ProfilePanel currentUser={data.currentUser} loading={loading} refetch={refetch}/>
+      <ProfilePanel currentUser={data && data.currentUser} loading={loading} refetch={refetch}/>
     </div>
   )
 }

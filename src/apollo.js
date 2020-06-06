@@ -13,10 +13,12 @@ import ActionCableLink          from 'graphql-ruby-client/dist/subscriptions/Act
 export const cache = new InMemoryCache();
 
 const BASE_URI = `peaceful-eyrie-59851.herokuapp.com`
-const URI = `http://${BASE_URI}/graphql`;
+// Change protocol https to http for localhost
+const URI = `https://${BASE_URI}/graphql`;
 
 const uploadLink = new createUploadLink({ uri: URI });
-const cable = ActionCable.createConsumer(`ws://${BASE_URI}/cable?token=${localStorage.getItem('jwtToken')}`)
+// Change protocol wss to ws for localhost
+const cable = ActionCable.createConsumer(`wss://${BASE_URI}/cable?token=${localStorage.getItem('jwtToken')}`)
 const batchLinkHttp = new BatchHttpLink({ uri: URI })
 
 let httpLink = ApolloLink.split(

@@ -26,7 +26,7 @@ const AvatarUploader = (props) => {
   const { data } = useQuery(
     GET_CURRENT_USER, { vairables: {}, errorPolicy: 'all' }
   );
-  const [image, setImage] = useState(data.currentUser.avatarUrl)
+  const [image, setImage] = useState(data && data.currentUser && data.currentUser.avatarUrl)
 
   const onCompleteUpload = (data) => {
     setImage(data.avatarUpload.url)
@@ -60,7 +60,7 @@ const AvatarUploader = (props) => {
                   <div {...getRootProps()}>
                     <input {...getInputProps()} />
                     <div className={classes.avatarWrapper}>
-                      { <CircularProgress thickness={1} size={326} className={classes.avatarUploadProgress}/> }
+                      { loading && <CircularProgress thickness={1} size={326} className={classes.avatarUploadProgress}/> }
                       <Avatar alt="default_img" src={image || UserDefaultImg} className={classes.large}/>
                     </div>
                   </div>
