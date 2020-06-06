@@ -6,6 +6,7 @@ import gql                 from 'graphql-tag';
 import { Mutation }        from '@apollo/react-components';
 import { GET_CURRENT_USER } from '../../../resolvers/queries';
 import { useQuery }         from '@apollo/react-hooks';
+import CircularProgress     from '@material-ui/core/CircularProgress';
 
 const ADD_AVATAR = gql`
   mutation uploadAvatar($id: ID!, $avatar: Upload!) {
@@ -49,19 +50,24 @@ const AvatarUploader = (props) => {
       onCompleted={onCompleteUpload.bind(this)}>
       {
         (mutator, { loading }) => (
-          <Dropzone
-            accept="image/*"
-            multiple={false} // Only upload 1 file
-            onDrop={onDrop.bind(this, mutator)}>
-            {
-              ({getRootProps, getInputProps}) => (
-                <div {...getRootProps()}>
-                  <input {...getInputProps()} />
-                  <Avatar alt="default_img" src={image || UserDefaultImg} className={classes.large} />
-                </div>
-              )
-            }
-          </Dropzone>
+          <>
+            <Dropzone
+              accept="image/*"
+              multiple={false} // Only upload 1 file
+              onDrop={onDrop.bind(this, mutator)}>
+              {
+                ({getRootProps, getInputProps}) => (
+                  <div {...getRootProps()}>
+                    <input {...getInputProps()} />
+                    <div className={classes.avatarWrapper}>
+                      { <CircularProgress thickness={1} size={326} className={classes.avatarUploadProgress}/> }
+                      <Avatar alt="default_img" src={image || UserDefaultImg} className={classes.large}/>
+                    </div>
+                  </div>
+                )
+              }
+            </Dropzone>
+          </>
         )
       }
     </Mutation>

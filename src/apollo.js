@@ -7,32 +7,47 @@ import { BatchHttpLink }        from 'apollo-link-batch-http';
 import history                  from './history'
 import { resolvers, typeDefs }  from './resolvers/resolvers';
 import { createUploadLink }     from 'apollo-upload-client';
+import ActionCable              from 'actioncable'
+import ActionCableLink          from 'graphql-ruby-client/dist/subscriptions/ActionCableLink'
 
 export const cache = new InMemoryCache();
 
-const URI = 'https://peaceful-eyrie-59851.herokuapp.com/graphql';
+const BASE_URI = `peaceful-eyrie-59851.herokuapp.com`
+const URI = `http://${BASE_URI}/graphql`;
 
-const uploadLink = new createUploadLink({
-  uri: URI
-  //
-});
-
+const uploadLink = new createUploadLink({ uri: URI });
+const cable = ActionCable.createConsumer(`ws://${BASE_URI}/cable?token=${localStorage.getItem('jwtToken')}`)
 const batchLinkHttp = new BatchHttpLink({ uri: URI })
 
-const httpLink = ApolloLink.split(
+let httpLink = ApolloLink.split(
   operation => operation.getContext().hasUpload,
   uploadLink,
   batchLinkHttp
 )
 
+let httpLinkConnection = ApolloLink.split(
+  ({ query: { definitions } }) => {
+    return definitions.some(
+      ({ kind, operation }) => {
+        return(kind === 'OperationDefinition' && operation === 'subscription')
+      }
+    )
+  },
+  new ActionCableLink({cable}),
+  httpLink
+)
+
 const authMiddleware = new ApolloLink((operation, forward) => {
   // add the authorization to the headers
-  operation.setContext(({ headers = {} }) => ({
-    headers: {
-      ...headers,
-      authorization: localStorage.getItem('jwtToken') || null,
+  operation.setContext(({ headers = {} }) => {
+    const result = {
+      headers: {
+        ...headers,
+        Authorization: localStorage.getItem('jwtToken') || null,
+      }
     }
-  }));
+    return(result)
+  });
 
   return forward(operation);
 })
@@ -47,7 +62,7 @@ const logoutLink = onError(({ networkError, forward, operation }) => {
 const apolloClient = new ApolloClient(
   {
     cache,
-    link: from([authMiddleware, logoutLink, httpLink]),
+    link: from([authMiddleware, logoutLink, httpLinkConnection]),
     typeDefs,
     resolvers
   }

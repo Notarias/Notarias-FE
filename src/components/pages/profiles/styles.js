@@ -1,3 +1,5 @@
+import { green } from '@material-ui/core/colors';
+
 export default (theme) => {
   return (
       {
@@ -47,8 +49,8 @@ export default (theme) => {
         paddingLeft: '20px',
       },
       large: {
-        width: theme.spacing(36),
-        height: theme.spacing(36),
+        width: theme.spacing(40),
+        height: theme.spacing(40),
       },
       paddingPaper: {
         padding: '20px'
@@ -63,6 +65,16 @@ export default (theme) => {
         fontWeight: 'normal',
         margin: '0px',
         textAlign: 'left',  
+      },
+      avatarUploadProgress: {
+        color: green[500],
+        position: 'absolute',
+        top: -2,
+        left: -2,
+        zIndex: 1,
+      },
+      avatarWrapper: {
+        position: 'relative',
       }
     }
   )

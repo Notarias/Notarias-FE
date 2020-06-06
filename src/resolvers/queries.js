@@ -29,6 +29,7 @@ export const GET_CURRENT_USER = gql`
       avatarThumbUrl
       avatarMidUrl
       avatarUrl
+      updatedAt
       role {
         name
         permanentLink

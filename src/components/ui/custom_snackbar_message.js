@@ -13,7 +13,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { Mutation } from "@apollo/react-components";
 import { REMOVE_MESSAGE_MUTATION } from '../../resolvers/queries'
 import { GLOBAL_MESSAGE }          from '../../resolvers/queries';
-import client                      from '../../apollo'
+import client                      from '../../apollo';
 
 const variantIcon = {
   success: CheckCircleIcon,
@@ -82,12 +82,13 @@ function CustomSnackbarMessage(props) {
   return (
     !hidden &&
         <SnackbarContent
+          key={variant}
           classes={{ action: classes.action }}
           className={classNames(classes[variant], className)}
           aria-describedby="client-snackbar"
           message={
-            <span id="client-snackbar" className={classes.message}>
-              <Icon className={classNames(classes.icon, classes.iconVariant)} />
+            <span key="icon-container" id="client-snackbar" className={classes.message}>
+              <Icon key="message-type" className={classNames(classes.icon, classes.iconVariant)} />
               {message}
             </span>
           }

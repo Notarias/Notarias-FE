@@ -1,28 +1,78 @@
 import ListItem             from '@material-ui/core/ListItem';
 import ListItemIcon         from '@material-ui/core/ListItemIcon';
 import ListItemText         from '@material-ui/core/ListItemText';
-import React                from 'react';
+import React, { useEffect } from 'react';
 import withStyles           from '@material-ui/core/styles/withStyles';
 import { Link }             from 'react-router-dom';
 import { styles }           from './navigation_menu_styles'
 import Grid                 from '@material-ui/core/Grid';
 import Avatar               from '@material-ui/core/Avatar';
 import { GET_CURRENT_USER } from '../../resolvers/queries';
-import { useQuery }         from '@apollo/react-hooks';
+import { Query }            from '@apollo/react-components';
+import gql                  from 'graphql-tag';
+import { cache }            from '../../apollo';
+
+const USER_CHANGE = gql`
+  subscription {
+    userChange {
+      id
+      firstName
+      lastName
+      address
+      email
+      lockedAt
+      phone
+      avatarThumbUrl
+      avatarMidUrl
+      avatarUrl
+      updatedAt
+      role {
+        name
+        permanentLink
+      }
+    }
+  }
+`
 
 export default withStyles(styles)((props) => {
   const { classes } = props
   //const { loading, data, refetch } = useQuery(
-  const { data } = useQuery(
-    GET_CURRENT_USER, { vairables: {}, errorPolicy: 'all' }
-  );
 
+  const _subscribeToAvatarChange = subscribeToMore => {
+    subscribeToMore({
+      document: USER_CHANGE,
+      updateQuery: (prev, { subscriptionData }) => {
+        if (!subscriptionData.data) return prev
+
+        if (subscriptionData.data && subscriptionData.data.userChange && (prev.currentUser.id === subscriptionData.data.userChange.id)) {
+          return Object.assign({}, prev, {
+            currentUser: subscriptionData.data.userChange,
+            __typename: prev.__typename
+          })
+        } else {
+          return prev
+        }
+      }
+    })
+  }
   return(
     <Link to="/profiles/general">
       <ListItem button>
         <ListItemIcon >
             <Grid>
-              <Avatar src={data.currentUser.avatarThumbUrl} className={classes.avatar} />
+              <Query
+               query={GET_CURRENT_USER}
+              >
+                {({id, loading, error, data, subscribeToMore}) => {
+                    _subscribeToAvatarChange(subscribeToMore)
+                    return(
+                      <>
+                        <Avatar src={data.currentUser.avatarThumbUrl} className={classes.avatar} />
+                      </>
+                    )
+                  }
+                }
+              </Query>
             </Grid>
           </ListItemIcon>
         <ListItemText primary="Perfil" />

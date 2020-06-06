@@ -33,6 +33,9 @@ mutation updateUser($input: UpdateUserInput!) {
       email
       lockedAt
       phone
+      avatarThumbUrl
+      avatarMidUrl
+      avatarUrl
       role {
         name
         permanentLink
