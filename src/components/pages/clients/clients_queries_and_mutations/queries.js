@@ -74,3 +74,46 @@ export const LOAD_CLIENTS = gql`
     }
   }
 `
+
+export const LOAD_CLIENT_COMMENTS = gql `
+  query clientComments($clientId: ID!,
+    $page: Int,
+    $per: Int
+    $sortDirection: String,
+    $sortField: String,
+    $searchField: String,
+    $searchValue: String)
+    {
+      clientComments(clientId: $clientId,
+        page: $page, 
+        per: $per,
+        sortDirection: $sortDirection,
+        sortField: $sortField,
+        searchField: $searchField,
+        searchValue: $searchValue)
+        {
+          id
+          commentableId
+          commentableType
+          body
+          user{
+            id
+            avatarThumbUrl
+          }
+        }
+    }
+`
+
+export const CREATE_CLIENT_COMMENT_MUTATION = gql `
+  mutation createComments($commentableId: ID!, $commentableType: String!, $body: String!){
+    createComment(input:{ commentableId: $commentableId,commentableType: $commentableType, body: $body}){
+      comment{
+        commentableId
+        commentableType
+        body
+      }
+      errors
+      pointers
+    }
+  }
+`
