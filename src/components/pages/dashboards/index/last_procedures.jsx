@@ -22,10 +22,10 @@ class LastProceduresIndex extends Component {
           </Grid>
           <Grid item container xs={12} spacing={2}>
             <Grid item container xs={12}>
-              <Grid item container xs={3} justify="center">
+              <Grid item container xs={2} justify="left" style={{paddingLeft: "3.3%"}}>
                 <CheckBoxIcon size="40" color="white" className={classes.svgCheckBoxIcon}/>
               </Grid>
-              <Grid item xs={9}>
+              <Grid item xs={10}>
                 <Typography variant="subtitle2" gutterBottom align="left">
                   Últimos Trámites 1
                   <br/>
@@ -34,12 +34,12 @@ class LastProceduresIndex extends Component {
               </Grid>
             </Grid>
             <Grid item container xs={12}>
-              <Grid item container xs={3} justify="center">
-                <Grid item className={classes.svgProceso}>
-                  <Procedures arrowColor="white" colorNut="white" size="33" />
-                </Grid>
+            <Grid item container xs={2} justify="left" style={{paddingLeft: "3.3%"}}>
+              <Grid item className={classes.svgProceso}>
+                <Procedures arrowColor="white" colorNut="white" size="37" />
               </Grid>
-              <Grid item xs={9}>
+              </Grid>
+              <Grid item xs={10}>
                 <Typography variant="subtitle2" gutterBottom align="left">
                   Últimos Trámites 2
                   <br/>
@@ -48,10 +48,10 @@ class LastProceduresIndex extends Component {
               </Grid>
             </Grid>
             <Grid item container xs={12}>
-              <Grid item container xs={3} justify="center">
+              <Grid item container xs={2} justify="left" style={{paddingLeft: "3.3%"}}>
                 <CheckBoxIcon size="40" color="white" className={classes.svgCheckBoxIcon}/>
               </Grid>
-              <Grid item xs={9}>
+              <Grid item xs={10}>
                 <Typography variant="subtitle2" gutterBottom align="left">
                   Últimos Trámites 1
                   <br/>
@@ -60,12 +60,12 @@ class LastProceduresIndex extends Component {
               </Grid>
             </Grid>
             <Grid item container xs={12}>
-              <Grid item container xs={3} justify="center">
+              <Grid item container xs={2} justify="left" style={{paddingLeft: "3.3%"}}>
                 <Grid item className={classes.svgProceso}>
-                  <Procedures arrowColor="white" colorNut="white" size="33" />
+                  <Procedures arrowColor="white" colorNut="white" size="37" />
                 </Grid>
               </Grid>
-              <Grid item xs={9}>
+              <Grid item xs={10}>
                 <Typography variant="subtitle2" gutterBottom align="left">
                   Últimos Trámites 2
                   <br/>

@@ -9,8 +9,7 @@ export const styles = theme => {
       padding: theme.spacing(2),
       textAlign: 'center',
       color: theme.palette.text.secondary,
-      height: "100%",
-      width: "100%"
+      height: "100%"
     },
     paperComment: {
       height: "100%"
@@ -19,8 +18,8 @@ export const styles = theme => {
       padding: `${theme.spacing(3)}px ${theme.spacing(4)}px ${theme.spacing(3)}px`,
     },
     svgProceso: {
-      height: "33px",
-      width: "33px",
+      height: "37px",
+      width: "37px",
       background: "aqua",
       borderRadius: "3px",
     },
@@ -30,8 +29,8 @@ export const styles = theme => {
       color: "limegreen"
     },
     svgCheckBoxIcon:{
-      height: "33px",
-      width: "33px",
+      height: "37px",
+      width: "37px",
       background: "limegreen",
       borderRadius: "3px",
     },
@@ -40,6 +39,16 @@ export const styles = theme => {
     },
     calendarGridColor: {
       background: "#F6F6F6",
+    },
+    largeAvatar: {
+      width: theme.spacing(6),
+      height: theme.spacing(6),
+    },
+    gridEllipsis:{
+      textOverflow: "ellipsis",
+      overflow: "hidden",
+      whiteSpace: "nowrap",
+      maxWidth: "80%"
     }
   })
 }
