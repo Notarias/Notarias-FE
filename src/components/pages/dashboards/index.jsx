@@ -23,7 +23,7 @@ const DashboardsIndex = (props) => {
   return (
     <>
       <Breadcrumbs breadcrumbs={BREADCRUMBS}/>
-      <Grid container xs={12} spacing={3} classes={{root: classes.gridContainer}}>
+      <Grid item container xs={12} spacing={3} classes={{root: classes.gridContainer}}>
         <Grid item container xs={12} sm={12} md={12} lg={8} spacing={3} style={{width: "100%"}}>
           <Grid item xs={12} sm={12} md={6}><Paper className={ classes.paper }> <LastPayments/> </Paper></Grid>
           <Grid item xs={12} sm={12} md={6}><Paper className={ classes.paper }> <LastProcedures/> </Paper></Grid>
@@ -32,7 +32,7 @@ const DashboardsIndex = (props) => {
         </Grid>
         <Grid item container xs={12} sm={12} md={12} lg={4}>
           <Grid item xs={12} md={12}>
-            <Paper className={ classes.paper } style={{width: "97%"}}>
+            <Paper className={ classes.paper }>
               <LastComments/>
             </Paper>
           </Grid>

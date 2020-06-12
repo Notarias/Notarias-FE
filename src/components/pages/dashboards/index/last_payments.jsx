@@ -15,7 +15,7 @@ class LastPayments extends Component {
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <Typography variant="h5" align="left">
-              Últimos Presupuestos
+              Últimos Pagos
             </Typography>
           </Grid>
           <Grid item container justify="center">
