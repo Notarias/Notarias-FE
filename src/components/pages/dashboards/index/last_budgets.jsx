@@ -13,8 +13,8 @@ class LastBudgetsIndex extends Component {
     const { classes } = this.props
 
     return(
-      <Grid xs={12} >
-        <Grid xs={12}>
+      <Grid >
+        <Grid container >
           <Grid item xs={12} style={{paddingBottom:"3%"}}>
             <Typography variant="h5" align="left">
               Últimos Presupuestos
@@ -22,8 +22,8 @@ class LastBudgetsIndex extends Component {
           </Grid>
           <Grid item container xs={12} spacing={2}>
             <Grid item container xs={12}>
-              <Grid item container xs={2} justify="left" style={{paddingLeft: "3.3%"}}>
-                <CheckBoxIcon size="40" color="white" className={classes.svgCheckBoxIcon}/>
+              <Grid item container xs={2} justify="flex-start" style={{paddingLeft: "3.3%"}}>
+                <CheckBoxIcon size={40} color="white" className={classes.svgCheckBoxIcon}/>
               </Grid>
               <Grid item xs={10}>
                 <Typography variant="subtitle2" gutterBottom align="left">
@@ -34,9 +34,9 @@ class LastBudgetsIndex extends Component {
               </Grid>
             </Grid>
             <Grid item container xs={12}>
-              <Grid item container xs={2} justify="left" style={{paddingLeft: "3.3%"}}>
+              <Grid item container xs={2} justify="flex-start" style={{paddingLeft: "3.3%"}}>
                 <Grid item className={classes.svgProceso}>
-                  <Procedures arrowColor="white" colorNut="white" size="37" />
+                  <Procedures arrowcolor="white" colornut="white" size={37} />
                 </Grid>
               </Grid>
               <Grid item xs={10}>
@@ -48,8 +48,8 @@ class LastBudgetsIndex extends Component {
               </Grid>
             </Grid>
             <Grid item container xs={12}>
-              <Grid item container xs={2} justify="left" style={{paddingLeft: "3.3%"}}>
-                <CheckBoxIcon size="40" color="white" className={classes.svgCheckBoxIcon}/>
+              <Grid item container xs={2} justify="flex-start" style={{paddingLeft: "3.3%"}}>
+                <CheckBoxIcon size={40} color="white" className={classes.svgCheckBoxIcon}/>
               </Grid>
               <Grid item xs={10}>
                 <Typography variant="subtitle2" gutterBottom align="left">
@@ -60,9 +60,9 @@ class LastBudgetsIndex extends Component {
               </Grid>
             </Grid>
             <Grid item container xs={12}>
-              <Grid item container xs={2} justify="left" style={{paddingLeft: "3.3%"}}>
+              <Grid item container xs={2} justify="flex-start" style={{paddingLeft: "3.3%"}}>
                 <Grid item className={classes.svgProceso}>
-                  <Procedures arrowColor="white" colorNut="white" size="37" />
+                  <Procedures arrowcolor="white" colornut="white" size={37} />
                 </Grid>
               </Grid>
               <Grid item xs={10}>

@@ -10,6 +10,7 @@ import ListItemIcon             from '@material-ui/core/ListItemIcon';
 import ListItemText             from '@material-ui/core/ListItemText';
 import ExpandLess               from '@material-ui/icons/ExpandLess';
 import ExpandMore               from '@material-ui/icons/ExpandMore';
+import ContactsSharpIcon        from '@material-ui/icons/ContactsSharp';
 import classNames               from 'classnames';
 import { styles }               from './navigation_menu_styles';
 import MenuLink                 from './menu_link'
@@ -23,6 +24,7 @@ import AppointmentsIcon         from './../../icons/calendario.svg';
 import UsersIcon                from './../../icons/usuarios.svg';
 import BudgetsBuilderIcon       from './../../icons/plantillas_presupuestos.svg';
 import FormsBuilderIcon         from './../../icons/plantillas_tramites.svg';
+
 
 class NavigationMenu extends Component {
   constructor(props) {
@@ -72,6 +74,7 @@ class NavigationMenu extends Component {
             <MenuLink nested={true} iconComponent={BudgetsBuilderIcon} linkPath="/budgets/templates" menuText="Presupuestos" />
             <MenuLink nested={true} iconComponent={FormsBuilderIcon} linkPath="/forms/templates" menuText="Trámites" />
             <MenuLink nested={true} iconComponent={ReportsIcon} linkPath="/reports" menuText="Reportes" />
+            <MenuLink nested={true} rawIcon={true} iconComponent={ContactsSharpIcon} linkPath="/config/clients" menuText="Clientes" />
           </List>
         </Collapse>
 
