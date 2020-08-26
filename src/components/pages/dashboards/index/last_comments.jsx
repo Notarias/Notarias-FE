@@ -16,7 +16,7 @@ class LastComments extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <Grid container spacing={3} xs={12} style={{margin: "0px", overflowY: "scroll", height: "100%"}} spacing={3}>
+      <Grid container spacing={3} style={{margin: "0px", overflowY: "scroll", height: "100%"}} spacing={3}>
         <Grid item xs={12} style={{margin: "0px"}}>
           <Query query={GET_LATEST_COMMENTS}
           variables={{searchField: "created_at", sortDirection: "DESC", per: 10 }}
@@ -27,8 +27,8 @@ class LastComments extends Component {
                 return (
                   <div style={{ width: '100%', height:" 500px"}}>
                     {data.comments.map(comment => (
-                      <Link href={`clients/${comment.commentableId}/edit`} color="inherit" textDecoration="none" underline= "none">
-                        <ListItem key={comment.id}>
+                      <Link key={"comment-" + comment.id} href={`clients/${comment.commentableId}/edit`} color="inherit" textDecoration="none" underline= "none">
+                        <ListItem >
                           <Grid item container xs={4}>
                             <ListItemAvatar align='center'>
                               <Avatar key={comment.commentableId} src={comment.user.avatarMidUrl} className={classes.largeAvatar} />
@@ -38,12 +38,12 @@ class LastComments extends Component {
                             <ListItemText align='left' primary={
                               <Grid item container xs={12}>
                                 <Grid item xs={12} sm={12} md={2} lg={2}>
-                                  <Typography variant="subtitle2" color="Primary">
+                                  <Typography variant="subtitle2" color="primary">
                                     {comment.user.firstName}
                                   </Typography>
                                 </Grid>
                                 <Grid item xs={12} sm={12} md={10} lg={10}>
-                                  <Typography variant="body2" color="Primary">
+                                  <Typography variant="body2" color="primary">
                                     {comment.user.createdAt.substr(0,10)}
                                   </Typography>
                                 </Grid>

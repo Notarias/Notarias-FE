@@ -14,15 +14,15 @@ class LastBudgets extends Component {
     const { classes } = this.props
 
     return(
-        <Grid xs={12} classes={{root: classes.paperFullHeight}}>
+        <Grid classes={{root: classes.paperFullHeight}}>
           <Paper classes={{root: classes.paperFullHeight}}>
             <Grid classes={{root: classes.marginGridBudgets}}>
-              <Grid container xs={12} classes={{root: classes.gridTitle}}>
+              <Grid container classes={{root: classes.gridTitle}}>
                 <Typography variant="h5">
                   Últimos Presupuestos
                 </Typography>
               </Grid>
-              <Grid xs={12} classes={{root: classes.gridBottomComponents}}>
+              <Grid classes={{root: classes.gridBottomComponents}}>
                 <Typography aling="left">
                   <MenuItem>
                     <img alt={"presupuestos"} src={BudgetsIcon} className={ classes.imgSizeCustomer }/>
