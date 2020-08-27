@@ -62,7 +62,6 @@ const dotsMenu  = ({
         <MenuItem>
           <Button 
           onClick={ deleteAttrClick }
-          disabled={ loadingAttr }
           >
               borrar
           </Button>
