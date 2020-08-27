@@ -43,20 +43,23 @@ const ConfigClientsIndex  = ()=> {
     setAttrList(attrList.concat([{ active: true }]))
   }
 
-  const removeFromList = (index, mutation, variables) => {
-    mutation(variables)
+  const removeFromList = (index, mutation, variables, id) => {
+    if(id){
+      mutation(variables)
+    }
     attrList.splice(index, 1)
     let newArray = attrList.slice()
     setAttrList(newArray)
   }
 
   const renderAttributes = () => {
+    console.log(attrList)
     return(
       attrList.map(
         (attr, index) => {
           return (
             <AttrList 
-              key={ attr.id + '-attr'}
+              key={ index + '-attr'}
               arrayIndex={ index } 
               id={ attr.id } 
               name={ attr.name || "" }
@@ -71,6 +74,7 @@ const ConfigClientsIndex  = ()=> {
   }
 
   const classes = useStyles();
+
   return (
     <>
     <Breadcrumbs breadcrumbs={BREADCRUMBS}/>

@@ -169,7 +169,7 @@ const attrList = (props)=> {
   };
 
   const deleteAttrClick = () => {
-    removeFromList(props.arrayIndex, destroyClientAttributeMutation, { variables: { id: id } } )
+    removeFromList(props.arrayIndex, destroyClientAttributeMutation, { variables: { id: id } }, id )
   }
 
   const updateAttribute = (event) => {
