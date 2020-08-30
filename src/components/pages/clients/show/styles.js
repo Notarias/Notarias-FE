@@ -24,7 +24,7 @@ export const styles = theme => {
       height: "40px"
     },
     svgComment:{
-      width:"10%"
+      width:"15%"
     },
     calendarGridColor: {
       background: "#F6F6F6",
