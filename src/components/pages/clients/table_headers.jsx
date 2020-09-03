@@ -10,6 +10,12 @@ export default (props) => {
     <TableHead>
       <TableRow>
         <SortHeader
+          text={""}
+          current_field={field}
+          sort_direction={direction}
+          callback={sortHandler}
+        />
+        <SortHeader
           text={"Nombre"}
           field_property={"first_name"}
           current_field={field}

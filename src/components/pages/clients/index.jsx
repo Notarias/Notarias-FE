@@ -6,10 +6,10 @@ import TableRow                     from '@material-ui/core/TableRow';
 import { styles }                   from './styles';
 import TableHeaders                 from './table_headers';
 import ClientRows                   from './client_rows';
-import TableFooter              from '@material-ui/core/TableFooter';
-import TablePagination          from '@material-ui/core/TablePagination';
-import ControlsBar              from './controls_bar';
-import Breadcrumbs              from '../../ui/breadcrumbs'
+import TableFooter                  from '@material-ui/core/TableFooter';
+import TablePagination              from '@material-ui/core/TablePagination';
+import ControlsBar                  from './controls_bar';
+import Breadcrumbs                  from '../../ui/breadcrumbs'
 
 const BREADCRUMBS = [
   { name: "Inicio", path: "/" },

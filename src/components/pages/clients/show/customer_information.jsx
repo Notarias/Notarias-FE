@@ -37,10 +37,9 @@ class CustomerInformation extends Component {
   render() {
     const { classes } = this.props
     return(
-      <Grid item xs={12}>
-        <Paper classes={{root: classes.fullWidhAndHeight}}>
+      <Paper classes={{root: classes.fullWidhAndHeight}}>
           <form className= {classes.fullWidhAndHeight}>
-            <Grid container xs={12} classes={{root: classes.marginGridInformation}}>
+            <Grid container item xs={12} classes={{root: classes.marginGridInformation}}>
               <Grid align="left" classes={{root: classes.halfGridInformationOne}}>
                 <Typography className={classes.title} color="textSecondary" variant="h4" gutterBottom>
                   {this.state.firstName }
@@ -50,7 +49,7 @@ class CustomerInformation extends Component {
                 </Typography>
                 <Grid classes={{root: classes.paddingTextsInformation}}>
                   <Typography variant="h6">
-                    <Grid container xs={12}>
+                    <Grid container item xs={12}>
                       <Grid item>
                         <SvgIcon  component={PhoneInTalkOutlinedIcon} style={{ width:"25px", height:"25px" }}/>
                       </Grid>
@@ -74,7 +73,7 @@ class CustomerInformation extends Component {
                 </Grid>
                 <Grid classes={{root: classes.paddingTextsInformation}}>
                   <Typography variant="h6">
-                    <Grid container xs={12}>
+                    <Grid container item xs={12}>
                       <Grid item classes={{root: classes.gridCustomerIcon}}>
                         <SvgIcon  component={LocationOnOutlinedIcon} style={{ width:"25px", height:"25px" }}/>
                       </Grid>
@@ -86,7 +85,7 @@ class CustomerInformation extends Component {
                 </Grid>
                 <Grid classes={{root: classes.paddingTextsInformation}}>
                   <Typography variant="h6">
-                    <Grid container xs={12}>
+                    <Grid container item xs={12}>
                       <Grid item classes={{root: classes.gridCustomerIcon}}>
                         <SvgIcon  component={BusinessOutlinedIcon} style={{ width:"25px", height:"25px" }}/>
                       </Grid>
@@ -98,7 +97,7 @@ class CustomerInformation extends Component {
                 </Grid>
                 <Grid classes={{root: classes.paddingTextsInformation}}>
                   <Typography variant="h6">
-                    <Grid container xs={12}>
+                    <Grid container item xs={12}>
                       <Grid item classes={{root: classes.gridCustomerIcon}}>
                         <SvgIcon component={BusinessCenterOutlinedIcon} style={{ width:"25px", height:"25px" }}/>
                       </Grid>
@@ -110,7 +109,7 @@ class CustomerInformation extends Component {
                 </Grid>
                 <Grid classes={{root: classes.paddingTextsInformation}}>
                   <Typography variant="h6">
-                    <Grid container xs={12}>
+                    <Grid container item xs={12}>
                       <Grid item classes={{root: classes.gridCustomerIcon}}>
                       <SvgIcon  component={FingerprintOutlinedIcon} style={{ width:"25px", height:"25px" }}/>
                       </Grid>
@@ -122,16 +121,15 @@ class CustomerInformation extends Component {
                 </Grid>
               </Grid>
               <Grid  container  direction="row"  justify="center"  alignItems="flex-end" classes={{root: classes.halfGridInformationTwo}}>
-                  <Grid item classes={{root: classes.fullWidth}}>
-                    <Button href={`/clients/${this.state.id}/edit`} variant="contained" fullWidth color="default" style={{textTransform: 'none',}} >
-                      Editar Datos
-                    </Button>
-                  </Grid>
+                <Grid item classes={{root: classes.fullWidth}}>
+                  <Button href={`/clients/${this.state.id}/edit`} variant="contained" fullWidth color="default" style={{textTransform: 'none',}} >
+                    Editar Datos
+                  </Button>
                 </Grid>
-            </Grid>
-          </form>
-        </Paper>
-      </Grid>
+              </Grid>
+          </Grid>
+        </form>
+      </Paper>
     )
   }
 }

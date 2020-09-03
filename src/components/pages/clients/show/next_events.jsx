@@ -15,7 +15,7 @@ class NextEvents extends Component {
     const { classes } = this.props
 
     return(
-      <Grid container xs={12} classes={{root: classes.fullWidhAndHeight}} >
+      <Grid container item xs={12} classes={{root: classes.fullWidhAndHeight}} >
         <Paper classes={{root: classes.fullWidhAndHeight}}>
           <Grid item style={{height:"100%"}}>
             <Grid container classes={{root: classes.titleNextEvents}}>
@@ -23,7 +23,7 @@ class NextEvents extends Component {
                 Próximos Eventos
               </Typography>
             </Grid>
-            <Grid container xs={12} style={{height:"60%"}}>
+            <Grid container item xs={12} style={{height:"60%"}}>
               <Grid item xs={6}>
                 <form>
                   <TextField

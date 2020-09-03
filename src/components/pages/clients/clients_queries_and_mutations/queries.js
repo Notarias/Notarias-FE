@@ -12,6 +12,7 @@ export const GET_CLIENT = gql`
       business
       category
       rfc
+      serialNumber
     }
   }
 `
