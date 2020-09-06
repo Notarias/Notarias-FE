@@ -68,7 +68,8 @@ export const styles = theme => {
       borderTop: `1px solid ${theme.palette.divider}`,
     },
     submitFormButton: {
-      marginTop: "25px"
+      marginTop: "25px",
+      width: '90%',
     },
     gridScrollable: {
       height: "30%",
@@ -97,7 +98,8 @@ export const styles = theme => {
     },
     newClientForm: {
       padding: "0 5%",
-      paddingTop: "15px"
+      paddingTop: "15px",
+      width: '80%'
     },
     pageWrapper: {
       height: "94%",
@@ -115,6 +117,12 @@ export const styles = theme => {
     },
     buttonFetch: {
       paddingRight: "5%"
+    },
+    paper_button_chat_margin: {
+      margin: '5%'
+    },
+    buttonSeeMore: {
+      paddingLeft: "2%"
     }
   })
 }

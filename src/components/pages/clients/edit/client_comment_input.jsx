@@ -45,7 +45,7 @@ class ClientCommentari extends Component {
     const { classes } = this.props
       return(
         <div>
-          <Grid item container style={{ width: '100%', height:" 500px"}}>
+          <Grid item container style={{ width: '100%', height:" 460px"}}>
             <Query query={LOAD_CLIENT_COMMENTS}
               variables={{ clientId : this.props.data.client.id, per: this.state.per, sortDirection: "DESC"}}
             >
@@ -63,8 +63,8 @@ class ClientCommentari extends Component {
                           <ListItemText primary={this.props.data.client.firstName} secondary={comment.body} style={{ width: '100%', maxHeight: "50%" }}/>
                         </ListItem>
                       ))}
-                      <Grid item>
-                        <Grid container justify='flex-end' classes={{ root: classes.buttonFetch }}>
+                      <Grid container item>
+                        <Grid classes={{ root: classes.buttonSeeMore }}>
                           <Button
                             color='primary'
                             variant="contained"
