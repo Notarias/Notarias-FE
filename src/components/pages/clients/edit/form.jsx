@@ -196,7 +196,7 @@ class EditClientForm extends Component {
             <FormHelperText error>{this.state.errors.rfc}</FormHelperText>
           </Grid>
         </Grid>
-        <Grid item>
+        <Grid item align="right">
           <Mutation
             mutation={UPDATE_CLIENT_MUTATION}
             variables={{ ...this.state }}
