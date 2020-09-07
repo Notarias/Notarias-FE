@@ -118,11 +118,25 @@ export const styles = theme => {
     buttonFetch: {
       paddingRight: "5%"
     },
-    paper_button_chat_margin: {
+    paper_button_comments_margin: {
       margin: '5%'
     },
     buttonSeeMore: {
       paddingLeft: "2%"
-    }
+    },
+    linkWidthAndHeigth: {
+      width: "100%",
+      height: "100%"
+    },
+    genericPaddingLeft: {
+      paddingLeft: "11px"
+    },
+    imgIconGeneric: {
+      width: "25px",
+      height: "25px"
+    },
+    editPaddingLeft: {
+      paddingLeft: "13px"
+    },
   })
 }

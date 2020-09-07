@@ -11,7 +11,7 @@ const SvgComponent = (props) =>(
 )
 
 SvgComponent.propTypes = {
-  arrowColor: PropTypes.string,
+  arrowcolor: PropTypes.string,
   size: PropTypes.number
 };
 

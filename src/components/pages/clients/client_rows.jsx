@@ -16,6 +16,8 @@ import EditOutlinedIcon             from '@material-ui/icons/EditOutlined';
 import Grid                         from '@material-ui/core/Grid';
 import Typography                   from '@material-ui/core/Typography';
 import { LOAD_CLIENTS }             from './clients_queries_and_mutations/queries';
+import ClientPreviewDrawer          from './client_preview_drawer';
+
 
 export default (props) => {
   const { page, per, sortDirection, sortField, searchField, searchValue, classes } = props
@@ -40,7 +42,7 @@ export default (props) => {
     return(
       <TableBody>
         <TableRow>
-          <TableCell align="center" colSpan={4} className={classes.loadingTableCell}>
+          <TableCell align="center" colSpan={3} className={classes.loadingTableCell}>
             <CircularProgress className={classes.searchLoadingIcon} size={100}/>
           </TableCell>
         </TableRow>
@@ -52,52 +54,67 @@ export default (props) => {
         {
           data.clients.map(client => (
             <TableRow key={client.id}>
-              <TableCell align= "center">{client.firstName}</TableCell>
-              <TableCell align= "center">{client.lastName}</TableCell>
-              <TableCell align= "center">{client.rfc}</TableCell>
+              <TableCell align= "center" colSpan={1}>
+                <Grid>
+                <ClientPreviewDrawer id={client.id}/>
+                </Grid>
+              </TableCell>
+              <TableCell align= "center">{ client.firstName }</TableCell>
+              <TableCell align= "center">{ client.lastName }</TableCell>
+              <TableCell align= "center">{ client.rfc }</TableCell>
               <TableCell align= "center">
                 <Grid>
                   <GenericDropdownMenu>
-                    <MenuItem key={client.id + "-details"}>
-                      <Link href={`/clients/${client.id}`} color="inherit" underline="none" style={{ width: "100%", height: "100%" }} >
+                    <MenuItem key={ client.id + "-details" }>
+                      <Link 
+                        href={ `/clients/${client.id}` }
+                        color="inherit"
+                        underline="none"
+                        className={ classes.linkWidthAndHeigth }
+                      >
                         <Grid container>
                           <VisibilityOutlinedIcon/>
-                          <Typography style={{ paddingLeft: "11px" }} >
+                          <Typography className={ classes.genericPaddingLeft } >
                             Detalles
                           </Typography>
                         </Grid>
                       </Link>
                     </MenuItem>
                     <MenuItem key={client.id + "-budgets"}>
-                      <img alt={"presupuestos"} src={BudgetsIcon} style={{ width: "25px", height: "25px"}}/>
-                      <span style={{paddingLeft: "10px"}}>
+                      <img alt={"presupuestos"} src={BudgetsIcon} className={ classes.imgIconGeneric }/>
+                      <span className={ classes.genericPaddingLeft }>
                         Presupuestos
                       </span>
                     </MenuItem>
                     <MenuItem key={client.id + "-agenda"}>
-                      <img alt={"Agenda"} src={AppointmentsIcon} style={{ width: "26px", height: "26px"}}/>
-                      <span style={{paddingLeft: "10px"}}>
+                      <img alt={"Agenda"} src={AppointmentsIcon} className={ classes.imgIconGeneric }/>
+                      <span className={ classes.genericPaddingLeft }>
                         Agenda
                       </span>
                     </MenuItem>
                     <MenuItem key={client.id + "-report"}>
-                      <img alt={"Reporte"} src={ReportsIcon} style={{ width: "25px", height: "25px"}}/>
-                      <span style={{paddingLeft: "10px"}}>
+                      <img alt={"Reporte"} src={ReportsIcon} className={ classes.imgIconGeneric }/>
+                      <span className={ classes.genericPaddingLeft }>
                         Reporte
                       </span>
                     </MenuItem>
                     <MenuItem key={client.id + "-procedures"}>
-                      <img alt={"Trámites"} src={FormsIcon} style={{ width: "25px", height: "25px", paddingRight: "3px"}}/>
-                      <span style={{paddingLeft: "10px"}}>
-                        Trámites
+                      <img alt={"Trámites"} src={FormsIcon} className={ classes.imgIconGeneric }/>
+                      <span className={ classes.genericPaddingLeft }>
+                      Trámites
                       </span>
                     </MenuItem>
                     <MenuItem key={client.id + "-edit"}>
-                      <Link href={`/clients/${client.id}/edit`} color="inherit" underline="none" style={{ width: "100%", height: "100%" }} >
+                      <Link 
+                        href={`/clients/${client.id}/edit`}
+                        color="inherit"
+                        underline="none"
+                        className={ classes.linkWidthAndHeigth }
+                      >
                         <Grid container>
                           <EditOutlinedIcon/>
-                          <Typography style={{ paddingLeft: "11px" }} >
-                            Trámites
+                          <Typography className={ classes.editPaddingLeft } >
+                            Editar
                           </Typography>
                         </Grid>
                       </Link>

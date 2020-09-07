@@ -14,7 +14,7 @@ class NextEventsIndex extends Component {
     const { classes } = this.props
 
     return(
-      <Grid container xs={12} classes={{root: classes.fullWidhAndHeight}}>
+      <Grid container classes={{root: classes.fullWidhAndHeight}}>
         <Grid item container style={{height:"100%", paddingLeft: "1%"}} xs={12} spacing={2}>
           <Grid item container xs={12} classes={{root: classes.titleNextEvents}}>
             <Typography align="left" variant="h5" style={{paddingBottom:"3%"}}>
