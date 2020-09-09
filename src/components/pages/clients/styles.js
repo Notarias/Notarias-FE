@@ -69,11 +69,13 @@ export const styles = theme => {
     },
     submitFormButton: {
       marginTop: "25px",
-      width: '90%',
+      width: '92%',
     },
     gridScrollable: {
       height: "30%",
-      overflowY: "scroll"
+      overflowY: "scroll",
+      width: '100%',
+      height: "500px"
     },
     commentsList: {
       width: "100%",
@@ -138,5 +140,71 @@ export const styles = theme => {
     editPaddingLeft: {
       paddingLeft: "13px"
     },
+    rootEdit: {
+      display: 'flex',
+    },
+    appBar: {
+      transition: theme.transitions.create(['margin', 'width'], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+      }),
+    },
+    appBarShift: {
+      width: `calc(100% - ${800}px)`,
+      transition: theme.transitions.create(['margin', 'width'], {
+        easing: theme.transitions.easing.easeOut,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+      marginRight: 800,
+    },
+    title: {
+      flexGrow: 1,
+    },
+    hide: {
+      display: 'none',
+    },
+    drawer: {
+      width: 800,
+    },
+    drawerPaper: {
+      width: 800,
+      top: '15%',
+      height: "70%",
+      borderRadius: '4px',
+      border: '1px solid rgba(0, 0, 0, 0.12)',
+      boxShadow: '0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)',
+      overflow: 'hidden',
+    },
+    drawerHeader: {
+      display: 'flex',
+      alignItems: 'center',
+      padding: theme.spacing(0, 1),
+      // necessary for content to be below app bar
+      ...theme.mixins.toolbar,
+      justifyContent: 'flex-start',
+    },
+    content: {
+      flexGrow: 1,
+      padding: '10px 0px 30px 24px',
+      transition: theme.transitions.create('margin', {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+      }),
+      marginRight: -800,
+    },
+    contentShift: {
+      transition: theme.transitions.create('margin', {
+        easing: theme.transitions.easing.easeOut,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+      marginRight: 0,
+    },
+    WindowComment: {
+      width: '100%', height:" 460px"
+    },
+    widthWindowComment: {
+      width: '100%',
+      height:" 500px"
+    }
   })
 }
