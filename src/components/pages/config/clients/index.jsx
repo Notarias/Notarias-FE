@@ -1,13 +1,13 @@
-import React                  from 'react';
-import { makeStyles }         from '@material-ui/core/styles';
-import Paper                  from '@material-ui/core/Paper';
-import Button                 from '@material-ui/core/Button';
-import Grid                   from '@material-ui/core/Grid';
-import AttrList               from './attr_list';
-import Breadcrumbs            from '../../../ui/breadcrumbs'
-import Typography from '@material-ui/core/Typography';
+import React                       from 'react';
+import { makeStyles }              from '@material-ui/core/styles';
+import Paper                       from '@material-ui/core/Paper';
+import Button                      from '@material-ui/core/Button';
+import Grid                        from '@material-ui/core/Grid';
+import AttrList                    from './attr_list';
+import Breadcrumbs                 from '../../../ui/breadcrumbs'
+import Typography                  from '@material-ui/core/Typography';
 
-import { useQuery }           from '@apollo/react-hooks';
+import { useQuery }                from '@apollo/react-hooks';
 import { GET_CLIENT_ATTRIBUTE }    from './queries_and_mutations/queries';
 
 
