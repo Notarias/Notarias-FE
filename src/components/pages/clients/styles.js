@@ -1,5 +1,5 @@
-import { fade } from '@material-ui/core/styles/colorManipulator';
-import green from '@material-ui/core/colors/green';
+import { fade }     from '@material-ui/core/styles/colorManipulator';
+import green        from '@material-ui/core/colors/green';
 
 export const styles = theme => {
   return ({
