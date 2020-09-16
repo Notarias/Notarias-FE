@@ -21,7 +21,7 @@ export default class GenericDropdownMenu extends React.Component {
 
   render() {
     const { anchorEl } = this.state;
-    const { children, user } = this.props;
+    const { children, user, handleClose } = this.props;
 
     const open = Boolean(anchorEl);
 
@@ -39,7 +39,8 @@ export default class GenericDropdownMenu extends React.Component {
           id="long-menu"
           anchorEl={anchorEl}
           open={open}
-          onClose={this.handleClose}
+          keepMounted
+          onClose={handleClose || this.handleClose}
           PaperProps={{
             style: {
               maxHeight: ITEM_HEIGHT * 10,

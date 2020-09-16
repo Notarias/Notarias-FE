@@ -1,25 +1,19 @@
-import React                        from 'react';
-import { makeStyles }               from '@material-ui/core/styles';
-import Grid                         from '@material-ui/core/Grid';
-import TextField                    from '@material-ui/core/TextField';
-
-import DotsMenu                     from './dots_menu';
-
-import FormControl                  from '@material-ui/core/FormControl';
-import Select                       from '@material-ui/core/Select';
-import MenuItem                     from '@material-ui/core/MenuItem';
-import InputLabel                   from '@material-ui/core/InputLabel';
-
-import { useMutation }              from '@apollo/react-hooks';
-import { GLOBAL_MESSAGE }           from '../../../../resolvers/queries';
-import { CREATE_CLIENT_ATTRIBUTE }  from './queries_and_mutations/queries';
+import React                             from 'react';
+import { makeStyles }                    from '@material-ui/core/styles';
+import Grid                              from '@material-ui/core/Grid';
+import TextField                         from '@material-ui/core/TextField';
+import DotsMenu                          from './dots_menu';
+import FormControl                       from '@material-ui/core/FormControl';
+import Select                            from '@material-ui/core/Select';
+import MenuItem                          from '@material-ui/core/MenuItem';
+import InputLabel                        from '@material-ui/core/InputLabel';
+import { useMutation }                   from '@apollo/react-hooks';
+import { GLOBAL_MESSAGE }                from '../../../../resolvers/queries';
+import { CREATE_CLIENT_ATTRIBUTE }       from './queries_and_mutations/queries';
 import { GET_CLIENT_ATTRIBUTE }          from './queries_and_mutations/queries';
 import { DESTROY_CLIENT_ATTRIBUTE }      from './queries_and_mutations/queries';
 import { UPDATE_CLIENT_ATTRIBUTE }       from './queries_and_mutations/queries';
-
-import { useEffect } from 'react';
-
-import FormHelperText       from '@material-ui/core/FormHelperText';
+import FormHelperText                    from '@material-ui/core/FormHelperText';
 
 const useStyles = makeStyles((theme) => ({
   paper: {

@@ -17,8 +17,34 @@ export const PROCEDURE_TEMPLATES = gql`
       {
         id
         name
+        active
         serialNumber
     }
     procedureTemplatesCount
+  }
+`
+
+export const UPDATE_PROCEDURE_TEMPLATES = gql`
+  mutation updateProcedureTemplates ($id: ID!,
+    $name: String,
+    $active: Boolean,
+    $clientMutationId: String)
+    {
+    updateProcedureTemplate (input: 
+      {
+        id: $id,
+        name: $name,
+        active: $active,
+        clientMutationId: $clientMutationId
+      }
+    )
+    {
+      procedureTemplate{
+        id
+        name
+        active
+        serialNumber
+      }
+    }
   }
 `

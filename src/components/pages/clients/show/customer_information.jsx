@@ -11,7 +11,7 @@ import BusinessCenterOutlinedIcon     from '@material-ui/icons/BusinessCenterOut
 import BusinessOutlinedIcon           from '@material-ui/icons/BusinessOutlined';
 import FingerprintOutlinedIcon        from '@material-ui/icons/FingerprintOutlined';
 import EmailOutlinedIcon              from '@material-ui/icons/EmailOutlined';
-import Link                           from '@material-ui/core/Link';
+
 
 
 class CustomerInformation extends Component {

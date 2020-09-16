@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ConfigClientsIndex  = ()=> {
 
-  const { loading, error, data } = useQuery(GET_CLIENT_ATTRIBUTE)
+  const { loading, data } = useQuery(GET_CLIENT_ATTRIBUTE)
  
   const [attrList, setAttrList] = React.useState(data ? data.clientAttributes : [])
   const addNewAttr = (event) => {
@@ -53,7 +53,7 @@ const ConfigClientsIndex  = ()=> {
   }
 
   const renderAttributes = () => {
-    console.log(attrList)
+
     return(
       attrList.map(
         (attr, index) => {
