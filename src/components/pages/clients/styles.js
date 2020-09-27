@@ -205,6 +205,58 @@ export const styles = theme => {
     widthWindowComment: {
       width: '100%',
       height:" 500px"
-    }
+    },
+    list: {
+      width: '350px',
+    },
+    fullList: {
+      width: 'auto',
+    },
+    infoAndSerialBox: {
+      width: '300px'
+    },
+    moreDetailsLink: {
+      width: '100%',
+      height: '40%',
+      display: 'flex',
+      padding: '16px 16px 16px 16px',
+      flexDirection: 'column-reverse'
+    },
+    serialNumberText: {
+      display: 'inline-block',
+      width: '160px',
+      textAlign: 'right'
+    },
+    informationText: {
+      display: 'inline-block',
+      width: '140px',
+      textAlign: 'right'
+    },
+    list: {
+      width: '350px',
+    },
+    fullList: {
+      width: 'auto',
+    },
+    infoAndSerialBox: {
+      width: '300px'
+    },
+    moreDetailsLink: {
+      width: '100%',
+      height: '40%',
+      display: 'flex',
+      padding: '16px 16px 16px 16px',
+      flexDirection: 'column-reverse'
+    },
+    serialNumberText: {
+      display: 'inline-block',
+      width: '160px',
+      textAlign: 'right'
+    },
+    informationText: {
+      display: 'inline-block',
+      width: '140px',
+      textAlign: 'right'
+    },
   })
 }

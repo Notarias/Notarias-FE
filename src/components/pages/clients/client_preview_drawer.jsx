@@ -1,7 +1,7 @@
 import React, { useEffect }         from 'react';
 import Drawer                       from '@material-ui/core/Drawer';
 import clsx                         from 'clsx';
-import { makeStyles }               from '@material-ui/core/styles';
+import { styles }                   from './styles';
 import Button                       from '@material-ui/core/Button';
 import List                         from '@material-ui/core/List';
 import ListItem                     from '@material-ui/core/ListItem';
@@ -19,43 +19,15 @@ import BusinessIcon                 from '@material-ui/icons/Business';
 import EmojiTransportationIcon      from '@material-ui/icons/EmojiTransportation';
 import AssignmentIndIcon            from '@material-ui/icons/AssignmentInd';
 import Link                         from '@material-ui/core/Link';
+import { withStyles }               from '@material-ui/core/styles';
 
-const useStyles = makeStyles({
-  list: {
-    width: '350px',
-  },
-  fullList: {
-    width: 'auto',
-  },
-  infoAndSerialBox: {
-    width: '300px'
-  },
-  moreDetailsLink: {
-    width: '100%',
-    height: '40%',
-    display: 'flex',
-    padding: '16px 16px 16px 16px',
-    flexDirection: 'column-reverse'
-  },
-  serialNumberText: {
-    display: 'inline-block',
-    width: '160px',
-    textAlign: 'right'
-  },
-  informationText: {
-    display: 'inline-block',
-    width: '140px',
-    textAlign: 'right'
-  },
-});
 
 const clientPreviewDrawer = (props) => {
 
-  const match = props;
+  const { classes, match } = props
   const [id, setId] = React.useState(props.id);
   const { loading, error, data } = useQuery(GET_CLIENT, { variables: { "id": id } });
 
-  const classes = useStyles();
   const [state, setState] = React.useState({ right: false });
 
   const toggleDrawer = (anchor, open) => {
@@ -69,10 +41,13 @@ const clientPreviewDrawer = (props) => {
     )
   }
 
-  const serial = data.client.serialNumber
+  const serial = data && data.client.serialNumber
   const folioNumber = (serial) => {
-    return serial.toString().padStart(5, "0")
+    if(serial) {
+      return serial.toString().padStart(5, "0")
+    }
   }
+
 
   const list = (anchor) => (
     <div>
@@ -108,43 +83,43 @@ const clientPreviewDrawer = (props) => {
             <ListItemIcon>  
               <PersonIcon/>
             </ListItemIcon>
-            <ListItemText primary={ data.client.firstName + " " + data.client.lastName } />
+            <ListItemText primary={ data && data.client.firstName + " " + data && data.client.lastName } />
           </ListItem>
           <ListItem>
             <ListItemIcon>  
               <MailOutlineIcon/>
             </ListItemIcon>
-            <ListItemText primary={ data.client.email } />
+            <ListItemText primary={ data && data.client.email } />
           </ListItem>
           <ListItem>
             <ListItemIcon>  
               <PhoneRoundedIcon/>
             </ListItemIcon>
-            <ListItemText primary={ data.client.phone } />
+            <ListItemText primary={ data && data.client.phone } />
           </ListItem>
           <ListItem>
             <ListItemIcon>  
               <BusinessIcon/>
             </ListItemIcon>
-            <ListItemText primary={ data.client.address } />
+            <ListItemText primary={ data && data.client.address } />
           </ListItem>
           <ListItem>
             <ListItemIcon>  
               <EmojiTransportationIcon/>
             </ListItemIcon>
-            <ListItemText primary={ data.client.business } />
+            <ListItemText primary={ data && data.client.business } />
           </ListItem>
           <ListItem>
             <ListItemIcon>  
               <AssignmentIndIcon/>
             </ListItemIcon>
-            <ListItemText primary={ data.client.category } />
+            <ListItemText primary={ data && data.client.category } />
           </ListItem>
         </List>
       </div>
       <div className={ classes.moreDetailsLink }>
         <Typography variant="overline" align="center" display='block' >
-          <Link href={`/clients/${data.client.id}`} >
+          <Link href={`/clients/${ data && data.client.id}`} >
             Ver más detalles
           </Link>
         </Typography>
@@ -164,4 +139,4 @@ const clientPreviewDrawer = (props) => {
   );
 }
 
-export default clientPreviewDrawer;
+export default withStyles(styles)(clientPreviewDrawer);
