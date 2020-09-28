@@ -1,13 +1,13 @@
-import React                  from 'react';
-import { makeStyles }         from '@material-ui/core/styles';
-import Paper                  from '@material-ui/core/Paper';
-import Button                 from '@material-ui/core/Button';
-import Grid                   from '@material-ui/core/Grid';
-import AttrList               from './attr_list';
-import Breadcrumbs            from '../../../ui/breadcrumbs'
-import Typography from '@material-ui/core/Typography';
+import React                       from 'react';
+import { makeStyles }              from '@material-ui/core/styles';
+import Paper                       from '@material-ui/core/Paper';
+import Button                      from '@material-ui/core/Button';
+import Grid                        from '@material-ui/core/Grid';
+import AttrList                    from './attr_list';
+import Breadcrumbs                 from '../../../ui/breadcrumbs'
+import Typography                  from '@material-ui/core/Typography';
 
-import { useQuery }           from '@apollo/react-hooks';
+import { useQuery }                from '@apollo/react-hooks';
 import { GET_CLIENT_ATTRIBUTE }    from './queries_and_mutations/queries';
 
 
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ConfigClientsIndex  = ()=> {
 
-  const { loading, error, data } = useQuery(GET_CLIENT_ATTRIBUTE)
+  const { loading, data } = useQuery(GET_CLIENT_ATTRIBUTE)
  
   const [attrList, setAttrList] = React.useState(data ? data.clientAttributes : [])
   const addNewAttr = (event) => {
@@ -53,7 +53,7 @@ const ConfigClientsIndex  = ()=> {
   }
 
   const renderAttributes = () => {
-    console.log(attrList)
+
     return(
       attrList.map(
         (attr, index) => {

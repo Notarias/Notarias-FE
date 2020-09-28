@@ -1,18 +1,13 @@
-import React, { Component }     from 'react';
+import React                     from 'react';
 import { withStyles }           from '@material-ui/core/styles';
 import Grid                     from '@material-ui/core/Grid';
 import { styles }               from './styles';
-import PermIdentityIcon         from '@material-ui/icons/PermIdentity';
-import FormHelperText           from '@material-ui/core/FormHelperText';
-import { setMessage }           from '../../interfaces/messages_interface';
-import CircularProgress         from '@material-ui/core/CircularProgress';
 import Breadcrumbs              from '../../ui/breadcrumbs';
 import EditForm                 from './edit/form';
 import { useQuery }             from '@apollo/react-hooks';
 import { GET_CLIENT }           from './clients_queries_and_mutations/queries';
 import AddComment               from './edit/client_comment_input';
 import clsx                     from 'clsx';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer                   from '@material-ui/core/Drawer';
 import AppBar                   from '@material-ui/core/AppBar';
 import Toolbar                  from '@material-ui/core/Toolbar';
@@ -21,15 +16,10 @@ import List                     from '@material-ui/core/List';
 import Typography               from '@material-ui/core/Typography';
 import Divider                  from '@material-ui/core/Divider';
 import IconButton               from '@material-ui/core/IconButton';
-import MenuIcon                 from '@material-ui/icons/Menu';
 import ChevronLeftIcon          from '@material-ui/icons/ChevronLeft';
 import ChatIcon                 from '@material-ui/icons/Chat';
 import ChevronRightIcon         from '@material-ui/icons/ChevronRight';
 import ListItem                 from '@material-ui/core/ListItem';
-import ListItemIcon             from '@material-ui/core/ListItemIcon';
-import ListItemText             from '@material-ui/core/ListItemText';
-import InboxIcon                from '@material-ui/icons/MoveToInbox';
-import MailIcon                 from '@material-ui/icons/Mail';
 import Paper                    from '@material-ui/core/Paper';
 
 const BREADCRUMBS = [

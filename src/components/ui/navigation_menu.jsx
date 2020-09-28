@@ -72,7 +72,7 @@ class NavigationMenu extends Component {
           <List>
             <MenuLink nested={true} iconComponent={UsersIcon} linkPath="/users" menuText="Usuarios" />
             <MenuLink nested={true} iconComponent={BudgetsBuilderIcon} linkPath="/budgets/templates" menuText="Presupuestos" />
-            <MenuLink nested={true} iconComponent={FormsBuilderIcon} linkPath="/forms/templates" menuText="Trámites" />
+            <MenuLink nested={true} iconComponent={FormsBuilderIcon} linkPath="/config/procedure_templates" menuText="Trámites" />
             <MenuLink nested={true} iconComponent={ReportsIcon} linkPath="/reports" menuText="Reportes" />
             <MenuLink nested={true} rawIcon={true} iconComponent={ContactsSharpIcon} linkPath="/config/clients" menuText="Clientes" />
           </List>

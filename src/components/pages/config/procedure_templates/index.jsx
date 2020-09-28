@@ -1,31 +1,31 @@
 import React, { useState }          from 'react';
 import { withStyles }               from '@material-ui/core/styles';
-import Table                        from '@material-ui/core/Table';
-import Paper                        from '@material-ui/core/Paper';
-import TableRow                     from '@material-ui/core/TableRow';
 import { styles }                   from './styles';
-import TableHeaders                 from './table_headers';
-import ClientRows                   from './client_rows';
+import Paper                        from '@material-ui/core/Paper';
+import Table                        from '@material-ui/core/Table';
+import TableBodyTemplate            from './index/table_body_template';
+import TableRow                     from '@material-ui/core/TableRow';
 import TableFooter                  from '@material-ui/core/TableFooter';
 import TablePagination              from '@material-ui/core/TablePagination';
-import ControlsBar                  from './controls_bar';
-import Breadcrumbs                  from '../../ui/breadcrumbs'
+import TableHeaders                 from './index/table_headers';
+import Breadcrumbs                 from '../../../ui/breadcrumbs'
+import ControlsBar                  from './index/controls_bar';
 
 const BREADCRUMBS = [
   { name: "Inicio", path: "/" },
-  { name: "Clientes", path: null }
+  { name: "Trámites", path: null }
 ]
 
-const Clients = (props) => {
+const ConfigProcedureTemplatesIndex  = (props)=> {
   const [searchLoading, setSearchLoading] = useState(false);
-  const [sortField, setSortField]         = useState("first_name")
+  const [sortField, setSortField]         = useState("name")
   const [sortDirection, setSortDirection] = useState("desc")
-  const [searchField]                     = useState("first_name_or_last_name_or_rfc_cont")
+  const [searchField]                     = useState("name_or_string_serial_number_cont")
   const [searchValue, setSearchValue]     = useState("")
   const [timeout, setSetTimeout]          = useState(null)
   const [page, setPage]                   = useState(0)
   const [per, setPer]                     = useState(5)
-  const [total_records, setTotalRecords]  = useState(10)
+  const [total_records, setTotalRecords]  = useState(5)
 
   const { classes } = props
 
@@ -49,6 +49,10 @@ const Clients = (props) => {
     }, 2000))
   }
 
+  const assingTotalRecords = (total) => {
+    setTotalRecords(total)
+  }
+
   const sort = (params) => {
     setSortDirection(Object.values(params["sort"])[0])
     setSortField(Object.keys(params["sort"])[0])
@@ -56,45 +60,47 @@ const Clients = (props) => {
 
   return(
     <>
-      <Breadcrumbs breadcrumbs={BREADCRUMBS}/>
-      <div className={classes.root}>
+      <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
+      <div className={ classes.root }>
         <ControlsBar
           classes={classes}
           searchLoading={searchLoading}
-          onChangeSearch={onChangeSearch.bind(this)}/>
-        <div className={classes.tableWrapper}>
-          <Paper >
+          onChangeSearch={onChangeSearch.bind(this)}
+        />
+        <div className={ classes.tableWrapper }>
+          <Paper>
             <Table className={classes.table}>
-              <TableHeaders field={sortField} direction={sortDirection} sortHandler={sort.bind(this) }/>
-              <ClientRows
+              <TableHeaders field={ sortField } direction={ sortDirection } sortHandler={ sort.bind(this) }/>
+              <TableBodyTemplate
                 page={ page }
                 per={ per }
-                search={{}}
+                search={ {} }
                 sortField={ sortField }
                 sortDirection={ sortDirection }
-                setTotalRecords={ setTotalRecords }
+                assingTotalRecords={ assingTotalRecords }
                 searchValue={ searchValue }
                 searchField={ searchField }
-                classes={ classes } />
+                classes={ classes } 
+              />
               <TableFooter>
                 <TableRow>
-                  <TablePagination
-                    page={page}
-                    rowsPerPage={per}
-                    rowsPerPageOptions={[5, 10, 15, 20]}
-                    onChangePage={changePage}
-                    onChangeRowsPerPage={changeRowsPerPage}
-                    count={total_records}
-                    labelRowsPerPage={"Filas por página:"}
+                <TablePagination
+                    page={ page }
+                    rowsPerPage={ per }
+                    rowsPerPageOptions={ [5, 10, 15, 20] }
+                    onChangePage={ changePage }
+                    onChangeRowsPerPage={ changeRowsPerPage }
+                    count={ total_records }
+                    labelRowsPerPage={ "Filas por página:" }
                   />
                 </TableRow>
               </TableFooter>
             </Table>
           </Paper>
         </div>
-      </div>
+    </div>
     </>
   )
 }
 
-export default withStyles(styles)(Clients);
+export default withStyles(styles)(ConfigProcedureTemplatesIndex);
