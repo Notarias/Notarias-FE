@@ -63,5 +63,22 @@ export const styles = theme => {
         },
       }
     },
+    defaultIcon:{
+      width:"30px", 
+      height:"40px",
+      marginRight: "10px"
+    },
+    activeIconGreen:{
+      width:"30px", 
+      height:"40px",
+      marginRight: "10px",
+      color: "green",
+    },
+    textIconDefault:{
+      marginTop: "10px"
+    },
+    statusTemplateRow: {
+      boxShadow: `inset 10px 0px 0px -5px ${theme.palette.error.dark}`,
+    },
   })
 }

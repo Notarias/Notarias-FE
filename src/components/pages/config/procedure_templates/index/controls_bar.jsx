@@ -4,7 +4,7 @@ import CircularProgress     from '@material-ui/core/CircularProgress';
 import SearchIcon           from '@material-ui/icons/Search';
 import InputBase            from '@material-ui/core/InputBase';
 import Button               from '@material-ui/core/Button';
-import { styles }           from './styles';
+import { styles }           from '../styles';
 import { withStyles }       from '@material-ui/core/styles';
 import PostAddIcon          from '@material-ui/icons/PostAdd';
 

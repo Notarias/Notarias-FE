@@ -3,13 +3,13 @@ import { withStyles }               from '@material-ui/core/styles';
 import { styles }                   from './styles';
 import Paper                        from '@material-ui/core/Paper';
 import Table                        from '@material-ui/core/Table';
-import ProcedureRow                 from './procedure_row';
+import TableBodyTemplate            from './index/table_body_template';
 import TableRow                     from '@material-ui/core/TableRow';
 import TableFooter                  from '@material-ui/core/TableFooter';
 import TablePagination              from '@material-ui/core/TablePagination';
-import TableHeaders                 from './table_headers';
+import TableHeaders                 from './index/table_headers';
 import Breadcrumbs                 from '../../../ui/breadcrumbs'
-import ControlsBar                  from './controls_bar';
+import ControlsBar                  from './index/controls_bar';
 
 const BREADCRUMBS = [
   { name: "Inicio", path: "/" },
@@ -71,7 +71,7 @@ const ConfigProcedureTemplatesIndex  = (props)=> {
           <Paper>
             <Table className={classes.table}>
               <TableHeaders field={ sortField } direction={ sortDirection } sortHandler={ sort.bind(this) }/>
-              <ProcedureRow
+              <TableBodyTemplate
                 page={ page }
                 per={ per }
                 search={ {} }
