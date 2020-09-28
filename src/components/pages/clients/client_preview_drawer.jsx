@@ -20,6 +20,7 @@ import EmojiTransportationIcon      from '@material-ui/icons/EmojiTransportation
 import AssignmentIndIcon            from '@material-ui/icons/AssignmentInd';
 import Link                         from '@material-ui/core/Link';
 import { withStyles }               from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 
 const clientPreviewDrawer = (props) => {
@@ -48,6 +49,12 @@ const clientPreviewDrawer = (props) => {
     }
   }
 
+
+  if (loading || !data) {
+    return(
+      <CircularProgress />
+    )
+  }
 
   const list = (anchor) => (
     <div>
@@ -83,37 +90,37 @@ const clientPreviewDrawer = (props) => {
             <ListItemIcon>  
               <PersonIcon/>
             </ListItemIcon>
-            <ListItemText primary={ data && data.client.firstName + " " + data && data.client.lastName } />
+            <ListItemText primary={ data.client.firstName + " " + data && data.client.lastName } />
           </ListItem>
           <ListItem>
             <ListItemIcon>  
               <MailOutlineIcon/>
             </ListItemIcon>
-            <ListItemText primary={ data && data.client.email } />
+            <ListItemText primary={ data.client.email } />
           </ListItem>
           <ListItem>
             <ListItemIcon>  
               <PhoneRoundedIcon/>
             </ListItemIcon>
-            <ListItemText primary={ data && data.client.phone } />
+            <ListItemText primary={ data.client.phone } />
           </ListItem>
           <ListItem>
             <ListItemIcon>  
               <BusinessIcon/>
             </ListItemIcon>
-            <ListItemText primary={ data && data.client.address } />
+            <ListItemText primary={ data.client.address } />
           </ListItem>
           <ListItem>
             <ListItemIcon>  
               <EmojiTransportationIcon/>
             </ListItemIcon>
-            <ListItemText primary={ data && data.client.business } />
+            <ListItemText primary={ data.client.business } />
           </ListItem>
           <ListItem>
             <ListItemIcon>  
               <AssignmentIndIcon/>
             </ListItemIcon>
-            <ListItemText primary={ data && data.client.category } />
+            <ListItemText primary={ data.client.category } />
           </ListItem>
         </List>
       </div>
