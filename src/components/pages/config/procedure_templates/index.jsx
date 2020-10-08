@@ -8,7 +8,7 @@ import TableRow                     from '@material-ui/core/TableRow';
 import TableFooter                  from '@material-ui/core/TableFooter';
 import TablePagination              from '@material-ui/core/TablePagination';
 import TableHeaders                 from './index/table_headers';
-import Breadcrumbs                 from '../../../ui/breadcrumbs'
+import Breadcrumbs                  from '../../../ui/breadcrumbs'
 import ControlsBar                  from './index/controls_bar';
 
 const BREADCRUMBS = [

@@ -21,6 +21,7 @@ import ReportsIndex                   from '../components/pages/reports/index';
 import ProfilesIndex                  from '../components/pages/profiles/index';
 import ConfigClientsIndex             from '../components/pages/config/clients/index';
 import ConfigProcedureTemplatesIndex  from '../components/pages/config/procedure_templates/index';
+import ConfigProcedureTemplatesEdit   from '../components/pages/config/procedure_templates/edit';
 import GlobalMessage                  from './global_message';
 
 export default function BaseRoutes(props) {
@@ -48,6 +49,7 @@ export default function BaseRoutes(props) {
         <ProtectedRoute path="/reports" component={ReportsIndex}/>
         <ProtectedRoute path="/profiles" component={ProfilesIndex}/>
         <ProtectedRoute path="/config/clients" component={ConfigClientsIndex}/>
+        <ProtectedRoute path="/config/procedure_templates/:id/edit" component={ConfigProcedureTemplatesEdit}/>
         <ProtectedRoute path="/config/procedure_templates" component={ConfigProcedureTemplatesIndex}/>
         <Route render={() => <DashboardsIndex/>}/>
       </Switch>

@@ -4,7 +4,7 @@ import Grid                           from '@material-ui/core/Grid';
 import GenericDropdownMenu            from '../../../../ui/generic_dropdown_menu';
 import CreateIcon                     from '@material-ui/icons/Create';
 import MenuItem                       from '@material-ui/core/MenuItem';
-import Link                           from '@material-ui/core/Link';
+import { Link }                       from 'react-router-dom';
 import Typography                     from '@material-ui/core/Typography';
 import TableRow                       from '@material-ui/core/TableRow';
 import TableCell                      from '@material-ui/core/TableCell';
@@ -80,10 +80,11 @@ const TempleteRow = (props) => {
         <Grid>
           <GenericDropdownMenu>
             <MenuItem key={ procedureTemplate.id + "-edit" }>
-              <Link 
-                href={ "" }
+              <Link
+                to={`/config/procedure_templates/${ procedureTemplate.id }/edit`}
                 color="inherit"
                 underline="none"
+                className={ classes.linkDefault }
               >
                 <Grid container>
                   <CreateIcon  className={ classes.defaultIcon }/>
@@ -141,7 +142,6 @@ const TempleteRow = (props) => {
       </TableCell>
     </TableRow>
   )
-
 }
 
 export default TempleteRow;

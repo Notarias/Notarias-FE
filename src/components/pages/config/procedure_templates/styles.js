@@ -80,5 +80,54 @@ export const styles = theme => {
     statusTemplateRow: {
       boxShadow: `inset 10px 0px 0px -5px ${theme.palette.error.dark}`,
     },
+    linkDefault: {
+      textDecoration:"none",
+    },
+    addTittleProcedure: {
+      height: "70px",
+      paddingLeft: "20px",
+      paddingRight: "20px",
+    },
+    buttonAddProcedure: {
+      height: "30px",
+    },
+    textFieldTittle: {
+      width: "320px",
+      fontFamily: "Lucida Console, Courier, monospace",
+      fontWeight: "bold",
+      textAling: "left",
+    },
+    buttonHeight: {
+      height: "30px",
+    },
+    inputFieldName: {
+      width: "200px",
+    },
+    fieldHeightRow: {
+      padding: "10px",
+    },
+    formControlPadding: {
+      margin: "0px",
+    },
+    tittleDialogWidth: {
+      width: "600px",
+    },
+    roundedBorderDialog: {
+      border: "2px solid",
+      borderRadius: "8px",
+    },
+    buttonProcedurePage: {
+      width: "100%",
+      height: "70px",
+    },
+    tittleProcedurePage: {
+      width: "100%",
+      height: "70px",
+      border: "2px solid",
+      borderRadius: "8px",
+    },
+    buttonAddFieldInGroup: {
+      marginRight: "9px"
+    },
   })
 }
