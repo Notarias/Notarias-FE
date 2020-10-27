@@ -17,19 +17,19 @@ import Dialog                         from '@material-ui/core/Dialog';
 import DialogActions                  from '@material-ui/core/DialogActions';
 import DialogContent                  from '@material-ui/core/DialogContent';
 import DialogTitle                    from '@material-ui/core/DialogTitle';
+import Paper                          from '@material-ui/core/Paper';
 
 
 const Field = (props) => {
 
-  const { classes } = props
-  // const [state, setState] = React.useState({
-  //   checked: true,
-  // });
-
-  const [checked, setChecked] = React.useState(false)
+  const { classes, id, name, type, favourite } = props
+  // const { removeFromList } = props
+  
   const [open, setOpen] = React.useState(false);
   const [openb, setOpenb] = React.useState(false);
-
+  // const[name, setName] = React.useState(props.name)
+  // const[type, setType] = React.useState(props.type)
+  // const [favourite, setFavourite] = React.useState(props.favourite)
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -37,10 +37,6 @@ const Field = (props) => {
   const handleClose = () => {
     setOpen(false);
   };
-
-  // const handleChange = (event) => {
-  //   setState({ ...state, [event.target.name]: event.target.checked });
-  // };
 
   const handleClickOpenb = () => {
     setOpenb(true);
@@ -51,39 +47,43 @@ const Field = (props) => {
   };
 
   const checkedStar = () => {
-    setChecked(!checked);
+    // setFavourite(!favourite);
     setOpenb(false);
   }
 
   const colorButton = () => {
-    if (checked === true) {
+    if (favourite === true) {
       return 'secondary'
     } else {
       return "primary"
     }
   }
-  // const deleteFieldClick = () => {
-  //   removeFromList(props.arrayIndex)
-  // }
 
-  // const removeFromList = (index) => {
-  //   fieldList.splice(index, 1)
-  //   let newArray = fieldList.slice()
-  //   setfieldList(newArray)
-  // }
+  const deleteFieldClick = () => {
+    // removeFromList(props.arrayIndex);
+    setOpen(false);
+  }
+
 
   return (
-    <Grid container item direction="row"  alignItems="flex-start" justify="center">
+    <Grid container item alignItems="flex-start" justify="flex-start" className={ classes.fielPaddingBottom }>
+      <Paper>
       <Grid container item className={ classes.fieldHeightRow }>
         <Grid item xs={6}>
-          <TextField id="standard-basic" label="Nombre de campo" className={ classes.textFieldTittle }/>
+          <TextField 
+            id="standard-basic" 
+            label="Nombre del campo"
+            className={ classes.textFieldTittle }
+            value={ name }
+          />
         </Grid>
         <Grid item xs={4}>
           <FormControl variant="outlined" className={ classes.inputFieldName }>
-            <InputLabel id="label-field" >Tipo de campo</InputLabel>
+            <InputLabel id="label-field">Tipo de campo</InputLabel>
             <Select
               labelId="demo-simple-select-outlined-label"
               name='name'
+              value={ type }
             >
               <MenuItem key='string' value={'string'}>Texto</MenuItem>
               <MenuItem key='number' value={'number'}>Numerico</MenuItem>
@@ -94,8 +94,8 @@ const Field = (props) => {
           <FormControlLabel
             control={<Checkbox icon={<StarBorderIcon />} 
               checkedIcon={<StarsIcon />} 
-              name="checked"
-              checked={ checked }
+              name="favourite"
+              checked={ favourite }
             />}
             label=" "
             color="primary"
@@ -109,17 +109,17 @@ const Field = (props) => {
             aria-describedby="favorite-alert-dialog"
           >
             <DialogTitle id="favorite-alert">
-              {checked === true ? "Eliminar Favorito": "Añadir Favorito"}
+              { favourite === true ? "Eliminar Favorito": "Añadir Favorito"}
             </DialogTitle>
             <DialogContent>
-            {checked === true ? "Este campo dejará de ser importante": "Se marcará este campo como importante"}
+            { favourite === true ? "Este campo dejará de ser importante": "Se marcará este campo como importante"}
             </DialogContent>
             <DialogActions>
-              <Button onClick={ handleCloseb } color="secundary">
+              <Button onClick={ handleCloseb } color="secondary">
                 Cancelar
               </Button>
               <Button color={ colorButton() } autoFocus onClick={ checkedStar } variant="contained">
-                {checked === true ? "Quitar": "Añadir"}
+                { favourite === true ? "Quitar": "Añadir"}
               </Button>
             </DialogActions>
           </Dialog>
@@ -139,16 +139,17 @@ const Field = (props) => {
               Se eliminara de manera permantente este campo
             </DialogContent>
             <DialogActions>
-              <Button onClick={ handleClose } color="secundary">
+              <Button onClick={ handleClose } color="secondary">
                 Cancelar
               </Button>
-              <Button color="primary" autoFocus>
+              <Button color="primary" autoFocus onClick={ deleteFieldClick }>
                 Borrar
               </Button>
             </DialogActions>
           </Dialog>
         </Grid>
       </Grid>
+      </Paper>
     </Grid>
   )
 }

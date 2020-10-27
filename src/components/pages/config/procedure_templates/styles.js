@@ -92,7 +92,7 @@ export const styles = theme => {
       height: "30px",
     },
     textFieldTittle: {
-      width: "320px",
+      width: "250px",
       fontFamily: "Lucida Console, Courier, monospace",
       fontWeight: "bold",
       textAling: "left",
@@ -101,10 +101,14 @@ export const styles = theme => {
       height: "30px",
     },
     inputFieldName: {
-      width: "200px",
+      width: "180px",
     },
     fieldHeightRow: {
       padding: "10px",
+      width: "600px",
+    },
+    fielPaddingBottom: {
+      marginBottom: "2px"
     },
     formControlPadding: {
       margin: "0px",
@@ -112,22 +116,57 @@ export const styles = theme => {
     tittleDialogWidth: {
       width: "600px",
     },
+    contentDialogPadding: {
+     padding: "10px",
+    },
+     roundedBorderDialogSelected: {
+      border: "1px solid",
+      borderRadius: "6px",
+      margin: "7px",
+      padding: "15px 0px",
+      opacity: "0.5",
+      width: "260px",
+      '&:hover': {
+        opacity: "1",
+      },
+    },
     roundedBorderDialog: {
-      border: "2px solid",
-      borderRadius: "8px",
+      border: "1px solid",
+      borderRadius: "6px",
+      width: "260px",
+      margin: "7px",
+      padding: "15px 0px",
     },
-    buttonProcedurePage: {
+    roundedBorderGruop: {
+      marginBottom: "10px"
+    },
+    buttonTab: {
       width: "100%",
       height: "70px",
+      opacity: "0.7"
     },
-    tittleProcedurePage: {
+    tittleTab: {
       width: "100%",
       height: "70px",
-      border: "2px solid",
-      borderRadius: "8px",
     },
     buttonAddFieldInGroup: {
       marginRight: "9px"
+    },
+    tabDefault: {
+      width: "100%",
+      height: "70px",
+      opacity: "0.4",
+    },
+    activeTab: {
+      width: "100%",
+      height: "70px",
+      borderBottom: '2px solid #e8e8e8',
+
+    },
+    templateTittle: {
+      minWidth: "30px",
+      minHeight: "30px",
+      paddingLeft: "10px"
     },
   })
 }

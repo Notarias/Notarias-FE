@@ -47,10 +47,17 @@ const DialogSelect = ({
         className={ classes.tittleDialogWidth }
       >
         Crear Campos
-      </DialogTitle>
-      <DialogContent >
-        <Grid container>
-          <Grid container direction="column" item xs={6} justify="center" alignItems="center" className={ classes.roundedBorderDialog }>
+      </DialogTitle >
+      <DialogContent>
+        <Grid container alignItems="center"  >
+          <Grid 
+            container 
+            direction="column" 
+            // item xs={6} 
+            justify="center" 
+            alignItems="center" 
+            className={ value === 'field' ?  classes.roundedBorderDialog : classes.roundedBorderDialogSelected  }
+          >
           <Typography
             variant="button"
           >
@@ -69,7 +76,13 @@ const DialogSelect = ({
             Agrega un campo a la hoja.
           </Typography>
           </Grid>
-          <Grid container direction="column" item xs={6} justify="center" alignItems="center" className={ classes.roundedBorderDialog }>
+          <Grid 
+            container 
+            direction="column" 
+            // item xs={6} 
+            justify="center" 
+            alignItems="center" 
+            className={ value === 'fieldsGroup' ?  classes.roundedBorderDialog : classes.roundedBorderDialogSelected }>
           <Typography
             variant="button"
           >

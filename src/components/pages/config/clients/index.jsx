@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ConfigClientsIndex  = ()=> {
 
-  const { loading, data } = useQuery(GET_CLIENT_ATTRIBUTE)
+  const { loading, data } = useQuery(GET_CLIENT_ATTRIBUTE)//TODO: cambiar a plural
  
   const [attrList, setAttrList] = React.useState(data ? data.clientAttributes : [])
   const addNewAttr = (event) => {
