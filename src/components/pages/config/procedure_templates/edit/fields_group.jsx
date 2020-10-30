@@ -25,7 +25,7 @@ const FieldsGroup = (props) => {
       <Divider/>
       <Grid container>
         <Grid container direction="row" alignItems="center" className={ classes.buttonAddFieldInGroup }>
-          <Grid container item xs={8} alignItems="flex-start">
+          <Grid container item xs={10} alignItems="flex-start">
           <TextField 
             id="filled-basic"
             label="Nombre del Grupo"
@@ -36,7 +36,7 @@ const FieldsGroup = (props) => {
             // onChange={ handleGroupNameChange }
           />
           </Grid>
-          <Grid container item xs={4} justify="flex-end">
+          <Grid container item xs={2} justify="flex-end">
           <Button
             onClick={ addNewField }
             variant="outlined"

@@ -46,7 +46,6 @@ const Tabs = (props) => {
     return(
       tabList.map(
         (tab, index) => {
-          console.log("tab", tab)
           return(
             <Tab
               key={ index + "-tabs"}

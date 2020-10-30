@@ -10,9 +10,9 @@ import CreateIcon                   from '@material-ui/icons/Create';
 
 const TemplateTittle = (props) => {
 
-  const { classes } = props
+  const { classes, templateData } = props
   const [value, setValue] = React.useState(true);
-  const [templateName, setTemplateName] = React.useState("Nombre de la plantilla")
+  const [templateName, setTemplateName] = React.useState(templateData.name)
 
   const handleNameChange = (event) => {
     setTemplateName(event.target.value);
@@ -22,46 +22,45 @@ const TemplateTittle = (props) => {
   
   const changeTittle = () => {
     setValue(!value)
-    console.log("running")
   }
 
   const renderTittleText = () => {
 
     return(
       <>
-        <Grid item onClick={ changeTittle }>
-          <Typography variant="h6" gutterBottom>
+        <Grid alignItems="center" className={ classes.templateTextTittle } onClick={ changeTittle }>
+          <Typography variant="overline" >
             { templateName }
           </Typography>
         </Grid>
-        <Grid item>
-          <Button
-            className={ classes.templateTittle }
-            onClick={ changeTittle }
-          >
-            <CreateIcon fontSize="inherit"/>
-          </Button>
-        </Grid>
+        <Button
+          className={ classes.templateTittleButton }
+          onClick={ changeTittle }
+        >
+          <CreateIcon />
+        </Button>
       </>
     )
   }
+
 
   const renderTittleInput = () => {
 
     return(
       <>
-        <Grid>
+        <Grid item>
           <TextField 
             id="standard-basic" 
             label="Nombre de la plantilla"
             value={ templateName }
-            className={ classes.textFieldTittle }
+            className={ classes.textInputTittle }
             onChange={ handleNameChange }
           />
         </Grid>
-        <Grid>
+        <Grid item className={ classes.saveTittleButton }>
           <Button
             onClick={ changeTittle }
+            color="primary"
           >
             <SaveIcon/>
           </Button>
@@ -70,10 +69,10 @@ const TemplateTittle = (props) => {
     )
   }
 
-
+  console.log("tittle", templateData.name)
 
   return(
-    <Grid container item>
+    <Grid container item >
       { value ? renderTittleText() : renderTittleInput() }
     </Grid>
   )

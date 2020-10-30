@@ -48,3 +48,33 @@ export const UPDATE_PROCEDURE_TEMPLATES = gql`
     }
   }
 `
+
+export const GET_PROCEDURE_TEMPLATE = gql`
+  query getTemplate ($id: ID!){
+	  procedureTemplate(id: $id){
+      id
+      name
+      serialNumber
+      tabs {
+        id
+        name
+        fields {
+          id
+          name
+          style
+          favourite
+        }
+        groups {
+          id
+          name
+          fields {
+            id
+            name
+            style
+            favourite
+          }
+        }
+      }
+    }
+  }
+`

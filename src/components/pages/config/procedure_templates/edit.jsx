@@ -13,7 +13,8 @@ import RenderFieldsGroupList        from './edit/render_fields_group_list';
 import Tabs                         from './edit/tabs';
 import ActiveTemplateButton         from './edit/active_template_button';
 import TemplateTittle               from './edit/template_tittle';
-
+import { useQuery }                 from '@apollo/react-hooks';
+import { GET_PROCEDURE_TEMPLATE }   from './queries_and_mutations/queries'
 
 const BREADCRUMBS = [
   { name: "Inicio", path: "/" },
@@ -206,11 +207,13 @@ const MOCK_DATA = {
 }
 
 
+
 const Edit = (props) => {
 
   const [open, setOpen] = React.useState(false);
-  const data = MOCK_DATA;
-  const [currentTab, setCurrentTab] = React.useState(data.data.procedureTemplate.tabs[0])
+  const { loading, data } = useQuery(GET_PROCEDURE_TEMPLATE, { variables: {"id": 9 }} );
+  const [currentTab, setCurrentTab] = React.useState(data ? data.procedureTemplate.tabs[0]: [])
+
 
   const { classes } = props
 
@@ -221,7 +224,6 @@ const Edit = (props) => {
 
   const addNewField = (event) => {
     // setfieldList(fieldList.concat([fieldList]));
-    console.log("Creado nuevo field")
     setOpen(false);
   }
 
@@ -233,7 +235,6 @@ const Edit = (props) => {
 
   const addNewFieldsGroup = (event) => {
     // setFieldsGroupList(fieldsGroupList.concat([fieldsGroupList]));
-    console.log("Creado nuevo GRUPO")
     setOpen(false);
   }
 
@@ -263,19 +264,21 @@ const Edit = (props) => {
   }
 
   //pasar cosas para arriba es a travez de las variables(parentesis) y separar
-
+  console.log("data", data)
   return (
     <>
       <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
       <Divider/>
       <Grid container direction="row">
-        <Grid container item xs={9} direction="column">
+        <Grid container item xs={10} direction="column">
             <Grid container direction="row"  alignItems="center" className={ classes.addTittleProcedure }>
-              <Grid container item xs={6} justify="flex-start">
-                <TemplateTittle/>
+              <Grid container item xs={7} justify="flex-start">
+                <TemplateTittle
+                  templateData={ data.procedureTemplate }
+                />
               </Grid>
-              <Grid container item xs={6} justify="flex-end">
-                <Grid container item xs={2} justify="center">
+              <Grid container item xs={5} justify="flex-end" alignItems="center">
+                <Grid container item xs={4} justify="center">
                   <Button variant="contained" onClick={ handleClickOpen } className={ classes.buttonHeight }>
                     <PostAddIcon/>
                   </Button>
@@ -291,7 +294,7 @@ const Edit = (props) => {
                   + presupuesto
                   </Button>
                 </Grid>
-                <Grid container item xs={2}>
+                <Grid container item xs={4} justify="center">
                   <ActiveTemplateButton/>
                 </Grid>
               </Grid>
@@ -316,10 +319,10 @@ const Edit = (props) => {
             </Grid>
        
         </Grid>
-        <Grid container item xs={3} direction="column">
+        <Grid container item xs={2} direction="column">
           <Paper>
           <Tabs 
-            tabsData={data.data.procedureTemplate.tabs}
+            tabsData={data ? data.procedureTemplate.tabs : []}
             currentTab={currentTab}
             changeTab={ changeTab }
             // changeFields={  }

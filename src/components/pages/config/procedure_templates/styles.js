@@ -91,11 +91,15 @@ export const styles = theme => {
     buttonAddProcedure: {
       height: "30px",
     },
+    textInputTittle: {
+      width: "450px",
+      fontWeight: "bold",
+      wordWrap: "break-word",
+    },
     textFieldTittle: {
       width: "250px",
       fontFamily: "Lucida Console, Courier, monospace",
       fontWeight: "bold",
-      textAling: "left",
     },
     buttonHeight: {
       height: "30px",
@@ -105,7 +109,7 @@ export const styles = theme => {
     },
     fieldHeightRow: {
       padding: "10px",
-      width: "600px",
+      width: "700px",
     },
     fielPaddingBottom: {
       marginBottom: "2px"
@@ -163,10 +167,20 @@ export const styles = theme => {
       borderBottom: '2px solid #e8e8e8',
 
     },
-    templateTittle: {
-      minWidth: "30px",
-      minHeight: "30px",
-      paddingLeft: "10px"
+    templateTittleButton: {
+      minWidth: "45px",
+      minHeight: "45px",
+    },
+    saveTittleButton: {
+      paddingTop: "10px"
+    },
+    templateTextTittle: {
+      height: "70px",
+      maxWidth: "550px",
+      textAlign: "left",
+      display: "flex",
+      alignItems: "center",
+      cursor: "pointer",
     },
   })
 }
