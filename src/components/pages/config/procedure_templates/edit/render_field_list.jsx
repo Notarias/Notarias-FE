@@ -17,7 +17,7 @@ const RenderFieldList = (props) => {
                 arrayIndex={ index }
                 // removeFromList={ removeFromList }
                 name={ field.name || " "}
-                type={ field.fieldType || " " }
+                type={ field.style || " " }
                 favourite={ field.favourite || false }
                 id={ field.id || " " }
               />
