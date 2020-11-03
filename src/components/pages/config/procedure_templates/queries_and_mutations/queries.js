@@ -55,6 +55,7 @@ export const GET_PROCEDURE_TEMPLATE = gql`
       id
       name
       serialNumber
+      active
       tabs {
         id
         name

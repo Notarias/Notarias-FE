@@ -1,25 +1,65 @@
-import React                        from 'react';
-import TextField                    from '@material-ui/core/TextField';
-import Grid                         from '@material-ui/core/Grid';
-import { styles }                   from '../styles';
-import { withStyles }               from '@material-ui/core/styles';
-import Typography                   from '@material-ui/core/Typography';
-import Button                       from '@material-ui/core/Button';
-import SaveIcon                     from '@material-ui/icons/Save';
-import CreateIcon                   from '@material-ui/icons/Create';
+import React                              from 'react';
+import TextField                          from '@material-ui/core/TextField';
+import Grid                               from '@material-ui/core/Grid';
+import { styles }                         from '../styles';
+import { withStyles }                     from '@material-ui/core/styles';
+import Typography                         from '@material-ui/core/Typography';
+import Button                             from '@material-ui/core/Button';
+import SaveIcon                           from '@material-ui/icons/Save';
+import CreateIcon                         from '@material-ui/icons/Create';
+import { useMutation }                    from '@apollo/react-hooks';
+import { GET_PROCEDURE_TEMPLATE }         from '../queries_and_mutations/queries'
+import { UPDATE_PROCEDURE_TEMPLATES }     from '../queries_and_mutations/queries'
+
+
 
 const TemplateTittle = (props) => {
 
   const { classes, templateData } = props
   const [value, setValue] = React.useState(true);
-  const [templateName, setTemplateName] = React.useState(templateData.name)
+  const [name, setName] = React.useState(templateData.name)
+  const [error, setError] = React.useState(false)
+
+  const inputsList = ["name"]
+
+  const [updateProcedureTemplateMutation, updateProcessInfo] =
+    useMutation(
+      UPDATE_PROCEDURE_TEMPLATES,
+      {
+        onError(apolloError) {
+          setErrors(apolloError)
+        },
+        update(store, cacheData) {
+          setError(false)
+          const procedureTemplateData = store.readQuery({ query: GET_PROCEDURE_TEMPLATE, 
+            variables: { id: 9 }
+          });
+          setValue(!value)
+        }
+      }
+    )
+
+    const setErrors = (apolloError) => {
+      let errorsList = {}
+      let errorTemplateList = apolloError.graphQLErrors
+      for ( let i = 0; i < errorTemplateList.length; i++) {
+        for( let n = 0; n < inputsList.length; n++) {
+          if(errorTemplateList[i].extensions.attribute === inputsList[n]){
+            errorsList[inputsList[n]] = errorTemplateList[i].message
+          }
+        }
+      }
+      setError(errorsList);//{name: "mensaje", style: "mensaje"} 
+    }
 
   const handleNameChange = (event) => {
-    setTemplateName(event.target.value);
+    setName(event.target.value);
   };
 
+  const updateTemplate = (event) => {
+    updateProcedureTemplateMutation({ variables: {"id": 9 , name: name}})
+  }
 
-  
   const changeTittle = () => {
     setValue(!value)
   }
@@ -28,9 +68,9 @@ const TemplateTittle = (props) => {
 
     return(
       <>
-        <Grid alignItems="center" className={ classes.templateTextTittle } onClick={ changeTittle }>
+        <Grid className={ classes.templateTextTittle } onClick={ changeTittle }>
           <Typography variant="overline" >
-            { templateName }
+            { name }
           </Typography>
         </Grid>
         <Button
@@ -52,14 +92,16 @@ const TemplateTittle = (props) => {
           <TextField 
             id="standard-basic" 
             label="Nombre de la plantilla"
-            value={ templateName }
+            value={ name }
             className={ classes.textInputTittle }
             onChange={ handleNameChange }
+            error={ !!error["name"] && true }
+            helperText={error["name"] || " "}
           />
         </Grid>
         <Grid item className={ classes.saveTittleButton }>
           <Button
-            onClick={ changeTittle }
+            onClick={ updateTemplate }
             color="primary"
           >
             <SaveIcon/>
@@ -68,8 +110,6 @@ const TemplateTittle = (props) => {
       </>
     )
   }
-
-  console.log("tittle", templateData.name)
 
   return(
     <Grid container item >

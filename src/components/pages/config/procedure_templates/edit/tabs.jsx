@@ -20,6 +20,7 @@ const Tabs = (props) => {
  // const [activeTab, setActiveTab] = React.useState(currentTab)
   const [tabName, setTabName] = React.useState(currentTab.name);
   const [open, setOpen] = React.useState(false);
+// const { loading, data } = useQuery(GET_PROCEDURE_TEMPLATE, { variables: {"id": tabData.id }} )
 
 
   const [tabDataList, setTabDataList] = React.useState([]);

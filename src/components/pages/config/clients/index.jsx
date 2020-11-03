@@ -6,7 +6,6 @@ import Grid                        from '@material-ui/core/Grid';
 import AttrList                    from './attr_list';
 import Breadcrumbs                 from '../../../ui/breadcrumbs'
 import Typography                  from '@material-ui/core/Typography';
-
 import { useQuery }                from '@apollo/react-hooks';
 import { GET_CLIENT_ATTRIBUTE }    from './queries_and_mutations/queries';
 

@@ -25,13 +25,14 @@ const BREADCRUMBS = [
 
 const Edit = (props) => {
 
+  const { classes, match } = props
+
   const [open, setOpen] = React.useState(false);
-  const { loading, data } = useQuery(GET_PROCEDURE_TEMPLATE, { variables: {"id": 9 }} );
+  const { loading, data } = useQuery(GET_PROCEDURE_TEMPLATE, { variables: {"id": match.params.id }} );
   const [currentTab, setCurrentTab] = React.useState(data ? data.procedureTemplate.tabs[0]: [])
 
 
-  const { classes } = props
-
+  
   // const fdsafdsafdas = (currentTab) => {
   //   setfieldList(currentTab.groups.find(element => !element.id))
   //   setFieldsGroups(currentTab.groups)
@@ -89,7 +90,7 @@ const Edit = (props) => {
             <Grid container direction="row"  alignItems="center" className={ classes.addTittleProcedure }>
               <Grid container item xs={7} justify="flex-start">
                 <TemplateTittle
-                  templateData={ data.procedureTemplate }
+                  templateData={ data ? data.procedureTemplate: " " }
                 />
               </Grid>
               <Grid container item xs={5} justify="flex-end" alignItems="center">
@@ -110,7 +111,9 @@ const Edit = (props) => {
                   </Button>
                 </Grid>
                 <Grid container item xs={4} justify="center">
-                  <ActiveTemplateButton/>
+                  <ActiveTemplateButton
+                    templateData={ data.procedureTemplate }
+                  />
                 </Grid>
               </Grid>
             </Grid>
