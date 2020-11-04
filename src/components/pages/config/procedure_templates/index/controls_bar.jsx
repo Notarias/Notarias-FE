@@ -1,20 +1,45 @@
-import React                from 'react'
-import Grid                 from '@material-ui/core/Grid';
-import CircularProgress     from '@material-ui/core/CircularProgress';
-import Dialog               from '@material-ui/core/Dialog';
-import DialogContent        from '@material-ui/core/DialogContent';
-import DialogTitle          from '@material-ui/core/DialogTitle';
-import DialogActions        from '@material-ui/core/DialogActions';
-import SearchIcon           from '@material-ui/icons/Search';
-import InputBase            from '@material-ui/core/InputBase';
-import Button               from '@material-ui/core/Button';
-import { styles }           from '../styles';
-import { withStyles }       from '@material-ui/core/styles';
-import PostAddIcon          from '@material-ui/icons/PostAdd';
+import React                              from 'react'
+import Grid                               from '@material-ui/core/Grid';
+import CircularProgress                   from '@material-ui/core/CircularProgress';
+import Dialog                             from '@material-ui/core/Dialog';
+import DialogContent                      from '@material-ui/core/DialogContent';
+import DialogTitle                        from '@material-ui/core/DialogTitle';
+import DialogActions                      from '@material-ui/core/DialogActions';
+import TextField                          from '@material-ui/core/TextField'
+import SearchIcon                         from '@material-ui/icons/Search';
+import InputBase                          from '@material-ui/core/InputBase';
+import Button                             from '@material-ui/core/Button';
+import { styles }                         from '../styles';
+import { withStyles }                     from '@material-ui/core/styles';
+import PostAddIcon                        from '@material-ui/icons/PostAdd';
+import { useMutation }                    from '@apollo/react-hooks';
+import { GET_PROCEDURE_TEMPLATE }         from '../queries_and_mutations/queries'
+import { CREATE_PROCEDURE_TEMPLATE }      from '../queries_and_mutations/queries'
 
 const styles_control_bar = (props) => {
   const { classes, searchLoading, onChangeSearch } = props;
   const [open, setOpen] = React.useState(false);
+  const [templateName, setTemplateName] = React.useState(" ");
+
+  const [createProcedureTemplateMutation, createProcessInfo] =
+  useMutation(
+    CREATE_PROCEDURE_TEMPLATE,
+    {
+      // onError(apolloError) {
+      //   setErrors(apolloError)
+      // },
+      update(store, cacheData) {
+        // setError(false)
+        const procedureTemplateData = store.readQuery({ query: GET_PROCEDURE_TEMPLATE });
+        console.log(procedureTemplateData)
+        // procedureTemplateData.clientAttributes.push(
+        //   // cacheData.data.createClientAttribute.clientAttribute 
+        // )
+        // store.writeQuery({ query: GET_PROCEDURE_TEMPLATE, data: clientAttrsData });
+        // setId(cacheData.data.createClientAttribute.clientAttribute.id)
+       }
+     }
+   )
 
   const handleClickOpen = (event) => {
     setOpen(true);
@@ -23,6 +48,15 @@ const styles_control_bar = (props) => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const handleNameChange = (event) => {
+    setTemplateName(event.target.value);
+  };
+
+  const createNewProcedureTemplate = (event) => {
+    setOpen(false);
+    createProcedureTemplateMutation({ variables: { name: templateName, active: true } })
+  }
 
   return(
     <Grid container  direction="row"  justify="flex-end"  alignItems="flex-end" >
@@ -50,10 +84,18 @@ const styles_control_bar = (props) => {
       </Button>
         <Dialog open={open} onClose={ handleClose }>
         <DialogTitle>
-          Se añadirá una nueva plantilla
+          Se añadirá una nueva plantilla.
         </DialogTitle>
         <DialogContent>
-          Aqui va el input para el nombre
+          Título de la plantilla de trámites.
+          <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              variant="filled"
+              fullWidth
+              onChange={ handleNameChange }
+            />
         </DialogContent>
         <DialogActions>
           <Button 
@@ -64,7 +106,7 @@ const styles_control_bar = (props) => {
             cancelar
           </Button>
           <Button
-             onClick={ handleClose }
+             onClick={ createNewProcedureTemplate }
             variant="text" 
             color="primary" 
             size="small" 
