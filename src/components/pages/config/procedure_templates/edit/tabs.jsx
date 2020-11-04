@@ -18,7 +18,7 @@ const Tabs = (props) => {
   const { classes, tabsData, currentTab, changeTab } = props
   const [tabList, setTabList] = React.useState(tabsData);
  // const [activeTab, setActiveTab] = React.useState(currentTab)
-  const [tabName, setTabName] = React.useState(currentTab.name);
+  const [tabName, setTabName] = React.useState(currentTab ? currentTab.name : " Insertar");
   const [open, setOpen] = React.useState(false);
 // const { loading, data } = useQuery(GET_PROCEDURE_TEMPLATE, { variables: {"id": tabData.id }} )
 

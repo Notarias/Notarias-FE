@@ -1,6 +1,10 @@
 import React                from 'react'
 import Grid                 from '@material-ui/core/Grid';
 import CircularProgress     from '@material-ui/core/CircularProgress';
+import Dialog               from '@material-ui/core/Dialog';
+import DialogContent        from '@material-ui/core/DialogContent';
+import DialogTitle          from '@material-ui/core/DialogTitle';
+import DialogActions        from '@material-ui/core/DialogActions';
 import SearchIcon           from '@material-ui/icons/Search';
 import InputBase            from '@material-ui/core/InputBase';
 import Button               from '@material-ui/core/Button';
@@ -10,6 +14,16 @@ import PostAddIcon          from '@material-ui/icons/PostAdd';
 
 const styles_control_bar = (props) => {
   const { classes, searchLoading, onChangeSearch } = props;
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = (event) => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return(
     <Grid container  direction="row"  justify="flex-end"  alignItems="flex-end" >
       <div className={classes.search}>
@@ -30,8 +44,35 @@ const styles_control_bar = (props) => {
         />
       </div>
       <Button variant="contained" color="primary">
-        <PostAddIcon/>
+        <PostAddIcon
+          onClick={ handleClickOpen }
+        />
       </Button>
+        <Dialog open={open} onClose={ handleClose }>
+        <DialogTitle>
+          Se añadirá una nueva plantilla
+        </DialogTitle>
+        <DialogContent>
+          Aqui va el input para el nombre
+        </DialogContent>
+        <DialogActions>
+          <Button 
+            onClick={ handleClose }
+            variant="text" 
+            size="small" 
+          >
+            cancelar
+          </Button>
+          <Button
+             onClick={ handleClose }
+            variant="text" 
+            color="primary" 
+            size="small" 
+          >
+            Agregar
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Grid>
   )
 }

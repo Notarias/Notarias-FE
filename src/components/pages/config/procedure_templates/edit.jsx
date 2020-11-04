@@ -91,6 +91,7 @@ const Edit = (props) => {
               <Grid container item xs={7} justify="flex-start">
                 <TemplateTittle
                   templateData={ data ? data.procedureTemplate: " " }
+                  match={ props.match.params }
                 />
               </Grid>
               <Grid container item xs={5} justify="flex-end" alignItems="center">
@@ -112,7 +113,8 @@ const Edit = (props) => {
                 </Grid>
                 <Grid container item xs={4} justify="center">
                   <ActiveTemplateButton
-                    templateData={ data.procedureTemplate }
+                    templateData={data?  data.procedureTemplate : [] }
+                    match={ props.match.params }
                   />
                 </Grid>
               </Grid>
@@ -123,7 +125,7 @@ const Edit = (props) => {
               Campos
               <RenderFieldList
                 // removeFromList={ removeFromList }
-                fields={ currentTab.fields || [] }
+                fields={ currentTab ? currentTab.fields : [] }
               />
             </Grid>
               <Grid container item xs={10}  justify="center" alignItems="center">
@@ -140,7 +142,7 @@ const Edit = (props) => {
           <Paper>
           <Tabs 
             tabsData={data ? data.procedureTemplate.tabs : []}
-            currentTab={currentTab}
+            currentTab={currentTab }
             changeTab={ changeTab }
             // changeFields={  }
           />

@@ -5,7 +5,7 @@ import FieldsGroup                  from './fields_group';
 const RenderFieldsGroupList = (props) => {
 
   const { currentTab, addNewField } = props
-  const fieldsGroupList = currentTab.groups || []
+  const fieldsGroupList = currentTab ? currentTab.groups : []
 
 
   return(

@@ -14,7 +14,8 @@ import { UPDATE_PROCEDURE_TEMPLATES }     from '../queries_and_mutations/queries
 
 const ActiveTemplateButton = (props) => {
 
-  const { classes, templateData } = props
+  const { classes, templateData, match } = props
+  const [id, setId] = React.useState(match.id);
   const [active, setActive] = React.useState(templateData.active);
   const [open, setOpen] = React.useState(false);
 
@@ -23,8 +24,9 @@ const ActiveTemplateButton = (props) => {
       UPDATE_PROCEDURE_TEMPLATES,
       {
         update(store, cacheData) {
-          const procedureTemplateData = store.readQuery({ query: GET_PROCEDURE_TEMPLATE, 
-            variables: { id: 9 }
+          const procedureTemplateData = store.readQuery({
+            query: GET_PROCEDURE_TEMPLATE, 
+            variables: { id: id }
           });
           setActive(cacheData.data.updateProcedureTemplate.procedureTemplate.active)
         }
@@ -32,11 +34,12 @@ const ActiveTemplateButton = (props) => {
     )
 
   const updateStatusTemplate = (event) => {
-    updateProcedureTemplateMutation({ variables: {"id": 9 , active: !active}})
+    console.log("id", id)
+    updateProcedureTemplateMutation({ variables: {id: id , active: !active}})
     setOpen(false);
   }
 
-  const loadingAttr = updateProcessInfo.loading
+  const loadingTemplate = updateProcessInfo.loading
 
   const handleClickOpen = (event) => {
     setOpen(true);
@@ -56,7 +59,7 @@ const ActiveTemplateButton = (props) => {
           size="small" 
           className={ classes.buttonHeight } 
           onClick={ handleClickOpen }
-          disabled={ loadingAttr }
+          disabled={ loadingTemplate }
         >
           Activar
         </Button>
@@ -73,7 +76,7 @@ const ActiveTemplateButton = (props) => {
           size="small" 
           className={ classes.buttonHeight } 
           onClick={ handleClickOpen }
-          disabled={ loadingAttr }
+          disabled={ loadingTemplate }
         >
           Desactivar
         </Button>

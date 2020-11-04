@@ -12,10 +12,10 @@ import { GET_PROCEDURE_TEMPLATE }         from '../queries_and_mutations/queries
 import { UPDATE_PROCEDURE_TEMPLATES }     from '../queries_and_mutations/queries'
 
 
-
 const TemplateTittle = (props) => {
 
-  const { classes, templateData } = props
+  const { classes, templateData, match } = props
+  const [id, setId] = React.useState(match.id);
   const [value, setValue] = React.useState(true);
   const [name, setName] = React.useState(templateData.name)
   const [error, setError] = React.useState(false)
@@ -32,7 +32,7 @@ const TemplateTittle = (props) => {
         update(store, cacheData) {
           setError(false)
           const procedureTemplateData = store.readQuery({ query: GET_PROCEDURE_TEMPLATE, 
-            variables: { id: 9 }
+            variables: { id: id }
           });
           setValue(!value)
         }
@@ -57,12 +57,14 @@ const TemplateTittle = (props) => {
   };
 
   const updateTemplate = (event) => {
-    updateProcedureTemplateMutation({ variables: {"id": 9 , name: name}})
+    updateProcedureTemplateMutation({ variables: { id: id , name: name}})
   }
 
   const changeTittle = () => {
     setValue(!value)
   }
+
+  const loadingTemplate = updateProcessInfo.loading
 
   const renderTittleText = () => {
 
@@ -83,7 +85,6 @@ const TemplateTittle = (props) => {
     )
   }
 
-
   const renderTittleInput = () => {
 
     return(
@@ -103,6 +104,7 @@ const TemplateTittle = (props) => {
           <Button
             onClick={ updateTemplate }
             color="primary"
+            disabled={ loadingTemplate }
           >
             <SaveIcon/>
           </Button>
