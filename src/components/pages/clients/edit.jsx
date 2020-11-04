@@ -49,7 +49,7 @@ const Edit = (props) => {
 
   return(
     <>
-      <Grid className={classes.rootEdit} style={{ paddingTop: '8%' }}>
+      <Grid className={classes.rootEdit}>
         <CssBaseline />
           <AppBar
             color="white"

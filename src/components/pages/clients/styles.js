@@ -99,9 +99,8 @@ export const styles = theme => {
       width: "100%"
     },
     newClientForm: {
-      padding: "0 5%",
-      paddingTop: "15px",
-      width: '80%'
+      padding: "2% 3% 2% 2%",
+      width: '50%',
     },
     pageWrapper: {
       height: "94%",
@@ -142,6 +141,7 @@ export const styles = theme => {
     },
     rootEdit: {
       display: 'flex',
+      paddingTop: '3%',
     },
     appBar: {
       transition: theme.transitions.create(['margin', 'width'], {
@@ -185,7 +185,6 @@ export const styles = theme => {
     },
     content: {
       flexGrow: 1,
-      padding: '10px 0px 30px 24px',
       transition: theme.transitions.create('margin', {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
@@ -257,6 +256,9 @@ export const styles = theme => {
       display: 'inline-block',
       width: '140px',
       textAlign: 'right'
+    },
+    clientAtributes: {
+      padding: theme.spacing(1),
     },
   })
 }

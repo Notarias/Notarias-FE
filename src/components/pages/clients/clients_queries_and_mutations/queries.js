@@ -118,3 +118,15 @@ export const CREATE_CLIENT_COMMENT_MUTATION = gql `
     }
   }
 `
+
+export const GET_CLIENT_ATTRIBUTE = gql`
+  query clientAttributes {
+    clientAttributes {
+      id
+      name
+      permanentLink
+      style
+      active
+    }
+  }
+`
