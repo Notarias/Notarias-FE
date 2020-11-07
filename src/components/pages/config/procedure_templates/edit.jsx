@@ -80,7 +80,7 @@ const Edit = (props) => {
   }
 
   //pasar cosas para arriba es a travez de las variables(parentesis) y separar
-  console.log("data", data)
+
   return (
     <>
       <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>

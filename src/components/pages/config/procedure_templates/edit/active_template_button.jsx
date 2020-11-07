@@ -34,7 +34,6 @@ const ActiveTemplateButton = (props) => {
     )
 
   const updateStatusTemplate = (event) => {
-    console.log("id", id)
     updateProcedureTemplateMutation({ variables: {id: id , active: !active}})
     setOpen(false);
   }

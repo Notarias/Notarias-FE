@@ -12,36 +12,10 @@ import Button                             from '@material-ui/core/Button';
 import { styles }                         from '../styles';
 import { withStyles }                     from '@material-ui/core/styles';
 import PostAddIcon                        from '@material-ui/icons/PostAdd';
-import { useMutation }                    from '@apollo/react-hooks';
-import { GET_PROCEDURE_TEMPLATE }         from '../queries_and_mutations/queries'
-import { CREATE_PROCEDURE_TEMPLATE }      from '../queries_and_mutations/queries'
-import Link                         from '@material-ui/core/Link';
 
-const styles_control_bar = (props) => {
+const ControlBar = (props) => {
   const { classes, searchLoading, onChangeSearch } = props;
   const [open, setOpen] = React.useState(false);
-  const [templateName, setTemplateName] = React.useState(" ");
-  const [pristine, setPristine] = React.useState(true)
-
-  const [createProcedureTemplateMutation, createProcessInfo] =
-  useMutation(
-    CREATE_PROCEDURE_TEMPLATE,
-    {
-      // onError(apolloError) {
-      //   setErrors(apolloError)
-      // },
-      update(store, cacheData) {
-        // setError(false)
-        const procedureTemplateData = store.readQuery({ query: GET_PROCEDURE_TEMPLATE });
-        console.log(procedureTemplateData)
-        // procedureTemplateData.clientAttributes.push(
-        //   // cacheData.data.createClientAttribute.clientAttribute 
-        // )
-        // store.writeQuery({ query: GET_PROCEDURE_TEMPLATE, data: clientAttrsData });
-        // setId(cacheData.data.createClientAttribute.clientAttribute.id)
-       }
-     }
-   )
 
   const handleClickOpen = (event) => {
     setOpen(true);
@@ -50,16 +24,6 @@ const styles_control_bar = (props) => {
   const handleClose = () => {
     setOpen(false);
   };
-
-  const handleNameChange = (event) => {
-    setTemplateName(event.target.value);
-    setPristine(false);
-  };
-
-  const createNewProcedureTemplate = (event) => {
-    setOpen(false);
-    createProcedureTemplateMutation({ variables: { name: templateName, active: true } })
-  }
 
   return(
     <Grid container  direction="row"  justify="flex-end"  alignItems="flex-end" >
@@ -80,8 +44,10 @@ const styles_control_bar = (props) => {
           }}
         />
       </div>
-      <Button variant="contained" color="primary" onClick={ handleClickOpen }>
-        <PostAddIcon/>
+      <Button variant="contained" color="primary">
+        <PostAddIcon
+          onClick={ handleClickOpen }
+        />
       </Button>
         <Dialog open={open} onClose={ handleClose }>
         <DialogTitle>
@@ -95,7 +61,6 @@ const styles_control_bar = (props) => {
               id="name"
               variant="filled"
               fullWidth
-              onChange={ handleNameChange }
             />
         </DialogContent>
         <DialogActions>
@@ -107,25 +72,16 @@ const styles_control_bar = (props) => {
             cancelar
           </Button>
           <Button
-            // onClick={ createNewProcedureTemplate }
+            onClick={ handleClose }
             variant="text" 
             color="primary" 
-            size="small"
-            disabled={ pristine }
-            // component={Link} to="config/procedure_templates/${client.id}/edit"
-          >                      
-            <Link 
-              href={ `/config/procedure_templates/9/edit` }
-              color="inherit"
-              underline="none"
-            >
+            size="small" 
+          >
             Agregar
-            </Link>
-            {/* Agregar */}
           </Button>
         </DialogActions>
       </Dialog>
     </Grid>
   )
 }
-export default withStyles(styles)(styles_control_bar);
+export default withStyles(styles)(ControlBar);

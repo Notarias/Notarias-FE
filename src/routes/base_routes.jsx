@@ -20,6 +20,7 @@ import AppointmentsIndex              from '../components/pages/appointments/ind
 import ReportsIndex                   from '../components/pages/reports/index';
 import ProfilesIndex                  from '../components/pages/profiles/index';
 import ConfigClientsIndex             from '../components/pages/config/clients/index';
+import ConfigBudgetsTemplatesIndex    from '../components/pages/config/budget_templates/index';
 import ConfigProcedureTemplatesIndex  from '../components/pages/config/procedure_templates/index';
 import ConfigProcedureTemplatesEdit   from '../components/pages/config/procedure_templates/edit';
 import GlobalMessage                  from './global_message';
@@ -42,7 +43,6 @@ export default function BaseRoutes(props) {
         <ProtectedRoute path='/clients/:id' component={ClientsShow}/> 
         <ProtectedRoute path="/clients" component={ClientsIndex}/>
         <ProtectedRoute path="/budgets/templates" component={BudgetBuilderIndex}/>
-
         <ProtectedRoute path='/budgets' component={BudgetsIndex} />
         <ProtectedRoute path="/procedures" component={ProceduresIndex}/>
         <ProtectedRoute path="/appointments" component={AppointmentsIndex}/>
@@ -51,6 +51,7 @@ export default function BaseRoutes(props) {
         <ProtectedRoute path="/config/clients" component={ConfigClientsIndex}/>
         <ProtectedRoute path="/config/procedure_templates/:id/edit" component={ConfigProcedureTemplatesEdit}/>
         <ProtectedRoute path="/config/procedure_templates" component={ConfigProcedureTemplatesIndex}/>
+        <ProtectedRoute path="/config/budget_templates" component={ConfigBudgetsTemplatesIndex}/>
         <Route render={() => <DashboardsIndex/>}/>
       </Switch>
     </div>
