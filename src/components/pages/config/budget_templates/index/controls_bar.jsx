@@ -44,10 +44,8 @@ const ControlBar = (props) => {
           }}
         />
       </div>
-      <Button variant="contained" color="primary">
-        <PostAddIcon
-          onClick={ handleClickOpen }
-        />
+      <Button variant="contained" color="primary" onClick={ handleClickOpen }>
+        <PostAddIcon/>
       </Button>
         <Dialog open={open} onClose={ handleClose }>
         <DialogTitle>

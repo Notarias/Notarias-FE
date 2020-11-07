@@ -10,7 +10,7 @@ import TemplateRow                    from './template_row';
 
 const TableBodyTemplate = (props) => {
 
-  const { page, per, sortDirection, sortField, searchField, searchValue, assingTotalRecords, classes, id } = props
+  const { page, per, sortDirection, sortField, searchField, searchValue, assingTotalRecords, classes, id, setGetTemplatesVariables } = props
   let variables = {
     page: page + 1,
     per: per,
@@ -22,7 +22,7 @@ const TableBodyTemplate = (props) => {
   }
 
   const { loading, data, refetch } = useQuery(
-    PROCEDURE_TEMPLATES, { vairables: variables }
+    PROCEDURE_TEMPLATES, { variables: variables, fetchPolicy: "no-cache" }
   );
 
   let totalCount = data && data.procedureTemplatesCount
@@ -30,6 +30,7 @@ const TableBodyTemplate = (props) => {
 
   useEffect(() => {
     refetch(variables);
+    setGetTemplatesVariables(variables)
     totalCount && assingTotalRecords(totalCount)
   }, [page, per, searchField, searchValue, sortField, sortDirection, totalCount]);
 

@@ -1,27 +1,31 @@
 import gql          from 'graphql-tag';
 
 export const PROCEDURE_TEMPLATES = gql`
-  query procedureTemplates ($page: Int,
-    $per: Int,
-    $sortDirection: String,
-    $sortField: String,
-    $searchField: String,
-    $searchValue: String)
+  query procedureTemplates (
+      $page: Int,
+      $per: Int,
+      $sortDirection: String,
+      $sortField: String,
+      $searchField: String,
+      $searchValue: String
+    )
     {
-     procedureTemplates (page: $page,
-      per: $per,
-      sortDirection: $sortDirection,
-      sortField: $sortField,
-      searchField: $searchField,
-      searchValue: $searchValue) 
+      procedureTemplates (
+        page: $page,
+        per: $per,
+        sortDirection: $sortDirection,
+        sortField: $sortField,
+        searchField: $searchField,
+        searchValue: $searchValue
+      ) 
       {
         id
         name
         active
         serialNumber
+      }
+      procedureTemplatesCount
     }
-    procedureTemplatesCount
-  }
 `
 
 export const UPDATE_PROCEDURE_TEMPLATES = gql`
@@ -56,26 +60,6 @@ export const GET_PROCEDURE_TEMPLATE = gql`
       name
       serialNumber
       active
-      tabs {
-        id
-        name
-        fields {
-          id
-          name
-          style
-          favourite
-        }
-        groups {
-          id
-          name
-          fields {
-            id
-            name
-            style
-            favourite
-          }
-        }
-      }
     }
   }
 `

@@ -31,7 +31,8 @@ const TemplateTittle = (props) => {
         },
         update(store, cacheData) {
           setError(false)
-          const procedureTemplateData = store.readQuery({ query: GET_PROCEDURE_TEMPLATE, 
+          const procedureTemplateData = store.readQuery({
+            query: GET_PROCEDURE_TEMPLATE, 
             variables: { id: id }
           });
           setValue(!value)

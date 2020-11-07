@@ -26,6 +26,7 @@ const ConfigProcedureTemplatesIndex  = (props)=> {
   const [page, setPage]                   = useState(0)
   const [per, setPer]                     = useState(5)
   const [total_records, setTotalRecords]  = useState(5)
+  const [getTemplatesVariables, setGetTemplatesVariables] = useState({})
 
   const { classes } = props
 
@@ -66,6 +67,7 @@ const ConfigProcedureTemplatesIndex  = (props)=> {
           classes={classes}
           searchLoading={searchLoading}
           onChangeSearch={onChangeSearch.bind(this)}
+          getTemplatesVariables={ getTemplatesVariables }
         />
         <div className={ classes.tableWrapper }>
           <Paper>
@@ -80,7 +82,8 @@ const ConfigProcedureTemplatesIndex  = (props)=> {
                 assingTotalRecords={ assingTotalRecords }
                 searchValue={ searchValue }
                 searchField={ searchField }
-                classes={ classes } 
+                classes={ classes }
+                setGetTemplatesVariables={ setGetTemplatesVariables }
               />
               <TableFooter>
                 <TableRow>

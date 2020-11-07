@@ -1,4 +1,4 @@
-import React                              from 'react'
+import React, { useState }                from 'react'
 import Grid                               from '@material-ui/core/Grid';
 import CircularProgress                   from '@material-ui/core/CircularProgress';
 import Dialog                             from '@material-ui/core/Dialog';
@@ -13,15 +13,16 @@ import { styles }                         from '../styles';
 import { withStyles }                     from '@material-ui/core/styles';
 import PostAddIcon                        from '@material-ui/icons/PostAdd';
 import { useMutation }                    from '@apollo/react-hooks';
-import { GET_PROCEDURE_TEMPLATE }         from '../queries_and_mutations/queries'
+import { PROCEDURE_TEMPLATES }            from '../queries_and_mutations/queries'
 import { CREATE_PROCEDURE_TEMPLATE }      from '../queries_and_mutations/queries'
-import Link                         from '@material-ui/core/Link';
+import { Redirect }                           from 'react-router-dom';
 
 const styles_control_bar = (props) => {
-  const { classes, searchLoading, onChangeSearch } = props;
-  const [open, setOpen] = React.useState(false);
-  const [templateName, setTemplateName] = React.useState(" ");
-  const [pristine, setPristine] = React.useState(true)
+  const { classes, searchLoading, onChangeSearch, getTemplatesVariables } = props;
+  const [open, setOpen] = useState(false);
+  const [templateName, setTemplateName] = useState(" ");
+  const [pristine, setPristine] = useState(true)
+  const [redirect, setRedirect] = useState(false)
 
   const [createProcedureTemplateMutation, createProcessInfo] =
   useMutation(
@@ -30,10 +31,28 @@ const styles_control_bar = (props) => {
       // onError(apolloError) {
       //   setErrors(apolloError)
       // },
-      update(store, cacheData) {
+      onCompleted(cacheData) {
         // setError(false)
-        const procedureTemplateData = store.readQuery({ query: GET_PROCEDURE_TEMPLATE });
-        console.log(procedureTemplateData)
+        console.log(cacheData)
+        const id = cacheData.createProceduresTemplate.proceduresTemplate.id
+        id && setRedirect(
+          <Redirect to={{ pathname: `/config/procedure_templates/${id}/edit` }} />
+        )
+        //  let newList = procedureTemplatesData.procedureTemplates.push(
+        //   {
+        //     name: cacheData.,//escarbar
+        //     active: "warning",
+        //     serialNumber:,
+        //     __typename: "ProceduresTemplate"
+        //   }
+        // )
+        //  console.log(procedureTemplatesData)
+        //  store.writeQuery({
+        //   query: PROCEDURE_TEMPLATES,
+        //   data: {
+        //     procedureTemplates: newList
+        //   }
+        // })
         // procedureTemplateData.clientAttributes.push(
         //   // cacheData.data.createClientAttribute.clientAttribute 
         // )
@@ -58,17 +77,17 @@ const styles_control_bar = (props) => {
 
   const createNewProcedureTemplate = (event) => {
     setOpen(false);
-    createProcedureTemplateMutation({ variables: { name: templateName, active: true } })
+    createProcedureTemplateMutation({ variables: { name: templateName },  fetchPolicy: "no-cache" })
   }
 
   return(
     <Grid container  direction="row"  justify="flex-end"  alignItems="flex-end" >
       <div className={classes.search}>
         <div className={classes.searchIcon}>
-          { 
+          {
             searchLoading ?
             <CircularProgress size={25} /> :
-            <SearchIcon /> 
+            <SearchIcon />
           }
         </div>
         <InputBase
@@ -107,21 +126,15 @@ const styles_control_bar = (props) => {
             cancelar
           </Button>
           <Button
-            // onClick={ createNewProcedureTemplate }
+            onClick={ createNewProcedureTemplate }
             variant="text" 
             color="primary" 
             size="small"
             disabled={ pristine }
             // component={Link} to="config/procedure_templates/${client.id}/edit"
           >                      
-            <Link 
-              href={ `/config/procedure_templates/9/edit` }
-              color="inherit"
-              underline="none"
-            >
+            { redirect  }
             Agregar
-            </Link>
-            {/* Agregar */}
           </Button>
         </DialogActions>
       </Dialog>
