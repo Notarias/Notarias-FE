@@ -1,7 +1,7 @@
 import gql          from 'graphql-tag';
 
 export const PROCEDURE_TEMPLATES = gql`
-  query procedureTemplates (
+  query proceduresTemplates (
       $page: Int,
       $per: Int,
       $sortDirection: String,
@@ -10,7 +10,7 @@ export const PROCEDURE_TEMPLATES = gql`
       $searchValue: String
     )
     {
-      procedureTemplates (
+      proceduresTemplates (
         page: $page,
         per: $per,
         sortDirection: $sortDirection,
@@ -23,18 +23,19 @@ export const PROCEDURE_TEMPLATES = gql`
         name
         active
         serialNumber
+        tabs
       }
-      procedureTemplatesCount
+      proceduresTemplatesCount
     }
 `
 
 export const UPDATE_PROCEDURE_TEMPLATES = gql`
-  mutation updateProcedureTemplates ($id: ID!,
+  mutation updateProceduresTemplates ($id: ID!,
     $name: String,
     $active: Boolean,
     $clientMutationId: String)
     {
-    updateProcedureTemplate (input: 
+    updateProceduresTemplate (input: 
       {
         id: $id,
         name: $name,
@@ -43,7 +44,7 @@ export const UPDATE_PROCEDURE_TEMPLATES = gql`
       }
     )
     {
-      procedureTemplate{
+      proceduresTemplate{
         id
         name
         active
@@ -55,23 +56,46 @@ export const UPDATE_PROCEDURE_TEMPLATES = gql`
 
 export const GET_PROCEDURE_TEMPLATE = gql`
   query getTemplate ($id: ID!){
-	  procedureTemplate(id: $id){
+    proceduresTemplate(id: $id){
       id
       name
       serialNumber
       active
+      tabs {
+        id
+      }
     }
   }
 `
 
 export const CREATE_PROCEDURE_TEMPLATE = gql`
-  mutation createProcedureTemplate ($name: String!){
+  mutation createProceduresTemplate ($name: String!){
     createProceduresTemplate (input: {name: $name} ) {
         proceduresTemplate {
           active
           id
           name
         }
+    }
+  }
+`
+
+export const GET_PROCEDURES_TEMPLATE_TABS = gql`
+  query proceduresTemplateTabs($proceduresTemplateId: ID!){
+    proceduresTemplateTabs(proceduresTemplateId: $proceduresTemplateId) {
+      id
+      name
+    }
+  }
+`
+
+export const GET_PROCEDURE_TEMPLATE_TAB_FIELDS = gql`
+  query proceduresTemplateTabFields($proceduresTemplateTabId: ID!){
+    proceduresTemplateTabFields(proceduresTemplateTabId: $proceduresTemplateTabId) {
+      id
+      favourite
+      name
+      style
     }
   }
 `

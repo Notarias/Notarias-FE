@@ -28,8 +28,8 @@ const Edit = (props) => {
   const { classes, match } = props
 
   const [open, setOpen] = React.useState(false);
-  const { loading, data } = useQuery(GET_PROCEDURE_TEMPLATE, { variables: {"id": match.params.id }} );
-  const [currentTab, setCurrentTab] = React.useState(data ? data.procedureTemplate.tabs[0]: [])
+  const { loading, data } = useQuery(GET_PROCEDURE_TEMPLATE, { variables: {"id": 9 }} );
+  const [currentTab, setCurrentTab] = React.useState(data ? data.proceduresTemplate.tabs[0]: [])
 
 
   
@@ -66,21 +66,21 @@ const Edit = (props) => {
     setCurrentTab(newTab);
   }
 
-  const checkFieldsId = (currentTab) => {
-    if(currentTab.groups){
-      let group = currentTab.groups.find(group => !group.id)
-      if(group && group.fields){
-        return group.fields
-      } else {
-        return []
-      }
-    } else {
-      return []
-    } 
-  }
+  // const checkFieldsId = (currentTab) => {
+  //   if(currentTab.groups){
+  //     let group = currentTab.groups.find(group => !group.id)
+  //     if(group && group.fields){
+  //       return group.fields
+  //     } else {
+  //       return []
+  //     }
+  //   } else {
+  //     return []
+  //   } 
+  // }
 
   //pasar cosas para arriba es a travez de las variables(parentesis) y separar
-
+  console.log("current", currentTab.id)
   return (
     <>
       <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
@@ -90,7 +90,7 @@ const Edit = (props) => {
             <Grid container direction="row"  alignItems="center" className={ classes.addTittleProcedure }>
               <Grid container item xs={7} justify="flex-start">
                 <TemplateTittle
-                  templateData={ data ? data.procedureTemplate: " " }
+                  templateData={ data ? data.proceduresTemplate: " " }
                   match={ props.match.params }
                 />
               </Grid>
@@ -113,7 +113,7 @@ const Edit = (props) => {
                 </Grid>
                 <Grid container item xs={4} justify="center">
                   <ActiveTemplateButton
-                    templateData={data?  data.procedureTemplate : [] }
+                    templateData={data?  data.proceduresTemplate : [] }
                     match={ props.match.params }
                   />
                 </Grid>
@@ -125,7 +125,7 @@ const Edit = (props) => {
               Campos
               <RenderFieldList
                 // removeFromList={ removeFromList }
-                fields={ currentTab ? currentTab.fields : [] }
+                currentTab={ data && currentTab }
               />
             </Grid>
               <Grid container item xs={10}  justify="center" alignItems="center">
@@ -141,9 +141,10 @@ const Edit = (props) => {
         <Grid container item xs={2} direction="column">
           <Paper>
           <Tabs 
-            tabsData={data ? data.procedureTemplate.tabs : []}
+            tabsData={data ? data.proceduresTemplate.tabs : []}
             currentTab={currentTab }
             changeTab={ changeTab }
+            proceduresTemplateId={ data.proceduresTemplate.id }
             // changeFields={  }
           />
           </Paper>

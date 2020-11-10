@@ -77,7 +77,7 @@ const styles_control_bar = (props) => {
 
   const createNewProcedureTemplate = (event) => {
     setOpen(false);
-    createProcedureTemplateMutation({ variables: { name: templateName },  fetchPolicy: "no-cache" })
+    createProcedureTemplateMutation({ variables: { name: templateName }})
   }
 
   return(

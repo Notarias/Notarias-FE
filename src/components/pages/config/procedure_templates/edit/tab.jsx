@@ -8,9 +8,6 @@ import Button                       from '@material-ui/core/Button';
 
 const Tab = (props) => {
 
-  // const [name, setName] = React.useState(props.name);
-  // const [id, setId] = React.useState(props.id);
-  // const [activeTab, setActiveTab] = React.useState(props.active);
   const { active, tab, changeTab } = props;
   const { classes } = props;
 

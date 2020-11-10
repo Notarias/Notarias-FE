@@ -1,26 +1,30 @@
-import React                        from 'react';
-import Grid                         from '@material-ui/core/Grid';
-import AddIcon                      from '@material-ui/icons/Add';
-import Button                       from '@material-ui/core/Button';
-import { styles }                   from '../styles';
-import { withStyles }               from '@material-ui/core/styles';
-import TextField                    from '@material-ui/core/TextField';
-import Dialog                       from '@material-ui/core/Dialog';
-import DialogActions                from '@material-ui/core/DialogActions';
-import DialogContent                from '@material-ui/core/DialogContent';
-import DialogContentText            from '@material-ui/core/DialogContentText';
-import DialogTitle                  from '@material-ui/core/DialogTitle';
-import Tab                          from './tab';
+import React                              from 'react';
+import Grid                               from '@material-ui/core/Grid';
+import AddIcon                            from '@material-ui/icons/Add';
+import Button                             from '@material-ui/core/Button';
+import { styles }                         from '../styles';
+import { withStyles }                     from '@material-ui/core/styles';
+import TextField                          from '@material-ui/core/TextField';
+import Dialog                             from '@material-ui/core/Dialog';
+import DialogActions                      from '@material-ui/core/DialogActions';
+import DialogContent                      from '@material-ui/core/DialogContent';
+import DialogContentText                  from '@material-ui/core/DialogContentText';
+import DialogTitle                        from '@material-ui/core/DialogTitle';
+import Tab                                from './tab';
+import { useQuery }                       from '@apollo/react-hooks';
+import { GET_PROCEDURES_TEMPLATE_TABS }    from '../queries_and_mutations/queries'
 
 
 const Tabs = (props) => {
-  
-  const { classes, tabsData, currentTab, changeTab } = props
-  const [tabList, setTabList] = React.useState(tabsData);
- // const [activeTab, setActiveTab] = React.useState(currentTab)
+
+  const { classes, tabsData, currentTab, changeTab, proceduresTemplateId } = props
+  const { loading, data } = useQuery(
+    GET_PROCEDURES_TEMPLATE_TABS, { variables: {"proceduresTemplateId": proceduresTemplateId }}
+  );
+  const [tabList, setTabList] = React.useState(data ? data.proceduresTemplateTabs: []);
   const [tabName, setTabName] = React.useState(currentTab ? currentTab.name : " Insertar");
   const [open, setOpen] = React.useState(false);
-// const { loading, data } = useQuery(GET_PROCEDURE_TEMPLATE, { variables: {"id": tabData.id }} )
+
 
 
   const [tabDataList, setTabDataList] = React.useState([]);
@@ -65,6 +69,7 @@ const Tabs = (props) => {
   };
 
   //endpoint cuando pida las paginas me llega name teniendo una relacion con campos
+  console.log("tabs", tabsData, data.proceduresTemplateTabs)
   return(
     <Grid container item direction="column">
       <Grid >

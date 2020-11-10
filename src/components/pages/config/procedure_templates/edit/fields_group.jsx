@@ -50,7 +50,7 @@ const FieldsGroup = (props) => {
         <RenderFieldList
           addNewField={ addNewField }
           // removeFromList={ removeFromList }
-          fields={ group.fields || [] }
+          fields={ [] }
         />
       </Grid>
     </Paper>
