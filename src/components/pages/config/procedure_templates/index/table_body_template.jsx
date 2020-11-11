@@ -25,7 +25,7 @@ const TableBodyTemplate = (props) => {
     PROCEDURE_TEMPLATES, { variables: variables, fetchPolicy: "no-cache" }
   );
 
-  let totalCount = data && data.procedureTemplatesCount
+  let totalCount = data && data.proceduresTemplatesCount
 
 
   useEffect(() => {
@@ -49,10 +49,10 @@ const TableBodyTemplate = (props) => {
     return(
       <TableBody>
         {
-          data.procedureTemplates.map(procedureTemplate => (
+          data.proceduresTemplates.map(proceduresTemplate => (
             <TemplateRow
-              data={ procedureTemplate }
-              key={ procedureTemplate.id + "-Templaterow" }
+              data={ proceduresTemplate }
+              key={ proceduresTemplate.id + "-Templaterow" }
               classes={ classes }
             />
           ))

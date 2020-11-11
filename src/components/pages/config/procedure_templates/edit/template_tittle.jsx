@@ -22,7 +22,7 @@ const TemplateTittle = (props) => {
 
   const inputsList = ["name"]
 
-  const [updateProcedureTemplateMutation, updateProcessInfo] =
+  const [updateProceduresTemplateMutation, updateProcessInfo] =
     useMutation(
       UPDATE_PROCEDURE_TEMPLATES,
       {
@@ -31,7 +31,7 @@ const TemplateTittle = (props) => {
         },
         update(store, cacheData) {
           setError(false)
-          const procedureTemplateData = store.readQuery({
+          const proceduresTemplateData = store.readQuery({
             query: GET_PROCEDURE_TEMPLATE, 
             variables: { id: id }
           });
@@ -58,7 +58,7 @@ const TemplateTittle = (props) => {
   };
 
   const updateTemplate = (event) => {
-    updateProcedureTemplateMutation({ variables: { id: id , name: name}})
+    updateProceduresTemplateMutation({ variables: { id: id , name: name}})
   }
 
   const changeTittle = () => {

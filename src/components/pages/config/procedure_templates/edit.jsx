@@ -8,13 +8,14 @@ import Divider                      from '@material-ui/core/Divider';
 import Button                       from '@material-ui/core/Button';
 import DialogSelect                 from './edit/dialog_select';
 import PostAddIcon                  from '@material-ui/icons/PostAdd';
-import RenderFieldList              from './edit/render_field_list';
-import RenderFieldsGroupList        from './edit/render_fields_group_list';
+import FieldList                    from './edit/field_list';
+import FieldsGroupList              from './edit/fields_group_list';
 import Tabs                         from './edit/tabs';
 import ActiveTemplateButton         from './edit/active_template_button';
 import TemplateTittle               from './edit/template_tittle';
 import { useQuery }                 from '@apollo/react-hooks';
 import { GET_PROCEDURE_TEMPLATE }   from './queries_and_mutations/queries'
+import CircularProgress             from '@material-ui/core/CircularProgress';
 
 const BREADCRUMBS = [
   { name: "Inicio", path: "/" },
@@ -24,11 +25,11 @@ const BREADCRUMBS = [
 
 
 const Edit = (props) => {
-
+console.log(props)
   const { classes, match } = props
 
   const [open, setOpen] = React.useState(false);
-  const { loading, data } = useQuery(GET_PROCEDURE_TEMPLATE, { variables: {"id": 9 }} );
+  const { loading, data } = useQuery(GET_PROCEDURE_TEMPLATE, { variables: {"id": match.params.id }} );
   const [currentTab, setCurrentTab] = React.useState(data ? data.proceduresTemplate.tabs[0]: [])
 
 
@@ -80,7 +81,6 @@ const Edit = (props) => {
   // }
 
   //pasar cosas para arriba es a travez de las variables(parentesis) y separar
-  console.log("current", currentTab.id)
   return (
     <>
       <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
@@ -113,40 +113,51 @@ const Edit = (props) => {
                 </Grid>
                 <Grid container item xs={4} justify="center">
                   <ActiveTemplateButton
-                    templateData={data?  data.proceduresTemplate : [] }
+                    templateData={data ?  data.proceduresTemplate : [] }
                     match={ props.match.params }
                   />
                 </Grid>
               </Grid>
             </Grid>
           <Divider/>
-          <Grid container item direction="column" alignItems="center">
-            <Grid container item xs={10} alignItems="center" justify="center">
-              Campos
-              <RenderFieldList
-                // removeFromList={ removeFromList }
-                currentTab={ data && currentTab }
-              />
-            </Grid>
-              <Grid container item xs={10}  justify="center" alignItems="center">
-                Grupo de campos
-              <RenderFieldsGroupList
-                  addNewField={ addNewField }
-                  // removeFromList={ removeFromList }
-                  currentTab={ currentTab }
-                />
+          { 
+          (loading || !data || true) ?
+            (
+              <Grid container item direction="column" alignItems="center" justify="center">
+                <CircularProgress  size={ 100 }/>
               </Grid>
-            </Grid>
+            )
+          :
+            (
+              <Grid container item direction="column" alignItems="center">
+                <Grid container item xs={10} alignItems="center" justify="center">
+                  Campos
+                  <FieldList
+                    // removeFromList={ removeFromList }
+                    currentTab={ data && currentTab }
+                  />
+                </Grid>
+                <Grid container item xs={10}  justify="center" alignItems="center">
+                  Grupo de campos
+                <FieldsGroupList
+                    addNewField={ addNewField }
+                    // removeFromList={ removeFromList }
+                    currentTab={ currentTab }
+                  />
+                </Grid>
+              </Grid>
+            )
+          }
         </Grid>
         <Grid container item xs={2} direction="column">
           <Paper>
-          <Tabs 
-            tabsData={data ? data.proceduresTemplate.tabs : []}
-            currentTab={currentTab }
-            changeTab={ changeTab }
-            proceduresTemplateId={ data.proceduresTemplate.id }
-            // changeFields={  }
-          />
+            <Tabs 
+              tabsData={data ? data.proceduresTemplate.tabs : []}
+              currentTab={currentTab }
+              changeTab={ changeTab }
+              proceduresTemplateId={ data.proceduresTemplate.id }
+              // changeFields={  }
+            />
           </Paper>
         </Grid>
       </Grid>

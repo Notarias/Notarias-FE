@@ -23,7 +23,9 @@ export const PROCEDURE_TEMPLATES = gql`
         name
         active
         serialNumber
-        tabs
+        tabs {
+          id
+        }
       }
       proceduresTemplatesCount
     }
@@ -95,6 +97,30 @@ export const GET_PROCEDURE_TEMPLATE_TAB_FIELDS = gql`
       id
       favourite
       name
+      style
+    }
+  }
+`
+
+export const GET_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS = gql`
+  query proceduresTemplateTabFieldsGroups(
+    $id: ID!
+  ){
+    proceduresTemplateTabFieldsGroups(proceduresTemplateTabId: $id){
+      id
+      name
+    }
+  }
+`
+
+export const GET_PROCEDURES_TEMPLATE_FIELDS_GROUPS_FIELDS = gql`
+  query proceduresTemplateFieldsGroupFields(
+    $id: ID!
+  ){
+    proceduresTemplateFieldsGroupFields(proceduresTemplateFieldsGroupId: $id){
+      id
+      name
+      favourite
       style
     }
   }

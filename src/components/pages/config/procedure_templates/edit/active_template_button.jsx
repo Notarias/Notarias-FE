@@ -19,22 +19,22 @@ const ActiveTemplateButton = (props) => {
   const [active, setActive] = React.useState(templateData.active);
   const [open, setOpen] = React.useState(false);
 
-  const [updateProcedureTemplateMutation, updateProcessInfo] =
+  const [updateProceduresTemplateMutation, updateProcessInfo] =
     useMutation(
       UPDATE_PROCEDURE_TEMPLATES,
       {
         update(store, cacheData) {
-          const procedureTemplateData = store.readQuery({
+          const proceduresTemplateData = store.readQuery({
             query: GET_PROCEDURE_TEMPLATE, 
             variables: { id: id }
           });
-          setActive(cacheData.data.updateProcedureTemplate.procedureTemplate.active)
+          setActive(cacheData.data.updateProceduresTemplate.proceduresTemplate.active)
         }
       }
     )
 
   const updateStatusTemplate = (event) => {
-    updateProcedureTemplateMutation({ variables: {id: id , active: !active}})
+    updateProceduresTemplateMutation({ variables: {id: id , active: !active}})
     setOpen(false);
   }
 

@@ -69,7 +69,6 @@ const Tabs = (props) => {
   };
 
   //endpoint cuando pida las paginas me llega name teniendo una relacion con campos
-  console.log("tabs", tabsData, data.proceduresTemplateTabs)
   return(
     <Grid container item direction="column">
       <Grid >
