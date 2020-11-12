@@ -25,7 +25,6 @@ const BREADCRUMBS = [
 
 
 const Edit = (props) => {
-console.log(props)
   const { classes, match } = props
 
   const [open, setOpen] = React.useState(false);
@@ -121,10 +120,10 @@ console.log(props)
             </Grid>
           <Divider/>
           { 
-          (loading || !data || true) ?
+          (loading || !data || !currentTab) ?
             (
-              <Grid container item direction="column" alignItems="center" justify="center">
-                <CircularProgress  size={ 100 }/>
+              <Grid container item className={ classes.circularProgressLoading } direction="column" alignItems="center" justify="center">
+                <CircularProgress size={ 100 }/>
               </Grid>
             )
           :

@@ -37,7 +37,7 @@ export const UPDATE_PROCEDURE_TEMPLATES = gql`
     $active: Boolean,
     $clientMutationId: String)
     {
-    updateProceduresTemplate (input: 
+    updateProcedureTemplate (input: 
       {
         id: $id,
         name: $name,

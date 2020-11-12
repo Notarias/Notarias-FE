@@ -24,11 +24,12 @@ const ActiveTemplateButton = (props) => {
       UPDATE_PROCEDURE_TEMPLATES,
       {
         update(store, cacheData) {
+          console.log("activB", cacheData)
           const proceduresTemplateData = store.readQuery({
             query: GET_PROCEDURE_TEMPLATE, 
             variables: { id: id }
           });
-          setActive(cacheData.data.updateProceduresTemplate.proceduresTemplate.active)
+          setActive(cacheData.data.updateProcedureTemplate.proceduresTemplate.active)
         }
       }
     )
@@ -82,6 +83,7 @@ const ActiveTemplateButton = (props) => {
       </Grid>
     )
 }
+
 
   return(
     <>

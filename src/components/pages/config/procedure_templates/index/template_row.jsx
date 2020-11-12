@@ -42,7 +42,7 @@ const TempleteRow = (props) => {
     UPDATE_PROCEDURE_TEMPLATES,
     {
       update(store, cacheData, id) {
-        setActive(cacheData.data.updateProcedureTemplate.procedureTemplate.active)
+        setActive(cacheData.data.updateProcedureTemplate.proceduresTemplate.active)
       }
     }
   )

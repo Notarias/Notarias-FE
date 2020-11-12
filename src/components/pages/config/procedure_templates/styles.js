@@ -182,5 +182,9 @@ export const styles = theme => {
       alignItems: "center",
       cursor: "pointer",
     },
+    circularProgressLoading: {
+      paddingTop: "60px",
+      paddingBottom: "40px"
+    },
   })
 }
