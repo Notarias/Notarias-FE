@@ -28,6 +28,7 @@ const Edit = (props) => {
   const { classes, match } = props
 
   const [open, setOpen] = React.useState(false);
+  console.log("null", match.params.id)
   const { loading, data } = useQuery(GET_PROCEDURE_TEMPLATE, { variables: {"id": match.params.id }} );
   const [currentTab, setCurrentTab] = React.useState(data ? data.proceduresTemplate.tabs[0]: [])
 
@@ -80,6 +81,7 @@ const Edit = (props) => {
   // }
 
   //pasar cosas para arriba es a travez de las variables(parentesis) y separar
+  console.log(loading || !data || !currentTab)
   return (
     <>
       <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
@@ -150,13 +152,22 @@ const Edit = (props) => {
         </Grid>
         <Grid container item xs={2} direction="column">
           <Paper>
+          {
+          (loading || !data) ?
+            (
+              <Grid container item className={ classes.circularProgressLoading } direction="column" alignItems="center" justify="center">
+                <CircularProgress size={ 100 }/>
+              </Grid>
+            )
+            :
             <Tabs 
               tabsData={data ? data.proceduresTemplate.tabs : []}
               currentTab={currentTab }
               changeTab={ changeTab }
-              proceduresTemplateId={ data.proceduresTemplate.id }
+              proceduresTemplateId={data ? data.proceduresTemplate.id : " " }
               // changeFields={  }
             />
+            }
           </Paper>
         </Grid>
       </Grid>

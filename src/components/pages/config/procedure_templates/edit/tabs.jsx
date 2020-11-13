@@ -1,18 +1,20 @@
-import React                              from 'react';
-import Grid                               from '@material-ui/core/Grid';
-import AddIcon                            from '@material-ui/icons/Add';
-import Button                             from '@material-ui/core/Button';
-import { styles }                         from '../styles';
-import { withStyles }                     from '@material-ui/core/styles';
-import TextField                          from '@material-ui/core/TextField';
-import Dialog                             from '@material-ui/core/Dialog';
-import DialogActions                      from '@material-ui/core/DialogActions';
-import DialogContent                      from '@material-ui/core/DialogContent';
-import DialogContentText                  from '@material-ui/core/DialogContentText';
-import DialogTitle                        from '@material-ui/core/DialogTitle';
-import Tab                                from './tab';
-import { useQuery }                       from '@apollo/react-hooks';
-import { GET_PROCEDURES_TEMPLATE_TABS }    from '../queries_and_mutations/queries'
+import React                                from 'react';
+import Grid                                 from '@material-ui/core/Grid';
+import AddIcon                              from '@material-ui/icons/Add';
+import Button                               from '@material-ui/core/Button';
+import { styles }                           from '../styles';
+import { withStyles }                       from '@material-ui/core/styles';
+import TextField                            from '@material-ui/core/TextField';
+import Dialog                               from '@material-ui/core/Dialog';
+import DialogActions                        from '@material-ui/core/DialogActions';
+import DialogContent                        from '@material-ui/core/DialogContent';
+import DialogContentText                    from '@material-ui/core/DialogContentText';
+import DialogTitle                          from '@material-ui/core/DialogTitle';
+import Tab                                  from './tab';
+import { useQuery }                         from '@apollo/react-hooks';
+import { useMutation }                      from '@apollo/react-hooks';
+import { GET_PROCEDURES_TEMPLATE_TABS }     from '../queries_and_mutations/queries'
+import { CREATE_PROCEDURES_TEMPLATE_TAB }   from '../queries_and_mutations/queries'
 
 
 const Tabs = (props) => {
@@ -30,8 +32,30 @@ const Tabs = (props) => {
   const [tabDataList, setTabDataList] = React.useState([]);
   // Persistir tabsData en el state
 
+  const [createProcedureTemplateTabMutation, createProcessInfo] =
+  useMutation(
+    CREATE_PROCEDURES_TEMPLATE_TAB,
+    {
+      // onError(apolloError) {
+      //   setErrors(apolloError)
+      // },
+      update(store, cacheData) {
+        // setError(false)
+        console.log("kch", cacheData)
+        console.log("Dt", data)
+        // const proceduresTemplateTabData = store.readQuery({ query: GET_PROCEDURES_TEMPLATE_TABS });
+        // clientAttrsData.clientAttributes.push(
+        //   cacheData.data.createClientAttribute.clientAttribute 
+        // )
+        // store.writeQuery({ query: GET_CLIENT_ATTRIBUTE, data: clientAttrsData });
+        // setId(cacheData.data.createClientAttribute.clientAttribute.id)
+      }
+    }
+  )
+
   const addNewTab= (event) => {
-    const newTab = { name: tabName, id: tabList[tabList.length - 1].id + 1, groups: [] }
+    createProcedureTemplateTabMutation({ variables: { name: tabName, id: proceduresTemplateId } })
+    const newTab = { name: tabName, id: proceduresTemplateId }
     setTabList(tabList.concat([newTab]));//TODO: hacer la mutacion
     setOpen(false);
     changeTab(newTab)
@@ -69,6 +93,7 @@ const Tabs = (props) => {
   };
 
   //endpoint cuando pida las paginas me llega name teniendo una relacion con campos
+  console.log("tabs", data)
   return(
     <Grid container item direction="column">
       <Grid >

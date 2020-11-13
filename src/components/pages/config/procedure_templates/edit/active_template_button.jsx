@@ -29,7 +29,7 @@ const ActiveTemplateButton = (props) => {
             query: GET_PROCEDURE_TEMPLATE, 
             variables: { id: id }
           });
-          setActive(cacheData.data.updateProcedureTemplate.proceduresTemplate.active)
+          setActive(cacheData.data.updateProceduresTemplate.proceduresTemplate.active)
         }
       }
     )

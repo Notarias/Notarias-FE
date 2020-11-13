@@ -37,7 +37,7 @@ export const UPDATE_PROCEDURE_TEMPLATES = gql`
     $active: Boolean,
     $clientMutationId: String)
     {
-    updateProcedureTemplate (input: 
+    updateProceduresTemplate (input: 
       {
         id: $id,
         name: $name,
@@ -122,6 +122,18 @@ export const GET_PROCEDURES_TEMPLATE_FIELDS_GROUPS_FIELDS = gql`
       name
       favourite
       style
+    }
+  }
+`
+
+export const CREATE_PROCEDURES_TEMPLATE_TAB = gql`
+  mutation createProceduresTemplateTab ($id: ID!, $name: String!){
+    createProceduresTemplateTab (input: {templateId: $id, name: $name} ) {
+      proceduresTemplateTab {
+        id
+        name
+        proceduresTemplateId
+      }
     }
   }
 `
