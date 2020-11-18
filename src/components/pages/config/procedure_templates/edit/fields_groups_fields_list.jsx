@@ -6,7 +6,11 @@ import { GET_PROCEDURES_TEMPLATE_FIELDS_GROUPS_FIELDS }     from '../queries_and
 const FieldsGroupFieldList = (props) => {
   const { groupId } = props
   const { loading, data } = useQuery(
-    GET_PROCEDURES_TEMPLATE_FIELDS_GROUPS_FIELDS, { variables: {"id": groupId }} 
+    GET_PROCEDURES_TEMPLATE_FIELDS_GROUPS_FIELDS,
+    {
+      variables: {"id": groupId },
+      fetchPolicy: "no-cache"
+    } 
   );
   const fields = data? data.proceduresTemplateFieldsGroupFields : []
 

@@ -63,9 +63,6 @@ export const GET_PROCEDURE_TEMPLATE = gql`
       name
       serialNumber
       active
-      tabs {
-        id
-      }
     }
   }
 `
@@ -129,6 +126,18 @@ export const GET_PROCEDURES_TEMPLATE_FIELDS_GROUPS_FIELDS = gql`
 export const CREATE_PROCEDURES_TEMPLATE_TAB = gql`
   mutation createProceduresTemplateTab ($id: ID!, $name: String!){
     createProceduresTemplateTab (input: {templateId: $id, name: $name} ) {
+      proceduresTemplateTab {
+        id
+        name
+        proceduresTemplateId
+      }
+    }
+  }
+`
+
+export const UPDATE_PROCEDURES_TEMPLATE_TAB = gql`
+  mutation updateProceduresTemplateTab ($id: ID!, $name: String!){
+    updateProceduresTemplateTab (input: {id: $id, name: $name} ) {
       proceduresTemplateTab {
         id
         name

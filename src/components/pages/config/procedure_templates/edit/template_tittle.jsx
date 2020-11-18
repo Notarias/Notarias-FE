@@ -58,7 +58,12 @@ const TemplateTittle = (props) => {
   };
 
   const updateTemplate = (event) => {
-    updateProceduresTemplateMutation({ variables: { id: id , name: name}})
+    updateProceduresTemplateMutation(
+      {
+        variables: { id: id , name: name},
+        fetchPolicy: "no-cache"
+      }
+    )
   }
 
   const changeTittle = () => {

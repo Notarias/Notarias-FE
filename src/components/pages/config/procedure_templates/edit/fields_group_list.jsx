@@ -8,11 +8,15 @@ const FieldsGroupList = (props) => {
 
   const { currentTab, addNewField } = props
   const { loading, data } = useQuery(
-    GET_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS, { variables: {"id": currentTab.id }} 
+    GET_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS,
+    {
+      variables: {"id": currentTab.id },
+      fetchPolicy: "no-cache"
+    }
   );
+
   const fieldsGroupList = data ? data.proceduresTemplateTabFieldsGroups : []
 
-  console.log("groups", data, currentTab.id)
   return(
     <>
       {

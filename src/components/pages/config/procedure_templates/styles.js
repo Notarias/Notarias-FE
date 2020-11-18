@@ -186,5 +186,9 @@ export const styles = theme => {
       paddingTop: "60px",
       paddingBottom: "40px"
     },
+    tittleTabMenu: {
+      width: "325px",
+      height: "50px",
+    }
   })
 }

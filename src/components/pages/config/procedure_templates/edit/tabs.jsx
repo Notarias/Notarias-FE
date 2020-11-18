@@ -1,4 +1,4 @@
-import React                                from 'react';
+import React, { useEffect }                 from 'react';
 import Grid                                 from '@material-ui/core/Grid';
 import AddIcon                              from '@material-ui/icons/Add';
 import Button                               from '@material-ui/core/Button';
@@ -17,19 +17,24 @@ import { GET_PROCEDURES_TEMPLATE_TABS }     from '../queries_and_mutations/queri
 import { CREATE_PROCEDURES_TEMPLATE_TAB }   from '../queries_and_mutations/queries'
 
 
+//TODO: hacer el refetch del create mutation
+
+
 const Tabs = (props) => {
 
-  const { classes, tabsData, currentTab, changeTab, proceduresTemplateId } = props
+  const { classes, tabsData, currentTab, setCurrentTab, proceduresTemplateId } = props
   const { loading, data } = useQuery(
     GET_PROCEDURES_TEMPLATE_TABS, { variables: {"proceduresTemplateId": proceduresTemplateId }}
   );
   const [tabList, setTabList] = React.useState(data ? data.proceduresTemplateTabs: []);
   const [tabName, setTabName] = React.useState(currentTab ? currentTab.name : " Insertar");
+ 
   const [open, setOpen] = React.useState(false);
-
-
-
   const [tabDataList, setTabDataList] = React.useState([]);
+
+  useEffect(() => {
+    data && setCurrentTab(data.proceduresTemplateTabs[0]);
+  }, [data])
   // Persistir tabsData en el state
 
   const [createProcedureTemplateTabMutation, createProcessInfo] =
@@ -41,24 +46,35 @@ const Tabs = (props) => {
       // },
       update(store, cacheData) {
         // setError(false)
-        console.log("kch", cacheData)
-        console.log("Dt", data)
-        // const proceduresTemplateTabData = store.readQuery({ query: GET_PROCEDURES_TEMPLATE_TABS });
+        const proceduresTemplateTabData = store.readQuery({
+          query: GET_PROCEDURES_TEMPLATE_TABS, 
+          variables: { "proceduresTemplateId": proceduresTemplateId }
+        });
+        console.log("cacheData", cacheData, proceduresTemplateTabData)
         // clientAttrsData.clientAttributes.push(
         //   cacheData.data.createClientAttribute.clientAttribute 
         // )
         // store.writeQuery({ query: GET_CLIENT_ATTRIBUTE, data: clientAttrsData });
         // setId(cacheData.data.createClientAttribute.clientAttribute.id)
+        // )
+        // store.writeQuery({ query: GET_PROCEDURES_TEMPLATE_TABS, data: clientAttrsData });
+        // 
       }
     }
   )
 
   const addNewTab= (event) => {
-    createProcedureTemplateTabMutation({ variables: { name: tabName, id: proceduresTemplateId } })
+    createProcedureTemplateTabMutation(
+      { 
+        variables: 
+          { name: tabName, id: proceduresTemplateId },
+          fetchPolicy: "no-cache" 
+      }
+    )
     const newTab = { name: tabName, id: proceduresTemplateId }
     setTabList(tabList.concat([newTab]));//TODO: hacer la mutacion
     setOpen(false);
-    changeTab(newTab)
+    setCurrentTab(newTab)
   }
 
   // con tabsData persistidos haces el map que renderea los tabs
@@ -80,7 +96,8 @@ const Tabs = (props) => {
               key={ index + "-tabs"}
               tab={ tab }
               active={ tab.id === currentTab.id }
-              changeTab={ changeTab }
+              setCurrentTab={ setCurrentTab }
+              proceduresTemplateId={ proceduresTemplateId }
             />
           )
         }
@@ -93,12 +110,12 @@ const Tabs = (props) => {
   };
 
   //endpoint cuando pida las paginas me llega name teniendo una relacion con campos
-  console.log("tabs", data)
+
   return(
     <Grid container item direction="column">
-      <Grid >
+      <Grid  container item>
         {
-          renderTabList()
+          currentTab && renderTabList()
         }
       </Grid>
       <Grid item >

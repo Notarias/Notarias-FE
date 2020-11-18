@@ -6,7 +6,11 @@ import { GET_PROCEDURE_TEMPLATE_TAB_FIELDS }    from '../queries_and_mutations/q
 const FieldList = (props) => {
   const { currentTab } = props
   const { loading, data } = useQuery(
-    GET_PROCEDURE_TEMPLATE_TAB_FIELDS, { variables: {"proceduresTemplateTabId": currentTab.id }} 
+    GET_PROCEDURE_TEMPLATE_TAB_FIELDS,
+    {
+      variables: {"proceduresTemplateTabId": currentTab.id },
+      fetchPolicy: "no-cache"
+    } 
   );
   const fields = data ? data.proceduresTemplateTabFields : []
 

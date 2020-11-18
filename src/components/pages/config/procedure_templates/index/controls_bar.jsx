@@ -58,9 +58,9 @@ const styles_control_bar = (props) => {
         // )
         // store.writeQuery({ query: GET_PROCEDURE_TEMPLATE, data: clientAttrsData });
         // setId(cacheData.data.createClientAttribute.clientAttribute.id)
-       }
-     }
-   )
+      }
+    }
+  )
 
   const handleClickOpen = (event) => {
     setOpen(true);

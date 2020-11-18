@@ -8,14 +8,13 @@ import Divider                      from '@material-ui/core/Divider';
 import Button                       from '@material-ui/core/Button';
 import DialogSelect                 from './edit/dialog_select';
 import PostAddIcon                  from '@material-ui/icons/PostAdd';
-import FieldList                    from './edit/field_list';
-import FieldsGroupList              from './edit/fields_group_list';
 import Tabs                         from './edit/tabs';
 import ActiveTemplateButton         from './edit/active_template_button';
 import TemplateTittle               from './edit/template_tittle';
 import { useQuery }                 from '@apollo/react-hooks';
 import { GET_PROCEDURE_TEMPLATE }   from './queries_and_mutations/queries'
 import CircularProgress             from '@material-ui/core/CircularProgress';
+import FieldsAndGroupFields         from './edit/fields_and_group_fields';
 
 const BREADCRUMBS = [
   { name: "Inicio", path: "/" },
@@ -28,9 +27,8 @@ const Edit = (props) => {
   const { classes, match } = props
 
   const [open, setOpen] = React.useState(false);
-  console.log("null", match.params.id)
   const { loading, data } = useQuery(GET_PROCEDURE_TEMPLATE, { variables: {"id": match.params.id }} );
-  const [currentTab, setCurrentTab] = React.useState(data ? data.proceduresTemplate.tabs[0]: [])
+  const [currentTab, setCurrentTab] = React.useState()
 
 
   
@@ -63,10 +61,6 @@ const Edit = (props) => {
     setOpen(false);
   };
 
-  const changeTab = (newTab) => {
-    setCurrentTab(newTab);
-  }
-
   // const checkFieldsId = (currentTab) => {
   //   if(currentTab.groups){
   //     let group = currentTab.groups.find(group => !group.id)
@@ -87,7 +81,7 @@ const Edit = (props) => {
       <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
       <Divider/>
       <Grid container direction="row">
-        <Grid container item xs={10} direction="column">
+        <Grid container item xs={9} direction="column">
             <Grid container direction="row"  alignItems="center" className={ classes.addTittleProcedure }>
               <Grid container item xs={7} justify="flex-start">
                 <TemplateTittle
@@ -130,27 +124,13 @@ const Edit = (props) => {
             )
           :
             (
-              <Grid container item direction="column" alignItems="center">
-                <Grid container item xs={10} alignItems="center" justify="center">
-                  Campos
-                  <FieldList
-                    // removeFromList={ removeFromList }
-                    currentTab={ data && currentTab }
-                  />
-                </Grid>
-                <Grid container item xs={10}  justify="center" alignItems="center">
-                  Grupo de campos
-                <FieldsGroupList
-                    addNewField={ addNewField }
-                    // removeFromList={ removeFromList }
-                    currentTab={ currentTab }
-                  />
-                </Grid>
-              </Grid>
+              <FieldsAndGroupFields
+                currentTab={ currentTab }
+              />
             )
           }
         </Grid>
-        <Grid container item xs={2} direction="column">
+        <Grid container item xs={3} direction="column">
           <Paper>
           {
           (loading || !data) ?
@@ -163,7 +143,7 @@ const Edit = (props) => {
             <Tabs 
               tabsData={data ? data.proceduresTemplate.tabs : []}
               currentTab={currentTab }
-              changeTab={ changeTab }
+              setCurrentTab={ setCurrentTab }
               proceduresTemplateId={data ? data.proceduresTemplate.id : " " }
               // changeFields={  }
             />

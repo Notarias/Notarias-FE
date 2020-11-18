@@ -4,23 +4,37 @@ import { withStyles }               from '@material-ui/core/styles';
 import Typography                   from '@material-ui/core/Typography';
 import Grid                         from '@material-ui/core/Grid';
 import Button                       from '@material-ui/core/Button';
+import TabMenu                      from './tab_menu';
+
 
 
 const Tab = (props) => {
 
-  const { active, tab, changeTab } = props;
+  const { active, tab, setCurrentTab, proceduresTemplateId } = props;
   const { classes } = props;
 
   const selectTab = (event) => {
-    changeTab(tab)
+    setCurrentTab(tab)
   }
 
   const showFields = () => {
     console.log("aqui", tab)
   }
-  return(
 
+
+  return(
+    <>
+    <Grid container item xs={2} alignItems="center" >
+      <TabMenu
+        name={ tab.name }
+        id={ tab.id }
+        proceduresTemplateId={ proceduresTemplateId }
+      />
+    </Grid>
     <Grid
+      container 
+      item 
+      xs={10}
       onClick={ selectTab }
       id={ tab.id }
       container 
@@ -36,6 +50,7 @@ const Tab = (props) => {
         </Typography>
       </Button>
     </Grid>
+    </>
   )
 }
 
