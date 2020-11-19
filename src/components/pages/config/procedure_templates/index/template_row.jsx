@@ -42,7 +42,8 @@ const TempleteRow = (props) => {
     UPDATE_PROCEDURE_TEMPLATES,
     {
       update(store, cacheData, id) {
-        setActive(cacheData.data.updateProcedureTemplate.proceduresTemplate.active)
+        console.log("kchdt", cacheData)
+        setActive(cacheData.data.updateProceduresTemplate.proceduresTemplate.active)
       }
     }
   )
@@ -91,7 +92,6 @@ const TempleteRow = (props) => {
                   <Typography 
                     variant="button" 
                     display="block" 
-                    gutterBottom
                     className={ classes.textIconDefault }
                   >
                     Editar

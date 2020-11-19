@@ -1,4 +1,4 @@
-import React                        from 'react';
+import React, { useEffect }         from 'react';
 import Breadcrumbs                  from '../../../ui/breadcrumbs'
 import Paper                        from '@material-ui/core/Paper';
 import Grid                         from '@material-ui/core/Grid';
@@ -27,11 +27,14 @@ const Edit = (props) => {
   const { classes, match } = props
 
   const [open, setOpen] = React.useState(false);
-  const { loading, data } = useQuery(GET_PROCEDURE_TEMPLATE, { variables: {"id": match.params.id }} );
+  const { loading, data, refetch } = useQuery(GET_PROCEDURE_TEMPLATE, { variables: {"id": match.params.id }} );
   const [currentTab, setCurrentTab] = React.useState()
 
+  // useEffect(() => {
+  //   refetch(variables);
+  // }, [data]);
 
-  
+
   // const fdsafdsafdas = (currentTab) => {
   //   setfieldList(currentTab.groups.find(element => !element.id))
   //   setFieldsGroups(currentTab.groups)
@@ -75,7 +78,7 @@ const Edit = (props) => {
   // }
 
   //pasar cosas para arriba es a travez de las variables(parentesis) y separar
-  console.log(loading || !data || !currentTab)
+
   return (
     <>
       <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
@@ -151,7 +154,6 @@ const Edit = (props) => {
           </Paper>
         </Grid>
       </Grid>
-
     </>
   )
 }

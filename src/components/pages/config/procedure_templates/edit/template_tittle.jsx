@@ -1,4 +1,4 @@
-import React                              from 'react';
+import React, { useEffect }                              from 'react';
 import TextField                          from '@material-ui/core/TextField';
 import Grid                               from '@material-ui/core/Grid';
 import { styles }                         from '../styles';
@@ -19,6 +19,9 @@ const TemplateTittle = (props) => {
   const [value, setValue] = React.useState(true);
   const [name, setName] = React.useState(templateData.name)
   const [error, setError] = React.useState(false)
+  // let variables = {
+  //   name: name
+  // }
 
   const inputsList = ["name"]
 
@@ -61,7 +64,7 @@ const TemplateTittle = (props) => {
     updateProceduresTemplateMutation(
       {
         variables: { id: id , name: name},
-        fetchPolicy: "no-cache"
+        // fetchPolicy: "no-cache"
       }
     )
   }
@@ -118,6 +121,10 @@ const TemplateTittle = (props) => {
       </>
     )
   }
+
+  // useEffect(() => {
+  //   refetch(variables);
+  // }, [name])
 
   return(
     <Grid container item >

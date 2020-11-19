@@ -82,6 +82,7 @@ export const styles = theme => {
     },
     linkDefault: {
       textDecoration:"none",
+      width: "200px"
     },
     addTittleProcedure: {
       height: "70px",

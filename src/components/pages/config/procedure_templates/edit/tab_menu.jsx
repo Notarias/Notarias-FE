@@ -15,6 +15,7 @@ import CreateIcon                         from '@material-ui/icons/Create'
 import { useMutation }                    from '@apollo/react-hooks';
 import { GET_PROCEDURES_TEMPLATE_TABS }         from '../queries_and_mutations/queries'
 import { UPDATE_PROCEDURES_TEMPLATE_TAB }     from '../queries_and_mutations/queries'
+import Divider                      from '@material-ui/core/Divider';
 
 
 
@@ -141,6 +142,12 @@ const TabMenu = (props) => {
       >
       <MenuItem className={ classes.tittleTabMenu }>
         { value ? renderTittleTextTab() : renderTittleInputTab() }
+      </MenuItem>
+      <Divider/>
+      <MenuItem>
+        <Button>
+          Borrar
+        </Button>
       </MenuItem>
     </Menu>
   </Grid>
