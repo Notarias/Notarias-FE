@@ -34,7 +34,15 @@ const Tabs = (props) => {
 
   useEffect(() => {
     data && setCurrentTab(data.proceduresTemplateTabs[0]);
+   data && setTabList(data.proceduresTemplateTabs);
+   currentTab && setTabName(currentTab.name);
   }, [data])
+    // useEffect(
+  //   () => {
+  //     setName(templateData.name)
+  //   },
+  //   [templateData]
+  // )
   // Persistir tabsData en el state
 
   const [createProcedureTemplateTabMutation, createProcessInfo] =
@@ -59,7 +67,8 @@ const Tabs = (props) => {
         // )
         // store.writeQuery({ query: GET_PROCEDURES_TEMPLATE_TABS, data: clientAttrsData });
         // 
-      }
+      },
+      fetchPolicy: "no-cache" 
     }
   )
 
@@ -67,8 +76,7 @@ const Tabs = (props) => {
     createProcedureTemplateTabMutation(
       { 
         variables: 
-          { name: tabName, id: proceduresTemplateId },
-          fetchPolicy: "no-cache" 
+          { name: tabName, id: proceduresTemplateId }
       }
     )
     const newTab = { name: tabName, id: proceduresTemplateId }
@@ -109,7 +117,6 @@ const Tabs = (props) => {
     setTabName(event.target.value);
   };
 
-  //endpoint cuando pida las paginas me llega name teniendo una relacion con campos
 
   return(
     <Grid container item direction="column">

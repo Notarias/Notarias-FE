@@ -1,4 +1,4 @@
-import React, { useEffect }                              from 'react';
+import React, { useEffect, useState }                              from 'react';
 import TextField                          from '@material-ui/core/TextField';
 import Grid                               from '@material-ui/core/Grid';
 import { styles }                         from '../styles';
@@ -15,15 +15,23 @@ import { UPDATE_PROCEDURE_TEMPLATES }     from '../queries_and_mutations/queries
 const TemplateTittle = (props) => {
 
   const { classes, templateData, match } = props
-  const [id, setId] = React.useState(match.id);
-  const [value, setValue] = React.useState(true);
-  const [name, setName] = React.useState(templateData.name)
-  const [error, setError] = React.useState(false)
+  const [id, setId] = useState(match.id);
+  const [editing, setEditing] = useState(true);
+  const [name, setName] = useState(templateData.name)
+
+  const [error, setError] = useState(false)
   // let variables = {
   //   name: name
   // }
 
   const inputsList = ["name"]
+
+  useEffect(
+    () => {
+      setName(templateData.name)
+    },
+    [templateData]
+  )
 
   const [updateProceduresTemplateMutation, updateProcessInfo] =
     useMutation(
@@ -32,14 +40,13 @@ const TemplateTittle = (props) => {
         onError(apolloError) {
           setErrors(apolloError)
         },
-        update(store, cacheData) {
+        onCompleted(cacheData) {
           setError(false)
-          const proceduresTemplateData = store.readQuery({
-            query: GET_PROCEDURE_TEMPLATE, 
-            variables: { id: id }
-          });
-          setValue(!value)
-        }
+          
+          //setName(cacheData.proceduresTemplate)
+          setEditing(!editing)
+        },
+        fetchPolicy: "no-cache"
       }
     )
 
@@ -63,20 +70,18 @@ const TemplateTittle = (props) => {
   const updateTemplate = (event) => {
     updateProceduresTemplateMutation(
       {
-        variables: { id: id , name: name},
-        // fetchPolicy: "no-cache"
+        variables: { id: id , name: name}
       }
     )
   }
 
   const changeTittle = () => {
-    setValue(!value)
+    setEditing(!editing)
   }
 
   const loadingTemplate = updateProcessInfo.loading
 
-  const renderTittleText = () => {
-
+  const renderTittleText = (name) => {
     return(
       <>
         <Grid className={ classes.templateTextTittle } onClick={ changeTittle }>
@@ -94,8 +99,7 @@ const TemplateTittle = (props) => {
     )
   }
 
-  const renderTittleInput = () => {
-
+  const renderTittleInput = (name) => {
     return(
       <>
         <Grid item>
@@ -122,13 +126,10 @@ const TemplateTittle = (props) => {
     )
   }
 
-  // useEffect(() => {
-  //   refetch(variables);
-  // }, [name])
 
   return(
     <Grid container item >
-      { value ? renderTittleText() : renderTittleInput() }
+      { editing ? renderTittleText(name) : renderTittleInput(name) }
     </Grid>
   )
 }

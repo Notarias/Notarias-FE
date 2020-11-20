@@ -27,7 +27,7 @@ const Edit = (props) => {
   const { classes, match } = props
 
   const [open, setOpen] = React.useState(false);
-  const { loading, data, refetch } = useQuery(GET_PROCEDURE_TEMPLATE, { variables: {"id": match.params.id }} );
+  const { loading, data, refetch } = useQuery(GET_PROCEDURE_TEMPLATE, { variables: {"id": match.params.id }, fetchPolicy: "no-cache" } );
   const [currentTab, setCurrentTab] = React.useState()
 
   // useEffect(() => {
@@ -78,7 +78,6 @@ const Edit = (props) => {
   // }
 
   //pasar cosas para arriba es a travez de las variables(parentesis) y separar
-
   return (
     <>
       <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>

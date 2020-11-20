@@ -27,8 +27,15 @@ const TabMenu = (props) => {
   const { classes, proceduresTemplateId } = props;
   const [id, setId] = React.useState(props.id);
   const [name, setName] = React.useState(props.name);
-  const [value, setValue] = React.useState(true);
+  const [editing, setEditing] =  React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
+
+  // useEffect(
+  //   () => {
+  //     setName(templateData.name)
+  //   },
+  //   [templateData]
+  // )
 
   const [updateProceduresTemplateTabMutation, updateProcessInfo] =
   useMutation(
@@ -37,15 +44,14 @@ const TabMenu = (props) => {
       // onError(apolloError) {
       //   setErrors(apolloError)
       // },
-      update(store, cacheData) {
+      onCompleted(cacheData) {
         // setError(false)
-        const proceduresTemplateTabData = store.readQuery({
-          query: GET_PROCEDURES_TEMPLATE_TABS, 
-          variables: { "proceduresTemplateId": proceduresTemplateId }
-        });
-      }
+        setEditing(!editing)
+      },
+      fetchPolicy: "no-cache"
     }
   )
+
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
@@ -58,7 +64,7 @@ const TabMenu = (props) => {
   let open = Boolean(anchorEl);
 
   const changeTittle = () => {
-    setValue(!value)
+    setEditing(!editing)
   }
 
   const handleNameChange = (event) => {
@@ -68,16 +74,10 @@ const TabMenu = (props) => {
   const updateTab = (event) => {
     updateProceduresTemplateTabMutation(
       { 
-        variables: { id: id , name: name},
-        fetchPolicy: "no-cache"
+        variables: { id: id , name: name}
       }
     )
-    setValue(!value)
   }
-
-  // useEffect(() => {
-  //   refetch(variables);
-  // }, [data]);
 
 
   const loadingTab = updateProcessInfo.loading
@@ -141,7 +141,7 @@ const TabMenu = (props) => {
         onClose={ handleClose }
       >
       <MenuItem className={ classes.tittleTabMenu }>
-        { value ? renderTittleTextTab() : renderTittleInputTab() }
+        { editing ? renderTittleTextTab() : renderTittleInputTab() }
       </MenuItem>
       <Divider/>
       <MenuItem>
