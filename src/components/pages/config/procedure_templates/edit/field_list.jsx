@@ -8,12 +8,10 @@ const FieldList = (props) => {
   const { loading, data } = useQuery(
     GET_PROCEDURE_TEMPLATE_TAB_FIELDS,
     {
-      variables: {"proceduresTemplateTabId": currentTab.id },
-      fetchPolicy: "no-cache"
+      variables: { "proceduresTemplateTabId": currentTab.id }
     } 
   );
   const fields = data ? data.proceduresTemplateTabFields : []
-
   return(
     <>
       {

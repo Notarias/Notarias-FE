@@ -18,6 +18,8 @@ import DialogActions                  from '@material-ui/core/DialogActions';
 import DialogContent                  from '@material-ui/core/DialogContent';
 import DialogTitle                    from '@material-ui/core/DialogTitle';
 import Paper                          from '@material-ui/core/Paper';
+import SaveIcon                           from '@material-ui/icons/Save';
+import CreateIcon                         from '@material-ui/icons/Create';
 
 
 const Field = (props) => {
@@ -69,6 +71,11 @@ const Field = (props) => {
     <Grid container item alignItems="flex-start" justify="flex-start" className={ classes.fielPaddingBottom }>
       <Paper>
       <Grid container item className={ classes.fieldHeightRow }>
+        <Grid item xs={1}>
+          <Button>
+            <SaveIcon />
+          </Button>
+        </Grid>
         <Grid item xs={5}>
           <TextField 
             id="standard-basic" 
@@ -77,7 +84,7 @@ const Field = (props) => {
             value={ name }
           />
         </Grid>
-        <Grid item xs={5}>
+        <Grid item xs={4}>
           <FormControl variant="outlined" className={ classes.inputFieldName }>
             <InputLabel id="label-field">Tipo de campo</InputLabel>
             <Select

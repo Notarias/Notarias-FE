@@ -33,9 +33,9 @@ const Tabs = (props) => {
   const [tabDataList, setTabDataList] = React.useState([]);
 
   useEffect(() => {
-    data && setCurrentTab(data.proceduresTemplateTabs[0]);
-   data && setTabList(data.proceduresTemplateTabs);
-   currentTab && setTabName(currentTab.name);
+    currentTab || (data && setCurrentTab(data.proceduresTemplateTabs[0]));
+    data && setTabList(data.proceduresTemplateTabs);
+    currentTab && setTabName(currentTab.name);
   }, [data])
     // useEffect(
   //   () => {
@@ -53,6 +53,7 @@ const Tabs = (props) => {
       //   setErrors(apolloError)
       // },
       onCompleted(cacheData) {
+        setCurrentTab(cacheData.createProceduresTemplateTab.proceduresTemplateTab)
         // setError(false)
         // const proceduresTemplateTabData = store.readQuery({
         //   query: GET_PROCEDURES_TEMPLATE_TABS, 
@@ -76,17 +77,17 @@ const Tabs = (props) => {
     }
   )
 
-  const addNewTab= (event) => {
+  const addNewTab = (event) => {
     createProcedureTemplateTabMutation(
       { 
         variables: 
           { name: tabName, id: proceduresTemplateId },
       }
     )
-    const newTab = { name: tabName, id: proceduresTemplateId }
-    setTabList(tabList.concat([newTab]));//TODO: hacer la mutacion
+    // const newTab = { name: tabName, id: proceduresTemplateId }
+    // setTabList(tabList.concat([newTab]));//TODO: hacer la mutacion
     setOpen(false);
-    setCurrentTab(newTab)
+    // setCurrentTab(newTab)
   }
 
   // con tabsData persistidos haces el map que renderea los tabs
@@ -103,9 +104,10 @@ const Tabs = (props) => {
     return(
       tabList.map(
         (tab, index) => {
+          console.log( tabList, currentTab)
           return(
             <Tab
-              key={ index + "-tabs"}
+              key={ tab.id + "-tabs" }
               tab={ tab }
               active={ tab.id === currentTab.id }
               setCurrentTab={ setCurrentTab }
@@ -134,10 +136,10 @@ const Tabs = (props) => {
           <AddIcon/>
         </Button>
         <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-          <DialogTitle id="form-dialog-title">Nueva página</DialogTitle>
+          <DialogTitle id="form-dialog-title">Nueva pestaña</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Inserte el nombre de la página nueva
+              Inserte el nombre de la pestaña nueva
             </DialogContentText>
             <TextField
               autoFocus

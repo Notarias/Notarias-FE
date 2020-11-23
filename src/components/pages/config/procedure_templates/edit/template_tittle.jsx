@@ -20,9 +20,6 @@ const TemplateTittle = (props) => {
   const [name, setName] = useState(templateData.name)
 
   const [error, setError] = useState(false)
-  // let variables = {
-  //   name: name
-  // }
 
   const inputsList = ["name"]
 
@@ -40,13 +37,11 @@ const TemplateTittle = (props) => {
         onError(apolloError) {
           setErrors(apolloError)
         },
-        onCompleted(cacheData) {
+        update(store, cacheData) {
           setError(false)
           
           //setName(cacheData.proceduresTemplate)
-          setEditing(!editing)
-        },
-        fetchPolicy: "no-cache"
+        }
       }
     )
 
@@ -111,6 +106,8 @@ const TemplateTittle = (props) => {
             onChange={ handleNameChange }
             error={ !!error["name"] && true }
             helperText={error["name"] || " "}
+            errorskey={ "name" }
+            name='name'
           />
         </Grid>
         <Grid item className={ classes.saveTittleButton }>

@@ -29,7 +29,7 @@ const TabMenu = (props) => {
   const [name, setName] = React.useState(props.name);
   const [editing, setEditing] =  React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
-
+  console.log("props", props, id, name)
   // useEffect(
   //   () => {
   //     setName(templateData.name)
@@ -46,6 +46,7 @@ const TabMenu = (props) => {
       // },
       onCompleted(cacheData) {
         // setError(false)
+        console.log("menu", cacheData)
         setEditing(!editing)
       },
       refetchQueries: [{
