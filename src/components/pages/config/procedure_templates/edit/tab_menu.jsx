@@ -48,7 +48,10 @@ const TabMenu = (props) => {
         // setError(false)
         setEditing(!editing)
       },
-      fetchPolicy: "no-cache"
+      refetchQueries: [{
+        query: GET_PROCEDURES_TEMPLATE_TABS,
+        variables: { "proceduresTemplateId": proceduresTemplateId },
+      }],
     }
   )
 
@@ -74,7 +77,8 @@ const TabMenu = (props) => {
   const updateTab = (event) => {
     updateProceduresTemplateTabMutation(
       { 
-        variables: { id: id , name: name}
+        variables: { id: id , name: name},
+        fetchPolicy: "no-cache"
       }
     )
   }

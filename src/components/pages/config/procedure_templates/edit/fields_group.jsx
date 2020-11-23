@@ -20,7 +20,6 @@ const FieldsGroup = (props) => {
   //   setGroupName(event.target.value);
   // };
 
-  console.log("FG", groupId)
   return(
     <Paper className={ classes.roundedBorderGruop }>
       <Divider/>

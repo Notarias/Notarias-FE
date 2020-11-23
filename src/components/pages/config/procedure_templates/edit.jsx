@@ -27,7 +27,9 @@ const Edit = (props) => {
   const { classes, match } = props
 
   const [open, setOpen] = React.useState(false);
-  const { loading, data, refetch } = useQuery(GET_PROCEDURE_TEMPLATE, { variables: {"id": match.params.id }, fetchPolicy: "no-cache" } );
+  const { loading, data, refetch } = useQuery(GET_PROCEDURE_TEMPLATE,
+    { variables: {"id": match.params.id }, fetchPolicy: "no-cache" } 
+  );
   const [currentTab, setCurrentTab] = React.useState()
 
   // useEffect(() => {
@@ -78,6 +80,7 @@ const Edit = (props) => {
   // }
 
   //pasar cosas para arriba es a travez de las variables(parentesis) y separar
+  console.log("current", currentTab)
   return (
     <>
       <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
@@ -93,7 +96,12 @@ const Edit = (props) => {
               </Grid>
               <Grid container item xs={5} justify="flex-end" alignItems="center">
                 <Grid container item xs={4} justify="center">
-                  <Button variant="contained" onClick={ handleClickOpen } className={ classes.buttonHeight }>
+                  <Button
+                    variant="contained"
+                    onClick={ handleClickOpen }
+                    className={ classes.buttonHeight }
+                    disabled={ !currentTab }
+                  >
                     <PostAddIcon/>
                   </Button>
                   <DialogSelect
@@ -118,7 +126,7 @@ const Edit = (props) => {
             </Grid>
           <Divider/>
           { 
-          (loading || !data || !currentTab) ?
+          (loading || !data) ?
             (
               <Grid container item className={ classes.circularProgressLoading } direction="column" alignItems="center" justify="center">
                 <CircularProgress size={ 100 }/>

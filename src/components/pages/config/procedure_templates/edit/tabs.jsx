@@ -52,13 +52,13 @@ const Tabs = (props) => {
       // onError(apolloError) {
       //   setErrors(apolloError)
       // },
-      update(store, cacheData) {
+      onCompleted(cacheData) {
         // setError(false)
-        const proceduresTemplateTabData = store.readQuery({
-          query: GET_PROCEDURES_TEMPLATE_TABS, 
-          variables: { "proceduresTemplateId": proceduresTemplateId }
-        });
-        console.log("cacheData", cacheData, proceduresTemplateTabData)
+        // const proceduresTemplateTabData = store.readQuery({
+        //   query: GET_PROCEDURES_TEMPLATE_TABS, 
+        //   variables: { "proceduresTemplateId": proceduresTemplateId }
+        // });
+        // console.log("cacheData", cacheData, proceduresTemplateTabData)
         // clientAttrsData.clientAttributes.push(
         //   cacheData.data.createClientAttribute.clientAttribute 
         // )
@@ -68,7 +68,11 @@ const Tabs = (props) => {
         // store.writeQuery({ query: GET_PROCEDURES_TEMPLATE_TABS, data: clientAttrsData });
         // 
       },
-      fetchPolicy: "no-cache" 
+      fetchPolicy: "no-cache",
+      refetchQueries: [{
+        query: GET_PROCEDURES_TEMPLATE_TABS,
+        variables: { "proceduresTemplateId": proceduresTemplateId },
+      }],
     }
   )
 
@@ -76,7 +80,7 @@ const Tabs = (props) => {
     createProcedureTemplateTabMutation(
       { 
         variables: 
-          { name: tabName, id: proceduresTemplateId }
+          { name: tabName, id: proceduresTemplateId },
       }
     )
     const newTab = { name: tabName, id: proceduresTemplateId }

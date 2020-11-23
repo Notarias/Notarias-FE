@@ -14,7 +14,6 @@ const FieldsGroupFieldList = (props) => {
   );
   const fields = data? data.proceduresTemplateFieldsGroupFields : []
 
-  console.log("FiGr", data, groupId)
   return(
     <>
       {

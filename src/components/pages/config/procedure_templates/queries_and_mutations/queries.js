@@ -70,11 +70,11 @@ export const GET_PROCEDURE_TEMPLATE = gql`
 export const CREATE_PROCEDURE_TEMPLATE = gql`
   mutation createProceduresTemplate ($name: String!){
     createProceduresTemplate (input: {name: $name} ) {
-        proceduresTemplate {
-          active
-          id
-          name
-        }
+      proceduresTemplate {
+        active
+        id
+        name
+      }
     }
   }
 `
