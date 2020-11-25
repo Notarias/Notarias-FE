@@ -13,12 +13,13 @@ const Tab = (props) => {
   const { active, tab, setCurrentTab, proceduresTemplateId } = props;
   const { classes } = props;
 
+
   const selectTab = (event) => {
     setCurrentTab(tab)
   }
 
   const showFields = () => {
-    console.log("aqui", tab)
+    console.log( "select")
   }
 
 
@@ -29,6 +30,7 @@ const Tab = (props) => {
         name={ tab.name }
         id={ tab.id }
         proceduresTemplateId={ proceduresTemplateId }
+        active={ active}
       />
     </Grid>
     <Grid

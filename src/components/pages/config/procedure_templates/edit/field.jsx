@@ -18,6 +18,7 @@ import DialogActions                  from '@material-ui/core/DialogActions';
 import DialogContent                  from '@material-ui/core/DialogContent';
 import DialogTitle                    from '@material-ui/core/DialogTitle';
 import Paper                          from '@material-ui/core/Paper';
+import Typography                         from '@material-ui/core/Typography';
 import SaveIcon                           from '@material-ui/icons/Save';
 import CreateIcon                         from '@material-ui/icons/Create';
 
@@ -29,6 +30,7 @@ const Field = (props) => {
   
   const [open, setOpen] = React.useState(false);
   const [openb, setOpenb] = React.useState(false);
+  const [editing, setEditing] = React.useState(true);
   // const[name, setName] = React.useState(props.name)
   // const[type, setType] = React.useState(props.type)
   // const [favourite, setFavourite] = React.useState(props.favourite)
@@ -66,26 +68,54 @@ const Field = (props) => {
     setOpen(false);
   }
 
+  const editField = () => {
+    setEditing(!editing)
+  }
 
-  return (
-    <Grid container item alignItems="flex-start" justify="flex-start" className={ classes.fielPaddingBottom }>
-      <Paper>
-      <Grid container item className={ classes.fieldHeightRow }>
-        <Grid item xs={1}>
-          <Button>
+  const renderTextField = () => {
+    return(
+      <>
+        <Grid container item xs={1} alignItems="center" justify="center">
+          <Button
+            onClick={ editField }
+          >
+            <CreateIcon/>
+          </Button>
+        </Grid>
+        <Grid container item xs={5}>
+          <Typography className={ classes.texPlainTittleName }>
+            { name }
+          </Typography>
+        </Grid>
+        <Grid container item xs={4}>
+        <Typography className={ classes.textTittleType }>
+            { type === "string" ?  "Texto": "Numerico"}
+          </Typography>
+        </Grid>
+      </>
+    )
+  }
+
+  const renderInputField = () => {
+    return(
+      <>
+        <Grid container item xs={1} alignItems="center" justify="center">
+          <Button
+            onClick={ editField }
+          >
             <SaveIcon />
           </Button>
         </Grid>
-        <Grid item xs={5}>
+        <Grid container item xs={5}>
           <TextField 
             id="standard-basic" 
             label="Nombre del campo"
-            className={ classes.textFieldTittle }
+            className={ classes.textInputTittleName }
             value={ name }
           />
         </Grid>
-        <Grid item xs={4}>
-          <FormControl variant="outlined" className={ classes.inputFieldName }>
+        <Grid container item xs={4}>
+          <FormControl variant="outlined" className={ classes.textFieldTittleType }>
             <InputLabel id="label-field">Tipo de campo</InputLabel>
             <Select
               labelId="demo-simple-select-outlined-label"
@@ -97,6 +127,16 @@ const Field = (props) => {
             </Select>
           </FormControl>
         </Grid>
+      </>
+    )
+  }
+
+
+  return (
+    <Grid container item alignItems="flex-start" justify="flex-start" className={ classes.fielPaddingBottom }>
+      <Paper>
+      <Grid container item className={ classes.fieldHeightRow }>
+        { editing ? renderTextField() : renderInputField() }
         <Grid container item direction="column"  alignItems="center" justify="center" item xs={1}>
           <FormControlLabel
             control={<Checkbox icon={<StarBorderIcon />} 

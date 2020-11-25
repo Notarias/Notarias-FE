@@ -24,12 +24,12 @@ import Divider                      from '@material-ui/core/Divider';
 
 
 const TabMenu = (props) => {
-  const { classes, proceduresTemplateId } = props;
+  const { classes, proceduresTemplateId, active } = props;
   const [id, setId] = React.useState(props.id);
   const [name, setName] = React.useState(props.name);
   const [editing, setEditing] =  React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
-  console.log("props", props, id, name)
+
   // useEffect(
   //   () => {
   //     setName(templateData.name)
@@ -46,7 +46,6 @@ const TabMenu = (props) => {
       // },
       onCompleted(cacheData) {
         // setError(false)
-        console.log("menu", cacheData)
         setEditing(!editing)
       },
       refetchQueries: [{
@@ -134,7 +133,8 @@ const TabMenu = (props) => {
         aria-label="more"
         aria-controls="long-menu"
         aria-haspopup="true"
-        onClick={handleClick}
+        disabled={ !active }
+        onClick={ handleClick }
       >
       <MoreVertIcon />
       </IconButton>

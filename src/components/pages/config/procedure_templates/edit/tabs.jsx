@@ -28,7 +28,7 @@ const Tabs = (props) => {
   );
   const [tabList, setTabList] = React.useState(data ? data.proceduresTemplateTabs: []);
   const [tabName, setTabName] = React.useState(currentTab ? currentTab.name : " Insertar");
- 
+
   const [open, setOpen] = React.useState(false);
   const [tabDataList, setTabDataList] = React.useState([]);
 
@@ -104,7 +104,6 @@ const Tabs = (props) => {
     return(
       tabList.map(
         (tab, index) => {
-          console.log( tabList, currentTab)
           return(
             <Tab
               key={ tab.id + "-tabs" }

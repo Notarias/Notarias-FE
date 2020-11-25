@@ -92,15 +92,32 @@ export const styles = theme => {
     buttonAddProcedure: {
       height: "30px",
     },
-    textInputTittle: {
-      width: "450px",
+    textInputTittleName: {
+      width: "250px",
       fontWeight: "bold",
       wordWrap: "break-word",
     },
-    textFieldTittle: {
-      width: "250px",
+    textFieldTittleType: {
+      width: "230px",
       fontFamily: "Lucida Console, Courier, monospace",
       fontWeight: "bold",
+    },
+    texPlainTittleName: {
+      width: "250px",
+      textAlign: "left",
+      paddingTop: "20px",
+      height: "48px",
+     
+
+      wordWrap: "break-word",
+    },
+    textTittleType: {
+      width: "230px",
+      height: "56px",
+      paddingTop: "15px",
+      paddingRight: "18px",
+      border: "1px solid",
+      borderRadius: "6px",
     },
     buttonHeight: {
       height: "30px",
