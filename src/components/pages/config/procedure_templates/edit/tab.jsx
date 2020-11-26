@@ -19,7 +19,7 @@ const Tab = (props) => {
   }
 
   const showFields = () => {
-    console.log( "select")
+    console.log( "select", tab.id)
   }
 
 

@@ -8,7 +8,7 @@ const FieldList = (props) => {
   const { loading, data } = useQuery(
     GET_PROCEDURE_TEMPLATE_TAB_FIELDS,
     {
-      variables: { "proceduresTemplateTabId": currentTab.id }
+      variables: { "id": currentTab.id }
     } 
   );
   const fields = data ? data.proceduresTemplateTabFields : []
@@ -19,11 +19,11 @@ const FieldList = (props) => {
           (field, index) => {
             return(
               <Field
-                key={ index + "-field"}
+                key={ field.id + "-field"}
                 arrayIndex={ index }
                 // removeFromList={ removeFromList }
-                name={ field.name || " "}
-                type={ field.style || " " }
+                name={ field.name || "" }
+                style={ field.style || "" }
                 favourite={ field.favourite || false }
                 id={ field.id || " " }
               />

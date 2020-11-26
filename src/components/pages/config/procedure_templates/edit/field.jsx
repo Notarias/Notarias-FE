@@ -21,19 +21,52 @@ import Paper                          from '@material-ui/core/Paper';
 import Typography                         from '@material-ui/core/Typography';
 import SaveIcon                           from '@material-ui/icons/Save';
 import CreateIcon                         from '@material-ui/icons/Create';
+import { useMutation }                    from '@apollo/react-hooks';
+import { UPDATE_PROCEDURES_TEMPLATE_TAB_FIELD }     from '../queries_and_mutations/queries'
 
+const INPUT_TYPES = {
+  string: "Texto",
+  number: "Numerico",
+  file: "Archivo",
+
+}
 
 const Field = (props) => {
 
-  const { classes, id, name, type, favourite } = props
+  const { classes, id } = props
   // const { removeFromList } = props
   
   const [open, setOpen] = React.useState(false);
   const [openb, setOpenb] = React.useState(false);
   const [editing, setEditing] = React.useState(true);
-  // const[name, setName] = React.useState(props.name)
-  // const[type, setType] = React.useState(props.type)
-  // const [favourite, setFavourite] = React.useState(props.favourite)
+  const[name, setName] = React.useState(props.name)
+  const[style, setStyle] = React.useState(props.style)
+  const [favourite, setFavourite] = React.useState(props.favourite)
+  console.log(favourite, "inic")
+
+  const [updateProceduresTemplateTabFieldMutation, updateProcessInfo] =
+  useMutation(
+    UPDATE_PROCEDURES_TEMPLATE_TAB_FIELD,
+    {
+      // onError(apolloError) {
+      //   setErrors(apolloError)
+      // },
+      update(store, cacheData) {
+        console.log(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.favourite, "-----")
+        setFavourite(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.favourite)
+        // console.log(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.favourite, "---2--")
+        // // setError(false)
+        // setPristine(true)
+        // const clientAttrsData = store.readQuery({ query: GET_CLIENT_ATTRIBUTE });
+      }
+    }
+  )
+
+  const updateField = (event) => {
+    updateProceduresTemplateTabFieldMutation({ variables: { id: id, name: name, style: style }})
+    setEditing(!editing)
+  }
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -51,8 +84,9 @@ const Field = (props) => {
   };
 
   const checkedStar = () => {
-    // setFavourite(!favourite);
+    updateProceduresTemplateTabFieldMutation({ variables: { id: id, favourite: !favourite }})
     setOpenb(false);
+    console.log(favourite, "check")
   }
 
   const colorButton = () => {
@@ -72,6 +106,15 @@ const Field = (props) => {
     setEditing(!editing)
   }
 
+  const handleNameChange = (event) => {
+    setName(event.target.value);
+  };
+
+  const handleStyleChange = (event) => {
+    setStyle(event.target.value);
+    // setPristine(false)
+  };
+
   const renderTextField = () => {
     return(
       <>
@@ -84,12 +127,12 @@ const Field = (props) => {
         </Grid>
         <Grid container item xs={5}>
           <Typography className={ classes.texPlainTittleName }>
-            { name }
+            { name } {id}
           </Typography>
         </Grid>
         <Grid container item xs={4}>
         <Typography className={ classes.textTittleType }>
-            { type === "string" ?  "Texto": "Numerico"}
+            {  INPUT_TYPES[style] }
           </Typography>
         </Grid>
       </>
@@ -101,7 +144,7 @@ const Field = (props) => {
       <>
         <Grid container item xs={1} alignItems="center" justify="center">
           <Button
-            onClick={ editField }
+            onClick={ updateField }
           >
             <SaveIcon />
           </Button>
@@ -112,6 +155,7 @@ const Field = (props) => {
             label="Nombre del campo"
             className={ classes.textInputTittleName }
             value={ name }
+            onChange={ handleNameChange }
           />
         </Grid>
         <Grid container item xs={4}>
@@ -120,7 +164,8 @@ const Field = (props) => {
             <Select
               labelId="demo-simple-select-outlined-label"
               name='name'
-              value={ type }
+              value={ style }
+              onChange={ handleStyleChange }
             >
               <MenuItem key='string' value={'string'}>Texto</MenuItem>
               <MenuItem key='number' value={'number'}>Numerico</MenuItem>
@@ -166,7 +211,7 @@ const Field = (props) => {
                 Cancelar
               </Button>
               <Button color={ colorButton() } autoFocus onClick={ checkedStar } variant="contained">
-                { favourite === true ? "Quitar": "Añadir"}
+                { favourite ? "Quitar": "Añadir"}
               </Button>
             </DialogActions>
           </Dialog>

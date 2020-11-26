@@ -45,7 +45,7 @@ const DialogSelect = ({
         },
         refetchQueries: [{
           query: GET_PROCEDURE_TEMPLATE_TAB_FIELDS,
-          variables: { "proceduresTemplateTabId": currentTab && currentTab.id },
+          variables: { "id": currentTab && currentTab.id },
         }],
         awaitRefetchQueries: true
       }
