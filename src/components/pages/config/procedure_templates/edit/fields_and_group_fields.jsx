@@ -14,7 +14,6 @@ const FieldsAndGroupFields = (props) => {
     return(
       <Grid container item direction="column" alignItems="center">
         <Grid container item xs={10} alignItems="center" justify="center">
-          Campos
         <FieldList
           // removeFromList={ removeFromList }
           refreshAll={ refreshAll }
@@ -38,7 +37,7 @@ const FieldsAndGroupFields = (props) => {
       <Grid container item direction="column" alignItems="center">
         <Grid container item xs={10} alignItems="center" justify="center">
           <Typography variant="h6">
-            Agrega una pestaña para continuar
+            Agrega una pestaña para continuar 
           </Typography>
         </Grid>
       </Grid>

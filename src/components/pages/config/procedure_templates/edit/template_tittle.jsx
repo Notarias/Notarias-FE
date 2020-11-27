@@ -39,6 +39,7 @@ const TemplateTittle = (props) => {
         },
         update(store, cacheData) {
           setError(false)
+          setEditing(!editing)
           
           //setName(cacheData.proceduresTemplate)
         }

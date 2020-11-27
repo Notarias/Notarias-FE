@@ -93,7 +93,7 @@ export const styles = theme => {
       height: "30px",
     },
     textInputTittleName: {
-      width: "250px",
+      width: "350px",
       fontWeight: "bold",
       wordWrap: "break-word",
     },
@@ -207,6 +207,9 @@ export const styles = theme => {
     tittleTabMenu: {
       width: "325px",
       height: "50px",
+    },
+    fieldSelect: {
+      height: "80px"
     }
   })
 }

@@ -132,7 +132,10 @@ const Tabs = (props) => {
       </Grid>
       <Grid item >
         <Button variant="contained" onClick={ handleClickOpen } className={ classes.buttonTab }>
-          <AddIcon/>
+          <Grid container direction="column" alignItems="center" justify="center">
+            Agregar pestaña
+            <AddIcon/>
+          </Grid>
         </Button>
         <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
           <DialogTitle id="form-dialog-title">Nueva pestaña</DialogTitle>
