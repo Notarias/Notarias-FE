@@ -12,9 +12,8 @@ import Divider                      from '@material-ui/core/Divider';
 
 const FieldsGroup = (props) => {
 
-  const { classes, group, addNewField, groupId } = props
-  const {groupName}  = props
-  const { index } = props
+  const { classes, group, groupName, addNewField, groupId } = props
+
 
   // const handleGroupNameChange = (event) => {
   //   setGroupName(event.target.value);
@@ -24,27 +23,28 @@ const FieldsGroup = (props) => {
     <Paper className={ classes.roundedBorderGruop }>
       <Divider/>
       <Grid container>
-        <Grid container direction="row" alignItems="center" className={ classes.buttonAddFieldInGroup }>
+        <Grid container  alignItems="center" className={ classes.buttonAddFieldInGroup }>
           <Grid container item xs={10} alignItems="flex-start">
-          <TextField 
-            id="filled-basic"
-            label="Nombre del Grupo"
-            value={ groupName } 
-            variant="filled" 
-            size="small" 
-            // inputProps={{ 'aria-label': 'description' }}
-            // onChange={ handleGroupNameChange }
-          />
+            <TextField 
+              id="filled-basic"
+              label="Nombre del Grupo"
+              value={ groupName } 
+              variant="filled" 
+              size="small" 
+              // inputProps={{ 'aria-label': 'description' }}
+              // onChange={ handleGroupNameChange }
+            />
+            { groupId }
           </Grid>
           <Grid container item xs={2} justify="flex-end">
-          <Button
-            onClick={ addNewField }
-            variant="outlined"
-            color="primary"
-            size="small"
-          >
-            <AddIcon/>
-          </Button>
+            <Button
+              onClick={ addNewField }
+              variant="outlined"
+              color="primary"
+              size="small"
+            >
+              <AddIcon/>
+            </Button>
           </Grid>
         </Grid>
         <FieldsGroupFieldList

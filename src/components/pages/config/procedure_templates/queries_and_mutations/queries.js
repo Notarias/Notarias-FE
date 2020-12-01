@@ -90,14 +90,20 @@ export const GET_PROCEDURES_TEMPLATE_TABS = gql`
 `
 
 export const GET_PROCEDURE_TEMPLATE_TAB_FIELDS = gql`
-  query proceduresTemplateTabFields($id: ID!){
-    proceduresTemplateTabFields(tabId: $id) {
-      id
-      favourite
-      name
-      style
+  query proceduresTemplateTabFields(
+    $id: ID!
+  )
+    {
+      proceduresTemplateTabFields(
+        tabId: $id
+      )
+      {
+        id
+        favourite
+        name
+        style
+      }
     }
-  }
 `
 
 export const GET_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS = gql`
@@ -107,6 +113,29 @@ export const GET_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS = gql`
     proceduresTemplateTabFieldsGroups(tabId: $id){
       id
       name
+    }
+  }
+`
+
+export const CREATE_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS = gql`
+  mutation createProceduresTemplateFieldsGroup (
+    $tabId: ID!,
+    $name: String
+  )
+    {
+      createProceduresTemplateFieldsGroup (
+        input: {
+          tabId: $tabId,
+          name: $name
+        } 
+      ) 
+    {
+      proceduresTemplateFieldsGroup 
+      {
+        id
+        name
+        tabId
+      }
     }
   }
 `

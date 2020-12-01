@@ -6,7 +6,7 @@ import { styles }                   from './styles';
 import { withStyles }               from '@material-ui/core/styles';
 import Divider                      from '@material-ui/core/Divider';
 import Button                       from '@material-ui/core/Button';
-import DialogSelect                 from './edit/dialog_select';
+// import DialogSelect                 from './edit/dialog_select';
 import Tabs                         from './edit/tabs';
 import ActiveTemplateButton         from './edit/active_template_button';
 import TemplateTittle               from './edit/template_tittle';
@@ -64,7 +64,7 @@ const Edit = (props) => {
               </Grid>
               <Grid container item xs={5} justify="flex-end" alignItems="center">
                 <Grid container item xs={4} justify="center">
-                  <DialogSelect currentTab={ currentTab } />
+                  {/* <DialogSelect currentTab={ currentTab } /> */}
                 </Grid>
                 <Grid container item xs={4} justify="center">
                   <Button variant="contained" size="small" className={ classes.buttonAddProcedure }>
