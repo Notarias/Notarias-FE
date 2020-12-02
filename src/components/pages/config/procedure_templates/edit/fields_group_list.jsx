@@ -56,15 +56,15 @@ const FieldsGroupList = (props) => {
 
   return(
     <>
-      <Typography variant="overline">
+      {/* <Typography variant="overline">
         Agrega un Grupo
-      </Typography>
-    <Grid>
+      </Typography> */}
+    {/* <Grid>
       <DialogSelectCopy
         currentTab={ currentTab }
         iconButtonType={ iconButtonType }
       />
-    </Grid>
+    </Grid> */}
       {
         renderFieldGroups()
       }

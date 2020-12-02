@@ -31,6 +31,7 @@ const FieldsGroupFieldList = (props) => {
                 style={ field.style || " " }
                 favourite={ field.favourite || false }
                 id={ field.id || " " }
+                groupId={ groupId }
               />
             )
           }

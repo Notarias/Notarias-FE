@@ -8,6 +8,7 @@ import TextField                    from '@material-ui/core/TextField';
 import FieldsGroupFieldList         from './fields_groups_fields_list';
 import Paper                        from '@material-ui/core/Paper';
 import Divider                      from '@material-ui/core/Divider';
+import AddBoxIcon                   from '@material-ui/icons/AddBox';
 
 
 const FieldsGroup = (props) => {
@@ -18,7 +19,7 @@ const FieldsGroup = (props) => {
   // const handleGroupNameChange = (event) => {
   //   setGroupName(event.target.value);
   // };
-
+  console.log("gID", groupId)
   return(
     <Paper className={ classes.roundedBorderGruop }>
       <Divider/>
@@ -39,11 +40,11 @@ const FieldsGroup = (props) => {
           <Grid container item xs={2} justify="flex-end">
             <Button
               onClick={ addNewField }
-              variant="outlined"
-              color="primary"
-              size="small"
+              // variant="outlined"
+              // color="primary"
+              // size="small"
             >
-              <AddIcon/>
+              <AddBoxIcon/>
             </Button>
           </Grid>
         </Grid>

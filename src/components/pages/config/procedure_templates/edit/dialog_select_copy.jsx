@@ -15,6 +15,8 @@ import { CREATE_PROCEDURES_TEMPLATE_TAB_FIELD }                 from '../queries
 import { GET_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS }            from '../queries_and_mutations/queries'
 import { CREATE_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS }         from '../queries_and_mutations/queries'
 
+import AddIcon                              from '@material-ui/icons/Add';
+
 import Tabs   from '@material-ui/core/Tabs';
 import Tab    from '@material-ui/core/Tab';
 import AppBar from '@material-ui/core/AppBar';
@@ -36,11 +38,9 @@ import StarBorderIcon                 from '@material-ui/icons/StarBorder';
 
 const DialogSelectCopy = ({
   currentTab,
-  iconButtonType,
-  // setRefreshAll,
+  classes,
   ...props
 }) => {
-  const { classes } = props
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState('');
   const [disabled, setDisabled] = React.useState(true);
@@ -182,14 +182,39 @@ const DialogSelectCopy = ({
 
   return (
     <>
-      <Button
+      {/* <Button
         variant="contained"
         onClick={ handleClickOpen }
         className={ classes.buttonHeight }
         disabled={ !currentTab }
+        variant="outlined"
       >
         { iconButtonType() }
-      </Button>
+      </Button> */}
+      <Grid container justify="center" alignItems="center" className={ classes.addFieldsAndGroupsButton } >
+        <Grid container  justify="center" alignItems="center" direction="row" >
+          <Grid item xs={4}>
+            <Typography variant="button" display="block" gutterBottom>
+              {<Button
+                variant="contained"
+                color="primary"
+                size="small"
+                disabled={ !currentTab }
+                onClick={ handleClickOpen }
+              >
+                Campo  <AddIcon className={ classes.addIconMargin }/>
+              </Button>}
+            </Typography>
+          </Grid>
+          <Grid item xs={4}>
+            <Typography variant="button" display="block" gutterBottom>
+              {<Button variant="contained" color="primary" size="small">
+                Grupo de Campos <AddIcon className={ classes.addIconMargin }/>
+              </Button>}
+            </Typography>
+          </Grid>
+        </Grid>
+      </Grid>
       <Dialog open={open} onClose={ handleClose }>
         <DialogTitle 
           id="simple-dialog-title"

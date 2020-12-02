@@ -178,17 +178,28 @@ export const UPDATE_PROCEDURES_TEMPLATE_TAB = gql`
 `
 
 export const CREATE_PROCEDURES_TEMPLATE_TAB_FIELD = gql`
-mutation createProceduresTemplateTabField ($tabId: ID!, $name: String!){
-  createProceduresTemplateField (input: {tabId: $tabId, name: $name} ) {
-     proceduresTemplateField {
-       id
-       name
-       favourite
-       style
-       proceduresTemplateTabId
-     }
-   }
- }
+  mutation createProceduresTemplateTabField (
+    $tabId: ID!,
+    $name: String!, 
+    $fieldsGroupId: ID
+  ){
+    createProceduresTemplateField (
+      input: {
+        tabId: $tabId, 
+        name: $name, 
+        fieldsGroupId: $fieldsGroupId
+      } 
+    ) 
+    {
+      proceduresTemplateField {
+        id
+        name
+        favourite
+        style
+        proceduresTemplateTabId
+      }
+    }
+  }
 `
 
 export const UPDATE_PROCEDURES_TEMPLATE_TAB_FIELD = gql`

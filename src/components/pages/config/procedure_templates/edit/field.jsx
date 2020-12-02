@@ -33,7 +33,7 @@ const INPUT_TYPES = {
 
 const Field = (props) => {
 
-  const { classes, id } = props
+  const { classes, id, groupId } = props
   // const { removeFromList } = props
   
   const [open, setOpen] = React.useState(false);
@@ -115,6 +115,7 @@ const Field = (props) => {
     // setPristine(false)
   };
 
+  console.log("groupId", groupId)
   const renderTextField = () => {
     return(
       <>
@@ -127,7 +128,7 @@ const Field = (props) => {
         </Grid>
         <Grid container item xs={5}>
           <Typography className={ classes.texPlainTittleName }>
-            { name } {id}
+            { name } { id } -{ groupId }
           </Typography>
         </Grid>
         <Grid container item xs={4}>

@@ -210,6 +210,13 @@ export const styles = theme => {
     },
     fieldSelect: {
       height: "80px"
-    }
+    },
+    addFieldsAndGroupsButton: {
+      marginTop: "15px",
+      marginBottom: "4px",
+    },
+    addIconMargin: {
+      marginLeft: "10px",
+    },
   })
 }

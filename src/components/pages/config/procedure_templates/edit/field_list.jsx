@@ -72,15 +72,15 @@ const FieldList = (props) => {
 
   return (
     <>
-        <Typography variant="overline">
+        {/* <Typography variant="overline">
           Agrega un Campo
-        </Typography>
-      <Grid>
+        </Typography> */}
+      {/* <Grid>
         <DialogSelectCopy
           currentTab={ currentTab }
           iconButtonType={ iconButtonType }
         />
-      </Grid>
+      </Grid> */}
         {
           renderFields()
         }
