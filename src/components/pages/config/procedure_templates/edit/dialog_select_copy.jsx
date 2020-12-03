@@ -42,12 +42,12 @@ const DialogSelectCopy = ({
   ...props
 }) => {
   const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState('');
+  const [renderValue, setRenderValue] = React.useState();
   const [disabled, setDisabled] = React.useState(true);
-  const [fieldName, setFieldName] = React.useState("Editar nombre");
-  const [style, setStyle] = React.useState()
-  const [favourite, setFavourite] = React.useState()
-  const [groupFieldName, setGroupFieldName] = React.useState("Nombre del grupo");
+  const [fieldName, setFieldName] = React.useState("");
+  const [style, setStyle] = React.useState("")
+  const [favourite, setFavourite] = React.useState(false)
+  const [groupFieldName, setGroupFieldName] = React.useState("");
   const [optionSelect, setOptionSelect] = React.useState(0);
   const [pristine, setPristine] = React.useState(true)
 
@@ -74,6 +74,7 @@ const DialogSelectCopy = ({
         // )
         // store.writeQuery({ query: GET_PROCEDURES_TEMPLATE_TABS, data: clientAttrsData });
       },
+      fetchPolicy: "no-cache",
       refetchQueries: [{
         query: GET_PROCEDURE_TEMPLATE_TAB_FIELDS,
         variables: { "id": currentTab && currentTab.id },
@@ -87,7 +88,8 @@ const DialogSelectCopy = ({
     createProcedureTemplateTabFieldMutation(
       { 
         variables: 
-          { "name": fieldName, "tabId": currentTab.id },
+          { "name": fieldName, "tabId": currentTab.id, "style": style},
+          fetchPolicy: "no-cache",
       }
     )
     // const newTab = { name: tabName, id: proceduresTemplateId }
@@ -145,40 +147,52 @@ const DialogSelectCopy = ({
     // setFieldsGroupList(fieldsGroupList.concat([fieldsGroupList]));
   }
 
-  const handleClickOpen = (event) => {
+  const fieldHandleClickOpen = (event) => {
     setOpen(true);
+    setRenderValue(true);
+    setPristine(true)
+    setFieldName("")
+    setStyle("")
+  };
+
+  const groupHandleClickOpen = (event) => {
+    setOpen(true);
+    setRenderValue(false)
+    setPristine(true)
+    setGroupFieldName("")
   };
 
   const handleClose = () => {
     setOpen(false);
   };
 
-  const handleChange = (event) => {
-    setValue(event.target.value);
-    setDisabled(false);
-  };
+  // const handleChange = (event) => {
+  //   setValue(event.target.value);
+  //   setDisabled(false);
+  // };
 
-  const handleNameChange = (event) => {
+  const handleFieldNameChange = (event) => {
     setFieldName(event.target.value);
     setPristine(false)
+    console.log("name", fieldName)
   };
 
   const handleStyleChange = (event) => {
     setStyle(event.target.value);
     setPristine(false)
+    console.log("style", style)
   };
 
-  const radioSelect = () => {
-    if (value === "field" || value === "fieldsGroup") {
-      return (
-        "Añadir"
-      )
-    } else {
-      return "Elige una opcion"
-    }
+  const handleFavouriteChange = (event) => {
+    setFavourite(!favourite);
+    console.log("favourite", favourite)
   };
 
-
+  const handleFieldGroupNameChange = (event) => {
+    setGroupFieldName(event.target.value);
+    setPristine(false)
+    console.log("GroupName", groupFieldName)
+  };
 
   return (
     <>
@@ -200,7 +214,7 @@ const DialogSelectCopy = ({
                 color="primary"
                 size="small"
                 disabled={ !currentTab }
-                onClick={ handleClickOpen }
+                onClick={ fieldHandleClickOpen }
               >
                 Campo  <AddIcon className={ classes.addIconMargin }/>
               </Button>}
@@ -208,7 +222,13 @@ const DialogSelectCopy = ({
           </Grid>
           <Grid item xs={4}>
             <Typography variant="button" display="block" gutterBottom>
-              {<Button variant="contained" color="primary" size="small">
+              {<Button
+                variant="contained"
+                color="primary"
+                size="small"
+                disabled={ !currentTab }
+                onClick={ groupHandleClickOpen }
+              >
                 Grupo de Campos <AddIcon className={ classes.addIconMargin }/>
               </Button>}
             </Typography>
@@ -220,11 +240,59 @@ const DialogSelectCopy = ({
           id="simple-dialog-title"
           className={ classes.tittleDialogWidth }
         >
+          Rellena los campos para continuar
         </DialogTitle >
         <Divider/>
         <DialogContent>
           <Grid container alignItems="center"  >
-            <Grid 
+            {
+              (renderValue)?
+                (
+                  <Grid container direction="row">
+                    <Grid container item xs={6}>
+                      <TextField 
+                        id="fieldName" 
+                        label="Editar nombre"
+                        className={ classes.textInputTittleName }
+                        value={ fieldName }
+                        onChange={ handleFieldNameChange }
+                      />
+                    </Grid>
+                    <Grid container item xs={1}>
+
+                    </Grid>
+                    <Grid container item xs={5}>
+                      <FormControl variant="outlined" className={ classes.textFieldTittleType }>
+                        <InputLabel id="label-field">Selecciona el tipo de campo</InputLabel>
+                        <Select
+                          labelId="demo-simple-select-outlined-label"
+                          name='style'
+                          value={ style }
+                          onChange={ handleStyleChange }
+                        >
+                          <MenuItem key='string' value={'string'}>Texto</MenuItem>
+                          <MenuItem key='number' value={'number'}>Numerico</MenuItem>
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                  </Grid>
+                )
+              :
+                (
+                  <Grid>
+                    <TextField 
+                      id="filled-basic"
+                      label="Nombre del Grupo"
+                      value={ groupFieldName } 
+                      variant="filled" 
+                      size="small" 
+                      // inputProps={{ 'aria-label': 'description' }}
+                      onChange={ handleFieldGroupNameChange }
+                    />
+                  </Grid>
+                )
+            }
+            {/* <Grid 
               container 
               direction="column" 
               // item xs={6} 
@@ -274,7 +342,7 @@ const DialogSelectCopy = ({
             >
               Agrega un Grupo de campos a la hoja.
             </Typography>
-            </Grid>
+            </Grid> */}
           </Grid>
         </DialogContent>
         <DialogActions>
@@ -283,12 +351,12 @@ const DialogSelectCopy = ({
               Cancelar
             </Button>
             <Button 
-              onClick={ value === 'field' ? addNewField : addNewFieldsGroup } 
+              onClick={ renderValue ? addNewField : addNewFieldsGroup } 
               color="primary"
               variant="contained"
-              disabled={ disabled }
+              disabled={ pristine }
             >
-              { radioSelect() }
+              { renderValue ? "Añadir campo" : "Añadir grupo"}
             </Button>
           </Grid>
         </DialogActions>

@@ -48,27 +48,12 @@ const FieldsGroupList = (props) => {
     )
   }
 
-  const iconButtonType = () => {
-    return(
-      <LibraryAddIcon/>
-    )
-  }
-
   return(
     <>
-      {/* <Typography variant="overline">
-        Agrega un Grupo
-      </Typography> */}
-    {/* <Grid>
-      <DialogSelectCopy
-        currentTab={ currentTab }
-        iconButtonType={ iconButtonType }
-      />
-    </Grid> */}
       {
         renderFieldGroups()
       }
-  </>
+    </>
   )
 }
 

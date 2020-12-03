@@ -23,6 +23,7 @@ import SaveIcon                           from '@material-ui/icons/Save';
 import CreateIcon                         from '@material-ui/icons/Create';
 import { useMutation }                    from '@apollo/react-hooks';
 import { UPDATE_PROCEDURES_TEMPLATE_TAB_FIELD }     from '../queries_and_mutations/queries'
+import LabelOffIcon from '@material-ui/icons/LabelOff';
 
 const INPUT_TYPES = {
   string: "Texto",
@@ -42,7 +43,6 @@ const Field = (props) => {
   const[name, setName] = React.useState(props.name)
   const[style, setStyle] = React.useState(props.style)
   const [favourite, setFavourite] = React.useState(props.favourite)
-  console.log(favourite, "inic")
 
   const [updateProceduresTemplateTabFieldMutation, updateProcessInfo] =
   useMutation(
@@ -52,7 +52,6 @@ const Field = (props) => {
       //   setErrors(apolloError)
       // },
       update(store, cacheData) {
-        console.log(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.favourite, "-----")
         setFavourite(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.favourite)
         // console.log(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.favourite, "---2--")
         // // setError(false)
@@ -131,7 +130,7 @@ const Field = (props) => {
             { name } { id } -{ groupId }
           </Typography>
         </Grid>
-        <Grid container item xs={4}>
+        <Grid container item xs={3}>
         <Typography className={ classes.textTittleType }>
             {  INPUT_TYPES[style] }
           </Typography>
@@ -159,7 +158,7 @@ const Field = (props) => {
             onChange={ handleNameChange }
           />
         </Grid>
-        <Grid container item xs={4}>
+        <Grid container item xs={3}>
           <FormControl variant="outlined" className={ classes.textFieldTittleType }>
             <InputLabel id="label-field">Tipo de campo</InputLabel>
             <Select
@@ -240,6 +239,11 @@ const Field = (props) => {
               </Button>
             </DialogActions>
           </Dialog>
+        </Grid>
+        <Grid container item direction="column"  alignItems="center" justify="center" item xs={1}>
+          <Button>
+            <LabelOffIcon/>
+          </Button>
         </Grid>
       </Grid>
       </Paper>

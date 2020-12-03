@@ -135,6 +135,7 @@ const TabMenu = (props) => {
         aria-haspopup="true"
         disabled={ !active }
         onClick={ handleClick }
+        className={ active ? classes.activeMenuTab : classes.menuTabDefault }
       >
       <MoreVertIcon />
       </IconButton>
@@ -153,6 +154,10 @@ const TabMenu = (props) => {
         <Button>
           Borrar
         </Button>
+      </MenuItem>
+      <Divider/>
+      <MenuItem>
+        Desactivar
       </MenuItem>
     </Menu>
   </Grid>

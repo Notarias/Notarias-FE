@@ -96,6 +96,7 @@ export const styles = theme => {
       width: "350px",
       fontWeight: "bold",
       wordWrap: "break-word",
+      paddingLeft: "10px"
     },
     textFieldTittleType: {
       width: "230px",
@@ -107,8 +108,7 @@ export const styles = theme => {
       textAlign: "left",
       paddingTop: "20px",
       height: "48px",
-     
-
+      paddingLeft: "10px",
       wordWrap: "break-word",
     },
     textTittleType: {
@@ -217,6 +217,12 @@ export const styles = theme => {
     },
     addIconMargin: {
       marginLeft: "10px",
+    },
+    menuTabDefault: {
+      opacity: "0",
+    },
+    activeMenuTab: {
+      opacity: "1",
     },
   })
 }
