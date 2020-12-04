@@ -183,8 +183,10 @@ export const styles = theme => {
       width: "100%",
       height: "70px",
       borderBottom: '2px solid #e8e8e8',
-
     },
+    // statusDesactivedTab:{
+    //   boxShadow: `inset 10px 0px 0px -5px ${theme.palette.error.dark}`
+    // },
     templateTittleButton: {
       minWidth: "45px",
       minHeight: "45px",

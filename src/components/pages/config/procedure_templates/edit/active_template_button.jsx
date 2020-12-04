@@ -1,4 +1,4 @@
-import React                              from 'react';
+import React, { useEffect}                from 'react';
 import { styles }                         from '../styles';
 import { withStyles }                     from '@material-ui/core/styles';
 import Button                             from '@material-ui/core/Button';
@@ -18,6 +18,13 @@ const ActiveTemplateButton = (props) => {
   const [id, setId] = React.useState(match.id);
   const [active, setActive] = React.useState(templateData.active);
   const [open, setOpen] = React.useState(false);
+
+  useEffect(
+    () => {
+      setActive(templateData.active)
+    },
+    [templateData]
+  )
 
   const [updateProceduresTemplateMutation, updateProcessInfo] =
     useMutation(
@@ -79,7 +86,7 @@ const ActiveTemplateButton = (props) => {
     )
 }
 
-
+  console.log("active", active, templateData.active)
   return(
     <>
     <Grid container item justify="center" >
@@ -95,8 +102,8 @@ const ActiveTemplateButton = (props) => {
       <DialogActions>
         <Button 
           onClick={ handleClose }
-          variant="text" 
-          size="small" 
+          variant="text"
+          size="small"
         >
           cancelar
         </Button>

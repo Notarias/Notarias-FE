@@ -1,4 +1,4 @@
-import React                                                    from 'react';
+import React, { Component }                                     from 'react';
 import Button                                                   from '@material-ui/core/Button';
 import Dialog                                                   from '@material-ui/core/Dialog';
 import DialogContent                                            from '@material-ui/core/DialogContent';
@@ -52,36 +52,36 @@ const DialogSelectCopy = ({
   const [pristine, setPristine] = React.useState(true)
 
   const [createProcedureTemplateTabFieldMutation, createProcessInfo] =
-  useMutation(
-    CREATE_PROCEDURES_TEMPLATE_TAB_FIELD,
-    {
-      // onError(apolloError) {
-      //   setErrors(apolloError)
-      // },
-      onCompleted(cacheData) {
-        // setRefreshAll('RefreshFields' + cacheData.createProceduresTemplateField.proceduresTemplateField.id)
-        // setError(false)
-        // const proceduresTemplateTabData = store.readQuery({
-        //   query: GET_PROCEDURES_TEMPLATE_TABS, 
-        //   variables: { "proceduresTemplateId": proceduresTemplateId }
-        // });
-        // console.log("cacheData", cacheData, proceduresTemplateTabData)
-        // clientAttrsData.clientAttributes.push(
-        //   cacheData.data.createClientAttribute.clientAttribute 
-        // )
-        // store.writeQuery({ query: GET_CLIENT_ATTRIBUTE, data: clientAttrsData });
-        // setId(cacheData.data.createClientAttribute.clientAttribute.id)
-        // )
-        // store.writeQuery({ query: GET_PROCEDURES_TEMPLATE_TABS, data: clientAttrsData });
-      },
-      fetchPolicy: "no-cache",
-      refetchQueries: [{
-        query: GET_PROCEDURE_TEMPLATE_TAB_FIELDS,
-        variables: { "id": currentTab && currentTab.id },
-      }],
-      awaitRefetchQueries: true
-    }
-  )
+    useMutation(
+      CREATE_PROCEDURES_TEMPLATE_TAB_FIELD,
+      {
+        // onError(apolloError) {
+        //   setErrors(apolloError)
+        // },
+        onCompleted(cacheData) {
+          // setRefreshAll('RefreshFields' + cacheData.createProceduresTemplateField.proceduresTemplateField.id)
+          // setError(false)
+          // const proceduresTemplateTabData = store.readQuery({
+          //   query: GET_PROCEDURES_TEMPLATE_TABS, 
+          //   variables: { "proceduresTemplateId": proceduresTemplateId }
+          // });
+          // console.log("cacheData", cacheData, proceduresTemplateTabData)
+          // clientAttrsData.clientAttributes.push(
+          //   cacheData.data.createClientAttribute.clientAttribute 
+          // )
+          // store.writeQuery({ query: GET_CLIENT_ATTRIBUTE, data: clientAttrsData });
+          // setId(cacheData.data.createClientAttribute.clientAttribute.id)
+          // )
+          // store.writeQuery({ query: GET_PROCEDURES_TEMPLATE_TABS, data: clientAttrsData });
+        },
+        fetchPolicy: "no-cache",
+        refetchQueries: [{
+          query: GET_PROCEDURE_TEMPLATE_TAB_FIELDS,
+          variables: { "id": currentTab && currentTab.id },
+        }],
+        awaitRefetchQueries: true
+      }
+    )
 
 
   const addNewField = (event) => {

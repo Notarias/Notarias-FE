@@ -18,6 +18,7 @@ const TemplateTittle = (props) => {
   const [id, setId] = useState(match.id);
   const [editing, setEditing] = useState(true);
   const [name, setName] = useState(templateData.name)
+  // const [active, setActive] = useState(templateData && templateData.active)
 
   const [error, setError] = useState(false)
 
@@ -124,9 +125,20 @@ const TemplateTittle = (props) => {
     )
   }
 
+  // const markStatus = () => {
+  //   if(!active) {
+  //     return  classes.statusTemplateRow 
+  //   }
+  // }
 
+
+  console.log(templateData, "----")
   return(
-    <Grid container item >
+    <Grid
+      container 
+      item 
+      // className={ markStatus() }
+    >
       { editing ? renderTittleText(name) : renderTittleInput(name) }
     </Grid>
   )

@@ -16,6 +16,7 @@ import { useMutation }                    from '@apollo/react-hooks';
 import { GET_PROCEDURES_TEMPLATE_TABS }         from '../queries_and_mutations/queries'
 import { UPDATE_PROCEDURES_TEMPLATE_TAB }     from '../queries_and_mutations/queries'
 import Divider                      from '@material-ui/core/Divider';
+import DeleteForeverIcon              from '@material-ui/icons/DeleteForever';
 
 
 
@@ -29,6 +30,7 @@ const TabMenu = (props) => {
   const [name, setName] = React.useState(props.name);
   const [editing, setEditing] =  React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  // const [status, setStatus] = React.useState(procedureTemplate.active);
 
   // useEffect(
   //   () => {
@@ -54,6 +56,10 @@ const TabMenu = (props) => {
       }],
     }
   )
+
+  // const statusTemplate = () => { 
+  //   return status ? "Desactivar" : "Activar"
+  // }
 
 
   const handleClick = (event) => {
@@ -152,12 +158,17 @@ const TabMenu = (props) => {
       <Divider/>
       <MenuItem>
         <Button>
-          Borrar
+          <DeleteForeverIcon/> 
         </Button>
+        <Typography variant="overline" >
+            Borrar
+        </Typography>
       </MenuItem>
       <Divider/>
       <MenuItem>
-        Desactivar
+        <Typography variant="overline" >
+            Activar/Desactivar
+        </Typography>
       </MenuItem>
     </Menu>
   </Grid>
