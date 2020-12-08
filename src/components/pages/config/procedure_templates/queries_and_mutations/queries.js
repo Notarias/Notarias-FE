@@ -85,6 +85,7 @@ export const GET_PROCEDURES_TEMPLATE_TABS = gql`
     proceduresTemplateTabs(proceduresTemplateId: $proceduresTemplateId) {
       id
       name
+      active
     }
   }
 `
@@ -102,6 +103,7 @@ export const GET_PROCEDURE_TEMPLATE_TAB_FIELDS = gql`
         favourite
         name
         style
+        active
       }
     }
 `
@@ -113,6 +115,7 @@ export const GET_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS = gql`
     proceduresTemplateTabFieldsGroups(tabId: $id){
       id
       name
+      active
     }
   }
 `
@@ -166,15 +169,16 @@ export const CREATE_PROCEDURES_TEMPLATE_TAB = gql`
 `
 
 export const UPDATE_PROCEDURES_TEMPLATE_TAB = gql`
-  mutation updateProceduresTemplateTab ($id: ID!, $name: String!){
-    updateProceduresTemplateTab (input: {id: $id, name: $name} ) {
-      proceduresTemplateTab {
-        id
-        name
-        proceduresTemplateId
-      }
+mutation updateProceduresTemplateTab ($id: ID!, $name: String, $active: Boolean){
+  updateProceduresTemplateTab (input: {id: $id, name: $name, active: $active} ) {
+    proceduresTemplateTab {
+      id
+      name
+      proceduresTemplateId
+      active
     }
   }
+}
 `
 
 export const CREATE_PROCEDURES_TEMPLATE_TAB_FIELD = gql`

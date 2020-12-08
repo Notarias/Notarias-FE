@@ -22,6 +22,9 @@ import InputLabel                     from '@material-ui/core/InputLabel';
 import { useMutation }                                          from '@apollo/react-hooks';
 import { GET_PROCEDURES_TEMPLATE_FIELDS_GROUPS_FIELDS }         from '../queries_and_mutations/queries'
 import { CREATE_PROCEDURES_TEMPLATE_TAB_FIELD }                 from '../queries_and_mutations/queries'
+import StatusRadioButton              from '../index/statusRadioButton';
+import IconButton                     from '@material-ui/core/IconButton';
+import MoreVertIcon                   from '@material-ui/icons/MoreVert';
 
 
 const FieldsGroup = (props) => {
@@ -98,13 +101,30 @@ const FieldsGroup = (props) => {
   // const handleGroupNameChange = (event) => {
   //   setGroupName(event.target.value);
   // };
-  console.log("gID", groupId)
+  const changeStatus = () => {
+    return( true )
+  }
+
+
+  console.log("actiGRF",  group.active )
   return(
     <Paper className={ classes.roundedBorderGruop }>
       <Divider/>
       <Grid container>
         <Grid container  alignItems="center" className={ classes.buttonAddFieldInGroup }>
-          <Grid container item xs={5} alignItems="flex-start">
+          <Grid container item xs={1} alignItems="center" justify="flex-end">
+            <IconButton
+              aria-label="more"
+              aria-controls="long-menu"
+              aria-haspopup="true"
+              // disabled={ !selected }
+              // onClick={ handleClick }
+              // className={ selected ? classes.activeMenuTab : classes.menuTabDefault }
+            >
+              <MoreVertIcon />
+            </IconButton>
+          </Grid>
+          <Grid container item xs={9} alignItems="flex-start">
             <TextField 
               id="filled-basic"
               label="Nombre del Grupo"
@@ -116,16 +136,19 @@ const FieldsGroup = (props) => {
             />
             { groupId }
           </Grid>
-          <Grid container item xs={2} alignItems="center">
+          {/* <Grid container item xs={2} alignItems="center">
             <Button>
               borrar
             </Button>
-          </Grid>
-          <Grid container item xs={3} alignItems="center">
+          </Grid> */}
+          {/* <Grid container item xs={2} alignItems="center">
             <Button>
-              desactivar
+            <StatusRadioButton
+                  status={ group.active }
+                  changeStatus= { changeStatus }
+                  />
             </Button>
-          </Grid>
+          </Grid> */}
           <Grid container item xs={2} justify="flex-end">
             <Button
               onClick={ handleClickOpen }

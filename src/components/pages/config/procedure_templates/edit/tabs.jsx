@@ -108,7 +108,7 @@ const Tabs = (props) => {
             <Tab
               key={ tab.id + "-tabs" }
               tab={ tab }
-              active={ tab.id === currentTab.id }
+              selected={ tab.id === currentTab.id }
               setCurrentTab={ setCurrentTab }
               proceduresTemplateId={ proceduresTemplateId }
             />

@@ -17,6 +17,7 @@ import { GET_PROCEDURES_TEMPLATE_TABS }         from '../queries_and_mutations/q
 import { UPDATE_PROCEDURES_TEMPLATE_TAB }     from '../queries_and_mutations/queries'
 import Divider                      from '@material-ui/core/Divider';
 import DeleteForeverIcon              from '@material-ui/icons/DeleteForever';
+import StatusRadioButton              from '../index/statusRadioButton';
 
 
 
@@ -25,7 +26,7 @@ import DeleteForeverIcon              from '@material-ui/icons/DeleteForever';
 
 
 const TabMenu = (props) => {
-  const { classes, proceduresTemplateId, active } = props;
+  const { classes, proceduresTemplateId, selected, active } = props;
   const [id, setId] = React.useState(props.id);
   const [name, setName] = React.useState(props.name);
   const [editing, setEditing] =  React.useState(true);
@@ -89,6 +90,16 @@ const TabMenu = (props) => {
     )
   }
 
+  const changeStatus = (event) => {
+    updateProceduresTemplateTabMutation(
+      { 
+        variables: { id: id , active: active},
+        fetchPolicy: "no-cache"
+      }
+    )
+  }
+
+
 
   const loadingTab = updateProcessInfo.loading
 
@@ -131,17 +142,23 @@ const TabMenu = (props) => {
     )
   }
 
+  const markStatus = () => {
+    if(!active) {
+      return  classes.statusTemplateRow 
+    }
+  }
 
 
+  console.log("activeTab", active)
   return (
-    <Grid>
+    <Grid className={ markStatus() } container alignItems="center" justify="flex-start">
       <IconButton
         aria-label="more"
         aria-controls="long-menu"
         aria-haspopup="true"
-        disabled={ !active }
+        disabled={ !selected }
         onClick={ handleClick }
-        className={ active ? classes.activeMenuTab : classes.menuTabDefault }
+        className={ selected ? classes.activeMenuTab : classes.menuTabDefault }
       >
       <MoreVertIcon />
       </IconButton>
@@ -166,9 +183,12 @@ const TabMenu = (props) => {
       </MenuItem>
       <Divider/>
       <MenuItem>
-        <Typography variant="overline" >
-            Activar/Desactivar
-        </Typography>
+      <Grid container item alignItems="center" >
+        <StatusRadioButton
+            status={ active }
+            changeStatus= { changeStatus }
+          />
+      </Grid>
       </MenuItem>
     </Menu>
   </Grid>

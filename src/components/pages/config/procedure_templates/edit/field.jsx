@@ -114,7 +114,6 @@ const Field = (props) => {
     // setPristine(false)
   };
 
-  console.log("groupId", groupId)
   const renderTextField = () => {
     return(
       <>

@@ -10,7 +10,7 @@ import TabMenu                      from './tab_menu';
 
 const Tab = (props) => {
 
-  const { active, tab, setCurrentTab, proceduresTemplateId } = props;
+  const { selected, tab, setCurrentTab, proceduresTemplateId, } = props;
   const { classes } = props;
 
 
@@ -23,14 +23,16 @@ const Tab = (props) => {
   }
 
 
+
   return(
     <>
     <Grid container item xs={2} alignItems="center" >
       <TabMenu
         name={ tab.name }
         id={ tab.id }
+        active={ tab.active }
         proceduresTemplateId={ proceduresTemplateId }
-        active={ active}
+        selected={ selected}
       />
     </Grid>
     <Grid
@@ -44,9 +46,9 @@ const Tab = (props) => {
       direction="column" 
       justify="flex-start" 
       alignItems="center"
-      className={ active ? classes.activeTab : classes.tabDefault }
+      className={ selected ? classes.activeTab : classes.tabDefault }
       >
-      <Button variant={ active ? "contained" : "outlined" } className={ classes.tittleTab } onClick={ showFields }>
+      <Button variant={ selected ? "contained" : "outlined" } className={ classes.tittleTab } onClick={ showFields }>
         <Typography variant="h6" gutterBottom>
           { tab.name }
         </Typography>
