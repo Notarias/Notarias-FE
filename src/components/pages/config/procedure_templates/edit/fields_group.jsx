@@ -8,7 +8,6 @@ import TextField                    from '@material-ui/core/TextField';
 import FieldsGroupFieldList         from './fields_groups_fields_list';
 import Paper                        from '@material-ui/core/Paper';
 import Divider                      from '@material-ui/core/Divider';
-import AddBoxIcon                   from '@material-ui/icons/AddBox';
 
 import Dialog                                                   from '@material-ui/core/Dialog';
 import DialogContent                                            from '@material-ui/core/DialogContent';
@@ -22,26 +21,20 @@ import InputLabel                     from '@material-ui/core/InputLabel';
 import { useMutation }                                          from '@apollo/react-hooks';
 import { GET_PROCEDURES_TEMPLATE_FIELDS_GROUPS_FIELDS }         from '../queries_and_mutations/queries'
 import { CREATE_PROCEDURES_TEMPLATE_TAB_FIELD }                 from '../queries_and_mutations/queries'
-import StatusRadioButton              from '../index/statusRadioButton';
-import IconButton                     from '@material-ui/core/IconButton';
-import MoreVertIcon                   from '@material-ui/icons/MoreVert';
+
+import FieldsGroupMenu from './fields_group_menu';
+
+
 
 
 const FieldsGroup = (props) => {
 
   const { classes, group, groupName, groupId, currentTab } = props
-  const [open, setOpen] = React.useState(false);
   const [fieldName, setFieldName] = React.useState("");
   const [style, setStyle] = React.useState("")
   const [pristine, setPristine] = React.useState(true)
+  const [open, setOpen] = React.useState(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  }
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const [createProcedureTemplateTabFieldMutation, createProcessInfo] =
   useMutation(
@@ -98,6 +91,10 @@ const FieldsGroup = (props) => {
     setPristine(false)
   };
 
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   // const handleGroupNameChange = (event) => {
   //   setGroupName(event.target.value);
   // };
@@ -112,19 +109,7 @@ const FieldsGroup = (props) => {
       <Divider/>
       <Grid container>
         <Grid container  alignItems="center" className={ classes.buttonAddFieldInGroup }>
-          <Grid container item xs={1} alignItems="center" justify="flex-end">
-            <IconButton
-              aria-label="more"
-              aria-controls="long-menu"
-              aria-haspopup="true"
-              // disabled={ !selected }
-              // onClick={ handleClick }
-              // className={ selected ? classes.activeMenuTab : classes.menuTabDefault }
-            >
-              <MoreVertIcon />
-            </IconButton>
-          </Grid>
-          <Grid container item xs={9} alignItems="flex-start">
+          <Grid container item xs={11} alignItems="flex-start">
             <TextField 
               id="filled-basic"
               label="Nombre del Grupo"
@@ -149,18 +134,13 @@ const FieldsGroup = (props) => {
                   />
             </Button>
           </Grid> */}
-          <Grid container item xs={2} justify="flex-end">
-            <Button
-              onClick={ handleClickOpen }
-              // variant="outlined"
-              // color="primary"
-              // size="small"
-            >
-              <AddBoxIcon/>
-            </Button>
+          <Grid container item xs={1} alignItems="center" justify="flex-end">
+            <FieldsGroupMenu
+              groupName={ groupName }
+            />
           </Grid>
           <Grid>
-          <Dialog open={open} onClose={ handleClose }>
+          {/* <Dialog open={open} onClose={ handleClose }>
             <DialogTitle>
               Añade un campo al grupo { groupName }
             </DialogTitle>
@@ -208,7 +188,7 @@ const FieldsGroup = (props) => {
                 </Button>
               </Grid>
             </DialogActions>
-          </Dialog>
+          </Dialog> */}
           </Grid>
         </Grid>
         <FieldsGroupFieldList

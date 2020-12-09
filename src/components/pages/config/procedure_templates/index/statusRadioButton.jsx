@@ -17,9 +17,8 @@ import useMediaQuery                  from '@material-ui/core/useMediaQuery';
 
 const StatusRadioButton = (props) => {
 
-  const { classes, status, changeStatus } = props
+  const { classes, active, changeStatus } = props
 
-  const [active, setActive] = React.useState(props.status)
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const [open, setOpen] = React.useState(false);
@@ -34,6 +33,11 @@ const StatusRadioButton = (props) => {
 
   const statusTemplate = () => { 
     return active ? "Desactivar" : "Activar"
+  }
+
+  const changeStatusValidation = () => {
+    setOpen(false)
+    changeStatus()
   }
 
 
@@ -76,7 +80,7 @@ const StatusRadioButton = (props) => {
           <Button onClick={ handleClose } color="primary">
             Cancelar
           </Button>
-          <Button autoFocus onClick={ changeStatus } color="primary">
+          <Button autoFocus onClick={ changeStatusValidation } color="primary">
             { statusTemplate() }
           </Button>
         </DialogActions>

@@ -49,7 +49,7 @@ const TabMenu = (props) => {
       // },
       onCompleted(cacheData) {
         // setError(false)
-        setEditing(!editing)
+        // setEditing(!editing)
       },
       refetchQueries: [{
         query: GET_PROCEDURES_TEMPLATE_TABS,
@@ -88,12 +88,13 @@ const TabMenu = (props) => {
         fetchPolicy: "no-cache"
       }
     )
+    setEditing(!editing)
   }
 
   const changeStatus = (event) => {
     updateProceduresTemplateTabMutation(
       { 
-        variables: { id: id , active: active},
+        variables: { id: id , active: !active},
         fetchPolicy: "no-cache"
       }
     )
@@ -149,7 +150,7 @@ const TabMenu = (props) => {
   }
 
 
-  console.log("activeTab", active)
+
   return (
     <Grid className={ markStatus() } container alignItems="center" justify="flex-start">
       <IconButton
@@ -185,7 +186,7 @@ const TabMenu = (props) => {
       <MenuItem>
       <Grid container item alignItems="center" >
         <StatusRadioButton
-            status={ active }
+            active={ active }
             changeStatus= { changeStatus }
           />
       </Grid>
