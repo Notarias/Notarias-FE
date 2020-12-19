@@ -65,8 +65,13 @@ export const styles = theme => {
     },
     defaultIcon:{
       width:"30px", 
-      height:"40px",
-      marginRight: "10px"
+      height:"30px",
+    },
+    defaultMenuIcon:{
+      width:"30px", 
+      height:"30px",
+      marginRight: "5px",
+      marginTop: "10px"
     },
     activeIconGreen:{
       width:"30px", 
@@ -76,7 +81,7 @@ export const styles = theme => {
     },
     radioButtonActiveGreen:{
       width:"30px", 
-      height:"40px",
+      height:"30px",
       color: "green",
     },
     textIconDefault:{
@@ -115,6 +120,36 @@ export const styles = theme => {
       height: "48px",
       paddingLeft: "10px",
       wordWrap: "break-word",
+    },
+    textPlainGoupName: {
+      height: "48px",
+      maxWidth: "550px",
+      textAlign: "left",
+      display: "flex",
+      alignItems: "center",
+      cursor: "pointer",
+      marginRight: "10px",
+      marginLeft: "5px",
+      backgroundColor: "#d7d7e6",
+
+    },
+    inputTittleGroupName: {
+      width: "250px",
+      textAlign: "left",
+
+      paddingLeft: "10px",
+      wordWrap: "break-word",
+
+    },
+    editGroupNameIcon:{
+      width:"30px", 
+      height:"30px",
+      marginTop: "10px",
+    },
+    saveGroupNameIcon:{
+      width:"30px", 
+      height:"30px",
+      marginTop: "5px",
     },
     textTittleType: {
       width: "230px",
@@ -175,9 +210,6 @@ export const styles = theme => {
     tittleTab: {
       width: "100%",
       height: "70px",
-    },
-    buttonAddFieldInGroup: {
-      marginRight: "9px"
     },
     tabDefault: {
       width: "100%",

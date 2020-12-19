@@ -19,6 +19,8 @@ import Divider                      from '@material-ui/core/Divider';
 import DeleteForeverIcon              from '@material-ui/icons/DeleteForever';
 import StatusRadioButton              from '../index/statusRadioButton';
 
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
 
 
 
@@ -108,15 +110,10 @@ const TabMenu = (props) => {
 
     return(
       <>
-        <Button
-          // className={ classes.templateTittleButton }
-          onClick={ changeTittle }
-        >
-          <CreateIcon />
-        </Button>
-        <Typography variant="overline" >
-            { name }
-        </Typography>
+        <ListItemIcon>
+          <CreateIcon className={ classes.defaultIcon } onClick={ changeTittle }/>
+        </ListItemIcon>
+        <ListItemText primary={name} onClick={ changeTittle }/>
       </>
     )
   }
@@ -126,19 +123,17 @@ const TabMenu = (props) => {
 
     return(
       <>
-        <Button
-          onClick={ updateTab }
-          color="primary"
-          disabled={ loadingTab }
-        >
-          <SaveIcon/>
-        </Button>
-        <TextField
-          id="standard-basic" 
-          label="Nombre"
-          value={ name }
-          onChange={ handleNameChange }
-        />
+        <ListItemIcon>
+          <SaveIcon  onClick={ updateTab } color="primary" className={ classes.defaultIcon }/>
+        </ListItemIcon>
+        <ListItemText>
+          <TextField
+            id="standard-basic" 
+            label="Nombre"
+            value={ name }
+            onChange={ handleNameChange }
+          />
+        </ListItemText>
       </>
     )
   }
@@ -170,17 +165,17 @@ const TabMenu = (props) => {
         open={ open }
         onClose={ handleClose }
       >
-      <MenuItem className={ classes.tittleTabMenu }>
+      <MenuItem className={ classes.tittleTabMenu } 
+        // onClick={ editing ? changeTittle : updateTab }
+      >
         { editing ? renderTittleTextTab() : renderTittleInputTab() }
       </MenuItem>
       <Divider/>
       <MenuItem>
-        <Button>
-          <DeleteForeverIcon/> 
-        </Button>
-        <Typography variant="overline" >
-            Borrar
-        </Typography>
+        <ListItemIcon>
+          <DeleteForeverIcon className={ classes.defaultIcon }/>
+        </ListItemIcon>
+        <ListItemText primary="Borrar" />
       </MenuItem>
       <Divider/>
       <MenuItem>

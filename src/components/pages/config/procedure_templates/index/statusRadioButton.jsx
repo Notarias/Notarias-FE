@@ -13,6 +13,8 @@ import RadioButtonUncheckedIcon       from '@material-ui/icons/RadioButtonUnchec
 import RadioButtonCheckedIcon         from '@material-ui/icons/RadioButtonChecked';
 import { useTheme }                   from '@material-ui/core/styles';
 import useMediaQuery                  from '@material-ui/core/useMediaQuery';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
 
 
 const StatusRadioButton = (props) => {
@@ -43,26 +45,32 @@ const StatusRadioButton = (props) => {
 
   return(
     <>
-      <Grid container alignItems="center" justify="flex-start" onClick={ handleClickOpen }>
+      <Grid container direction="row" onClick={ handleClickOpen }>
         {
           active ?
-            <Button>
+            // <Button>
+            <ListItemIcon>
               <RadioButtonUncheckedIcon color="secondary" className={ classes.defaultIcon }/>
-            </Button>
+            </ListItemIcon>
+            // {/* </Button> */}
           :
-            <Button>
+            //<Button>
+            <ListItemIcon>
               <RadioButtonCheckedIcon className={classes.radioButtonActiveGreen} />
-            </Button>
+            </ListItemIcon>
+            //</Button>
         }
-      <Typography 
-        variant="button" 
+      {/* <Typography 
+        variant="overline"
         display="block" 
         gutterBottom
         key="activar"
         className={ classes.textIconDefault }
-      >
+      > */}
+      <ListItemText>
         { statusTemplate() }
-      </Typography>
+      </ListItemText>
+      {/* </Typography> */}
     </Grid>
     <Dialog
         fullScreen={ fullScreen }

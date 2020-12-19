@@ -138,6 +138,7 @@ export const CREATE_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS = gql`
         id
         name
         tabId
+        active
       }
     }
   }

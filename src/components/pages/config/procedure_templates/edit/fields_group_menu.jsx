@@ -16,18 +16,22 @@ import AddBoxIcon                   from '@material-ui/icons/AddBox';
 import Divider                      from '@material-ui/core/Divider';
 import TextField                    from '@material-ui/core/TextField';
 import DeleteForeverIcon              from '@material-ui/icons/DeleteForever';
-import CreateIcon                         from '@material-ui/icons/Create'
-import Typography                   from '@material-ui/core/Typography';
+
 
 import Dialog                                                   from '@material-ui/core/Dialog';
 import DialogContent                                            from '@material-ui/core/DialogContent';
 import DialogTitle                                              from '@material-ui/core/DialogTitle';
 import DialogActions                                            from '@material-ui/core/DialogActions';
 
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+
+
+
 
 const FieldsGroupMenu = (props) => {
 
-  const { classes, groupName } = props
+  const { classes, groupName, active, changeStatus, addNewField } = props
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openB, setOpenB] = React.useState(false);
@@ -50,13 +54,13 @@ const FieldsGroupMenu = (props) => {
     setAnchorEl(null)
   };
 
+
   return(
     <>
       <IconButton
         aria-label="more"
         aria-controls="long-menu"
         aria-haspopup="true"
-        // disabled={ !selected }
         onClick={ handleClickOpenMenu }
         // className={ selected ? classes.activeMenuTab : classes.menuTabDefault }
       >
@@ -70,37 +74,24 @@ const FieldsGroupMenu = (props) => {
         onClose={ handleCloseMenu }
       >
         <MenuItem>
-          <Button
-          >
-            <CreateIcon />
-          </Button>
-          <Typography variant="overline" >
-              Editar
-          </Typography>
+          <ListItemIcon>
+            <DeleteForeverIcon className={ classes.defaultIcon }/>
+          </ListItemIcon>
+          <ListItemText primary="Borrar" />
         </MenuItem>
         <Divider/>
         <MenuItem>
-          <Button>
-            <DeleteForeverIcon/> 
-          </Button>
-          <Typography variant="overline" >
-              Borrar
-          </Typography>
+          <StatusRadioButton
+            active={ active }
+            changeStatus= { changeStatus }
+          />
         </MenuItem>
         <Divider/>
         <MenuItem>
-          activar/desactivar
-        </MenuItem>
-        <Divider/>
-        <MenuItem>
-          <Button
-            onClick={ handleClickOpen }
-            // variant="outlined"
-            // color="primary"
-            // size="small"
-          >
-           campo {<AddBoxIcon/>}
-          </Button>
+          <ListItemIcon>
+            <AddBoxIcon className={ classes.defaultIcon }  onClick={ handleClickOpen}/>
+          </ListItemIcon>
+          <ListItemText primary="Campo" onClick={ handleClickOpen}/>
           <Dialog open={openB} onClose={ handleClose }>
             <DialogTitle>
               Añade un campo al grupo { groupName }
@@ -117,7 +108,6 @@ const FieldsGroupMenu = (props) => {
                   />
                 </Grid>
                 <Grid container item xs={1}>
-
                 </Grid>
                 <Grid container item xs={5}>
                   <FormControl variant="outlined" className={ classes.textFieldTittleType }>
@@ -141,7 +131,7 @@ const FieldsGroupMenu = (props) => {
                   Cancelar
                 </Button>
                 <Button 
-                  // onClick={ addNewField } 
+                  onClick={ addNewField } 
                   color="primary"
                   variant="contained"
                 >

@@ -35,8 +35,8 @@ const FieldsGroupList = (props) => {
                   key={ fieldsGroup.id + "-fieldsGroup"}
                   group={ fieldsGroup }
                   groupId={ fieldsGroup.id }
-                  groupName={ fieldsGroup.name || " " }
                   currentTab={ currentTab }
+                  active={ fieldsGroup.active }
                   // removeFromList={ removeFromList }
                   // addNewField={ addNewField }
                 />

@@ -21,19 +21,24 @@ import InputLabel                     from '@material-ui/core/InputLabel';
 import { useMutation }                                          from '@apollo/react-hooks';
 import { GET_PROCEDURES_TEMPLATE_FIELDS_GROUPS_FIELDS }         from '../queries_and_mutations/queries'
 import { CREATE_PROCEDURES_TEMPLATE_TAB_FIELD }                 from '../queries_and_mutations/queries'
+import Typography                         from '@material-ui/core/Typography';
 
 import FieldsGroupMenu from './fields_group_menu';
-
+import SaveIcon                           from '@material-ui/icons/Save';
+import CreateIcon                         from '@material-ui/icons/Create'
 
 
 
 const FieldsGroup = (props) => {
 
-  const { classes, group, groupName, groupId, currentTab } = props
+  const { classes, group, groupId, currentTab, active } = props
+  const [groupName, setGroupName] = React.useState(group.name);
   const [fieldName, setFieldName] = React.useState("");
   const [style, setStyle] = React.useState("")
   const [pristine, setPristine] = React.useState(true)
   const [open, setOpen] = React.useState(false);
+  const [editing, setEditing] = React.useState(true);
+  
 
 
   const [createProcedureTemplateTabFieldMutation, createProcessInfo] =
@@ -95,11 +100,56 @@ const FieldsGroup = (props) => {
     setOpen(false);
   };
 
-  // const handleGroupNameChange = (event) => {
-  //   setGroupName(event.target.value);
-  // };
+  const handleGroupNameChange = (event) => {
+    setGroupName(event.target.value);
+  };
+
   const changeStatus = () => {
     return( true )
+  }
+
+  const editFieldGroup = () => {
+    setEditing(!editing)
+  }
+
+  const markStatus = () => {
+    if(!active) {
+      return  classes.statusTemplateRow 
+    }
+  }
+
+  const renderTextGroupName = () => {
+    return(
+      <>
+        <Grid className={ classes.textPlainGoupName } onClick={ editFieldGroup }>
+          <Typography variant="overline">
+            { groupName }
+          </Typography>
+        </Grid>
+          <Button onClick={ editFieldGroup } className={ classes.editGroupNameIcon }>
+            <CreateIcon />
+          </Button>
+      </>
+    )
+  }
+
+  const renderInputGroupName = () => {
+    return(
+      <>
+        <TextField 
+          id="filled-basic"
+          label="Nombre del Grupo"
+          value={ groupName } 
+          variant="filled" 
+          size="small"
+          className={ classes.inputTittleGroupName }
+          onChange={ handleGroupNameChange }
+        />
+        <Button  onClick={ editFieldGroup }>
+          <SaveIcon color="primary" className={ classes.saveGroupNameIcon }/>
+        </Button>
+      </>
+    )
   }
 
 
@@ -108,35 +158,17 @@ const FieldsGroup = (props) => {
     <Paper className={ classes.roundedBorderGruop }>
       <Divider/>
       <Grid container>
-        <Grid container  alignItems="center" className={ classes.buttonAddFieldInGroup }>
+        <Grid container  alignItems="center" className={ markStatus() }>
           <Grid container item xs={11} alignItems="flex-start">
-            <TextField 
-              id="filled-basic"
-              label="Nombre del Grupo"
-              value={ groupName } 
-              variant="filled" 
-              size="small" 
-              // inputProps={{ 'aria-label': 'description' }}
-              // onChange={ handleGroupNameChange }
-            />
-            { groupId }
+            { editing ? renderTextGroupName() : renderInputGroupName() }
           </Grid>
-          {/* <Grid container item xs={2} alignItems="center">
-            <Button>
-              borrar
-            </Button>
-          </Grid> */}
-          {/* <Grid container item xs={2} alignItems="center">
-            <Button>
-            <StatusRadioButton
-                  status={ group.active }
-                  changeStatus= { changeStatus }
-                  />
-            </Button>
-          </Grid> */}
           <Grid container item xs={1} alignItems="center" justify="flex-end">
             <FieldsGroupMenu
               groupName={ groupName }
+              active={ active }
+              changeStatus={ changeStatus }
+              editFieldGroup={ editFieldGroup }
+              addNewField={ addNewField }
             />
           </Grid>
           <Grid>
@@ -192,7 +224,7 @@ const FieldsGroup = (props) => {
           </Grid>
         </Grid>
         <FieldsGroupFieldList
-          // addNewField={ addNewField }
+
           groupId={ groupId }
           // removeFromList={ removeFromList }
         />
