@@ -46,6 +46,7 @@ const FieldList = (props) => {
         {
           fields.map(
             (field, index) => {
+              console.log("ooo",field.active)
               return(
                 <Field
                   key={ field.id + "-field"}
@@ -55,6 +56,7 @@ const FieldList = (props) => {
                   style={ field.style || "" }
                   favourite={ field.favourite || false }
                   id={ field.id || " " }
+                  field={ field.active }
                 />
               )
             }

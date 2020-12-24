@@ -20,7 +20,9 @@ import InputLabel                     from '@material-ui/core/InputLabel';
 
 import { useMutation }                                          from '@apollo/react-hooks';
 import { GET_PROCEDURES_TEMPLATE_FIELDS_GROUPS_FIELDS }         from '../queries_and_mutations/queries'
+import { GET_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS }                from '../queries_and_mutations/queries'
 import { CREATE_PROCEDURES_TEMPLATE_TAB_FIELD }                 from '../queries_and_mutations/queries'
+import { UPDATE_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS }         from '../queries_and_mutations/queries'
 import Typography                         from '@material-ui/core/Typography';
 
 import FieldsGroupMenu from './fields_group_menu';
@@ -86,6 +88,32 @@ const FieldsGroup = (props) => {
     setOpen(false);
   }
 
+  const [updateProceduresTemplateTabFieldsGroupMutation, updateGroupProcessInfo] =
+  useMutation(
+    UPDATE_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS,
+    {
+      // onError(apolloError) {
+      //   setErrors(apolloError)
+      // },
+      update(store, cacheData) {
+        // console.log(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.favourite, "---2--")
+        // // setError(false)
+        // setPristine(true)
+        // const clientAttrsData = store.readQuery({ query: GET_CLIENT_ATTRIBUTE });
+      },
+      refetchQueries: [{
+        query: GET_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS,
+        variables: { "id": groupId },
+      }],
+      awaitRefetchQueries: true
+    }
+  )
+
+  const updateFieldsGroup = (event) => {
+    updateProceduresTemplateTabFieldsGroupMutation({ variables: { "id": groupId, "name": groupName, "active": active }})
+    setEditing(!editing)
+  }
+
   const handleFieldNameChange = (event) => {
     setFieldName(event.target.value);
     setPristine(false)
@@ -145,7 +173,7 @@ const FieldsGroup = (props) => {
           className={ classes.inputTittleGroupName }
           onChange={ handleGroupNameChange }
         />
-        <Button  onClick={ editFieldGroup }>
+        <Button  onClick={ updateFieldsGroup }>
           <SaveIcon color="primary" className={ classes.saveGroupNameIcon }/>
         </Button>
       </>

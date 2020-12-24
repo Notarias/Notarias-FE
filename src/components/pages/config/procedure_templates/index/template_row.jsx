@@ -19,6 +19,8 @@ import useMediaQuery                  from '@material-ui/core/useMediaQuery';
 import { useTheme }                   from '@material-ui/core/styles';
 import RadioButtonUncheckedIcon       from '@material-ui/icons/RadioButtonUnchecked';
 import RadioButtonCheckedIcon         from '@material-ui/icons/RadioButtonChecked';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
 
 
 const TempleteRow = (props) => {
@@ -88,14 +90,18 @@ const TempleteRow = (props) => {
                 className={ classes.linkDefault }
               >
                 <Grid container>
-                  <CreateIcon  className={ classes.defaultIcon }/>
+                  {/* <CreateIcon  className={ classes.defaultIcon }/>
                   <Typography 
                     variant="button" 
                     display="block" 
                     className={ classes.textIconDefault }
                   >
                     Editar
-                  </Typography>
+                  </Typography> */}
+                  <ListItemIcon>
+                    <CreateIcon className={ classes.defaultIcon }/>
+                  </ListItemIcon>
+                  <ListItemText primary="Editar" />
                 </Grid>
               </Link>
             </MenuItem>
@@ -103,8 +109,16 @@ const TempleteRow = (props) => {
               key={ procedureTemplate.id + "-status" }
             >
               <Grid container onClick={ handleClickOpen }>
-                {active ? <RadioButtonUncheckedIcon color="secondary" className={ classes.defaultIcon }/> : <RadioButtonCheckedIcon className={classes.activeIconGreen} /> }
-                <Typography 
+                <ListItemIcon>
+                  {
+                    active ? 
+                      <RadioButtonUncheckedIcon color="secondary" className={ classes.defaultIcon }/> 
+                    : 
+                      <RadioButtonCheckedIcon className={classes.activeIconGreen} /> 
+                  }
+                </ListItemIcon>
+                <ListItemText primary={ statusTemplate() } />
+                {/* <Typography 
                   variant="button" 
                   display="block" 
                   gutterBottom
@@ -112,8 +126,7 @@ const TempleteRow = (props) => {
                   className={ classes.textIconDefault }
                 >
                   { statusTemplate() }
-                </Typography>
-                
+                </Typography>                 */}
               </Grid>
               <Dialog
                   fullScreen={ fullScreen }

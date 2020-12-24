@@ -35,6 +35,7 @@ const FieldsGroupMenu = (props) => {
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openB, setOpenB] = React.useState(false);
+  const [openDialog, setOpenDialog] = React.useState(false);
 
   let open = Boolean(anchorEl);
 
@@ -53,6 +54,15 @@ const FieldsGroupMenu = (props) => {
   const handleCloseMenu = () => {
     setAnchorEl(null)
   };
+
+  const handleClickOpenDialogDelete = () => {
+    setOpenDialog(true);
+  }
+
+  const handleCloseDialogDelete = () => {
+    setOpenDialog(false);
+  };
+
 
 
   return(
@@ -73,12 +83,37 @@ const FieldsGroupMenu = (props) => {
         open={ open }
         onClose={ handleCloseMenu }
       >
-        <MenuItem>
+        <MenuItem onClick={ handleClickOpenDialogDelete }>
           <ListItemIcon>
             <DeleteForeverIcon className={ classes.defaultIcon }/>
           </ListItemIcon>
           <ListItemText primary="Borrar" />
         </MenuItem>
+
+        <Dialog
+            open={openDialog}
+            onClose={handleCloseDialogDelete}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">{"Eliminar grupo"}</DialogTitle>
+            <DialogContent>
+              Se eliminara de manera permantente este grupo de campos
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={ handleCloseDialogDelete } color="secondary">
+                Cancelar
+              </Button>
+              <Button
+                color="primary"
+                autoFocus
+                // onClick={ deleteFieldClick }
+              >
+                Borrar
+              </Button>
+            </DialogActions>
+          </Dialog>
+
         <Divider/>
         <MenuItem>
           <StatusRadioButton

@@ -19,6 +19,11 @@ import Divider                      from '@material-ui/core/Divider';
 import DeleteForeverIcon              from '@material-ui/icons/DeleteForever';
 import StatusRadioButton              from '../index/statusRadioButton';
 
+import Dialog                                                   from '@material-ui/core/Dialog';
+import DialogContent                                            from '@material-ui/core/DialogContent';
+import DialogTitle                                              from '@material-ui/core/DialogTitle';
+import DialogActions                                            from '@material-ui/core/DialogActions';
+
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
@@ -33,6 +38,8 @@ const TabMenu = (props) => {
   const [name, setName] = React.useState(props.name);
   const [editing, setEditing] =  React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [openDialog, setOpenDialog] = React.useState(false);
+
   // const [status, setStatus] = React.useState(procedureTemplate.active);
 
   // useEffect(
@@ -75,6 +82,14 @@ const TabMenu = (props) => {
 
   let open = Boolean(anchorEl);
 
+  const handleClickOpenDialog = () => {
+    setOpenDialog(true);
+  }
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
+
   const changeTittle = () => {
     setEditing(!editing)
   }
@@ -110,8 +125,8 @@ const TabMenu = (props) => {
 
     return(
       <>
-        <ListItemIcon>
-          <CreateIcon className={ classes.defaultIcon } onClick={ changeTittle }/>
+        <ListItemIcon  onClick={ changeTittle }>
+          <CreateIcon className={ classes.defaultIcon }/>
         </ListItemIcon>
         <ListItemText primary={name} onClick={ changeTittle }/>
       </>
@@ -124,7 +139,7 @@ const TabMenu = (props) => {
     return(
       <>
         <ListItemIcon>
-          <SaveIcon  onClick={ updateTab } color="primary" className={ classes.defaultIcon }/>
+          <SaveIcon color="primary" className={ classes.defaultIcon } onClick={ updateTab }/>
         </ListItemIcon>
         <ListItemText>
           <TextField
@@ -171,12 +186,37 @@ const TabMenu = (props) => {
         { editing ? renderTittleTextTab() : renderTittleInputTab() }
       </MenuItem>
       <Divider/>
-      <MenuItem>
-        <ListItemIcon>
-          <DeleteForeverIcon className={ classes.defaultIcon }/>
+      <MenuItem onClick={ handleClickOpenDialog }>
+        <ListItemIcon >
+          <DeleteForeverIcon className={ classes.defaultIcon } />
         </ListItemIcon>
-        <ListItemText primary="Borrar" />
+        <ListItemText primary="Borrar"/>
       </MenuItem>
+
+      <Dialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Eliminar pestaña"}</DialogTitle>
+        <DialogContent>
+          Se eliminara de manera permantente esta Pestaña
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={ handleCloseDialog } color="secondary">
+            Cancelar
+          </Button>
+          <Button
+            color="primary"
+            autoFocus
+            // onClick={ deleteFieldClick }
+          >
+            Borrar
+          </Button>
+        </DialogActions>
+      </Dialog>
+
       <Divider/>
       <MenuItem>
       <Grid container item alignItems="center" >

@@ -144,6 +144,32 @@ export const CREATE_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS = gql`
   }
 `
 
+export const UPDATE_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS = gql`
+mutation updateProceduresTemplateFieldsGroup (
+  $id: ID!,
+  $name: String,
+  $active: Boolean
+)
+  {
+    updateProceduresTemplateFieldsGroup (
+      input: {
+        id: $id,
+        name: $name,
+        active: $active,
+      } 
+    ) 
+  {
+    proceduresTemplateField
+    {
+      id
+      name
+      tabId
+      active
+    }
+  }
+}
+`
+
 export const GET_PROCEDURES_TEMPLATE_FIELDS_GROUPS_FIELDS = gql`
   query proceduresTemplateFieldsGroupFields(
     $id: ID!
