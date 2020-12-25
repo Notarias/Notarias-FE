@@ -19,9 +19,9 @@ import MenuItem                       from '@material-ui/core/MenuItem';
 import InputLabel                     from '@material-ui/core/InputLabel';
 
 import { useMutation }                                          from '@apollo/react-hooks';
-import { GET_PROCEDURES_TEMPLATE_FIELDS_GROUPS_FIELDS }         from '../queries_and_mutations/queries'
+
 import { GET_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS }                from '../queries_and_mutations/queries'
-import { CREATE_PROCEDURES_TEMPLATE_TAB_FIELD }                 from '../queries_and_mutations/queries'
+
 import { UPDATE_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS }         from '../queries_and_mutations/queries'
 import Typography                         from '@material-ui/core/Typography';
 
@@ -35,58 +35,10 @@ const FieldsGroup = (props) => {
 
   const { classes, group, groupId, currentTab, active } = props
   const [groupName, setGroupName] = React.useState(group.name);
-  const [fieldName, setFieldName] = React.useState("");
-  const [style, setStyle] = React.useState("")
-  const [pristine, setPristine] = React.useState(true)
+
   const [open, setOpen] = React.useState(false);
   const [editing, setEditing] = React.useState(true);
   
-
-
-  const [createProcedureTemplateTabFieldMutation, createProcessInfo] =
-  useMutation(
-    CREATE_PROCEDURES_TEMPLATE_TAB_FIELD,
-    {
-      // onError(apolloError) {
-      //   setErrors(apolloError)
-      // },
-      onCompleted(cacheData) {
-        // setRefreshAll('RefreshFields' + cacheData.createProceduresTemplateField.proceduresTemplateField.id)
-        // setError(false)
-        // const proceduresTemplateTabData = store.readQuery({
-        //   query: GET_PROCEDURES_TEMPLATE_TABS, 
-        //   variables: { "proceduresTemplateId": proceduresTemplateId }
-        // });
-        // console.log("cacheData", cacheData, proceduresTemplateTabData)
-        // clientAttrsData.clientAttributes.push(
-        //   cacheData.data.createClientAttribute.clientAttribute 
-        // )
-        // store.writeQuery({ query: GET_CLIENT_ATTRIBUTE, data: clientAttrsData });
-        // setId(cacheData.data.createClientAttribute.clientAttribute.id)
-        // )
-        // store.writeQuery({ query: GET_PROCEDURES_TEMPLATE_TABS, data: clientAttrsData });
-      },
-      fetchPolicy: "no-cache",
-      refetchQueries: [{
-        query: GET_PROCEDURES_TEMPLATE_FIELDS_GROUPS_FIELDS,
-        variables: { "fieldsGroupId": groupId },
-      }],
-      awaitRefetchQueries: true
-    }
-  )
-
-  const addNewField = (event) => {
-    createProcedureTemplateTabFieldMutation(
-      { 
-        variables: 
-          { "name": fieldName, "tabId": currentTab.id, "style": style, "fieldsGroupId": groupId },
-          fetchPolicy: "no-cache",
-      }
-    )
-    // const newTab = { name: tabName, id: proceduresTemplateId }
-    // setTabList(tabList.concat([newTab]));//TODO: hacer la mutacion
-    setOpen(false);
-  }
 
   const [updateProceduresTemplateTabFieldsGroupMutation, updateGroupProcessInfo] =
   useMutation(
@@ -103,26 +55,17 @@ const FieldsGroup = (props) => {
       },
       refetchQueries: [{
         query: GET_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS,
-        variables: { "id": groupId },
+        variables: { "id": currentTab.id },
       }],
       awaitRefetchQueries: true
     }
   )
 
   const updateFieldsGroup = (event) => {
+    console.log(groupId, "-------------------------------------------------------")
     updateProceduresTemplateTabFieldsGroupMutation({ variables: { "id": groupId, "name": groupName, "active": active }})
     setEditing(!editing)
   }
-
-  const handleFieldNameChange = (event) => {
-    setFieldName(event.target.value);
-    setPristine(false)
-  };
-
-  const handleStyleChange = (event) => {
-    setStyle(event.target.value);
-    setPristine(false)
-  };
 
   const handleClose = () => {
     setOpen(false);
@@ -196,7 +139,9 @@ const FieldsGroup = (props) => {
               active={ active }
               changeStatus={ changeStatus }
               editFieldGroup={ editFieldGroup }
-              addNewField={ addNewField }
+              currentTab={ currentTab }
+              groupId={ groupId }
+
             />
           </Grid>
           <Grid>

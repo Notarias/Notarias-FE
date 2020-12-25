@@ -26,16 +26,80 @@ import DialogActions                                            from '@material-
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
+import { useMutation }                                          from '@apollo/react-hooks';
+import { CREATE_PROCEDURES_TEMPLATE_TAB_FIELD }                 from '../queries_and_mutations/queries'
+import { GET_PROCEDURES_TEMPLATE_FIELDS_GROUPS_FIELDS }         from '../queries_and_mutations/queries'
+
 
 
 
 const FieldsGroupMenu = (props) => {
 
-  const { classes, groupName, active, changeStatus, addNewField } = props
+  const { classes, groupName, active, changeStatus, currentTab, groupId } = props
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openB, setOpenB] = React.useState(false);
   const [openDialog, setOpenDialog] = React.useState(false);
+  const [pristine, setPristine] = React.useState(true)
+  const [fieldName, setFieldName] = React.useState("");
+  const [style, setStyle] = React.useState("")
+
+  const [createProcedureTemplateTabFieldMutation, createProcessInfo] =
+  useMutation(
+    CREATE_PROCEDURES_TEMPLATE_TAB_FIELD,
+    {
+      // onError(apolloError) {
+      //   setErrors(apolloError)
+      // },
+      onCompleted(cacheData) {
+        // setRefreshAll('RefreshFields' + cacheData.createProceduresTemplateField.proceduresTemplateField.id)
+        // setError(false)
+        // const proceduresTemplateTabData = store.readQuery({
+        //   query: GET_PROCEDURES_TEMPLATE_TABS, 
+        //   variables: { "proceduresTemplateId": proceduresTemplateId }
+        // });
+        // console.log("cacheData", cacheData, proceduresTemplateTabData)
+        // clientAttrsData.clientAttributes.push(
+        //   cacheData.data.createClientAttribute.clientAttribute 
+        // )
+        // store.writeQuery({ query: GET_CLIENT_ATTRIBUTE, data: clientAttrsData });
+        // setId(cacheData.data.createClientAttribute.clientAttribute.id)
+        // )
+        // store.writeQuery({ query: GET_PROCEDURES_TEMPLATE_TABS, data: clientAttrsData });
+      },
+      fetchPolicy: "no-cache",
+      refetchQueries: [{
+        query: GET_PROCEDURES_TEMPLATE_FIELDS_GROUPS_FIELDS,
+        variables: { "id": groupId },
+      }],
+      awaitRefetchQueries: true
+    }
+  )
+
+  const addNewField = (event) => {
+    console.log("PASA CREATE ----",currentTab.id, groupId)
+    createProcedureTemplateTabFieldMutation(
+      { 
+        variables: 
+          { "name": fieldName, "tabId": currentTab.id, "style": style, "fieldsGroupId": groupId },
+          fetchPolicy: "no-cache",
+      }
+    )
+    // const newTab = { name: tabName, id: proceduresTemplateId }
+    // setTabList(tabList.concat([newTab]));//TODO: hacer la mutacion
+    setOpenB(false);
+  }
+
+  const handleFieldNameChange = (event) => {
+    setFieldName(event.target.value);
+    setPristine(false)
+  };
+
+  const handleStyleChange = (event) => {
+    setStyle(event.target.value);
+    setPristine(false)
+  };
+
 
   let open = Boolean(anchorEl);
 
@@ -138,8 +202,8 @@ const FieldsGroupMenu = (props) => {
                     id="fieldName" 
                     label="Editar nombre"
                     className={ classes.textInputTittleName }
-                    // value={ fieldName }
-                    // onChange={ handleFieldNameChange }
+                    value={ fieldName }
+                    onChange={ handleFieldNameChange }
                   />
                 </Grid>
                 <Grid container item xs={1}>
@@ -150,8 +214,8 @@ const FieldsGroupMenu = (props) => {
                     <Select
                       labelId="demo-simple-select-outlined-label"
                       name='style'
-                      // value={ style }
-                      // onChange={ handleStyleChange }
+                      value={ style }
+                      onChange={ handleStyleChange }
                     >
                       <MenuItem key='string' value={'string'}>Texto</MenuItem>
                       <MenuItem key='number' value={'number'}>Numerico</MenuItem>
