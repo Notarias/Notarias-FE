@@ -84,9 +84,8 @@ const ActiveTemplateButton = (props) => {
         </Button>
       </Grid>
     )
-}
+  }
 
-  console.log("active", active, templateData.active)
   return(
     <>
     <Grid container item justify="center" >

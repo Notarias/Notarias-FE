@@ -48,25 +48,14 @@ const StatusRadioButton = (props) => {
       <Grid container direction="row" onClick={ handleClickOpen }>
         {
           active ?
-            // <Button>
-            <ListItemIcon>
-              <RadioButtonUncheckedIcon color="secondary" className={ classes.defaultIcon }/>
-            </ListItemIcon>
-            // {/* </Button> */}
-          :
-            //<Button>
             <ListItemIcon>
               <RadioButtonCheckedIcon className={classes.radioButtonActiveGreen} />
             </ListItemIcon>
-            //</Button>
+          :
+            <ListItemIcon>
+              <RadioButtonUncheckedIcon color="secondary" className={ classes.defaultIcon }/>
+            </ListItemIcon>
         }
-      {/* <Typography 
-        variant="overline"
-        display="block" 
-        gutterBottom
-        key="activar"
-        className={ classes.textIconDefault }
-      > */}
       <ListItemText>
         { statusTemplate() }
       </ListItemText>

@@ -144,7 +144,7 @@ const TabMenu = (props) => {
         <ListItemText>
           <TextField
             id="standard-basic" 
-            label="Nombre"
+            label="&#8288;Nombre"
             value={ name }
             onChange={ handleNameChange }
           />

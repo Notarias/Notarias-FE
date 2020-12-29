@@ -131,8 +131,6 @@ const TemplateTittle = (props) => {
   //   }
   // }
 
-
-  console.log(templateData, "----")
   return(
     <Grid
       container 

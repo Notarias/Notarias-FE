@@ -77,7 +77,6 @@ const FieldsGroupMenu = (props) => {
   )
 
   const addNewField = (event) => {
-    console.log("PASA CREATE ----",currentTab.id, groupId)
     createProcedureTemplateTabFieldMutation(
       { 
         variables: 
@@ -187,10 +186,10 @@ const FieldsGroupMenu = (props) => {
         </MenuItem>
         <Divider/>
         <MenuItem>
-          <ListItemIcon>
-            <AddBoxIcon className={ classes.defaultIcon }  onClick={ handleClickOpen}/>
+          <ListItemIcon onClick={ handleClickOpen}>
+            <AddBoxIcon className={ classes.defaultIcon } />
           </ListItemIcon>
-          <ListItemText primary="Campo" onClick={ handleClickOpen}/>
+          <ListItemText primary="&#8288;Campo" onClick={ handleClickOpen}/>
           <Dialog open={openB} onClose={ handleClose }>
             <DialogTitle>
               Añade un campo al grupo { groupName }

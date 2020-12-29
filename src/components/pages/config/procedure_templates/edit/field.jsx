@@ -1,4 +1,4 @@
-import React                          from 'react';
+import React, { useEffect }                          from 'react';
 import Grid                           from '@material-ui/core/Grid';
 import TextField                      from '@material-ui/core/TextField';
 import StarsIcon                      from '@material-ui/icons/Stars';
@@ -23,6 +23,7 @@ import SaveIcon                           from '@material-ui/icons/Save';
 import CreateIcon                         from '@material-ui/icons/Create';
 import { useMutation }                    from '@apollo/react-hooks';
 import { UPDATE_PROCEDURES_TEMPLATE_TAB_FIELD }     from '../queries_and_mutations/queries'
+import { GET_PROCEDURE_TEMPLATE_TAB_FIELDS }        from '../queries_and_mutations/queries'
 
 import RadioButtonUncheckedIcon       from '@material-ui/icons/RadioButtonUnchecked';
 import RadioButtonCheckedIcon         from '@material-ui/icons/RadioButtonChecked';
@@ -39,37 +40,42 @@ const INPUT_TYPES = {
 
 const Field = (props) => {
 
-  const { classes, id, groupId } = props
+  const { classes, id, groupId, currentTab } = props
   // const { removeFromList } = props
-  
   const [open, setOpen] = React.useState(false);
   const [openb, setOpenb] = React.useState(false);
-    const [openDialog, setOpenDialog] = React.useState(false);
+  const [openDialog, setOpenDialog] = React.useState(false);
   const [editing, setEditing] = React.useState(true);
-  const[name, setName] = React.useState(props.name)
-  const[style, setStyle] = React.useState(props.style)
-  const[active, setActive] = React.useState(true)
+  const [name, setName] = React.useState(props.name)
+  const [style, setStyle] = React.useState(props.style)
+  const [active, setActive] = React.useState(props.active)
   const [favourite, setFavourite] = React.useState(props.favourite)
+  const [tabId, setTabId] = React.useState()
+
+  // useEffect(() => {
+  //   currentTab && setTabId(currentTab.id)
+  // }, [currentTab])
 
   const [updateProceduresTemplateTabFieldMutation, updateProcessInfo] =
-  useMutation(
-    UPDATE_PROCEDURES_TEMPLATE_TAB_FIELD,
-    {
-      // onError(apolloError) {
-      //   setErrors(apolloError)
-      // },
-      update(store, cacheData) {
-        setFavourite(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.favourite)
-        // console.log(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.favourite, "---2--")
-        // // setError(false)
-        // setPristine(true)
-        // const clientAttrsData = store.readQuery({ query: GET_CLIENT_ATTRIBUTE });
+    useMutation(
+      UPDATE_PROCEDURES_TEMPLATE_TAB_FIELD,
+      {
+        // onError(apolloError) {
+        //   setErrors(apolloError)
+        // },
+        update(store, cacheData) {
+          setFavourite(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.favourite)
+          setActive(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.active)
+          // console.log(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.favourite, "---2--")
+          // // setError(false)
+          // setPristine(true)
+          // const clientAttrsData = store.readQuery({ query: GET_CLIENT_ATTRIBUTE });
+        }
       }
-    }
-  )
+    )
 
   const updateField = (event) => {
-    updateProceduresTemplateTabFieldMutation({ variables: { id: id, name: name, style: style, active: active }})
+    updateProceduresTemplateTabFieldMutation({ variables: { id: id, name: name, style: style}})
     setEditing(!editing)
   }
 
@@ -103,7 +109,7 @@ const Field = (props) => {
   }
 
   const changeFieldStatus = (event) => {
-    // updateProceduresTemplateTabFieldMutation({ variables: { id: id, active: !active }})
+    updateProceduresTemplateTabFieldMutation({ variables: { id: id, active: !active }})
     setActive(!active)
     setOpenDialog(false);
   }
@@ -199,8 +205,6 @@ const Field = (props) => {
     )
   }
 
-
-  console.log("field-active", props.active)
   return (
     <Grid container item alignItems="flex-start" justify="flex-start" className={ classes.fielPaddingBottom }>
       <Paper>
@@ -270,11 +274,11 @@ const Field = (props) => {
           {
           active ?
             <Button>
-              <RadioButtonUncheckedIcon color="secondary" className={ classes.defaultIcon }/>
+              <RadioButtonCheckedIcon className={classes.radioButtonActiveGreen}/>
             </Button>
           :
             <Button>
-              <RadioButtonCheckedIcon className={classes.radioButtonActiveGreen}/>
+              <RadioButtonUncheckedIcon color="secondary" className={ classes.defaultIcon }/>
             </Button>
         }
             {/* <FormControlLabel

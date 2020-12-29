@@ -9,8 +9,7 @@ const FieldsGroupFieldList = (props) => {
   const { loading, data } = useQuery(
     GET_PROCEDURES_TEMPLATE_FIELDS_GROUPS_FIELDS,
     {
-      variables: {"id": groupId },
-      fetchPolicy: "no-cache"
+      variables: {"id": groupId }
     } 
   );
   const fields = data ? data.proceduresTemplateFieldsGroupFields : []
@@ -21,7 +20,6 @@ const FieldsGroupFieldList = (props) => {
       {
         fields.map(
           (field, index) => {
-            console.log(field.style)
             return(
               <Field
                 key={ field.id + "-fieldGroupField"}
@@ -31,6 +29,7 @@ const FieldsGroupFieldList = (props) => {
                 style={ field.style || " " }
                 favourite={ field.favourite || false }
                 id={ field.id || " " }
+                active={ field.active }
                 groupId={ groupId }
               />
             )

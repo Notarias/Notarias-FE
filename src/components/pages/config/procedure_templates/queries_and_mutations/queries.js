@@ -90,24 +90,6 @@ export const GET_PROCEDURES_TEMPLATE_TABS = gql`
   }
 `
 
-export const GET_PROCEDURE_TEMPLATE_TAB_FIELDS = gql`
-  query proceduresTemplateTabFields(
-    $id: ID!
-  )
-    {
-      proceduresTemplateTabFields(
-        tabId: $id
-      )
-      {
-        id
-        favourite
-        name
-        style
-        active
-      }
-    }
-`
-
 export const GET_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS = gql`
   query proceduresTemplateTabFieldsGroups(
     $id: ID!
@@ -159,7 +141,7 @@ mutation updateProceduresTemplateFieldsGroup (
       } 
     ) 
   {
-    proceduresTemplateField
+    proceduresTemplateFieldsGroup
     {
       id
       name
@@ -179,6 +161,7 @@ export const GET_PROCEDURES_TEMPLATE_FIELDS_GROUPS_FIELDS = gql`
       name
       favourite
       style
+      active
     }
   }
 `
@@ -206,6 +189,24 @@ mutation updateProceduresTemplateTab ($id: ID!, $name: String, $active: Boolean)
     }
   }
 }
+`
+
+export const GET_PROCEDURE_TEMPLATE_TAB_FIELDS = gql`
+  query proceduresTemplateTabFields(
+    $id: ID!
+  )
+    {
+      proceduresTemplateTabFields(
+        tabId: $id
+      )
+      {
+        id
+        favourite
+        name
+        style
+        active
+      }
+    }
 `
 
 export const CREATE_PROCEDURES_TEMPLATE_TAB_FIELD = gql`
@@ -240,15 +241,17 @@ export const UPDATE_PROCEDURES_TEMPLATE_TAB_FIELD = gql`
     $id: ID!,
     $name: String,
     $favourite: Boolean,
-    $style: String
+    $style: String,
+    $active: Boolean
   )
     {
       updateProceduresTemplateField (
         input: {
           id: $id,
-          name: $name
+          name: $name,
           favourite: $favourite,
-          style: $style
+          style: $style,
+          active: $active
         } 
       ) 
     {
@@ -257,6 +260,7 @@ export const UPDATE_PROCEDURES_TEMPLATE_TAB_FIELD = gql`
         name
         favourite
         style
+        active
         proceduresTemplateTabId
         proceduresTemplateFieldsGroupId
       }

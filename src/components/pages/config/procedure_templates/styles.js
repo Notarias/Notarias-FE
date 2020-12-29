@@ -131,6 +131,8 @@ export const styles = theme => {
       marginRight: "10px",
       marginLeft: "5px",
       backgroundColor: "#d7d7e6",
+      paddingLeft: "8px",
+      paddingRight: "8px"
 
     },
     inputTittleGroupName: {

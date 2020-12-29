@@ -9,18 +9,7 @@ import FieldsGroupFieldList         from './fields_groups_fields_list';
 import Paper                        from '@material-ui/core/Paper';
 import Divider                      from '@material-ui/core/Divider';
 
-import Dialog                                                   from '@material-ui/core/Dialog';
-import DialogContent                                            from '@material-ui/core/DialogContent';
-import DialogTitle                                              from '@material-ui/core/DialogTitle';
-import DialogActions                                            from '@material-ui/core/DialogActions';
-import FormControl                    from '@material-ui/core/FormControl';
-import Select                         from '@material-ui/core/Select';
-import MenuItem                       from '@material-ui/core/MenuItem';
-import InputLabel                     from '@material-ui/core/InputLabel';
-
 import { useMutation }                                          from '@apollo/react-hooks';
-
-import { GET_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS }                from '../queries_and_mutations/queries'
 
 import { UPDATE_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS }         from '../queries_and_mutations/queries'
 import Typography                         from '@material-ui/core/Typography';
@@ -35,7 +24,6 @@ const FieldsGroup = (props) => {
 
   const { classes, group, groupId, currentTab, active } = props
   const [groupName, setGroupName] = React.useState(group.name);
-
   const [open, setOpen] = React.useState(false);
   const [editing, setEditing] = React.useState(true);
   
@@ -48,22 +36,18 @@ const FieldsGroup = (props) => {
       //   setErrors(apolloError)
       // },
       update(store, cacheData) {
+        console.log(cacheData, "cache-----")
+        // setActive(cacheData.data.updateProceduresTemplateFieldsGroup.proceduresTemplateField.active)
         // console.log(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.favourite, "---2--")
         // // setError(false)
         // setPristine(true)
         // const clientAttrsData = store.readQuery({ query: GET_CLIENT_ATTRIBUTE });
-      },
-      refetchQueries: [{
-        query: GET_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS,
-        variables: { "id": currentTab.id },
-      }],
-      awaitRefetchQueries: true
+      }
     }
   )
 
   const updateFieldsGroup = (event) => {
-    console.log(groupId, "-------------------------------------------------------")
-    updateProceduresTemplateTabFieldsGroupMutation({ variables: { "id": groupId, "name": groupName, "active": active }})
+    updateProceduresTemplateTabFieldsGroupMutation({ variables: { "id": groupId, "name": groupName}})
     setEditing(!editing)
   }
 
@@ -76,7 +60,7 @@ const FieldsGroup = (props) => {
   };
 
   const changeStatus = () => {
-    return( true )
+    updateProceduresTemplateTabFieldsGroupMutation({ variables: { "id": groupId, "active": !active }})
   }
 
   const editFieldGroup = () => {
@@ -123,8 +107,6 @@ const FieldsGroup = (props) => {
     )
   }
 
-
-  console.log("actiGRF",  group.active )
   return(
     <Paper className={ classes.roundedBorderGruop }>
       <Divider/>
@@ -141,7 +123,6 @@ const FieldsGroup = (props) => {
               editFieldGroup={ editFieldGroup }
               currentTab={ currentTab }
               groupId={ groupId }
-
             />
           </Grid>
           <Grid>

@@ -1,4 +1,4 @@
-import React                                        from 'react';
+import React, { useEffect }                                         from 'react';
 import Field                                        from './field';
 import { useQuery }                                 from '@apollo/react-hooks';
 import { GET_PROCEDURE_TEMPLATE_TAB_FIELDS }        from '../queries_and_mutations/queries'
@@ -39,14 +39,13 @@ const FieldList = (props) => {
   );
 
   const fields = data ? data.proceduresTemplateTabFields : []
-
   const renderFields = () => {
     return(
       <>
         {
           fields.map(
             (field, index) => {
-              console.log("ooo",field.active)
+              console.log(fields, "oooooiuu")
               return(
                 <Field
                   key={ field.id + "-field"}
@@ -56,7 +55,8 @@ const FieldList = (props) => {
                   style={ field.style || "" }
                   favourite={ field.favourite || false }
                   id={ field.id || " " }
-                  field={ field.active }
+                  active={ field.active }
+                  currentTab={ currentTab }
                 />
               )
             }
