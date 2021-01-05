@@ -1,32 +1,32 @@
-import React, { useEffect }                          from 'react';
-import Grid                           from '@material-ui/core/Grid';
-import TextField                      from '@material-ui/core/TextField';
-import StarsIcon                      from '@material-ui/icons/Stars';
-import FormControlLabel               from '@material-ui/core/FormControlLabel';
-import Checkbox                       from '@material-ui/core/Checkbox';
-import StarBorderIcon                 from '@material-ui/icons/StarBorder';
-import Button                         from '@material-ui/core/Button';
-import DeleteForeverIcon              from '@material-ui/icons/DeleteForever';
-import { withStyles }                 from '@material-ui/core/styles';
-import { styles }                     from '../styles';
-import FormControl                    from '@material-ui/core/FormControl';
-import Select                         from '@material-ui/core/Select';
-import MenuItem                       from '@material-ui/core/MenuItem';
-import InputLabel                     from '@material-ui/core/InputLabel';
-import Dialog                         from '@material-ui/core/Dialog';
-import DialogActions                  from '@material-ui/core/DialogActions';
-import DialogContent                  from '@material-ui/core/DialogContent';
-import DialogTitle                    from '@material-ui/core/DialogTitle';
-import Paper                          from '@material-ui/core/Paper';
-import Typography                         from '@material-ui/core/Typography';
-import SaveIcon                           from '@material-ui/icons/Save';
-import CreateIcon                         from '@material-ui/icons/Create';
-import { useMutation }                    from '@apollo/react-hooks';
-import { UPDATE_PROCEDURES_TEMPLATE_TAB_FIELD }     from '../queries_and_mutations/queries'
-import { GET_PROCEDURE_TEMPLATE_TAB_FIELDS }        from '../queries_and_mutations/queries'
+import React, { useEffect }                           from 'react';
+import Grid                                           from '@material-ui/core/Grid';
+import TextField                                      from '@material-ui/core/TextField';
+import StarsIcon                                      from '@material-ui/icons/Stars';
+import FormControlLabel                               from '@material-ui/core/FormControlLabel';
+import Checkbox                                       from '@material-ui/core/Checkbox';
+import StarBorderIcon                                 from '@material-ui/icons/StarBorder';
+import Button                                         from '@material-ui/core/Button';
+import DeleteForeverIcon                              from '@material-ui/icons/DeleteForever';
+import { withStyles }                                 from '@material-ui/core/styles';
+import { styles }                                     from '../styles';
+import FormControl                                    from '@material-ui/core/FormControl';
+import Select                                         from '@material-ui/core/Select';
+import MenuItem                                       from '@material-ui/core/MenuItem';
+import InputLabel                                     from '@material-ui/core/InputLabel';
+import Dialog                                         from '@material-ui/core/Dialog';
+import DialogActions                                  from '@material-ui/core/DialogActions';
+import DialogContent                                  from '@material-ui/core/DialogContent';
+import DialogTitle                                    from '@material-ui/core/DialogTitle';
+import Paper                                          from '@material-ui/core/Paper';
+import Typography                                     from '@material-ui/core/Typography';
+import SaveIcon                                       from '@material-ui/icons/Save';
+import CreateIcon                                     from '@material-ui/icons/Create';
+import { useMutation }                                from '@apollo/react-hooks';
+import { UPDATE_PROCEDURES_TEMPLATE_TAB_FIELD }       from '../queries_and_mutations/queries'
+import { DESTROY_PROCEDURES_TEMPLATE_TAB_FIELD }      from '../queries_and_mutations/queries'
+import RadioButtonUncheckedIcon                       from '@material-ui/icons/RadioButtonUnchecked';
+import RadioButtonCheckedIcon                         from '@material-ui/icons/RadioButtonChecked';
 
-import RadioButtonUncheckedIcon       from '@material-ui/icons/RadioButtonUnchecked';
-import RadioButtonCheckedIcon         from '@material-ui/icons/RadioButtonChecked';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import LabelOffIcon from '@material-ui/icons/LabelOff';
 
@@ -40,8 +40,7 @@ const INPUT_TYPES = {
 
 const Field = (props) => {
 
-  const { classes, id, groupId, currentTab } = props
-  // const { removeFromList } = props
+  const { classes, id, groupId, currentTab, removeFromList } = props
   const [open, setOpen] = React.useState(false);
   const [openb, setOpenb] = React.useState(false);
   const [openDialog, setOpenDialog] = React.useState(false);
@@ -122,8 +121,29 @@ const Field = (props) => {
     }
   }
 
+  const [destroyProceduresTemplateTabFieldMutation, destroyProcessInfo] =
+  useMutation(
+    DESTROY_PROCEDURES_TEMPLATE_TAB_FIELD, 
+    {
+      update(store, cacheData, id) {
+        // const clientAttrsData = store.readQuery({ query: GET_CLIENT_ATTRIBUTE });
+        // const deleteId = cacheData.data.destroyClientAttribute.clientAttribute.id
+
+        // let attr = clientAttrsData.clientAttributes
+        // let newArray = []
+        // for ( let i = 0; i < attr.length; i++) {
+        //   if (parseInt(attr[i].id) != parseInt(deleteId)) { 
+        //     newArray.push(attr[i]) 
+        //   }
+        // }
+        // clientAttrsData.clientAttributes = newArray
+        // store.writeQuery({ query: GET_CLIENT_ATTRIBUTE, data: clientAttrsData });
+      }
+    }
+  )
+
   const deleteFieldClick = () => {
-    // removeFromList(props.arrayIndex);
+    removeFromList(props.arrayIndex, destroyProceduresTemplateTabFieldMutation, { variables: { id: id } }, id )
     setOpen(false);
   }
 
@@ -257,7 +277,10 @@ const Field = (props) => {
           >
             <DialogTitle id="alert-dialog-title">{"Eliminar campo"}</DialogTitle>
             <DialogContent>
-              Se eliminara de manera permantente este campo
+              Se eliminara de manera permantente el campo: 
+              <Typography variant="subtitle2" className={ classes.texPlainTittleName }>
+                {name}
+              </Typography>
             </DialogContent>
             <DialogActions>
               <Button onClick={ handleClose } color="secondary">

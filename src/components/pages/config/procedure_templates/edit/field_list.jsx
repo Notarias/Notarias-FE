@@ -7,30 +7,26 @@ import Button                                       from '@material-ui/core/Butt
 import { styles }                                   from '../styles';
 import Typography                                   from '@material-ui/core/Typography';
 import { withStyles }                               from '@material-ui/core/styles';
-
-import Divider                                      from '@material-ui/core/Divider';
-import StarsIcon                                    from '@material-ui/icons/Stars';
-import FormControlLabel                             from '@material-ui/core/FormControlLabel';
-import FormControl                                  from '@material-ui/core/FormControl';
-import Checkbox                                     from '@material-ui/core/Checkbox';
-import TextField                                    from '@material-ui/core/TextField';
-import Paper                                        from '@material-ui/core/Paper';
-import Select                                       from '@material-ui/core/Select';
-import MenuItem                                     from '@material-ui/core/MenuItem';
-import InputLabel                                   from '@material-ui/core/InputLabel';
-import StarBorderIcon                               from '@material-ui/icons/StarBorder';
-
-import Dialog                                       from '@material-ui/core/Dialog';
-import DialogContent                                from '@material-ui/core/DialogContent';
-import DialogTitle                                  from '@material-ui/core/DialogTitle';
-import DialogActions                                from '@material-ui/core/DialogActions';
-import DialogSelectCopy                 from './dialog_select_copy'
-
-import PostAddIcon                                  from '@material-ui/icons/PostAdd';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 
 const FieldList = (props) => {
-  const { currentTab, classes } = props
+  const { currentTab, classes} = props
+
+  const [fields, setFields] = React.useState(data ? data.proceduresTemplateTabFields : [])
+
+  useEffect(() => {
+    data && setFields(data.proceduresTemplateTabFields);;
+  }, [data])
+
+  const removeFromList = (index, mutation, variables, id) => {
+    if(id){
+      mutation(variables)
+    }
+    fields.splice(index, 1)
+    let newArray = fields.slice()
+    setFields(newArray)
+  }
+
   const { loading, data } = useQuery(
     GET_PROCEDURE_TEMPLATE_TAB_FIELDS,
     {
@@ -38,7 +34,6 @@ const FieldList = (props) => {
     } 
   );
 
-  const fields = data ? data.proceduresTemplateTabFields : []
   const renderFields = () => {
     return(
       <>
@@ -50,7 +45,7 @@ const FieldList = (props) => {
                 <Field
                   key={ field.id + "-field"}
                   arrayIndex={ index }
-                  // removeFromList={ removeFromList }
+                  removeFromList={ removeFromList }
                   name={ field.name || "" }
                   style={ field.style || "" }
                   favourite={ field.favourite || false }

@@ -89,6 +89,38 @@ export const GET_PROCEDURES_TEMPLATE_TABS = gql`
     }
   }
 `
+export const CREATE_PROCEDURES_TEMPLATE_TAB = gql`
+  mutation createProceduresTemplateTab ($id: ID!, $name: String!){
+    createProceduresTemplateTab (input: {templateId: $id, name: $name} ) {
+      proceduresTemplateTab {
+        id
+        name
+        proceduresTemplateId
+      }
+    }
+  }
+`
+
+export const UPDATE_PROCEDURES_TEMPLATE_TAB = gql`
+mutation updateProceduresTemplateTab ($id: ID!, $name: String, $active: Boolean){
+  updateProceduresTemplateTab (input: {id: $id, name: $name, active: $active} ) {
+    proceduresTemplateTab {
+      id
+      name
+      proceduresTemplateId
+      active
+    }
+  }
+}
+`
+
+export const DESTROY_PROCEDURES_TEMPLATE_TAB = gql`
+  mutation destoryProceduresTemplateTab ($id: ID! ) {
+    destoryProceduresTemplateTab (input: { id: $id}) {
+      destroyed
+    }
+  }
+`
 
 export const GET_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS = gql`
   query proceduresTemplateTabFieldsGroups(
@@ -152,43 +184,12 @@ mutation updateProceduresTemplateFieldsGroup (
 }
 `
 
-export const GET_PROCEDURES_TEMPLATE_FIELDS_GROUPS_FIELDS = gql`
-  query proceduresTemplateFieldsGroupFields(
-    $id: ID!
-  ){
-    proceduresTemplateFieldsGroupFields(fieldsGroupId: $id){
-      id
-      name
-      favourite
-      style
-      active
+export const DESTROY_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS = gql`
+  mutation destroyProceduresTemplateFieldsGroup ($id: ID! ) {
+    destroyProceduresTemplateFieldsGroup (input: { id: $id}) {
+      destroyed
     }
   }
-`
-
-export const CREATE_PROCEDURES_TEMPLATE_TAB = gql`
-  mutation createProceduresTemplateTab ($id: ID!, $name: String!){
-    createProceduresTemplateTab (input: {templateId: $id, name: $name} ) {
-      proceduresTemplateTab {
-        id
-        name
-        proceduresTemplateId
-      }
-    }
-  }
-`
-
-export const UPDATE_PROCEDURES_TEMPLATE_TAB = gql`
-mutation updateProceduresTemplateTab ($id: ID!, $name: String, $active: Boolean){
-  updateProceduresTemplateTab (input: {id: $id, name: $name, active: $active} ) {
-    proceduresTemplateTab {
-      id
-      name
-      proceduresTemplateId
-      active
-    }
-  }
-}
 `
 
 export const GET_PROCEDURE_TEMPLATE_TAB_FIELDS = gql`
@@ -264,6 +265,31 @@ export const UPDATE_PROCEDURES_TEMPLATE_TAB_FIELD = gql`
         proceduresTemplateTabId
         proceduresTemplateFieldsGroupId
       }
+    }
+  }
+`
+
+export const DESTROY_PROCEDURES_TEMPLATE_TAB_FIELD = gql`
+  mutation destroyProceduresTemplateField ($id: ID! ) {
+    destroyProceduresTemplateField (input: { id: $id}) {
+      destroyed
+    }
+  }
+`
+
+
+
+
+export const GET_PROCEDURES_TEMPLATE_FIELDS_GROUPS_FIELDS = gql`
+  query proceduresTemplateFieldsGroupFields(
+    $id: ID!
+  ){
+    proceduresTemplateFieldsGroupFields(fieldsGroupId: $id){
+      id
+      name
+      favourite
+      style
+      active
     }
   }
 `

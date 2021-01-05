@@ -125,57 +125,6 @@ const FieldsGroup = (props) => {
               groupId={ groupId }
             />
           </Grid>
-          <Grid>
-          {/* <Dialog open={open} onClose={ handleClose }>
-            <DialogTitle>
-              Añade un campo al grupo { groupName }
-            </DialogTitle>
-            <DialogContent>
-              <Grid container direction="row">
-                <Grid container item xs={6}>
-                  <TextField 
-                    id="fieldName" 
-                    label="Editar nombre"
-                    className={ classes.textInputTittleName }
-                    value={ fieldName }
-                    onChange={ handleFieldNameChange }
-                  />
-                </Grid>
-                <Grid container item xs={1}>
-
-                </Grid>
-                <Grid container item xs={5}>
-                  <FormControl variant="outlined" className={ classes.textFieldTittleType }>
-                    <InputLabel id="label-field">Selecciona el tipo de campo</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-outlined-label"
-                      name='style'
-                      value={ style }
-                      onChange={ handleStyleChange }
-                    >
-                      <MenuItem key='string' value={'string'}>Texto</MenuItem>
-                      <MenuItem key='number' value={'number'}>Numerico</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-              </Grid>
-            </DialogContent>
-            <DialogActions>
-              <Grid container direction="row" justify="flex-end">
-                <Button onClick={ handleClose } color="secondary" >
-                  Cancelar
-                </Button>
-                <Button 
-                  onClick={ addNewField } 
-                  color="primary"
-                  variant="contained"
-                >
-                  "Añadir campo"
-                </Button>
-              </Grid>
-            </DialogActions>
-          </Dialog> */}
-          </Grid>
         </Grid>
         <FieldsGroupFieldList
 
