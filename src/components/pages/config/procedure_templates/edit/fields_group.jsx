@@ -1,32 +1,26 @@
-import React                        from 'react';
-import { styles }                   from '../styles';
-import { withStyles }               from '@material-ui/core/styles';
-import Grid                         from '@material-ui/core/Grid';
-import Button                       from '@material-ui/core/Button';
-import AddIcon                      from '@material-ui/icons/Add';
-import TextField                    from '@material-ui/core/TextField';
-import FieldsGroupFieldList         from './fields_groups_fields_list';
-import Paper                        from '@material-ui/core/Paper';
-import Divider                      from '@material-ui/core/Divider';
-
+import React                                                    from 'react';
+import { styles }                                               from '../styles';
+import { withStyles }                                           from '@material-ui/core/styles';
+import Grid                                                     from '@material-ui/core/Grid';
+import Button                                                   from '@material-ui/core/Button';
+import TextField                                                from '@material-ui/core/TextField';
+import FieldsGroupFieldList                                     from './fields_groups_fields_list';
+import Paper                                                    from '@material-ui/core/Paper';
+import Divider                                                  from '@material-ui/core/Divider';
 import { useMutation }                                          from '@apollo/react-hooks';
-
 import { UPDATE_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS }         from '../queries_and_mutations/queries'
-import Typography                         from '@material-ui/core/Typography';
-
-import FieldsGroupMenu from './fields_group_menu';
-import SaveIcon                           from '@material-ui/icons/Save';
-import CreateIcon                         from '@material-ui/icons/Create'
-
+import Typography                                               from '@material-ui/core/Typography';
+import FieldsGroupMenu                                          from './fields_group_menu';
+import SaveIcon                                                 from '@material-ui/icons/Save';
+import CreateIcon                                               from '@material-ui/icons/Create'
 
 
 const FieldsGroup = (props) => {
 
-  const { classes, group, groupId, currentTab, active } = props
+  const { classes, group, groupId, currentTab, active} = props
   const [groupName, setGroupName] = React.useState(group.name);
   const [open, setOpen] = React.useState(false);
   const [editing, setEditing] = React.useState(true);
-  
 
   const [updateProceduresTemplateTabFieldsGroupMutation, updateGroupProcessInfo] =
   useMutation(
@@ -36,7 +30,6 @@ const FieldsGroup = (props) => {
       //   setErrors(apolloError)
       // },
       update(store, cacheData) {
-        console.log(cacheData, "cache-----")
         // setActive(cacheData.data.updateProceduresTemplateFieldsGroup.proceduresTemplateField.active)
         // console.log(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.favourite, "---2--")
         // // setError(false)
@@ -127,9 +120,7 @@ const FieldsGroup = (props) => {
           </Grid>
         </Grid>
         <FieldsGroupFieldList
-
           groupId={ groupId }
-          // removeFromList={ removeFromList }
         />
       </Grid>
     </Paper>

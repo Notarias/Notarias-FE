@@ -1,35 +1,30 @@
 
-import React, { useEffect }                       from 'react';
-import { styles }                   from '../styles';
-import { withStyles }               from '@material-ui/core/styles';
-import Typography                   from '@material-ui/core/Typography';
-import Grid                         from '@material-ui/core/Grid';
-import Button                       from '@material-ui/core/Button';
-import IconButton                   from '@material-ui/core/IconButton';
-import Menu                         from '@material-ui/core/Menu';
-import MenuItem                     from '@material-ui/core/MenuItem';
-import MoreVertIcon                 from '@material-ui/icons/MoreVert';
-import TextField                    from '@material-ui/core/TextField';
-import SaveIcon                           from '@material-ui/icons/Save';
-import CreateIcon                         from '@material-ui/icons/Create'
-import { useMutation }                    from '@apollo/react-hooks';
+import React, { useEffect }                     from 'react';
+import { styles }                               from '../styles';
+import { withStyles }                           from '@material-ui/core/styles';
+import Typography                               from '@material-ui/core/Typography';
+import Grid                                     from '@material-ui/core/Grid';
+import Button                                   from '@material-ui/core/Button';
+import IconButton                               from '@material-ui/core/IconButton';
+import Menu                                     from '@material-ui/core/Menu';
+import MenuItem                                 from '@material-ui/core/MenuItem';
+import MoreVertIcon                             from '@material-ui/icons/MoreVert';
+import TextField                                from '@material-ui/core/TextField';
+import SaveIcon                                 from '@material-ui/icons/Save';
+import CreateIcon                               from '@material-ui/icons/Create'
+import { useMutation }                          from '@apollo/react-hooks';
 import { GET_PROCEDURES_TEMPLATE_TABS }         from '../queries_and_mutations/queries'
-import { UPDATE_PROCEDURES_TEMPLATE_TAB }     from '../queries_and_mutations/queries'
-import Divider                      from '@material-ui/core/Divider';
-import DeleteForeverIcon              from '@material-ui/icons/DeleteForever';
-import StatusRadioButton              from '../index/statusRadioButton';
-
-import Dialog                                                   from '@material-ui/core/Dialog';
-import DialogContent                                            from '@material-ui/core/DialogContent';
-import DialogTitle                                              from '@material-ui/core/DialogTitle';
-import DialogActions                                            from '@material-ui/core/DialogActions';
-
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-
-
-
-//TODO: hacer el refetch del update mutation
+import { UPDATE_PROCEDURES_TEMPLATE_TAB }       from '../queries_and_mutations/queries'
+import { DESTROY_PROCEDURES_TEMPLATE_TAB }      from '../queries_and_mutations/queries'
+import Divider                                  from '@material-ui/core/Divider';
+import DeleteForeverIcon                        from '@material-ui/icons/DeleteForever';
+import StatusRadioButton                        from '../index/statusRadioButton';
+import Dialog                                   from '@material-ui/core/Dialog';
+import DialogContent                            from '@material-ui/core/DialogContent';
+import DialogTitle                              from '@material-ui/core/DialogTitle';
+import DialogActions                            from '@material-ui/core/DialogActions';
+import ListItemIcon                             from '@material-ui/core/ListItemIcon';
+import ListItemText                             from '@material-ui/core/ListItemText';
 
 
 const TabMenu = (props) => {
@@ -39,15 +34,6 @@ const TabMenu = (props) => {
   const [editing, setEditing] =  React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openDialog, setOpenDialog] = React.useState(false);
-
-  // const [status, setStatus] = React.useState(procedureTemplate.active);
-
-  // useEffect(
-  //   () => {
-  //     setName(templateData.name)
-  //   },
-  //   [templateData]
-  // )
 
   const [updateProceduresTemplateTabMutation, updateProcessInfo] =
   useMutation(
@@ -67,10 +53,42 @@ const TabMenu = (props) => {
     }
   )
 
-  // const statusTemplate = () => { 
-  //   return status ? "Desactivar" : "Activar"
-  // }
+  const updateTab = (event) => {
+    updateProceduresTemplateTabMutation(
+      { 
+        variables: { id: id , name: name},
+        fetchPolicy: "no-cache"
+      }
+    )
+    setEditing(!editing)
+  }
 
+  const changeStatus = (event) => {
+    updateProceduresTemplateTabMutation(
+      { 
+        variables: { id: id , active: !active},
+        fetchPolicy: "no-cache"
+      }
+    )
+  }
+
+  const [destroyProceduresTemplateTabMutation, destroyProcessInfo] =
+  useMutation(
+    DESTROY_PROCEDURES_TEMPLATE_TAB, 
+    {
+      refetchQueries: [{
+        query: GET_PROCEDURES_TEMPLATE_TABS,
+        variables: { "proceduresTemplateId": proceduresTemplateId },
+      }],
+      awaitRefetchQueries: true
+    }
+  )
+
+  const deleteTabClick = () => {
+    destroyProceduresTemplateTabMutation(
+      { variables: { id: id } }
+    )
+  }
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
@@ -98,27 +116,6 @@ const TabMenu = (props) => {
     setName(event.target.value);
   };
 
-  const updateTab = (event) => {
-    updateProceduresTemplateTabMutation(
-      { 
-        variables: { id: id , name: name},
-        fetchPolicy: "no-cache"
-      }
-    )
-    setEditing(!editing)
-  }
-
-  const changeStatus = (event) => {
-    updateProceduresTemplateTabMutation(
-      { 
-        variables: { id: id , active: !active},
-        fetchPolicy: "no-cache"
-      }
-    )
-  }
-
-
-
   const loadingTab = updateProcessInfo.loading
 
   const renderTittleTextTab = () => {
@@ -128,7 +125,9 @@ const TabMenu = (props) => {
         <ListItemIcon  onClick={ changeTittle }>
           <CreateIcon className={ classes.defaultIcon }/>
         </ListItemIcon>
-        <ListItemText primary={name} onClick={ changeTittle }/>
+        <Typography onClick={ changeTittle } noWrap>
+          { name }
+        </Typography>
       </>
     )
   }
@@ -201,7 +200,11 @@ const TabMenu = (props) => {
       >
         <DialogTitle id="alert-dialog-title">{"Eliminar pestaña"}</DialogTitle>
         <DialogContent>
-          Se eliminara de manera permantente esta Pestaña
+          <Typography variant="body1">
+            Se eliminará permanentemente la pestaña
+            <strong style={ { color: "red", padding: "0 4px" }}>{ name }</strong>
+            junto con sus <strong style={ { color: "blue", padding: "0 4px" }}>grupos y campos</strong>.
+          </Typography>
         </DialogContent>
         <DialogActions>
           <Button onClick={ handleCloseDialog } color="secondary">
@@ -210,7 +213,7 @@ const TabMenu = (props) => {
           <Button
             color="primary"
             autoFocus
-            // onClick={ deleteFieldClick }
+            onClick={ deleteTabClick }
           >
             Borrar
           </Button>

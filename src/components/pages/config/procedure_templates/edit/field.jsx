@@ -24,6 +24,7 @@ import CreateIcon                                     from '@material-ui/icons/C
 import { useMutation }                                from '@apollo/react-hooks';
 import { UPDATE_PROCEDURES_TEMPLATE_TAB_FIELD }       from '../queries_and_mutations/queries'
 import { DESTROY_PROCEDURES_TEMPLATE_TAB_FIELD }      from '../queries_and_mutations/queries'
+import { GET_PROCEDURE_TEMPLATE_TAB_FIELDS }          from '../queries_and_mutations/queries'
 import RadioButtonUncheckedIcon                       from '@material-ui/icons/RadioButtonUnchecked';
 import RadioButtonCheckedIcon                         from '@material-ui/icons/RadioButtonChecked';
 
@@ -122,25 +123,16 @@ const Field = (props) => {
   }
 
   const [destroyProceduresTemplateTabFieldMutation, destroyProcessInfo] =
-  useMutation(
-    DESTROY_PROCEDURES_TEMPLATE_TAB_FIELD, 
-    {
-      update(store, cacheData, id) {
-        // const clientAttrsData = store.readQuery({ query: GET_CLIENT_ATTRIBUTE });
-        // const deleteId = cacheData.data.destroyClientAttribute.clientAttribute.id
-
-        // let attr = clientAttrsData.clientAttributes
-        // let newArray = []
-        // for ( let i = 0; i < attr.length; i++) {
-        //   if (parseInt(attr[i].id) != parseInt(deleteId)) { 
-        //     newArray.push(attr[i]) 
-        //   }
-        // }
-        // clientAttrsData.clientAttributes = newArray
-        // store.writeQuery({ query: GET_CLIENT_ATTRIBUTE, data: clientAttrsData });
+    useMutation(
+      DESTROY_PROCEDURES_TEMPLATE_TAB_FIELD, 
+      {
+        refetchQueries: [{
+          query: GET_PROCEDURE_TEMPLATE_TAB_FIELDS,
+          variables: { "id": currentTab && currentTab.id },
+        }],
+        awaitRefetchQueries: true
       }
-    }
-  )
+    )
 
   const deleteFieldClick = () => {
     removeFromList(props.arrayIndex, destroyProceduresTemplateTabFieldMutation, { variables: { id: id } }, id )

@@ -121,6 +121,10 @@ export const styles = theme => {
       paddingLeft: "10px",
       wordWrap: "break-word",
     },
+    wordWrapToTabName: {
+      wordWrap: "break-word",
+      maxWidth: "150px",
+    },
     textPlainGoupName: {
       height: "48px",
       maxWidth: "550px",

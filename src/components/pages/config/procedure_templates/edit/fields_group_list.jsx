@@ -1,15 +1,7 @@
-import React                                            from 'react';
+import React, { useEffect }                             from 'react';
 import FieldsGroup                                      from './fields_group';
 import { useQuery }                                     from '@apollo/react-hooks';
 import { GET_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS }    from '../queries_and_mutations/queries'
-
-import { styles }                                       from '../styles';
-import { withStyles }                                   from '@material-ui/core/styles';
-import Typography                                       from '@material-ui/core/Typography';
-import DialogSelectCopy                                 from './dialog_select_copy'
-import LibraryAddIcon                                   from '@material-ui/icons/LibraryAdd';
-import Grid                                             from '@material-ui/core/Button';
-
 
 
 const FieldsGroupList = (props) => {
@@ -22,7 +14,11 @@ const FieldsGroupList = (props) => {
     }
   );
 
-  const fieldsGroupList = data ? data.proceduresTemplateTabFieldsGroups : []
+  const [fieldsGroupList, setFieldsGroupList] = React.useState(data ? data.proceduresTemplateTabFieldsGroups : [])
+
+  useEffect(() => {
+    data && setFieldsGroupList(data.proceduresTemplateTabFieldsGroups);;
+  }, [data])
 
   const renderFieldGroups = () => {
     return(
@@ -37,8 +33,6 @@ const FieldsGroupList = (props) => {
                   groupId={ fieldsGroup.id }
                   currentTab={ currentTab }
                   active={ fieldsGroup.active }
-                  // removeFromList={ removeFromList }
-                  // addNewField={ addNewField }
                 />
               )
             }

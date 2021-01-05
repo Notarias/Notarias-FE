@@ -1,41 +1,41 @@
 
-import React                        from 'react';
-import { styles }                   from '../styles';
-import { withStyles }               from '@material-ui/core/styles';
-import Grid                         from '@material-ui/core/Grid';
-import Button                       from '@material-ui/core/Button';
-import StatusRadioButton              from '../index/statusRadioButton';
-import IconButton                     from '@material-ui/core/IconButton';
-import MoreVertIcon                   from '@material-ui/icons/MoreVert';
-import Menu                         from '@material-ui/core/Menu';
-import FormControl                    from '@material-ui/core/FormControl';
-import Select                         from '@material-ui/core/Select';
-import MenuItem                       from '@material-ui/core/MenuItem';
-import InputLabel                     from '@material-ui/core/InputLabel';
-import AddBoxIcon                   from '@material-ui/icons/AddBox';
-import Divider                      from '@material-ui/core/Divider';
-import TextField                    from '@material-ui/core/TextField';
-import DeleteForeverIcon              from '@material-ui/icons/DeleteForever';
-
-
+import React                                                    from 'react';
+import { styles }                                               from '../styles';
+import { withStyles }                                           from '@material-ui/core/styles';
+import Grid                                                     from '@material-ui/core/Grid';
+import Button                                                   from '@material-ui/core/Button';
+import StatusRadioButton                                        from '../index/statusRadioButton';
+import IconButton                                               from '@material-ui/core/IconButton';
+import MoreVertIcon                                             from '@material-ui/icons/MoreVert';
+import Menu                                                     from '@material-ui/core/Menu';
+import FormControl                                              from '@material-ui/core/FormControl';
+import Select                                                   from '@material-ui/core/Select';
+import MenuItem                                                 from '@material-ui/core/MenuItem';
+import InputLabel                                               from '@material-ui/core/InputLabel';
+import AddBoxIcon                                               from '@material-ui/icons/AddBox';
+import Divider                                                  from '@material-ui/core/Divider';
+import TextField                                                from '@material-ui/core/TextField';
+import DeleteForeverIcon                                        from '@material-ui/icons/DeleteForever';
+import Typography                                               from '@material-ui/core/Typography';
 import Dialog                                                   from '@material-ui/core/Dialog';
 import DialogContent                                            from '@material-ui/core/DialogContent';
 import DialogTitle                                              from '@material-ui/core/DialogTitle';
 import DialogActions                                            from '@material-ui/core/DialogActions';
-
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-
+import ListItemIcon                                             from '@material-ui/core/ListItemIcon';
+import ListItemText                                             from '@material-ui/core/ListItemText';
 import { useMutation }                                          from '@apollo/react-hooks';
 import { CREATE_PROCEDURES_TEMPLATE_TAB_FIELD }                 from '../queries_and_mutations/queries'
 import { GET_PROCEDURES_TEMPLATE_FIELDS_GROUPS_FIELDS }         from '../queries_and_mutations/queries'
+
+import { DESTROY_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS }        from '../queries_and_mutations/queries'
+import { GET_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS }            from '../queries_and_mutations/queries'
 
 
 
 
 const FieldsGroupMenu = (props) => {
 
-  const { classes, groupName, active, changeStatus, currentTab, groupId } = props
+  const { classes, groupName, active, changeStatus, currentTab, groupId, removeFromList, arrayIndex } = props
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openB, setOpenB] = React.useState(false);
@@ -87,6 +87,25 @@ const FieldsGroupMenu = (props) => {
     // const newTab = { name: tabName, id: proceduresTemplateId }
     // setTabList(tabList.concat([newTab]));//TODO: hacer la mutacion
     setOpenB(false);
+    setAnchorEl(null)
+  }
+
+  const [destroyProceduresTemplateTabFieldsGroupMutation, destroyProcessInfo] =
+  useMutation(
+    DESTROY_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS, 
+    {
+      refetchQueries: [{
+        query: GET_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS,
+        variables: { "id": currentTab && currentTab.id },
+      }],
+      awaitRefetchQueries: true
+    }
+  )
+
+  const deleteFieldsGroupClick = () => {
+    destroyProceduresTemplateTabFieldsGroupMutation(
+      { variables: { id: groupId } }
+    )
   }
 
   const handleFieldNameChange = (event) => {
@@ -161,7 +180,10 @@ const FieldsGroupMenu = (props) => {
           >
             <DialogTitle id="alert-dialog-title">{"Eliminar grupo"}</DialogTitle>
             <DialogContent>
-              Se eliminara de manera permantente este grupo de campos
+              Se eliminara de manera permantente este grupo de campos:
+              <Typography variant="subtitle2" className={ classes.texPlainTittleName }>
+                { groupName }
+              </Typography>
             </DialogContent>
             <DialogActions>
               <Button onClick={ handleCloseDialogDelete } color="secondary">
@@ -170,7 +192,7 @@ const FieldsGroupMenu = (props) => {
               <Button
                 color="primary"
                 autoFocus
-                // onClick={ deleteFieldClick }
+                onClick={ deleteFieldsGroupClick }
               >
                 Borrar
               </Button>

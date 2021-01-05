@@ -56,12 +56,12 @@ const StatusRadioButton = (props) => {
               <RadioButtonUncheckedIcon color="secondary" className={ classes.defaultIcon }/>
             </ListItemIcon>
         }
-      <ListItemText>
-        { statusTemplate() }
-      </ListItemText>
-      {/* </Typography> */}
-    </Grid>
-    <Dialog
+        <ListItemText>
+          &#8288; { statusTemplate() }
+        </ListItemText>
+        {/* </Typography> */}
+      </Grid>
+      <Dialog
         fullScreen={ fullScreen }
         open={ open }
         onClose={ handleClose }

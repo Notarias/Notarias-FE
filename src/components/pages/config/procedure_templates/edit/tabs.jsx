@@ -17,15 +17,13 @@ import { GET_PROCEDURES_TEMPLATE_TABS }     from '../queries_and_mutations/queri
 import { CREATE_PROCEDURES_TEMPLATE_TAB }   from '../queries_and_mutations/queries'
 
 
-//TODO: hacer el refetch del create mutation
-
-
 const Tabs = (props) => {
 
   const { classes, tabsData, currentTab, setCurrentTab, proceduresTemplateId } = props
   const { loading, data } = useQuery(
     GET_PROCEDURES_TEMPLATE_TABS, { variables: {"proceduresTemplateId": proceduresTemplateId }}
   );
+
   const [tabList, setTabList] = React.useState(data ? data.proceduresTemplateTabs: []);
   const [tabName, setTabName] = React.useState(currentTab ? currentTab.name : " Insertar");
 
@@ -37,13 +35,7 @@ const Tabs = (props) => {
     data && setTabList(data.proceduresTemplateTabs);
     currentTab && setTabName(currentTab.name);
   }, [data])
-    // useEffect(
-  //   () => {
-  //     setName(templateData.name)
-  //   },
-  //   [templateData]
-  // )
-  // Persistir tabsData en el state
+
 
   const [createProcedureTemplateTabMutation, createProcessInfo] =
   useMutation(
@@ -89,8 +81,6 @@ const Tabs = (props) => {
     setOpen(false);
     // setCurrentTab(newTab)
   }
-
-  // con tabsData persistidos haces el map que renderea los tabs
 
   const handleClickOpen = () => {
     setOpen(true);
