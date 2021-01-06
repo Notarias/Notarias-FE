@@ -19,8 +19,8 @@ import useMediaQuery                  from '@material-ui/core/useMediaQuery';
 import { useTheme }                   from '@material-ui/core/styles';
 import RadioButtonUncheckedIcon       from '@material-ui/icons/RadioButtonUnchecked';
 import RadioButtonCheckedIcon         from '@material-ui/icons/RadioButtonChecked';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
+import ListItemIcon                   from '@material-ui/core/ListItemIcon';
+import ListItemText                   from '@material-ui/core/ListItemText';
 
 
 const TempleteRow = (props) => {
@@ -44,7 +44,6 @@ const TempleteRow = (props) => {
     UPDATE_PROCEDURE_TEMPLATES,
     {
       update(store, cacheData, id) {
-        console.log("kchdt", cacheData)
         setActive(cacheData.data.updateProceduresTemplate.proceduresTemplate.active)
       }
     }
@@ -90,14 +89,6 @@ const TempleteRow = (props) => {
                 className={ classes.linkDefault }
               >
                 <Grid container>
-                  {/* <CreateIcon  className={ classes.defaultIcon }/>
-                  <Typography 
-                    variant="button" 
-                    display="block" 
-                    className={ classes.textIconDefault }
-                  >
-                    Editar
-                  </Typography> */}
                   <ListItemIcon>
                     <CreateIcon className={ classes.defaultIcon }/>
                   </ListItemIcon>
@@ -118,15 +109,6 @@ const TempleteRow = (props) => {
                   }
                 </ListItemIcon>
                 <ListItemText primary={ statusTemplate() } />
-                {/* <Typography 
-                  variant="button" 
-                  display="block" 
-                  gutterBottom
-                  key="activar"
-                  className={ classes.textIconDefault }
-                >
-                  { statusTemplate() }
-                </Typography>                 */}
               </Grid>
               <Dialog
                   fullScreen={ fullScreen }

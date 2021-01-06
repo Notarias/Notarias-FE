@@ -67,6 +67,9 @@ export const styles = theme => {
       width:"30px", 
       height:"30px",
     },
+    inputSmall:{
+      height:"50px",
+    },
     defaultMenuIcon:{
       width:"30px", 
       height:"30px",
@@ -244,6 +247,7 @@ export const styles = theme => {
       display: "flex",
       alignItems: "center",
       cursor: "pointer",
+      paddingLeft: "10px"
     },
     circularProgressLoading: {
       paddingTop: "60px",

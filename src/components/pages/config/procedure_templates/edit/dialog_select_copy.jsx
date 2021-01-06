@@ -1,10 +1,9 @@
-import React, { Component }                                     from 'react';
+import React                                                    from 'react';
 import Button                                                   from '@material-ui/core/Button';
 import Dialog                                                   from '@material-ui/core/Dialog';
 import DialogContent                                            from '@material-ui/core/DialogContent';
 import DialogTitle                                              from '@material-ui/core/DialogTitle';
 import DialogActions                                            from '@material-ui/core/DialogActions';
-import Radio                                                    from '@material-ui/core/Radio';
 import Grid                                                     from '@material-ui/core/Grid';
 import Typography                                               from '@material-ui/core/Typography';
 import { styles }                                               from '../styles';
@@ -14,26 +13,13 @@ import { GET_PROCEDURE_TEMPLATE_TAB_FIELDS }                    from '../queries
 import { CREATE_PROCEDURES_TEMPLATE_TAB_FIELD }                 from '../queries_and_mutations/queries'
 import { GET_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS }            from '../queries_and_mutations/queries'
 import { CREATE_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS }         from '../queries_and_mutations/queries'
-
-import AddIcon                              from '@material-ui/icons/Add';
-
-import Tabs   from '@material-ui/core/Tabs';
-import Tab    from '@material-ui/core/Tab';
-import AppBar from '@material-ui/core/AppBar';
-import PropTypes from 'prop-types';
-import Box from '@material-ui/core/Box';
-import Divider                      from '@material-ui/core/Divider';
-import StarsIcon                      from '@material-ui/icons/Stars';
-import FormControlLabel               from '@material-ui/core/FormControlLabel';
-import FormControl                    from '@material-ui/core/FormControl';
-import Checkbox                       from '@material-ui/core/Checkbox';
-import TextField                      from '@material-ui/core/TextField';
-import Paper                          from '@material-ui/core/Paper';
-import Select                         from '@material-ui/core/Select';
-import MenuItem                       from '@material-ui/core/MenuItem';
-import InputLabel                     from '@material-ui/core/InputLabel';
-import StarBorderIcon                 from '@material-ui/icons/StarBorder';
-
+import AddIcon                                                  from '@material-ui/icons/Add';
+import Divider                                                  from '@material-ui/core/Divider';
+import FormControl                                              from '@material-ui/core/FormControl';
+import TextField                                                from '@material-ui/core/TextField';
+import Select                                                   from '@material-ui/core/Select';
+import MenuItem                                                 from '@material-ui/core/MenuItem';
+import InputLabel                                               from '@material-ui/core/InputLabel';
 
 
 const DialogSelectCopy = ({
@@ -59,20 +45,6 @@ const DialogSelectCopy = ({
         //   setErrors(apolloError)
         // },
         onCompleted(cacheData) {
-          // setRefreshAll('RefreshFields' + cacheData.createProceduresTemplateField.proceduresTemplateField.id)
-          // setError(false)
-          // const proceduresTemplateTabData = store.readQuery({
-          //   query: GET_PROCEDURES_TEMPLATE_TABS, 
-          //   variables: { "proceduresTemplateId": proceduresTemplateId }
-          // });
-          // console.log("cacheData", cacheData, proceduresTemplateTabData)
-          // clientAttrsData.clientAttributes.push(
-          //   cacheData.data.createClientAttribute.clientAttribute 
-          // )
-          // store.writeQuery({ query: GET_CLIENT_ATTRIBUTE, data: clientAttrsData });
-          // setId(cacheData.data.createClientAttribute.clientAttribute.id)
-          // )
-          // store.writeQuery({ query: GET_PROCEDURES_TEMPLATE_TABS, data: clientAttrsData });
         },
         fetchPolicy: "no-cache",
         refetchQueries: [{
@@ -174,13 +146,11 @@ const DialogSelectCopy = ({
   const handleFieldNameChange = (event) => {
     setFieldName(event.target.value);
     setPristine(false)
-    console.log("name", fieldName)
   };
 
   const handleStyleChange = (event) => {
     setStyle(event.target.value);
     setPristine(false)
-    console.log("style", style)
   };
 
   const handleFavouriteChange = (event) => {
@@ -292,57 +262,6 @@ const DialogSelectCopy = ({
                   </Grid>
                 )
             }
-            {/* <Grid 
-              container 
-              direction="column" 
-              // item xs={6} 
-              justify="center" 
-              alignItems="center" 
-              className={ value === 'field' ?  classes.roundedBorderDialog : classes.roundedBorderDialogSelected  }
-            >
-            <Typography
-              variant="button"
-            >
-              Campo
-            </Typography>
-            <Radio
-              checked={value === 'field'}
-              onChange={handleChange}
-              value="field"
-              name="radio-button-field"
-              color="primary"
-            />
-            <Typography
-              variant="caption"
-            >
-              Agrega un campo a la hoja.
-            </Typography>
-            </Grid>
-            <Grid 
-              container 
-              direction="column" 
-              // item xs={6} 
-              justify="center" 
-              alignItems="center" 
-              className={ value === 'fieldsGroup' ?  classes.roundedBorderDialog : classes.roundedBorderDialogSelected }>
-            <Typography
-              variant="button"
-            >
-              Grupo de Campos
-            </Typography>
-            <Radio
-              checked={value === 'fieldsGroup'}
-              onChange={handleChange}
-              value="fieldsGroup"
-              name="radio-button-group"
-              color="primary"
-            />
-            <Typography
-              variant="caption"
-            >
-              Agrega un Grupo de campos a la hoja.
-            </Typography>
-            </Grid> */}
           </Grid>
         </DialogContent>
         <DialogActions>

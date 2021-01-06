@@ -15,15 +15,11 @@ const FieldsAndGroupFields = (props) => {
       <Grid container item direction="column" alignItems="center">
         <Grid container item xs={10} alignItems="center" justify="center">
         <FieldList
-          // removeFromList={ removeFromList }
-          // refreshAll={ refreshAll }
           currentTab={ currentTab }
         />
         </Grid>
         <Grid container item xs={10}  justify="center" alignItems="center">
         <FieldsGroupList
-          // addNewField={ addNewField }
-          // removeFromList={ removeFromList }
           currentTab={ currentTab }
         />
         </Grid>

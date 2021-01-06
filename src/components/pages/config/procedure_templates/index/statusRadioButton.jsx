@@ -4,7 +4,6 @@ import { withStyles }                 from '@material-ui/core/styles';
 import Button                         from '@material-ui/core/Button';
 import Grid                           from '@material-ui/core/Grid';
 import Dialog                         from '@material-ui/core/Dialog';
-import Typography                     from '@material-ui/core/Typography';
 import DialogActions                  from '@material-ui/core/DialogActions';
 import DialogContent                  from '@material-ui/core/DialogContent';
 import DialogContentText              from '@material-ui/core/DialogContentText';
@@ -13,8 +12,8 @@ import RadioButtonUncheckedIcon       from '@material-ui/icons/RadioButtonUnchec
 import RadioButtonCheckedIcon         from '@material-ui/icons/RadioButtonChecked';
 import { useTheme }                   from '@material-ui/core/styles';
 import useMediaQuery                  from '@material-ui/core/useMediaQuery';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
+import ListItemIcon                   from '@material-ui/core/ListItemIcon';
+import ListItemText                   from '@material-ui/core/ListItemText';
 
 
 const StatusRadioButton = (props) => {
@@ -59,7 +58,6 @@ const StatusRadioButton = (props) => {
         <ListItemText>
           &#8288; { statusTemplate() }
         </ListItemText>
-        {/* </Typography> */}
       </Grid>
       <Dialog
         fullScreen={ fullScreen }

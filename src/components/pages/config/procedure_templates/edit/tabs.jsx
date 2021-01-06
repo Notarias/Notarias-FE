@@ -25,10 +25,11 @@ const Tabs = (props) => {
   );
 
   const [tabList, setTabList] = React.useState(data ? data.proceduresTemplateTabs: []);
-  const [tabName, setTabName] = React.useState(currentTab ? currentTab.name : " Insertar");
-
+  const [tabName, setTabName] = React.useState(currentTab ? currentTab.name : "");
   const [open, setOpen] = React.useState(false);
-  const [tabDataList, setTabDataList] = React.useState([]);
+  const [pristine, setPristine] = React.useState(true)
+  const [error, setError] = React.useState(false)
+  const inputsList = ["name"]
 
   useEffect(() => {
     currentTab || (data && setCurrentTab(data.proceduresTemplateTabs[0]));
@@ -41,25 +42,15 @@ const Tabs = (props) => {
   useMutation(
     CREATE_PROCEDURES_TEMPLATE_TAB,
     {
-      // onError(apolloError) {
-      //   setErrors(apolloError)
-      // },
+      onError(apolloError) {
+        setErrors(apolloError)
+        setPristine(true)
+      },
       onCompleted(cacheData) {
         setCurrentTab(cacheData.createProceduresTemplateTab.proceduresTemplateTab)
-        // setError(false)
-        // const proceduresTemplateTabData = store.readQuery({
-        //   query: GET_PROCEDURES_TEMPLATE_TABS, 
-        //   variables: { "proceduresTemplateId": proceduresTemplateId }
-        // });
-        // console.log("cacheData", cacheData, proceduresTemplateTabData)
-        // clientAttrsData.clientAttributes.push(
-        //   cacheData.data.createClientAttribute.clientAttribute 
-        // )
-        // store.writeQuery({ query: GET_CLIENT_ATTRIBUTE, data: clientAttrsData });
-        // setId(cacheData.data.createClientAttribute.clientAttribute.id)
-        // )
-        // store.writeQuery({ query: GET_PROCEDURES_TEMPLATE_TABS, data: clientAttrsData });
-        // 
+        setError(false)
+        setOpen(false)
+        setPristine(true)
       },
       fetchPolicy: "no-cache",
       refetchQueries: [{
@@ -69,6 +60,19 @@ const Tabs = (props) => {
     }
   )
 
+  const setErrors = (apolloError) => {
+    let errorsList = {}
+    let errorTemplateList = apolloError.graphQLErrors
+    for ( let i = 0; i < errorTemplateList.length; i++) {
+      for( let n = 0; n < inputsList.length; n++) {
+        if(errorTemplateList[i].extensions.attribute === inputsList[n]){
+          errorsList[inputsList[n]] = errorTemplateList[i].message
+        }
+      }
+    }
+    setError(errorsList);//{name: "mensaje", style: "mensaje"} 
+  }
+
   const addNewTab = (event) => {
     createProcedureTemplateTabMutation(
       { 
@@ -76,10 +80,7 @@ const Tabs = (props) => {
           { name: tabName, id: proceduresTemplateId },
       }
     )
-    // const newTab = { name: tabName, id: proceduresTemplateId }
-    // setTabList(tabList.concat([newTab]));//TODO: hacer la mutacion
-    setOpen(false);
-    // setCurrentTab(newTab)
+
   }
 
   const handleClickOpen = () => {
@@ -110,6 +111,7 @@ const Tabs = (props) => {
 
   const handleNameChange = (event) => {
     setTabName(event.target.value);
+    setPristine(false);
   };
 
 
@@ -140,13 +142,17 @@ const Tabs = (props) => {
               variant="filled"
               fullWidth
               onChange={ handleNameChange }
+              error={ !!error["name"] && true }
+              helperText={error["name"] || " "}
+              errorskey={ "name" }
+              name='name'
             />
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose} color="primary">
               Cancel
             </Button>
-            <Button onClick={ addNewTab } color="primary">
+            <Button onClick={ addNewTab } color="primary" disabled={ pristine }>
               Aceptar
             </Button>
           </DialogActions>

@@ -25,6 +25,8 @@ import DialogTitle                              from '@material-ui/core/DialogTi
 import DialogActions                            from '@material-ui/core/DialogActions';
 import ListItemIcon                             from '@material-ui/core/ListItemIcon';
 import ListItemText                             from '@material-ui/core/ListItemText';
+import { GLOBAL_MESSAGE }                       from '../../../../../resolvers/queries';
+import client, { cache }             from '../../../../../apollo'
 
 
 const TabMenu = (props) => {
@@ -35,16 +37,20 @@ const TabMenu = (props) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openDialog, setOpenDialog] = React.useState(false);
 
+  const [error, setError] = React.useState(false)
+  const inputsList = ["name"]
+  console.log()
+
   const [updateProceduresTemplateTabMutation, updateProcessInfo] =
   useMutation(
     UPDATE_PROCEDURES_TEMPLATE_TAB,
     {
-      // onError(apolloError) {
-      //   setErrors(apolloError)
-      // },
-      onCompleted(cacheData) {
-        // setError(false)
-        // setEditing(!editing)
+      onError(apolloError) {
+        setErrors(apolloError)
+      },
+      update(store, cacheData) {
+        setError(false)
+        setEditing(!editing)
       },
       refetchQueries: [{
         query: GET_PROCEDURES_TEMPLATE_TABS,
@@ -53,14 +59,25 @@ const TabMenu = (props) => {
     }
   )
 
+  const setErrors = (apolloError) => {
+    let errorsList = {}
+    let errorTemplateList = apolloError.graphQLErrors
+    for ( let i = 0; i < errorTemplateList.length; i++) {
+      for( let n = 0; n < inputsList.length; n++) {
+        if(errorTemplateList[i].extensions.attribute === inputsList[n]){
+          errorsList[inputsList[n]] = errorTemplateList[i].message
+        }
+      }
+    }
+    setError(errorsList);//{name: "mensaje", style: "mensaje"} 
+  }
+
   const updateTab = (event) => {
     updateProceduresTemplateTabMutation(
       { 
-        variables: { id: id , name: name},
-        fetchPolicy: "no-cache"
+        variables: { id: id , name: name}
       }
     )
-    setEditing(!editing)
   }
 
   const changeStatus = (event) => {
@@ -142,10 +159,16 @@ const TabMenu = (props) => {
         </ListItemIcon>
         <ListItemText>
           <TextField
+            className={ classes.inputSmall }
+            size="small"
             id="standard-basic" 
             label="&#8288;Nombre"
             value={ name }
             onChange={ handleNameChange }
+            error={ !!error["name"] && true }
+
+            errorskey={ "name" }
+            name='name'
           />
         </ListItemText>
       </>
@@ -180,7 +203,6 @@ const TabMenu = (props) => {
         onClose={ handleClose }
       >
       <MenuItem className={ classes.tittleTabMenu } 
-        // onClick={ editing ? changeTittle : updateTab }
       >
         { editing ? renderTittleTextTab() : renderTittleInputTab() }
       </MenuItem>

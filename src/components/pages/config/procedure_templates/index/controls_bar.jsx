@@ -13,54 +13,49 @@ import { styles }                         from '../styles';
 import { withStyles }                     from '@material-ui/core/styles';
 import PostAddIcon                        from '@material-ui/icons/PostAdd';
 import { useMutation }                    from '@apollo/react-hooks';
-import { PROCEDURE_TEMPLATES }            from '../queries_and_mutations/queries'
 import { CREATE_PROCEDURE_TEMPLATE }      from '../queries_and_mutations/queries'
-import { Redirect }                           from 'react-router-dom';
+import { Redirect }                       from 'react-router-dom';
 
 const styles_control_bar = (props) => {
   const { classes, searchLoading, onChangeSearch, getTemplatesVariables } = props;
   const [open, setOpen] = useState(false);
   const [templateName, setTemplateName] = useState(" ");
-  const [pristine, setPristine] = useState(true)
   const [redirect, setRedirect] = useState(false)
+  const [pristine, setPristine] = useState(true)
+  const [error, setError] = useState(false)
+  const inputsList = ["name"]
 
   const [createProcedureTemplateMutation, createProcessInfo] =
   useMutation(
     CREATE_PROCEDURE_TEMPLATE,
     {
-      // onError(apolloError) {
-      //   setErrors(apolloError)
-      // },
+      onError(apolloError) {
+        setErrors(apolloError)
+        setPristine(true)
+      },
       onCompleted(cacheData) {
-        // setError(false)
-        console.log(cacheData)
+        setOpen(false);
+        setError(false)
         const id = cacheData.createProceduresTemplate.proceduresTemplate.id
         id && setRedirect(
           <Redirect to={{ pathname: `/config/procedure_templates/${id}/edit` }} />
         )
-        //  let newList = procedureTemplatesData.procedureTemplates.push(
-        //   {
-        //     name: cacheData.,//escarbar
-        //     active: "warning",
-        //     serialNumber:,
-        //     __typename: "ProceduresTemplate"
-        //   }
-        // )
-        //  console.log(procedureTemplatesData)
-        //  store.writeQuery({
-        //   query: PROCEDURE_TEMPLATES,
-        //   data: {
-        //     procedureTemplates: newList
-        //   }
-        // })
-        // procedureTemplateData.clientAttributes.push(
-        //   // cacheData.data.createClientAttribute.clientAttribute 
-        // )
-        // store.writeQuery({ query: GET_PROCEDURE_TEMPLATE, data: clientAttrsData });
-        // setId(cacheData.data.createClientAttribute.clientAttribute.id)
       }
     }
   )
+
+  const setErrors = (apolloError) => {
+    let errorsList = {}
+    let errorTemplateList = apolloError.graphQLErrors
+    for ( let i = 0; i < errorTemplateList.length; i++) {
+      for( let n = 0; n < inputsList.length; n++) {
+        if(errorTemplateList[i].extensions.attribute === inputsList[n]){
+          errorsList[inputsList[n]] = errorTemplateList[i].message
+        }
+      }
+    }
+    setError(errorsList);//{name: "mensaje", style: "mensaje"} 
+  }
 
   const handleClickOpen = (event) => {
     setOpen(true);
@@ -76,7 +71,6 @@ const styles_control_bar = (props) => {
   };
 
   const createNewProcedureTemplate = (event) => {
-    setOpen(false);
     createProcedureTemplateMutation({ variables: { name: templateName }})
   }
 
@@ -109,13 +103,17 @@ const styles_control_bar = (props) => {
         <DialogContent>
           Título de la plantilla de trámites.
           <TextField
-              autoFocus
-              margin="dense"
-              id="name"
-              variant="filled"
-              fullWidth
-              onChange={ handleNameChange }
-            />
+            autoFocus
+            margin="dense"
+            id="name"
+            variant="filled"
+            fullWidth
+            onChange={ handleNameChange }
+            error={ !!error["name"] && true }
+            helperText={error["name"] || " "}
+            errorskey={ "name" }
+            name='name'
+          />
         </DialogContent>
         <DialogActions>
           <Button 
@@ -131,8 +129,7 @@ const styles_control_bar = (props) => {
             color="primary" 
             size="small"
             disabled={ pristine }
-            // component={Link} to="config/procedure_templates/${client.id}/edit"
-          >                      
+          >
             { redirect  }
             Agregar
           </Button>

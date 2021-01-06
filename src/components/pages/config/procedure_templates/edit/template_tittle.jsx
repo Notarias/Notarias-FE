@@ -1,4 +1,4 @@
-import React, { useEffect, useState }                              from 'react';
+import React, { useEffect, useState }     from 'react';
 import TextField                          from '@material-ui/core/TextField';
 import Grid                               from '@material-ui/core/Grid';
 import { styles }                         from '../styles';
@@ -8,25 +8,24 @@ import Button                             from '@material-ui/core/Button';
 import SaveIcon                           from '@material-ui/icons/Save';
 import CreateIcon                         from '@material-ui/icons/Create';
 import { useMutation }                    from '@apollo/react-hooks';
-import { GET_PROCEDURE_TEMPLATE }         from '../queries_and_mutations/queries'
 import { UPDATE_PROCEDURE_TEMPLATES }     from '../queries_and_mutations/queries'
 
 
 const TemplateTittle = (props) => {
 
   const { classes, templateData, match } = props
+  const [active, setActive] = React.useState(templateData.active);
   const [id, setId] = useState(match.id);
   const [editing, setEditing] = useState(true);
   const [name, setName] = useState(templateData.name)
-  // const [active, setActive] = useState(templateData && templateData.active)
-
   const [error, setError] = useState(false)
 
   const inputsList = ["name"]
 
   useEffect(
     () => {
-      setName(templateData.name)
+      setName(templateData.name) 
+      setActive(templateData.active)
     },
     [templateData]
   )
@@ -41,8 +40,6 @@ const TemplateTittle = (props) => {
         update(store, cacheData) {
           setError(false)
           setEditing(!editing)
-          
-          //setName(cacheData.proceduresTemplate)
         }
       }
     )
@@ -125,17 +122,17 @@ const TemplateTittle = (props) => {
     )
   }
 
-  // const markStatus = () => {
-  //   if(!active) {
-  //     return  classes.statusTemplateRow 
-  //   }
-  // }
+  const markStatus = () => {
+    if(!active) {
+      return  classes.statusTemplateRow 
+    }
+  }
 
   return(
     <Grid
       container 
       item 
-      // className={ markStatus() }
+      className={ markStatus() }
     >
       { editing ? renderTittleText(name) : renderTittleInput(name) }
     </Grid>
