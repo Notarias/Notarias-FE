@@ -40,7 +40,7 @@ const FieldsGroupMenu = (props) => {
   const [style, setStyle] = React.useState("")
   const [pristine, setPristine] = React.useState(true)
   const [error, setError] = React.useState(false)
-  const inputsList = ["name"]
+  const inputsList = ["name", "style"]
 
   const [createProcedureTemplateTabFieldMutation, createProcessInfo] =
   useMutation(
@@ -235,6 +235,9 @@ const FieldsGroupMenu = (props) => {
                       name='style'
                       value={ style }
                       onChange={ handleStyleChange }
+                      error={ !!error["style"] && true }
+                      helperText={error["style"] || " "}
+                      errorskey={ "style" }
                     >
                       <MenuItem key='string' value={'string'}>Texto</MenuItem>
                       <MenuItem key='number' value={'number'}>Numerico</MenuItem>

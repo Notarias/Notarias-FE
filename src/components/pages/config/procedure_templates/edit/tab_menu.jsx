@@ -68,7 +68,7 @@ const TabMenu = (props) => {
         }
       }
     }
-    setError(errorsList);//{name: "mensaje", style: "mensaje"} 
+    setError(errorsList)
   }
 
   const updateTab = (event) => {
@@ -163,7 +163,6 @@ const TabMenu = (props) => {
             value={ name }
             onChange={ handleNameChange }
             error={ !!error["name"] && true }
-
             errorskey={ "name" }
             name='name'
           />
