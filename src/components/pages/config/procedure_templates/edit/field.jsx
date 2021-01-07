@@ -1,4 +1,4 @@
-import React, { useEffect }                           from 'react';
+import React                                          from 'react';
 import Grid                                           from '@material-ui/core/Grid';
 import TextField                                      from '@material-ui/core/TextField';
 import StarsIcon                                      from '@material-ui/icons/Stars';
@@ -28,10 +28,6 @@ import { GET_PROCEDURE_TEMPLATE_TAB_FIELDS }          from '../queries_and_mutat
 import RadioButtonUncheckedIcon                       from '@material-ui/icons/RadioButtonUnchecked';
 import RadioButtonCheckedIcon                         from '@material-ui/icons/RadioButtonChecked';
 
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import LabelOffIcon from '@material-ui/icons/LabelOff';
-
-import Switch             from '@material-ui/core/Switch';
 
 const INPUT_TYPES = {
   string: "Texto",
@@ -50,33 +46,40 @@ const Field = (props) => {
   const [style, setStyle] = React.useState(props.style)
   const [active, setActive] = React.useState(props.active)
   const [favourite, setFavourite] = React.useState(props.favourite)
-  const [tabId, setTabId] = React.useState()
-
-  // useEffect(() => {
-  //   currentTab && setTabId(currentTab.id)
-  // }, [currentTab])
+  const [error, setError] = React.useState(false)
+  const inputsList = ["name"]
 
   const [updateProceduresTemplateTabFieldMutation, updateProcessInfo] =
     useMutation(
       UPDATE_PROCEDURES_TEMPLATE_TAB_FIELD,
       {
-        // onError(apolloError) {
-        //   setErrors(apolloError)
-        // },
+        onError(apolloError) {
+          setErrors(apolloError)
+        },
         update(store, cacheData) {
           setFavourite(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.favourite)
           setActive(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.active)
-          // console.log(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.favourite, "---2--")
-          // // setError(false)
-          // setPristine(true)
-          // const clientAttrsData = store.readQuery({ query: GET_CLIENT_ATTRIBUTE });
+          setError(false)
+          setEditing(true)
         }
       }
     )
 
+    const setErrors = (apolloError) => {
+      let errorsList = {}
+      let errorTemplateList = apolloError.graphQLErrors
+      for ( let i = 0; i < errorTemplateList.length; i++) {
+        for( let n = 0; n < inputsList.length; n++) {
+          if(errorTemplateList[i].extensions.attribute === inputsList[n]){
+            errorsList[inputsList[n]] = errorTemplateList[i].message
+          }
+        }
+      }
+      setError(errorsList) 
+    }
+
   const updateField = (event) => {
     updateProceduresTemplateTabFieldMutation({ variables: { id: id, name: name, style: style}})
-    setEditing(!editing)
   }
 
   const handleClickOpen = () => {
@@ -149,7 +152,6 @@ const Field = (props) => {
 
   const handleStyleChange = (event) => {
     setStyle(event.target.value);
-    // setPristine(false)
   };
 
   const statusField = () => { 
@@ -197,6 +199,10 @@ const Field = (props) => {
             className={ classes.textInputTittleName }
             value={ name }
             onChange={ handleNameChange }
+            error={ !!error["name"] && true }
+            helperText={error["name"] || " "}
+            errorskey={ "name" }
+            name='name'
           />
         </Grid>
         <Grid container item xs={3}>
@@ -204,7 +210,7 @@ const Field = (props) => {
             <InputLabel id="label-field">Tipo de campo</InputLabel>
             <Select
               labelId="demo-simple-select-outlined-label"
-              name='name'
+              name='style'
               value={ style }
               onChange={ handleStyleChange }
             >
@@ -296,20 +302,7 @@ const Field = (props) => {
               <RadioButtonUncheckedIcon color="secondary" className={ classes.defaultIcon }/>
             </Button>
         }
-            {/* <FormControlLabel
-              value="top"
-              control={
-                <Switch 
-                  color="primary" 
-                  // onChange={ handleDialogActiveChange } 
-                  // checked={ active } 
-                />
-              }
-              labelPlacement="top"
-              onClick={ handleClickOpenDialog }
-            /> */}
         </Grid>
-        
         <Dialog
           open={openDialog}
           onClose={handleCloseDialog}
@@ -333,7 +326,6 @@ const Field = (props) => {
             </Button>
           </DialogActions>
         </Dialog>
-
       </Grid>
       </Paper>
     </Grid>

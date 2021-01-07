@@ -26,46 +26,34 @@ import ListItemText                                             from '@material-
 import { useMutation }                                          from '@apollo/react-hooks';
 import { CREATE_PROCEDURES_TEMPLATE_TAB_FIELD }                 from '../queries_and_mutations/queries'
 import { GET_PROCEDURES_TEMPLATE_FIELDS_GROUPS_FIELDS }         from '../queries_and_mutations/queries'
-
 import { DESTROY_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS }        from '../queries_and_mutations/queries'
 import { GET_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS }            from '../queries_and_mutations/queries'
-
-
 
 
 const FieldsGroupMenu = (props) => {
 
   const { classes, groupName, active, changeStatus, currentTab, groupId, removeFromList, arrayIndex } = props
-
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openB, setOpenB] = React.useState(false);
   const [openDialog, setOpenDialog] = React.useState(false);
-  const [pristine, setPristine] = React.useState(true)
   const [fieldName, setFieldName] = React.useState("");
   const [style, setStyle] = React.useState("")
+  const [pristine, setPristine] = React.useState(true)
+  const [error, setError] = React.useState(false)
+  const inputsList = ["name"]
 
   const [createProcedureTemplateTabFieldMutation, createProcessInfo] =
   useMutation(
     CREATE_PROCEDURES_TEMPLATE_TAB_FIELD,
     {
-      // onError(apolloError) {
-      //   setErrors(apolloError)
-      // },
+      onError(apolloError) {
+        setErrors(apolloError)
+      },
       onCompleted(cacheData) {
-        // setRefreshAll('RefreshFields' + cacheData.createProceduresTemplateField.proceduresTemplateField.id)
-        // setError(false)
-        // const proceduresTemplateTabData = store.readQuery({
-        //   query: GET_PROCEDURES_TEMPLATE_TABS, 
-        //   variables: { "proceduresTemplateId": proceduresTemplateId }
-        // });
-        // console.log("cacheData", cacheData, proceduresTemplateTabData)
-        // clientAttrsData.clientAttributes.push(
-        //   cacheData.data.createClientAttribute.clientAttribute 
-        // )
-        // store.writeQuery({ query: GET_CLIENT_ATTRIBUTE, data: clientAttrsData });
-        // setId(cacheData.data.createClientAttribute.clientAttribute.id)
-        // )
-        // store.writeQuery({ query: GET_PROCEDURES_TEMPLATE_TABS, data: clientAttrsData });
+        setError(false)
+        setPristine(true)
+        setOpenB(false);
+        setAnchorEl(null)
       },
       fetchPolicy: "no-cache",
       refetchQueries: [{
@@ -76,6 +64,19 @@ const FieldsGroupMenu = (props) => {
     }
   )
 
+  const setErrors = (apolloError) => {
+    let errorsList = {}
+    let errorTemplateList = apolloError.graphQLErrors
+    for ( let i = 0; i < errorTemplateList.length; i++) {
+      for( let n = 0; n < inputsList.length; n++) {
+        if(errorTemplateList[i].extensions.attribute === inputsList[n]){
+          errorsList[inputsList[n]] = errorTemplateList[i].message
+        }
+      }
+    }
+    setError(errorsList)
+  }
+
   const addNewField = (event) => {
     createProcedureTemplateTabFieldMutation(
       { 
@@ -84,10 +85,6 @@ const FieldsGroupMenu = (props) => {
           fetchPolicy: "no-cache",
       }
     )
-    // const newTab = { name: tabName, id: proceduresTemplateId }
-    // setTabList(tabList.concat([newTab]));//TODO: hacer la mutacion
-    setOpenB(false);
-    setAnchorEl(null)
   }
 
   const [destroyProceduresTemplateTabFieldsGroupMutation, destroyProcessInfo] =
@@ -154,7 +151,6 @@ const FieldsGroupMenu = (props) => {
         aria-controls="long-menu"
         aria-haspopup="true"
         onClick={ handleClickOpenMenu }
-        // className={ selected ? classes.activeMenuTab : classes.menuTabDefault }
       >
         <MoreVertIcon />
       </IconButton>
@@ -171,7 +167,6 @@ const FieldsGroupMenu = (props) => {
           </ListItemIcon>
           <ListItemText primary="Borrar" />
         </MenuItem>
-
         <Dialog
             open={openDialog}
             onClose={handleCloseDialogDelete}
@@ -198,7 +193,6 @@ const FieldsGroupMenu = (props) => {
               </Button>
             </DialogActions>
           </Dialog>
-
         <Divider/>
         <MenuItem>
           <StatusRadioButton
@@ -225,6 +219,10 @@ const FieldsGroupMenu = (props) => {
                     className={ classes.textInputTittleName }
                     value={ fieldName }
                     onChange={ handleFieldNameChange }
+                    error={ !!error["name"] && true }
+                    helperText={error["name"] || " "}
+                    errorskey={ "name" }
+                    name='name'
                   />
                 </Grid>
                 <Grid container item xs={1}>
@@ -254,6 +252,7 @@ const FieldsGroupMenu = (props) => {
                   onClick={ addNewField } 
                   color="primary"
                   variant="contained"
+                  disabled={ pristine }
                 >
                   "Añadir campo"
                 </Button>

@@ -13,7 +13,7 @@ import { useQuery }                         from '@apollo/react-hooks';
 import { GET_PROCEDURE_TEMPLATE }           from './queries_and_mutations/queries'
 import CircularProgress                     from '@material-ui/core/CircularProgress';
 import FieldsAndGroupFields                 from './edit/fields_and_group_fields';
-import DialogSelectCopy                     from './edit/dialog_select_copy'
+import ButtonsNewFieldNewFieldsGroup        from './edit/buttons_newField_newFieldsGroup'
 
 const BREADCRUMBS = [
   { name: "Inicio", path: "/" },
@@ -61,7 +61,7 @@ const Edit = (props) => {
               </Grid>
             </Grid>
           <Divider/>
-          <DialogSelectCopy
+          <ButtonsNewFieldNewFieldsGroup
             currentTab={ currentTab }
           />
           { 

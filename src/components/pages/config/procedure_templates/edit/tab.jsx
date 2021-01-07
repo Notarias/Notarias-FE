@@ -7,22 +7,14 @@ import Button                       from '@material-ui/core/Button';
 import TabMenu                      from './tab_menu';
 
 
-
 const Tab = (props) => {
 
   const { selected, tab, setCurrentTab, proceduresTemplateId, } = props;
   const { classes } = props;
 
-
   const selectTab = (event) => {
     setCurrentTab(tab)
   }
-
-  const showFields = () => {
-    console.log( "select", tab.id)
-  }
-
-
 
   return(
     <>
@@ -48,7 +40,7 @@ const Tab = (props) => {
       alignItems="center"
       className={ selected ? classes.activeTab : classes.tabDefault }
       >
-      <Button variant={ selected ? "contained" : "outlined" } className={ classes.tittleTab } onClick={ showFields }>
+      <Button variant={ selected ? "contained" : "outlined" } className={ classes.tittleTab }>
         <Typography variant="h6" gutterBottom>
           { tab.name }
         </Typography>

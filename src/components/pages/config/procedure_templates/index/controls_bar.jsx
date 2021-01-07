@@ -54,7 +54,7 @@ const styles_control_bar = (props) => {
         }
       }
     }
-    setError(errorsList);//{name: "mensaje", style: "mensaje"} 
+    setError(errorsList)
   }
 
   const handleClickOpen = (event) => {

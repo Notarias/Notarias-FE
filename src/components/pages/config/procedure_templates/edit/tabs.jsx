@@ -70,7 +70,7 @@ const Tabs = (props) => {
         }
       }
     }
-    setError(errorsList);//{name: "mensaje", style: "mensaje"} 
+    setError(errorsList)
   }
 
   const addNewTab = (event) => {

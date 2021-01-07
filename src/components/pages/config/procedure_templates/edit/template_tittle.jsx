@@ -8,7 +8,7 @@ import Button                             from '@material-ui/core/Button';
 import SaveIcon                           from '@material-ui/icons/Save';
 import CreateIcon                         from '@material-ui/icons/Create';
 import { useMutation }                    from '@apollo/react-hooks';
-import { UPDATE_PROCEDURE_TEMPLATES }     from '../queries_and_mutations/queries'
+import { UPDATE_PROCEDURE_TEMPLATES }     from '../queries_and_mutations/queries';
 
 
 const TemplateTittle = (props) => {
@@ -19,7 +19,6 @@ const TemplateTittle = (props) => {
   const [editing, setEditing] = useState(true);
   const [name, setName] = useState(templateData.name)
   const [error, setError] = useState(false)
-
   const inputsList = ["name"]
 
   useEffect(
@@ -54,7 +53,7 @@ const TemplateTittle = (props) => {
           }
         }
       }
-      setError(errorsList);//{name: "mensaje", style: "mensaje"} 
+      setError(errorsList)
     }
 
   const handleNameChange = (event) => {

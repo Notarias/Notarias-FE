@@ -22,29 +22,31 @@ import MenuItem                                                 from '@material-
 import InputLabel                                               from '@material-ui/core/InputLabel';
 
 
-const DialogSelectCopy = ({
+const ButtonsNewFieldNewFieldsGroup = ({
   currentTab,
   classes,
   ...props
 }) => {
   const [open, setOpen] = React.useState(false);
   const [renderValue, setRenderValue] = React.useState();
-  const [disabled, setDisabled] = React.useState(true);
   const [fieldName, setFieldName] = React.useState("");
   const [style, setStyle] = React.useState("")
-  const [favourite, setFavourite] = React.useState(false)
   const [groupFieldName, setGroupFieldName] = React.useState("");
-  const [optionSelect, setOptionSelect] = React.useState(0);
   const [pristine, setPristine] = React.useState(true)
+  const [error, setError] = React.useState(false)
+  const inputsList = ["name", "style"]
 
   const [createProcedureTemplateTabFieldMutation, createProcessInfo] =
     useMutation(
       CREATE_PROCEDURES_TEMPLATE_TAB_FIELD,
       {
-        // onError(apolloError) {
-        //   setErrors(apolloError)
-        // },
+        onError(apolloError) {
+          setErrors(apolloError)
+        },
         onCompleted(cacheData) {
+          setPristine(true)
+          setError(false)
+          setOpen(false);
         },
         fetchPolicy: "no-cache",
         refetchQueries: [{
@@ -55,6 +57,18 @@ const DialogSelectCopy = ({
       }
     )
 
+    const setErrors = (apolloError) => {
+      let errorsList = {}
+      let errorTemplateList = apolloError.graphQLErrors
+      for ( let i = 0; i < errorTemplateList.length; i++) {
+        for( let n = 0; n < inputsList.length; n++) {
+          if(errorTemplateList[i].extensions.attribute === inputsList[n]){
+            errorsList[inputsList[n]] = errorTemplateList[i].message
+          }
+        }
+      }
+      setError(errorsList);//{name: "mensaje", style: "mensaje"} 
+    }
 
   const addNewField = (event) => {
     createProcedureTemplateTabFieldMutation(
@@ -64,39 +78,19 @@ const DialogSelectCopy = ({
           fetchPolicy: "no-cache",
       }
     )
-    // const newTab = { name: tabName, id: proceduresTemplateId }
-    // setTabList(tabList.concat([newTab]));//TODO: hacer la mutacion
-    setOpen(false);
   }
-
-  // const removeFromList = (index) => {
-  //   fieldList.splice(index, 1)
-  //   let newArray = fieldList.slice()
-  //   setfieldList(newArray)
-  // }
 
   const [createProcedureTemplateTabFieldGroupsMutation, createGroupProcessInfo] =
   useMutation(
     CREATE_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS,
     {
-      // onError(apolloError) {
-      //   setErrors(apolloError)
-      // },
+      onError(apolloError) {
+        setErrors(apolloError)
+      },
       onCompleted(cacheData) {
-        // setRefreshAll('RefreshFields' + cacheData.createProceduresTemplateField.proceduresTemplateField.id)
-        // setError(false)
-        // const proceduresTemplateTabData = store.readQuery({
-        //   query: GET_PROCEDURES_TEMPLATE_TABS, 
-        //   variables: { "proceduresTemplateId": proceduresTemplateId }
-        // });
-        // console.log("cacheData", cacheData, proceduresTemplateTabData)
-        // clientAttrsData.clientAttributes.push(
-        //   cacheData.data.createClientAttribute.clientAttribute 
-        // )
-        // store.writeQuery({ query: GET_CLIENT_ATTRIBUTE, data: clientAttrsData });
-        // setId(cacheData.data.createClientAttribute.clientAttribute.id)
-        // )
-        // store.writeQuery({ query: GET_PROCEDURES_TEMPLATE_TABS, data: clientAttrsData });
+        setPristine(true)
+        setError(false)
+        setOpen(false);
       },
       refetchQueries: [{
         query: GET_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS,
@@ -113,10 +107,6 @@ const DialogSelectCopy = ({
           { "name": groupFieldName, "tabId": currentTab.id },
       }
     )
-    // const newTab = { name: tabName, id: proceduresTemplateId }
-    // setTabList(tabList.concat([newTab]));//TODO: hacer la mutacion
-    setOpen(false);
-    // setFieldsGroupList(fieldsGroupList.concat([fieldsGroupList]));
   }
 
   const fieldHandleClickOpen = (event) => {
@@ -138,11 +128,6 @@ const DialogSelectCopy = ({
     setOpen(false);
   };
 
-  // const handleChange = (event) => {
-  //   setValue(event.target.value);
-  //   setDisabled(false);
-  // };
-
   const handleFieldNameChange = (event) => {
     setFieldName(event.target.value);
     setPristine(false)
@@ -153,28 +138,13 @@ const DialogSelectCopy = ({
     setPristine(false)
   };
 
-  const handleFavouriteChange = (event) => {
-    setFavourite(!favourite);
-    console.log("favourite", favourite)
-  };
-
   const handleFieldGroupNameChange = (event) => {
     setGroupFieldName(event.target.value);
     setPristine(false)
-    console.log("GroupName", groupFieldName)
   };
 
   return (
     <>
-      {/* <Button
-        variant="contained"
-        onClick={ handleClickOpen }
-        className={ classes.buttonHeight }
-        disabled={ !currentTab }
-        variant="outlined"
-      >
-        { iconButtonType() }
-      </Button> */}
       <Grid container justify="center" alignItems="center" className={ classes.addFieldsAndGroupsButton } >
         <Grid container  justify="center" alignItems="center" direction="row" >
           <Grid item xs={4}>
@@ -226,10 +196,13 @@ const DialogSelectCopy = ({
                         className={ classes.textInputTittleName }
                         value={ fieldName }
                         onChange={ handleFieldNameChange }
+                        error={ !!error["name"] && true }
+                        helperText={error["name"] || " "}
+                        errorskey={ "name" }
+                        name='name'
                       />
                     </Grid>
                     <Grid container item xs={1}>
-
                     </Grid>
                     <Grid container item xs={5}>
                       <FormControl variant="outlined" className={ classes.textFieldTittleType }>
@@ -239,6 +212,9 @@ const DialogSelectCopy = ({
                           name='style'
                           value={ style }
                           onChange={ handleStyleChange }
+                          error={ !!error["style"] && true }
+                          helperText={error["style"] || " "}
+                          errorskey={ "style" }
                         >
                           <MenuItem key='string' value={'string'}>Texto</MenuItem>
                           <MenuItem key='number' value={'number'}>Numerico</MenuItem>
@@ -256,8 +232,11 @@ const DialogSelectCopy = ({
                       value={ groupFieldName } 
                       variant="filled" 
                       size="small" 
-                      // inputProps={{ 'aria-label': 'description' }}
                       onChange={ handleFieldGroupNameChange }
+                      error={ !!error["name"] && true }
+                      helperText={error["name"] || " "}
+                      errorskey={ "name" }
+                      name='name'
                     />
                   </Grid>
                 )
@@ -284,4 +263,4 @@ const DialogSelectCopy = ({
   )
 }
 
-export default  withStyles(styles)(DialogSelectCopy);
+export default  withStyles(styles)(ButtonsNewFieldNewFieldsGroup);

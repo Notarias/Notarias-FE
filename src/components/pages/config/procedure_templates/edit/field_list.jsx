@@ -2,10 +2,7 @@ import React, { useEffect }                         from 'react';
 import Field                                        from './field';
 import { useQuery }                                 from '@apollo/react-hooks';
 import { GET_PROCEDURE_TEMPLATE_TAB_FIELDS }        from '../queries_and_mutations/queries'
-import Grid                                         from '@material-ui/core/Button';
-import Button                                       from '@material-ui/core/Button';
 import { styles }                                   from '../styles';
-import Typography                                   from '@material-ui/core/Typography';
 import { withStyles }                               from '@material-ui/core/styles';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 
@@ -68,18 +65,9 @@ const FieldList = (props) => {
 
   return (
     <>
-        {/* <Typography variant="overline">
-          Agrega un Campo
-        </Typography> */}
-      {/* <Grid>
-        <DialogSelectCopy
-          currentTab={ currentTab }
-          iconButtonType={ iconButtonType }
-        />
-      </Grid> */}
-        {
-          renderFields()
-        }
+      {
+        renderFields()
+      }
     </>
   )
 }

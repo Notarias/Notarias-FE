@@ -17,36 +17,42 @@ import CreateIcon                                               from '@material-
 
 const FieldsGroup = (props) => {
 
-  const { classes, group, groupId, currentTab, active} = props
+  const { classes, group, groupId, currentTab, active} = props;
   const [groupName, setGroupName] = React.useState(group.name);
-  const [open, setOpen] = React.useState(false);
   const [editing, setEditing] = React.useState(true);
+  const [error, setError] = React.useState(false);
+  const inputsList = ["name"];
 
   const [updateProceduresTemplateTabFieldsGroupMutation, updateGroupProcessInfo] =
   useMutation(
     UPDATE_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS,
     {
-      // onError(apolloError) {
-      //   setErrors(apolloError)
-      // },
+      onError(apolloError) {
+        setErrors(apolloError)
+      },
       update(store, cacheData) {
-        // setActive(cacheData.data.updateProceduresTemplateFieldsGroup.proceduresTemplateField.active)
-        // console.log(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.favourite, "---2--")
-        // // setError(false)
-        // setPristine(true)
-        // const clientAttrsData = store.readQuery({ query: GET_CLIENT_ATTRIBUTE });
+        setError(false)
+        setEditing(true)
       }
     }
   )
 
-  const updateFieldsGroup = (event) => {
-    updateProceduresTemplateTabFieldsGroupMutation({ variables: { "id": groupId, "name": groupName}})
-    setEditing(!editing)
+  const setErrors = (apolloError) => {
+    let errorsList = {}
+    let errorTemplateList = apolloError.graphQLErrors
+    for ( let i = 0; i < errorTemplateList.length; i++) {
+      for( let n = 0; n < inputsList.length; n++) {
+        if(errorTemplateList[i].extensions.attribute === inputsList[n]){
+          errorsList[inputsList[n]] = errorTemplateList[i].message
+        }
+      }
+    }
+    setError(errorsList) 
   }
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const updateFieldsGroup = (event) => {
+    updateProceduresTemplateTabFieldsGroupMutation({ variables: { "id": groupId, "name": groupName}})
+  }
 
   const handleGroupNameChange = (event) => {
     setGroupName(event.target.value);
@@ -92,6 +98,10 @@ const FieldsGroup = (props) => {
           size="small"
           className={ classes.inputTittleGroupName }
           onChange={ handleGroupNameChange }
+          error={ !!error["name"] && true }
+          helperText={error["name"] || " "}
+          errorskey={ "name" }
+          name='name'
         />
         <Button  onClick={ updateFieldsGroup }>
           <SaveIcon color="primary" className={ classes.saveGroupNameIcon }/>

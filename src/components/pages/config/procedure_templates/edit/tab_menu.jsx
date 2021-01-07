@@ -39,7 +39,6 @@ const TabMenu = (props) => {
 
   const [error, setError] = React.useState(false)
   const inputsList = ["name"]
-  console.log()
 
   const [updateProceduresTemplateTabMutation, updateProcessInfo] =
   useMutation(
@@ -133,8 +132,6 @@ const TabMenu = (props) => {
     setName(event.target.value);
   };
 
-  const loadingTab = updateProcessInfo.loading
-
   const renderTittleTextTab = () => {
 
     return(
@@ -181,8 +178,6 @@ const TabMenu = (props) => {
     }
   }
 
-
-
   return (
     <Grid className={ markStatus() } container alignItems="center" justify="flex-start">
       <IconButton
@@ -213,7 +208,6 @@ const TabMenu = (props) => {
         </ListItemIcon>
         <ListItemText primary="Borrar"/>
       </MenuItem>
-
       <Dialog
         open={openDialog}
         onClose={handleCloseDialog}
@@ -241,7 +235,6 @@ const TabMenu = (props) => {
           </Button>
         </DialogActions>
       </Dialog>
-
       <Divider/>
       <MenuItem>
       <Grid container item alignItems="center" >

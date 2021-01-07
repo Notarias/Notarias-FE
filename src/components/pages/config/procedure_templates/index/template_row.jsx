@@ -27,10 +27,8 @@ const TempleteRow = (props) => {
 
   const procedureTemplate  = props.data
   const { classes } = props
-
   const [id, setId] = React.useState(procedureTemplate.id);
   const [active, setActive] = React.useState(procedureTemplate.active);
-
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const [open, setOpen] = React.useState(false);
@@ -43,7 +41,7 @@ const TempleteRow = (props) => {
   useMutation(
     UPDATE_PROCEDURE_TEMPLATES,
     {
-      update(store, cacheData, id) {
+      update(store, cacheData) {
         setActive(cacheData.data.updateProceduresTemplate.proceduresTemplate.active)
       }
     }
