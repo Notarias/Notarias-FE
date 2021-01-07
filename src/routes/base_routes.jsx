@@ -49,7 +49,9 @@ export default function BaseRoutes(props) {
         <ProtectedRoute path="/profiles" component={ProfilesIndex}/>
         <ProtectedRoute path="/config/clients" component={ConfigClientsIndex}/>
         <ProtectedRoute path="/config/procedure_templates" component={ConfigProcedureTemplatesIndex}/>
-        <Route render={() => <DashboardsIndex/>}/>
+        <Route path='*' component={DashboardsIndex} />
+        <Route render={() => <ProtectedRoute path='/' component={DashboardsIndex}/>}/>
+
       </Switch>
     </div>
   )
