@@ -14,7 +14,7 @@ export const CREATE_CLIENT_ATTRIBUTE = gql`
   }
 `
 
-export const GET_CLIENT_ATTRIBUTE = gql`
+export const GET_CLIENT_ATTRIBUTES = gql`
   query clientAttributes {
     clientAttributes {
       id
