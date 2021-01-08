@@ -129,9 +129,7 @@ const FieldsGroup = (props) => {
             />
           </Grid>
         </Grid>
-        <FieldsGroupFieldList
-          groupId={ groupId }
-        />
+        <FieldsGroupFieldList groupId={ groupId } />
       </Grid>
     </Paper>
   )

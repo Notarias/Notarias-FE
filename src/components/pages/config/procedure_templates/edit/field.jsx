@@ -291,7 +291,6 @@ const Field = (props) => {
           </Dialog>
         </Grid>
         <Grid container item direction="column"  alignItems="center" justify="center" item xs={1} onClick={ handleClickOpenDialog }>
-
           {
           active ?
             <Button>
@@ -301,7 +300,7 @@ const Field = (props) => {
             <Button>
               <RadioButtonUncheckedIcon color="secondary" className={ classes.defaultIcon }/>
             </Button>
-        }
+          }
         </Grid>
         <Dialog
           open={openDialog}

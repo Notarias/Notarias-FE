@@ -167,7 +167,7 @@ const FieldsGroupMenu = (props) => {
           </ListItemIcon>
           <ListItemText primary="Borrar" />
         </MenuItem>
-        <Dialog
+          <Dialog
             open={openDialog}
             onClose={handleCloseDialogDelete}
             aria-labelledby="alert-dialog-title"

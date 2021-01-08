@@ -23,9 +23,7 @@ const FieldList = (props) => {
   }, [data])
 
   const removeFromList = (index, mutation, variables, id) => {
-    if(id){
-      mutation(variables)
-    }
+    id && mutation(variables)
     fields.splice(index, 1)
     let newArray = fields.slice()
     setFields(newArray)

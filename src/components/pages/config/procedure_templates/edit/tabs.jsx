@@ -37,7 +37,6 @@ const Tabs = (props) => {
     currentTab && setTabName(currentTab.name);
   }, [data])
 
-
   const [createProcedureTemplateTabMutation, createProcessInfo] =
   useMutation(
     CREATE_PROCEDURES_TEMPLATE_TAB,
