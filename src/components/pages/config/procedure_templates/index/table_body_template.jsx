@@ -10,7 +10,7 @@ import TemplateRow                    from './template_row';
 
 const TableBodyTemplate = (props) => {
 
-  const { page, per, sortDirection, sortField, searchField, searchValue, assingTotalRecords, classes, id } = props
+  const { page, per, sortDirection, sortField, searchField, searchValue, assingTotalRecords, classes, id, setGetTemplatesVariables } = props
   let variables = {
     page: page + 1,
     per: per,
@@ -22,14 +22,15 @@ const TableBodyTemplate = (props) => {
   }
 
   const { loading, data, refetch } = useQuery(
-    PROCEDURE_TEMPLATES, { vairables: variables }
+    PROCEDURE_TEMPLATES, { variables: variables, fetchPolicy: "no-cache" }
   );
 
-  let totalCount = data && data.procedureTemplatesCount
+  let totalCount = data && data.proceduresTemplatesCount
 
 
   useEffect(() => {
     refetch(variables);
+    setGetTemplatesVariables(variables)
     totalCount && assingTotalRecords(totalCount)
   }, [page, per, searchField, searchValue, sortField, sortDirection, totalCount]);
 
@@ -48,10 +49,10 @@ const TableBodyTemplate = (props) => {
     return(
       <TableBody>
         {
-          data.procedureTemplates.map(procedureTemplate => (
+          data.proceduresTemplates.map(proceduresTemplate => (
             <TemplateRow
-              data={ procedureTemplate }
-              key={ procedureTemplate.id + "-Templaterow" }
+              data={ proceduresTemplate }
+              key={ proceduresTemplate.id + "-Templaterow" }
               classes={ classes }
             />
           ))

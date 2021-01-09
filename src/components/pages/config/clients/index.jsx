@@ -1,4 +1,4 @@
-import React                       from 'react';
+import React, { useEffect}         from 'react';
 import { makeStyles }              from '@material-ui/core/styles';
 import Paper                       from '@material-ui/core/Paper';
 import Button                      from '@material-ui/core/Button';
@@ -6,9 +6,8 @@ import Grid                        from '@material-ui/core/Grid';
 import AttrList                    from './attr_list';
 import Breadcrumbs                 from '../../../ui/breadcrumbs'
 import Typography                  from '@material-ui/core/Typography';
-
 import { useQuery }                from '@apollo/react-hooks';
-import { GET_CLIENT_ATTRIBUTE }    from './queries_and_mutations/queries';
+import { GET_CLIENT_ATTRIBUTES }   from './queries_and_mutations/queries';
 
 
 const BREADCRUMBS = [
@@ -36,9 +35,13 @@ const useStyles = makeStyles((theme) => ({
 
 const ConfigClientsIndex  = ()=> {
 
-  const { loading, data } = useQuery(GET_CLIENT_ATTRIBUTE)
- 
+  const { loading, data } = useQuery(GET_CLIENT_ATTRIBUTES)
   const [attrList, setAttrList] = React.useState(data ? data.clientAttributes : [])
+
+  useEffect(() => {
+    data && setAttrList(data.clientAttributes);
+  }, [data])
+
   const addNewAttr = (event) => {
     setAttrList(attrList.concat([{ active: true }]))
   }

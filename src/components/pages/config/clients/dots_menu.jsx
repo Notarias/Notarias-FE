@@ -2,14 +2,11 @@ import React              from 'react';
 import Grid               from '@material-ui/core/Grid';
 import Button             from '@material-ui/core/Button';
 import MoreVertIcon       from '@material-ui/icons/MoreVert';
-
 import FormControlLabel   from '@material-ui/core/FormControlLabel';
 import Switch             from '@material-ui/core/Switch';
-
 import IconButton         from '@material-ui/core/IconButton';
 import Menu               from '@material-ui/core/Menu';
-
-import MenuItem from '@material-ui/core/MenuItem';
+import MenuItem           from '@material-ui/core/MenuItem';
 
 
 const dotsMenu  = ({

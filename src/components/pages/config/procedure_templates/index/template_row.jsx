@@ -4,7 +4,7 @@ import Grid                           from '@material-ui/core/Grid';
 import GenericDropdownMenu            from '../../../../ui/generic_dropdown_menu';
 import CreateIcon                     from '@material-ui/icons/Create';
 import MenuItem                       from '@material-ui/core/MenuItem';
-import Link                           from '@material-ui/core/Link';
+import { Link }                       from 'react-router-dom';
 import Typography                     from '@material-ui/core/Typography';
 import TableRow                       from '@material-ui/core/TableRow';
 import TableCell                      from '@material-ui/core/TableCell';
@@ -19,16 +19,16 @@ import useMediaQuery                  from '@material-ui/core/useMediaQuery';
 import { useTheme }                   from '@material-ui/core/styles';
 import RadioButtonUncheckedIcon       from '@material-ui/icons/RadioButtonUnchecked';
 import RadioButtonCheckedIcon         from '@material-ui/icons/RadioButtonChecked';
+import ListItemIcon                   from '@material-ui/core/ListItemIcon';
+import ListItemText                   from '@material-ui/core/ListItemText';
 
 
 const TempleteRow = (props) => {
 
   const procedureTemplate  = props.data
   const { classes } = props
-
   const [id, setId] = React.useState(procedureTemplate.id);
   const [active, setActive] = React.useState(procedureTemplate.active);
-
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const [open, setOpen] = React.useState(false);
@@ -41,8 +41,8 @@ const TempleteRow = (props) => {
   useMutation(
     UPDATE_PROCEDURE_TEMPLATES,
     {
-      update(store, cacheData, id) {
-        setActive(cacheData.data.updateProcedureTemplate.procedureTemplate.active)
+      update(store, cacheData) {
+        setActive(cacheData.data.updateProceduresTemplate.proceduresTemplate.active)
       }
     }
   )
@@ -80,21 +80,17 @@ const TempleteRow = (props) => {
         <Grid>
           <GenericDropdownMenu>
             <MenuItem key={ procedureTemplate.id + "-edit" }>
-              <Link 
-                href={ "" }
+              <Link
+                to={`/config/procedure_templates/${ procedureTemplate.id }/edit`}
                 color="inherit"
                 underline="none"
+                className={ classes.linkDefault }
               >
                 <Grid container>
-                  <CreateIcon  className={ classes.defaultIcon }/>
-                  <Typography 
-                    variant="button" 
-                    display="block" 
-                    gutterBottom
-                    className={ classes.textIconDefault }
-                  >
-                    Editar
-                  </Typography>
+                  <ListItemIcon>
+                    <CreateIcon className={ classes.defaultIcon }/>
+                  </ListItemIcon>
+                  <ListItemText primary="Editar" />
                 </Grid>
               </Link>
             </MenuItem>
@@ -102,17 +98,15 @@ const TempleteRow = (props) => {
               key={ procedureTemplate.id + "-status" }
             >
               <Grid container onClick={ handleClickOpen }>
-                {active ? <RadioButtonUncheckedIcon color="secondary" className={ classes.defaultIcon }/> : <RadioButtonCheckedIcon className={classes.activeIconGreen} /> }
-                <Typography 
-                  variant="button" 
-                  display="block" 
-                  gutterBottom
-                  key="activar"
-                  className={ classes.textIconDefault }
-                >
-                  { statusTemplate() }
-                </Typography>
-                
+                <ListItemIcon>
+                  {
+                    active ? 
+                      <RadioButtonUncheckedIcon color="secondary" className={ classes.defaultIcon }/> 
+                    : 
+                      <RadioButtonCheckedIcon className={classes.activeIconGreen} /> 
+                  }
+                </ListItemIcon>
+                <ListItemText primary={ statusTemplate() } />
               </Grid>
               <Dialog
                   fullScreen={ fullScreen }
@@ -141,7 +135,6 @@ const TempleteRow = (props) => {
       </TableCell>
     </TableRow>
   )
-
 }
 
 export default TempleteRow;

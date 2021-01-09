@@ -10,7 +10,7 @@ import InputLabel                        from '@material-ui/core/InputLabel';
 import { useMutation }                   from '@apollo/react-hooks';
 import { GLOBAL_MESSAGE }                from '../../../../resolvers/queries';
 import { CREATE_CLIENT_ATTRIBUTE }       from './queries_and_mutations/queries';
-import { GET_CLIENT_ATTRIBUTE }          from './queries_and_mutations/queries';
+import { GET_CLIENT_ATTRIBUTES }         from './queries_and_mutations/queries';
 import { DESTROY_CLIENT_ATTRIBUTE }      from './queries_and_mutations/queries';
 import { UPDATE_CLIENT_ATTRIBUTE }       from './queries_and_mutations/queries';
 import FormHelperText                    from '@material-ui/core/FormHelperText';
@@ -34,13 +34,11 @@ const attrList = (props)=> {
   const { removeFromList } = props
   const classes = useStyles();
   const inputsList = ["name", "style"]
-
   const [name, setName] = React.useState(props.name);
   const [style, setStyle] = React.useState(props.style);
   const [active, setActive] = React.useState(props.active);
   const [id, setId] = React.useState(props.id);
   const [pristine, setPristine] = React.useState(true)
-
   const [error, setError] = React.useState(false)
   const [loading, setLoading] = React.useState(false)
 
@@ -49,7 +47,7 @@ const attrList = (props)=> {
       DESTROY_CLIENT_ATTRIBUTE, 
       {
         update(store, cacheData, id) {
-          const clientAttrsData = store.readQuery({ query: GET_CLIENT_ATTRIBUTE });
+          const clientAttrsData = store.readQuery({ query: GET_CLIENT_ATTRIBUTES });
           const deleteId = cacheData.data.destroyClientAttribute.clientAttribute.id
 
           let attr = clientAttrsData.clientAttributes
@@ -60,7 +58,7 @@ const attrList = (props)=> {
             }
           }
           clientAttrsData.clientAttributes = newArray
-          store.writeQuery({ query: GET_CLIENT_ATTRIBUTE, data: clientAttrsData });
+          store.writeQuery({ query: GET_CLIENT_ATTRIBUTES, data: clientAttrsData });
           store.writeQuery({
             query: GLOBAL_MESSAGE,
             data: {
@@ -98,11 +96,11 @@ const attrList = (props)=> {
         update(store, cacheData) {
           setError(false)
           setPristine(true)
-          const clientAttrsData = store.readQuery({ query: GET_CLIENT_ATTRIBUTE });
+          const clientAttrsData = store.readQuery({ query: GET_CLIENT_ATTRIBUTES });
           clientAttrsData.clientAttributes.push(
             cacheData.data.createClientAttribute.clientAttribute 
           )
-          store.writeQuery({ query: GET_CLIENT_ATTRIBUTE, data: clientAttrsData });
+          store.writeQuery({ query: GET_CLIENT_ATTRIBUTES, data: clientAttrsData });
           setId(cacheData.data.createClientAttribute.clientAttribute.id)
           store.writeQuery(
             {
@@ -130,7 +128,7 @@ const attrList = (props)=> {
         update(store, cacheData) {
           setError(false)
           setPristine(true)
-          const clientAttrsData = store.readQuery({ query: GET_CLIENT_ATTRIBUTE });
+          const clientAttrsData = store.readQuery({ query: GET_CLIENT_ATTRIBUTES });
           store.writeQuery(
             {
               query: GLOBAL_MESSAGE,
