@@ -2,33 +2,33 @@ import gql          from 'graphql-tag';
 
 export const PROCEDURE_TEMPLATES = gql`
   query proceduresTemplates (
-      $page: Int,
-      $per: Int,
-      $sortDirection: String,
-      $sortField: String,
-      $searchField: String,
-      $searchValue: String
-    )
+    $page: Int,
+    $per: Int,
+    $sortDirection: String,
+    $sortField: String,
+    $searchField: String,
+    $searchValue: String
+  )
+  {
+    proceduresTemplates (
+      page: $page,
+      per: $per,
+      sortDirection: $sortDirection,
+      sortField: $sortField,
+      searchField: $searchField,
+      searchValue: $searchValue
+    ) 
     {
-      proceduresTemplates (
-        page: $page,
-        per: $per,
-        sortDirection: $sortDirection,
-        sortField: $sortField,
-        searchField: $searchField,
-        searchValue: $searchValue
-      ) 
-      {
+      id
+      name
+      active
+      serialNumber
+      tabs {
         id
-        name
-        active
-        serialNumber
-        tabs {
-          id
-        }
       }
-      proceduresTemplatesCount
     }
+    proceduresTemplatesCount
+  }
 `
 
 export const UPDATE_PROCEDURE_TEMPLATES = gql`
