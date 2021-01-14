@@ -10,6 +10,19 @@ export const GET_BUDGETING_TEMPLATE = gql`
   }
 `
 
+export const CREATE_BUDGETING_TEMPLATE = gql`
+  mutation createBudgetingTemplate ($name: String!){
+    createBudgetingTemplate (input: {name: $name} ) {
+      budgetingTemplate {
+        active
+        id
+        name
+        serialNumber
+      }
+    }
+  }
+`
+
 export const GET_BUDGETING_TEMPLATES = gql`
   query budgetingTemplates (
     $page: Int,

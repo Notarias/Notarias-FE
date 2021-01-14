@@ -12,11 +12,60 @@ import Button                             from '@material-ui/core/Button';
 import { styles }                         from '../styles';
 import { withStyles }                     from '@material-ui/core/styles';
 import PostAddIcon                        from '@material-ui/icons/PostAdd';
+import { useMutation }                    from '@apollo/react-hooks';
+import { CREATE_BUDGETING_TEMPLATE }      from '../queries_and_mutations/queries'
+import { Redirect }                       from 'react-router-dom';
 
 
 const ControlBar = (props) => {
   const { classes, searchLoading, onChangeSearch } = props;
   const [open, setOpen] = React.useState(false);
+  const [templateName, setTemplateName] = useState(" ");
+  const [redirect, setRedirect] = useState(false)
+  const [pristine, setPristine] = useState(true)
+  const [error, setError] = useState(false)
+  const inputsList = ["name"]
+
+  const [createBudgetingTemplateMutation, createProcessInfo] =
+  useMutation(
+    CREATE_BUDGETING_TEMPLATE,
+    {
+      onError(apolloError) {
+        setErrors(apolloError)
+        setPristine(true)
+      },
+      onCompleted(cacheData) {
+        setOpen(false);
+        setError(false)
+        // const id = cacheData.createBudgetingTemplate.budgetingTemplate.id
+        // id && setRedirect(
+        //   <Redirect to={{ pathname: `/config/budget_templates/${id}/edit` }} />
+        // )
+      }
+    }
+  )
+
+  const setErrors = (apolloError) => {
+    let errorsList = {}
+    let errorTemplateList = apolloError.graphQLErrors
+    for ( let i = 0; i < errorTemplateList.length; i++) {
+      for( let n = 0; n < inputsList.length; n++) {
+        if(errorTemplateList[i].extensions.attribute === inputsList[n]){
+          errorsList[inputsList[n]] = errorTemplateList[i].message
+        }
+      }
+    }
+    setError(errorsList)
+  }
+
+  const handleNameChange = (event) => {
+    setTemplateName(event.target.value);
+    setPristine(false);
+  };
+
+  const createNewBudgetingTemplate = (event) => {
+    createBudgetingTemplateMutation({ variables: { name: templateName }})
+  }
 
   const handleClickOpen = (event) => {
     setOpen(true);
@@ -60,6 +109,11 @@ const ControlBar = (props) => {
               id="name"
               variant="filled"
               fullWidth
+              onChange={ handleNameChange }
+              error={ !!error["name"] && true }
+              helperText={error["name"] || " "}
+              errorskey={ "name" }
+              name='name'
             />
         </DialogContent>
         <DialogActions>
@@ -71,11 +125,13 @@ const ControlBar = (props) => {
             cancelar
           </Button>
           <Button
-            onClick={ handleClose }
-            variant="text" 
-            color="primary" 
-            size="small" 
+            onClick={ createNewBudgetingTemplate }
+            variant="text"
+            color="primary"
+            size="small"
+            disabled={ pristine }
           >
+            {/* { redirect  } */}
             Agregar
           </Button>
         </DialogActions>
@@ -83,4 +139,5 @@ const ControlBar = (props) => {
     </Grid>
   )
 }
+
 export default withStyles(styles)(ControlBar);
