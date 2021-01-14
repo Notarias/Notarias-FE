@@ -65,6 +65,10 @@ const ConfigBudgetsTemplatesIndex  = (props)=> {
       <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
       <div className={ classes.root }>
         <ControlsBar
+          classes={classes}
+          searchLoading={searchLoading}
+          onChangeSearch={onChangeSearch.bind(this)}
+          getTemplatesVariables={ getTemplatesVariables }
         />
         <div className={ classes.tableWrapper }>
           <Paper>

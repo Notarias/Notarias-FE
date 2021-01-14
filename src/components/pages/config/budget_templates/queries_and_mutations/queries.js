@@ -34,5 +34,6 @@ export const GET_BUDGETING_TEMPLATES = gql`
       name
       serialNumber
     }
+    proceduresTemplatesCount
   }
 `

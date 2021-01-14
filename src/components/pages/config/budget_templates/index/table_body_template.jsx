@@ -4,7 +4,7 @@ import TableRow                       from '@material-ui/core/TableRow';
 import TableCell                      from '@material-ui/core/TableCell';
 import TableBody                      from '@material-ui/core/TableBody';
 import { useQuery }                   from '@apollo/react-hooks';
-import { GET_BUDGETING_TEMPLATES }    from '../Querys_and_mutations/queries';
+import { GET_BUDGETING_TEMPLATES }    from '../queries_and_mutations/queries';
 import TemplateRow                    from './template_row';
 
 

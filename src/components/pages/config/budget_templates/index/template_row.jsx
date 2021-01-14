@@ -37,59 +37,6 @@ const TemplateRow = (props) => {
       <TableCell align= "center">
         <Grid>
         <GenericDropdownMenu/>
-          {/* <GenericDropdownMenu>
-            <MenuItem key={ procedureTemplate.id + "-edit" }>
-              <Link
-                to={`/config/procedure_templates/${ procedureTemplate.id }/edit`}
-                color="inherit"
-                underline="none"
-                className={ classes.linkDefault }
-              >
-                <Grid container>
-                  <ListItemIcon>
-                    <CreateIcon className={ classes.defaultIcon }/>
-                  </ListItemIcon>
-                  <ListItemText primary="Editar" />
-                </Grid>
-              </Link>
-            </MenuItem>
-            <MenuItem 
-              key={ procedureTemplate.id + "-status" }
-            >
-              <Grid container onClick={ handleClickOpen }>
-                <ListItemIcon>
-                  {
-                    active ? 
-                      <RadioButtonUncheckedIcon color="secondary" className={ classes.defaultIcon }/> 
-                    : 
-                      <RadioButtonCheckedIcon className={classes.activeIconGreen} /> 
-                  }
-                </ListItemIcon>
-                <ListItemText primary={ statusTemplate() } />
-              </Grid>
-              <Dialog
-                  fullScreen={ fullScreen }
-                  open={ open }
-                  onClose={ handleClose }
-                  aria-labelledby="responsive-dialog-title"
-                >
-                  <DialogTitle id="responsive-dialog-title">{"Confirmar ", statusTemplate() }</DialogTitle>
-                  <DialogContent>
-                    <DialogContentText>
-                      ¿Realmente deseas { statusTemplate() } está plantilla de trámite ?
-                    </DialogContentText>
-                  </DialogContent>
-                  <DialogActions>
-                    <Button onClick={ handleClose } color="primary">
-                      Cancelar
-                    </Button>
-                    <Button autoFocus onClick={ changeStatus } color="primary">
-                      { statusTemplate() }
-                    </Button>
-                  </DialogActions>
-                </Dialog>
-            </MenuItem>
-          </GenericDropdownMenu> */}
         </Grid>
       </TableCell>
     </TableRow>

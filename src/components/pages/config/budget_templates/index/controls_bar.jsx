@@ -1,4 +1,4 @@
-import React                              from 'react'
+import React, { useState }                from 'react'
 import Grid                               from '@material-ui/core/Grid';
 import CircularProgress                   from '@material-ui/core/CircularProgress';
 import Dialog                             from '@material-ui/core/Dialog';
@@ -12,6 +12,7 @@ import Button                             from '@material-ui/core/Button';
 import { styles }                         from '../styles';
 import { withStyles }                     from '@material-ui/core/styles';
 import PostAddIcon                        from '@material-ui/icons/PostAdd';
+
 
 const ControlBar = (props) => {
   const { classes, searchLoading, onChangeSearch } = props;
@@ -52,7 +53,7 @@ const ControlBar = (props) => {
           Se añadirá una nueva plantilla.
         </DialogTitle>
         <DialogContent>
-          Título de la plantilla de trámites.
+          Título de la plantilla de Presupuestos.
           <TextField
               autoFocus
               margin="dense"
