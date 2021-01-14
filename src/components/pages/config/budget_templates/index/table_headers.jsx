@@ -12,17 +12,28 @@ export default (props) => {
         <SortHeader
           text={ "Nombre" }
           field_property={ "name" }
+          current_field={ field }
+          sort_direction={ direction }
+          callback={ sortHandler }
         />
         <SortHeader
           text={ "Número de serie" }
           field_property={ "serial_number" }
-
+          current_field={ field }
+          sort_direction={ direction }
+          callback={ sortHandler }
         />
         <SortHeader
           text={ "Estado" }
+          current_field={ field }
+          sort_direction={ direction }
+          callback={ sortHandler }
         />
         <SortHeader
           text={ "Versión" }
+          current_field={ field }
+          sort_direction={ direction }
+          callback={ sortHandler }
         />
         <SortHeader
           text={ "Trámite" }

@@ -27,6 +27,7 @@ const ConfigBudgetsTemplatesIndex  = (props)=> {
   const [page, setPage]                   = useState(0)
   const [per, setPer]                     = useState(5)
   const [total_records, setTotalRecords]  = useState(5)
+  const [getTemplatesVariables, setGetTemplatesVariables] = useState({})
 
   const { classes } = props
 
@@ -50,26 +51,40 @@ const ConfigBudgetsTemplatesIndex  = (props)=> {
     }, 2000))
   }
 
+  const assingTotalRecords = (total) => {
+    setTotalRecords(total)
+  }
+
+  const sort = (params) => {
+    setSortDirection(Object.values(params["sort"])[0])
+    setSortField(Object.keys(params["sort"])[0])
+  }
+
   return(
     <>
       <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
       <div className={ classes.root }>
         <ControlsBar
+          classes={classes}
+          searchLoading={searchLoading}
+          onChangeSearch={onChangeSearch.bind(this)}
+          getTemplatesVariables={ getTemplatesVariables }
         />
         <div className={ classes.tableWrapper }>
           <Paper>
-            <Table >
-              <TableHeaders/>
+            <Table className={classes.table}>
+              <TableHeaders field={ sortField } direction={ sortDirection } sortHandler={ sort.bind(this) }/>
               <TableBodyTemplate
-                // page={ page }
-                // per={ per }
-                // search={ {} }
-                // sortField={ sortField }
-                // sortDirection={ sortDirection }
-                // assingTotalRecords={ assingTotalRecords }
-                // searchValue={ searchValue }
-                // searchField={ searchField }
-                classes={ classes } 
+                page={ page }
+                per={ per }
+                search={ {} }
+                sortField={ sortField }
+                sortDirection={ sortDirection }
+                assingTotalRecords={ assingTotalRecords }
+                searchValue={ searchValue }
+                searchField={ searchField }
+                classes={ classes }
+                setGetTemplatesVariables={ setGetTemplatesVariables }
               />
               <TableFooter>
                 <TableRow>

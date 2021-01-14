@@ -10,7 +10,7 @@ export default (props) => {
     <TableHead>
       <TableRow>
         <SortHeader
-          text={ "Nombre del trámite" }
+          text={ "Nombre del Presupuesto" }
           field_property={ "name" }
           current_field={ field }
           sort_direction={ direction }
