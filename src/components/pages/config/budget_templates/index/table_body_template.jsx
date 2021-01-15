@@ -1,4 +1,4 @@
-import React                          from 'react'
+import React, { useEffect }           from 'react'
 import CircularProgress               from '@material-ui/core/CircularProgress';
 import TableRow                       from '@material-ui/core/TableRow';
 import TableCell                      from '@material-ui/core/TableCell';
@@ -24,6 +24,15 @@ const TableBodyTemplate = (props) => {
   const { loading, data, refetch } = useQuery(
     GET_BUDGETING_TEMPLATES, { variables: variables, fetchPolicy: "no-cache" }
   );
+
+  let totalCount = data && data.budgetingTemplatesCount
+
+  useEffect(() => {
+    refetch(variables);
+    setGetTemplatesVariables(variables)
+    totalCount && assingTotalRecords(totalCount)
+  }, [page, per, searchField, searchValue, sortField, sortDirection, totalCount]);
+
 
   if (loading || !data) {
     return(
