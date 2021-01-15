@@ -21,6 +21,7 @@ import ReportsIndex                   from '../components/pages/reports/index';
 import ProfilesIndex                  from '../components/pages/profiles/index';
 import ConfigClientsIndex             from '../components/pages/config/clients/index';
 import ConfigBudgetsTemplatesIndex    from '../components/pages/config/budget_templates/index';
+import ConfigBudgetsTemplatesEdit     from '../components/pages/config/budget_templates/edit';
 import ConfigProcedureTemplatesIndex  from '../components/pages/config/procedure_templates/index';
 import ConfigProcedureTemplatesEdit   from '../components/pages/config/procedure_templates/edit';
 import GlobalMessage                  from './global_message';
@@ -51,6 +52,7 @@ export default function BaseRoutes(props) {
         <ProtectedRoute path="/config/clients" component={ConfigClientsIndex}/>
         <ProtectedRoute path="/config/procedure_templates/:id/edit" component={ConfigProcedureTemplatesEdit}/>
         <ProtectedRoute path="/config/procedure_templates" component={ConfigProcedureTemplatesIndex}/>
+        <ProtectedRoute path="/config/budget_templates/:id/edit" component={ConfigBudgetsTemplatesEdit}/>
         <ProtectedRoute path="/config/budget_templates" component={ConfigBudgetsTemplatesIndex}/>
         <ProtectedRoute path='*' component={DashboardsIndex} />
         <Route render={() => <ProtectedRoute path='/' component={DashboardsIndex}/>}/>
