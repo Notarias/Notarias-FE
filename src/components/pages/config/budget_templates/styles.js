@@ -68,6 +68,16 @@ export const styles = theme => {
     },
     activeGreen: {
       backgroundColor: "green"
-    }
+    },
+    defaultIcon:{
+      width:"30px", 
+      height:"30px",
+    },
+    activeIconGreen:{
+      width:"30px", 
+      height:"40px",
+      marginRight: "10px",
+      color: "green",
+    },
   })
 }

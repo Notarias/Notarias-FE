@@ -4,6 +4,20 @@ import TableRow                       from '@material-ui/core/TableRow';
 import TableCell                      from '@material-ui/core/TableCell';
 import GenericDropdownMenu            from '../../../../ui/generic_dropdown_menu';
 import Chip                           from '@material-ui/core/Chip';
+import Button                         from '@material-ui/core/Button';
+import CreateIcon                     from '@material-ui/icons/Create';
+import MenuItem                       from '@material-ui/core/MenuItem';
+import RadioButtonUncheckedIcon       from '@material-ui/icons/RadioButtonUnchecked';
+import RadioButtonCheckedIcon         from '@material-ui/icons/RadioButtonChecked';
+import ListItemIcon                   from '@material-ui/core/ListItemIcon';
+import ListItemText                   from '@material-ui/core/ListItemText';
+import Dialog                         from '@material-ui/core/Dialog';
+import DialogActions                  from '@material-ui/core/DialogActions';
+import DialogContent                  from '@material-ui/core/DialogContent';
+import DialogContentText              from '@material-ui/core/DialogContentText';
+import DialogTitle                    from '@material-ui/core/DialogTitle';
+import useMediaQuery                  from '@material-ui/core/useMediaQuery';
+import { useTheme }                   from '@material-ui/core/styles';
 
 
 const TemplateRow = (props) => {
@@ -11,15 +25,30 @@ const TemplateRow = (props) => {
   const budtingTemplate  = props.data
   const { classes } = props
   const [active, setActive] = React.useState(budtingTemplate.active);
+  const [open, setOpen] = React.useState(false);
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   const folioNumber = (serial) => {
     return serial.toString().padStart(5, "0")
   }
 
+  const handleClickOpen = (event) => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const markStatus = () => {
     if(!active) {
       return  classes.statusTemplateRow 
     }
+  }
+
+  const statusTemplate = () => { 
+    return active ? "Desactivar" : "Activar"
   }
 
   const statusBadgetTemplate = () => {
@@ -45,7 +74,50 @@ const TemplateRow = (props) => {
       <TableCell align= "center">En ejecución</TableCell>
       <TableCell align= "center">
         <Grid>
-        <GenericDropdownMenu/>
+          <GenericDropdownMenu>
+            <MenuItem key={ budtingTemplate.id + "-edit" }>
+              <ListItemIcon>
+                <CreateIcon className={ classes.defaultIcon }/>
+              </ListItemIcon>
+              <ListItemText primary="Editar" />
+            </MenuItem>
+            <MenuItem 
+              key={ budtingTemplate.id + "-status" }
+            >
+              <Grid container onClick={ handleClickOpen }>
+                <ListItemIcon>
+                  {
+                    active ? 
+                      <RadioButtonUncheckedIcon color="secondary" className={ classes.defaultIcon }/> 
+                    : 
+                      <RadioButtonCheckedIcon className={classes.activeIconGreen} /> 
+                  }
+                </ListItemIcon>
+                <ListItemText primary={ statusTemplate() } />
+              </Grid>
+              <Dialog
+                fullScreen={ fullScreen }
+                open={ open }
+                onClose={ handleClose }
+                aria-labelledby="responsive-dialog-title"
+              >
+                <DialogTitle id="responsive-dialog-title">{"Confirmar ", statusTemplate() }</DialogTitle>
+                <DialogContent>
+                  <DialogContentText>
+                    ¿Realmente deseas { statusTemplate() } está plantilla de presupuesto ?
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={ handleClose } color="primary">
+                    Cancelar
+                  </Button>
+                  <Button autoFocus onClick={ handleClose } color="primary">
+                    { statusTemplate() }
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            </MenuItem>
+          </GenericDropdownMenu>
         </Grid>
       </TableCell>
     </TableRow>
