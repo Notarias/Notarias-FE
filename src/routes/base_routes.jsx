@@ -52,7 +52,8 @@ export default function BaseRoutes(props) {
         <ProtectedRoute path="/config/procedure_templates/:id/edit" component={ConfigProcedureTemplatesEdit}/>
         <ProtectedRoute path="/config/procedure_templates" component={ConfigProcedureTemplatesIndex}/>
         <ProtectedRoute path="/config/budget_templates" component={ConfigBudgetsTemplatesIndex}/>
-        <Route render={() => <DashboardsIndex/>}/>
+        <ProtectedRoute path='*' component={DashboardsIndex} />
+        <Route render={() => <ProtectedRoute path='/' component={DashboardsIndex}/>}/>
       </Switch>
     </div>
   )
