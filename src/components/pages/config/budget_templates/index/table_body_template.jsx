@@ -1,4 +1,4 @@
-import React, { useEffect }           from 'react'
+import React                          from 'react'
 import CircularProgress               from '@material-ui/core/CircularProgress';
 import TableRow                       from '@material-ui/core/TableRow';
 import TableCell                      from '@material-ui/core/TableCell';
@@ -29,7 +29,7 @@ const TableBodyTemplate = (props) => {
     return(
       <TableBody>
         <TableRow>
-          <TableCell align="center" colSpan={3} className={ classes.loadingTableCell }>
+          <TableCell align="center" colSpan={6} className={ classes.loadingTableCell }>
             <CircularProgress className={ classes.searchLoadingIcon } size={ 100 }/>
           </TableCell>
         </TableRow>
