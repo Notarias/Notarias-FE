@@ -24,6 +24,9 @@ export const styles = theme => {
       paddingTop: "40px",
       paddingBottom: "40px"
     },
+    searchLoadingIcon: {
+      marginLeft: "-100px"
+    },
     search: {
       marginRight: "10px",
       position: 'relative',
@@ -63,5 +66,8 @@ export const styles = theme => {
         },
       }
     },
+    activeGreen: {
+      backgroundColor: "green"
+    }
   })
 }

@@ -39,7 +39,7 @@ const TableBodyTemplate = (props) => {
     return(
       <TableBody>
         <TableRow>
-          <TableCell align="center" colSpan={3} className={ classes.loadingTableCell }>
+          <TableCell align="center" colSpan={6} className={ classes.loadingTableCell }>
             <CircularProgress className={ classes.searchLoadingIcon } size={ 100 }/>
           </TableCell>
         </TableRow>

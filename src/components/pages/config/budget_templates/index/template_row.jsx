@@ -3,6 +3,7 @@ import Grid                           from '@material-ui/core/Grid';
 import TableRow                       from '@material-ui/core/TableRow';
 import TableCell                      from '@material-ui/core/TableCell';
 import GenericDropdownMenu            from '../../../../ui/generic_dropdown_menu';
+import Chip                           from '@material-ui/core/Chip';
 
 
 const TemplateRow = (props) => {
@@ -31,7 +32,13 @@ const TemplateRow = (props) => {
     <TableRow key={ budtingTemplate.id + "-row" }  className={ markStatus() } >
       <TableCell align= "center">{ budtingTemplate.name }</TableCell>
       <TableCell align= "center">{ folioNumber(budtingTemplate.serialNumber) }</TableCell>
-      <TableCell align= "center">{ statusBadgetTemplate() }</TableCell>
+      <TableCell 
+        align= "center">{ 
+          <Chip size="small" label={ statusBadgetTemplate() }
+          classes={{colorPrimary: classes.activeGreen}}
+          color={ active ? "primary" : "secondary"} /> 
+        }
+      </TableCell>
       <TableCell align= "center">2.0</TableCell>
       <TableCell align= "center">En ejecución</TableCell>
       <TableCell align= "center">

@@ -6,6 +6,7 @@ import TableBody                      from '@material-ui/core/TableBody';
 import { useQuery }                   from '@apollo/react-hooks';
 import { GET_BUDGETING_TEMPLATES }    from '../queries_and_mutations/queries';
 import TemplateRow                    from './template_row';
+import Grid                                 from '@material-ui/core/Grid';
 
 
 const TableBodyTemplate = (props) => {
@@ -29,7 +30,7 @@ const TableBodyTemplate = (props) => {
     return(
       <TableBody>
         <TableRow>
-          <TableCell align="center" colSpan={3} className={ classes.loadingTableCell }>
+          <TableCell align="center" colSpan={6} className={ classes.loadingTableCell }>
             <CircularProgress className={ classes.searchLoadingIcon } size={ 100 }/>
           </TableCell>
         </TableRow>
