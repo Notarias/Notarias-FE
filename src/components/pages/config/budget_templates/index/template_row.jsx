@@ -32,11 +32,13 @@ const TemplateRow = (props) => {
     <TableRow key={ budtingTemplate.id + "-row" }  className={ markStatus() } >
       <TableCell align= "center">{ budtingTemplate.name }</TableCell>
       <TableCell align= "center">{ folioNumber(budtingTemplate.serialNumber) }</TableCell>
-      <TableCell 
-        align= "center">{ 
-          <Chip size="small" label={ statusBadgetTemplate() }
-          classes={{colorPrimary: classes.activeGreen}}
-          color={ active ? "primary" : "secondary"} /> 
+      <TableCell align= "center">
+        { 
+          <Chip
+            size="small" label={ statusBadgetTemplate() }
+            classes={{colorPrimary: classes.activeGreen}}
+            color={ active ? "primary" : "secondary"} 
+          /> 
         }
       </TableCell>
       <TableCell align= "center">2.0</TableCell>
