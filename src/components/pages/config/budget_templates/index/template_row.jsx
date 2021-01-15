@@ -18,6 +18,7 @@ import DialogContentText              from '@material-ui/core/DialogContentText'
 import DialogTitle                    from '@material-ui/core/DialogTitle';
 import useMediaQuery                  from '@material-ui/core/useMediaQuery';
 import { useTheme }                   from '@material-ui/core/styles';
+import { Link }                       from 'react-router-dom';
 
 
 const TemplateRow = (props) => {
@@ -76,10 +77,19 @@ const TemplateRow = (props) => {
         <Grid>
           <GenericDropdownMenu>
             <MenuItem key={ budtingTemplate.id + "-edit" }>
-              <ListItemIcon>
-                <CreateIcon className={ classes.defaultIcon }/>
-              </ListItemIcon>
-              <ListItemText primary="Editar" />
+              <Link
+                to={`/config/budget_templates/${ budtingTemplate.id }/edit`}
+                color="inherit"
+                underline="none"
+                className={ classes.linkDefault }
+              >
+                <Grid container>
+                  <ListItemIcon>
+                    <CreateIcon className={ classes.defaultIcon }/>
+                  </ListItemIcon>
+                  <ListItemText primary="Editar" />
+                </Grid>
+              </Link>
             </MenuItem>
             <MenuItem 
               key={ budtingTemplate.id + "-status" }

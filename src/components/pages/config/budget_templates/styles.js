@@ -79,5 +79,9 @@ export const styles = theme => {
       marginRight: "10px",
       color: "green",
     },
+    linkDefault: {
+      textDecoration:"none",
+      width: "200px"
+    },
   })
 }
