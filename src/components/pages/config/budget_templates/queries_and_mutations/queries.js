@@ -23,6 +23,32 @@ export const CREATE_BUDGETING_TEMPLATE = gql`
   }
 `
 
+export const UPDATE_BUDGETING_TEMPLATE = gql`
+  mutation updateBudgetingTemplate (
+    $id: ID!,
+    $name: String,
+    $active: Boolean,
+    $clientMutationId: String)
+    {
+    updateBudgetingTemplate (input: 
+      {
+        id: $id,
+        name: $name,
+        active: $active,
+        clientMutationId: $clientMutationId
+      }
+    )
+    {
+      budgetingTemplate{
+        id
+        name
+        active
+        serialNumber
+      }
+    }
+  }
+`
+
 export const GET_BUDGETING_TEMPLATES = gql`
   query budgetingTemplates (
     $page: Int,
