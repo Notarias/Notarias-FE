@@ -1,4 +1,4 @@
-import React                          from 'react';
+import React, { useEffect }           from 'react';
 import Grid                           from '@material-ui/core/Grid';
 import TableRow                       from '@material-ui/core/TableRow';
 import TableCell                      from '@material-ui/core/TableCell';
@@ -19,6 +19,8 @@ import DialogTitle                    from '@material-ui/core/DialogTitle';
 import useMediaQuery                  from '@material-ui/core/useMediaQuery';
 import { useTheme }                   from '@material-ui/core/styles';
 import { Link }                       from 'react-router-dom';
+import { useMutation }                from '@apollo/react-hooks';
+import { UPDATE_BUDGETING_TEMPLATE }  from '../queries_and_mutations/queries'
 
 
 const TemplateRow = (props) => {
@@ -29,9 +31,31 @@ const TemplateRow = (props) => {
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const id = budtingTemplate.id;
+
+  // useEffect(
+  //   () => {
+  //     setActive(budtingTemplate.active)
+  //   }
+  // )
 
   const folioNumber = (serial) => {
     return serial.toString().padStart(5, "0")
+  }
+
+  const [updateBudgetingTemplateMutation, updateProcessInfo] =
+  useMutation(
+    UPDATE_BUDGETING_TEMPLATE,
+    {
+      update(store, cacheData) {
+        setActive(cacheData.data.updateBudgetingTemplate.budgetingTemplate.active)
+      }
+    }
+  )
+
+  const changeStatus = (e) => {
+    updateBudgetingTemplateMutation({ variables: { id: id, active: !active } })
+    setOpen(false);
   }
 
   const handleClickOpen = (event) => {
@@ -58,6 +82,7 @@ const TemplateRow = (props) => {
     )
   }
 
+  console.log("id", id)
   return(
     <TableRow key={ budtingTemplate.id + "-row" }  className={ markStatus() } >
       <TableCell align= "center">{ budtingTemplate.name }</TableCell>
@@ -68,8 +93,9 @@ const TemplateRow = (props) => {
             size="small" label={ statusBadgetTemplate() }
             classes={{colorPrimary: classes.activeGreen}}
             color={ active ? "primary" : "secondary"} 
-          /> 
+          />
         }
+                  { id }
       </TableCell>
       <TableCell align= "center">2.0</TableCell>
       <TableCell align= "center">En ejecución</TableCell>
@@ -121,7 +147,7 @@ const TemplateRow = (props) => {
                   <Button onClick={ handleClose } color="primary">
                     Cancelar
                   </Button>
-                  <Button autoFocus onClick={ handleClose } color="primary">
+                  <Button autoFocus onClick={ changeStatus } color="primary">
                     { statusTemplate() }
                   </Button>
                 </DialogActions>
