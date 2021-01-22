@@ -30,7 +30,7 @@ const Edit = (props) => {
         <Grid container item xs={9} direction="column">
             <Grid container direction="row"  alignItems="center" className={ classes.addTittleProcedure }>
               <Grid container item xs={7} justify="flex-start">
-                { "titúlo de la plantilla" }
+                titúlo de la plantilla
               </Grid>
               <Grid container item xs={5} justify="flex-end" alignItems="center">
                 <Grid container item xs={4} justify="center">
@@ -41,7 +41,7 @@ const Edit = (props) => {
                   </Button>
                 </Grid>
                 <Grid container item xs={4} justify="center">
-{/* espacios dejados intencionalmente para marcar los espacios de sus respectivos componentes */}
+{/* spaces left intentionally to mark the spaces of it own components */}
                 <Grid item>
                   <Button 
                     variant="contained" 
@@ -52,76 +52,74 @@ const Edit = (props) => {
                     Activar
                   </Button>
                 </Grid>
-{/* espacios dejados intencionalmente para marcar los espacios de sus respectivos componentes */}
+{/* spaces left intentionally to mark the spaces of it own components */}
                 </Grid>
               </Grid>
             </Grid>
             <Divider/>
-{/* espacios dejados intencionalmente para marcar los espacios de sus respectivos componentes */}
+{/* spaces left intentionally to mark the spaces of it own components */}
             <Grid container justify="center" alignItems="center" className={ classes.addFieldsAndGroupsButton } >
               <Grid container  justify="center" alignItems="center" direction="row" >
                 <Grid item xs={4}>
                   <Typography variant="button" display="block" gutterBottom>
-                    {<Button
+                    <Button
                       variant="contained"
                       color="primary"
                       size="small"
                     >
                       Campo  <AddIcon className={ classes.addIconMargin }/>
-                    </Button>}
+                    </Button>
                   </Typography>
                 </Grid>
                 <Grid item xs={4}>
                   <Typography variant="button" display="block" gutterBottom>
-                    {<Button
+                    <Button
                       variant="contained"
                       color="primary"
                       size="small"
                     >
                       Grupo de Campos <AddIcon className={ classes.addIconMargin }/>
-                    </Button>}
+                    </Button>
                   </Typography>
                 </Grid>
               </Grid>
             </Grid>
-{/* espacios dejados intencionalmente para marcar los espacios de sus respectivos componentes */}
-          { 
-          (loading || !data) ?
-            (
-              <Grid container item className={ classes.circularProgressLoading } direction="column" alignItems="center" justify="center">
-                <CircularProgress size={ 100 }/>
-              </Grid>
-            )
-          :
-            (
-              <Grid container item direction="column" alignItems="center" justify="center">
-                {"Fields and Groups" }
-              </Grid>
-            )
-          }
-        </Grid>
-        <Grid container item xs={3} direction="column">
+{/* spaces left intentionally to mark the spaces of it own components */}
+            { 
+              (loading || !data) ?
+                (
+                  <Grid container item className={ classes.circularProgressLoading } direction="column" alignItems="center" justify="center">
+                    <CircularProgress size={ 100 }/>
+                  </Grid>
+                )
+              :
+                (
+                  <Grid container item direction="column" alignItems="center" justify="center">
+                    Fields and Groups
+                  </Grid>
+                )
+            }
+          </Grid>
+          <Grid container item xs={3} direction="column">
           <Paper>
             {
-            (loading || !data) ?
-              (
-                <Grid container item className={ classes.circularProgressLoading } direction="column" alignItems="center" justify="center">
-                  <CircularProgress size={ 100 }/>
-                </Grid>
-              )
-            :
-
-            <Grid container item direction="column">
-              <Grid item >
-                <Button variant="contained" className={ classes.buttonTab }>
-                  <Grid container direction="column" alignItems="center" justify="center">
-                    Agregar pestaña
-                    <AddIcon/>
+              (loading || !data) ?
+                (
+                  <Grid container item className={ classes.circularProgressLoading } direction="column" alignItems="center" justify="center">
+                    <CircularProgress size={ 100 }/>
                   </Grid>
-                </Button>
-              </Grid>
-            </Grid>
-
+                )
+              :
+                <Grid container item direction="column">
+                  <Grid item >
+                    <Button variant="contained" className={ classes.buttonTab }>
+                      <Grid container direction="column" alignItems="center" justify="center">
+                        Agregar pestaña
+                        <AddIcon/>
+                      </Grid>
+                    </Button>
+                  </Grid>
+                </Grid>
             }
           </Paper>
         </Grid>
