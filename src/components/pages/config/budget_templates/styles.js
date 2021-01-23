@@ -83,5 +83,32 @@ export const styles = theme => {
       textDecoration:"none",
       width: "200px"
     },
+    addTittleProcedure: {
+      height: "70px",
+      paddingLeft: "20px",
+      paddingRight: "20px",
+    },
+    buttonAddProcedure: {
+      height: "30px",
+    },
+    circularProgressLoading: {
+      paddingTop: "60px",
+      paddingBottom: "40px"
+    },
+    addFieldsAndGroupsButton: {
+      marginTop: "15px",
+      marginBottom: "4px",
+    },
+    addIconMargin: {
+      marginLeft: "10px",
+    },
+    buttonHeight: {
+      height: "30px",
+    },
+    buttonTab: {
+      width: "100%",
+      height: "70px",
+      opacity: "0.7"
+    },
   })
 }
