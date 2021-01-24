@@ -7,9 +7,13 @@ import { styles }                           from './styles';
 import { withStyles }                       from '@material-ui/core/styles';
 import Button                               from '@material-ui/core/Button';
 import CircularProgress                     from '@material-ui/core/CircularProgress';
+import TemplateTittle                       from './edit/template_tittle';
+import { useQuery }                         from '@apollo/react-hooks';
+import { GET_BUDGETING_TEMPLATE }           from './queries_and_mutations/queries'
 
-import Typography                                               from '@material-ui/core/Typography';
-import AddIcon                                                  from '@material-ui/icons/Add';
+import Typography                           from '@material-ui/core/Typography';
+import AddIcon                              from '@material-ui/icons/Add';
+
 
 const BREADCRUMBS = [
   { name: "Inicio", path: "/" },
@@ -19,8 +23,9 @@ const BREADCRUMBS = [
 
 const Edit = (props) => {
   const { classes, match } = props
-  const loading = false
-  const data = true
+  const { loading, data, refetch } = useQuery(GET_BUDGETING_TEMPLATE,
+    { variables: {"id": match.params.id } } 
+  );
 
   return(
     <>
@@ -30,7 +35,10 @@ const Edit = (props) => {
         <Grid container item xs={9} direction="column">
             <Grid container direction="row"  alignItems="center" className={ classes.addTittleProcedure }>
               <Grid container item xs={7} justify="flex-start">
-                titúlo de la plantilla
+                <TemplateTittle
+                  templateData={ data ? data.budgetingTemplate : " " }
+                  match={ props.match.params }
+                />
               </Grid>
               <Grid container item xs={5} justify="flex-end" alignItems="center">
                 <Grid container item xs={4} justify="center">

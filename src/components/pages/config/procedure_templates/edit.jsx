@@ -15,6 +15,7 @@ import CircularProgress                     from '@material-ui/core/CircularProg
 import FieldsAndGroupFields                 from './edit/fields_and_group_fields';
 import ButtonsNewFieldNewFieldsGroup        from './edit/buttons_newField_newFieldsGroup'
 
+
 const BREADCRUMBS = [
   { name: "Inicio", path: "/" },
   { name: "Trámites", path: "/config/procedure_templates" },

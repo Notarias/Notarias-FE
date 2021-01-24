@@ -110,5 +110,30 @@ export const styles = theme => {
       height: "70px",
       opacity: "0.7"
     },
+    templateTextTittle: {
+      height: "70px",
+      maxWidth: "550px",
+      textAlign: "left",
+      display: "flex",
+      alignItems: "center",
+      cursor: "pointer",
+      paddingLeft: "10px"
+    },
+    templateTittleButton: {
+      minWidth: "45px",
+      minHeight: "45px",
+    },
+    textInputTittleName: {
+      width: "350px",
+      fontWeight: "bold",
+      wordWrap: "break-word",
+      paddingLeft: "10px"
+    },
+    saveTittleButton: {
+      paddingTop: "10px"
+    },
+    statusTemplateRow: {
+      boxShadow: `inset 10px 0px 0px -5px ${theme.palette.error.dark}`,
+    },
   })
 }
