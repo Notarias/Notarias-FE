@@ -12,6 +12,7 @@ import { useQuery }                         from '@apollo/react-hooks';
 import { GET_BUDGETING_TEMPLATE }           from './queries_and_mutations/queries'
 import Typography                           from '@material-ui/core/Typography';
 import AddIcon                              from '@material-ui/icons/Add';
+import ActiveTemplateButton                 from './edit/active_template_button';
 
 
 const BREADCRUMBS = [
@@ -48,18 +49,10 @@ const Edit = (props) => {
                   </Button>
                 </Grid>
                 <Grid container item xs={4} justify="center">
-{/* spaces left intentionally to mark the spaces of it own components */}
-                <Grid item>
-                  <Button 
-                    variant="contained" 
-                    color="primary" 
-                    size="small" 
-                    className={ classes.buttonHeight } 
-                  >
-                    Activar
-                  </Button>
-                </Grid>
-{/* spaces left intentionally to mark the spaces of it own components */}
+                  <ActiveTemplateButton
+                    templateData={data ?  data.budgetingTemplate : [] }
+                    match={ props.match.params }
+                  />
                 </Grid>
               </Grid>
             </Grid>
