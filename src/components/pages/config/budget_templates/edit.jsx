@@ -10,7 +10,6 @@ import CircularProgress                     from '@material-ui/core/CircularProg
 import TemplateTittle                       from './edit/template_tittle';
 import { useQuery }                         from '@apollo/react-hooks';
 import { GET_BUDGETING_TEMPLATE }           from './queries_and_mutations/queries'
-
 import Typography                           from '@material-ui/core/Typography';
 import AddIcon                              from '@material-ui/icons/Add';
 
