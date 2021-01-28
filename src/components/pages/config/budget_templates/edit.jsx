@@ -45,14 +45,17 @@ const Edit = (props) => {
                 <Grid container item xs={4} justify="center">
                 </Grid>
                 <Grid container item xs={4} justify="center">
-                  <AddProcedureTemplateButton/>
+                  <AddProcedureTemplateButton
+                    id={ match.params.id }
+                    proceduresTemplateData={ data ? data.budgetingTemplate.proceduresTemplate : null }
+                  />
                   {/* <Button variant="contained" size="small" className={ classes.buttonAddProcedure }>
                   + Tramite
                   </Button> */}
                 </Grid>
                 <Grid container item xs={4} justify="center">
                   <ActiveTemplateButton
-                    templateData={data ?  data.budgetingTemplate : [] }
+                    templateData={data ? data.budgetingTemplate : [] }
                     match={ props.match.params }
                   />
                 </Grid>

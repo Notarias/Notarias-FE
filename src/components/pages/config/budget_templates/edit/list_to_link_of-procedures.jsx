@@ -29,11 +29,8 @@ const useStyles = makeStyles((theme) => ({
 const ListToLinkOfProcedures = (props) => {
 
   const classes = useStyles();
-  const [selectedIndex, setSelectedIndex] = React.useState(1);
-
-  const handleListItemClick = (event, index) => {
-    setSelectedIndex(index);
-  };
+  const procedureLinked = props.procedureLinked;
+  const procedureIdSelected = props.procedureIdSelected;
 
   const { loading, data, refetch } = useQuery(
     GET_BUDGETING_TEMPLATES_QUICK_LIST,
@@ -49,8 +46,9 @@ const ListToLinkOfProcedures = (props) => {
               button
               key={ item.id + "-itemId"}
               divider
-              selected={selectedIndex === item.id}
-              onClick={(event) => handleListItemClick(event, item.id)}
+              selected={procedureIdSelected === item.id}
+              onClick={(event) =>  procedureLinked(item.id)}
+              // disabled={true}
             >
               <ListItemText primary={`${item.name} ${item.id}`} />
             </ListItem>
