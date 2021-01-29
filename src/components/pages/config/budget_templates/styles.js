@@ -52,6 +52,12 @@ export const styles = theme => {
       color: 'inherit',
       width: '100%',
     },
+    searchInputRootOnLink: {
+      color: 'inherit',
+      border: "1px solid",
+      borderRadius: "6px",
+      width: '100%',
+    },
     searchInputInput: {
       paddingTop: theme.spacing(),
       paddingRight: theme.spacing(),

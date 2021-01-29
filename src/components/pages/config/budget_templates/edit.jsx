@@ -42,9 +42,9 @@ const Edit = (props) => {
                 />
               </Grid>
               <Grid container item xs={5} justify="flex-end" alignItems="center">
-                <Grid container item xs={4} justify="center">
+                <Grid container item xs={3} justify="center">
                 </Grid>
-                <Grid container item xs={4} justify="center">
+                <Grid container item xs={5} justify="center">
                   <AddProcedureTemplateButton
                     id={ match.params.id }
                     proceduresTemplateData={ data ? data.budgetingTemplate.proceduresTemplate : null }
