@@ -1,32 +1,31 @@
-import React, { useEffect }               from 'react'
-// import Button                             from '@material-ui/core/Button';
-import Dialog                             from '@material-ui/core/Dialog';
-import DialogContent                      from '@material-ui/core/DialogContent';
-import DialogTitle                        from '@material-ui/core/DialogTitle';
-import DialogActions                      from '@material-ui/core/DialogActions';
-import ListToLinkOfProcedures             from './list_to_link_of-procedures';
-import { styles }                         from '../styles';
-import { withStyles }                     from '@material-ui/core/styles';
-import { useMutation }                    from '@apollo/react-hooks';
-import { UPDATE_BUDGETING_TEMPLATE }      from '../queries_and_mutations/queries';
-import { GET_BUDGETING_TEMPLATE }         from '../queries_and_mutations/queries';
-import Divider                            from '@material-ui/core/Divider';
-import InputBase                          from '@material-ui/core/InputBase';
-import SearchIcon                         from '@material-ui/icons/Search';
-import CircularProgress                   from '@material-ui/core/CircularProgress';
-
-
-
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import Grow from '@material-ui/core/Grow';
-import Paper from '@material-ui/core/Paper';
-import Popper from '@material-ui/core/Popper';
-import MenuItem from '@material-ui/core/MenuItem';
-import MenuList from '@material-ui/core/MenuList';
+import React, { useEffect }                           from 'react'
+import Dialog                                         from '@material-ui/core/Dialog';
+import DialogContent                                  from '@material-ui/core/DialogContent';
+import DialogTitle                                    from '@material-ui/core/DialogTitle';
+import DialogActions                                  from '@material-ui/core/DialogActions';
+import ListToLinkOfProcedures                         from './list_to_link_of-procedures';
+import { styles }                                     from '../styles';
+import { withStyles }                                 from '@material-ui/core/styles';
+import { useMutation }                                from '@apollo/react-hooks';
+import { UPDATE_BUDGETING_TEMPLATE }                  from '../queries_and_mutations/queries';
+import { GET_BUDGETING_TEMPLATE }                     from '../queries_and_mutations/queries';
+import Divider                                        from '@material-ui/core/Divider';
+import CircularProgress                               from '@material-ui/core/CircularProgress';
+import Grid                                           from '@material-ui/core/Grid';
+import Button                                         from '@material-ui/core/Button';
+import ButtonGroup                                    from '@material-ui/core/ButtonGroup';
+import ArrowDropDownIcon                              from '@material-ui/icons/ArrowDropDown';
+import ClickAwayListener                              from '@material-ui/core/ClickAwayListener';
+import Grow                                           from '@material-ui/core/Grow';
+import Paper                                          from '@material-ui/core/Paper';
+import Popper                                         from '@material-ui/core/Popper';
+import MenuItem                                       from '@material-ui/core/MenuItem';
+import MenuList                                       from '@material-ui/core/MenuList';
+import { useQuery }                                   from '@apollo/react-hooks';
+import { GET_BUDGETING_TEMPLATES_QUICK_LIST }         from '../queries_and_mutations/queries';
+import { GLOBAL_MESSAGE }                             from '../../../../../resolvers/queries';
+import client                                         from '../../../../../apollo';
+import { Link }                                       from 'react-router-dom';
 
 const AddProcedureTemplateButton = (props) => {
 
@@ -35,7 +34,6 @@ const AddProcedureTemplateButton = (props) => {
   const [procedureTemplate, setProcedureTemplate] = React.useState()
   const [openDialog, setOpenDialog] = React.useState(false)
   const [procedureSelectedOption, setProcedureSelectedOption] = React.useState()
-  // const [disableButton, setDisableButton] = React.useState(false)
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
   const [selectedIndex, setSelectedIndex] = React.useState(1);
@@ -49,6 +47,20 @@ const AddProcedureTemplateButton = (props) => {
     useMutation(
       UPDATE_BUDGETING_TEMPLATE,
       {
+        onError(apolloError) {
+          setOpen(false)
+          setOpenDialog(false)
+          client.writeQuery({
+            query: GLOBAL_MESSAGE,
+            data: {
+              globalMessage: {
+                message: "Ocurrió un error",
+                type: "error",
+                __typename: "globalMessage"
+              }
+            }
+          })
+        },
         update(store, cacheData) {
           setOpen(false)
           setOpenDialog(false)
@@ -68,6 +80,10 @@ const AddProcedureTemplateButton = (props) => {
   const updateUnlinkProcedureTemplate = (event) => {
     updateBudgetingTemplateMutation({ variables: {"id": id, "proceduresTemplateId": null}})
   }
+
+  const { loading, data, refetch } = useQuery(
+    GET_BUDGETING_TEMPLATES_QUICK_LIST,
+  );
 
   const handleClickOpenDialog = () => {
     setOpenDialog(true)
@@ -110,7 +126,12 @@ const AddProcedureTemplateButton = (props) => {
     <Grid container direction="column" alignItems="center">
       <Grid item xs={12}>
         <ButtonGroup variant="contained" color="primary" ref={anchorRef} aria-label="split button">
-          <Button onClick={handleClick} disabled={ !procedureTemplate }>
+          <Button
+            color="primary"
+            component={Link} 
+            to={`/config/procedure_templates/${ proceduresTemplateData ? proceduresTemplateData.id : "" }/edit`}
+            disabled={ !procedureTemplate }
+          >
             { procedureSelected() }
           </Button>
           <Button
@@ -159,18 +180,10 @@ const AddProcedureTemplateButton = (props) => {
             Selecciona un Trámite para vincularlo
           </DialogTitle>
           <DialogContent>
-            {/* <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                { 
-                  searchLoading ?
-                  <CircularProgress size={25} /> :
-                  <SearchIcon /> 
-                }
-              </div>
-            </div> */}
             <ListToLinkOfProcedures
               procedureSelectedOption={ procedureSelectedOption }
               setProcedureSelectedOption={ setProcedureSelectedOption }
+              data={ data }
             />
           </DialogContent>
           <DialogActions>
@@ -181,43 +194,14 @@ const AddProcedureTemplateButton = (props) => {
             </Button>
             <Button
               onClick={ updateLinkedProcedureTemplate }
-              disabled={ !procedureSelectedOption }
+              disabled={ !procedureSelectedOption || (procedureSelectedOption && updateProcessInfo.loading)}
             >
-              Aceptar
+              {loading ? <CircularProgress/> : "Aceptar"}
             </Button>
           </DialogActions>
         </Dialog>
       </Grid>
     </Grid>
-    // <>
-    //   <Button onClick={ handleClickOpen }>
-    //     { procedureSelected() }
-    //   </Button>
-    //   <Dialog open={ openb } onClose={ handleCloseb } >
-    //     <DialogTitle>
-    //       Selecciona un Trámite para vincularlo
-    //     </DialogTitle>
-    //     <DialogContent>
-    //       <ListToLinkOfProcedures
-    //         procedureLinked={ procedureLinked }
-    //         procedureIdSelected={ procedureIdSelected }
-    //       />
-    //     </DialogContent>
-    //     <DialogActions>
-    //       <Button
-    //         onClick={ handleClose }
-    //       >
-    //         Cancelar
-    //       </Button>
-    //       <Button
-    //         onClick={ updateLinkedProcedureTemplate }
-    //         disabled={ !procedureIdSelected }
-    //       >
-    //         Aceptar
-    //       </Button>
-    //     </DialogActions>
-    //   </Dialog>
-    // </>
   )
 }
 

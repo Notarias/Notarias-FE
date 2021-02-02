@@ -53,10 +53,8 @@ export const styles = theme => {
       width: '100%',
     },
     searchInputRootOnLink: {
-      color: 'inherit',
-      border: "1px solid",
-      borderRadius: "6px",
-      width: '100%',
+      width: "360px",
+      marginBottom: "10px"
     },
     searchInputInput: {
       paddingTop: theme.spacing(),

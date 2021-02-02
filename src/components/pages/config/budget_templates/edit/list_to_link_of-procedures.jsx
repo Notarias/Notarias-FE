@@ -1,27 +1,24 @@
-import React, { useRef }                                          from 'react';
+import React, { useRef }                              from 'react';
 import { makeStyles }                                 from '@material-ui/core/styles';
 import { styles }                                     from '../styles';
 import { withStyles }                                 from '@material-ui/core/styles';
 import List                                           from '@material-ui/core/List';
-import ListItem                                       from '@material-ui/core/ListItem';
-import ListItemText                                   from '@material-ui/core/ListItemText';
-import { useQuery }                                   from '@apollo/react-hooks';
-import { GET_BUDGETING_TEMPLATES_QUICK_LIST }         from '../queries_and_mutations/queries'
-import Fuse                                           from 'fuse.js'
-import Divider                            from '@material-ui/core/Divider';
-import TemplateSelectOption      from './template_select_option'
+import Fuse                                           from 'fuse.js';
+import Divider                                        from '@material-ui/core/Divider';
+import TemplateSelectOption                           from './template_select_option'
+import { TextField }                                  from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '100%',
-    maxWidth: 360,
+    maxWidth: "360px",
+    width: "360px",
     backgroundColor: theme.palette.background.paper,
-    position: 'relative',
-    overflow: 'auto',
-    maxHeight: 300,
+    marginBottom: '10px',
+    marginTop: '5px'
   },
-  listSection: {
+  selectableListItem: {
     backgroundColor: 'inherit',
+    width: "360px",
   },
   ul: {
     backgroundColor: 'inherit',
@@ -31,24 +28,23 @@ const useStyles = makeStyles((theme) => ({
 
 const ListToLinkOfProcedures = (props) => {
 
-  const classes = useStyles();
+  const classesUi = useStyles();
+  const {classes, data} = props;
   const setProcedureSelectedOption = props.setProcedureSelectedOption;
   const procedureSelectedOption = props.procedureSelectedOption;
   const [searchList, setSearchList] = React.useState([])
   const [initialList, setInitialList] = React.useState([])
   const [fuzzySearcher, setFuzzySearcher] = React.useState(new Fuse(initialList, { keys: ['name'] }))
 
-  let textInput = useRef(null);
-
   function changeSearch(event) {
     let result = fuzzySearcher.search(event.target.value)
-    console.log("val", event.target.value)
-    setSearchList(result)
+    
+    if (event.target.value.length === 0){
+      setSearchList(initialList)
+    } else {
+      setSearchList(result)
+    }
   }
-//cuando llegue vacio el value
-  const { loading, data, refetch } = useQuery(
-    GET_BUDGETING_TEMPLATES_QUICK_LIST,
-  );
 
   React.useEffect(() => {
     if (data && data.proceduresTemplatesQuickList) {
@@ -59,54 +55,37 @@ const ListToLinkOfProcedures = (props) => {
   }, [data])
 
   return (
-      <div>
-        <input type="text" onChange={ changeSearch }/>
-        {
-          searchList.map((item) => {
-            let obj = item.item || item
-            return(
+    <div>
+      <TextField 
+        onChange={ changeSearch }
+        id="outlined-basic"
+        label="Buscar"
+        variant="outlined"
+        className={ classesUi.root }
+      />
+      {
+        searchList.map((item) => {
+          let obj = item.item || item
+          return(
+            <List 
+              component="nav" 
+              aria-label="contacts" 
+              key={ obj.id + "-list"}
+              disablePadding={true}
+              className={ classesUi.selectableListItem }
+            >
               <TemplateSelectOption 
                 key={ obj.id + "template-option" }
                 template={ obj }
                 selectItem={ props.setProcedureSelectedOption }
                 selectedItem={ props.procedureSelectedOption }
               />
-            )
-          })
-        }
-      </div>
-    // <List className={classes.root}>
-    //   {data.proceduresTemplatesQuickList.map(
-    //     (item) => {
-    //       return(
-    //         <ListItem 
-    //           button
-    //           key={ item.id + "-itemId"}
-    //           divider
-    //           selected={procedureIdSelected === item.id}
-    //           onClick={(event) =>  procedureLinked(item.id)}
-    //           // disabled={true}
-    //         >
-    //           <ListItemText primary={`${item.name} ${item.id}`} />
-    //         </ListItem>
-    //       )
-    //     }
-    //   )
-    //   }
-    // </List>
-    // {
-    //   data.proceduresTemplatesQuickList.map(
-    //     (item) => {
-    //       return([{
-    //         id: item.id,
-    //         name: item.name,
-    //         folioNumber: item.folioNumber,
-    //       }]
-    //       )
-    //     }
-    //   )
-    // }
-
+              <Divider/>
+            </List>
+          )
+        })
+      }
+    </div>
   );
 }
 
