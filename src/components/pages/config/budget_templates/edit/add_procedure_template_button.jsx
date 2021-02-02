@@ -16,6 +16,7 @@ import SearchIcon                         from '@material-ui/icons/Search';
 import CircularProgress                   from '@material-ui/core/CircularProgress';
 
 
+
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
@@ -33,12 +34,12 @@ const AddProcedureTemplateButton = (props) => {
   const id = props.id
   const [procedureTemplate, setProcedureTemplate] = React.useState()
   const [openDialog, setOpenDialog] = React.useState(false)
-  const [procedureIdSelected, setProcedureIdSelected] = React.useState()
+  const [procedureSelectedOption, setProcedureSelectedOption] = React.useState()
   // const [disableButton, setDisableButton] = React.useState(false)
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
   const [selectedIndex, setSelectedIndex] = React.useState(1);
-  const [searchLoading, setSearchLoading] = React.useState(false)
+  const [searchLoading, setSearchLoading] = React.useState(false);
 
   useEffect(() => {
     setProcedureTemplate(proceduresTemplateData)
@@ -61,7 +62,7 @@ const AddProcedureTemplateButton = (props) => {
     )
 
   const updateLinkedProcedureTemplate = (event) => {
-    updateBudgetingTemplateMutation({ variables: {"id": id, "proceduresTemplateId": procedureIdSelected}})
+    updateBudgetingTemplateMutation({ variables: {"id": id, "proceduresTemplateId": procedureSelectedOption.id}})
   }
 
   const updateUnlinkProcedureTemplate = (event) => {
@@ -70,7 +71,7 @@ const AddProcedureTemplateButton = (props) => {
 
   const handleClickOpenDialog = () => {
     setOpenDialog(true)
-    setProcedureIdSelected(false)
+    setProcedureSelectedOption(false)
   }
 
   const handleCloseDialog = () => {
@@ -82,10 +83,6 @@ const AddProcedureTemplateButton = (props) => {
     return (
       procedureTemplate ? "No." + procedureTemplate.serialNumber : "+ Tramite"
     ) 
-  }
-
-  const procedureLinked = (id) => {
-    setProcedureIdSelected(id)
   }
 
   const handleClick = () => {
@@ -162,7 +159,7 @@ const AddProcedureTemplateButton = (props) => {
             Selecciona un Trámite para vincularlo
           </DialogTitle>
           <DialogContent>
-            <div className={classes.search}>
+            {/* <div className={classes.search}>
               <div className={classes.searchIcon}>
                 { 
                   searchLoading ?
@@ -170,17 +167,10 @@ const AddProcedureTemplateButton = (props) => {
                   <SearchIcon /> 
                 }
               </div>
-              <InputBase
-                placeholder="Buscar…"
-                classes={{
-                  root: classes.searchInputRootOnLink,
-                  input: classes.searchInputInput,
-                }}
-              />
-            </div>
+            </div> */}
             <ListToLinkOfProcedures
-              procedureLinked={ procedureLinked }
-              procedureIdSelected={ procedureIdSelected }
+              procedureSelectedOption={ procedureSelectedOption }
+              setProcedureSelectedOption={ setProcedureSelectedOption }
             />
           </DialogContent>
           <DialogActions>
@@ -191,7 +181,7 @@ const AddProcedureTemplateButton = (props) => {
             </Button>
             <Button
               onClick={ updateLinkedProcedureTemplate }
-              disabled={ !procedureIdSelected }
+              disabled={ !procedureSelectedOption }
             >
               Aceptar
             </Button>
