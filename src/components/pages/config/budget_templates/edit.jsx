@@ -13,6 +13,7 @@ import { GET_BUDGETING_TEMPLATE }           from './queries_and_mutations/querie
 import Typography                           from '@material-ui/core/Typography';
 import AddIcon                              from '@material-ui/icons/Add';
 import ActiveTemplateButton                 from './edit/active_template_button';
+import AddProcedureTemplateButton           from './edit/add_procedure_template_button';
 
 
 const BREADCRUMBS = [
@@ -41,16 +42,20 @@ const Edit = (props) => {
                 />
               </Grid>
               <Grid container item xs={5} justify="flex-end" alignItems="center">
-                <Grid container item xs={4} justify="center">
+                <Grid container item xs={3} justify="center">
                 </Grid>
-                <Grid container item xs={4} justify="center">
-                  <Button variant="contained" size="small" className={ classes.buttonAddProcedure }>
-                  + presupuesto
-                  </Button>
+                <Grid container item xs={5} justify="center">
+                  <AddProcedureTemplateButton
+                    id={ match.params.id }
+                    proceduresTemplateData={ data ? data.budgetingTemplate.proceduresTemplate : null }
+                  />
+                  {/* <Button variant="contained" size="small" className={ classes.buttonAddProcedure }>
+                  + Tramite
+                  </Button> */}
                 </Grid>
                 <Grid container item xs={4} justify="center">
                   <ActiveTemplateButton
-                    templateData={data ?  data.budgetingTemplate : [] }
+                    templateData={data ? data.budgetingTemplate : [] }
                     match={ props.match.params }
                   />
                 </Grid>

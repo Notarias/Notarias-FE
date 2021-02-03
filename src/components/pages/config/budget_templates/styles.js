@@ -52,6 +52,10 @@ export const styles = theme => {
       color: 'inherit',
       width: '100%',
     },
+    searchInputRootOnLink: {
+      width: "360px",
+      marginBottom: "10px"
+    },
     searchInputInput: {
       paddingTop: theme.spacing(),
       paddingRight: theme.spacing(),
@@ -134,6 +138,17 @@ export const styles = theme => {
     },
     statusTemplateRow: {
       boxShadow: `inset 10px 0px 0px -5px ${theme.palette.error.dark}`,
+    },
+    selectableListItem: {
+      backgroundColor: 'inherit',
+      width: "360px",
+    },
+    textFieldSearchInTable: {
+      maxWidth: "360px",
+      width: "360px",
+      backgroundColor: theme.palette.background.paper,
+      marginBottom: '10px',
+      marginTop: '5px'
     },
   })
 }
