@@ -1,5 +1,4 @@
 import React, { useRef }                              from 'react';
-import { makeStyles }                                 from '@material-ui/core/styles';
 import { styles }                                     from '../styles';
 import { withStyles }                                 from '@material-ui/core/styles';
 import List                                           from '@material-ui/core/List';
@@ -8,27 +7,8 @@ import Divider                                        from '@material-ui/core/Di
 import TemplateSelectOption                           from './template_select_option'
 import { TextField }                                  from '@material-ui/core';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    maxWidth: "360px",
-    width: "360px",
-    backgroundColor: theme.palette.background.paper,
-    marginBottom: '10px',
-    marginTop: '5px'
-  },
-  selectableListItem: {
-    backgroundColor: 'inherit',
-    width: "360px",
-  },
-  ul: {
-    backgroundColor: 'inherit',
-    padding: 0,
-  },
-}));
-
 const ListToLinkOfProcedures = (props) => {
 
-  const classesUi = useStyles();
   const {classes, data} = props;
   const setProcedureSelectedOption = props.setProcedureSelectedOption;
   const procedureSelectedOption = props.procedureSelectedOption;
@@ -61,7 +41,7 @@ const ListToLinkOfProcedures = (props) => {
         id="outlined-basic"
         label="Buscar"
         variant="outlined"
-        className={ classesUi.root }
+        className={ classes.textFieldSearchInTable }
       />
       {
         searchList.map((item) => {
@@ -72,7 +52,7 @@ const ListToLinkOfProcedures = (props) => {
               aria-label="contacts" 
               key={ obj.id + "-list"}
               disablePadding={true}
-              className={ classesUi.selectableListItem }
+              className={ classes.selectableListItem }
             >
               <TemplateSelectOption 
                 key={ obj.id + "template-option" }

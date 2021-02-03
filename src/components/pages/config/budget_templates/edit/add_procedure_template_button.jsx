@@ -36,8 +36,6 @@ const AddProcedureTemplateButton = (props) => {
   const [procedureSelectedOption, setProcedureSelectedOption] = React.useState()
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
-  const [selectedIndex, setSelectedIndex] = React.useState(1);
-  const [searchLoading, setSearchLoading] = React.useState(false);
 
   useEffect(() => {
     setProcedureTemplate(proceduresTemplateData)
@@ -92,7 +90,6 @@ const AddProcedureTemplateButton = (props) => {
 
   const handleCloseDialog = () => {
     setOpenDialog(false)
-    // setDisableButton(false)
   }
 
   const procedureSelected = () => {
@@ -100,16 +97,6 @@ const AddProcedureTemplateButton = (props) => {
       procedureTemplate ? "No." + procedureTemplate.serialNumber : "+ Tramite"
     ) 
   }
-
-  const handleClick = () => {
-    // console.info(`You clicked ${options[selectedIndex]}`);
-    console.log("hola")
-  };
-
-  const handleMenuItemClick = (event, index) => {
-    setSelectedIndex(index);
-    setOpen(false);
-  };
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
