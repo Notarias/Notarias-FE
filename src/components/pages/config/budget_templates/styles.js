@@ -150,5 +150,17 @@ export const styles = theme => {
       marginBottom: '10px',
       marginTop: '5px'
     },
+    activeTab: {
+      width: "100%",
+      height: "70px",
+      borderBottom: '2px solid #e8e8e8',
+    },
+    menuTabDefault: {
+      opacity: "0",
+    },
+    tittleTab: {
+      width: "100%",
+      height: "70px",
+    },
   })
 }

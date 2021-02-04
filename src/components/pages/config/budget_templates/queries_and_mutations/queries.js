@@ -98,3 +98,26 @@ export const GET_BUDGETING_TEMPLATES_QUICK_LIST = gql`
   }
 `
 
+export const GET_BUDGETING_TEMPLATES_TABS = gql`
+  query budgetingTemplateTabs ($id: ID! ) {
+    budgetingTemplateTabs (id: $id) {
+      active
+      id
+      name
+      budgetingTemplateId
+    }
+  }
+`
+
+export const CREATE_BUDGETING_TEMPLATES_TABS = gql`
+  mutation createBudgetingTemplateTab ($name: String!, $templateId: ID!){
+    createBudgetingTemplateTab (input: {name: $name, templateId: $templateId} ) {
+      budgetingTemplateTab {
+        active
+        id
+        name
+        budgetingTemplateId
+      }
+    }
+  }
+`

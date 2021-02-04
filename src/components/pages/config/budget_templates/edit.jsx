@@ -14,6 +14,7 @@ import Typography                           from '@material-ui/core/Typography';
 import AddIcon                              from '@material-ui/icons/Add';
 import ActiveTemplateButton                 from './edit/active_template_button';
 import AddProcedureTemplateButton           from './edit/add_procedure_template_button';
+import Tabs                                 from './edit/tabs';
 
 
 const BREADCRUMBS = [
@@ -27,6 +28,8 @@ const Edit = (props) => {
   const { loading, data, refetch } = useQuery(GET_BUDGETING_TEMPLATE,
     { variables: {"id": match.params.id } } 
   );
+
+  const [currentTab, setCurrentTab] = React.useState()
 
   return(
     <>
@@ -115,16 +118,12 @@ const Edit = (props) => {
                   </Grid>
                 )
               :
-                <Grid container item direction="column">
-                  <Grid item >
-                    <Button variant="contained" className={ classes.buttonTab }>
-                      <Grid container direction="column" alignItems="center" justify="center">
-                        Agregar pestaña
-                        <AddIcon/>
-                      </Grid>
-                    </Button>
-                  </Grid>
-                </Grid>
+              <Tabs 
+                tabsData={data ? data.budgetingTemplate.tabs : []}
+                currentTab={currentTab }
+                setCurrentTab={ setCurrentTab }
+                budgetingTemplateId={data ? data.budgetingTemplate.id : " " }
+              />
             }
           </Paper>
         </Grid>
