@@ -162,5 +162,15 @@ export const styles = theme => {
       width: "100%",
       height: "70px",
     },
+    inputSmall:{
+      height:"50px",
+    },
+    activeMenuTab: {
+      opacity: "1",
+    },
+    tittleTabMenu: {
+      width: "325px",
+      height: "50px",
+    },
   })
 }
