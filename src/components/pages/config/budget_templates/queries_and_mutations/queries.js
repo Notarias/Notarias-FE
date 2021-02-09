@@ -142,3 +142,49 @@ export const DESTROY_BUDGETING_TEMPLATE_TAB = gql`
     }
   }
 `
+
+export const GET_BUDGETING_TEMPLATE_TAB_FIELDS = gql`
+  query budgetingTemplateTabFields(
+    $id: ID!
+  )
+  {
+    budgetingTemplateTabFields(
+      id: $id
+    )
+    {
+      id
+      name
+      categories {
+        id
+        name
+      }
+    }
+  }
+`
+
+export const CREATE_BUDGETING_TEMPLATE_TAB_FIELD = gql`
+  mutation createBudgetingTemplateField (
+    $tabId: ID!,
+    $name: String!, 
+    $style: String,
+  ){
+    createBudgetingTemplateField (
+      input: {
+        tabId: $tabId, 
+        name: $name, 
+        style: $style,
+      } 
+    ) 
+    {
+      budgetingTemplateField {
+        id
+        name
+        budgetingTemplateTabId
+        categories {
+          id
+          name
+        }
+      }
+    }
+  }
+`

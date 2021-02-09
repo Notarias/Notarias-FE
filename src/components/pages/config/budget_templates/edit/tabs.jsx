@@ -97,7 +97,7 @@ const Tabs = (props) => {
             <Tab
               key={ tab.id + "-tabs" }
               tab={ tab }
-              selected={ tab.id === currentTab.id }
+              selected={ tab.id === (currentTab && currentTab.id ) }
               setCurrentTab={ setCurrentTab }
               budgetingTemplateId={ budgetingTemplateId }
             />
@@ -112,12 +112,11 @@ const Tabs = (props) => {
     setPristine(false);
   };
 
-  console.log("ex", budgetingTemplateId)
   return(
     <Grid container item direction="column">
       <Grid  container item>
         {
-          currentTab && renderTabList()
+          (currentTab || (data && data.budgetingTemplateTabs)) && renderTabList()
         }
       </Grid>
       <Grid item >

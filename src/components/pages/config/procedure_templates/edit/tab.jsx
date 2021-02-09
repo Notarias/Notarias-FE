@@ -25,6 +25,7 @@ const Tab = (props) => {
         active={ tab.active }
         proceduresTemplateId={ proceduresTemplateId }
         selected={ selected}
+        setCurrentTab={ setCurrentTab }
       />
     </Grid>
     <Grid

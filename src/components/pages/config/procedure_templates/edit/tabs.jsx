@@ -98,7 +98,7 @@ const Tabs = (props) => {
             <Tab
               key={ tab.id + "-tabs" }
               tab={ tab }
-              selected={ tab.id === currentTab.id }
+              selected={ tab.id === (currentTab && currentTab.id ) }
               setCurrentTab={ setCurrentTab }
               proceduresTemplateId={ proceduresTemplateId }
             />
@@ -118,7 +118,7 @@ const Tabs = (props) => {
     <Grid container item direction="column">
       <Grid  container item>
         {
-          currentTab && renderTabList()
+          (currentTab || (data && data.proceduresTemplateTabs)) && renderTabList()
         }
       </Grid>
       <Grid item >
