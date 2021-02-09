@@ -154,7 +154,7 @@ const TabMenu = (props) => {
         <ListItemIcon>
           <SaveIcon color="primary" className={ classes.defaultIcon } onClick={ updateTab }/>
         </ListItemIcon>
-        <ListItemText>
+        <ListItemText >
           <TextField
             className={ classes.inputSmall }
             size="small"
@@ -187,7 +187,7 @@ const TabMenu = (props) => {
         onClick={ handleClick }
         className={ selected ? classes.activeMenuTab : classes.menuTabDefault }
       >
-      <MoreVertIcon />
+        <MoreVertIcon />
       </IconButton>
       <Menu
         id="long-menu"
@@ -196,23 +196,22 @@ const TabMenu = (props) => {
         open={ open }
         onClose={ handleClose }
       >
-      <MenuItem className={ classes.tittleTabMenu } 
-      >
-        { editing ? renderTittleTextTab() : renderTittleInputTab() }
-      </MenuItem>
-      <Divider/>
-      <MenuItem onClick={ handleClickOpenDialog }>
-        <ListItemIcon >
-          <DeleteForeverIcon className={ classes.defaultIcon } />
-        </ListItemIcon>
-        <ListItemText primary="Borrar"/>
-      </MenuItem>
-      <Dialog
-        open={openDialog}
-        onClose={handleCloseDialog}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
+        <MenuItem key="budgetingTabMenu1" className={ classes.tittleTabMenu } >
+          { editing ? renderTittleTextTab() : renderTittleInputTab() }
+        </MenuItem>
+        <Divider/>
+        <MenuItem key="budgetingTabMenu2" onClick={ handleClickOpenDialog }>
+          <ListItemIcon >
+            <DeleteForeverIcon className={ classes.defaultIcon } />
+          </ListItemIcon>
+          <ListItemText primary="&#8288;Borrar"/>
+        </MenuItem>
+        <Dialog
+          open={openDialog}
+          onClose={handleCloseDialog}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
         <DialogTitle id="alert-dialog-title">{"Eliminar pestaña"}</DialogTitle>
         <DialogContent>
           <Typography variant="body1">
@@ -234,17 +233,17 @@ const TabMenu = (props) => {
           </Button>
         </DialogActions>
       </Dialog>
-      <Divider/>
-      <MenuItem>
-      <Grid container item alignItems="center" >
-        <StatusRadioButton
-            active={ active }
-            changeStatus= { changeStatus }
-          />
-      </Grid>
+        <Divider/>
+        <MenuItem key="budgetingTabMenu3">
+          <Grid container item alignItems="center" >
+            <StatusRadioButton
+                active={ active }
+                changeStatus= { changeStatus }
+              />
+          </Grid>
       </MenuItem>
-    </Menu>
-  </Grid>
+      </Menu>
+    </Grid>
   )
 }
 

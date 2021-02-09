@@ -121,3 +121,24 @@ export const CREATE_BUDGETING_TEMPLATES_TABS = gql`
     }
   }
 `
+
+export const UPDATE_BUDGETING_TEMPLATE_TAB = gql`
+  mutation updateBudgetingTemplateTab ($id: ID!, $name: String, $active: Boolean){
+    updateBudgetingTemplateTab (input: {id: $id, name: $name, active: $active} ) {
+      budgetingTemplateTab {
+        active
+        id
+        name
+        budgetingTemplateId
+      }
+    }
+  }
+`
+
+export const DESTROY_BUDGETING_TEMPLATE_TAB = gql`
+  mutation destroyBudgetingTemplateTab ($id: ID!){
+    destroyBudgetingTemplateTab (input: {id: $id} ) {
+      destroyed
+    }
+  }
+`
