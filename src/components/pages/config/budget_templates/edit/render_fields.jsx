@@ -9,7 +9,7 @@ import Typography                           from '@material-ui/core/Typography';
 const RenderFields = (props) => {
   const {classes, currentTab, loading, data} = props
 
-  const ifFunction = () => {
+  const render = () => {
     if (loading || !data) {
       return (
         <Grid container item className={ classes.circularProgressLoading } direction="column" alignItems="center" justify="center">
@@ -40,8 +40,8 @@ const RenderFields = (props) => {
   }
 
   return (
-    ifFunction()
+    render()
   )
 }
 
-export default withStyles(styles)(RenderFields);
+export default withStyles(styles)(RenerFields);

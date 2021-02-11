@@ -76,7 +76,7 @@ const ButtonNewField = ({
     )
   }
 
-  const fieldHandleClickOpen = (event) => {
+  const addNewFieldClickOpen = (event) => {
     setOpen(true);
     setPristineA(true)
     setPristineB(true)
@@ -94,7 +94,7 @@ const ButtonNewField = ({
     setPristineA(false)
   };
 
-  const handleStyleChange = (event) => {
+  const handleFieldStyleChange = (event) => {
     setStyle(event.target.value);
     setPristineB(false)
   };
@@ -104,15 +104,17 @@ const ButtonNewField = ({
       <Grid container  justify="center" alignItems="center" direction="row" >
         <Grid item xs={4}>
           <Typography variant="button" display="block" gutterBottom>
-            {<Button
-              variant="contained"
-              color="primary"
-              size="small"
-              disabled={ !currentTab }
-              onClick={ fieldHandleClickOpen }
-            >
-              Campo  <AddIcon className={ classes.addIconMargin }/>
-            </Button>}
+            {
+              <Button
+                variant="contained"
+                color="primary"
+                size="small"
+                disabled={ !currentTab }
+                onClick={ addNewFieldClickOpen }
+              >
+                Campo  <AddIcon className={ classes.addIconMargin }/>
+              </Button>
+            }
           </Typography>
         </Grid>
       </Grid>
@@ -155,7 +157,7 @@ const ButtonNewField = ({
                     labelId="demo-simple-select-outlined-label"
                     name='style'
                     value={ style }
-                    onChange={ handleStyleChange }
+                    onChange={ handleFieldStyleChange }
                     error={ !!error["style"] && true }
                     helperText={error["style"] || " "}
                     errorskey={ "style" }
