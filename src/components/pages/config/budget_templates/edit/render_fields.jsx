@@ -44,4 +44,4 @@ const RenderFields = (props) => {
   )
 }
 
-export default withStyles(styles)(RenerFields);
+export default withStyles(styles)(RenderFields);

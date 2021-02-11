@@ -15,7 +15,7 @@ import AddIcon                              from '@material-ui/icons/Add';
 import ActiveTemplateButton                 from './edit/active_template_button';
 import AddProcedureTemplateButton           from './edit/add_procedure_template_button';
 import Tabs                                 from './edit/tabs';
-import ButtonNewField                       from './edit/button_new_Field';
+import NewFieldButton                       from './edit/new_field_Button';
 import RenderFields                         from './edit/render_fields';
 
 
@@ -64,7 +64,7 @@ const Edit = (props) => {
               </Grid>
             </Grid>
             <Divider/>
-            <ButtonNewField
+            <NewFieldButton
               currentTab={ currentTab }
             />
             <RenderFields

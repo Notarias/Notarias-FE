@@ -20,7 +20,7 @@ import MenuItem                                                 from '@material-
 import InputLabel                                               from '@material-ui/core/InputLabel';
 
 
-const ButtonNewField = ({
+const NewFieldButton = ({
   currentTab,
   classes,
   ...props
@@ -190,4 +190,4 @@ const ButtonNewField = ({
   )
 }
 
-export default  withStyles(styles)(ButtonNewField);
+export default  withStyles(styles)(NewFieldButton);
