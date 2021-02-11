@@ -4,6 +4,7 @@ import Grid                                 from '@material-ui/core/Grid';
 import { styles }                           from '../styles';
 import { withStyles }                       from '@material-ui/core/styles';
 import Typography                           from '@material-ui/core/Typography';
+import FieldList                            from './field_list';
 
 
 const RenderFields = (props) => {
@@ -20,9 +21,9 @@ const RenderFields = (props) => {
       return (
         <Grid container item direction="column" alignItems="center">
           <Grid container item xs={10} alignItems="center" justify="center">
-            {/* <FieldList
+            <FieldList
               currentTab={ currentTab }
-            /> */}
+            />
           </Grid>
         </Grid>
       )
