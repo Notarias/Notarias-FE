@@ -29,7 +29,7 @@ import { DESTROY_BUDGETING_TEMPLATE_TAB }       from '../queries_and_mutations/q
 
 
 const TabMenu = (props) => {
-  const { classes, budgetingTemplateId, selected, active } = props;
+  const { classes, budgetingTemplateId, selected, active, setCurrentTab } = props;
   const [id, setId] = React.useState(props.id);
   const [name, setName] = React.useState(props.name);
   const [editing, setEditing] =  React.useState(true);
@@ -92,7 +92,7 @@ const TabMenu = (props) => {
 
   const [destroyBudgetingTemplateTabMutation, destroyProcessInfo] =
   useMutation(
-    DESTROY_BUDGETING_TEMPLATE_TAB, 
+    DESTROY_BUDGETING_TEMPLATE_TAB,
     {
       refetchQueries: [{
         query: GET_BUDGETING_TEMPLATES_TABS,
@@ -104,7 +104,11 @@ const TabMenu = (props) => {
 
   const deleteTabClick = () => {
     destroyBudgetingTemplateTabMutation(
-      { variables: { id: id } }
+      {
+        variables: { id: id },
+        fetchPolicy: "no-cache"
+      },
+      setCurrentTab(null)
     )
   }
 

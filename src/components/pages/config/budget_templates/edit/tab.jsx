@@ -24,7 +24,8 @@ const Tab = (props) => {
           id={ tab.id }
           active={ tab.active }
           budgetingTemplateId={ budgetingTemplateId }
-          selected={ selected}
+          selected={ selected }
+          setCurrentTab={ setCurrentTab }
         />
       </Grid>
       <Grid

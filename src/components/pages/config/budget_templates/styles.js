@@ -99,7 +99,7 @@ export const styles = theme => {
       paddingTop: "60px",
       paddingBottom: "40px"
     },
-    addFieldsAndGroupsButton: {
+    addFieldButton: {
       marginTop: "15px",
       marginBottom: "4px",
     },
@@ -171,6 +171,14 @@ export const styles = theme => {
     tittleTabMenu: {
       width: "325px",
       height: "50px",
+    },
+    tittleDialogWidth: {
+      width: "600px",
+    },
+    textFieldTittleType: {
+      width: "230px",
+      fontFamily: "Lucida Console, Courier, monospace",
+      fontWeight: "bold",
     },
   })
 }

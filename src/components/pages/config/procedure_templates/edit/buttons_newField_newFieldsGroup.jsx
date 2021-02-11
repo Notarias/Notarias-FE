@@ -143,13 +143,13 @@ const ButtonsNewFieldNewFieldsGroup = ({
     setPristine(false)
   };
 
-  return (
-    <>
-      <Grid container justify="center" alignItems="center" className={ classes.addFieldsAndGroupsButton } >
-        <Grid container  justify="center" alignItems="center" direction="row" >
-          <Grid item xs={4}>
-            <Typography variant="button" display="block" gutterBottom>
-              {<Button
+  const renderNewFieldAndNewFieldsGroupButton = () => {
+    return(
+      <Grid container  justify="center" alignItems="center" direction="row" >
+        <Grid item xs={4}>
+          <Typography variant="button" display="block" gutterBottom>
+            {
+              <Button
                 variant="contained"
                 color="primary"
                 size="small"
@@ -157,12 +157,14 @@ const ButtonsNewFieldNewFieldsGroup = ({
                 onClick={ fieldHandleClickOpen }
               >
                 Campo  <AddIcon className={ classes.addIconMargin }/>
-              </Button>}
-            </Typography>
-          </Grid>
-          <Grid item xs={4}>
-            <Typography variant="button" display="block" gutterBottom>
-              {<Button
+              </Button>
+            }
+          </Typography>
+        </Grid>
+        <Grid item xs={4}>
+          <Typography variant="button" display="block" gutterBottom>
+            {
+              <Button
                 variant="contained"
                 color="primary"
                 size="small"
@@ -170,10 +172,18 @@ const ButtonsNewFieldNewFieldsGroup = ({
                 onClick={ groupHandleClickOpen }
               >
                 Grupo de Campos <AddIcon className={ classes.addIconMargin }/>
-              </Button>}
-            </Typography>
-          </Grid>
+              </Button>
+            }
+          </Typography>
         </Grid>
+      </Grid>
+    )
+  }
+
+  return (
+    <>
+      <Grid container justify="center" alignItems="center" className={ classes.addFieldsAndGroupsButton } >
+        { currentTab && renderNewFieldAndNewFieldsGroupButton() }
       </Grid>
       <Dialog open={open} onClose={ handleClose }>
         <DialogTitle 

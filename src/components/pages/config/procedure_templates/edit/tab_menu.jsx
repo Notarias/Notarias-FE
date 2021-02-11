@@ -30,12 +30,13 @@ import client, { cache }             from '../../../../../apollo'
 
 
 const TabMenu = (props) => {
-  const { classes, proceduresTemplateId, selected, active } = props;
+  const { classes, proceduresTemplateId, selected, active, setCurrentTab } = props;
   const [id, setId] = React.useState(props.id);
   const [name, setName] = React.useState(props.name);
   const [editing, setEditing] =  React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openDialog, setOpenDialog] = React.useState(false);
+  const [updateLoading, setUpdateLoading] = React.useState(false)
 
   const [error, setError] = React.useState(false)
   const inputsList = ["name"]
@@ -50,6 +51,7 @@ const TabMenu = (props) => {
       update(store, cacheData) {
         setError(false)
         setEditing(!editing)
+        setUpdateLoading(false)
       },
       refetchQueries: [{
         query: GET_PROCEDURES_TEMPLATE_TABS,
@@ -72,6 +74,7 @@ const TabMenu = (props) => {
   }
 
   const updateTab = (event) => {
+    setUpdateLoading(true)
     updateProceduresTemplateTabMutation(
       { 
         variables: { id: id , name: name}
@@ -102,7 +105,8 @@ const TabMenu = (props) => {
 
   const deleteTabClick = () => {
     destroyProceduresTemplateTabMutation(
-      { variables: { id: id } }
+      { variables: { id: id } },
+      setCurrentTab(null)
     )
   }
 

@@ -15,6 +15,8 @@ import AddIcon                              from '@material-ui/icons/Add';
 import ActiveTemplateButton                 from './edit/active_template_button';
 import AddProcedureTemplateButton           from './edit/add_procedure_template_button';
 import Tabs                                 from './edit/tabs';
+import NewFieldButton                       from './edit/new_field_Button';
+import RenderFields                         from './edit/render_fields';
 
 
 const BREADCRUMBS = [
@@ -52,9 +54,6 @@ const Edit = (props) => {
                     id={ match.params.id }
                     proceduresTemplateData={ data ? data.budgetingTemplate.proceduresTemplate : null }
                   />
-                  {/* <Button variant="contained" size="small" className={ classes.buttonAddProcedure }>
-                  + Tramite
-                  </Button> */}
                 </Grid>
                 <Grid container item xs={4} justify="center">
                   <ActiveTemplateButton
@@ -65,48 +64,14 @@ const Edit = (props) => {
               </Grid>
             </Grid>
             <Divider/>
-{/* spaces left intentionally to mark the spaces of it own components */}
-            <Grid container justify="center" alignItems="center" className={ classes.addFieldsAndGroupsButton } >
-              <Grid container  justify="center" alignItems="center" direction="row" >
-                <Grid item xs={4}>
-                  <Typography variant="button" display="block" gutterBottom>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      size="small"
-                    >
-                      Campo  <AddIcon className={ classes.addIconMargin }/>
-                    </Button>
-                  </Typography>
-                </Grid>
-                <Grid item xs={4}>
-                  <Typography variant="button" display="block" gutterBottom>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      size="small"
-                    >
-                      Grupo de Campos <AddIcon className={ classes.addIconMargin }/>
-                    </Button>
-                  </Typography>
-                </Grid>
-              </Grid>
-            </Grid>
-{/* spaces left intentionally to mark the spaces of it own components */}
-            { 
-              (loading || !data) ?
-                (
-                  <Grid container item className={ classes.circularProgressLoading } direction="column" alignItems="center" justify="center">
-                    <CircularProgress size={ 100 }/>
-                  </Grid>
-                )
-              :
-                (
-                  <Grid container item direction="column" alignItems="center" justify="center">
-                    Fields and Groups
-                  </Grid>
-                )
-            }
+            <NewFieldButton
+              currentTab={ currentTab }
+            />
+            <RenderFields
+              currentTab={ currentTab }
+              data={ data }
+              loading={ loading }
+            />
           </Grid>
           <Grid container item xs={3} direction="column">
           <Paper>
