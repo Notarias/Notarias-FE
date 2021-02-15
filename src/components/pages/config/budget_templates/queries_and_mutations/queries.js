@@ -188,3 +188,37 @@ export const CREATE_BUDGETING_TEMPLATE_TAB_FIELD = gql`
     }
   }
 `
+
+export const UPDATE_BUDGETING_TEMPLATE_TAB_FIELD = gql`
+  mutation updateBudgetingTemplateField (
+    $id: ID!,
+    $name: String, 
+    $active: Boolean, 
+    $categoriesIds: [ID!]
+  ){
+    updateBudgetingTemplateField (input: {
+      id: $id,
+      name: $name,
+      active: $active
+      categoriesIds: $categoriesIds
+    } ) {
+      budgetingTemplateField {
+        active
+        id
+        name
+        categories {
+          id
+          name
+        }
+      }
+    }
+  }
+`
+
+export const DESTROY_BUDGETING_TEMPLATE_TAB_FIELD = gql`
+  mutation destroyBudgetingTemplateField ($id: ID!){
+    destroyBudgetingTemplateField (input: {id: $id} ) {
+      destroyed
+    }
+  }
+`

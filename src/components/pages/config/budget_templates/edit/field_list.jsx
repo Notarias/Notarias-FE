@@ -1,5 +1,5 @@
 import React, { useEffect }                         from 'react';
-// import Field                                        from './field';
+import Field                                        from './field';
 import { useQuery }                                 from '@apollo/react-hooks';
 import { GET_BUDGETING_TEMPLATE_TAB_FIELDS }        from '../queries_and_mutations/queries'
 import { styles }                                   from '../styles';
@@ -36,18 +36,17 @@ const FieldList = (props) => {
           fields.map(
             (field, index) => {
               return(
-                  "field"
-                // <Field
-                //   key={ field.id + "-field"}
-                //   arrayIndex={ index }
-                //   removeFromList={ removeFromList }
-                //   name={ field.name || "" }
-                //   style={ field.style || "" }
-                //   favourite={ field.favourite || false }
-                //   id={ field.id || " " }
-                //   active={ field.active }
-                //   currentTab={ currentTab }
-                // />
+                <Field
+                  key={ field.id + "-field"}
+                  arrayIndex={ index }
+                  removeFromList={ removeFromList }
+                  name={ field.name || "" }
+                  style={ field.style || "" }
+                  favourite={ field.favourite || false }
+                  id={ field.id || " " }
+                  active={ field.active }
+                  currentTab={ currentTab }
+                />
               )
             }
           )
@@ -71,4 +70,4 @@ const FieldList = (props) => {
   )
 }
 
-export default  withStyles(styles)( FieldList);
+export default  withStyles(styles)(FieldList);

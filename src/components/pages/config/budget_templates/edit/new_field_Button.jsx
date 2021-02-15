@@ -159,7 +159,7 @@ const NewFieldButton = ({
                     value={ style }
                     onChange={ handleFieldStyleChange }
                     error={ !!error["style"] && true }
-                    helperText={error["style"] || " "}
+                    helpertext={error["style"] || " "}
                     errorskey={ "style" }
                   >
                     <MenuItem key='string' value={'string'}>Texto</MenuItem>
