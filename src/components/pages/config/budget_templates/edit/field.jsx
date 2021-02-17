@@ -28,8 +28,10 @@ import { GET_BUDGETING_TEMPLATE_TAB_FIELDS }          from '../queries_and_mutat
 import RadioButtonUncheckedIcon                       from '@material-ui/icons/RadioButtonUnchecked';
 import RadioButtonCheckedIcon                         from '@material-ui/icons/RadioButtonChecked';
 
+import Fuse                                           from 'fuse.js';
 
-const INPUT_TYPES = {
+
+const INPUT_CATEGORIES = {
   cateA: "IVA",
   cateB: "Comision",
   cateC: "ISR",
@@ -48,6 +50,20 @@ const Field = (props) => {
   const [favourite, setFavourite] = React.useState(props.favourite)
   const [error, setError] = React.useState(false)
   const inputsList = ["name"]
+
+  const [searchList, setSearchList] = React.useState([])
+  const [initialList, setInitialList] = React.useState([])
+  const [fuzzySearcher, setFuzzySearcher] = React.useState(new Fuse(initialList, { keys: ['name'] }))
+
+  function changeSearch(event) {
+    let result = fuzzySearcher.search(event.target.value)
+    
+    if (event.target.value.length === 0){
+      setSearchList(initialList)
+    } else {
+      setSearchList(result)
+    }
+  }
 
   const [updateBudgetingTemplateTabFieldMutation, updateProcessInfo] =
     useMutation(
@@ -79,7 +95,7 @@ const Field = (props) => {
     }
 
   const updateField = (event) => {
-    updateBudgetingTemplateTabFieldMutation({ variables: { id: id, name: name}})
+    updateBudgetingTemplateTabFieldMutation({ variables: { id: id, name: name, categories: categories}})
   }
 
   const handleClickOpen = () => {
@@ -175,7 +191,7 @@ const Field = (props) => {
         </Grid>
         <Grid container item xs={3}>
         <Typography className={ classes.textTittleType }>
-            {  INPUT_TYPES[categories] }
+            {  INPUT_CATEGORIES[categories] }
           </Typography>
         </Grid>
       </>
@@ -214,8 +230,9 @@ const Field = (props) => {
               value={ categories }
               onChange={ handleCategoryChange }
             >
-              <MenuItem key='string' value={'string'}>Categoria 1</MenuItem>
-              <MenuItem key='number' value={'number'}>categoria 2</MenuItem>
+              <MenuItem key='cateA' value={'cateA'}>Categoria 1</MenuItem>
+              <MenuItem key='cateB' value={'cateB'}>categoria 2</MenuItem>
+              <MenuItem key='cateC' value={'cateC'}>categoria 3</MenuItem>
             </Select>
           </FormControl>
         </Grid>
