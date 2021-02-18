@@ -42,7 +42,6 @@ const FieldList = (props) => {
                   removeFromList={ removeFromList }
                   name={ field.name || "" }
                   style={ field.style || "" }
-                  favourite={ field.favourite || false }
                   id={ field.id || " " }
                   active={ field.active }
                   currentTab={ currentTab }

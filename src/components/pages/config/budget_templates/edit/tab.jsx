@@ -16,8 +16,6 @@ const Tab = (props) => {
     setCurrentTab(tab)
   }
 
-  console.log("tabid", tab.id)
-
   return(
     <>
       <Grid container item xs={2} alignItems="center" >

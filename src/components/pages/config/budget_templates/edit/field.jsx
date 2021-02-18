@@ -22,13 +22,18 @@ import Typography                                     from '@material-ui/core/Ty
 import SaveIcon                                       from '@material-ui/icons/Save';
 import CreateIcon                                     from '@material-ui/icons/Create';
 import { useMutation }                                from '@apollo/react-hooks';
-import { UPDATE_BUDGETING_TEMPLATE_TAB_FIELD }       from '../queries_and_mutations/queries'
-import { DESTROY_BUDGETING_TEMPLATE_TAB_FIELD }      from '../queries_and_mutations/queries'
+import { UPDATE_BUDGETING_TEMPLATE_TAB_FIELD }        from '../queries_and_mutations/queries'
+import { DESTROY_BUDGETING_TEMPLATE_TAB_FIELD }       from '../queries_and_mutations/queries'
 import { GET_BUDGETING_TEMPLATE_TAB_FIELDS }          from '../queries_and_mutations/queries'
 import RadioButtonUncheckedIcon                       from '@material-ui/icons/RadioButtonUnchecked';
 import RadioButtonCheckedIcon                         from '@material-ui/icons/RadioButtonChecked';
+import List                                           from '@material-ui/core/List';
+import ListItem                                       from '@material-ui/core/ListItem';
+
+import AddCategoryToField                             from './add_category_to_field';
 
 import Fuse                                           from 'fuse.js';
+// import { List } from '@material-ui/core';
 
 
 const INPUT_CATEGORIES = {
@@ -41,19 +46,18 @@ const Field = (props) => {
 
   const { classes, id, groupId, currentTab, removeFromList } = props
   const [open, setOpen] = React.useState(false);
-  const [openb, setOpenb] = React.useState(false);
+  const [openB, setOpenB] = React.useState(false);
   const [openDialog, setOpenDialog] = React.useState(false);
   const [editing, setEditing] = React.useState(true);
   const [name, setName] = React.useState(props.name)
-  const [categories, setCategories] = React.useState(props.categories)
-  const [active, setActive] = React.useState(props.active)
-  const [favourite, setFavourite] = React.useState(props.favourite)
-  const [error, setError] = React.useState(false)
+  const [categories, setCategories] = React.useState(props.categories);
+  const [active, setActive] = React.useState(props.active);
+  const [error, setError] = React.useState(false);
   const inputsList = ["name"]
 
-  const [searchList, setSearchList] = React.useState([])
-  const [initialList, setInitialList] = React.useState([])
-  const [fuzzySearcher, setFuzzySearcher] = React.useState(new Fuse(initialList, { keys: ['name'] }))
+  const [searchList, setSearchList] = React.useState([]);
+  const [initialList, setInitialList] = React.useState([]);
+  const [fuzzySearcher, setFuzzySearcher] = React.useState(new Fuse(initialList, { keys: ['name'] }));
 
   function changeSearch(event) {
     let result = fuzzySearcher.search(event.target.value)
@@ -73,11 +77,15 @@ const Field = (props) => {
           setErrors(apolloError)
         },
         update(store, cacheData) {
-          setFavourite(cacheData.data.updateBudgetingTemplateField.budgetingTemplateField.favourite)
           setActive(cacheData.data.updateBudgetingTemplateField.budgetingTemplateField.active)
           setError(false)
           setEditing(true)
-        }
+        },
+        refetchQueries: [{
+          query: GET_BUDGETING_TEMPLATE_TAB_FIELDS,
+          variables: { "id": currentTab && currentTab.id },
+        }],
+        awaitRefetchQueries: true
       }
     )
 
@@ -106,12 +114,12 @@ const Field = (props) => {
     setOpen(false);
   };
 
-  const handleClickOpenb = () => {
-    setOpenb(true);
+  const openCategoryList = () => {
+    setOpenB(true);
   }
 
-  const handleCloseb = () => {
-    setOpenb(false);
+  const handleCloseCategoryList = () => {
+    setOpenB(false);
   };
 
   const handleClickOpenDialog = () => {
@@ -122,23 +130,10 @@ const Field = (props) => {
     setOpenDialog(false);
   };
 
-  const checkedStar = () => {
-    updateBudgetingTemplateTabFieldMutation({ variables: { id: id, favourite: !favourite }})
-    setOpenb(false);
-  }
-
   const changeFieldStatus = (event) => {
     updateBudgetingTemplateTabFieldMutation({ variables: { id: id, active: !active }})
     setActive(!active)
     setOpenDialog(false);
-  }
-
-  const colorButton = () => {
-    if (favourite === true) {
-      return 'secondary'
-    } else {
-      return "primary"
-    }
   }
 
   const [destroyBudgetingTemplateTabFieldMutation, destroyProcessInfo] =
@@ -189,14 +184,35 @@ const Field = (props) => {
             { name } { id } -{ groupId }
           </Typography>
         </Grid>
-        <Grid container item xs={3}>
-        <Typography className={ classes.textTittleType }>
-            {  INPUT_CATEGORIES[categories] }
-          </Typography>
-        </Grid>
       </>
     )
   }
+
+  
+  const renderCategoriesList = () => {
+    return(
+      <>
+        {
+          categories.map(
+            (category, index) => {
+              return(
+                <List
+                  key={ category.id + "-category"}
+                >
+                  <ListItem>
+                    { category.name }
+                    {/* id={ category.id || " " }
+                    "hola" */}
+                  </ListItem>
+                </List>
+              )
+            }
+          )
+        }
+      </>
+    )
+  }
+
 
   const renderInputField = () => {
     return(
@@ -221,91 +237,35 @@ const Field = (props) => {
             name='name'
           />
         </Grid>
-        <Grid container item xs={3}>
-          <FormControl variant="outlined" className={ classes.textFieldTittleType }>
-            <InputLabel id="label-field">Tipo de campo</InputLabel>
-            <Select
-              labelId="demo-simple-select-outlined-label"
-              name='categories'
-              value={ categories }
-              onChange={ handleCategoryChange }
-            >
-              <MenuItem key='cateA' value={'cateA'}>Categoria 1</MenuItem>
-              <MenuItem key='cateB' value={'cateB'}>categoria 2</MenuItem>
-              <MenuItem key='cateC' value={'cateC'}>categoria 3</MenuItem>
-            </Select>
-          </FormControl>
-        </Grid>
       </>
     )
   }
 
+  console.log("active", props.active)
   return (
     <Grid container item alignItems="flex-start" justify="flex-start" className={ classes.fielPaddingBottom }>
       <Paper>
       <Grid container item className={ classes.fieldHeightRow }>
         { editing ? renderTextField() : renderInputField() }
-        <Grid container item direction="column"  alignItems="center" justify="center" item xs={1}>
-          <FormControlLabel
-            control={
-              <Checkbox 
-              icon={<StarBorderIcon />} 
-              checkedIcon={<StarsIcon />} 
-              name="favourite"
-              checked={ favourite }
-              />
-            }
-            label=" "
-            color="primary"
-            className={ classes.formControlPadding }
-            onChange={ handleClickOpenb }
-          />
-          <Dialog
-            open={ openb }
-            onClose={ handleClose }
-            aria-labelledby="favorite-alert"
-            aria-describedby="favorite-alert-dialog"
+        <Grid container item direction="column"  alignItems="center" justify="center" item xs={4}>
+          <Button 
+            onClick={ openCategoryList }
           >
-            <DialogTitle id="favorite-alert">
-              { favourite === true ? "Eliminar Favorito": "Añadir Favorito"}
-            </DialogTitle>
-            <DialogContent>
-            { favourite === true ? "Este campo dejará de ser importante": "Se marcará este campo como importante"}
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={ handleCloseb } color="secondary">
-                Cancelar
-              </Button>
-              <Button color={ colorButton() } autoFocus onClick={ checkedStar } variant="contained">
-                { favourite ? "Quitar": "Añadir"}
-              </Button>
-            </DialogActions>
-          </Dialog>
-        </Grid>
-        <Grid container item direction="column"  alignItems="center" justify="center" item xs={1}>
-          <Button onClick={ handleClickOpen }>
-            <DeleteForeverIcon/>
+            + Categoria
           </Button>
           <Dialog
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
+            open={openB}
+            onClose={handleCloseCategoryList}
           >
-            <DialogTitle id="alert-dialog-title">{"Eliminar campo"}</DialogTitle>
+            <DialogTitle>
+              Agrega una Categoria
+            </DialogTitle>
             <DialogContent>
-              Se eliminara de manera permantente el campo: 
-              <Typography variant="subtitle2" className={ classes.texPlainTittleName }>
-                {name}
-              </Typography>
+              <AddCategoryToField/>
             </DialogContent>
             <DialogActions>
-              <Button onClick={ handleClose } color="secondary">
-                Cancelar
-              </Button>
-              <Button color="primary" autoFocus onClick={ deleteFieldClick }>
-                Borrar
-              </Button>
+              <Button onClick={ handleCloseCategoryList }> Cancelar </Button>
+              <Button> Aceptar </Button>
             </DialogActions>
           </Dialog>
         </Grid>
@@ -344,6 +304,33 @@ const Field = (props) => {
             </Button>
           </DialogActions>
         </Dialog>
+        <Grid container item direction="column"  alignItems="center" justify="center" item xs={1}>
+          <Button onClick={ handleClickOpen }>
+            <DeleteForeverIcon/>
+          </Button>
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">{"Eliminar campo"}</DialogTitle>
+            <DialogContent>
+              Se eliminara de manera permantente el campo: 
+              <Typography variant="subtitle2" className={ classes.texPlainTittleName }>
+                {name}
+              </Typography>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={ handleClose } color="secondary">
+                Cancelar
+              </Button>
+              <Button color="primary" autoFocus onClick={ deleteFieldClick }>
+                Borrar
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </Grid>
       </Grid>
       </Paper>
     </Grid>
