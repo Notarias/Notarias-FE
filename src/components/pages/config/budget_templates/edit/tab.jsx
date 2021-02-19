@@ -43,7 +43,7 @@ const Tab = (props) => {
       >
         <Button variant={ selected ? "contained" : "outlined" } className={ classes.tittleTab }>
           <Typography variant="h6" gutterBottom>
-            { tab.name }
+            { tab.name } { tab.id }
           </Typography>
         </Button>
       </Grid>

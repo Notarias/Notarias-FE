@@ -41,7 +41,7 @@ const FieldList = (props) => {
                   arrayIndex={ index }
                   removeFromList={ removeFromList }
                   name={ field.name || "" }
-                  style={ field.style || "" }
+                  categories={ field.categories || [] }
                   id={ field.id || " " }
                   active={ field.active }
                   currentTab={ currentTab }

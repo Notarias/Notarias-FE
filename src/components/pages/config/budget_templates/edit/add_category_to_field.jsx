@@ -37,19 +37,27 @@ function intersection(a, b) {
 
 const AddCategoryToField = (props) => {
   const classes = useStyles();
+  const { categoriesToSave, setCategoriesToSave} = props
+  console.log(setCategoriesToSave)
   const [checked, setChecked] = React.useState([]);
-  const [left, setLeft] = React.useState([0, 1, 2, 3, 4, 5, 6, 7]);
+  const [left, setLeft] = React.useState([]);
   const [right, setRight] = React.useState([]);
 
   const leftChecked = intersection(checked, left);
   const rightChecked = intersection(checked, right);
 
+  const[ categories, setCategories] = React.useState(data ? data.budgetingCategories : [])
+
   useEffect(() => {
     setCategories(data.budgetingCategories)
+    setLeft(data.budgetingCategories.map((category)=>{
+      return(
+        category.id
+      )
+    }))
   }, [data])
 
 
-  const[ categories, setCategories] = React.useState(data ? data.budgetingCategories : [])
 
   const { loading, data } = useQuery(
     GET_BUDGETING_CATEGORIES,
@@ -67,15 +75,17 @@ const AddCategoryToField = (props) => {
     }
 
     setChecked(newChecked);
+    
   };
 
-  const handleAllRight = () => {
+  const handleAllRight = () => { 
     setRight(right.concat(left));
     setLeft([]);
   };
 
   const handleCheckedRight = () => {
     setRight(right.concat(leftChecked));
+    setCategoriesToSave(right.concat(leftChecked));
     setLeft(not(left, leftChecked));
     setChecked(not(checked, leftChecked));
   };
@@ -91,25 +101,26 @@ const AddCategoryToField = (props) => {
     setRight([]);
   };
 
-  const customList = (categories) => (
+  const customList = (items) => ( 
     <Paper className={classes.paper}>
       <List dense component="div" role="list">
-        {categories.map((category) => {
-          const value = category.id
-          const labelId = `transfer-list-item-${value}-label`;
+        {items.map((item) => {
+          const value = item
 
-          console.log("value", value, category)
+          const labelId = `transfer-list-item-${value}-label`;
+          const category = categories.find((category) => category.id === value)
+
           return (
-            <ListItem key={category.id + "-category"} role="listitem" button onClick={handleToggle(category)}>
+           <ListItem key={value} role="listitem" button onClick={handleToggle(value)}>
               <ListItemIcon>
                 <Checkbox
-                  checked={checked.indexOf(category) !== -1}
+                  checked={checked.indexOf(value) !== -1}
                   tabIndex={-1}
                   disableRipple
                   inputProps={{ 'aria-labelledby': labelId }}
                 />
               </ListItemIcon>
-              <ListItemText id={category.id} primary={` ${category.name}`} />
+              <ListItemText id={labelId} primary={` ${ category.name }`} />
             </ListItem>
           );
         })}
@@ -118,6 +129,8 @@ const AddCategoryToField = (props) => {
     </Paper>
   );
 
+
+  console.log("toS", setCategoriesToSave)
   return (
     <Grid container spacing={2} justify="center" alignItems="center" className={classes.root}>
       <Grid item>{customList(left)}</Grid>
