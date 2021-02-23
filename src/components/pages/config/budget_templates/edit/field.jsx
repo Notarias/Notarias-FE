@@ -79,6 +79,10 @@ const Field = (props) => {
     }
 
   const updateField = (event) => {
+    updateBudgetingTemplateTabFieldMutation({ variables: { id: id, name: name}})
+  }
+
+  const updateCategoriesField = (event) => {
     updateBudgetingTemplateTabFieldMutation({ variables: { id: id, name: name, categories: categoriesToSave}})
   }
 
@@ -194,21 +198,11 @@ const Field = (props) => {
   const categoriesToShow = () => {
     
     if ( categories ){
-      const laQuesea = categories.length
-      // const laQuesea = categories.map((category)=> {
-      //   console.log("sies", category, categories)
-      //   return (
-      //     category.length
-      //   )
-      // } )
-      
-      return laQuesea
+      const categoryCount = categories.length
+      return categoryCount
     } else {
       return "selecciona"
     }
-    // return (
-    //   "uno"
-    // )
   }
 
   return (
@@ -216,21 +210,13 @@ const Field = (props) => {
       <Paper>
       <Grid container item className={ classes.fieldHeightRow }>
         { editing ? renderTextField() : renderInputField() }
-        <Grid container item direction="column"  alignItems="center" justify="center" item xs={3}>
+        <Grid container item direction="column"  alignItems="center" justify="center" item xs={4}>
           <Chip
             avatar={<Avatar>{ categoriesToShow() }</Avatar>}
             label={ ` categorias` }
             color={ categories.length > 0 ? "primary" : "default" }
-            onClick={ () => null }
-          />
-
-        </Grid>
-        <Grid container item direction="column"  alignItems="center" justify="center" item xs={1}>
-          <Button 
             onClick={ openCategoryList }
-          >
-            + Cat
-          </Button>
+          />
           <Dialog
             open={openB}
             onClose={handleCloseCategoryList}
@@ -246,10 +232,11 @@ const Field = (props) => {
             </DialogContent>
             <DialogActions>
               <Button onClick={ handleCloseCategoryList }> Cancelar </Button>
-              <Button disabled={ !categoriesToSave } onClick={ updateField }> Aceptar </Button>
+              <Button disabled={ !categoriesToSave } onClick={ updateCategoriesField }> Aceptar </Button>
             </DialogActions>
           </Dialog>
         </Grid>
+
         <Grid container item direction="column"  alignItems="center" justify="center" item xs={1} onClick={ handleClickOpenDialog }>
           {
           active ?

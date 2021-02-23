@@ -11,13 +11,17 @@ import { withStyles }                                           from '@material-
 import { useMutation }                                          from '@apollo/react-hooks';
 import { GET_BUDGETING_TEMPLATE_TAB_FIELDS }                    from '../queries_and_mutations/queries'
 import { CREATE_BUDGETING_TEMPLATE_TAB_FIELD }                 from '../queries_and_mutations/queries'
+
 import AddIcon                                                  from '@material-ui/icons/Add';
 import Divider                                                  from '@material-ui/core/Divider';
-import FormControl                                              from '@material-ui/core/FormControl';
 import TextField                                                from '@material-ui/core/TextField';
+
+import CategoriesSelectableList             from './categories_selectable_list';
+
 import Select                                                   from '@material-ui/core/Select';
 import MenuItem                                                 from '@material-ui/core/MenuItem';
 import InputLabel                                               from '@material-ui/core/InputLabel';
+import FormControl                                              from '@material-ui/core/FormControl';
 
 
 const NewFieldButton = ({
@@ -27,11 +31,12 @@ const NewFieldButton = ({
 }) => {
   const [open, setOpen] = React.useState(false);
   const [fieldName, setFieldName] = React.useState("");
-  const [style, setStyle] = React.useState("")
+  const [categoriesToSave, setCategoriesToSave] = React.useState("")
+
   const [pristineA, setPristineA] = React.useState(true)
   const [pristineB, setPristineB] = React.useState(true)
   const [error, setError] = React.useState(false)
-  const inputsList = ["name", "style"]
+  const inputsList = ["name", "categories"]
 
   const [createBudgetingTemplateTabFieldMutation, createProcessInfo] =
     useMutation(
@@ -63,14 +68,14 @@ const NewFieldButton = ({
           }
         }
       }
-      setError(errorsList);//{name: "mensaje", style: "mensaje"} 
+      setError(errorsList);
     }
 
   const addNewField = (event) => {
     createBudgetingTemplateTabFieldMutation(
       { 
         variables: 
-          { "name": fieldName, "tabId": currentTab.id, "style": style},
+          { "name": fieldName, "tabId": currentTab.id, "categories": categoriesToSave},
           fetchPolicy: "no-cache",
       }
     )
@@ -81,7 +86,7 @@ const NewFieldButton = ({
     setPristineA(true)
     setPristineB(true)
     setFieldName("")
-    setStyle("")
+    // setStyle("")
   };
 
   const handleClose = () => {
@@ -94,10 +99,6 @@ const NewFieldButton = ({
     setPristineA(false)
   };
 
-  const handleFieldStyleChange = (event) => {
-    setStyle(event.target.value);
-    setPristineB(false)
-  };
 
   const renderNewFieldButton = () => {
     return(
@@ -151,7 +152,11 @@ const NewFieldButton = ({
                 />
               </Grid>
               <Grid container item xs={5}>
-                <FormControl variant="outlined" className={ classes.textFieldTittleType }>
+                <Grid item>
+                  <CategoriesSelectableList/>
+                </Grid>
+
+                {/* <FormControl variant="outlined" className={ classes.textFieldTittleType }>
                   <InputLabel id="label-field">Selecciona el tipo de campo</InputLabel>
                   <Select
                     labelId="demo-simple-select-outlined-label"
@@ -165,7 +170,7 @@ const NewFieldButton = ({
                     <MenuItem key='string' value={'string'}>Texto</MenuItem>
                     <MenuItem key='number' value={'number'}>Numerico</MenuItem>
                   </Select>
-                </FormControl>
+                </FormControl> */}
               </Grid>
             </Grid>
            </Grid>
