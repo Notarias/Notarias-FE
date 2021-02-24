@@ -166,20 +166,19 @@ export const GET_BUDGETING_TEMPLATE_TAB_FIELDS = gql`
 export const CREATE_BUDGETING_TEMPLATE_TAB_FIELD = gql`
   mutation createBudgetingTemplateField (
     $tabId: ID!,
-    $name: String!, 
-    $style: String,
+    $name: String!,
   ){
     createBudgetingTemplateField (
       input: {
-        tabId: $tabId, 
-        name: $name, 
-        style: $style,
+        tabId: $tabId,
+        name: $name,
       } 
     ) 
     {
       budgetingTemplateField {
         id
         name
+        active
         budgetingTemplateTabId
         categories {
           id

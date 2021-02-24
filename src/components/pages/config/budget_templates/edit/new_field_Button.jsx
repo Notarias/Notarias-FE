@@ -11,17 +11,9 @@ import { withStyles }                                           from '@material-
 import { useMutation }                                          from '@apollo/react-hooks';
 import { GET_BUDGETING_TEMPLATE_TAB_FIELDS }                    from '../queries_and_mutations/queries'
 import { CREATE_BUDGETING_TEMPLATE_TAB_FIELD }                 from '../queries_and_mutations/queries'
-
 import AddIcon                                                  from '@material-ui/icons/Add';
 import Divider                                                  from '@material-ui/core/Divider';
 import TextField                                                from '@material-ui/core/TextField';
-
-import CategoriesSelectableList             from './categories_selectable_list';
-
-import Select                                                   from '@material-ui/core/Select';
-import MenuItem                                                 from '@material-ui/core/MenuItem';
-import InputLabel                                               from '@material-ui/core/InputLabel';
-import FormControl                                              from '@material-ui/core/FormControl';
 
 
 const NewFieldButton = ({
@@ -31,10 +23,7 @@ const NewFieldButton = ({
 }) => {
   const [open, setOpen] = React.useState(false);
   const [fieldName, setFieldName] = React.useState("");
-  const [categoriesToSave, setCategoriesToSave] = React.useState("")
-
-  const [pristineA, setPristineA] = React.useState(true)
-  const [pristineB, setPristineB] = React.useState(true)
+  const [pristine, setPristine] = React.useState(true)
   const [error, setError] = React.useState(false)
   const inputsList = ["name", "categories"]
 
@@ -75,7 +64,7 @@ const NewFieldButton = ({
     createBudgetingTemplateTabFieldMutation(
       { 
         variables: 
-          { "name": fieldName, "tabId": currentTab.id, "categories": categoriesToSave},
+          { "name": fieldName, "tabId": currentTab.id},
           fetchPolicy: "no-cache",
       }
     )
@@ -83,10 +72,8 @@ const NewFieldButton = ({
 
   const addNewFieldClickOpen = (event) => {
     setOpen(true);
-    setPristineA(true)
-    setPristineB(true)
+    setPristine(true)
     setFieldName("")
-    // setStyle("")
   };
 
   const handleClose = () => {
@@ -96,7 +83,7 @@ const NewFieldButton = ({
 
   const handleFieldNameChange = (event) => {
     setFieldName(event.target.value);
-    setPristineA(false)
+    setPristine(false)
   };
 
 
@@ -152,25 +139,6 @@ const NewFieldButton = ({
                 />
               </Grid>
               <Grid container item xs={5}>
-                <Grid item>
-                  <CategoriesSelectableList/>
-                </Grid>
-
-                {/* <FormControl variant="outlined" className={ classes.textFieldTittleType }>
-                  <InputLabel id="label-field">Selecciona el tipo de campo</InputLabel>
-                  <Select
-                    labelId="demo-simple-select-outlined-label"
-                    name='style'
-                    value={ style }
-                    onChange={ handleFieldStyleChange }
-                    error={ !!error["style"] && true }
-                    helpertext={error["style"] || " "}
-                    errorskey={ "style" }
-                  >
-                    <MenuItem key='string' value={'string'}>Texto</MenuItem>
-                    <MenuItem key='number' value={'number'}>Numerico</MenuItem>
-                  </Select>
-                </FormControl> */}
               </Grid>
             </Grid>
            </Grid>
@@ -184,7 +152,7 @@ const NewFieldButton = ({
               onClick={ addNewField } 
               color="primary"
               variant="contained"
-              disabled={ pristineA || pristineB }
+              disabled={ pristine }
             >
               "Añadir campo"
             </Button>

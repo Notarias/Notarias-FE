@@ -1,10 +1,6 @@
 import React                                          from 'react';
 import Grid                                           from '@material-ui/core/Grid';
 import TextField                                      from '@material-ui/core/TextField';
-import StarsIcon                                      from '@material-ui/icons/Stars';
-import FormControlLabel                               from '@material-ui/core/FormControlLabel';
-import Checkbox                                       from '@material-ui/core/Checkbox';
-import StarBorderIcon                                 from '@material-ui/icons/StarBorder';
 import Button                                         from '@material-ui/core/Button';
 import DeleteForeverIcon                              from '@material-ui/icons/DeleteForever';
 import { withStyles }                                 from '@material-ui/core/styles';
@@ -25,23 +21,18 @@ import RadioButtonUncheckedIcon                       from '@material-ui/icons/R
 import RadioButtonCheckedIcon                         from '@material-ui/icons/RadioButtonChecked';
 import Chip                                           from '@material-ui/core/Chip';
 import Avatar                                         from '@material-ui/core/Avatar';
-import List                                           from '@material-ui/core/List';
-import ListItem                                       from '@material-ui/core/ListItem';
-
-import AddCategoryToField                             from './add_category_to_field';
 
 
 const Field = (props) => {
 
-  const { classes, id, groupId, currentTab, removeFromList } = props
+  const { classes, id, currentTab, removeFromList } = props
   const [open, setOpen] = React.useState(false);
   const [openB, setOpenB] = React.useState(false);
   const [openDialog, setOpenDialog] = React.useState(false);
   const [editing, setEditing] = React.useState(true);
   const [name, setName] = React.useState(props.name)
   const [categories, setCategories] = React.useState(props.categories);
-  const [active, setActive] = React.useState(props.active);
-  const [categoriesToSave, setCategoriesToSave] = React.useState()
+  const [active, setActive] = React.useState(props.active || false);
   const [error, setError] = React.useState(false);
   const inputsList = ["name"]
 
@@ -80,10 +71,6 @@ const Field = (props) => {
 
   const updateField = (event) => {
     updateBudgetingTemplateTabFieldMutation({ variables: { id: id, name: name}})
-  }
-
-  const updateCategoriesField = (event) => {
-    updateBudgetingTemplateTabFieldMutation({ variables: { id: id, name: name, categories: categoriesToSave}})
   }
 
   const handleClickOpen = () => {
@@ -225,14 +212,11 @@ const Field = (props) => {
               Agrega una Categoria
             </DialogTitle>
             <DialogContent>
-              <AddCategoryToField
-                categories={ categories }
-                setCategoriesToSave={ setCategoriesToSave }
-              />
+              "Componente lista de categorias"
             </DialogContent>
             <DialogActions>
               <Button onClick={ handleCloseCategoryList }> Cancelar </Button>
-              <Button disabled={ !categoriesToSave } onClick={ updateCategoriesField }> Aceptar </Button>
+              <Button> Aceptar </Button>
             </DialogActions>
           </Dialog>
         </Grid>
