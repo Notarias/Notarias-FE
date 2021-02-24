@@ -180,5 +180,35 @@ export const styles = theme => {
       fontFamily: "Lucida Console, Courier, monospace",
       fontWeight: "bold",
     },
+    texPlainTittleName: {
+      width: "250px",
+      textAlign: "left",
+      paddingTop: "20px",
+      height: "48px",
+      paddingLeft: "10px",
+      wordWrap: "break-word",
+    },
+    textTittleType: {
+      width: "230px",
+      height: "56px",
+      paddingTop: "15px",
+      paddingRight: "18px",
+      border: "1px solid",
+      borderRadius: "6px",
+    },
+    fielPaddingBottom: {
+      marginBottom: "2px"
+    },
+    fieldHeightRow: {
+      padding: "10px",
+      width: "700px",
+    },    formControlPadding: {
+      margin: "0px",
+    },
+    radioButtonActiveGreen:{
+      width:"30px", 
+      height:"30px",
+      color: "green",
+    },
   })
 }

@@ -29,21 +29,21 @@ const Tab = (props) => {
         />
       </Grid>
       <Grid
-        container 
-        item 
+        container
+        item
         xs={10}
         onClick={ selectTab }
         id={ tab.id }
-        container 
-        item 
-        direction="column" 
-        justify="flex-start" 
+        container
+        item
+        direction="column"
+        justify="flex-start"
         alignItems="center"
         className={ selected ? classes.activeTab : classes.tabDefault }
-        >
+      >
         <Button variant={ selected ? "contained" : "outlined" } className={ classes.tittleTab }>
           <Typography variant="h6" gutterBottom>
-            { tab.name }
+            { tab.name } { tab.id }
           </Typography>
         </Button>
       </Grid>
