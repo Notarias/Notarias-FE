@@ -21,6 +21,7 @@ import RadioButtonUncheckedIcon                       from '@material-ui/icons/R
 import RadioButtonCheckedIcon                         from '@material-ui/icons/RadioButtonChecked';
 import Chip                                           from '@material-ui/core/Chip';
 import Avatar                                         from '@material-ui/core/Avatar';
+import CategoriesSelectableList                       from './categories_selectable_list'
 
 
 const Field = (props) => {
@@ -35,6 +36,7 @@ const Field = (props) => {
   const [active, setActive] = React.useState(props.active || false);
   const [error, setError] = React.useState(false);
   const inputsList = ["name"]
+  const [categoriesToSave, setCategoriesToSave] = React.useState([])
 
   const [updateBudgetingTemplateTabFieldMutation, updateProcessInfo] =
     useMutation(
@@ -209,10 +211,13 @@ const Field = (props) => {
             onClose={handleCloseCategoryList}
           >
             <DialogTitle>
-              Agrega una Categoria
+              Selecciona una o varias Categorias
             </DialogTitle>
             <DialogContent>
-              "Componente lista de categorias"
+              <CategoriesSelectableList
+                CategoriesSelectableList={ CategoriesSelectableList }
+                setCategoriesToSave={ setCategoriesToSave }
+              />
             </DialogContent>
             <DialogActions>
               <Button onClick={ handleCloseCategoryList }> Cancelar </Button>
