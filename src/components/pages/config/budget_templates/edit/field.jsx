@@ -194,6 +194,7 @@ const Field = (props) => {
     }
   }
 
+  console.log("toS", categoriesToSave)
   return (
     <Grid container item alignItems="flex-start" justify="flex-start" className={ classes.fielPaddingBottom }>
       <Paper>

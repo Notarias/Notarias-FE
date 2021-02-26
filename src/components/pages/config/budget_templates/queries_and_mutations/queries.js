@@ -233,3 +233,21 @@ export const GET_BUDGETING_CATEGORIES = gql`
     }
   }
 `
+
+export const CREATE_BUDGETING_CATEGORIES = gql`
+  mutation createBudgetingCategory (
+    $name: String!,
+  ){
+    createBudgetingCategory (
+      input: {
+        name: $name,
+      } 
+    ) 
+    {
+      budgetingCategory {
+        id
+        name
+      }
+    }
+  }
+`
