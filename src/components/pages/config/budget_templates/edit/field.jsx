@@ -1,4 +1,4 @@
-import React                                          from 'react';
+import React, { useEffect }                           from 'react';
 import Grid                                           from '@material-ui/core/Grid';
 import TextField                                      from '@material-ui/core/TextField';
 import Button                                         from '@material-ui/core/Button';
@@ -49,6 +49,7 @@ const Field = (props) => {
           setActive(cacheData.data.updateBudgetingTemplateField.budgetingTemplateField.active)
           setError(false)
           setEditing(true)
+          setOpenB(false)
         },
         refetchQueries: [{
           query: GET_BUDGETING_TEMPLATE_TAB_FIELDS,
@@ -58,21 +59,35 @@ const Field = (props) => {
       }
     )
 
-    const setErrors = (apolloError) => {
-      let errorsList = {}
-      let errorTemplateList = apolloError.graphQLErrors
-      for ( let i = 0; i < errorTemplateList.length; i++) {
-        for( let n = 0; n < inputsList.length; n++) {
-          if(errorTemplateList[i].extensions.attribute === inputsList[n]){
-            errorsList[inputsList[n]] = errorTemplateList[i].message
-          }
+  const categoriesSavedIds = () => {
+    return(
+      categoriesToSave.map(category => (category.id))
+    )
+  }
+
+  const setErrors = (apolloError) => {
+    let errorsList = {}
+    let errorTemplateList = apolloError.graphQLErrors
+    for ( let i = 0; i < errorTemplateList.length; i++) {
+      for( let n = 0; n < inputsList.length; n++) {
+        if(errorTemplateList[i].extensions.attribute === inputsList[n]){
+          errorsList[inputsList[n]] = errorTemplateList[i].message
         }
       }
-      setError(errorsList) 
     }
+    setError(errorsList) 
+  }
+
+  React.useEffect(() => {
+    setCategories(props.categories)
+  }, [props.categories])
 
   const updateField = (event) => {
     updateBudgetingTemplateTabFieldMutation({ variables: { id: id, name: name}})
+  }
+
+  const updateFieldCategories = (event) => {
+    updateBudgetingTemplateTabFieldMutation({ variables: { id: id, categoriesIds: categoriesSavedIds() }})
   }
 
   const handleClickOpen = () => {
@@ -194,7 +209,7 @@ const Field = (props) => {
     }
   }
 
-  console.log("toS", categoriesToSave)
+  console.log("toS", categoriesSavedIds())
   return (
     <Grid container item alignItems="flex-start" justify="flex-start" className={ classes.fielPaddingBottom }>
       <Paper>
@@ -222,7 +237,7 @@ const Field = (props) => {
             </DialogContent>
             <DialogActions>
               <Button onClick={ handleCloseCategoryList }> Cancelar </Button>
-              <Button> Aceptar </Button>
+              <Button onClick={ updateFieldCategories }> Aceptar </Button>
             </DialogActions>
           </Dialog>
         </Grid>

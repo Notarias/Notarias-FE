@@ -12,6 +12,7 @@ import Fuse                                           from 'fuse.js';
 import IconButton                         from '@material-ui/core/IconButton';
 import CommentIcon                        from '@material-ui/icons/Comment';
 import ListItemSecondaryAction            from '@material-ui/core/ListItemSecondaryAction';
+// import CategoriesList                     from './categories_list'
 
 
 
@@ -23,6 +24,43 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const renderSearchList = (searchList, checked, classes, handleToggle) => {
+  // console.log(searchList)
+  return(
+    <List 
+      component="nav" 
+      aria-label="contacts" 
+      disablePadding={true}
+      className={ classes.selectableListItem }
+    >
+      { 
+        searchList.map(
+          (item) => {
+            let obj = item.item || item
+            return(
+              <React.Fragment key={obj.id + "fragment"}>
+                <ListItem key={obj.id} role={undefined} dense button onClick={handleToggle(obj)}>
+                  <ListItemIcon>
+                      <Checkbox
+                        edge="start"
+                        checked={checked.indexOf(obj) !== -1}
+                        tabIndex={-1}
+                        disableRipple
+                        inputProps={{ 'aria-labelledby': obj.id }}
+                      />
+                    </ListItemIcon>
+                    <ListItemText id={obj.id} primary={` ${ obj.name }`} />
+                  </ListItem>
+                  <Divider/>
+              </React.Fragment>
+            )
+          }
+        )
+      }
+    </List>
+  )
+}
+
 const CategoriesSelectableList = (props) => {
   const { setCategoriesToSave } = props
   const classes = useStyles();
@@ -31,10 +69,11 @@ const CategoriesSelectableList = (props) => {
   const [searchList, setSearchList] = React.useState([])
   const [initialList, setInitialList] = React.useState([])
   const [fuzzySearcher, setFuzzySearcher] = React.useState(new Fuse(initialList, { keys: ['name'] }))
+  const [initialized, setInitialized] = React.useState()
 
   function changeSearch(event) {
     let result = fuzzySearcher.search(event.target.value)
-    
+    console.log("corre", event.target.value.length)
     if (event.target.value.length === 0){
       setSearchList(initialList)
     } else {
@@ -42,12 +81,12 @@ const CategoriesSelectableList = (props) => {
     }
   }
 
-  const handleToggle = (category) => () => {
-    const currentIndex = checked.indexOf(category);
+  const handleToggle = (obj) => () => {
+    const currentIndex = checked.indexOf(obj);
     const newChecked = [...checked];
 
     if (currentIndex === -1) {
-      newChecked.push(category);
+      newChecked.push(obj);
     } else {
       newChecked.splice(currentIndex, 1);
     }
@@ -55,52 +94,35 @@ const CategoriesSelectableList = (props) => {
     setChecked(newChecked);
   };
 
-  useEffect(() => {
-    setCategories(data && data.budgetingCategories)
-    setCategoriesToSave(checked)
-    if (data &&  data.budgetingCategories) {
-      setInitialList( data.budgetingCategories)
-      setFuzzySearcher(new Fuse(data.budgetingCategories, { keys: ['name'] }))
-      setSearchList(data.budgetingCategories)
-    }
-  }, [data, checked])
-
   const { loading, data } = useQuery(
     GET_BUDGETING_CATEGORIES,
     {}
   );
 
-  console.log("cat", checked)
+  useEffect(() => {
+    setCategories(data && data.budgetingCategories)
+    setCategoriesToSave(checked)
+    if (initialized) {
+      console.log("falseo")
+    } else if (data && data.budgetingCategories) {
+      setInitialList(data.budgetingCategories)
+      setFuzzySearcher(new Fuse(data.budgetingCategories, { keys: ['name'] }))
+      setSearchList(data.budgetingCategories)
+      setInitialized(true) 
+    }
+  }, [data, checked])
+
   return (
     <>
       <TextField 
-        // onChange={ changeSearch }
+        onChange={ changeSearch }
         id="outlined-basic"
         label="Buscar"
         variant="outlined"
         className={ classes.textFieldSearchInTable }
       />
       {
-        searchList.map((item) => {
-          let obj = item.item || item
-          return(
-            <List 
-              component="nav" 
-              aria-label="contacts" 
-              key={ obj.id + "-list"}
-              disablePadding={true}
-              className={ classes.selectableListItem }
-            >
-              {/* <TemplateSelectOption 
-                key={ obj.id + "template-option" }
-                template={ obj }
-                selectItem={ props.setProcedureSelectedOption }
-                selectedItem={ props.procedureSelectedOption }
-              /> */}
-              <Divider/>
-            </List>
-          )
-        })
+        renderSearchList(searchList, checked, classes, handleToggle)
       }
       {/* <List className={classes.root}>
         {
