@@ -36,7 +36,7 @@ const Field = (props) => {
   const [active, setActive] = React.useState(props.active || false);
   const [error, setError] = React.useState(false);
   const inputsList = ["name"]
-  const [categoriesToSave, setCategoriesToSave] = React.useState([])
+  const [categoriesToSave, setCategoriesToSave] = React.useState(props.categories || [])
 
   const [updateBudgetingTemplateTabFieldMutation, updateProcessInfo] =
     useMutation(
@@ -46,7 +46,6 @@ const Field = (props) => {
           setErrors(apolloError)
         },
         update(store, cacheData) {
-          setActive(cacheData.data.updateBudgetingTemplateField.budgetingTemplateField.active)
           setError(false)
           setEditing(true)
           setOpenB(false)
@@ -115,7 +114,7 @@ const Field = (props) => {
   };
 
   const changeFieldStatus = (event) => {
-    updateBudgetingTemplateTabFieldMutation({ variables: { id: id, active: !active }})
+    updateBudgetingTemplateTabFieldMutation({ variables: { id: id, active: !active}})
     setActive(!active)
     setOpenDialog(false);
   }
@@ -200,7 +199,6 @@ const Field = (props) => {
   }
 
   const categoriesToShow = () => {
-    
     if ( categories ){
       const categoryCount = categories.length
       return categoryCount
@@ -209,7 +207,6 @@ const Field = (props) => {
     }
   }
 
-  console.log("toS", categoriesSavedIds())
   return (
     <Grid container item alignItems="flex-start" justify="flex-start" className={ classes.fielPaddingBottom }>
       <Paper>
@@ -233,6 +230,8 @@ const Field = (props) => {
               <CategoriesSelectableList
                 CategoriesSelectableList={ CategoriesSelectableList }
                 setCategoriesToSave={ setCategoriesToSave }
+                categoriesToSave={ categoriesToSave }
+                categories={ categories }
               />
             </DialogContent>
             <DialogActions>

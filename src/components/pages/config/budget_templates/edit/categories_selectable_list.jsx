@@ -1,5 +1,6 @@
 import React, { useEffect }                 from 'react';
-import { makeStyles }                       from '@material-ui/core/styles';
+import { withStyles }                       from '@material-ui/core/styles';
+import { styles }                           from '../styles';
 import List                                 from '@material-ui/core/List';
 import ListItem                             from '@material-ui/core/ListItem';
 import ListItemIcon                         from '@material-ui/core/ListItemIcon';
@@ -8,30 +9,16 @@ import Checkbox                             from '@material-ui/core/Checkbox';
 import { Divider, TextField }               from '@material-ui/core';
 import { GET_BUDGETING_CATEGORIES }         from '../queries_and_mutations/queries'
 import { useQuery }                         from '@apollo/react-hooks';
-import Fuse                                           from 'fuse.js';
-import IconButton                         from '@material-ui/core/IconButton';
-import CommentIcon                        from '@material-ui/icons/Comment';
-import ListItemSecondaryAction            from '@material-ui/core/ListItemSecondaryAction';
-// import CategoriesList                     from './categories_list'
+import Fuse                                 from 'fuse.js';
 
-
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-    maxWidth: 360,
-    backgroundColor: theme.palette.background.paper,
-  },
-}));
 
 const renderSearchList = (searchList, checked, classes, handleToggle) => {
-  // console.log(searchList)
+  const checkedIds = checked.map((item) =>  item.id )
   return(
     <List 
       component="nav" 
       aria-label="contacts" 
       disablePadding={true}
-      className={ classes.selectableListItem }
     >
       { 
         searchList.map(
@@ -43,7 +30,7 @@ const renderSearchList = (searchList, checked, classes, handleToggle) => {
                   <ListItemIcon>
                       <Checkbox
                         edge="start"
-                        checked={checked.indexOf(obj) !== -1}
+                        checked={checkedIds.indexOf(obj.id) !== -1}
                         tabIndex={-1}
                         disableRipple
                         inputProps={{ 'aria-labelledby': obj.id }}
@@ -62,10 +49,9 @@ const renderSearchList = (searchList, checked, classes, handleToggle) => {
 }
 
 const CategoriesSelectableList = (props) => {
-  const { setCategoriesToSave } = props
-  const classes = useStyles();
-  const [checked, setChecked] = React.useState([]);
+  const { setCategoriesToSave, categoriesToSave, classes } = props;
   const [categories, setCategories] = React.useState(data ? data.budgetingCategories : []);
+  const [checked, setChecked] = React.useState(categoriesToSave);
   const [searchList, setSearchList] = React.useState([])
   const [initialList, setInitialList] = React.useState([])
   const [fuzzySearcher, setFuzzySearcher] = React.useState(new Fuse(initialList, { keys: ['name'] }))
@@ -73,7 +59,6 @@ const CategoriesSelectableList = (props) => {
 
   function changeSearch(event) {
     let result = fuzzySearcher.search(event.target.value)
-    console.log("corre", event.target.value.length)
     if (event.target.value.length === 0){
       setSearchList(initialList)
     } else {
@@ -82,15 +67,14 @@ const CategoriesSelectableList = (props) => {
   }
 
   const handleToggle = (obj) => () => {
-    const currentIndex = checked.indexOf(obj);
+    const checkedIds = checked.map((item) => item.id)
+    const currentIndex = checkedIds.indexOf(obj.id);
     const newChecked = [...checked];
-
     if (currentIndex === -1) {
       newChecked.push(obj);
     } else {
       newChecked.splice(currentIndex, 1);
     }
-
     setChecked(newChecked);
   };
 
@@ -102,9 +86,7 @@ const CategoriesSelectableList = (props) => {
   useEffect(() => {
     setCategories(data && data.budgetingCategories)
     setCategoriesToSave(checked)
-    if (initialized) {
-      console.log("falseo")
-    } else if (data && data.budgetingCategories) {
+    if (!initialized && data && data.budgetingCategories) {
       setInitialList(data.budgetingCategories)
       setFuzzySearcher(new Fuse(data.budgetingCategories, { keys: ['name'] }))
       setSearchList(data.budgetingCategories)
@@ -114,44 +96,22 @@ const CategoriesSelectableList = (props) => {
 
   return (
     <>
+    <div>
       <TextField 
-        onChange={ changeSearch }
-        id="outlined-basic"
-        label="Buscar"
-        variant="outlined"
-        className={ classes.textFieldSearchInTable }
-      />
-      {
-        renderSearchList(searchList, checked, classes, handleToggle)
-      }
-      {/* <List className={classes.root}>
+          onChange={ changeSearch }
+          id="outlined-basic"
+          label="Buscar"
+          variant="outlined"
+          className={ classes.textFieldSearchInTable }
+        />
+    </div>
+      <div className={ classes.selectableListItem }> 
         {
-          categories.map((category) => {
-            // const category = categories.find((category) => category.id === value)
-            const labelId = `checkbox-list-label-${category.id}`;
-
-            return (
-              <>
-                <ListItem key={labelId} role={undefined} dense button onClick={handleToggle(category)}>
-                  <ListItemIcon>
-                    <Checkbox
-                      edge="start"
-                      checked={checked.indexOf(category) !== -1}
-                      tabIndex={-1}
-                      disableRipple
-                      inputProps={{ 'aria-labelledby': labelId }}
-                    />
-                  </ListItemIcon>
-                  <ListItemText id={labelId} primary={` ${ category.name }`} />
-                </ListItem>
-                <Divider/>
-              </>
-            );
-          })
+          renderSearchList(searchList, checked, classes, handleToggle)
         }
-      </List> */}
+      </div>
     </>
   );
 }
 
-export default  CategoriesSelectableList;
+export default withStyles(styles) (CategoriesSelectableList);

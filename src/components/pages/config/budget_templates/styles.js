@@ -142,10 +142,13 @@ export const styles = theme => {
     selectableListItem: {
       backgroundColor: 'inherit',
       width: "360px",
+      height: "250px",
+      overflowY:"scroll"
     },
     textFieldSearchInTable: {
       maxWidth: "360px",
       width: "360px",
+     
       backgroundColor: theme.palette.background.paper,
       marginBottom: '10px',
       marginTop: '5px'
@@ -210,5 +213,8 @@ export const styles = theme => {
       height:"30px",
       color: "green",
     },
+    listCategoriesDisplay: {
+      height:"300px"
+    }
   })
 }

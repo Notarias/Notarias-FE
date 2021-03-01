@@ -16,7 +16,6 @@ const CategoriesList = (props) => {
     <List className={classes.root}>
       {
         categories.map((category) => {
-        // const category = categories.find((category) => category.id === value)
         const labelId = `checkbox-list-label-${category.id}`;
           return (
               <>
