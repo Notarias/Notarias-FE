@@ -8,7 +8,9 @@ import Button                             from '@material-ui/core/Button';
 import SaveIcon                           from '@material-ui/icons/Save';
 import CreateIcon                         from '@material-ui/icons/Create';
 import { useMutation }                    from '@apollo/react-hooks';
-import { UPDATE_BUDGETING_TEMPLATE }     from '../queries_and_mutations/queries';
+import { UPDATE_BUDGETING_TEMPLATE }      from '../queries_and_mutations/queries';
+import { GLOBAL_MESSAGE }                 from '../../../../../resolvers/queries';
+import client                             from '../../../../../apollo';
 
 
 const TemplateTittle = (props) => {
@@ -34,7 +36,17 @@ const TemplateTittle = (props) => {
       UPDATE_BUDGETING_TEMPLATE,
       {
         onError(apolloError) {
-        setErrors(apolloError)
+          setErrors(apolloError)
+          client.writeQuery({
+            query: GLOBAL_MESSAGE,
+            data: {
+              globalMessage: {
+                message: "Ocurrió un error",
+                type: "error",
+                __typename: "globalMessage"
+              }
+            }
+          })
         },
         update(store, cacheData) {
           setError(false)

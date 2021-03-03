@@ -8,7 +8,9 @@ import DialogContent                      from '@material-ui/core/DialogContent'
 import DialogTitle                        from '@material-ui/core/DialogTitle';
 import DialogActions                      from '@material-ui/core/DialogActions';
 import { useMutation }                    from '@apollo/react-hooks';
-import { UPDATE_BUDGETING_TEMPLATE }     from '../queries_and_mutations/queries'
+import { UPDATE_BUDGETING_TEMPLATE }      from '../queries_and_mutations/queries'
+import { GLOBAL_MESSAGE }                             from '../../../../../resolvers/queries';
+import client                                         from '../../../../../apollo';
 
 
 const ActiveTemplateButton = (props) => {
@@ -29,6 +31,18 @@ const ActiveTemplateButton = (props) => {
     useMutation(
       UPDATE_BUDGETING_TEMPLATE,
       {
+        onError(apolloError) {
+          client.writeQuery({
+            query: GLOBAL_MESSAGE,
+            data: {
+              globalMessage: {
+                message: "Ocurrió un error",
+                type: "error",
+                __typename: "globalMessage"
+              }
+            }
+          })
+        },
         update(store, cacheData) {
           setActive(cacheData.data.updateBudgetingTemplate.budgetingTemplate.active)
         }

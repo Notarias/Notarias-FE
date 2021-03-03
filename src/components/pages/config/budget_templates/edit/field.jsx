@@ -22,6 +22,8 @@ import RadioButtonCheckedIcon                         from '@material-ui/icons/R
 import Chip                                           from '@material-ui/core/Chip';
 import Avatar                                         from '@material-ui/core/Avatar';
 import CategoriesSelectableList                       from './categories_selectable_list'
+import { GLOBAL_MESSAGE }                             from '../../../../../resolvers/queries';
+import client                                         from '../../../../../apollo';
 
 
 const Field = (props) => {
@@ -44,6 +46,16 @@ const Field = (props) => {
       {
         onError(apolloError) {
           setErrors(apolloError)
+          client.writeQuery({
+            query: GLOBAL_MESSAGE,
+            data: {
+              globalMessage: {
+                message: "Ocurrió un error",
+                type: "error",
+                __typename: "globalMessage"
+              }
+            }
+          })
         },
         update(store, cacheData) {
           setError(false)
