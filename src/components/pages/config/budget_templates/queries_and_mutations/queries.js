@@ -6,10 +6,9 @@ export const GET_BUDGETING_TEMPLATE = gql`
       active
       id
       name
-      proceduresTemplate {
+      proceduresTemplates{
         id
         name
-        serialNumber
       }
     }
   }
@@ -33,7 +32,7 @@ export const UPDATE_BUDGETING_TEMPLATE = gql`
     $id: ID!,
     $name: String,
     $active: Boolean,
-    $proceduresTemplateId: ID,
+    $proceduresTemplatesIds: [ID!],
     $clientMutationId: String)
     {
     updateBudgetingTemplate (input: 
@@ -41,7 +40,7 @@ export const UPDATE_BUDGETING_TEMPLATE = gql`
         id: $id,
         name: $name,
         active: $active,
-        proceduresTemplateId: $proceduresTemplateId
+        proceduresTemplatesIds: $proceduresTemplatesIds,
         clientMutationId: $clientMutationId
       }
     )
@@ -51,7 +50,7 @@ export const UPDATE_BUDGETING_TEMPLATE = gql`
         name
         active
         serialNumber
-        proceduresTemplate{
+        proceduresTemplates{
           id
           name
           serialNumber

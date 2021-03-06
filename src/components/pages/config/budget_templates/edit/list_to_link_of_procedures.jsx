@@ -52,7 +52,7 @@ const ListToLinkOfProcedures = (props) => {
               aria-label="contacts" 
               key={ obj.id + "-list"}
               disablePadding={true}
-              className={ classes.selectableListItem }
+              className={ classes.selectableProceduresListItem }
             >
               <TemplateSelectOption 
                 key={ obj.id + "template-option" }

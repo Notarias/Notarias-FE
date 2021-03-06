@@ -33,6 +33,7 @@ const Edit = (props) => {
 
   const [currentTab, setCurrentTab] = React.useState()
 
+  console.log(data ? data : "vacio", "DT")
   return(
     <>
       <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
@@ -52,7 +53,7 @@ const Edit = (props) => {
                 <Grid container item xs={5} justify="center">
                   <AddProcedureTemplateButton
                     id={ match.params.id }
-                    proceduresTemplateData={ data ? data.budgetingTemplate.proceduresTemplate : null }
+                    proceduresTemplatesData={ data ? data.budgetingTemplate.proceduresTemplates : null }
                   />
                 </Grid>
                 <Grid container item xs={4} justify="center">

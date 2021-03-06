@@ -14,6 +14,7 @@ import { GET_PROCEDURE_TEMPLATE }           from './queries_and_mutations/querie
 import CircularProgress                     from '@material-ui/core/CircularProgress';
 import FieldsAndGroupFields                 from './edit/fields_and_group_fields';
 import ButtonsNewFieldNewFieldsGroup        from './edit/buttons_newField_newFieldsGroup'
+import AddButgetingTemplateButton           from './edit/add_budgeting_template_button'
 
 
 const BREADCRUMBS = [
@@ -46,12 +47,7 @@ const Edit = (props) => {
               </Grid>
               <Grid container item xs={5} justify="flex-end" alignItems="center">
                 <Grid container item xs={4} justify="center">
-
-                </Grid>
-                <Grid container item xs={4} justify="center">
-                  <Button variant="contained" size="small" className={ classes.buttonAddProcedure }>
-                  + presupuesto
-                  </Button>
+                  <AddButgetingTemplateButton/>
                 </Grid>
                 <Grid container item xs={4} justify="center">
                   <ActiveTemplateButton

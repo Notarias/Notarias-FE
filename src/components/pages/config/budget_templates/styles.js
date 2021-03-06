@@ -145,10 +145,13 @@ export const styles = theme => {
       height: "250px",
       overflowY:"scroll"
     },
+    selectableProceduresListItem: {
+      backgroundColor: 'inherit',
+      width: "360px",
+    },
     textFieldSearchInTable: {
       maxWidth: "360px",
       width: "360px",
-     
       backgroundColor: theme.palette.background.paper,
       marginBottom: '10px',
       marginTop: '5px'

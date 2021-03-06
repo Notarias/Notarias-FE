@@ -3,7 +3,7 @@ import Dialog                                         from '@material-ui/core/Di
 import DialogContent                                  from '@material-ui/core/DialogContent';
 import DialogTitle                                    from '@material-ui/core/DialogTitle';
 import DialogActions                                  from '@material-ui/core/DialogActions';
-import ListToLinkOfProcedures                         from './list_to_link_of_procedures';
+// import ListToLinkOfProcedures                         from './list_to_link_of_procedures';
 import { styles }                                     from '../styles';
 import { withStyles }                                 from '@material-ui/core/styles';
 import { useMutation }                                from '@apollo/react-hooks';
@@ -26,83 +26,81 @@ import { GET_BUDGETING_TEMPLATES_QUICK_LIST }         from '../queries_and_mutat
 import { GLOBAL_MESSAGE }                             from '../../../../../resolvers/queries';
 import client                                         from '../../../../../apollo';
 import { Link }                                       from 'react-router-dom';
-import Chip                                           from '@material-ui/core/Chip';
-import Avatar                                         from '@material-ui/core/Avatar';
 
-const AddProcedureTemplateButton = (props) => {
+const AddButgetingTemplateButton = (props) => {
 
-  const { classes, proceduresTemplatesData }= props
-  const id = props.id
-  const [proceduresTemplates, setProceduresTemplates] = React.useState()
+  // const { classes, proceduresTemplateData }= props
+  // const id = props.id
+  // const [procedureTemplate, setProcedureTemplate] = React.useState()
   const [openDialog, setOpenDialog] = React.useState(false)
-  const [procedureSelectedOption, setProcedureSelectedOption] = React.useState()
+  // const [procedureSelectedOption, setProcedureSelectedOption] = React.useState()
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
 
-  useEffect(() => {
-    setProceduresTemplates(proceduresTemplatesData)
-  }, [proceduresTemplatesData])
+  // useEffect(() => {
+  //   setProcedureTemplate(proceduresTemplateData)
+  // }, [proceduresTemplateData])
 
-  const [updateBudgetingTemplateMutation, updateProcessInfo] =
-    useMutation(
-      UPDATE_BUDGETING_TEMPLATE,
-      {
-        onError(apolloError) {
-          setOpen(false)
-          setOpenDialog(false)
-          client.writeQuery({
-            query: GLOBAL_MESSAGE,
-            data: {
-              globalMessage: {
-                message: "Ocurrió un error",
-                type: "error",
-                __typename: "globalMessage"
-              }
-            }
-          })
-        },
-        update(store, cacheData) {
-          setOpen(false)
-          setOpenDialog(false)
-        },
-        refetchQueries: [{
-          query: GET_BUDGETING_TEMPLATE,
-          variables: { "id": id },
-        }],
-        awaitRefetchQueries: true
-      }
-    )
+  // const [updateBudgetingTemplateMutation, updateProcessInfo] =
+  //   useMutation(
+  //     UPDATE_BUDGETING_TEMPLATE,
+  //     {
+  //       onError(apolloError) {
+  //         setOpen(false)
+  //         setOpenDialog(false)
+  //         client.writeQuery({
+  //           query: GLOBAL_MESSAGE,
+  //           data: {
+  //             globalMessage: {
+  //               message: "Ocurrió un error",
+  //               type: "error",
+  //               __typename: "globalMessage"
+  //             }
+  //           }
+  //         })
+  //       },
+  //       update(store, cacheData) {
+  //         setOpen(false)
+  //         setOpenDialog(false)
+  //       },
+  //       refetchQueries: [{
+  //         query: GET_BUDGETING_TEMPLATE,
+  //         variables: { "id": id },
+  //       }],
+  //       awaitRefetchQueries: true
+  //     }
+  //   )
 
-  const updateLinkedProcedureTemplate = (event) => {
-    updateBudgetingTemplateMutation({ variables: {"id": id, "proceduresTemplateId": [procedureSelectedOption.id]}})
-  }
+  // const updateLinkedProcedureTemplate = (event) => {
+  //   updateBudgetingTemplateMutation({ variables: {"id": id, "proceduresTemplateId": procedureSelectedOption.id}})
+  // }
 
-  const updateUnlinkProcedureTemplate = (event) => {
-    updateBudgetingTemplateMutation({ variables: {"id": id, "proceduresTemplateId": null}})
-  }
+  // const updateUnlinkProcedureTemplate = (event) => {
+  //   updateBudgetingTemplateMutation({ variables: {"id": id, "proceduresTemplateId": null}})
+  // }
 
-  const { loading, data, refetch } = useQuery(
-    GET_BUDGETING_TEMPLATES_QUICK_LIST,
-  );
+  // const { loading, data, refetch } = useQuery(
+  //   GET_BUDGETING_TEMPLATES_QUICK_LIST,
+  // );
 
   const handleClickOpenDialog = () => {
     setOpenDialog(true)
-    setProcedureSelectedOption(false)
+    // setProcedureSelectedOption(false)
   }
 
   const handleCloseDialog = () => {
     setOpenDialog(false)
   }
 
-  const proceduresSelected = () => {
-    return (
-      proceduresTemplatesData ? "No." + proceduresTemplatesData.map((procedureTemplate) => procedureTemplate.id) : "+ Tramite"
-    )
-  }
+  // const procedureSelected = () => {
+  //   return (
+  //     procedureTemplate ? "No." + procedureTemplate.serialNumber : "+ Tramite"
+  //   ) 
+  // }
 
-  const handleToggle = () => {
-    setOpen((prevOpen) => !prevOpen);
-  };
+  // const handleToggle = () => {
+  //   setOpen((prevOpen) => !prevOpen);
+  // };
 
   const handleClose = (event) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
@@ -114,21 +112,24 @@ const AddProcedureTemplateButton = (props) => {
   return(
     <Grid container direction="column" alignItems="center">
       <Grid item xs={12}>
-        <ButtonGroup color="primary" variant="contained" ref={anchorRef} aria-label="split button">
+        <ButtonGroup variant="contained" color="primary" ref={anchorRef} aria-label="split button">
           <Button
-            component={Link} 
-            to={`/config/procedure_templates/${ proceduresTemplatesData ? proceduresTemplatesData.map((procedureTemplate) => procedureTemplate.id) : "" }/edit`}
-            disabled={ !proceduresTemplates }
+            color="primary"
+            // component={Link} 
+            // to={`/config/procedure_templates/${ proceduresTemplateData ? proceduresTemplateData.id : "" }/edit`}
+            // disabled={ !procedureTemplate }
           >
-            { proceduresSelected() }
+            {/* { procedureSelected() } */}
+            "Presupuesto"
           </Button>
           <Button
+            color="primary"
             size="small"
             aria-controls={open ? 'split-button-menu' : undefined}
             aria-expanded={open ? 'true' : undefined}
             aria-label="select merge strategy"
             aria-haspopup="menu"
-            onClick={handleToggle}
+            // onClick={handleToggle}
           >
             <ArrowDropDownIcon />
           </Button>
@@ -147,12 +148,13 @@ const AddProcedureTemplateButton = (props) => {
                     <MenuItem
                       onClick={ handleClickOpenDialog }
                     >
-                      { proceduresTemplates ? "Cambiar tramite" : "Añadir tramite" }
+                      {/* { procedureTemplate ? "Cambiar tramite" : "Añadir tramite" } */}
+                      "Añadir tramite"
                     </MenuItem>
                     <Divider/>
                     <MenuItem
-                      onClick={ updateUnlinkProcedureTemplate }
-                      disabled={ !proceduresTemplates }
+                      // onClick={ updateUnlinkProcedureTemplate }
+                      // disabled={ !procedureTemplate }
                     >
                       Desvincular
                     </MenuItem>
@@ -167,11 +169,11 @@ const AddProcedureTemplateButton = (props) => {
             Selecciona un Trámite para vincularlo
           </DialogTitle>
           <DialogContent>
-            <ListToLinkOfProcedures
+            {/* <ListToLinkOfProcedures
               procedureSelectedOption={ procedureSelectedOption }
               setProcedureSelectedOption={ setProcedureSelectedOption }
               data={ data }
-            />
+            /> */}
           </DialogContent>
           <DialogActions>
             <Button
@@ -180,10 +182,11 @@ const AddProcedureTemplateButton = (props) => {
               Cancelar
             </Button>
             <Button
-              onClick={ updateLinkedProcedureTemplate }
-              disabled={ !procedureSelectedOption || (procedureSelectedOption && updateProcessInfo.loading)}
+              // onClick={ updateLinkedProcedureTemplate }
+              // disabled={ !procedureSelectedOption || (procedureSelectedOption && updateProcessInfo.loading)}
             >
-              {loading ? <CircularProgress/> : "Aceptar"}
+              {/* {loading ? <CircularProgress/> : "Aceptar"} */}
+              Aceptar
             </Button>
           </DialogActions>
         </Dialog>
@@ -192,4 +195,4 @@ const AddProcedureTemplateButton = (props) => {
   )
 }
 
-export default withStyles(styles)(AddProcedureTemplateButton);
+export default withStyles(styles)(AddButgetingTemplateButton);
