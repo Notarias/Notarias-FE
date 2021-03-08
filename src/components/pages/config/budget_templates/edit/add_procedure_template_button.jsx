@@ -35,7 +35,7 @@ const AddProcedureTemplateButton = (props) => {
   const id = props.id
   const [proceduresTemplates, setProceduresTemplates] = React.useState()
   const [openDialog, setOpenDialog] = React.useState(false)
-  const [procedureSelectedOption, setProcedureSelectedOption] = React.useState()
+  const [procedureSelectedOption, setProcedureSelectedOption] = React.useState([])
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
 
@@ -73,8 +73,19 @@ const AddProcedureTemplateButton = (props) => {
       }
     )
 
+  const toSendIds = () => {
+    procedureSelectedOption.map((item) => item.id)
+    console.log(procedureSelectedOption.map((item) => item.id), "map")
+  }
+
   const updateLinkedProcedureTemplate = (event) => {
-    updateBudgetingTemplateMutation({ variables: {"id": id, "proceduresTemplateId": [procedureSelectedOption.id]}})
+    updateBudgetingTemplateMutation(
+      { variables: 
+        {
+          "id": id, "proceduresTemplateId": toSendIds()
+        }
+      }
+    )
   }
 
   const updateUnlinkProcedureTemplate = (event) => {
@@ -111,6 +122,7 @@ const AddProcedureTemplateButton = (props) => {
     setOpen(false);
   };
 
+  console.log(procedureSelectedOption, "tiene")
   return(
     <Grid container direction="column" alignItems="center">
       <Grid item xs={12}>

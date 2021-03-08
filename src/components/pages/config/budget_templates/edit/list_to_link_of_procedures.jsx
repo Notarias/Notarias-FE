@@ -34,6 +34,7 @@ const ListToLinkOfProcedures = (props) => {
     }
   }, [data])
 
+  console.log(props.procedureSelectedOption, "opt sel")
   return (
     <div>
       <TextField 

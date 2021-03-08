@@ -10,6 +10,7 @@ const TemplateSelectOption = (props) => {
 
   const clickHandler = () => {
     props.selectItem(template)
+    console.log(props.selectItem(template), "select")
   }
 
   return(
