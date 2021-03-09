@@ -32,7 +32,7 @@ export const UPDATE_BUDGETING_TEMPLATE = gql`
     $id: ID!,
     $name: String,
     $active: Boolean,
-    $proceduresTemplatesIds: [ID!],
+    $proceduresTemplatesIds: [ID],
     $clientMutationId: String)
     {
     updateBudgetingTemplate (input: 
@@ -88,7 +88,7 @@ export const GET_BUDGETING_TEMPLATES = gql`
   }
 `
 
-export const GET_BUDGETING_TEMPLATES_QUICK_LIST = gql`
+export const GET_PROCEDURES_TEMPLATES_QUICK_LIST = gql`
   query proceduresTemplatesQuickList{
     proceduresTemplatesQuickList{
       name

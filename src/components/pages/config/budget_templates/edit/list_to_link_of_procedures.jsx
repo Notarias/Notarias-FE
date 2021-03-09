@@ -10,8 +10,6 @@ import { TextField }                                  from '@material-ui/core';
 const ListToLinkOfProcedures = (props) => {
 
   const {classes, data} = props;
-  const setProcedureSelectedOption = props.setProcedureSelectedOption;
-  const procedureSelectedOption = props.procedureSelectedOption;
   const [searchList, setSearchList] = React.useState([])
   const [initialList, setInitialList] = React.useState([])
   const [fuzzySearcher, setFuzzySearcher] = React.useState(new Fuse(initialList, { keys: ['name'] }))
@@ -34,7 +32,6 @@ const ListToLinkOfProcedures = (props) => {
     }
   }, [data])
 
-  console.log(props.procedureSelectedOption, "opt sel")
   return (
     <div>
       <TextField 
@@ -58,8 +55,8 @@ const ListToLinkOfProcedures = (props) => {
               <TemplateSelectOption 
                 key={ obj.id + "template-option" }
                 template={ obj }
-                selectItem={ props.setProcedureSelectedOption }
-                selectedItem={ props.procedureSelectedOption }
+                setProcedureSelectedOptions={ props.setProcedureSelectedOptions }
+                procedureSelectedOptions={ props.procedureSelectedOptions }
               />
               <Divider/>
             </List>

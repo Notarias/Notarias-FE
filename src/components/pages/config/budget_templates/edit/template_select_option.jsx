@@ -6,20 +6,21 @@ import ListItemText                         from '@material-ui/core/ListItemText
 
 const TemplateSelectOption = (props) => {
   const [template] = React.useState(props.template)
-  const classes = props
+  const {classes} = props
 
   const clickHandler = () => {
-    props.selectItem(template)
-    console.log(props.selectItem(template), "select")
+    const ejemp = props.setProcedureSelectedOptions([template])
+    console.log(ejemp, "select")
   }
 
+  console.log(props.procedureSelectedOptions, "id")
   return(
     <ListItem
       button
       data-item-id={template.id}
       onClick={ clickHandler }
       key={template.id + "-template"}
-      selected={props.selectedItem && props.selectedItem.id == template.id}
+      selected={props.procedureSelectedOptions && props.procedureSelectedOptions.id == template.id}
     >
       <ListItemText primary={template.name} />
     </ListItem>

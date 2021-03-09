@@ -58,12 +58,16 @@ export const UPDATE_PROCEDURE_TEMPLATES = gql`
 `
 
 export const GET_PROCEDURE_TEMPLATE = gql`
-  query getTemplate ($id: ID!){
-    proceduresTemplate(id: $id){
+  query proceduresTemplate ($id: ID! ) {
+    proceduresTemplate (id: $id) {
+      active
       id
       name
       serialNumber
-      active
+      budgetingTemplates{
+        id
+        name
+      }
     }
   }
 `
@@ -76,6 +80,15 @@ export const CREATE_PROCEDURE_TEMPLATE = gql`
         id
         name
       }
+    }
+  }
+`
+
+export const GET_BUDGETING_TEMPLATES_QUICK_LIST = gql`
+query budgetingTemplatesQuickList{
+  budgetingTemplatesQuickList{
+    name
+      id
     }
   }
 `

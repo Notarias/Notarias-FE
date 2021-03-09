@@ -26,20 +26,22 @@ import { GET_BUDGETING_TEMPLATES_QUICK_LIST }         from '../queries_and_mutat
 import { GLOBAL_MESSAGE }                             from '../../../../../resolvers/queries';
 import client                                         from '../../../../../apollo';
 import { Link }                                       from 'react-router-dom';
+import Chip                                           from '@material-ui/core/Chip';
+import Avatar                                         from '@material-ui/core/Avatar';
 
 const AddButgetingTemplateButton = (props) => {
 
-  // const { classes, proceduresTemplateData }= props
-  // const id = props.id
-  // const [procedureTemplate, setProcedureTemplate] = React.useState()
+  const { classes, budgetingTemplatesData }= props
+  const id = props.id
+  const [budgetingTemplates, setBudgetingTemplates] = React.useState()
   const [openDialog, setOpenDialog] = React.useState(false)
   // const [procedureSelectedOption, setProcedureSelectedOption] = React.useState()
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
 
-  // useEffect(() => {
-  //   setProcedureTemplate(proceduresTemplateData)
-  // }, [proceduresTemplateData])
+  useEffect(() => {
+    setBudgetingTemplates(budgetingTemplatesData)
+  }, [budgetingTemplatesData])
 
   // const [updateBudgetingTemplateMutation, updateProcessInfo] =
   //   useMutation(
@@ -79,9 +81,9 @@ const AddButgetingTemplateButton = (props) => {
   //   updateBudgetingTemplateMutation({ variables: {"id": id, "proceduresTemplateId": null}})
   // }
 
-  // const { loading, data, refetch } = useQuery(
-  //   GET_BUDGETING_TEMPLATES_QUICK_LIST,
-  // );
+  const { loading, data, refetch } = useQuery(
+    GET_BUDGETING_TEMPLATES_QUICK_LIST,
+  );
 
   const handleClickOpenDialog = () => {
     setOpenDialog(true)
@@ -92,15 +94,19 @@ const AddButgetingTemplateButton = (props) => {
     setOpenDialog(false)
   }
 
-  // const procedureSelected = () => {
-  //   return (
-  //     procedureTemplate ? "No." + procedureTemplate.serialNumber : "+ Tramite"
-  //   ) 
-  // }
+  const budgetingSelected = () => {
+    return (
+      (budgetingTemplates && budgetingTemplates.length > 0) 
+        ? 
+        "No." + budgetingTemplates.map((budgetingTemplate) => budgetingTemplate.id) 
+        : 
+          "+ Tramite"
+    )
+  }
 
-  // const handleToggle = () => {
-  //   setOpen((prevOpen) => !prevOpen);
-  // };
+  const handleToggle = () => {
+    setOpen((prevOpen) => !prevOpen);
+  };
 
   const handleClose = (event) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
@@ -112,24 +118,30 @@ const AddButgetingTemplateButton = (props) => {
   return(
     <Grid container direction="column" alignItems="center">
       <Grid item xs={12}>
-        <ButtonGroup variant="contained" color="primary" ref={anchorRef} aria-label="split button">
-          <Button
+        <ButtonGroup color="primary" ref={anchorRef} aria-label="split button">
+          {/* <Button
             color="primary"
             // component={Link} 
             // to={`/config/procedure_templates/${ proceduresTemplateData ? proceduresTemplateData.id : "" }/edit`}
-            // disabled={ !procedureTemplate }
+            disabled={ !(budgetingTemplates && budgetingTemplates.length > 0) }
           >
-            {/* { procedureSelected() } */}
-            "Presupuesto"
-          </Button>
+            { budgetingSelected() }
+          </Button> */}
+          <Chip
+            avatar={<Avatar>{ budgetingTemplatesData ? budgetingTemplatesData.length : 0 }</Avatar>}
+            label={ ` Presupuestos` }
+            color={ budgetingTemplatesData.length > 0 ? "primary" : "default" }
+            // onClick={ openCategoryList }
+          />
           <Button
+            variant="contained"
             color="primary"
             size="small"
             aria-controls={open ? 'split-button-menu' : undefined}
             aria-expanded={open ? 'true' : undefined}
             aria-label="select merge strategy"
             aria-haspopup="menu"
-            // onClick={handleToggle}
+            onClick={handleToggle}
           >
             <ArrowDropDownIcon />
           </Button>
@@ -148,13 +160,12 @@ const AddButgetingTemplateButton = (props) => {
                     <MenuItem
                       onClick={ handleClickOpenDialog }
                     >
-                      {/* { procedureTemplate ? "Cambiar tramite" : "Añadir tramite" } */}
-                      "Añadir tramite"
+                      { (budgetingTemplates && budgetingTemplates.length > 0) ? "Cambiar Presupuesto" : "Añadir Preupuesto" }
                     </MenuItem>
                     <Divider/>
                     <MenuItem
                       // onClick={ updateUnlinkProcedureTemplate }
-                      // disabled={ !procedureTemplate }
+                      // disabled={ !(budgetingTemplates && budgetingTemplates.length > 0) }
                     >
                       Desvincular
                     </MenuItem>

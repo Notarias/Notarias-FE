@@ -22,7 +22,7 @@ import Popper                                         from '@material-ui/core/Po
 import MenuItem                                       from '@material-ui/core/MenuItem';
 import MenuList                                       from '@material-ui/core/MenuList';
 import { useQuery }                                   from '@apollo/react-hooks';
-import { GET_BUDGETING_TEMPLATES_QUICK_LIST }         from '../queries_and_mutations/queries';
+import { GET_PROCEDURES_TEMPLATES_QUICK_LIST  }         from '../queries_and_mutations/queries';
 import { GLOBAL_MESSAGE }                             from '../../../../../resolvers/queries';
 import client                                         from '../../../../../apollo';
 import { Link }                                       from 'react-router-dom';
@@ -35,7 +35,7 @@ const AddProcedureTemplateButton = (props) => {
   const id = props.id
   const [proceduresTemplates, setProceduresTemplates] = React.useState()
   const [openDialog, setOpenDialog] = React.useState(false)
-  const [procedureSelectedOption, setProcedureSelectedOption] = React.useState([])
+  const [procedureSelectedOptions, setProcedureSelectedOptions] = React.useState([])
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
 
@@ -74,31 +74,30 @@ const AddProcedureTemplateButton = (props) => {
     )
 
   const toSendIds = () => {
-    procedureSelectedOption.map((item) => item.id)
-    console.log(procedureSelectedOption.map((item) => item.id), "map")
+    return procedureSelectedOptions.map((item) => item.id)
   }
 
   const updateLinkedProcedureTemplate = (event) => {
     updateBudgetingTemplateMutation(
       { variables: 
         {
-          "id": id, "proceduresTemplateId": toSendIds()
+          "id": id, "proceduresTemplatesIds": toSendIds()
         }
       }
     )
   }
 
   const updateUnlinkProcedureTemplate = (event) => {
-    updateBudgetingTemplateMutation({ variables: {"id": id, "proceduresTemplateId": null}})
+    updateBudgetingTemplateMutation({ variables: {"id": id, "proceduresTemplatesIds": [null]}})
   }
 
   const { loading, data, refetch } = useQuery(
-    GET_BUDGETING_TEMPLATES_QUICK_LIST,
+    GET_PROCEDURES_TEMPLATES_QUICK_LIST ,
   );
 
   const handleClickOpenDialog = () => {
     setOpenDialog(true)
-    setProcedureSelectedOption(false)
+    setProcedureSelectedOptions(false)
   }
 
   const handleCloseDialog = () => {
@@ -107,7 +106,11 @@ const AddProcedureTemplateButton = (props) => {
 
   const proceduresSelected = () => {
     return (
-      proceduresTemplatesData ? "No." + proceduresTemplatesData.map((procedureTemplate) => procedureTemplate.id) : "+ Tramite"
+      (proceduresTemplates && proceduresTemplates.length > 0) 
+        ?
+      "No." + proceduresTemplates.map((procedureTemplate) => procedureTemplate.id) 
+        :
+      "+ Tramite"
     )
   }
 
@@ -122,7 +125,7 @@ const AddProcedureTemplateButton = (props) => {
     setOpen(false);
   };
 
-  console.log(procedureSelectedOption, "tiene")
+  console.log(proceduresTemplates, "proc")
   return(
     <Grid container direction="column" alignItems="center">
       <Grid item xs={12}>
@@ -130,7 +133,7 @@ const AddProcedureTemplateButton = (props) => {
           <Button
             component={Link} 
             to={`/config/procedure_templates/${ proceduresTemplatesData ? proceduresTemplatesData.map((procedureTemplate) => procedureTemplate.id) : "" }/edit`}
-            disabled={ !proceduresTemplates }
+            disabled={ !(proceduresTemplates && proceduresTemplates.length > 0) }
           >
             { proceduresSelected() }
           </Button>
@@ -159,12 +162,12 @@ const AddProcedureTemplateButton = (props) => {
                     <MenuItem
                       onClick={ handleClickOpenDialog }
                     >
-                      { proceduresTemplates ? "Cambiar tramite" : "Añadir tramite" }
+                      { (proceduresTemplates && proceduresTemplates.length > 0) ? "Cambiar tramite" : "Añadir tramite" }
                     </MenuItem>
                     <Divider/>
                     <MenuItem
                       onClick={ updateUnlinkProcedureTemplate }
-                      disabled={ !proceduresTemplates }
+                      disabled={ !(proceduresTemplates && proceduresTemplates.length > 0) }
                     >
                       Desvincular
                     </MenuItem>
@@ -180,8 +183,8 @@ const AddProcedureTemplateButton = (props) => {
           </DialogTitle>
           <DialogContent>
             <ListToLinkOfProcedures
-              procedureSelectedOption={ procedureSelectedOption }
-              setProcedureSelectedOption={ setProcedureSelectedOption }
+              procedureSelectedOptions={ procedureSelectedOptions }
+              setProcedureSelectedOptions={ setProcedureSelectedOptions }
               data={ data }
             />
           </DialogContent>
@@ -193,7 +196,7 @@ const AddProcedureTemplateButton = (props) => {
             </Button>
             <Button
               onClick={ updateLinkedProcedureTemplate }
-              disabled={ !procedureSelectedOption || (procedureSelectedOption && updateProcessInfo.loading)}
+              disabled={ !procedureSelectedOptions || (procedureSelectedOptions && updateProcessInfo.loading)}
             >
               {loading ? <CircularProgress/> : "Aceptar"}
             </Button>
