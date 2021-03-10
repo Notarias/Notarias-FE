@@ -77,17 +77,19 @@ const TemplateTittle = (props) => {
   const renderTittleText = (name) => {
     return(
       <>
-        <Grid className={ classes.templateTextTittle } onClick={ changeTittle }>
+        <Grid container item xs={11} className={ classes.templateTextTittle } onClick={ changeTittle }>
           <Typography variant="overline" >
             { name }
           </Typography>
         </Grid>
-        <Button
-          className={ classes.templateTittleButton }
-          onClick={ changeTittle }
-        >
-          <CreateIcon />
-        </Button>
+        <Grid container item xs={1}>
+          <Button
+            className={ classes.templateTittleButton }
+            onClick={ changeTittle }
+          >
+            <CreateIcon />
+          </Button>
+        </Grid>
       </>
     )
   }
@@ -130,7 +132,8 @@ const TemplateTittle = (props) => {
   return(
     <Grid
       container 
-      item 
+      item
+      xs={12}
       className={ markStatus() }
     >
       { editing ? renderTittleText(name) : renderTittleInput(name) }

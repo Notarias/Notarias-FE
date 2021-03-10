@@ -21,6 +21,9 @@ import RadioButtonUncheckedIcon       from '@material-ui/icons/RadioButtonUnchec
 import RadioButtonCheckedIcon         from '@material-ui/icons/RadioButtonChecked';
 import ListItemIcon                   from '@material-ui/core/ListItemIcon';
 import ListItemText                   from '@material-ui/core/ListItemText';
+import { useQuery }                   from '@apollo/react-hooks';
+import { GET_PROCEDURE_TEMPLATE }     from '../queries_and_mutations/queries';
+
 
 
 const TempleteRow = (props) => {
@@ -32,6 +35,10 @@ const TempleteRow = (props) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const [open, setOpen] = React.useState(false);
+
+  const { loading, data, refetch } = useQuery(GET_PROCEDURE_TEMPLATE,
+    { variables: {"id": id } } 
+  );
 
   const folioNumber = (serial) => {
     return serial.toString().padStart(5, "0")
@@ -70,11 +77,15 @@ const TempleteRow = (props) => {
     }
   }
 
+  const budgetingLinked = () => {
+    return data ? data.proceduresTemplate.budgetingTemplates.map((item) => item.id ) : "" 
+  }
+
   return(
     <TableRow key={ procedureTemplate.id + "-row" }  className={ markStatus() } >
       <TableCell align= "center">{ procedureTemplate.name }</TableCell>
       <TableCell align= "center">{ folioNumber(procedureTemplate.serialNumber) }</TableCell>
-      <TableCell align= "center">tramites abiertos</TableCell>
+      <TableCell align= "center">{ budgetingLinked() }</TableCell>
       <TableCell align= "center">costo de presupuesto</TableCell>
       <TableCell align= "center">
         <Grid>

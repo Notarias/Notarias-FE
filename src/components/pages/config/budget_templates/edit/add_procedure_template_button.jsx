@@ -125,7 +125,6 @@ const AddProcedureTemplateButton = (props) => {
     setOpen(false);
   };
 
-  console.log(proceduresTemplates, "proc")
   return(
     <Grid container direction="column" alignItems="center">
       <Grid item xs={12}>

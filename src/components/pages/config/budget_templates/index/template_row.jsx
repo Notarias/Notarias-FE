@@ -21,6 +21,8 @@ import { useTheme }                   from '@material-ui/core/styles';
 import { Link }                       from 'react-router-dom';
 import { useMutation }                from '@apollo/react-hooks';
 import { UPDATE_BUDGETING_TEMPLATE }  from '../queries_and_mutations/queries'
+import { useQuery }                   from '@apollo/react-hooks';
+import { GET_BUDGETING_TEMPLATE }     from '../queries_and_mutations/queries'
 
 
 const TemplateRow = (props) => {
@@ -38,6 +40,11 @@ const TemplateRow = (props) => {
   //     setActive(budgetingTemplate.active)
   //   }
   // )
+
+  const { loading, data, refetch } = useQuery(GET_BUDGETING_TEMPLATE,
+    { variables: {"id": id } } 
+  );
+
 
   const folioNumber = (serial) => {
     return serial.toString().padStart(5, "0")
@@ -82,7 +89,10 @@ const TemplateRow = (props) => {
     )
   }
 
-  console.log(budgetingTemplate, "data")
+  const procedureLinked = () => {
+    return data ? data.budgetingTemplate.proceduresTemplates.map((item) => item.id ) : "" 
+  }
+
   return(
     <TableRow key={ budgetingTemplate.id + "-row" }  className={ markStatus() } >
       <TableCell align= "center">{ budgetingTemplate.name }</TableCell>
@@ -95,10 +105,9 @@ const TemplateRow = (props) => {
             color={ active ? "primary" : "secondary"} 
           />
         }
-                  { id }
       </TableCell>
+      <TableCell align= "center">{ procedureLinked() }</TableCell>
       <TableCell align= "center">2.0</TableCell>
-      <TableCell align= "center">En ejecución</TableCell>
       <TableCell align= "center">
         <Grid>
           <GenericDropdownMenu>

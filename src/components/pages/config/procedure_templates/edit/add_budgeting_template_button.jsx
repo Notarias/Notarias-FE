@@ -35,6 +35,7 @@ const AddButgetingTemplateButton = (props) => {
   const id = props.id
   const [budgetingTemplates, setBudgetingTemplates] = React.useState()
   const [openDialog, setOpenDialog] = React.useState(false)
+  const [openBudgetingList, setOpenBudgetingList] = React.useState()
   // const [procedureSelectedOption, setProcedureSelectedOption] = React.useState()
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
@@ -115,24 +116,52 @@ const AddButgetingTemplateButton = (props) => {
     setOpen(false);
   };
 
+  const showBudgetingLinkedList = () => {
+    console.log("si")
+  }
+
+  const withBudgetingLinkedClass = () => {
+    return budgetingTemplatesData && (budgetingTemplatesData > 0)  ? classes.avatarBudgetingLinkedCount : "default"
+  }
+
+  console.log(withBudgetingLinkedClass)
   return(
     <Grid container direction="column" alignItems="center">
       <Grid item xs={12}>
         <ButtonGroup color="primary" ref={anchorRef} aria-label="split button">
-          {/* <Button
-            color="primary"
-            // component={Link} 
-            // to={`/config/procedure_templates/${ proceduresTemplateData ? proceduresTemplateData.id : "" }/edit`}
-            disabled={ !(budgetingTemplates && budgetingTemplates.length > 0) }
+          <Button 
+            size="small"
           >
-            { budgetingSelected() }
-          </Button> */}
-          <Chip
+            <Avatar
+              className={ classes.avatarBudgetingLinkedCountIsZero }
+              variant="rounded"
+            >
+              { budgetingTemplatesData ? budgetingTemplatesData.length : 0 }
+            </Avatar>
+          {/* <Chip
             avatar={<Avatar>{ budgetingTemplatesData ? budgetingTemplatesData.length : 0 }</Avatar>}
             label={ ` Presupuestos` }
             color={ budgetingTemplatesData.length > 0 ? "primary" : "default" }
-            // onClick={ openCategoryList }
-          />
+            onClick={ showBudgetingLinkedList }
+          /> */}
+            Presupuesto
+          </Button>
+          {/* <Dialog>
+            <DialogTitle>
+              Ir a la plantilla de presupuesto
+            </DialogTitle>
+            <DialogContent>
+              Una lista despegable
+            </DialogContent>
+            <DialogActions>
+              <Button>
+                Cancelar
+              </Button>
+              <Button>
+                Aceptar
+              </Button>
+            </DialogActions>
+          </Dialog> */}
           <Button
             variant="contained"
             color="primary"

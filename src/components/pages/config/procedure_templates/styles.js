@@ -1,6 +1,7 @@
 import { fade } from '@material-ui/core/styles/colorManipulator';
 
 export const styles = theme => {
+  console.log(theme)
   return ({
     root: {
       display: "flex",
@@ -245,12 +246,12 @@ export const styles = theme => {
     },
     templateTextTittle: {
       height: "70px",
-      maxWidth: "550px",
+      maxWidth: "500px",
       textAlign: "left",
       display: "flex",
       alignItems: "center",
       cursor: "pointer",
-      paddingLeft: "10px"
+      paddingLeft: "10px",
     },
     circularProgressLoading: {
       paddingTop: "60px",
@@ -275,6 +276,21 @@ export const styles = theme => {
     },
     activeMenuTab: {
       opacity: "1",
+    },
+    avatarBudgetingLinkedCount: {
+      width: "20px",
+      height: "20px",
+      marginRight: "10px",
+      fontSize: "12px",
+      backgroundColor: theme.palette.primary.main,
+    },
+    avatarBudgetingLinkedCountIsZero: {
+      width: "20px",
+      height: "20px",
+      marginRight: "10px",
+      fontSize: "12px",
+      backgroundColor: "gray",
+      border: "2px solid black"
     },
   })
 }
