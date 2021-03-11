@@ -290,9 +290,6 @@ export const DESTROY_PROCEDURES_TEMPLATE_TAB_FIELD = gql`
   }
 `
 
-
-
-
 export const GET_PROCEDURES_TEMPLATE_FIELDS_GROUPS_FIELDS = gql`
   query proceduresTemplateFieldsGroupFields(
     $id: ID!

@@ -3,11 +3,11 @@ import Dialog                                         from '@material-ui/core/Di
 import DialogContent                                  from '@material-ui/core/DialogContent';
 import DialogTitle                                    from '@material-ui/core/DialogTitle';
 import DialogActions                                  from '@material-ui/core/DialogActions';
-// import ListToLinkOfProcedures                         from './list_to_link_of_procedures';
+import ListToLinkOfBudgeting                          from './list_to_link_of_budgeting';
 import { styles }                                     from '../styles';
 import { withStyles }                                 from '@material-ui/core/styles';
 import { useMutation }                                from '@apollo/react-hooks';
-import { UPDATE_BUDGETING_TEMPLATE }                  from '../queries_and_mutations/queries';
+import { UPDATE_PROCEDURE_TEMPLATES }                  from '../queries_and_mutations/queries';
 import { GET_BUDGETING_TEMPLATE }                     from '../queries_and_mutations/queries';
 import Divider                                        from '@material-ui/core/Divider';
 import CircularProgress                               from '@material-ui/core/CircularProgress';
@@ -101,7 +101,7 @@ const AddButgetingTemplateButton = (props) => {
         ? 
         "No." + budgetingTemplates.map((budgetingTemplate) => budgetingTemplate.id) 
         : 
-          "+ Tramite"
+          "presupuesto"
     )
   }
 
@@ -133,7 +133,7 @@ const AddButgetingTemplateButton = (props) => {
             size="small"
           >
             <Avatar
-              className={ classes.avatarBudgetingLinkedCountIsZero }
+              className={ classes.avatarBudgetingLinkedCount }
               variant="rounded"
             >
               { budgetingTemplatesData ? budgetingTemplatesData.length : 0 }
@@ -189,7 +189,12 @@ const AddButgetingTemplateButton = (props) => {
                     <MenuItem
                       onClick={ handleClickOpenDialog }
                     >
-                      { (budgetingTemplates && budgetingTemplates.length > 0) ? "Cambiar Presupuesto" : "Añadir Preupuesto" }
+                      { 
+                        (budgetingTemplates && budgetingTemplates.length > 0) ? 
+                          "Cambiar Presupuesto" 
+                        : 
+                          "Añadir Preupuesto" 
+                      }
                     </MenuItem>
                     <Divider/>
                     <MenuItem
@@ -209,11 +214,11 @@ const AddButgetingTemplateButton = (props) => {
             Selecciona un Trámite para vincularlo
           </DialogTitle>
           <DialogContent>
-            {/* <ListToLinkOfProcedures
-              procedureSelectedOption={ procedureSelectedOption }
-              setProcedureSelectedOption={ setProcedureSelectedOption }
+            <ListToLinkOfBudgeting
+              // procedureSelectedOption={ procedureSelectedOption }
+              // setProcedureSelectedOption={ setProcedureSelectedOption }
               data={ data }
-            /> */}
+            />
           </DialogContent>
           <DialogActions>
             <Button

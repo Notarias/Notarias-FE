@@ -4,16 +4,14 @@ import { withStyles }                       from '@material-ui/core/styles';
 import ListItem                             from '@material-ui/core/ListItem';
 import ListItemText                         from '@material-ui/core/ListItemText';
 
-const TemplateSelectOption = (props) => {
+const ProcedureSelectOption = (props) => {
   const [template] = React.useState(props.template)
   const {classes} = props
 
   const clickHandler = () => {
     const ejemp = props.setProcedureSelectedOptions([template])
-    console.log(ejemp, "select")
   }
 
-  console.log(props.procedureSelectedOptions, "id")
   return(
     <ListItem
       button
@@ -27,4 +25,4 @@ const TemplateSelectOption = (props) => {
   )
 }
 
-export default withStyles(styles)(TemplateSelectOption);
+export default withStyles(styles)(ProcedureSelectOption);

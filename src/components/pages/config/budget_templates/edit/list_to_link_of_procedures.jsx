@@ -4,7 +4,7 @@ import { withStyles }                                 from '@material-ui/core/st
 import List                                           from '@material-ui/core/List';
 import Fuse                                           from 'fuse.js';
 import Divider                                        from '@material-ui/core/Divider';
-import TemplateSelectOption                           from './template_select_option'
+import ProcedureSelectOption                           from './procedure_select_option'
 import { TextField }                                  from '@material-ui/core';
 
 const ListToLinkOfProcedures = (props) => {
@@ -52,7 +52,7 @@ const ListToLinkOfProcedures = (props) => {
               disablePadding={true}
               className={ classes.selectableProceduresListItem }
             >
-              <TemplateSelectOption 
+              <ProcedureSelectOption 
                 key={ obj.id + "template-option" }
                 template={ obj }
                 setProcedureSelectedOptions={ props.setProcedureSelectedOptions }
