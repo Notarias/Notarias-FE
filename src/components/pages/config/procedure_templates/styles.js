@@ -276,20 +276,42 @@ export const styles = theme => {
     activeMenuTab: {
       opacity: "1",
     },
-    avatarBudgetingLinkedCount: {
+    avatarLinkedCount: {
       width: "20px",
       height: "20px",
       marginRight: "10px",
       fontSize: "12px",
       backgroundColor: theme.palette.primary.main,
     },
-    avatarBudgetingLinkedCountIsZero: {
+    avatarLinkedCountIsZero: {
       width: "20px",
       height: "20px",
       marginRight: "10px",
       fontSize: "12px",
       backgroundColor: "gray",
       border: "2px solid black"
+    },
+    textFieldSearchInTable: {
+      maxWidth: "360px",
+      width: "360px",
+      backgroundColor: theme.palette.background.paper,
+      marginBottom: '10px',
+      marginTop: '5px'
+    },    
+    selectableListItem: {
+      backgroundColor: 'inherit',
+      width: "360px",
+      height: "250px",
+      overflowY:"scroll"
+    },
+    divChange: {
+      width: "360px"
+    },
+    DialogTittleOfListToLink: {
+      width: "400px"
+    },
+    LinkedListToShow: {
+      width: "360px"
     },
   })
 }

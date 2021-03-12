@@ -5,7 +5,6 @@ import GenericDropdownMenu            from '../../../../ui/generic_dropdown_menu
 import CreateIcon                     from '@material-ui/icons/Create';
 import MenuItem                       from '@material-ui/core/MenuItem';
 import { Link }                       from 'react-router-dom';
-import Typography                     from '@material-ui/core/Typography';
 import TableRow                       from '@material-ui/core/TableRow';
 import TableCell                      from '@material-ui/core/TableCell';
 import { UPDATE_PROCEDURE_TEMPLATES } from '../queries_and_mutations/queries';
@@ -86,7 +85,7 @@ const TempleteRow = (props) => {
       <TableCell align= "center">{ procedureTemplate.name }</TableCell>
       <TableCell align= "center">{ folioNumber(procedureTemplate.serialNumber) }</TableCell>
       <TableCell align= "center">{ budgetingLinked() }</TableCell>
-      <TableCell align= "center">{data ? data.proceduresTemplate.budgetingTemplates.map((item) => item.id) : ""}</TableCell>
+      <TableCell align= "center">{data ? data.proceduresTemplate.budgetingTemplates.map((item) => item.id) + " " : ""}</TableCell>
       <TableCell align= "center">
         <Grid>
           <GenericDropdownMenu>

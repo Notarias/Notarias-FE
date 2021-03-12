@@ -3,7 +3,6 @@ import { styles }                                     from '../styles';
 import { withStyles }                                 from '@material-ui/core/styles';
 import Fuse                                           from 'fuse.js';
 import Divider                                        from '@material-ui/core/Divider';
-import TemplateSelectOption                           from './template_select_option'
 import { TextField }                                  from '@material-ui/core';
 import List                                 from '@material-ui/core/List';
 import ListItem                             from '@material-ui/core/ListItem';
@@ -55,15 +54,8 @@ const checkedIds = checked.map((item) =>  item.id )
 const ListToLinkOfBudgeting = (props) => {
 
   const {classes, data} = props;
-//   const setProcedureSelectedOption = props.setProcedureSelectedOption;
-//   const procedureSelectedOption = props.procedureSelectedOption;
   const setToLinkSelectedOption = props.setToLinkSelectedOption;
   const toLinkSelectedOption = props.toLinkSelectedOption;
-
-//   const { setCategoriesToSave, categoriesToSave, classes } = props;
-//   const [categories, setCategories] = React.useState(data ? data.budgetingCategories : []);
-//   const [checked, setChecked] = React.useState(categoriesToSave);
-
   const [checked, setChecked] = React.useState(toLinkSelectedOption);
   const [searchList, setSearchList] = React.useState([])
   const [initialList, setInitialList] = React.useState([])
@@ -91,16 +83,7 @@ const ListToLinkOfBudgeting = (props) => {
     setChecked(newChecked);
   };
 
-//   React.useEffect(() => {
-//     if (data && data.proceduresTemplatesQuickList) {
-//       setInitialList(data.proceduresTemplatesQuickList)
-//       setFuzzySearcher(new Fuse(data.proceduresTemplatesQuickList, { keys: ['name'] }))
-//       setSearchList(data.proceduresTemplatesQuickList)
-//     }
-//   }, [data])
-
   useEffect(() => {
-    // setCategories(data && data.budgetingTemplatesQuickList)
     setToLinkSelectedOption(checked)
     if (!initialized && data && data.budgetingTemplatesQuickList) {
       setInitialList(data.budgetingTemplatesQuickList)
@@ -110,22 +93,23 @@ const ListToLinkOfBudgeting = (props) => {
     }
   }, [data, checked])
 
-  console.log(data, "dat")
   return (
-    <div>
-      <TextField 
-        onChange={ changeSearch }
-        id="outlined-basic"
-        label="Buscar"
-        variant="outlined"
-        className={ classes.textFieldSearchInTable }
-      />
-        <div>
-          {
-            renderSearchList(searchList, checked, classes, handleToggle)
-          }
-        </div>
-    </div>
+    <>
+      <div>
+        <TextField 
+          onChange={ changeSearch }
+          id="outlined-basic"
+          label="Buscar"
+          variant="outlined"
+          className={ classes.textFieldSearchInTable }
+        />
+      </div>
+      <div className={ classes.selectableListItem }>
+        {
+          renderSearchList(searchList, checked, classes, handleToggle)
+        }
+      </div>
+    </>
   );
 }
 

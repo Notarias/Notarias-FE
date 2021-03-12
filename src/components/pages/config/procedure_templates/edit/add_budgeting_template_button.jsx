@@ -26,7 +26,6 @@ import { GET_BUDGETING_TEMPLATES_QUICK_LIST }         from '../queries_and_mutat
 import { GLOBAL_MESSAGE }                             from '../../../../../resolvers/queries';
 import client                                         from '../../../../../apollo';
 import { Link }                                       from 'react-router-dom';
-import Chip                                           from '@material-ui/core/Chip';
 import Avatar                                         from '@material-ui/core/Avatar';
 import List                                 from '@material-ui/core/List';
 import ListItem                             from '@material-ui/core/ListItem';
@@ -48,7 +47,7 @@ const AddButgetingTemplateButton = (props) => {
     setBudgetingTemplates(budgetingTemplatesData)
   }, [budgetingTemplatesData])
 
-  const [updateBudgetingTemplateMutation, updateProcessInfo] =
+  const [updateProcedureTemplateMutation, updateProcessInfo] =
     useMutation(
       UPDATE_PROCEDURE_TEMPLATES,
       {
@@ -82,12 +81,17 @@ const AddButgetingTemplateButton = (props) => {
       return toLinkSelectedOption.map((item) => item.id)
     }
 
-  const updateLinkedProcedureTemplate = (event) => {
-    updateBudgetingTemplateMutation({ variables: {"id": id, "budgetingTemplatesIds": toSendIds()}})
+  const updateLinkedBudgetingTemplate = (event) => {
+    updateProcedureTemplateMutation(
+      {
+        variables: { "id": id, "budgetingTemplatesIds": toSendIds() }
+      }
+    )
   }
 
   const updateUnlinkBudgetingTemplate = (event) => {
-    updateBudgetingTemplateMutation({ variables: {"id": id, "budgetingTemplatesIds": []}})
+    updateProcedureTemplateMutation({ variables: {"id": id, "budgetingTemplatesIds": []}})
+    setToLinkSelectedOption([])
   }
 
   const { loading, data, refetch } = useQuery(
@@ -96,7 +100,6 @@ const AddButgetingTemplateButton = (props) => {
 
   const handleClickOpenDialog = () => {
     setOpenDialog(true)
-    // setProcedureSelectedOption(false)
   }
 
   const handleCloseDialog = () => {
@@ -109,18 +112,7 @@ const AddButgetingTemplateButton = (props) => {
 
   const handleCloseBudgetingLinkedList = () => {
     setOpenBudgetingLinkedList(false)
-    console.log("cancelando")
   }
-
-  // const budgetingSelected = () => {
-  //   return (
-  //     (budgetingTemplates && budgetingTemplates.length > 0) 
-  //       ? 
-  //       "No." + budgetingTemplates.map((budgetingTemplate) => budgetingTemplate.id) 
-  //       : 
-  //         "presupuesto"
-  //   )
-  // }
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
@@ -133,45 +125,40 @@ const AddButgetingTemplateButton = (props) => {
     setOpen(false);
   };
 
-  // const clickHandler = (event) => {
-  //   const ejemp = props.setProcedureSelectedOptions([template])
-  //   setThisOne(event.target.value);
-  // }
-
-  // const handleNameChange = (event) => {
-  //   setName(event.target.value);
-  // };
-
   const showBudgetingLinkedList = () => {
-    return(
-      <List>
-        {
-          budgetingTemplatesData.map(
-            (budgetingTemplate) =>
-                <ListItem
-                button
-                data-item-id={budgetingTemplate.id}
-                component={Link} 
-                to={`/config/budget_templates/${budgetingTemplate.id}/edit`}
-                // onClick={ clickHandler }
-                key={budgetingTemplate.id + "-budgetingTemplate"}
-                // selected={props.procedureSelectedOptions && props.procedureSelectedOptions.id == template.id}
-                // selected={ tab.id === (currentTab && currentTab.id ) }
-                // selected={ }
-              >
-                <ListItemText primary={budgetingTemplate.name} />
-              </ListItem>
-          )
-        }
-      </List>
-    )
+    return budgetingTemplatesData ?
+      (
+        <List className={ classes.LinkedListToShow}>
+          {
+            budgetingTemplatesData.map(
+              (budgetingTemplate) =>
+                <React.Fragment key={budgetingTemplate.id + "fragment"}>
+                  <ListItem
+                    button
+                    data-item-id={budgetingTemplate.id}
+                    component={Link} 
+                    to={`/config/budget_templates/${budgetingTemplate.id}/edit`}
+                    key={budgetingTemplate.id + "-budgetingTemplate"}
+                  >
+                    <ListItemText primary={budgetingTemplate.name} />
+                  </ListItem>
+                  <Divider/>
+                </React.Fragment>
+            )
+          }
+        </List>
+      ) : ""
   }
 
-  const withBudgetingLinkedClass = () => {
-    return (budgetingTemplates && budgetingTemplates.length > 0)  ? classes.avatarBudgetingLinkedCount : classes.avatarBudgetingLinkedCountIsZero
+  const withTemplateLinkedClass = () => {
+    return (budgetingTemplates && budgetingTemplates.length > 0)
+      ? 
+        classes.avatarLinkedCount
+      : 
+        classes.avatarLinkedCountIsZero
   }
 
-  const colorOfButtonWhenBudgetingLinked = () => {
+  const colorOfButtonWhenTemplateIsLinked = () => {
     return(
       (budgetingTemplates && budgetingTemplates.length > 0) ?
         "primary"
@@ -180,19 +167,17 @@ const AddButgetingTemplateButton = (props) => {
     )
   }
 
-  console.log(toSendIds(), "ids")
-
   return(
     <Grid container direction="column" alignItems="center">
       <Grid item xs={12}>
-        <ButtonGroup color={ colorOfButtonWhenBudgetingLinked() } ref={anchorRef} aria-label="split button">
+        <ButtonGroup color={ colorOfButtonWhenTemplateIsLinked() } ref={anchorRef} aria-label="split button">
           <Button 
             size="small"
             disabled={ budgetingTemplatesData && (budgetingTemplatesData == 0) }
             onClick={ handleClickOpenBudgetingLinkedList }
           >
             <Avatar
-              className={ withBudgetingLinkedClass() }
+              className={ withTemplateLinkedClass() }
               variant="rounded"
             >
               { (budgetingTemplates && budgetingTemplates.length > 0) ? budgetingTemplatesData.length : "+" }
@@ -235,7 +220,7 @@ const AddButgetingTemplateButton = (props) => {
                     <Divider/>
                     <MenuItem
                       onClick={ updateUnlinkBudgetingTemplate }
-                      // disabled={ !(budgetingTemplates && budgetingTemplates.length > 0) }
+                      disabled={ budgetingTemplatesData && (budgetingTemplatesData == 0) }
                     >
                       Desvincular
                     </MenuItem>
@@ -246,8 +231,8 @@ const AddButgetingTemplateButton = (props) => {
           )}
         </Popper>
         <Dialog open={ openDialog } onClose={ handleCloseDialog } >
-          <DialogTitle>
-            Selecciona un Trámite para vincularlo
+          <DialogTitle className={ classes.DialogTittleOfListToLink }>
+            Selecciona un Presupuesto para vincularlo
           </DialogTitle>
           <DialogContent>
             <ListToLinkOfBudgeting
@@ -263,11 +248,9 @@ const AddButgetingTemplateButton = (props) => {
               Cancelar
             </Button>
             <Button
-              onClick={ updateLinkedProcedureTemplate }
-              // disabled={ !procedureSelectedOption || (procedureSelectedOption && updateProcessInfo.loading)}
+              onClick={ updateLinkedBudgetingTemplate }
             >
-              {/* {loading ? <CircularProgress/> : "Aceptar"} */}
-              Aceptar
+              {loading ? <CircularProgress/> : "Aceptar"}
             </Button>
           </DialogActions>
         </Dialog>

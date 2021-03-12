@@ -26,8 +26,10 @@ import { GET_PROCEDURES_TEMPLATES_QUICK_LIST  }         from '../queries_and_mut
 import { GLOBAL_MESSAGE }                             from '../../../../../resolvers/queries';
 import client                                         from '../../../../../apollo';
 import { Link }                                       from 'react-router-dom';
-import Chip                                           from '@material-ui/core/Chip';
 import Avatar                                         from '@material-ui/core/Avatar';
+import List                                 from '@material-ui/core/List';
+import ListItem                             from '@material-ui/core/ListItem';
+import ListItemText                         from '@material-ui/core/ListItemText';
 
 const AddProcedureTemplateButton = (props) => {
 
@@ -35,7 +37,9 @@ const AddProcedureTemplateButton = (props) => {
   const id = props.id
   const [proceduresTemplates, setProceduresTemplates] = React.useState()
   const [openDialog, setOpenDialog] = React.useState(false)
-  const [procedureSelectedOptions, setProcedureSelectedOptions] = React.useState([])
+  const [openProcedureLinkedList, setOpenProcedureLinkedList] = React.useState(false)
+  const [toLinkSelectedOption, setToLinkSelectedOption] = React.useState(proceduresTemplatesData || [])
+  // const [procedureSelectedOptions, setProcedureSelectedOptions] = React.useState([])
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
 
@@ -74,21 +78,19 @@ const AddProcedureTemplateButton = (props) => {
     )
 
   const toSendIds = () => {
-    return procedureSelectedOptions.map((item) => item.id)
+    return toLinkSelectedOption.map((item) => item.id)
   }
 
   const updateLinkedProcedureTemplate = (event) => {
     updateBudgetingTemplateMutation(
-      { variables: 
-        {
-          "id": id, "proceduresTemplatesIds": toSendIds()
-        }
+      { 
+        variables: { "id": id, "proceduresTemplatesIds": toSendIds() }
       }
     )
   }
 
   const updateUnlinkProcedureTemplate = (event) => {
-    updateBudgetingTemplateMutation({ variables: {"id": id, "proceduresTemplatesIds": [null]}})
+    updateBudgetingTemplateMutation({ variables: {"id": id, "proceduresTemplatesIds": []}})
   }
 
   const { loading, data, refetch } = useQuery(
@@ -97,21 +99,29 @@ const AddProcedureTemplateButton = (props) => {
 
   const handleClickOpenDialog = () => {
     setOpenDialog(true)
-    setProcedureSelectedOptions(false)
+    // setProcedureSelectedOptions(false)
   }
 
   const handleCloseDialog = () => {
     setOpenDialog(false)
   }
 
-  const proceduresSelected = () => {
-    return (
-      (proceduresTemplates && proceduresTemplates.length > 0) 
-        ?
-      "No." + proceduresTemplates.map((procedureTemplate) => procedureTemplate.id) 
-        :
-      "+ Tramite"
-    )
+  // const proceduresSelected = () => {
+  //   return (
+  //     (proceduresTemplates && proceduresTemplates.length > 0) 
+  //       ?
+  //     "No." + proceduresTemplates.map((procedureTemplate) => procedureTemplate.id) 
+  //       :
+  //     "+ Tramite"
+  //   )
+  // }
+
+  const handleClickOpenProcedureLinkedList = () => {
+    setOpenProcedureLinkedList(true)
+  }
+
+  const handleCloseProcedureLinkedList = () => {
+    setOpenProcedureLinkedList(false)
   }
 
   const handleToggle = () => {
@@ -125,16 +135,64 @@ const AddProcedureTemplateButton = (props) => {
     setOpen(false);
   };
 
+  const showProceduresLinkedList = () => {
+    return proceduresTemplatesData ?
+      (
+        <List className={ classes.LinkedListToShow}>
+          {
+            proceduresTemplatesData.map(
+              (procedureTemplate) =>
+                <React.Fragment key={procedureTemplate.id + "fragment"}>
+                  <ListItem
+                    button
+                    data-item-id={procedureTemplate.id}
+                    component={Link} 
+                    to={`/config/procedure_templates/${procedureTemplate.id}/edit`}
+                    key={procedureTemplate.id + "-budgetingTemplate"}
+                  >
+                    <ListItemText primary={procedureTemplate.name} />
+                  </ListItem>
+                  <Divider/>
+                </React.Fragment>
+            )
+          }
+        </List>
+      ) : ""
+  }
+
+  const withTemplateLinkedClass = () => {
+    return (proceduresTemplates && proceduresTemplates.length > 0)
+      ? 
+        classes.avatarLinkedCount
+      : 
+        classes.avatarLinkedCountIsZero
+  }
+
+  const colorOfButtonWhenTemplateIsLinked = () => {
+    return(
+      (proceduresTemplates && proceduresTemplates.length > 0) ?
+        "primary"
+      :
+        "default"
+    )
+  }
+
   return(
     <Grid container direction="column" alignItems="center">
       <Grid item xs={12}>
-        <ButtonGroup color="primary" variant="contained" ref={anchorRef} aria-label="split button">
-          <Button
-            component={Link} 
-            to={`/config/procedure_templates/${ proceduresTemplatesData ? proceduresTemplatesData.map((procedureTemplate) => procedureTemplate.id) : "" }/edit`}
-            disabled={ !(proceduresTemplates && proceduresTemplates.length > 0) }
+        <ButtonGroup color={ colorOfButtonWhenTemplateIsLinked() } ref={anchorRef} aria-label="split button">
+        <Button 
+            size="small"
+            disabled={ proceduresTemplatesData && (proceduresTemplatesData == 0) }
+            onClick={ handleClickOpenProcedureLinkedList }
           >
-            { proceduresSelected() }
+            <Avatar
+              className={ withTemplateLinkedClass() }
+              variant="rounded"
+            >
+              { (proceduresTemplates && proceduresTemplates.length > 0) ? proceduresTemplatesData.length : "+" }
+            </Avatar>
+            Trámite
           </Button>
           <Button
             size="small"
@@ -161,12 +219,17 @@ const AddProcedureTemplateButton = (props) => {
                     <MenuItem
                       onClick={ handleClickOpenDialog }
                     >
-                      { (proceduresTemplates && proceduresTemplates.length > 0) ? "Cambiar tramite" : "Añadir tramite" }
+                      { 
+                        (proceduresTemplates && proceduresTemplates.length > 0) ? 
+                          "Cambiar tramite" 
+                        :
+                          "Añadir tramite" 
+                      }
                     </MenuItem>
                     <Divider/>
                     <MenuItem
                       onClick={ updateUnlinkProcedureTemplate }
-                      disabled={ !(proceduresTemplates && proceduresTemplates.length > 0) }
+                      disabled={ !(proceduresTemplatesData && proceduresTemplatesData == 0) }
                     >
                       Desvincular
                     </MenuItem>
@@ -177,13 +240,13 @@ const AddProcedureTemplateButton = (props) => {
           )}
         </Popper>
         <Dialog open={ openDialog } onClose={ handleCloseDialog } >
-          <DialogTitle>
+          <DialogTitle className={ classes.DialogTittleOfListToLink }>
             Selecciona un Trámite para vincularlo
           </DialogTitle>
           <DialogContent>
             <ListToLinkOfProcedures
-              procedureSelectedOptions={ procedureSelectedOptions }
-              setProcedureSelectedOptions={ setProcedureSelectedOptions }
+              toLinkSelectedOption={ toLinkSelectedOption }
+              setToLinkSelectedOption={ setToLinkSelectedOption }
               data={ data }
             />
           </DialogContent>
@@ -195,9 +258,21 @@ const AddProcedureTemplateButton = (props) => {
             </Button>
             <Button
               onClick={ updateLinkedProcedureTemplate }
-              disabled={ !procedureSelectedOptions || (procedureSelectedOptions && updateProcessInfo.loading)}
             >
               {loading ? <CircularProgress/> : "Aceptar"}
+            </Button>
+          </DialogActions>
+        </Dialog>
+        <Dialog  open={ openProcedureLinkedList } onClose={ handleCloseProcedureLinkedList }>
+          <DialogTitle>
+            Ir a la plantilla de presupuesto
+          </DialogTitle>
+          <DialogContent>
+            { showProceduresLinkedList() }
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={ handleCloseProcedureLinkedList }>
+              Cancelar
             </Button>
           </DialogActions>
         </Dialog>

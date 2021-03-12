@@ -218,6 +218,24 @@ export const styles = theme => {
     },
     listCategoriesDisplay: {
       height:"300px"
-    }
+    },
+    avatarLinkedCount: {
+      width: "20px",
+      height: "20px",
+      marginRight: "10px",
+      fontSize: "12px",
+      backgroundColor: theme.palette.primary.main,
+    },
+    avatarLinkedCountIsZero: {
+      width: "20px",
+      height: "20px",
+      marginRight: "10px",
+      fontSize: "12px",
+      backgroundColor: "gray",
+      border: "2px solid black"
+    },
+    LinkedListToShow: {
+      width: "360px"
+    },
   })
 }
