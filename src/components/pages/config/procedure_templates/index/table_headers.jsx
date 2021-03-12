@@ -24,13 +24,13 @@ export default (props) => {
           callback={ sortHandler }
         />
         <SortHeader
-          text={"Tramites abiertos"}
+          text={"Presupuestos"}
           current_field={ field }
           sort_direction={ direction }
           callback={ sortHandler }
         />
         <SortHeader
-          text={ "Presupuestos" }
+          text={ "Tramites" }
           current_field={ field }
           sort_direction={ direction }
           callback={ sortHandler }

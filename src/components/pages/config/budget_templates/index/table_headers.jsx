@@ -30,7 +30,7 @@ export default (props) => {
           callback={ sortHandler }
         />
         <SortHeader
-          text={ "Trámite" }
+          text={ "Trámites" }
           current_field={ field }
           sort_direction={ direction }
           callback={ sortHandler }

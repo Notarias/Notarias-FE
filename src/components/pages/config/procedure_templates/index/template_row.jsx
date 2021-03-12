@@ -78,7 +78,7 @@ const TempleteRow = (props) => {
   }
 
   const budgetingLinked = () => {
-    return data ? data.proceduresTemplate.budgetingTemplates.map((item) => item.id ) : "" 
+    return data ? data.proceduresTemplate.budgetingTemplates.length  : "" 
   }
 
   return(
@@ -86,7 +86,7 @@ const TempleteRow = (props) => {
       <TableCell align= "center">{ procedureTemplate.name }</TableCell>
       <TableCell align= "center">{ folioNumber(procedureTemplate.serialNumber) }</TableCell>
       <TableCell align= "center">{ budgetingLinked() }</TableCell>
-      <TableCell align= "center">costo de presupuesto</TableCell>
+      <TableCell align= "center">{data ? data.proceduresTemplate.budgetingTemplates.map((item) => item.id) : ""}</TableCell>
       <TableCell align= "center">
         <Grid>
           <GenericDropdownMenu>

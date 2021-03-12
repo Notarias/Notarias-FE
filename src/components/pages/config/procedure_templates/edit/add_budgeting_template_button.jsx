@@ -8,7 +8,7 @@ import { styles }                                     from '../styles';
 import { withStyles }                                 from '@material-ui/core/styles';
 import { useMutation }                                from '@apollo/react-hooks';
 import { UPDATE_PROCEDURE_TEMPLATES }                  from '../queries_and_mutations/queries';
-import { GET_BUDGETING_TEMPLATE }                     from '../queries_and_mutations/queries';
+import { GET_PROCEDURE_TEMPLATE }                     from '../queries_and_mutations/queries';
 import Divider                                        from '@material-ui/core/Divider';
 import CircularProgress                               from '@material-ui/core/CircularProgress';
 import Grid                                           from '@material-ui/core/Grid';
@@ -28,6 +28,10 @@ import client                                         from '../../../../../apoll
 import { Link }                                       from 'react-router-dom';
 import Chip                                           from '@material-ui/core/Chip';
 import Avatar                                         from '@material-ui/core/Avatar';
+import List                                 from '@material-ui/core/List';
+import ListItem                             from '@material-ui/core/ListItem';
+import ListItemText                         from '@material-ui/core/ListItemText';
+
 
 const AddButgetingTemplateButton = (props) => {
 
@@ -35,8 +39,8 @@ const AddButgetingTemplateButton = (props) => {
   const id = props.id
   const [budgetingTemplates, setBudgetingTemplates] = React.useState()
   const [openDialog, setOpenDialog] = React.useState(false)
-  const [openBudgetingList, setOpenBudgetingList] = React.useState()
-  // const [procedureSelectedOption, setProcedureSelectedOption] = React.useState()
+  const [openBudgetingLinkedList, setOpenBudgetingLinkedList] = React.useState(false)
+  const [toLinkSelectedOption, setToLinkSelectedOption] = React.useState(budgetingTemplatesData || [])
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
 
@@ -44,43 +48,47 @@ const AddButgetingTemplateButton = (props) => {
     setBudgetingTemplates(budgetingTemplatesData)
   }, [budgetingTemplatesData])
 
-  // const [updateBudgetingTemplateMutation, updateProcessInfo] =
-  //   useMutation(
-  //     UPDATE_BUDGETING_TEMPLATE,
-  //     {
-  //       onError(apolloError) {
-  //         setOpen(false)
-  //         setOpenDialog(false)
-  //         client.writeQuery({
-  //           query: GLOBAL_MESSAGE,
-  //           data: {
-  //             globalMessage: {
-  //               message: "Ocurrió un error",
-  //               type: "error",
-  //               __typename: "globalMessage"
-  //             }
-  //           }
-  //         })
-  //       },
-  //       update(store, cacheData) {
-  //         setOpen(false)
-  //         setOpenDialog(false)
-  //       },
-  //       refetchQueries: [{
-  //         query: GET_BUDGETING_TEMPLATE,
-  //         variables: { "id": id },
-  //       }],
-  //       awaitRefetchQueries: true
-  //     }
-  //   )
+  const [updateBudgetingTemplateMutation, updateProcessInfo] =
+    useMutation(
+      UPDATE_PROCEDURE_TEMPLATES,
+      {
+        onError(apolloError) {
+          setOpen(false)
+          setOpenDialog(false)
+          client.writeQuery({
+            query: GLOBAL_MESSAGE,
+            data: {
+              globalMessage: {
+                message: "Ocurrió un error",
+                type: "error",
+                __typename: "globalMessage"
+              }
+            }
+          })
+        },
+        update(store, cacheData) {
+          setOpen(false)
+          setOpenDialog(false)
+        },
+        refetchQueries: [{
+          query: GET_PROCEDURE_TEMPLATE,
+          variables: { "id": id },
+        }],
+        awaitRefetchQueries: true
+      }
+    )
 
-  // const updateLinkedProcedureTemplate = (event) => {
-  //   updateBudgetingTemplateMutation({ variables: {"id": id, "proceduresTemplateId": procedureSelectedOption.id}})
-  // }
+    const toSendIds = () => {
+      return toLinkSelectedOption.map((item) => item.id)
+    }
 
-  // const updateUnlinkProcedureTemplate = (event) => {
-  //   updateBudgetingTemplateMutation({ variables: {"id": id, "proceduresTemplateId": null}})
-  // }
+  const updateLinkedProcedureTemplate = (event) => {
+    updateBudgetingTemplateMutation({ variables: {"id": id, "budgetingTemplatesIds": toSendIds()}})
+  }
+
+  const updateUnlinkBudgetingTemplate = (event) => {
+    updateBudgetingTemplateMutation({ variables: {"id": id, "budgetingTemplatesIds": []}})
+  }
 
   const { loading, data, refetch } = useQuery(
     GET_BUDGETING_TEMPLATES_QUICK_LIST,
@@ -95,15 +103,24 @@ const AddButgetingTemplateButton = (props) => {
     setOpenDialog(false)
   }
 
-  const budgetingSelected = () => {
-    return (
-      (budgetingTemplates && budgetingTemplates.length > 0) 
-        ? 
-        "No." + budgetingTemplates.map((budgetingTemplate) => budgetingTemplate.id) 
-        : 
-          "presupuesto"
-    )
+  const handleClickOpenBudgetingLinkedList = () => {
+    setOpenBudgetingLinkedList(true)
   }
+
+  const handleCloseBudgetingLinkedList = () => {
+    setOpenBudgetingLinkedList(false)
+    console.log("cancelando")
+  }
+
+  // const budgetingSelected = () => {
+  //   return (
+  //     (budgetingTemplates && budgetingTemplates.length > 0) 
+  //       ? 
+  //       "No." + budgetingTemplates.map((budgetingTemplate) => budgetingTemplate.id) 
+  //       : 
+  //         "presupuesto"
+  //   )
+  // }
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
@@ -116,55 +133,74 @@ const AddButgetingTemplateButton = (props) => {
     setOpen(false);
   };
 
+  // const clickHandler = (event) => {
+  //   const ejemp = props.setProcedureSelectedOptions([template])
+  //   setThisOne(event.target.value);
+  // }
+
+  // const handleNameChange = (event) => {
+  //   setName(event.target.value);
+  // };
+
   const showBudgetingLinkedList = () => {
-    console.log("si")
+    return(
+      <List>
+        {
+          budgetingTemplatesData.map(
+            (budgetingTemplate) =>
+                <ListItem
+                button
+                data-item-id={budgetingTemplate.id}
+                component={Link} 
+                to={`/config/budget_templates/${budgetingTemplate.id}/edit`}
+                // onClick={ clickHandler }
+                key={budgetingTemplate.id + "-budgetingTemplate"}
+                // selected={props.procedureSelectedOptions && props.procedureSelectedOptions.id == template.id}
+                // selected={ tab.id === (currentTab && currentTab.id ) }
+                // selected={ }
+              >
+                <ListItemText primary={budgetingTemplate.name} />
+              </ListItem>
+          )
+        }
+      </List>
+    )
   }
 
   const withBudgetingLinkedClass = () => {
-    return budgetingTemplatesData && (budgetingTemplatesData > 0)  ? classes.avatarBudgetingLinkedCount : "default"
+    return (budgetingTemplates && budgetingTemplates.length > 0)  ? classes.avatarBudgetingLinkedCount : classes.avatarBudgetingLinkedCountIsZero
   }
 
-  console.log(withBudgetingLinkedClass)
+  const colorOfButtonWhenBudgetingLinked = () => {
+    return(
+      (budgetingTemplates && budgetingTemplates.length > 0) ?
+        "primary"
+      :
+        "default"
+    )
+  }
+
+  console.log(toSendIds(), "ids")
+
   return(
     <Grid container direction="column" alignItems="center">
       <Grid item xs={12}>
-        <ButtonGroup color="primary" ref={anchorRef} aria-label="split button">
+        <ButtonGroup color={ colorOfButtonWhenBudgetingLinked() } ref={anchorRef} aria-label="split button">
           <Button 
             size="small"
+            disabled={ budgetingTemplatesData && (budgetingTemplatesData == 0) }
+            onClick={ handleClickOpenBudgetingLinkedList }
           >
             <Avatar
-              className={ classes.avatarBudgetingLinkedCount }
+              className={ withBudgetingLinkedClass() }
               variant="rounded"
             >
-              { budgetingTemplatesData ? budgetingTemplatesData.length : 0 }
+              { (budgetingTemplates && budgetingTemplates.length > 0) ? budgetingTemplatesData.length : "+" }
             </Avatar>
-          {/* <Chip
-            avatar={<Avatar>{ budgetingTemplatesData ? budgetingTemplatesData.length : 0 }</Avatar>}
-            label={ ` Presupuestos` }
-            color={ budgetingTemplatesData.length > 0 ? "primary" : "default" }
-            onClick={ showBudgetingLinkedList }
-          /> */}
             Presupuesto
           </Button>
-          {/* <Dialog>
-            <DialogTitle>
-              Ir a la plantilla de presupuesto
-            </DialogTitle>
-            <DialogContent>
-              Una lista despegable
-            </DialogContent>
-            <DialogActions>
-              <Button>
-                Cancelar
-              </Button>
-              <Button>
-                Aceptar
-              </Button>
-            </DialogActions>
-          </Dialog> */}
           <Button
             variant="contained"
-            color="primary"
             size="small"
             aria-controls={open ? 'split-button-menu' : undefined}
             aria-expanded={open ? 'true' : undefined}
@@ -198,7 +234,7 @@ const AddButgetingTemplateButton = (props) => {
                     </MenuItem>
                     <Divider/>
                     <MenuItem
-                      // onClick={ updateUnlinkProcedureTemplate }
+                      onClick={ updateUnlinkBudgetingTemplate }
                       // disabled={ !(budgetingTemplates && budgetingTemplates.length > 0) }
                     >
                       Desvincular
@@ -215,8 +251,8 @@ const AddButgetingTemplateButton = (props) => {
           </DialogTitle>
           <DialogContent>
             <ListToLinkOfBudgeting
-              // procedureSelectedOption={ procedureSelectedOption }
-              // setProcedureSelectedOption={ setProcedureSelectedOption }
+              toLinkSelectedOption={ toLinkSelectedOption }
+              setToLinkSelectedOption={ setToLinkSelectedOption }
               data={ data }
             />
           </DialogContent>
@@ -227,11 +263,24 @@ const AddButgetingTemplateButton = (props) => {
               Cancelar
             </Button>
             <Button
-              // onClick={ updateLinkedProcedureTemplate }
+              onClick={ updateLinkedProcedureTemplate }
               // disabled={ !procedureSelectedOption || (procedureSelectedOption && updateProcessInfo.loading)}
             >
               {/* {loading ? <CircularProgress/> : "Aceptar"} */}
               Aceptar
+            </Button>
+          </DialogActions>
+        </Dialog>
+        <Dialog  open={ openBudgetingLinkedList } onClose={ handleCloseBudgetingLinkedList }>
+          <DialogTitle>
+            Ir a la plantilla de presupuesto
+          </DialogTitle>
+          <DialogContent>
+            { showBudgetingLinkedList() }
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={ handleCloseBudgetingLinkedList }>
+              Cancelar
             </Button>
           </DialogActions>
         </Dialog>

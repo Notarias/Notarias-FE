@@ -1,7 +1,6 @@
 import { fade } from '@material-ui/core/styles/colorManipulator';
 
 export const styles = theme => {
-  console.log(theme)
   return ({
     root: {
       display: "flex",
