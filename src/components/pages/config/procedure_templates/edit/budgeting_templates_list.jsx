@@ -51,7 +51,7 @@ const renderSearchList = (searchList, checked, classes, handleToggle) => {
 }
 
 
-const ListToLinkOfBudgeting = (props) => {
+const BudgetingTemplatesList = (props) => {
 
   const {classes, data} = props;
   const setToLinkSelectedOption = props.setToLinkSelectedOption;
@@ -113,4 +113,4 @@ const ListToLinkOfBudgeting = (props) => {
   );
 }
 
-export default withStyles(styles)(ListToLinkOfBudgeting);
+export default withStyles(styles)(BudgetingTemplatesList);

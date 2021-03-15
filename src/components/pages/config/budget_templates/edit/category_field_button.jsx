@@ -128,8 +128,6 @@ const categoryFieldButton = (props) => {
     </Paper>
   );
 
-
-  console.log("toS", setCategoriesToSave)
   return (
     <Grid container spacing={2} justify="center" alignItems="center" className={classes.root}>
       <Grid item>{customList(left)}</Grid>

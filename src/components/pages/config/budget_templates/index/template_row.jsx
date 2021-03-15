@@ -35,12 +35,6 @@ const TemplateRow = (props) => {
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const id = budgetingTemplate.id;
 
-  // useEffect(
-  //   () => {
-  //     setActive(budgetingTemplate.active)
-  //   }
-  // )
-
   const { loading, data, refetch } = useQuery(GET_BUDGETING_TEMPLATE,
     { variables: {"id": id } } 
   );

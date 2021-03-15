@@ -3,7 +3,7 @@ import Dialog                                         from '@material-ui/core/Di
 import DialogContent                                  from '@material-ui/core/DialogContent';
 import DialogTitle                                    from '@material-ui/core/DialogTitle';
 import DialogActions                                  from '@material-ui/core/DialogActions';
-import ListToLinkOfBudgeting                          from './list_to_link_of_budgeting';
+import BudgetingTemplatesList                          from './budgeting_templates_list';
 import { styles }                                     from '../styles';
 import { withStyles }                                 from '@material-ui/core/styles';
 import { useMutation }                                from '@apollo/react-hooks';
@@ -235,7 +235,7 @@ const ButgetingTemplateLinkButton = (props) => {
             Selecciona un Presupuesto para vincularlo
           </DialogTitle>
           <DialogContent>
-            <ListToLinkOfBudgeting
+            <BudgetingTemplatesList
               toLinkSelectedOption={ toLinkSelectedOption }
               setToLinkSelectedOption={ setToLinkSelectedOption }
               data={ data }

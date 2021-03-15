@@ -51,7 +51,7 @@ const renderSearchList = (searchList, checked, classes, handleToggle) => {
   }
 
 
-const ListToLinkOfProcedures = (props) => {
+const ProceduresTemplatesList = (props) => {
 
   const {classes, data} = props;
   const setToLinkSelectedOption = props.setToLinkSelectedOption;
@@ -114,4 +114,4 @@ const ListToLinkOfProcedures = (props) => {
   );
 }
 
-export default withStyles(styles)(ListToLinkOfProcedures);
+export default withStyles(styles)(ProceduresTemplatesList);

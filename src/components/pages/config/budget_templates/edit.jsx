@@ -13,7 +13,7 @@ import { GET_BUDGETING_TEMPLATE }           from './queries_and_mutations/querie
 import Typography                           from '@material-ui/core/Typography';
 import AddIcon                              from '@material-ui/icons/Add';
 import ActiveTemplateButton                 from './edit/active_template_button';
-import Procedure_template_link_button           from './edit/procedure_template_link_button';
+import ProcedureTemplateLinkButton           from './edit/procedure_template_link_button';
 import Tabs                                 from './edit/tabs';
 import NewFieldButton                       from './edit/new_field_Button';
 import RenderFields                         from './edit/render_fields';
@@ -33,7 +33,6 @@ const Edit = (props) => {
 
   const [currentTab, setCurrentTab] = React.useState()
 
-  console.log(data ? data : "vacio", "DT")
   return(
     <>
       <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
@@ -51,7 +50,7 @@ const Edit = (props) => {
                 <Grid container item xs={3} justify="center">
                 </Grid>
                 <Grid container item xs={5} justify="center">
-                  <Procedure_template_link_button
+                  <ProcedureTemplateLinkButton
                     id={ match.params.id }
                     proceduresTemplatesData={ data ? data.budgetingTemplate.proceduresTemplates : null }
                   />

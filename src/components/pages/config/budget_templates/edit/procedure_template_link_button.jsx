@@ -3,7 +3,7 @@ import Dialog                                         from '@material-ui/core/Di
 import DialogContent                                  from '@material-ui/core/DialogContent';
 import DialogTitle                                    from '@material-ui/core/DialogTitle';
 import DialogActions                                  from '@material-ui/core/DialogActions';
-import ListToLinkOfProcedures                         from './list_to_link_of_procedures';
+import ProceduresTemplatesList                         from './procedures_templates_list';
 import { styles }                                     from '../styles';
 import { withStyles }                                 from '@material-ui/core/styles';
 import { useMutation }                                from '@apollo/react-hooks';
@@ -98,7 +98,6 @@ const ProcedureTemplateLinkButton = (props) => {
 
   const handleClickOpenDialog = () => {
     setOpenDialog(true)
-    // setProcedureSelectedOptions(false)
   }
 
   const handleCloseDialog = () => {
@@ -234,7 +233,7 @@ const ProcedureTemplateLinkButton = (props) => {
             Selecciona un Trámite para vincularlo
           </DialogTitle>
           <DialogContent>
-            <ListToLinkOfProcedures
+            <ProceduresTemplatesList
               toLinkSelectedOption={ toLinkSelectedOption }
               setToLinkSelectedOption={ setToLinkSelectedOption }
               data={ data }
