@@ -313,5 +313,8 @@ export const styles = theme => {
     LinkedListToShow: {
       width: "360px"
     },
+    buttonToAceptLinkedTemplate: {
+      width: "80px",
+    },
   })
 }

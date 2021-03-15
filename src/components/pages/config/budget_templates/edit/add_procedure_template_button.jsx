@@ -39,7 +39,6 @@ const AddProcedureTemplateButton = (props) => {
   const [openDialog, setOpenDialog] = React.useState(false)
   const [openProcedureLinkedList, setOpenProcedureLinkedList] = React.useState(false)
   const [toLinkSelectedOption, setToLinkSelectedOption] = React.useState(proceduresTemplatesData || [])
-  // const [procedureSelectedOptions, setProcedureSelectedOptions] = React.useState([])
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
 
@@ -105,16 +104,6 @@ const AddProcedureTemplateButton = (props) => {
   const handleCloseDialog = () => {
     setOpenDialog(false)
   }
-
-  // const proceduresSelected = () => {
-  //   return (
-  //     (proceduresTemplates && proceduresTemplates.length > 0) 
-  //       ?
-  //     "No." + proceduresTemplates.map((procedureTemplate) => procedureTemplate.id) 
-  //       :
-  //     "+ Tramite"
-  //   )
-  // }
 
   const handleClickOpenProcedureLinkedList = () => {
     setOpenProcedureLinkedList(true)
@@ -258,8 +247,10 @@ const AddProcedureTemplateButton = (props) => {
             </Button>
             <Button
               onClick={ updateLinkedProcedureTemplate }
+              disabled={ updateProcessInfo.loading }
+              className={ classes.buttonToAceptLinkedTemplate }
             >
-              {loading ? <CircularProgress/> : "Aceptar"}
+              { updateProcessInfo.loading ? <CircularProgress size={ "18px" }/> : "Aceptar"}
             </Button>
           </DialogActions>
         </Dialog>

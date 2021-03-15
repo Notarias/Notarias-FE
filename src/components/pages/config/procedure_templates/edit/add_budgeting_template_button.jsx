@@ -249,8 +249,10 @@ const AddButgetingTemplateButton = (props) => {
             </Button>
             <Button
               onClick={ updateLinkedBudgetingTemplate }
+              disabled={ updateProcessInfo.loading }
+              className={ classes.buttonToAceptLinkedTemplate }
             >
-              {loading ? <CircularProgress/> : "Aceptar"}
+              { updateProcessInfo.loading ? <CircularProgress size={ "18px" }/> : "Aceptar"}
             </Button>
           </DialogActions>
         </Dialog>
