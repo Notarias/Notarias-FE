@@ -8,16 +8,18 @@ import Button                             from '@material-ui/core/Button';
 import SaveIcon                           from '@material-ui/icons/Save';
 import CreateIcon                         from '@material-ui/icons/Create';
 import { useMutation }                    from '@apollo/react-hooks';
-import { UPDATE_PROCEDURE_TEMPLATES }     from '../queries_and_mutations/queries';
+import { UPDATE_BUDGETING_TEMPLATE }      from '../queries_and_mutations/queries';
+import { GLOBAL_MESSAGE }                 from '../../../../../resolvers/queries';
+import client                             from '../../../../../apollo';
 
 
-const TemplateTittle = (props) => {
+const TemplateTitle = (props) => {
 
   const { classes, templateData, match } = props
   const [active, setActive] = React.useState(templateData.active);
   const [id, setId] = useState(match.id);
   const [editing, setEditing] = useState(true);
-  const [name, setName] = useState(templateData.name)
+  const [name, setName] = useState(templateData.name);
   const [error, setError] = useState(false)
   const inputsList = ["name"]
 
@@ -29,12 +31,22 @@ const TemplateTittle = (props) => {
     [templateData]
   )
 
-  const [updateProceduresTemplateMutation, updateProcessInfo] =
+  const [updateBudgetingTemplateMutation, updateProcessInfo] =
     useMutation(
-      UPDATE_PROCEDURE_TEMPLATES,
+      UPDATE_BUDGETING_TEMPLATE,
       {
         onError(apolloError) {
           setErrors(apolloError)
+          client.writeQuery({
+            query: GLOBAL_MESSAGE,
+            data: {
+              globalMessage: {
+                message: "Ocurrió un error",
+                type: "error",
+                __typename: "globalMessage"
+              }
+            }
+          })
         },
         update(store, cacheData) {
           setError(false)
@@ -43,30 +55,30 @@ const TemplateTittle = (props) => {
       }
     )
 
-    const setErrors = (apolloError) => {
-      let errorsList = {}
-      let errorTemplateList = apolloError.graphQLErrors
-      for ( let i = 0; i < errorTemplateList.length; i++) {
-        for( let n = 0; n < inputsList.length; n++) {
-          if(errorTemplateList[i].extensions.attribute === inputsList[n]){
-            errorsList[inputsList[n]] = errorTemplateList[i].message
-          }
+  const setErrors = (apolloError) => {
+    let errorsList = {}
+    let errorTemplateList = apolloError.graphQLErrors
+    for ( let i = 0; i < errorTemplateList.length; i++) {
+      for( let n = 0; n < inputsList.length; n++) {
+        if(errorTemplateList[i].extensions.attribute === inputsList[n]){
+          errorsList[inputsList[n]] = errorTemplateList[i].message
         }
       }
-      setError(errorsList)
     }
-
-  const handleNameChange = (event) => {
-    setName(event.target.value);
-  };
+    setError(errorsList)
+  }
 
   const updateTemplate = (event) => {
-    updateProceduresTemplateMutation(
+    updateBudgetingTemplateMutation(
       {
         variables: { id: id , name: name}
       }
     )
   }
+
+  const handleNameChange = (event) => {
+    setName(event.target.value);
+  };
 
   const changeTittle = () => {
     setEditing(!editing)
@@ -77,19 +89,17 @@ const TemplateTittle = (props) => {
   const renderTittleText = (name) => {
     return(
       <>
-        <Grid container item xs={11} className={ classes.templateTextTittle } onClick={ changeTittle }>
+        <Grid className={ classes.templateTextTittle } onClick={ changeTittle }>
           <Typography variant="overline" >
             { name }
           </Typography>
         </Grid>
-        <Grid container item xs={1}>
-          <Button
-            className={ classes.templateTittleButton }
-            onClick={ changeTittle }
-          >
-            <CreateIcon />
-          </Button>
-        </Grid>
+        <Button
+          className={ classes.templateTittleButton }
+          onClick={ changeTittle }
+        >
+          <CreateIcon />
+        </Button>
       </>
     )
   }
@@ -112,8 +122,8 @@ const TemplateTittle = (props) => {
         </Grid>
         <Grid item className={ classes.saveTittleButton }>
           <Button
-            onClick={ updateTemplate }
             color="primary"
+            onClick={ updateTemplate }
             disabled={ loadingTemplate }
           >
             <SaveIcon/>
@@ -132,8 +142,7 @@ const TemplateTittle = (props) => {
   return(
     <Grid
       container 
-      item
-      xs={12}
+      item 
       className={ markStatus() }
     >
       { editing ? renderTittleText(name) : renderTittleInput(name) }
@@ -141,4 +150,4 @@ const TemplateTittle = (props) => {
   )
 }
 
-export default withStyles(styles)(TemplateTittle);
+export default withStyles(styles)(TemplateTitle);

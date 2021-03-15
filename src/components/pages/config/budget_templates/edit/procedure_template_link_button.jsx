@@ -31,7 +31,7 @@ import List                                 from '@material-ui/core/List';
 import ListItem                             from '@material-ui/core/ListItem';
 import ListItemText                         from '@material-ui/core/ListItemText';
 
-const AddProcedureTemplateButton = (props) => {
+const ProcedureTemplateLinkButton = (props) => {
 
   const { classes, proceduresTemplatesData }= props
   const id = props.id
@@ -184,6 +184,7 @@ const AddProcedureTemplateButton = (props) => {
             Trámite
           </Button>
           <Button
+            variant="contained"
             size="small"
             aria-controls={open ? 'split-button-menu' : undefined}
             aria-expanded={open ? 'true' : undefined}
@@ -218,7 +219,7 @@ const AddProcedureTemplateButton = (props) => {
                     <Divider/>
                     <MenuItem
                       onClick={ updateUnlinkProcedureTemplate }
-                      disabled={ !(proceduresTemplatesData && proceduresTemplatesData == 0) }
+                      disabled={ proceduresTemplatesData && (proceduresTemplatesData == 0) }
                     >
                       Desvincular
                     </MenuItem>
@@ -272,4 +273,4 @@ const AddProcedureTemplateButton = (props) => {
   )
 }
 
-export default withStyles(styles)(AddProcedureTemplateButton);
+export default withStyles(styles)(ProcedureTemplateLinkButton);

@@ -12,7 +12,7 @@ import Checkbox                             from '@material-ui/core/Checkbox';
 
 
 const renderSearchList = (searchList, checked, classes, handleToggle) => {
-const checkedIds = checked.map((item) =>  item.id )
+  const checkedIds = checked.map((item) =>  item.id )
   return(
     <List 
       component="nav" 
@@ -21,29 +21,29 @@ const checkedIds = checked.map((item) =>  item.id )
     >
     { 
       searchList.map(
-      (item) => {
+        (item) => {
           let obj = item.item || item
           return(
-          <React.Fragment key={obj.id + "fragment"}>
+            <React.Fragment key={obj.id + "fragment"}>
               <ListItem key={obj.id} role={undefined} dense button onClick={handleToggle(obj)}>
-              <ListItemIcon>
+                <ListItemIcon>
                   <Checkbox
-                      edge="start"
-                      checked={checkedIds.indexOf(obj.id) !== -1}
-                      tabIndex={-1}
-                      disableRipple
-                      inputProps={{ 'aria-labelledby': obj.id }}
+                    edge="start"
+                    checked={checkedIds.indexOf(obj.id) !== -1}
+                    tabIndex={-1}
+                    disableRipple
+                    inputProps={{ 'aria-labelledby': obj.id }}
                   />
                   </ListItemIcon>
                   <ListItemText 
-                  id={obj.id} 
-                  primary={` ${ obj.name }`} 
+                    id={obj.id} 
+                    primary={` ${ obj.name }`} 
                   />
-              </ListItem>
+                </ListItem>
               <Divider/>
-          </React.Fragment>
+            </React.Fragment>
           )
-      }
+        }
       )
     }
     </List>

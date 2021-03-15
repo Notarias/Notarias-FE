@@ -35,7 +35,7 @@ function intersection(a, b) {
   return a.filter((value) => b.indexOf(value) !== -1);
 }
 
-const AddCategoryToField = (props) => {
+const categoryFieldButton = (props) => {
   const classes = useStyles();
   const { categoriesToSave, setCategoriesToSave} = props
   const [checked, setChecked] = React.useState([]);
@@ -182,4 +182,4 @@ const AddCategoryToField = (props) => {
   );
 }
 
-export default  (AddCategoryToField);
+export default  (categoryFieldButton);

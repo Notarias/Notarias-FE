@@ -32,7 +32,7 @@ import ListItem                             from '@material-ui/core/ListItem';
 import ListItemText                         from '@material-ui/core/ListItemText';
 
 
-const AddButgetingTemplateButton = (props) => {
+const ButgetingTemplateLinkButton = (props) => {
 
   const { classes, budgetingTemplatesData }= props
   const id = props.id
@@ -274,4 +274,4 @@ const AddButgetingTemplateButton = (props) => {
   )
 }
 
-export default withStyles(styles)(AddButgetingTemplateButton);
+export default withStyles(styles)(ButgetingTemplateLinkButton);
