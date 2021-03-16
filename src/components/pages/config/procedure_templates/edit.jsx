@@ -8,12 +8,13 @@ import Divider                              from '@material-ui/core/Divider';
 import Button                               from '@material-ui/core/Button';
 import Tabs                                 from './edit/tabs';
 import ActiveTemplateButton                 from './edit/active_template_button';
-import TemplateTittle                       from './edit/template_tittle';
+import TemplateTitle                       from './edit/template_title';
 import { useQuery }                         from '@apollo/react-hooks';
 import { GET_PROCEDURE_TEMPLATE }           from './queries_and_mutations/queries'
 import CircularProgress                     from '@material-ui/core/CircularProgress';
 import FieldsAndGroupFields                 from './edit/fields_and_group_fields';
 import ButtonsNewFieldNewFieldsGroup        from './edit/buttons_newField_newFieldsGroup'
+import ButgetingTemplateLinkButton           from './edit/budgeting_template_link_button'
 
 
 const BREADCRUMBS = [
@@ -39,19 +40,17 @@ const Edit = (props) => {
         <Grid container item xs={9} direction="column">
             <Grid container direction="row"  alignItems="center" className={ classes.addTittleProcedure }>
               <Grid container item xs={7} justify="flex-start">
-                <TemplateTittle
+                <TemplateTitle
                   templateData={ data ? data.proceduresTemplate : " " }
                   match={ props.match.params }
                 />
               </Grid>
-              <Grid container item xs={5} justify="flex-end" alignItems="center">
-                <Grid container item xs={4} justify="center">
-
-                </Grid>
-                <Grid container item xs={4} justify="center">
-                  <Button variant="contained" size="small" className={ classes.buttonAddProcedure }>
-                  + presupuesto
-                  </Button>
+              <Grid container item xs={5} justify="center" alignItems="center">
+                <Grid container item xs={6} justify="center">
+                  <ButgetingTemplateLinkButton
+                    id={ match.params.id }
+                    budgetingTemplatesData={ data ? data.proceduresTemplate.budgetingTemplates : null }
+                  />
                 </Grid>
                 <Grid container item xs={4} justify="center">
                   <ActiveTemplateButton

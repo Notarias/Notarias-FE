@@ -26,6 +26,8 @@ import { useMutation }                          from '@apollo/react-hooks';
 import { GET_BUDGETING_TEMPLATES_TABS }         from '../queries_and_mutations/queries'
 import { UPDATE_BUDGETING_TEMPLATE_TAB }        from '../queries_and_mutations/queries'
 import { DESTROY_BUDGETING_TEMPLATE_TAB }       from '../queries_and_mutations/queries'
+import { GLOBAL_MESSAGE }                       from '../../../../../resolvers/queries';
+import client                                   from '../../../../../apollo';
 
 
 const TabMenu = (props) => {
@@ -46,6 +48,16 @@ const TabMenu = (props) => {
     {
       onError(apolloError) {
         setErrors(apolloError)
+        client.writeQuery({
+          query: GLOBAL_MESSAGE,
+          data: {
+            globalMessage: {
+              message: "Ocurrió un error",
+              type: "error",
+              __typename: "globalMessage"
+            }
+          }
+        })
       },
       update(store, cacheData) {
         setError(false)

@@ -245,12 +245,12 @@ export const styles = theme => {
     },
     templateTextTittle: {
       height: "70px",
-      maxWidth: "550px",
+      maxWidth: "500px",
       textAlign: "left",
       display: "flex",
       alignItems: "center",
       cursor: "pointer",
-      paddingLeft: "10px"
+      paddingLeft: "10px",
     },
     circularProgressLoading: {
       paddingTop: "60px",
@@ -275,6 +275,46 @@ export const styles = theme => {
     },
     activeMenuTab: {
       opacity: "1",
+    },
+    avatarLinkedCount: {
+      width: "20px",
+      height: "20px",
+      marginRight: "10px",
+      fontSize: "12px",
+      backgroundColor: theme.palette.primary.main,
+    },
+    avatarLinkedCountIsZero: {
+      width: "20px",
+      height: "20px",
+      marginRight: "10px",
+      fontSize: "12px",
+      backgroundColor: "gray",
+      border: "2px solid black"
+    },
+    textFieldSearchInTable: {
+      maxWidth: "360px",
+      width: "360px",
+      backgroundColor: theme.palette.background.paper,
+      marginBottom: '10px',
+      marginTop: '5px'
+    },    
+    selectableListItem: {
+      backgroundColor: 'inherit',
+      width: "360px",
+      height: "250px",
+      overflowY:"scroll"
+    },
+    divChange: {
+      width: "360px"
+    },
+    DialogTittleOfListToLink: {
+      width: "400px"
+    },
+    LinkedListToShow: {
+      width: "360px"
+    },
+    buttonToAceptLinkedTemplate: {
+      width: "80px",
     },
   })
 }

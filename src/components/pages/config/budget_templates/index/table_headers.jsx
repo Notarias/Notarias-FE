@@ -30,13 +30,13 @@ export default (props) => {
           callback={ sortHandler }
         />
         <SortHeader
-          text={ "Versión" }
+          text={ "Trámites" }
           current_field={ field }
           sort_direction={ direction }
           callback={ sortHandler }
         />
         <SortHeader
-          text={ "Trámite" }
+          text={ "Version" }
         />
         <TableCell align="center">Opciones</TableCell>
       </TableRow>

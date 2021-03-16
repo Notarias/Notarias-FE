@@ -45,6 +45,7 @@ const FieldList = (props) => {
                   id={ field.id || " " }
                   active={ field.active }
                   currentTab={ currentTab }
+                  data={ data }
                 />
               )
             }

@@ -10,10 +10,12 @@ import { styles }                                               from '../styles'
 import { withStyles }                                           from '@material-ui/core/styles';
 import { useMutation }                                          from '@apollo/react-hooks';
 import { GET_BUDGETING_TEMPLATE_TAB_FIELDS }                    from '../queries_and_mutations/queries'
-import { CREATE_BUDGETING_TEMPLATE_TAB_FIELD }                 from '../queries_and_mutations/queries'
+import { CREATE_BUDGETING_TEMPLATE_TAB_FIELD }                  from '../queries_and_mutations/queries'
 import AddIcon                                                  from '@material-ui/icons/Add';
 import Divider                                                  from '@material-ui/core/Divider';
 import TextField                                                from '@material-ui/core/TextField';
+import { GLOBAL_MESSAGE }                                       from '../../../../../resolvers/queries';
+import client                                                   from '../../../../../apollo';
 
 
 const NewFieldButton = ({
@@ -33,6 +35,16 @@ const NewFieldButton = ({
       {
         onError(apolloError) {
           setErrors(apolloError)
+          client.writeQuery({
+            query: GLOBAL_MESSAGE,
+            data: {
+              globalMessage: {
+                message: "Ocurrió un error",
+                type: "error",
+                __typename: "globalMessage"
+              }
+            }
+          })
         },
         onCompleted(cacheData) {
           setError(false)

@@ -57,7 +57,7 @@ class NavigationMenu extends Component {
           <Divider />
           <MenuLink iconComponent={ClientsIcon} linkPath="/clients" menuText="Clientes" />
           <MenuLink iconComponent={BudgetsIcon} linkPath="/budgets" menuText="Presupuestos" />
-          <MenuLink iconComponent={FormsIcon} linkPath="/forms" menuText="Trámites" />
+          <MenuLink iconComponent={FormsIcon} linkPath="/procedures" menuText="Trámites" />
           <MenuLink iconComponent={AppointmentsIcon} linkPath="/appointments" menuText="Calendario" />
         </List>
         <Divider />

@@ -15,6 +15,8 @@ import { useMutation }                      from '@apollo/react-hooks';
 import { GET_BUDGETING_TEMPLATES_TABS }     from '../queries_and_mutations/queries'
 import { CREATE_BUDGETING_TEMPLATES_TABS }  from '../queries_and_mutations/queries'
 import Tab                                  from './tab';
+import { GLOBAL_MESSAGE }                   from '../../../../../resolvers/queries';
+import client                               from '../../../../../apollo';
 
 
 const Tabs = (props) => {
@@ -44,6 +46,16 @@ const Tabs = (props) => {
       onError(apolloError) {
         setErrors(apolloError)
         setPristine(true)
+        client.writeQuery({
+          query: GLOBAL_MESSAGE,
+          data: {
+            globalMessage: {
+              message: "Ocurrió un error",
+              type: "error",
+              __typename: "globalMessage"
+            }
+          }
+        })
       },
       onCompleted(cacheData) {
         setCurrentTab(cacheData.createBudgetingTemplateTab.budgetingTemplateTab)

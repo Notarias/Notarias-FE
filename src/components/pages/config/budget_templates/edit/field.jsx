@@ -1,4 +1,4 @@
-import React                                          from 'react';
+import React, { useEffect }                           from 'react';
 import Grid                                           from '@material-ui/core/Grid';
 import TextField                                      from '@material-ui/core/TextField';
 import Button                                         from '@material-ui/core/Button';
@@ -21,6 +21,9 @@ import RadioButtonUncheckedIcon                       from '@material-ui/icons/R
 import RadioButtonCheckedIcon                         from '@material-ui/icons/RadioButtonChecked';
 import Chip                                           from '@material-ui/core/Chip';
 import Avatar                                         from '@material-ui/core/Avatar';
+import CategoriesSelectableList                       from './categories_selectable_list'
+import { GLOBAL_MESSAGE }                             from '../../../../../resolvers/queries';
+import client                                         from '../../../../../apollo';
 
 
 const Field = (props) => {
@@ -35,6 +38,7 @@ const Field = (props) => {
   const [active, setActive] = React.useState(props.active || false);
   const [error, setError] = React.useState(false);
   const inputsList = ["name"]
+  const [categoriesToSave, setCategoriesToSave] = React.useState(props.categories || [])
 
   const [updateBudgetingTemplateTabFieldMutation, updateProcessInfo] =
     useMutation(
@@ -42,11 +46,21 @@ const Field = (props) => {
       {
         onError(apolloError) {
           setErrors(apolloError)
+          client.writeQuery({
+            query: GLOBAL_MESSAGE,
+            data: {
+              globalMessage: {
+                message: "Ocurrió un error",
+                type: "error",
+                __typename: "globalMessage"
+              }
+            }
+          })
         },
         update(store, cacheData) {
-          setActive(cacheData.data.updateBudgetingTemplateField.budgetingTemplateField.active)
           setError(false)
           setEditing(true)
+          setOpenB(false)
         },
         refetchQueries: [{
           query: GET_BUDGETING_TEMPLATE_TAB_FIELDS,
@@ -56,21 +70,35 @@ const Field = (props) => {
       }
     )
 
-    const setErrors = (apolloError) => {
-      let errorsList = {}
-      let errorTemplateList = apolloError.graphQLErrors
-      for ( let i = 0; i < errorTemplateList.length; i++) {
-        for( let n = 0; n < inputsList.length; n++) {
-          if(errorTemplateList[i].extensions.attribute === inputsList[n]){
-            errorsList[inputsList[n]] = errorTemplateList[i].message
-          }
+  const categoriesSavedIds = () => {
+    return(
+      categoriesToSave.map(category => (category.id))
+    )
+  }
+
+  const setErrors = (apolloError) => {
+    let errorsList = {}
+    let errorTemplateList = apolloError.graphQLErrors
+    for ( let i = 0; i < errorTemplateList.length; i++) {
+      for( let n = 0; n < inputsList.length; n++) {
+        if(errorTemplateList[i].extensions.attribute === inputsList[n]){
+          errorsList[inputsList[n]] = errorTemplateList[i].message
         }
       }
-      setError(errorsList) 
     }
+    setError(errorsList) 
+  }
+
+  React.useEffect(() => {
+    setCategories(props.categories)
+  }, [props.categories])
 
   const updateField = (event) => {
     updateBudgetingTemplateTabFieldMutation({ variables: { id: id, name: name}})
+  }
+
+  const updateFieldCategories = (event) => {
+    updateBudgetingTemplateTabFieldMutation({ variables: { id: id, categoriesIds: categoriesSavedIds() }})
   }
 
   const handleClickOpen = () => {
@@ -98,7 +126,7 @@ const Field = (props) => {
   };
 
   const changeFieldStatus = (event) => {
-    updateBudgetingTemplateTabFieldMutation({ variables: { id: id, active: !active }})
+    updateBudgetingTemplateTabFieldMutation({ variables: { id: id, active: !active}})
     setActive(!active)
     setOpenDialog(false);
   }
@@ -183,7 +211,6 @@ const Field = (props) => {
   }
 
   const categoriesToShow = () => {
-    
     if ( categories ){
       const categoryCount = categories.length
       return categoryCount
@@ -209,14 +236,19 @@ const Field = (props) => {
             onClose={handleCloseCategoryList}
           >
             <DialogTitle>
-              Agrega una Categoria
+              Selecciona una o varias Categorias
             </DialogTitle>
             <DialogContent>
-              "Componente lista de categorias"
+              <CategoriesSelectableList
+                CategoriesSelectableList={ CategoriesSelectableList }
+                setCategoriesToSave={ setCategoriesToSave }
+                categoriesToSave={ categoriesToSave }
+                categories={ categories }
+              />
             </DialogContent>
             <DialogActions>
               <Button onClick={ handleCloseCategoryList }> Cancelar </Button>
-              <Button> Aceptar </Button>
+              <Button onClick={ updateFieldCategories }> Aceptar </Button>
             </DialogActions>
           </Dialog>
         </Grid>

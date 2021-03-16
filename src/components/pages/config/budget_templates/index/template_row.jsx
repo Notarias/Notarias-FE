@@ -21,23 +21,24 @@ import { useTheme }                   from '@material-ui/core/styles';
 import { Link }                       from 'react-router-dom';
 import { useMutation }                from '@apollo/react-hooks';
 import { UPDATE_BUDGETING_TEMPLATE }  from '../queries_and_mutations/queries'
+import { useQuery }                   from '@apollo/react-hooks';
+import { GET_BUDGETING_TEMPLATE }     from '../queries_and_mutations/queries'
 
 
 const TemplateRow = (props) => {
 
-  const budtingTemplate  = props.data
+  const budgetingTemplate  = props.data
   const { classes } = props
-  const [active, setActive] = React.useState(budtingTemplate.active);
+  const [active, setActive] = React.useState(budgetingTemplate.active);
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
-  const id = budtingTemplate.id;
+  const id = budgetingTemplate.id;
 
-  // useEffect(
-  //   () => {
-  //     setActive(budtingTemplate.active)
-  //   }
-  // )
+  const { loading, data, refetch } = useQuery(GET_BUDGETING_TEMPLATE,
+    { variables: {"id": id } } 
+  );
+
 
   const folioNumber = (serial) => {
     return serial.toString().padStart(5, "0")
@@ -78,15 +79,18 @@ const TemplateRow = (props) => {
 
   const statusBadgetTemplate = () => {
     return(
-      budtingTemplate.active ? "Activo" : "Inactivo"
+      budgetingTemplate.active ? "Activo" : "Inactivo"
     )
   }
 
-  console.log("id", id)
+  const procedureLinked = () => {
+    return data ? data.budgetingTemplate.proceduresTemplates.map((item) => item.id ) : "" 
+  }
+
   return(
-    <TableRow key={ budtingTemplate.id + "-row" }  className={ markStatus() } >
-      <TableCell align= "center">{ budtingTemplate.name }</TableCell>
-      <TableCell align= "center">{ folioNumber(budtingTemplate.serialNumber) }</TableCell>
+    <TableRow key={ budgetingTemplate.id + "-row" }  className={ markStatus() } >
+      <TableCell align= "center">{ budgetingTemplate.name }</TableCell>
+      <TableCell align= "center">{ folioNumber(budgetingTemplate.serialNumber) }</TableCell>
       <TableCell align= "center">
         { 
           <Chip
@@ -95,16 +99,15 @@ const TemplateRow = (props) => {
             color={ active ? "primary" : "secondary"} 
           />
         }
-                  { id }
       </TableCell>
+      <TableCell align= "center">{ procedureLinked() }</TableCell>
       <TableCell align= "center">2.0</TableCell>
-      <TableCell align= "center">En ejecución</TableCell>
       <TableCell align= "center">
         <Grid>
           <GenericDropdownMenu>
-            <MenuItem key={ budtingTemplate.id + "-edit" }>
+            <MenuItem key={ budgetingTemplate.id + "-edit" }>
               <Link
-                to={`/config/budget_templates/${ budtingTemplate.id }/edit`}
+                to={`/config/budget_templates/${ budgetingTemplate.id }/edit`}
                 color="inherit"
                 underline="none"
                 className={ classes.linkDefault }
@@ -118,7 +121,7 @@ const TemplateRow = (props) => {
               </Link>
             </MenuItem>
             <MenuItem 
-              key={ budtingTemplate.id + "-status" }
+              key={ budgetingTemplate.id + "-status" }
             >
               <Grid container onClick={ handleClickOpen }>
                 <ListItemIcon>

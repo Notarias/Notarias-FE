@@ -36,6 +36,7 @@ export const UPDATE_PROCEDURE_TEMPLATES = gql`
     $id: ID!,
     $name: String,
     $active: Boolean,
+    $budgetingTemplatesIds:[ID],
     $clientMutationId: String)
     {
     updateProceduresTemplate (input: 
@@ -43,6 +44,7 @@ export const UPDATE_PROCEDURE_TEMPLATES = gql`
         id: $id,
         name: $name,
         active: $active,
+        budgetingTemplatesIds: $budgetingTemplatesIds,
         clientMutationId: $clientMutationId
       }
     )
@@ -52,18 +54,26 @@ export const UPDATE_PROCEDURE_TEMPLATES = gql`
         name
         active
         serialNumber
+        budgetingTemplates{
+          name
+          id
+        }
       }
     }
   }
 `
 
 export const GET_PROCEDURE_TEMPLATE = gql`
-  query getTemplate ($id: ID!){
-    proceduresTemplate(id: $id){
+  query proceduresTemplate ($id: ID! ) {
+    proceduresTemplate (id: $id) {
+      active
       id
       name
       serialNumber
-      active
+      budgetingTemplates{
+        id
+        name
+      }
     }
   }
 `
@@ -76,6 +86,15 @@ export const CREATE_PROCEDURE_TEMPLATE = gql`
         id
         name
       }
+    }
+  }
+`
+
+export const GET_BUDGETING_TEMPLATES_QUICK_LIST = gql`
+query budgetingTemplatesQuickList{
+  budgetingTemplatesQuickList{
+    name
+      id
     }
   }
 `
@@ -276,9 +295,6 @@ export const DESTROY_PROCEDURES_TEMPLATE_TAB_FIELD = gql`
     }
   }
 `
-
-
-
 
 export const GET_PROCEDURES_TEMPLATE_FIELDS_GROUPS_FIELDS = gql`
   query proceduresTemplateFieldsGroupFields(
