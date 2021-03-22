@@ -28,10 +28,14 @@ import { useTheme }                   from '@material-ui/core/styles';
 const TemplateRow = (props) => {
 
 //   const budgetingTemplate  = props.data
-  const { classes, key } = props
+  const { classes, item } = props
 //   const [active, setActive] = React.useState(budgetingTemplate.active);
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
+  let kei = 0
+  const assingKey = () => {
+    return kei + 1
+  }
 //   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 //   const id = budgetingTemplate.id;
 
@@ -87,7 +91,6 @@ const TemplateRow = (props) => {
 //     return data ? data.budgetingTemplate.proceduresTemplates.map((item) => item.id ) : "" 
 //   }
 
-  console.log(key)
   return(
     // <TableRow key={ budgetingTemplate.id + "-row" }  className={ markStatus() } >
     //   <TableCell align= "center">{ budgetingTemplate.name }</TableCell>
@@ -162,7 +165,7 @@ const TemplateRow = (props) => {
     //   </TableCell>
     // </TableRow>
 
-    <TableRow key={ key + "-row" }  >
+    <TableRow key={ assingKey + "row" }  >
     <TableCell align= "center">Nombre</TableCell>
     <TableCell align= "center">00001</TableCell>
     <TableCell align= "center">

@@ -15,7 +15,6 @@ const TableBodyTemplate = (props) => {
     page: page + 1,
     per: per,
     search: search,
-
     sortDirection: sortDirection,
     sortField: sortField,
   }
@@ -27,13 +26,21 @@ const TableBodyTemplate = (props) => {
 
   let totalCount = 5
 
-  // useEffect(() => {
-  //   refetch(variables);
-  //   setGetTemplatesVariables(variables)
-  //   totalCount && assingTotalRecords(totalCount)
-  // }, [page, per, search, sortField, sortDirection, totalCount]);
+  useEffect(() => {
+    refetch(variables);
+    setGetTemplatesVariables(variables)
+    totalCount && assingTotalRecords(totalCount)
+  }, [page, per, search, sortField, sortDirection, totalCount]);
 
   console.log("budg", data)
+
+  const arrDemo = [{
+    0: {id: 1},
+    1: {id: 2},
+    2: {id: 3},
+    3: {id: 4},
+    4: {id: 5}
+  }]
 
   if (!true) {
     return(
@@ -58,12 +65,16 @@ const TableBodyTemplate = (props) => {
           ))
         } */}
         {
-          [0,1,2,3,4].map(item => (
-            <TemplateRow
-              key={ item.index }
-              classes={ classes }
-            />
-          ))
+          arrDemo.map(
+            ( item ) => {
+              return (
+                <TemplateRow
+                  key={ item.id + "row" }
+                  classes={ classes }
+                />
+              )
+            }
+          )
         }
       </TableBody>
     )

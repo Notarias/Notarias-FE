@@ -19,11 +19,19 @@ const BREADCRUMBS = [
 
 const BudgetsIndex = (props) => {
 
-  // const BUDGET_SEARCH_INPUT = []
+
+    let BUDGET_SEARCH_INPUT = {
+      clientName: null,
+      templateName: null,
+      serialNumber: 5,
+      totalMoreThanEq: null,
+      totalLessThanEq: null,
+    }
+
   const [searchLoading, setSearchLoading] = useState(false);
   const [sortField, setSortField]         = useState("name")
   const [sortDirection, setSortDirection] = useState("desc")
-  const [search]                     = useState({clientName: null})
+  const [search, setSearch]                     = useState({BUDGET_SEARCH_INPUT: BUDGET_SEARCH_INPUT})
   const [searchValue, setSearchValue]     = useState("")
   const [timeout, setSetTimeout]          = useState(null)
   const [page, setPage]                   = useState(0)
