@@ -27,22 +27,17 @@ import { useTheme }                   from '@material-ui/core/styles';
 
 const TemplateRow = (props) => {
 
-//   const budgetingTemplate  = props.data
-  const { classes, item } = props
+  const {budget} = props
+  const { classes } = props
 //   const [active, setActive] = React.useState(budgetingTemplate.active);
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
-  let kei = 0
-  const assingKey = () => {
-    return kei + 1
-  }
 //   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 //   const id = budgetingTemplate.id;
 
 //   const { loading, data, refetch } = useQuery(GET_BUDGETING_TEMPLATE,
 //     { variables: {"id": id } } 
 //   );
-
 
 //   const folioNumber = (serial) => {
 //     return serial.toString().padStart(5, "0")
@@ -91,100 +86,101 @@ const TemplateRow = (props) => {
 //     return data ? data.budgetingTemplate.proceduresTemplates.map((item) => item.id ) : "" 
 //   }
 
+  console.log("B", budget)
   return(
-    // <TableRow key={ budgetingTemplate.id + "-row" }  className={ markStatus() } >
-    //   <TableCell align= "center">{ budgetingTemplate.name }</TableCell>
-    //   <TableCell align= "center">{ folioNumber(budgetingTemplate.serialNumber) }</TableCell>
-    //   <TableCell align= "center">
-    //     { 
-    //       <Chip
-    //         size="small" label={ statusBadgetTemplate() }
-    //         classes={{colorPrimary: classes.activeGreen}}
-    //         color={ active ? "primary" : "secondary"} 
-    //       />
-    //     }
-    //   </TableCell>
-    //   <TableCell align= "center">{ procedureLinked() }</TableCell>
-    //   <TableCell align= "center">2.0</TableCell>
-    //   <TableCell align= "center">
-    //     <Grid>
-    //       <GenericDropdownMenu>
-    //         <MenuItem key={ budgetingTemplate.id + "-edit" }>
-    //           <Link
-    //             to={`/config/budget_templates/${ budgetingTemplate.id }/edit`}
-    //             color="inherit"
-    //             underline="none"
-    //             className={ classes.linkDefault }
-    //           >
-    //             <Grid container>
-    //               <ListItemIcon>
-    //                 <CreateIcon className={ classes.defaultIcon }/>
-    //               </ListItemIcon>
-    //               <ListItemText primary="Editar" />
-    //             </Grid>
-    //           </Link>
-    //         </MenuItem>
-    //         <MenuItem 
-    //           key={ budgetingTemplate.id + "-status" }
-    //         >
-    //           <Grid container onClick={ handleClickOpen }>
-    //             <ListItemIcon>
-    //               {
-    //                 active ? 
-    //                   <RadioButtonUncheckedIcon color="secondary" className={ classes.defaultIcon }/> 
-    //                 : 
-    //                   <RadioButtonCheckedIcon className={classes.activeIconGreen} /> 
-    //               }
-    //             </ListItemIcon>
-    //             <ListItemText primary={ statusTemplate() } />
-    //           </Grid>
-    //           <Dialog
-    //             fullScreen={ fullScreen }
-    //             open={ open }
-    //             onClose={ handleClose }
-    //             aria-labelledby="responsive-dialog-title"
-    //           >
-    //             <DialogTitle id="responsive-dialog-title">{"Confirmar ", statusTemplate() }</DialogTitle>
-    //             <DialogContent>
-    //               <DialogContentText>
-    //                 ¿Realmente deseas { statusTemplate() } está plantilla de presupuesto ?
-    //               </DialogContentText>
-    //             </DialogContent>
-    //             <DialogActions>
-    //               <Button onClick={ handleClose } color="primary">
-    //                 Cancelar
-    //               </Button>
-    //               <Button autoFocus onClick={ changeStatus } color="primary">
-    //                 { statusTemplate() }
-    //               </Button>
-    //             </DialogActions>
-    //           </Dialog>
-    //         </MenuItem>
-    //       </GenericDropdownMenu>
-    //     </Grid>
-    //   </TableCell>
-    // </TableRow>
+    <TableRow key={  "-row" } >
+      <TableCell align= "center">{ budget.client.firstName }</TableCell>
+      <TableCell align= "center">{ budget.budgetingTemplate.name }</TableCell>
+      <TableCell align= "center">
+        { 
+          <Chip
+            size="small" label={ "activo" }
+            // classes={{colorPrimary: classes.activeGreen}}
+            // color={ active ? "primary" : "secondary"} 
+          />
+        }
+      </TableCell>
+      <TableCell align= "center">10,000</TableCell>
+      <TableCell align= "center">{ budget.serialNumber }</TableCell>
+      <TableCell align= "center">
+        <Grid>
+          <GenericDropdownMenu>
+            {/* <MenuItem key={ budgetingTemplate.id + "-edit" }>
+              <Link
+                to={`/config/budget_templates/${ budgetingTemplate.id }/edit`}
+                color="inherit"
+                underline="none"
+                className={ classes.linkDefault }
+              >
+                <Grid container>
+                  <ListItemIcon>
+                    <CreateIcon className={ classes.defaultIcon }/>
+                  </ListItemIcon>
+                  <ListItemText primary="Editar" />
+                </Grid>
+              </Link>
+            </MenuItem>
+            <MenuItem 
+              key={ budgetingTemplate.id + "-status" }
+            >
+              <Grid container onClick={ handleClickOpen }>
+                <ListItemIcon>
+                  {
+                    active ? 
+                      <RadioButtonUncheckedIcon color="secondary" className={ classes.defaultIcon }/> 
+                    : 
+                      <RadioButtonCheckedIcon className={classes.activeIconGreen} /> 
+                  }
+                </ListItemIcon>
+                <ListItemText primary={ statusTemplate() } />
+              </Grid>
+              <Dialog
+                fullScreen={ fullScreen }
+                open={ open }
+                onClose={ handleClose }
+                aria-labelledby="responsive-dialog-title"
+              >
+                <DialogTitle id="responsive-dialog-title">{"Confirmar ", statusTemplate() }</DialogTitle>
+                <DialogContent>
+                  <DialogContentText>
+                    ¿Realmente deseas { statusTemplate() } está plantilla de presupuesto ?
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={ handleClose } color="primary">
+                    Cancelar
+                  </Button>
+                  <Button autoFocus onClick={ changeStatus } color="primary">
+                    { statusTemplate() }
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            </MenuItem> */}
+          </GenericDropdownMenu>
+        </Grid>
+      </TableCell>
+    </TableRow>
 
-    <TableRow key={ assingKey + "row" }  >
-    <TableCell align= "center">Nombre</TableCell>
-    <TableCell align= "center">00001</TableCell>
-    <TableCell align= "center">
-      { 
-        <Chip
-        //   size="small" label={ statusBadgetTemplate() }
-        //   classes={{colorPrimary: classes.activeGreen}}
-        //   color={ active ? "primary" : "secondary"} 
-        />
-      }
-    </TableCell>
-    <TableCell align= "center">No</TableCell>
-    <TableCell align= "center">2.0</TableCell>
-    <TableCell align= "center">
-      <Grid>
-        <GenericDropdownMenu/>
-      </Grid>
-    </TableCell>
-  </TableRow>
+  //   <TableRow key={ kei + "row" }  >
+  //   <TableCell align= "center">Nombre</TableCell>
+  //   <TableCell align= "center">{kei}</TableCell>
+  //   <TableCell align= "center">
+  //     { 
+  //       <Chip
+  //       //   size="small" label={ statusBadgetTemplate() }
+  //       //   classes={{colorPrimary: classes.activeGreen}}
+  //       //   color={ active ? "primary" : "secondary"} 
+  //       />
+  //     }
+  //   </TableCell>
+  //   <TableCell align= "center">No</TableCell>
+  //   <TableCell align= "center">2.0</TableCell>
+  //   <TableCell align= "center">
+  //     <Grid>
+  //       <GenericDropdownMenu/>
+  //     </Grid>
+  //   </TableCell>
+  // </TableRow>
   )
 }
 

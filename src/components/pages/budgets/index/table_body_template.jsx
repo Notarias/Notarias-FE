@@ -10,7 +10,7 @@ import TemplateRow                    from './template_row';
 
 const TableBodyTemplate = (props) => {
 
-  const { page, per, sortDirection, sortField, search, searchValue, assingTotalRecords, classes, id, setGetTemplatesVariables } = props
+  const { page, per, sortDirection, sortField, search, assingTotalRecords, classes, setGetTemplatesVariables } = props
   let variables = {
     page: page + 1,
     per: per,
@@ -24,7 +24,7 @@ const TableBodyTemplate = (props) => {
     GET_BUDGETS, { variables: variables, fetchPolicy: "no-cache" }
   );
 
-  let totalCount = 5
+  let totalCount = data && data.budgetsCount
 
   useEffect(() => {
     refetch(variables);
@@ -34,15 +34,7 @@ const TableBodyTemplate = (props) => {
 
   console.log("budg", data)
 
-  const arrDemo = [{
-    0: {id: 1},
-    1: {id: 2},
-    2: {id: 3},
-    3: {id: 4},
-    4: {id: 5}
-  }]
-
-  if (!true) {
+  if (loading || !data) {
     return(
       <TableBody>
         <TableRow>
@@ -55,27 +47,34 @@ const TableBodyTemplate = (props) => {
   } else {
     return(
       <TableBody>
-        {/* {
-          data.budgets.map(budget => (
-            <TemplateRow
-              data={ budget }
-              key={ budget.id + "-Budgetrow" }
-              classes={ classes }
-            />
-          ))
-        } */}
         {
-          arrDemo.map(
-            ( item ) => {
-              return (
+          data.budgets.map(
+            (budget) => {
+              console.log(budget)
+              return(
                 <TemplateRow
-                  key={ item.id + "row" }
+                  budget={ budget }
+                  key={ budget.id + "-BudgetRow" }
                   classes={ classes }
                 />
               )
             }
           )
         }
+        {/* {
+          [0, 1, 2, 3, 4].map(
+            ( item ) => {
+              let kei = item
+              return (
+                <TemplateRow
+                  key={ kei + "budgetRow"}
+                  item={ item }
+                  classes={ classes }
+                />
+              )
+            }
+          )
+        } */}
       </TableBody>
     )
   }

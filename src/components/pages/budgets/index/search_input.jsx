@@ -13,11 +13,16 @@ import { styles }                         from '../styles';
 import { withStyles }                     from '@material-ui/core/styles';
 import PostAddIcon                        from '@material-ui/icons/PostAdd';
 import PageviewIcon                       from '@material-ui/icons/Pageview';
+import { Link }             from 'react-router-dom';
 
 
 const SearchInput = (props) => {
   const { classes, searchLoading } = props
   const [open, setOpen] = React.useState(false)
+
+  const handleClickOpen = (event) => {
+    setOpen(true);
+  };
 
   const handleClose = () => {
     setOpen(false)
@@ -54,51 +59,12 @@ const SearchInput = (props) => {
         variant="contained" 
         color="primary"
         className={classes.newBudgetButton}
-        // onClick={ handleClickOpen }
+        onClick={ handleClickOpen }
+        component={Link} 
+        to="/budgets/new"
       >
         <PostAddIcon/>
       </Button>
-        <Dialog 
-          open={open} 
-          onClose={ handleClose }
-        >
-        <DialogTitle>
-          Se añadirá una nueva plantilla.
-        </DialogTitle>
-        <DialogContent>
-          Título de la plantilla de Presupuestos.
-          <TextField
-              autoFocus
-              margin="dense"
-              id="name"
-              variant="filled"
-
-              // onChange={ handleNameChange }
-              // error={ !!error["name"] && true }
-              // helperText={error["name"] || " "}
-              // errorskey={ "name" }
-              // name='name'
-            />
-        </DialogContent>
-        <DialogActions>
-          <Button 
-            //onClick={ handleClose }
-            variant="text" 
-            size="small" 
-          >
-            cancelar
-          </Button>
-          <Button
-            //onClick={ createNewBudgetingTemplate }
-            variant="text"
-            color="primary"
-            size="small"
-            // disabled={ pristine }
-          >
-            Agregar
-          </Button>
-        </DialogActions>
-      </Dialog>
     </Grid>
   )
 }

@@ -17,8 +17,8 @@ export default (props) => {
           callback={ sortHandler }
         />
         <SortHeader
-          text={ "Número del Tramite" }
-          field_property={ "serial_number" }
+          text={ "Nombre del Tramite" }
+          field_property={ "procedure_name" }
           current_field={ field }
           sort_direction={ direction }
           callback={ sortHandler }
@@ -37,6 +37,7 @@ export default (props) => {
         />
         <SortHeader
           text={ "Numero de serie" }
+          field_property={ "serial_number" }
           current_field={ field }
           sort_direction={ direction }
           callback={ sortHandler }

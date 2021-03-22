@@ -19,19 +19,18 @@ const BREADCRUMBS = [
 
 const BudgetsIndex = (props) => {
 
-
     let BUDGET_SEARCH_INPUT = {
       clientName: null,
       templateName: null,
-      serialNumber: 5,
+      serialNumber: null,
       totalMoreThanEq: null,
       totalLessThanEq: null,
     }
 
   const [searchLoading, setSearchLoading] = useState(false);
-  const [sortField, setSortField]         = useState("name")
+  const [sortField, setSortField]         = useState("serial_number")
   const [sortDirection, setSortDirection] = useState("desc")
-  const [search, setSearch]                     = useState({BUDGET_SEARCH_INPUT: BUDGET_SEARCH_INPUT})
+  const [search, setSearch]                     = useState(BUDGET_SEARCH_INPUT)
   const [searchValue, setSearchValue]     = useState("")
   const [timeout, setSetTimeout]          = useState(null)
   const [page, setPage]                   = useState(0)
@@ -86,12 +85,12 @@ const BudgetsIndex = (props) => {
             <TableBodyTemplate
               page={ page }
               per={ per }
-              search={ {} }
+              // search={ {} }
               sortField={ sortField }
               sortDirection={ sortDirection }
               assingTotalRecords={ assingTotalRecords }
               search={ search }
-              searchValue={ searchValue }
+              // searchValue={ searchValue }
               classes={ classes }
               setGetTemplatesVariables={ setGetTemplatesVariables }
             />
