@@ -12,6 +12,7 @@ import TextField from '@material-ui/core/TextField';
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
+    textAlign: 'left'
   },
   button: {
     marginTop: theme.spacing(1),

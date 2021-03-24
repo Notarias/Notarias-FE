@@ -71,5 +71,22 @@ export const styles = theme => {
     newBudgetButton: {
       marginLeft: "5px"
     },
+    textFieldSearchInTable: {
+      maxWidth: "350px",
+      width: "350px",
+      backgroundColor: theme.palette.background.paper,
+      marginBottom: '10px',
+      marginTop: '5px'
+    },   
+    selectableListItem: {
+      backgroundColor: 'inherit',
+      width: "350px",
+      height: "250px",
+      overflowY:"scroll"
+    },
+    labelLeft: {
+      textAlign: "left",
+    },
+
   })
 }

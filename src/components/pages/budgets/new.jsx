@@ -11,6 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Grid                               from '@material-ui/core/Grid';
 import Divider                              from '@material-ui/core/Divider';
+import ProceduresSearch                 from './new/procedures_search';
 
 
 const BREADCRUMBS = [
@@ -22,6 +23,7 @@ const BREADCRUMBS = [
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
+    textAlign: "left",
   },
   button: {
     marginTop: theme.spacing(1),
@@ -77,20 +79,17 @@ const NewBudget = (props) => {
     <>
       <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
       <Divider/>
-      <Grid>
-        asunto
-      </Grid>
-      <Grid container alignItems="center" justify="center">
-        <Grid container item xs={7}>
+      <Grid container justify="center">
+        <Grid container item justify="flex-start" xs={7}>
           <div className={classes.root}>
             <Stepper activeStep={activeStep} orientation="vertical">
               <Step key={ 1 + "step"}>
-                <StepLabel>{"Buscar cliente"}</StepLabel>
+                <StepLabel classes={ { root: classes.labelLeft } }>{"Buscar cliente"}</StepLabel>
                 <StepContent>
-                <Typography>{getStepContent(0)}</Typography>
+                {/* <Typography>{getStepContent(0)}</Typography> */}
                   <TextField id="outlined-basic" label="Buscar" variant="outlined" />
-                  <div className={classes.actionsContainer}>
-                    <div>
+                  <Grid container>
+                    <Grid container item alignItems="center" justify="flex-end" >
                       <Button
                         variant="contained"
                         color="primary"
@@ -107,8 +106,8 @@ const NewBudget = (props) => {
                       >
                         Crear
                       </Button>
-                    </div>
-                  </div>
+                    </Grid>
+                  </Grid>
                 </StepContent>
               </Step>
               <Step key={ 1 + "step"}>
@@ -118,8 +117,8 @@ const NewBudget = (props) => {
                   <TextField id="outlined-basic" label="Nombres" variant="outlined" />
                   <TextField id="outlined-basic" label="Apellidos" variant="outlined" />
                   <TextField id="outlined-basic" label="RFC" variant="outlined" />
-                    <div className={classes.actionsContainer}>
-                      <div>
+                  <Grid container>
+                    <Grid container item alignItems="center" justify="flex-end" >
                         <Button
                           onClick={handleBack}
                           className={classes.button}
@@ -132,19 +131,21 @@ const NewBudget = (props) => {
                           onClick={handleNext}
                           className={classes.button}
                         >
-                          {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                          Siguiente
                         </Button>
-                      </div>
-                    </div>
+                      </Grid>
+                    </Grid>
                   </StepContent>
                 </Step>
               <Step key={ 2 + "step"}>
                   <StepLabel>{"Agregar trámite"}</StepLabel>
                   <StepContent>
-                  <Typography>{getStepContent(2)}</Typography>
-                  <TextField id="outlined-basic" label="Buscar" variant="outlined" />
-                    <div className={classes.actionsContainer}>
-                      <div>
+                  {/* <Typography>{getStepContent(2)}</Typography> */}
+                  <Grid container alignItems="center" justify="center">
+                    <ProceduresSearch/>
+                  </Grid>
+                  <Grid container>
+                    <Grid container item alignItems="center" justify="flex-end" >
                         <Button
                           onClick={handleBack}
                           className={classes.button}
@@ -157,10 +158,10 @@ const NewBudget = (props) => {
                           onClick={handleNext}
                           className={classes.button}
                         >
-                          {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                          Terminar
                         </Button>
-                      </div>
-                    </div>
+                      </Grid>
+                    </Grid>
                   </StepContent>
                 </Step>
             </Stepper>
@@ -174,9 +175,23 @@ const NewBudget = (props) => {
             )}
           </div>
         </Grid>
-        <Grid container item xs={3} >
+        <Grid container item xs={3} direction="row" justify="flex-end" alignItems="stretch">
           <Paper className={classes.root}>
-            Tabla de busqueda
+            <Grid container item xs={12} justify="center" >
+              Datos del cliente
+              <Grid>
+                <TextField id="outlined-basic" label="Nombres" variant="outlined" />
+                <TextField id="outlined-basic" label="Apellidos" variant="outlined" />
+                <TextField id="outlined-basic" label="RFC" variant="outlined" />
+              </Grid>
+            </Grid>
+            <Grid container item xs={12} justify="center">
+              Trámite
+              <Grid>
+                <TextField id="outlined-basic" label="Nombre del trámite" variant="outlined" />
+                <TextField id="outlined-basic" label="RFC" variant="outlined" />
+              </Grid>
+            </Grid>
           </Paper>
         </Grid>
       </Grid>
