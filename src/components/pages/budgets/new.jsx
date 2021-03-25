@@ -12,6 +12,9 @@ import TextField from '@material-ui/core/TextField';
 import Grid                               from '@material-ui/core/Grid';
 import Divider                              from '@material-ui/core/Divider';
 import ProceduresSearch                 from './new/procedures_search';
+import SearchIcon from '@material-ui/icons/Search';
+import PageviewIcon from '@material-ui/icons/Pageview';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 
 const BREADCRUMBS = [
@@ -81,13 +84,26 @@ const NewBudget = (props) => {
       <Divider/>
       <Grid container justify="center">
         <Grid container item justify="flex-start" xs={7}>
-          <div className={classes.root}>
-            <Stepper activeStep={activeStep} orientation="vertical">
+        <Grid container item xs={12} direction="row" justify="center" alignItems="stretch" >
+          <Grid container item>
+            <Stepper activeStep={activeStep}>
+              <Step key={ 0 + "step"}  >
+                <StepLabel classes={ { root: classes.labelLeft }}>{"Buscar cliente"}</StepLabel>
+              </Step>
               <Step key={ 1 + "step"}>
-                <StepLabel classes={ { root: classes.labelLeft } }>{"Buscar cliente"}</StepLabel>
-                <StepContent>
-                {/* <Typography>{getStepContent(0)}</Typography> */}
-                  <TextField id="outlined-basic" label="Buscar" variant="outlined" />
+                <StepLabel classes={ { root: classes.labelLeft }}>{"Crear cliente"}</StepLabel>
+              </Step>
+              <Step key={ 2 + "step"}>
+                <StepLabel classes={ { root: classes.labelLeft }}>{"Buscar Trámite"}</StepLabel>
+              </Step>
+            </Stepper>
+          </Grid>
+        </Grid>
+        <Grid container item xs={12}>
+          <Paper className={classes.root}>
+        { (activeStep === 0) && (
+              <div>
+                <TextField id="outlined-basic" label="Buscar" variant="outlined" />
                   <Grid container>
                     <Grid container item alignItems="center" justify="flex-end" >
                       <Button
@@ -108,15 +124,14 @@ const NewBudget = (props) => {
                       </Button>
                     </Grid>
                   </Grid>
-                </StepContent>
-              </Step>
-              <Step key={ 1 + "step"}>
-                <StepLabel>{"Agregar cliente"}</StepLabel>
-                <StepContent>
-                  <Typography>{getStepContent(1)}</Typography>
-                  <TextField id="outlined-basic" label="Nombres" variant="outlined" />
-                  <TextField id="outlined-basic" label="Apellidos" variant="outlined" />
-                  <TextField id="outlined-basic" label="RFC" variant="outlined" />
+              </div>
+            )} 
+            { (activeStep === 1) && (
+              <div>
+                <Typography>{getStepContent(1)}</Typography>
+                  <TextField id="first-name-basic" label="Nombres" variant="outlined" />
+                  <TextField id="last-name-basic" label="Apellidos" variant="outlined" />
+                  <TextField id="rfc-basic" label="RFC" variant="outlined" />
                   <Grid container>
                     <Grid container item alignItems="center" justify="flex-end" >
                         <Button
@@ -135,13 +150,11 @@ const NewBudget = (props) => {
                         </Button>
                       </Grid>
                     </Grid>
-                  </StepContent>
-                </Step>
-              <Step key={ 2 + "step"}>
-                  <StepLabel>{"Agregar trámite"}</StepLabel>
-                  <StepContent>
-                  {/* <Typography>{getStepContent(2)}</Typography> */}
-                  <Grid container alignItems="center" justify="center">
+              </div>
+            )}
+            { (activeStep === 2) && (
+              <div>
+                <Grid container alignItems="center" justify="center">
                     <ProceduresSearch/>
                   </Grid>
                   <Grid container>
@@ -162,9 +175,8 @@ const NewBudget = (props) => {
                         </Button>
                       </Grid>
                     </Grid>
-                  </StepContent>
-                </Step>
-            </Stepper>
+              </div>
+            )}
             {activeStep === steps.length && (
               <Paper square elevation={0} className={classes.resetContainer}>
                 <Typography>All steps completed - you&apos;re finished</Typography>
@@ -173,28 +185,31 @@ const NewBudget = (props) => {
                 </Button>
               </Paper>
             )}
-          </div>
+            </Paper>
+        </Grid>
+
         </Grid>
         <Grid container item xs={3} direction="row" justify="flex-end" alignItems="stretch">
           <Paper className={classes.root}>
             <Grid container item xs={12} justify="center" >
               Datos del cliente
               <Grid>
-                <TextField id="outlined-basic" label="Nombres" variant="outlined" />
-                <TextField id="outlined-basic" label="Apellidos" variant="outlined" />
-                <TextField id="outlined-basic" label="RFC" variant="outlined" />
+                <TextField id="Nombres-basic" label="Nombres" variant="outlined" />
+                <TextField id="Apellidos-basic" label="Apellidos" variant="outlined" />
+                <TextField id="RFC-basic" label="RFC" variant="outlined" />
               </Grid>
             </Grid>
             <Grid container item xs={12} justify="center">
               Trámite
               <Grid>
-                <TextField id="outlined-basic" label="Nombre del trámite" variant="outlined" />
-                <TextField id="outlined-basic" label="RFC" variant="outlined" />
+                <TextField id="Nombre-basic" label="Nombre del trámite" variant="outlined" />
+                <TextField id="-basic" label="RFC" variant="outlined" />
               </Grid>
             </Grid>
           </Paper>
         </Grid>
       </Grid>
+      {/* <Typography>{getStepContent(2)}</Typography> */}
     </>
   )
 }
