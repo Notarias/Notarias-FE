@@ -15,7 +15,7 @@ import ProceduresSearch                 from './new/procedures_search';
 import SearchIcon from '@material-ui/icons/Search';
 import PageviewIcon from '@material-ui/icons/Pageview';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-
+import ControlsBar                  from '../clients/controls_bar';
 
 const BREADCRUMBS = [
   { name: "Inicio", path: "/" },
@@ -26,7 +26,6 @@ const BREADCRUMBS = [
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
-    textAlign: "left",
   },
   button: {
     marginTop: theme.spacing(1),
@@ -38,6 +37,19 @@ const useStyles = makeStyles((theme) => ({
   resetContainer: {
     padding: theme.spacing(3),
   },
+  stepperIconLabel: {
+    width: '100%',
+    height: "100px"
+  },
+  gridFather: {
+    height: "500px"
+  },
+  grid300: {
+    height: "300px"
+  },
+  grid100: {
+    height: "100px"
+  }
 }));
 
 function getStepContent(step) {
@@ -57,6 +69,9 @@ const NewBudget = (props) => {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
+  const [searchLoading, setSearchLoading] = useState(false);
+  const [searchValue, setSearchValue]     = useState("")
+  const [timeout, setSetTimeout]          = useState(null)
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -78,17 +93,28 @@ const NewBudget = (props) => {
     return ['Añadir un cliente', 'Crear un cliente', 'Añadir un Trámite'];
   }
 
+  const onChangeSearch = (event) => {
+    timeout && clearTimeout(timeout)
+    setSearchLoading(true)
+    let value = event.target.value
+
+    setSetTimeout(setTimeout(() => {
+      setSearchValue(value)
+      setSearchLoading(false)
+    }, 2000))
+  }
+
   return(
     <>
       <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
       <Divider/>
-      <Grid container justify="center">
-        <Grid container item justify="flex-start" xs={7}>
-        <Grid container item xs={12} direction="row" justify="center" alignItems="stretch" >
-          <Grid container item>
-            <Stepper activeStep={activeStep}>
+      <Grid container justify="center" className={classes.gridFather}>
+        <Grid container item xs={7} direction="row" >
+        <Paper className={classes.root}>
+          <Grid container item xs={12} >
+            <Stepper activeStep={activeStep} alternativeLabel className={classes.stepperIconLabel}>
               <Step key={ 0 + "step"}  >
-                <StepLabel classes={ { root: classes.labelLeft }}>{"Buscar cliente"}</StepLabel>
+                <StepLabel>{"Buscar cliente"}</StepLabel>
               </Step>
               <Step key={ 1 + "step"}>
                 <StepLabel classes={ { root: classes.labelLeft }}>{"Crear cliente"}</StepLabel>
@@ -98,96 +124,100 @@ const NewBudget = (props) => {
               </Step>
             </Stepper>
           </Grid>
-        </Grid>
-        <Grid container item xs={12}>
-          <Paper className={classes.root}>
-        { (activeStep === 0) && (
-              <div>
-                <TextField id="outlined-basic" label="Buscar" variant="outlined" />
-                  <Grid container>
-                    <Grid container item alignItems="center" justify="flex-end" >
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={handleToProcedure}
-                        className={classes.button}
-                      >
-                        Siguiente
-                      </Button>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={handleNext}
-                        className={classes.button}
-                      >
-                        Crear
-                      </Button>
-                    </Grid>
-                  </Grid>
-              </div>
+          <Grid container item xs={12} >
+            { (activeStep === 0) && (
+            <>
+              <Grid container item alignItems="center" justify="center" className={classes.grid300}>
+                <ControlsBar
+                classes={classes}
+                searchLoading={searchLoading}
+                onChangeSearch={onChangeSearch.bind(this)}
+                />
+              </Grid>
+              <Grid container item justify="flex-end" className={classes.grid100}>
+                <Grid>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleToProcedure}
+                    className={classes.button}
+                  >
+                    Siguiente
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleNext}
+                    className={classes.button}
+                  >
+                    Crear
+                  </Button>
+                </Grid>
+              </Grid>
+            </>
             )} 
-            { (activeStep === 1) && (
-              <div>
-                <Typography>{getStepContent(1)}</Typography>
-                  <TextField id="first-name-basic" label="Nombres" variant="outlined" />
-                  <TextField id="last-name-basic" label="Apellidos" variant="outlined" />
-                  <TextField id="rfc-basic" label="RFC" variant="outlined" />
-                  <Grid container>
-                    <Grid container item alignItems="center" justify="flex-end" >
-                        <Button
-                          onClick={handleBack}
-                          className={classes.button}
-                        >
-                          Atrás
-                        </Button>
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          onClick={handleNext}
-                          className={classes.button}
-                        >
-                          Siguiente
-                        </Button>
+              { (activeStep === 1) && (
+                <div>
+                  <Typography>{getStepContent(1)}</Typography>
+                    <TextField id="first-name-basic" label="Nombres" variant="outlined" />
+                    <TextField id="last-name-basic" label="Apellidos" variant="outlined" />
+                    <TextField id="rfc-basic" label="RFC" variant="outlined" />
+                    <Grid container>
+                      <Grid container item alignItems="center" justify="flex-end" >
+                          <Button
+                            onClick={handleBack}
+                            className={classes.button}
+                          >
+                            Atrás
+                          </Button>
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={handleNext}
+                            className={classes.button}
+                          >
+                            Siguiente
+                          </Button>
+                        </Grid>
                       </Grid>
+                </div>
+              )}
+              { (activeStep === 2) && (
+                <div>
+                  <Grid container alignItems="center" justify="center">
+                      <ProceduresSearch/>
                     </Grid>
-              </div>
-            )}
-            { (activeStep === 2) && (
-              <div>
-                <Grid container alignItems="center" justify="center">
-                    <ProceduresSearch/>
-                  </Grid>
-                  <Grid container>
-                    <Grid container item alignItems="center" justify="flex-end" >
-                        <Button
-                          onClick={handleBack}
-                          className={classes.button}
-                        >
-                          Atrás
-                        </Button>
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          onClick={handleNext}
-                          className={classes.button}
-                        >
-                          Terminar
-                        </Button>
+                    <Grid container>
+                      <Grid container item alignItems="center" justify="flex-end" >
+                          <Button
+                            onClick={handleBack}
+                            className={classes.button}
+                          >
+                            Atrás
+                          </Button>
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={handleNext}
+                            className={classes.button}
+                          >
+                            Terminar
+                          </Button>
+                        </Grid>
                       </Grid>
-                    </Grid>
-              </div>
-            )}
-            {activeStep === steps.length && (
-              <Paper square elevation={0} className={classes.resetContainer}>
-                <Typography>All steps completed - you&apos;re finished</Typography>
-                <Button onClick={handleReset} className={classes.button}>
-                  Reset
-                </Button>
-              </Paper>
-            )}
-            </Paper>
-        </Grid>
+                </div>
+              )}
+              {/* {activeStep === steps.length && (
+                <Paper square elevation={0} className={classes.resetContainer}>
+                  <Typography>All steps completed - you&apos;re finished</Typography>
+                  <Button onClick={handleReset} className={classes.button}>
+                    Reset
+                  </Button>
+                </Paper>
+              )} */}
 
+          </Grid>
+          </Paper>
         </Grid>
         <Grid container item xs={3} direction="row" justify="flex-end" alignItems="stretch">
           <Paper className={classes.root}>
