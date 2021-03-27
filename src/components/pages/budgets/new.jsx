@@ -126,35 +126,36 @@ const NewBudget = (props) => {
           </Grid>
           <Grid container item xs={12} >
             { (activeStep === 0) && (
-            <>
-              <Grid container item alignItems="center" justify="center" className={classes.grid300}>
-                <ControlsBar
-                classes={classes}
-                searchLoading={searchLoading}
-                onChangeSearch={onChangeSearch.bind(this)}
-                />
-              </Grid>
-              <Grid container item justify="flex-end" className={classes.grid100}>
-                <Grid>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleToProcedure}
-                    className={classes.button}
-                  >
-                    Siguiente
-                  </Button>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleNext}
-                    className={classes.button}
-                  >
-                    Crear
-                  </Button>
+              <Grid>
+                <Grid container item alignItems="center" justify="center" className={classes.grid300}>
+                  <ControlsBar
+                    classes={classes}
+                    searchLoading={searchLoading}
+                    onChangeSearch={onChangeSearch.bind(this)}
+                  />
+                  <Grid container item justify="flex-end" className={classes.grid100}>
+                    <Grid>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={handleToProcedure}
+                        className={classes.button}
+                      >
+                        Siguiente
+                      </Button>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={handleNext}
+                        className={classes.button}
+                      >
+                        Crear
+                      </Button>
+                    </Grid>
+                  </Grid>
                 </Grid>
               </Grid>
-            </>
+
             )} 
               { (activeStep === 1) && (
                 <div>
@@ -162,6 +163,7 @@ const NewBudget = (props) => {
                     <TextField id="first-name-basic" label="Nombres" variant="outlined" />
                     <TextField id="last-name-basic" label="Apellidos" variant="outlined" />
                     <TextField id="rfc-basic" label="RFC" variant="outlined" />
+                    <TextField id="curp-basic" label="CURP" variant="outlined" />
                     <Grid container>
                       <Grid container item alignItems="center" justify="flex-end" >
                           <Button
@@ -183,29 +185,27 @@ const NewBudget = (props) => {
                 </div>
               )}
               { (activeStep === 2) && (
-                <div>
-                  <Grid container alignItems="center" justify="center">
-                      <ProceduresSearch/>
-                    </Grid>
-                    <Grid container>
-                      <Grid container item alignItems="center" justify="flex-end" >
-                          <Button
-                            onClick={handleBack}
-                            className={classes.button}
-                          >
-                            Atrás
-                          </Button>
-                          <Button
-                            variant="contained"
-                            color="primary"
-                            onClick={handleNext}
-                            className={classes.button}
-                          >
-                            Terminar
-                          </Button>
-                        </Grid>
-                      </Grid>
-                </div>
+
+              <Grid  container item alignItems="center" justify="center" >
+                <ProceduresSearch/>
+                <Grid container item alignItems="flex-end" justify="flex-end" >
+                  <Button
+                    onClick={handleBack}
+                    className={classes.button}
+                  >
+                    Atrás
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleNext}
+                    className={classes.button}
+                  >
+                    Terminar
+                  </Button>
+                </Grid>
+              </Grid>
+
               )}
               {/* {activeStep === steps.length && (
                 <Paper square elevation={0} className={classes.resetContainer}>

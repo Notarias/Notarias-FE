@@ -11,6 +11,7 @@ import ListItemText                         from '@material-ui/core/ListItemText
 import Checkbox                             from '@material-ui/core/Checkbox';
 import { useQuery }                                   from '@apollo/react-hooks';
 import { GET_PROCEDURES_TEMPLATES_QUICK_LIST  }       from '../queries_and_mutations/queries';
+import Grid                               from '@material-ui/core/Grid';
 
 
 const renderSearchList = (searchList, checked, classes, handleToggle) => {
@@ -102,7 +103,7 @@ const ProceduresSearch = (props) => {
   }, [data, checked])
 
   return (
-    <>
+    <Grid container alignItems="center" justify="center">
       <div>
         <TextField 
           onChange={ changeSearch }
@@ -117,7 +118,7 @@ const ProceduresSearch = (props) => {
           renderSearchList(searchList, checked, classes, handleToggle)
         }
       </div>
-    </>
+    </Grid>
   );
 }
 
