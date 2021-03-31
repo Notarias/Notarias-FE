@@ -15,7 +15,7 @@ import ProceduresSearch                 from './new/procedures_search';
 import SearchIcon from '@material-ui/icons/Search';
 import PageviewIcon from '@material-ui/icons/Pageview';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import ControlsBar                  from '../clients/controls_bar';
+import ClientSearch                 from './new/client_search';
 
 const BREADCRUMBS = [
   { name: "Inicio", path: "/" },
@@ -26,6 +26,7 @@ const BREADCRUMBS = [
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
+    marginTop: '20px'
   },
   button: {
     marginTop: theme.spacing(1),
@@ -42,13 +43,13 @@ const useStyles = makeStyles((theme) => ({
     height: "100px"
   },
   gridFather: {
-    height: "500px"
+    height: "600px"
   },
   grid300: {
-    height: "300px"
+    height: "400px"
   },
   grid100: {
-    height: "100px"
+    height: "50px"
   }
 }));
 
@@ -117,45 +118,43 @@ const NewBudget = (props) => {
                 <StepLabel>{"Buscar cliente"}</StepLabel>
               </Step>
               <Step key={ 1 + "step"}>
-                <StepLabel classes={ { root: classes.labelLeft }}>{"Crear cliente"}</StepLabel>
+                <StepLabel>{"Crear cliente"}</StepLabel>
               </Step>
               <Step key={ 2 + "step"}>
-                <StepLabel classes={ { root: classes.labelLeft }}>{"Buscar Trámite"}</StepLabel>
+                <StepLabel>{"Buscar Trámite"}</StepLabel>
               </Step>
             </Stepper>
           </Grid>
           <Grid container item xs={12} >
             { (activeStep === 0) && (
-              <Grid>
+            <>
                 <Grid container item alignItems="center" justify="center" className={classes.grid300}>
-                  <ControlsBar
-                    classes={classes}
+                  <ClientSearch
                     searchLoading={searchLoading}
                     onChangeSearch={onChangeSearch.bind(this)}
                   />
-                  <Grid container item justify="flex-end" className={classes.grid100}>
-                    <Grid>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={handleToProcedure}
-                        className={classes.button}
-                      >
-                        Siguiente
-                      </Button>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={handleNext}
-                        className={classes.button}
-                      >
-                        Crear
-                      </Button>
-                    </Grid>
+                </Grid>
+                <Grid container item justify="flex-end" className={classes.grid100}>
+                  <Grid>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={handleToProcedure}
+                      className={classes.button}
+                    >
+                      Siguiente
+                    </Button>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={handleNext}
+                      className={classes.button}
+                    >
+                      Crear
+                    </Button>
                   </Grid>
                 </Grid>
-              </Grid>
-
+            </>
             )} 
               { (activeStep === 1) && (
                 <div>
@@ -239,7 +238,6 @@ const NewBudget = (props) => {
           </Paper>
         </Grid>
       </Grid>
-      {/* <Typography>{getStepContent(2)}</Typography> */}
     </>
   )
 }

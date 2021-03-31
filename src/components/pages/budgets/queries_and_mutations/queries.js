@@ -88,3 +88,29 @@ export const GET_PROCEDURES_TEMPLATES_QUICK_LIST = gql`
     }
   }
 `
+
+export const LOAD_CLIENTS = gql`
+  query searchClients(
+      $page: Int,
+      $per: Int,
+      $sortField: String,
+      $sortDirection: String,
+      $searchField: String,
+      $searchValue: String
+    ) {
+    clients(
+      page: $page,
+      per: $per,
+      sortField: $sortField,
+      sortDirection: $sortDirection,
+      searchField: $searchField,
+      searchValue: $searchValue
+    ) {
+      id
+      firstName
+      lastName
+      rfc
+      curp
+    }
+  }
+`

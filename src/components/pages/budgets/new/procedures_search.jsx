@@ -1,17 +1,17 @@
-import React, { useEffect }                              from 'react';
+import React, { useEffect }                           from 'react';
 import { styles }                                     from '../styles';
 import { withStyles }                                 from '@material-ui/core/styles';
 import Fuse                                           from 'fuse.js';
 import Divider                                        from '@material-ui/core/Divider';
 import { TextField }                                  from '@material-ui/core';
-import List                                 from '@material-ui/core/List';
-import ListItem                             from '@material-ui/core/ListItem';
-import ListItemIcon                         from '@material-ui/core/ListItemIcon';
-import ListItemText                         from '@material-ui/core/ListItemText';
-import Checkbox                             from '@material-ui/core/Checkbox';
+import List                                           from '@material-ui/core/List';
+import ListItem                                       from '@material-ui/core/ListItem';
+import ListItemIcon                                   from '@material-ui/core/ListItemIcon';
+import ListItemText                                   from '@material-ui/core/ListItemText';
+import Checkbox                                       from '@material-ui/core/Checkbox';
 import { useQuery }                                   from '@apollo/react-hooks';
 import { GET_PROCEDURES_TEMPLATES_QUICK_LIST  }       from '../queries_and_mutations/queries';
-import Grid                               from '@material-ui/core/Grid';
+import Grid                                           from '@material-ui/core/Grid';
 
 
 const renderSearchList = (searchList, checked, classes, handleToggle) => {
@@ -30,23 +30,23 @@ const renderSearchList = (searchList, checked, classes, handleToggle) => {
             <React.Fragment key={obj.id + "fragment"}>
                 <ListItem key={obj.id} role={undefined} dense button onClick={handleToggle(obj)}>
                 <ListItemIcon>
-                    <Checkbox
-                        edge="start"
-                        checked={checkedIds.indexOf(obj.id) !== -1}
-                        tabIndex={-1}
-                        disableRipple
-                        inputProps={{ 'aria-labelledby': obj.id }}
-                    />
-                    </ListItemIcon>
-                    <ListItemText 
+                  <Checkbox
+                    edge="start"
+                    checked={checkedIds.indexOf(obj.id) !== -1}
+                    tabIndex={-1}
+                    disableRipple
+                    inputProps={{ 'aria-labelledby': obj.id }}
+                  />
+                </ListItemIcon>
+                  <ListItemText 
                     id={obj.id} 
                     primary={` ${ obj.name }`} 
-                    />
+                  />
                 </ListItem>
                 <Divider/>
             </React.Fragment>
             )
-        }
+          }
         )
       }
       </List>
