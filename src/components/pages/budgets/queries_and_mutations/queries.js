@@ -114,3 +114,17 @@ export const LOAD_CLIENTS = gql`
     }
   }
 `
+
+export const CREATE_CLIENT = gql`
+  mutation createClient($firstName: String, $lastName: String) {
+    createClient(input: { firstName: $firstName, lastName: $lastName }) {
+      client {
+        id
+        firstName
+        lastName
+      }
+      errors
+      pointers
+    }
+  }
+`

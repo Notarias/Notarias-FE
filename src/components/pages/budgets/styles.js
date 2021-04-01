@@ -72,8 +72,8 @@ export const styles = theme => {
       marginLeft: "5px"
     },
     textFieldSearchInTable: {
-      maxWidth: "350px",
-      width: "350px",
+      maxWidth: "300px",
+      width: "300px",
       backgroundColor: theme.palette.background.paper,
       marginBottom: '10px',
       marginTop: '5px'
@@ -81,13 +81,11 @@ export const styles = theme => {
     selectableListItem: {
       backgroundColor: 'inherit',
       width: "350px",
-      height: "250px",
+      height: "300px",
       overflowY:"scroll"
     },
     labelLeft: {
       textAlign: "left",
     },
-
-
   })
 }

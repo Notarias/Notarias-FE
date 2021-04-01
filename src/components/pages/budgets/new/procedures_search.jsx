@@ -14,7 +14,7 @@ import { GET_PROCEDURES_TEMPLATES_QUICK_LIST  }       from '../queries_and_mutat
 import Grid                                           from '@material-ui/core/Grid';
 
 
-const renderSearchList = (searchList, checked, classes, handleToggle) => {
+const renderSearchList = (searchList, checked, classes, handleToggle, setProcedureInfo) => {
   const checkedIds = checked.map((item) =>  item.id )
     return(
       <List 
@@ -29,7 +29,7 @@ const renderSearchList = (searchList, checked, classes, handleToggle) => {
             return(
             <React.Fragment key={obj.id + "fragment"}>
                 <ListItem key={obj.id} role={undefined} dense button onClick={handleToggle(obj)}>
-                <ListItemIcon>
+                {/* <ListItemIcon>
                   <Checkbox
                     edge="start"
                     checked={checkedIds.indexOf(obj.id) !== -1}
@@ -37,10 +37,12 @@ const renderSearchList = (searchList, checked, classes, handleToggle) => {
                     disableRipple
                     inputProps={{ 'aria-labelledby': obj.id }}
                   />
-                </ListItemIcon>
+                </ListItemIcon> */}
                   <ListItemText 
                     id={obj.id} 
-                    primary={` ${ obj.name }`} 
+                    primary={` ${ obj.name }`}
+                    checked={checkedIds.indexOf(obj.id) !== -1}
+                    tabIndex={-1}
                   />
                 </ListItem>
                 <Divider/>
@@ -56,7 +58,7 @@ const renderSearchList = (searchList, checked, classes, handleToggle) => {
 
 const ProceduresSearch = (props) => {
 
-  const {classes} = props;
+  const { classes, setProcedureInfo } = props;
 //   const setToLinkSelectedOption = props.setToLinkSelectedOption;
 //   const toLinkSelectedOption = props.toLinkSelectedOption;
 //   const [checked, setChecked] = React.useState(toLinkSelectedOption);
@@ -65,6 +67,7 @@ const ProceduresSearch = (props) => {
   const [initialList, setInitialList] = React.useState([])
   const [fuzzySearcher, setFuzzySearcher] = React.useState(new Fuse(initialList, { keys: ['name'] }))
   const [initialized, setInitialized] = React.useState()
+  const [selectedIndex, setSelectedIndex] = React.useState();
 
   const { loading, data, refetch } = useQuery(
     GET_PROCEDURES_TEMPLATES_QUICK_LIST ,
@@ -81,6 +84,7 @@ const ProceduresSearch = (props) => {
   }
 
   const handleToggle = (obj) => () => {
+    setProcedureInfo(obj)
     const checkedIds = checked.map((item) => item.id)
     const currentIndex = checkedIds.indexOf(obj.id);
     const newChecked = [...checked];
@@ -103,7 +107,7 @@ const ProceduresSearch = (props) => {
   }, [data, checked])
 
   return (
-    <Grid container alignItems="center" justify="center">
+    <Grid container item direction="column" alignItems="center" justify="center">
       <div>
         <TextField 
           onChange={ changeSearch }

@@ -16,6 +16,9 @@ import SearchIcon from '@material-ui/icons/Search';
 import PageviewIcon from '@material-ui/icons/Pageview';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ClientSearch                 from './new/client_search';
+import { useMutation }                    from '@apollo/react-hooks';
+import { CREATE_CLIENT }                      from './queries_and_mutations/queries'
+
 
 const BREADCRUMBS = [
   { name: "Inicio", path: "/" },
@@ -43,13 +46,13 @@ const useStyles = makeStyles((theme) => ({
     height: "100px"
   },
   gridFather: {
-    height: "600px"
+    height: "500px"
   },
   grid300: {
-    height: "400px"
+    height: "420px"
   },
   grid100: {
-    height: "50px"
+    height: "60px"
   },
   textClientInfo: {
     height: "70px"
@@ -63,6 +66,13 @@ const useStyles = makeStyles((theme) => ({
     height: "70px",
     width: "250px",
     margin: "5px"
+  },
+  procedureInfoText: {
+    marginTop: "20px",
+    width: "182px"
+  },
+  titleDataInfo: {
+    marginTop: "20px"
   }
 }));
 
@@ -84,9 +94,33 @@ const NewBudget = (props) => {
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
   const [searchLoading, setSearchLoading] = useState(false);
-  const [searchValue, setSearchValue]     = useState("")
-  const [timeout, setSetTimeout]          = useState(null)
-  const [clientInfo, setClientInfo] = useState("")
+  const [searchValue, setSearchValue]     = useState("");
+  const [timeout, setSetTimeout]          = useState(null);
+  const [clientInfo, setClientInfo] = useState("");
+  const [procedureInfo, setProcedureInfo] = useState("");
+  const [firstName, setFirstName] = useState("")
+  const [lastName, setLastName] = useState("")
+  const [rfcClient, setRfcClient] = useState("")
+  const [curpClient, setCurpClient] = useState("")
+
+  const [createClientMutation, createProcessInfo] =
+  useMutation(
+    CREATE_CLIENT,
+    {
+      onError(apolloError) {
+        // setErrors(apolloError)
+        // setPristine(true)
+      },
+      onCompleted(cacheData) {
+
+      }
+    }
+  )
+
+  const createNewBudgetingTemplate = (event) => {
+    createClientMutation({ variables: { firstName: firstName, lastName: lastName, rfc: rfcClient, curp: curpClient }})
+    setActiveStep((prevActiveStep) => prevActiveStep + 1)
+  }
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -112,6 +146,22 @@ const NewBudget = (props) => {
   function getSteps() {
     return ['Añadir un cliente', 'Crear un cliente', 'Añadir un Trámite'];
   }
+
+  const handleFirstNameChange = (event) => {
+    setFirstName(event.target.value);
+  };
+
+  const handleLastNameChange = (event) => {
+    setLastName(event.target.value);
+  };
+
+  const handleRfcClientChange = (event) => {
+    setRfcClient(event.target.value);
+  };
+
+  const handleCurpClientChange = (event) => {
+    setCurpClient(event.target.value);
+  };
 
   const onChangeSearch = (event) => {
     timeout && clearTimeout(timeout)
@@ -154,7 +204,7 @@ const NewBudget = (props) => {
                   setClientInfo={ setClientInfo }
                 />
               </Grid>
-              <Grid container item justify="flex-end" className={classes.grid100}>
+              <Grid container item alignItems="flex-start" justify="flex-end" className={classes.grid100}>
                 <Grid>
                   <Button
                     variant="contained"
@@ -179,72 +229,94 @@ const NewBudget = (props) => {
             )} 
               { (activeStep === 1) && (
                 <Grid container item alignItems="center">
-                  <Grid container item alignItems="center" justify="center">
-                    <TextField id="first-name-basic" label="Nombres" className={classes.textFieldNames}/>
-                    <TextField id="last-name-basic" label="Apellidos" className={classes.textFieldNames}/>
-                  </Grid>
-                  <Grid container item alignItems="center" justify="center">
-                    <TextField id="rfc-basic" label="RFC" className={classes.textFieldNewClientInfo}/>
-                    <TextField id="curp-basic" label="CURP" className={classes.textFieldNewClientInfo}/>
-                  </Grid>
-                  <Grid container>
-                    <Grid container item alignItems="center" justify="flex-end" >
-                      <Button
-                        onClick={handleBack}
-                        className={classes.button}
-                      >
-                        Atrás
-                      </Button>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={handleNext}
-                        className={classes.button}
-                      >
-                        Siguiente
-                      </Button>
+                  <Grid container item alignItems="center" justify="center" className={classes.grid300}>
+                    <Grid>
+                      <TextField 
+                        id="first-name-basic" 
+                        label="Nombres" 
+                        className={classes.textFieldNames}
+                        onChange={handleFirstNameChange}
+                      />
+                      <TextField 
+                        id="last-name-basic" 
+                        label="Apellidos" 
+                        className={classes.textFieldNames}
+                        onChange={handleLastNameChange}
+                      />
                     </Grid>
+                    <Grid>
+                      <TextField 
+                        id="rfc-basic" 
+                        label="RFC" 
+                        className={classes.textFieldNewClientInfo}
+                        onChange={handleRfcClientChange}
+                      />
+                      <TextField 
+                        id="curp-basic" 
+                        label="CURP" 
+                        className={classes.textFieldNewClientInfo}
+                        onChange={handleCurpClientChange}
+                      />
+                    </Grid>
+                  </Grid>
+                  <Grid container item alignItems="flex-start" justify="flex-end" className={classes.grid100}>
+                    <Button
+                      onClick={handleBack}
+                      className={classes.button}
+                    >
+                      Atrás
+                    </Button>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={createNewBudgetingTemplate}
+                      className={classes.button}
+                    >
+                      Siguiente
+                    </Button>
                   </Grid>
                 </Grid>
               )}
               { (activeStep === 2) && (
-
-              <Grid  container item alignItems="center" justify="center" >
-                <ProceduresSearch/>
-                <Grid container item alignItems="flex-end" justify="flex-end" >
-                  <Button
-                    onClick={handleBack}
-                    className={classes.button}
-                  >
-                    Atrás
-                  </Button>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleNext}
-                    className={classes.button}
-                  >
-                    Terminar
-                  </Button>
+                <Grid  container item alignItems="center" justify="center" >
+                  <Grid className={classes.grid300}>
+                    <ProceduresSearch
+                      setProcedureInfo={ setProcedureInfo }
+                    />
+                  </Grid>
+                  <Grid container item alignItems="flex-start" justify="flex-end" className={classes.grid100}>
+                    <Button
+                      onClick={handleBack}
+                      className={classes.button}
+                    >
+                      Atrás
+                    </Button>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={handleNext}
+                      className={classes.button}
+                    >
+                      Terminar
+                    </Button>
+                  </Grid>
                 </Grid>
-              </Grid>
-
               )}
-              {/* {activeStep === steps.length && (
+              {activeStep === steps.length && (
                 <Paper square elevation={0} className={classes.resetContainer}>
                   <Typography>All steps completed - you&apos;re finished</Typography>
                   <Button onClick={handleReset} className={classes.button}>
                     Reset
                   </Button>
                 </Paper>
-              )} */}
+              )}
 
           </Grid>
           </Paper>
         </Grid>
         <Grid container item xs={3} direction="row" justify="flex-end" alignItems="stretch">
           <Paper className={classes.root}>
-            <Grid container item xs={12} justify="center" >
+            <Grid container item xs={12} justify="center" className={classes.titleDataInfo} >
               Datos del cliente
               <Grid>
                 <TextField 
@@ -278,11 +350,12 @@ const NewBudget = (props) => {
               </Grid>
             </Grid>
             <Grid container item xs={12} justify="center">
-              Trámite
-              <Grid>
-                <TextField id="Nombre-toShow" label="Nombre del trámite" disabled/>
-                <TextField id="-toShow" label="ALGo" disabled/>
+              <Grid container item justify="center" className={classes.titleDataInfo}>
+                Nombre del trámite
               </Grid>
+              <Typography variant="body2" color="textSecondary" className={classes.procedureInfoText} >
+                { procedureInfo ? procedureInfo.name : "......................"}
+              </Typography>
             </Grid>
           </Paper>
         </Grid>
