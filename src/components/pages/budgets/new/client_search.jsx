@@ -23,7 +23,7 @@ import { useQuery }                 from '@apollo/react-hooks';
 import { LOAD_CLIENTS }             from '../queries_and_mutations/queries';
 
 const ClientSearch = (props) => {
-  const { classes } = props
+  const { classes, setClientInfo } = props
   // const { classes, searchLoading, onChangeSearch } = props;
   const [searchLoading, setSearchLoading] = useState(false);
   const [sortField, setSortField]         = useState("first_name")
@@ -34,6 +34,7 @@ const ClientSearch = (props) => {
   const [page, setPage]                   = useState(0)
   const [per, setPer]                     = useState(5)
   const [total_records, setTotalRecords]  = useState(10)
+  const [selectedIndex, setSelectedIndex] = React.useState();
 
   let variables = {
     page: page + 1,
@@ -52,6 +53,9 @@ const ClientSearch = (props) => {
     refetch(variables);
   }, [page, per, searchField, searchValue, sortField, sortDirection]);
 
+  const handleMenuItemClick = (event, index) => {
+    setSelectedIndex(index);
+  };
 
 
   const changeRowsPerPage = (event) => {
@@ -107,19 +111,34 @@ const ClientSearch = (props) => {
     return(
       <TableBody>
         {
-         data && data.clients.map(client => (
-            <TableRow key={client.id}>
+          data && data.clients.map((client, index ) => {
+            
+            const handleMenuItemClick = (event) => {
+              setSelectedIndex(client.id);
+              setClientInfo(client);
+            };
+            return(
+            <TableRow
+              index={ client.id }
+              key={client.id}
+              hover 
+              selected={client.id === selectedIndex} 
+              onClick={ handleMenuItemClick }
+            >
               <TableCell align= "center">{ client.firstName }</TableCell>
               <TableCell align= "center">{ client.lastName }</TableCell>
               <TableCell align= "center">{ client.rfc }</TableCell>
               <TableCell align= "center">{ client.curp }</TableCell>
             </TableRow>
-          ))
+          )})
         }
       </TableBody>
     )
   }
 
+  let field = sortField
+  let direction = sortDirection
+  let sortHandler = sort.bind(this)
 
 
 
@@ -127,8 +146,39 @@ const ClientSearch = (props) => {
   return(
     <Grid container item xs={10}>
       <RenderInputSearch/>
-      <Table className={classes.table}>
-
+      <Table className={classes.table} size="small">
+        <TableHead>
+          <TableRow>
+          <SortHeader
+              text={"Nombre"}
+              field_property={"first_name"}
+              current_field={field}
+              sort_direction={direction}
+              callback={sortHandler}
+            />
+            <SortHeader
+              text={"Apellido"}
+              field_property={"last_name"}
+              current_field={field}
+              sort_direction={direction}
+              callback={sortHandler}
+            />
+            <SortHeader
+              text={"RFC"}
+              field_property={"rfc"}
+              current_field={field}
+              sort_direction={direction}
+              callback={sortHandler}
+            />
+            <SortHeader
+              text={"CURP"}
+              field_property={"curp"}
+              current_field={field}
+              sort_direction={direction}
+              callback={sortHandler}
+            />
+          </TableRow>
+        </TableHead>
         <RenderClientsTable/>
         <TableFooter>
           <TableRow>

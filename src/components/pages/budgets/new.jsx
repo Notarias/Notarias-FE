@@ -50,6 +50,19 @@ const useStyles = makeStyles((theme) => ({
   },
   grid100: {
     height: "50px"
+  },
+  textClientInfo: {
+    height: "70px"
+  },
+  textFieldNames: {
+    height: "70px",
+    width: "200px",
+    margin: "5px"
+  },
+  textFieldNewClientInfo: {
+    height: "70px",
+    width: "250px",
+    margin: "5px"
   }
 }));
 
@@ -73,9 +86,15 @@ const NewBudget = (props) => {
   const [searchLoading, setSearchLoading] = useState(false);
   const [searchValue, setSearchValue]     = useState("")
   const [timeout, setSetTimeout]          = useState(null)
+  const [clientInfo, setClientInfo] = useState("")
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  };
+
+  const createClient = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    setClientInfo(false)
   };
 
   const handleToProcedure = () => {
@@ -128,60 +147,65 @@ const NewBudget = (props) => {
           <Grid container item xs={12} >
             { (activeStep === 0) && (
             <>
-                <Grid container item alignItems="center" justify="center" className={classes.grid300}>
-                  <ClientSearch
-                    searchLoading={searchLoading}
-                    onChangeSearch={onChangeSearch.bind(this)}
-                  />
+              <Grid container item alignItems="center" justify="center" className={classes.grid300}>
+                <ClientSearch
+                  searchLoading={searchLoading}
+                  onChangeSearch={onChangeSearch.bind(this)}
+                  setClientInfo={ setClientInfo }
+                />
+              </Grid>
+              <Grid container item justify="flex-end" className={classes.grid100}>
+                <Grid>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleToProcedure}
+                    className={classes.button}
+                    disabled={ !clientInfo }
+                  >
+                    Siguiente
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={createClient}
+                    className={classes.button}
+                  >
+                    Crear
+                  </Button>
                 </Grid>
-                <Grid container item justify="flex-end" className={classes.grid100}>
-                  <Grid>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={handleToProcedure}
-                      className={classes.button}
-                    >
-                      Siguiente
-                    </Button>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={handleNext}
-                      className={classes.button}
-                    >
-                      Crear
-                    </Button>
-                  </Grid>
-                </Grid>
+              </Grid>
             </>
             )} 
               { (activeStep === 1) && (
-                <div>
-                  <Typography>{getStepContent(1)}</Typography>
-                    <TextField id="first-name-basic" label="Nombres" variant="outlined" />
-                    <TextField id="last-name-basic" label="Apellidos" variant="outlined" />
-                    <TextField id="rfc-basic" label="RFC" variant="outlined" />
-                    <TextField id="curp-basic" label="CURP" variant="outlined" />
-                    <Grid container>
-                      <Grid container item alignItems="center" justify="flex-end" >
-                          <Button
-                            onClick={handleBack}
-                            className={classes.button}
-                          >
-                            Atrás
-                          </Button>
-                          <Button
-                            variant="contained"
-                            color="primary"
-                            onClick={handleNext}
-                            className={classes.button}
-                          >
-                            Siguiente
-                          </Button>
-                        </Grid>
-                      </Grid>
-                </div>
+                <Grid container item alignItems="center">
+                  <Grid container item alignItems="center" justify="center">
+                    <TextField id="first-name-basic" label="Nombres" className={classes.textFieldNames}/>
+                    <TextField id="last-name-basic" label="Apellidos" className={classes.textFieldNames}/>
+                  </Grid>
+                  <Grid container item alignItems="center" justify="center">
+                    <TextField id="rfc-basic" label="RFC" className={classes.textFieldNewClientInfo}/>
+                    <TextField id="curp-basic" label="CURP" className={classes.textFieldNewClientInfo}/>
+                  </Grid>
+                  <Grid container>
+                    <Grid container item alignItems="center" justify="flex-end" >
+                      <Button
+                        onClick={handleBack}
+                        className={classes.button}
+                      >
+                        Atrás
+                      </Button>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={handleNext}
+                        className={classes.button}
+                      >
+                        Siguiente
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </Grid>
               )}
               { (activeStep === 2) && (
 
@@ -223,16 +247,41 @@ const NewBudget = (props) => {
             <Grid container item xs={12} justify="center" >
               Datos del cliente
               <Grid>
-                <TextField id="Nombres-basic" label="Nombres" variant="outlined" />
-                <TextField id="Apellidos-basic" label="Apellidos" variant="outlined" />
-                <TextField id="RFC-basic" label="RFC" variant="outlined" />
+                <TextField 
+                  id="Nombres-toShow" 
+                  label={ clientInfo ? clientInfo.firstName : "Nombres"} 
+                  disabled
+                  helperText={ clientInfo ? "Nombres" : ""}
+                  className={classes.textClientInfo}
+                />
+                <TextField 
+                  id="Apellidos-toShow" 
+                  label={ clientInfo ? clientInfo.lastName : "Apellidos"}
+                  disabled
+                  helperText={ clientInfo ? "Apellidos" : ""}
+                  className={classes.textClientInfo}
+                />
+                <TextField 
+                  id="RFC-toShow" 
+                  label={ clientInfo ? clientInfo.rfc : "RFC"} 
+                  disabled
+                  helperText={ clientInfo ? "RFC" : ""}
+                  className={classes.textClientInfo}
+                />
+                <TextField 
+                  id="curp-toShow" 
+                  label={ clientInfo ? clientInfo.curp : "CURP"} 
+                  disabled
+                  helperText={ clientInfo ? "CURP" : ""}
+                  className={classes.textClientInfo}
+                />
               </Grid>
             </Grid>
             <Grid container item xs={12} justify="center">
               Trámite
               <Grid>
-                <TextField id="Nombre-basic" label="Nombre del trámite" variant="outlined" />
-                <TextField id="-basic" label="RFC" variant="outlined" />
+                <TextField id="Nombre-toShow" label="Nombre del trámite" disabled/>
+                <TextField id="-toShow" label="ALGo" disabled/>
               </Grid>
             </Grid>
           </Paper>

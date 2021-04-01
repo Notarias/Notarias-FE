@@ -62,6 +62,7 @@ export default (props) => {
               <TableCell align= "center">{ client.firstName }</TableCell>
               <TableCell align= "center">{ client.lastName }</TableCell>
               <TableCell align= "center">{ client.rfc }</TableCell>
+              <TableCell align= "center">{ client.curp }</TableCell>
               <TableCell align= "center">
                 <Grid>
                   <GenericDropdownMenu>
