@@ -113,7 +113,13 @@ const NewBudget = (props) => {
       },
       onCompleted(cacheData) {
 
-      }
+      },
+      fetchPolicy: "no-cache",
+      // refetchQueries: [{
+      //   query: GET_BUDGETING_TEMPLATE_TAB_FIELDS,
+      //   variables: { "id": currentTab && currentTab.id },
+      // }],
+      // awaitRefetchQueries: true
     }
   )
 

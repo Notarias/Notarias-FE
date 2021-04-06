@@ -112,19 +112,32 @@ export const LOAD_CLIENTS = gql`
       rfc
       curp
     }
+    clientsCount
   }
 `
 
 export const CREATE_CLIENT = gql`
-  mutation createClient($firstName: String, $lastName: String) {
-    createClient(input: { firstName: $firstName, lastName: $lastName }) {
+  mutation createClient(
+    $firstName: String!,
+    $lastName: String!,
+    $curp: String,
+    $rfc: String
+  ) {
+    createClient(input: {
+      firstName: $firstName,
+      lastName: $lastName,
+      curp: $curp,
+      rfc: $rfc
+    }
+  ) 
+    {
       client {
         id
         firstName
         lastName
+        curp
+        rfc
       }
-      errors
-      pointers
     }
   }
 `

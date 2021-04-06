@@ -75,6 +75,7 @@ export const LOAD_CLIENTS = gql`
       rfc
       curp
     }
+    clientsCount
   }
 `
 

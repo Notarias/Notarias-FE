@@ -25,7 +25,7 @@ const Clients = (props) => {
   const [timeout, setSetTimeout]          = useState(null)
   const [page, setPage]                   = useState(0)
   const [per, setPer]                     = useState(5)
-  const [total_records, setTotalRecords]  = useState(10)
+  const [total_records, setTotalRecords]  = useState(props.clientsCount)
 
   const { classes } = props
 
@@ -54,6 +54,7 @@ const Clients = (props) => {
     setSortField(Object.keys(params["sort"])[0])
   }
 
+  console.log("count", props.clientsCount)
   return(
     <>
       <Breadcrumbs breadcrumbs={BREADCRUMBS}/>
