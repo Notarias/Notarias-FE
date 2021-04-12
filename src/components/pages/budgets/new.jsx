@@ -18,6 +18,12 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ClientSearch                 from './new/client_search';
 import { useMutation }                    from '@apollo/react-hooks';
 import { CREATE_CLIENT }                      from './queries_and_mutations/queries'
+import { CREATE_BUDGET }          from './queries_and_mutations/queries'
+
+import Dialog                             from '@material-ui/core/Dialog';
+import DialogContent                      from '@material-ui/core/DialogContent';
+import DialogTitle                        from '@material-ui/core/DialogTitle';
+import DialogActions                      from '@material-ui/core/DialogActions';
 
 
 const BREADCRUMBS = [
@@ -102,17 +108,31 @@ const NewBudget = (props) => {
   const [lastName, setLastName] = useState("")
   const [rfcClient, setRfcClient] = useState("")
   const [curpClient, setCurpClient] = useState("")
+  const [open, setOpen] = React.useState(false);
+  const [pristine, setPristine] = React.useState(true)
+  const [error, setError] = React.useState(false)
+  const inputsList = ["first_name", "last_name"]
 
-  const [createClientMutation, createProcessInfo] =
+  let variables = {
+    firstName: firstName,
+    lastName: lastName,
+    rfc: rfcClient,
+    curp: curpClient
+  }
+
+  const [createClientMutation, createClientProcessInfo] =
   useMutation(
     CREATE_CLIENT,
     {
       onError(apolloError) {
-        // setErrors(apolloError)
+        setErrors(apolloError)
+        setOpen(false);
         // setPristine(true)
       },
       onCompleted(cacheData) {
-
+        setClientInfo(cacheData.createClient.client)
+        setActiveStep((prevActiveStep) => prevActiveStep + 1)
+        //setLoading(false)
       },
       fetchPolicy: "no-cache",
       // refetchQueries: [{
@@ -123,9 +143,49 @@ const NewBudget = (props) => {
     }
   )
 
-  const createNewBudgetingTemplate = (event) => {
-    createClientMutation({ variables: { firstName: firstName, lastName: lastName, rfc: rfcClient, curp: curpClient }})
-    setActiveStep((prevActiveStep) => prevActiveStep + 1)
+  const createNewClient = (event) => {
+    createClientMutation({ variables: variables})
+  }
+
+  const [createBudgetMutation, createBudgetProcessInfo] =
+  useMutation(
+    CREATE_BUDGET,
+    {
+      onError(apolloError) {
+        // setErrors(apolloError)
+        // setPristine(true)
+      },
+      onCompleted(cacheData) {
+        setActiveStep((prevActiveStep) => prevActiveStep + 1)
+        //setLoading(false)
+      },
+      fetchPolicy: "no-cache",
+      // refetchQueries: [{
+      //   query: GET_BUDGETING_TEMPLATE_TAB_FIELDS,
+      //   variables: { "id": currentTab && currentTab.id },
+      // }],
+      // awaitRefetchQueries: true
+    }
+  )
+
+  const createNewBudget = (event) => {
+    createBudgetMutation({ variables: { "budgetingTemplateId": procedureInfo.id, "clientId": clientInfo.id }})
+  }
+
+  const setErrors = (apolloError) => {
+    let errorsList = {}
+    let errorTemplateList = apolloError.graphQLErrors
+    
+    for ( let i = 0; i < errorTemplateList.length; i++) {
+      for( let n = 0; n < inputsList.length; n++) {
+        if(errorTemplateList[i].extensions.attribute === inputsList[n]){
+          errorsList[inputsList[n]] = errorTemplateList[i].message
+        }
+      }
+    }
+
+    console.log(errorTemplateList)
+    setError(errorsList);
   }
 
   const handleNext = () => {
@@ -180,6 +240,17 @@ const NewBudget = (props) => {
     }, 2000))
   }
 
+  const handleClickOpen = (event) => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+
+  console.log(clientInfo.id, "client")
+  console.log(procedureInfo.id, "proc")
   return(
     <>
       <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
@@ -242,12 +313,24 @@ const NewBudget = (props) => {
                         label="Nombres" 
                         className={classes.textFieldNames}
                         onChange={handleFirstNameChange}
+                        required
+                        variant="outlined"
+                        error={ !!error["first_name"] && true }
+                        helperText={error["first_name"] || " "}
+                        errorskey={ "first_name" }
+                        name={ "first_name" }
                       />
                       <TextField 
                         id="last-name-basic" 
                         label="Apellidos" 
                         className={classes.textFieldNames}
                         onChange={handleLastNameChange}
+                        required
+                        variant="outlined"
+                        error={ !!error["last_name"] && true }
+                        helperText={error["last_name"] || " "}
+                        errorskey={ "last_name" }
+                        name={ "last_name" }
                       />
                     </Grid>
                     <Grid>
@@ -256,12 +339,14 @@ const NewBudget = (props) => {
                         label="RFC" 
                         className={classes.textFieldNewClientInfo}
                         onChange={handleRfcClientChange}
+                        variant="outlined"
                       />
                       <TextField 
                         id="curp-basic" 
                         label="CURP" 
                         className={classes.textFieldNewClientInfo}
                         onChange={handleCurpClientChange}
+                        variant="outlined"
                       />
                     </Grid>
                   </Grid>
@@ -275,12 +360,28 @@ const NewBudget = (props) => {
                     <Button
                       variant="contained"
                       color="primary"
-                      onClick={createNewBudgetingTemplate}
+                      onClick={ handleClickOpen }
                       className={classes.button}
                     >
-                      Siguiente
+                      Guardar
                     </Button>
                   </Grid>
+                  <Dialog open={open} onClose={ handleClose }>
+                  <DialogTitle>
+                    Desea crear un nuevo cliente
+                  </DialogTitle>
+                  <DialogContent>
+                    Verifique que la información sea correcta antes de continuar.
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={ handleClose }>
+                      Cancelar
+                    </Button>
+                    <Button onClick={ createNewClient }>
+                      Continuar
+                    </Button>
+                  </DialogActions>
+                  </Dialog>
                 </Grid>
               )}
               { (activeStep === 2) && (
@@ -292,15 +393,9 @@ const NewBudget = (props) => {
                   </Grid>
                   <Grid container item alignItems="flex-start" justify="flex-end" className={classes.grid100}>
                     <Button
-                      onClick={handleBack}
-                      className={classes.button}
-                    >
-                      Atrás
-                    </Button>
-                    <Button
                       variant="contained"
                       color="primary"
-                      onClick={handleNext}
+                      onClick={createNewBudget}
                       className={classes.button}
                     >
                       Terminar

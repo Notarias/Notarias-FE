@@ -87,5 +87,11 @@ export const styles = theme => {
     labelLeft: {
       textAlign: "left",
     },
+    ClientSearchTable: {
+      backgroundColor: 'inherit',
+      width: "100%",
+      height: "330px",
+    },
+    
   })
 }

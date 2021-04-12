@@ -24,7 +24,6 @@ import { LOAD_CLIENTS }             from '../queries_and_mutations/queries';
 
 const ClientSearch = (props) => {
   const { classes, setClientInfo } = props
-  // const { classes, searchLoading, onChangeSearch } = props;
   const [searchLoading, setSearchLoading] = useState(false);
   const [sortField, setSortField]         = useState("first_name")
   const [sortDirection, setSortDirection] = useState("desc")
@@ -33,7 +32,7 @@ const ClientSearch = (props) => {
   const [timeout, setSetTimeout]          = useState(null)
   const [page, setPage]                   = useState(0)
   const [per, setPer]                     = useState(5)
-  const [total_records, setTotalRecords]  = useState(10)
+  const [total_records, setTotalRecords]  = useState(0)
   const [selectedIndex, setSelectedIndex] = React.useState();
 
   let variables = {
@@ -53,10 +52,13 @@ const ClientSearch = (props) => {
     refetch(variables);
   }, [page, per, searchField, searchValue, sortField, sortDirection]);
 
+  useEffect(() => {
+    data && setTotalRecords(data.clientsCount)
+  }, [data]);
+
   const handleMenuItemClick = (event, index) => {
     setSelectedIndex(index);
   };
-
 
   const changeRowsPerPage = (event) => {
     let per = event.target.value
@@ -83,7 +85,7 @@ const ClientSearch = (props) => {
     setSortField(Object.keys(params["sort"])[0])
   }
 
-  const RenderInputSearch = (props) => {
+  const renderInputSearch = ( props) => {
     return(
     <Grid container  direction="row"  justify="flex-end"  alignItems="flex-end" >
       <div className={classes.search}>
@@ -107,9 +109,9 @@ const ClientSearch = (props) => {
     )
   }
 
-  const RenderClientsTable = () => {
+  const RenderClientsTable = (props) => {
     return(
-      <TableBody>
+      <TableBody className={classes.ClientSearchTable}>
         {
           data && data.clients.map((client, index ) => {
             
@@ -140,13 +142,10 @@ const ClientSearch = (props) => {
   let direction = sortDirection
   let sortHandler = sort.bind(this)
 
-
-
-
   return(
-    <Grid container item xs={10}>
-      <RenderInputSearch/>
-      <Table className={classes.table} size="small">
+    <Grid container item xs={10} >
+     { renderInputSearch() }
+      <Table className={classes.ClientSearchTable} size="small">
         <TableHead>
           <TableRow>
           <SortHeader
@@ -185,7 +184,7 @@ const ClientSearch = (props) => {
             <TablePagination
               page={page}
               rowsPerPage={per}
-              rowsPerPageOptions={[5, 10, 15, 20]}
+              rowsPerPageOptions={[5]}
               onChangePage={changePage}
               onChangeRowsPerPage={changeRowsPerPage}
               count={total_records}

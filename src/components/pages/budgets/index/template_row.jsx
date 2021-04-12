@@ -86,7 +86,6 @@ const TemplateRow = (props) => {
 //     return data ? data.budgetingTemplate.proceduresTemplates.map((item) => item.id ) : "" 
 //   }
 
-  console.log("B", budget)
   return(
     <TableRow key={  "-row" } >
       <TableCell align= "center">{ budget.client.firstName }</TableCell>

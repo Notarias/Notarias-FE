@@ -1,6 +1,6 @@
 import gql          from 'graphql-tag';
 
-export const CREATE_BUDGETING_TEMPLATE = gql`
+export const CREATE_BUDGET = gql`
    mutation createBudget (
     $budgetingTemplateId: ID!,
   	$clientId: ID!,
