@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
     height: "60px"
   },
   textClientInfo: {
-    height: "70px"
+    height: "60px"
   },
   textFieldNames: {
     height: "70px",
@@ -74,11 +74,15 @@ const useStyles = makeStyles((theme) => ({
     margin: "5px"
   },
   procedureInfoText: {
-    marginTop: "20px",
+    marginTop: "10px",
     width: "182px"
   },
   titleDataInfo: {
-    marginTop: "20px"
+    marginTop: "10px"
+  },
+  titleDataProcedureInfo: {
+    marginTop: "10px",
+    maxHeight: "100px"
   }
 }));
 
@@ -169,7 +173,7 @@ const NewBudget = (props) => {
   )
 
   const createNewBudget = (event) => {
-    createBudgetMutation({ variables: { "budgetingTemplateId": procedureInfo.id, "clientId": clientInfo.id }})
+    createBudgetMutation({ variables: { "proceduresTemplateId": procedureInfo.id, "clientId": clientInfo.id }})
   }
 
   const setErrors = (apolloError) => {
@@ -183,8 +187,6 @@ const NewBudget = (props) => {
         }
       }
     }
-
-    console.log(errorTemplateList)
     setError(errorsList);
   }
 
@@ -268,6 +270,9 @@ const NewBudget = (props) => {
               </Step>
               <Step key={ 2 + "step"}>
                 <StepLabel>{"Buscar Trámite"}</StepLabel>
+              </Step>
+              <Step key={ 3 + "step"}>
+                <StepLabel>{"Seleccionar Presupuesto"}</StepLabel>
               </Step>
             </Stepper>
           </Grid>
@@ -395,10 +400,29 @@ const NewBudget = (props) => {
                     <Button
                       variant="contained"
                       color="primary"
-                      onClick={createNewBudget}
+                      // onClick={createNewBudget}
+                      onClick={ handleNext }
                       className={classes.button}
                     >
-                      Terminar
+                      Siguiente
+                    </Button>
+                  </Grid>
+                </Grid>
+              )}
+              { (activeStep === 3) && (
+                <Grid  container item alignItems="center" justify="center" >
+                  <Grid className={classes.grid300}>
+                    SEleccionar budget ligado al procedure
+                    
+                  </Grid>
+                  <Grid container item alignItems="flex-start" justify="flex-end" className={classes.grid100}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={handleNext}
+                      className={classes.button}
+                    >
+                      Siguiente
                     </Button>
                   </Grid>
                 </Grid>
@@ -450,12 +474,20 @@ const NewBudget = (props) => {
                 />
               </Grid>
             </Grid>
-            <Grid container item xs={12} justify="center">
-              <Grid container item justify="center" className={classes.titleDataInfo}>
+            <Grid container item xs={12} justify="center" direction="column" alignItems="center">
+              <Grid container item justify="center" className={classes.titleDataProcedureInfo}>
                 Nombre del trámite
               </Grid>
               <Typography variant="body2" color="textSecondary" className={classes.procedureInfoText} >
                 { procedureInfo ? procedureInfo.name : "......................"}
+              </Typography>
+            </Grid>
+            <Grid container item xs={12} justify="center" direction="column" alignItems="center">
+              <Grid container item justify="center" className={classes.titleDataProcedureInfo}>
+                Presupuesto vinculado
+              </Grid>
+              <Typography variant="body2" color="textSecondary" className={classes.titleDataInfo} >
+                aqui va el nombre
               </Typography>
             </Grid>
           </Paper>

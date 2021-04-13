@@ -2,13 +2,13 @@ import gql          from 'graphql-tag';
 
 export const CREATE_BUDGET = gql`
    mutation createBudget (
-    $budgetingTemplateId: ID!,
+    $proceduresTemplateId: ID!,
   	$clientId: ID!,
   	$clientMutationId:String
   ){
     createBudget (
       input: {
-        budgetingTemplateId: $budgetingTemplateId,
+        proceduresTemplateId: $proceduresTemplateId,
         clientId: $clientId,
         clientMutationId: $clientMutationId
       } 
@@ -140,4 +140,17 @@ export const CREATE_CLIENT = gql`
       }
     }
   }
+`
+
+export const BUDGETING_TEMPLATE_BY_PROCEDURE_ID = gql`
+query budgetingTemplatesByProcedureId (
+  $proceduresTemplateId: Int!
+){
+  budgetingTemplatesByProcedureId(
+     proceduresTemplateId: $proceduresTemplateId
+  ){
+    id
+    
+  }
+}
 `
