@@ -1,24 +1,25 @@
 import React, { useState }                from 'react';
 import Breadcrumbs                        from '../../ui/breadcrumbs';
-import { makeStyles } from '@material-ui/core/styles';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import StepContent from '@material-ui/core/StepContent';
-import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
+import { makeStyles }                     from '@material-ui/core/styles';
+import Stepper                            from '@material-ui/core/Stepper';
+import Step                               from '@material-ui/core/Step';
+import StepLabel                          from '@material-ui/core/StepLabel';
+import StepContent                        from '@material-ui/core/StepContent';
+import Button                             from '@material-ui/core/Button';
+import Paper                              from '@material-ui/core/Paper';
+import Typography                         from '@material-ui/core/Typography';
+import TextField                          from '@material-ui/core/TextField';
 import Grid                               from '@material-ui/core/Grid';
-import Divider                              from '@material-ui/core/Divider';
-import ProceduresSearch                 from './new/procedures_search';
-import SearchIcon from '@material-ui/icons/Search';
-import PageviewIcon from '@material-ui/icons/Pageview';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import ClientSearch                 from './new/client_search';
+import Divider                            from '@material-ui/core/Divider';
+import ProceduresSearch                   from './new/procedures_search';
+import BudgetSelector                     from './new/budget_selector'
+import SearchIcon                         from '@material-ui/icons/Search';
+import PageviewIcon                       from '@material-ui/icons/Pageview';
+import AccountCircleIcon                  from '@material-ui/icons/AccountCircle';
+import ClientSearch                       from './new/client_search';
 import { useMutation }                    from '@apollo/react-hooks';
-import { CREATE_CLIENT }                      from './queries_and_mutations/queries'
-import { CREATE_BUDGET }          from './queries_and_mutations/queries'
+import { CREATE_CLIENT }                  from './queries_and_mutations/queries'
+import { CREATE_BUDGET }                  from './queries_and_mutations/queries'
 
 import Dialog                             from '@material-ui/core/Dialog';
 import DialogContent                      from '@material-ui/core/DialogContent';
@@ -86,18 +87,20 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return `Selecciona un cliente de la tabla de búsqueda.`;
-    case 1:
-      return 'Crea un cliente.';
-    case 2:
-      return `Agrega un tramite desde la tabla de búsqueda.`;
-    default:
-      return 'Unknown step';
-  }
-}
+// function getStepContent(step) {
+//   switch (step) {
+//     case 0:
+//       return `Selecciona un cliente de la tabla de búsqueda.`;
+//     case 1:
+//       return 'Crea un cliente.';
+//     case 2:
+//       return `Agrega un tramite desde la tabla de búsqueda.`;
+//     case 3:
+//       return `Agrega un tramite desde la tabla de búsqueda.`;
+//     default:
+//       return 'Unknown step';
+//   }
+// }
 
 const NewBudget = (props) => {
   const classes = useStyles();
@@ -108,6 +111,7 @@ const NewBudget = (props) => {
   const [timeout, setSetTimeout]          = useState(null);
   const [clientInfo, setClientInfo] = useState("");
   const [procedureInfo, setProcedureInfo] = useState("");
+  const [budgetInfo, setbudgetInfo] = useState("");
   const [firstName, setFirstName] = useState("")
   const [lastName, setLastName] = useState("")
   const [rfcClient, setRfcClient] = useState("")
@@ -164,16 +168,19 @@ const NewBudget = (props) => {
         //setLoading(false)
       },
       fetchPolicy: "no-cache",
-      // refetchQueries: [{
-      //   query: GET_BUDGETING_TEMPLATE_TAB_FIELDS,
-      //   variables: { "id": currentTab && currentTab.id },
-      // }],
-      // awaitRefetchQueries: true
     }
   )
 
   const createNewBudget = (event) => {
-    createBudgetMutation({ variables: { "proceduresTemplateId": procedureInfo.id, "clientId": clientInfo.id }})
+    createBudgetMutation(
+      { 
+        variables: { 
+          "proceduresTemplateId": procedureInfo.id, 
+          "clientId": clientInfo.id, 
+          "budgetingTemplateId": budgetInfo.id 
+        }
+      }
+    )
   }
 
   const setErrors = (apolloError) => {
@@ -252,7 +259,8 @@ const NewBudget = (props) => {
 
 
   console.log(clientInfo.id, "client")
-  console.log(procedureInfo.id, "proc")
+  console.log(procedureInfo.budgetingTemplatesIds, "proc")
+  console.log(budgetInfo.id, "budget")
   return(
     <>
       <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
@@ -400,7 +408,6 @@ const NewBudget = (props) => {
                     <Button
                       variant="contained"
                       color="primary"
-                      // onClick={createNewBudget}
                       onClick={ handleNext }
                       className={classes.button}
                     >
@@ -411,33 +418,53 @@ const NewBudget = (props) => {
               )}
               { (activeStep === 3) && (
                 <Grid  container item alignItems="center" justify="center" >
-                  <Grid className={classes.grid300}>
-                    SEleccionar budget ligado al procedure
-                    
+                  <Grid container item direction="column" alignItems="center" justify="center" className={classes.grid300}>
+                    <Typography variant="body2" color="textSecondary" >
+                      Selecciona un presupuesto ligado al trámite
+                    </Typography>
+                    <BudgetSelector
+                      procedureId={ procedureInfo ? procedureInfo.id : "" }
+                      setbudgetInfo={ setbudgetInfo }
+                    />
+                  </Grid>
+                  <Grid container item alignItems="flex-start" justify="flex-end" className={classes.grid100}>
+                  <Button
+                      onClick={handleBack}
+                      className={classes.button}
+                    >
+                      Atrás
+                    </Button>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={createNewBudget}
+                      className={classes.button}
+                    >
+                      Finalizar
+                    </Button>
+                  </Grid>
+                </Grid>
+              )}
+              { (activeStep === 4) && (
+                <Grid  container item alignItems="center" justify="center" >
+                  <Grid container item direction="column" alignItems="center" justify="center" className={classes.grid300}>
+                    <Typography variant="h6" color="textSecondary" >
+                      Se ha creado exitosamente el Presupuesto
+                    </Typography>
                   </Grid>
                   <Grid container item alignItems="flex-start" justify="flex-end" className={classes.grid100}>
                     <Button
                       variant="contained"
                       color="primary"
-                      onClick={handleNext}
                       className={classes.button}
                     >
-                      Siguiente
+                      Redireccionar
                     </Button>
                   </Grid>
                 </Grid>
               )}
-              {activeStep === steps.length && (
-                <Paper square elevation={0} className={classes.resetContainer}>
-                  <Typography>All steps completed - you&apos;re finished</Typography>
-                  <Button onClick={handleReset} className={classes.button}>
-                    Reset
-                  </Button>
-                </Paper>
-              )}
-
           </Grid>
-          </Paper>
+         </Paper>
         </Grid>
         <Grid container item xs={3} direction="row" justify="flex-end" alignItems="stretch">
           <Paper className={classes.root}>
@@ -487,7 +514,7 @@ const NewBudget = (props) => {
                 Presupuesto vinculado
               </Grid>
               <Typography variant="body2" color="textSecondary" className={classes.titleDataInfo} >
-                aqui va el nombre
+              { budgetInfo ? budgetInfo.name : "......................"}
               </Typography>
             </Grid>
           </Paper>

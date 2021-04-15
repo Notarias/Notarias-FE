@@ -1,15 +1,17 @@
 import gql          from 'graphql-tag';
 
 export const CREATE_BUDGET = gql`
-   mutation createBudget (
+ mutation createBudget (
     $proceduresTemplateId: ID!,
   	$clientId: ID!,
+    $budgetingTemplateId: ID!,
   	$clientMutationId:String
   ){
     createBudget (
       input: {
         proceduresTemplateId: $proceduresTemplateId,
         clientId: $clientId,
+        budgetingTemplateId: $budgetingTemplateId,
         clientMutationId: $clientMutationId
       } 
     ) 
@@ -85,6 +87,7 @@ export const GET_PROCEDURES_TEMPLATES_QUICK_LIST = gql`
     proceduresTemplatesQuickList{
       name
       id
+      budgetingTemplatesIds
     }
   }
 `
@@ -143,14 +146,16 @@ export const CREATE_CLIENT = gql`
 `
 
 export const BUDGETING_TEMPLATE_BY_PROCEDURE_ID = gql`
-query budgetingTemplatesByProcedureId (
-  $proceduresTemplateId: Int!
-){
-  budgetingTemplatesByProcedureId(
-     proceduresTemplateId: $proceduresTemplateId
+  query budgetingTemplatesByProcedureId (
+    $proceduresTemplateId: ID!
   ){
-    id
-    
+    budgetingTemplatesByProcedureId(
+       proceduresTemplateId: $proceduresTemplateId
+    ){
+      id
+      name
+      serialNumber
+      active
+    }
   }
-}
 `

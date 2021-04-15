@@ -29,15 +29,6 @@ const renderSearchList = (searchList, checked, classes, handleToggle, setProcedu
             return(
             <React.Fragment key={obj.id + "fragment"}>
                 <ListItem key={obj.id} role={undefined} dense button onClick={handleToggle(obj)}>
-                {/* <ListItemIcon>
-                  <Checkbox
-                    edge="start"
-                    checked={checkedIds.indexOf(obj.id) !== -1}
-                    tabIndex={-1}
-                    disableRipple
-                    inputProps={{ 'aria-labelledby': obj.id }}
-                  />
-                </ListItemIcon> */}
                   <ListItemText 
                     id={obj.id} 
                     primary={` ${ obj.name }`}

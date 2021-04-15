@@ -1,26 +1,24 @@
 import React, { useState, useEffect } from 'react'
-import Grid                 from '@material-ui/core/Grid';
-import CircularProgress     from '@material-ui/core/CircularProgress';
-import SearchIcon           from '@material-ui/icons/Search';
-import InputBase            from '@material-ui/core/InputBase';
-import Button               from '@material-ui/core/Button';
-import PersonAddIcon        from '@material-ui/icons/PersonAdd';
-import { Link }             from 'react-router-dom';
-import { styles }           from '../styles';
-import { withStyles }       from '@material-ui/core/styles';
-
-import Table                        from '@material-ui/core/Table';
-import TableFooter                  from '@material-ui/core/TableFooter';
-import TablePagination              from '@material-ui/core/TablePagination';
-import TableBody                    from '@material-ui/core/TableBody';
-
-import TableHead  from '@material-ui/core/TableHead';
-import TableCell  from '@material-ui/core/TableCell';
-import SortHeader from '../../../ui/sort_header';
-import TableRow   from '@material-ui/core/TableRow';
-import Typography                   from '@material-ui/core/Typography';
-import { useQuery }                 from '@apollo/react-hooks';
-import { LOAD_CLIENTS }             from '../queries_and_mutations/queries';
+import Grid                           from '@material-ui/core/Grid';
+import CircularProgress               from '@material-ui/core/CircularProgress';
+import SearchIcon                     from '@material-ui/icons/Search';
+import InputBase                      from '@material-ui/core/InputBase';
+import Button                         from '@material-ui/core/Button';
+import PersonAddIcon                  from '@material-ui/icons/PersonAdd';
+import { Link }                       from 'react-router-dom';
+import { styles }                     from '../styles';
+import { withStyles }                 from '@material-ui/core/styles';
+import Table                          from '@material-ui/core/Table';
+import TableFooter                    from '@material-ui/core/TableFooter';
+import TablePagination                from '@material-ui/core/TablePagination';
+import TableBody                      from '@material-ui/core/TableBody';
+import TableHead                      from '@material-ui/core/TableHead';
+import TableCell                      from '@material-ui/core/TableCell';
+import SortHeader                     from '../../../ui/sort_header';
+import TableRow                       from '@material-ui/core/TableRow';
+import Typography                     from '@material-ui/core/Typography';
+import { useQuery }                   from '@apollo/react-hooks';
+import { LOAD_CLIENTS }               from '../queries_and_mutations/queries';
 
 const ClientSearch = (props) => {
   const { classes, setClientInfo } = props
