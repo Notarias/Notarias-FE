@@ -50,9 +50,6 @@ const renderSearchList = (searchList, checked, classes, handleToggle, setProcedu
 const ProceduresSearch = (props) => {
 
   const { classes, setProcedureInfo } = props;
-//   const setToLinkSelectedOption = props.setToLinkSelectedOption;
-//   const toLinkSelectedOption = props.toLinkSelectedOption;
-//   const [checked, setChecked] = React.useState(toLinkSelectedOption);
   const [checked, setChecked] = React.useState([]);
   const [searchList, setSearchList] = React.useState([])
   const [initialList, setInitialList] = React.useState([])

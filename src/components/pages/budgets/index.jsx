@@ -53,17 +53,6 @@ const BudgetsIndex = (props) => {
     setPer(per)
   }
 
-  // const onChangeSearch = (event) => {
-  //   timeout && clearTimeout(timeout)
-  //   setSearchLoading(true)
-  //   let value = event.target.value
-
-  //   setSetTimeout(setTimeout(() => {
-  //     // setSearchValue(BUDGET_SEARCH_INPUT)
-  //     setSearchLoading(false)
-  //   }, 2000))
-  // }
-
   const assingTotalRecords = (total) => {
     setTotalRecords(total)
   }

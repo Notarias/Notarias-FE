@@ -18,73 +18,14 @@ import DialogContentText              from '@material-ui/core/DialogContentText'
 import DialogTitle                    from '@material-ui/core/DialogTitle';
 import useMediaQuery                  from '@material-ui/core/useMediaQuery';
 import { useTheme }                   from '@material-ui/core/styles';
-// import { Link }                       from 'react-router-dom';
-// import { useMutation }                from '@apollo/react-hooks';
-// import { UPDATE_BUDGETING_TEMPLATE }  from '../queries_and_mutations/queries'
-// import { useQuery }                   from '@apollo/react-hooks';
-// import { GET_BUDGETING_TEMPLATE }     from '../queries_and_mutations/queries'
 
 
 const TemplateRow = (props) => {
 
   const {budget} = props
   const { classes } = props
-//   const [active, setActive] = React.useState(budgetingTemplate.active);
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
-//   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
-//   const id = budgetingTemplate.id;
-
-//   const { loading, data, refetch } = useQuery(GET_BUDGETING_TEMPLATE,
-//     { variables: {"id": id } } 
-//   );
-
-//   const folioNumber = (serial) => {
-//     return serial.toString().padStart(5, "0")
-//   }
-
-//   const [updateBudgetingTemplateMutation, updateProcessInfo] =
-//   useMutation(
-//     UPDATE_BUDGETING_TEMPLATE,
-//     {
-//       update(store, cacheData) {
-//         setActive(cacheData.data.updateBudgetingTemplate.budgetingTemplate.active)
-//       }
-//     }
-//   )
-
-//   const changeStatus = (e) => {
-//     updateBudgetingTemplateMutation({ variables: { id: id, active: !active } })
-//     setOpen(false);
-//   }
-
-//   const handleClickOpen = (event) => {
-//     setOpen(true);
-//   };
-
-//   const handleClose = () => {
-//     setOpen(false);
-//   };
-
-//   const markStatus = () => {
-//     if(!active) {
-//       return  classes.statusTemplateRow 
-//     }
-//   }
-
-//   const statusTemplate = () => { 
-//     return active ? "Desactivar" : "Activar"
-//   }
-
-//   const statusBadgetTemplate = () => {
-//     return(
-//       budgetingTemplate.active ? "Activo" : "Inactivo"
-//     )
-//   }
-
-//   const procedureLinked = () => {
-//     return data ? data.budgetingTemplate.proceduresTemplates.map((item) => item.id ) : "" 
-//   }
 
   return(
     <TableRow key={  "-row" } >
@@ -94,8 +35,6 @@ const TemplateRow = (props) => {
         { 
           <Chip
             size="small" label={ "activo" }
-            // classes={{colorPrimary: classes.activeGreen}}
-            // color={ active ? "primary" : "secondary"} 
           />
         }
       </TableCell>
@@ -104,82 +43,10 @@ const TemplateRow = (props) => {
       <TableCell align= "center">
         <Grid>
           <GenericDropdownMenu>
-            {/* <MenuItem key={ budgetingTemplate.id + "-edit" }>
-              <Link
-                to={`/config/budget_templates/${ budgetingTemplate.id }/edit`}
-                color="inherit"
-                underline="none"
-                className={ classes.linkDefault }
-              >
-                <Grid container>
-                  <ListItemIcon>
-                    <CreateIcon className={ classes.defaultIcon }/>
-                  </ListItemIcon>
-                  <ListItemText primary="Editar" />
-                </Grid>
-              </Link>
-            </MenuItem>
-            <MenuItem 
-              key={ budgetingTemplate.id + "-status" }
-            >
-              <Grid container onClick={ handleClickOpen }>
-                <ListItemIcon>
-                  {
-                    active ? 
-                      <RadioButtonUncheckedIcon color="secondary" className={ classes.defaultIcon }/> 
-                    : 
-                      <RadioButtonCheckedIcon className={classes.activeIconGreen} /> 
-                  }
-                </ListItemIcon>
-                <ListItemText primary={ statusTemplate() } />
-              </Grid>
-              <Dialog
-                fullScreen={ fullScreen }
-                open={ open }
-                onClose={ handleClose }
-                aria-labelledby="responsive-dialog-title"
-              >
-                <DialogTitle id="responsive-dialog-title">{"Confirmar ", statusTemplate() }</DialogTitle>
-                <DialogContent>
-                  <DialogContentText>
-                    ¿Realmente deseas { statusTemplate() } está plantilla de presupuesto ?
-                  </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                  <Button onClick={ handleClose } color="primary">
-                    Cancelar
-                  </Button>
-                  <Button autoFocus onClick={ changeStatus } color="primary">
-                    { statusTemplate() }
-                  </Button>
-                </DialogActions>
-              </Dialog>
-            </MenuItem> */}
           </GenericDropdownMenu>
         </Grid>
       </TableCell>
     </TableRow>
-
-  //   <TableRow key={ kei + "row" }  >
-  //   <TableCell align= "center">Nombre</TableCell>
-  //   <TableCell align= "center">{kei}</TableCell>
-  //   <TableCell align= "center">
-  //     { 
-  //       <Chip
-  //       //   size="small" label={ statusBadgetTemplate() }
-  //       //   classes={{colorPrimary: classes.activeGreen}}
-  //       //   color={ active ? "primary" : "secondary"} 
-  //       />
-  //     }
-  //   </TableCell>
-  //   <TableCell align= "center">No</TableCell>
-  //   <TableCell align= "center">2.0</TableCell>
-  //   <TableCell align= "center">
-  //     <Grid>
-  //       <GenericDropdownMenu/>
-  //     </Grid>
-  //   </TableCell>
-  // </TableRow>
   )
 }
 

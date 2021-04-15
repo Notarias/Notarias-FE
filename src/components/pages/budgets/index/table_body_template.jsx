@@ -19,7 +19,6 @@ const TableBodyTemplate = (props) => {
     sortField: sortField,
   }
 
-  //setear la busqueda en event target para enviar el valor y si no, enviar null
   const { loading, data, refetch } = useQuery(
     GET_BUDGETS, { variables: variables, fetchPolicy: "no-cache" }
   );
@@ -61,20 +60,6 @@ const TableBodyTemplate = (props) => {
             }
           )
         }
-        {/* {
-          [0, 1, 2, 3, 4].map(
-            ( item ) => {
-              let kei = item
-              return (
-                <TemplateRow
-                  key={ kei + "budgetRow"}
-                  item={ item }
-                  classes={ classes }
-                />
-              )
-            }
-          )
-        } */}
       </TableBody>
     )
   }
