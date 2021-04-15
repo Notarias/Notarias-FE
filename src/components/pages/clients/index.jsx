@@ -25,7 +25,7 @@ const Clients = (props) => {
   const [timeout, setSetTimeout]          = useState(null)
   const [page, setPage]                   = useState(0)
   const [per, setPer]                     = useState(5)
-  const [total_records, setTotalRecords]  = useState(10)
+  const [total_records, setTotalRecords]  = useState(0)
 
   const { classes } = props
 
@@ -67,6 +67,7 @@ const Clients = (props) => {
             <Table className={classes.table}>
               <TableHeaders field={sortField} direction={sortDirection} sortHandler={sort.bind(this) }/>
               <ClientRows
+              setTotalRecords={ setTotalRecords }
                 page={ page }
                 per={ per }
                 search={{}}

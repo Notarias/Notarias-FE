@@ -13,7 +13,7 @@ import ClientsShow                    from '../components/pages/clients/show';
 import ClientsEdit                    from '../components/pages/clients/edit';
 import ClientsIndex                   from '../components/pages/clients/index';
 import BudgetBuilderIndex             from '../components/pages/budget_builders/index';
-
+import budgetsNew                     from '../components/pages/budgets/new'
 import BudgetsIndex                   from '../components/pages/budgets/index';
 import ProceduresIndex                from '../components/pages/procedures/index';
 import AppointmentsIndex              from '../components/pages/appointments/index';
@@ -44,6 +44,7 @@ export default function BaseRoutes(props) {
         <ProtectedRoute path='/clients/:id' component={ClientsShow}/> 
         <ProtectedRoute path="/clients" component={ClientsIndex}/>
         <ProtectedRoute path="/budgets/templates" component={BudgetBuilderIndex}/>
+        <ProtectedRoute path='/budgets/new' component={budgetsNew}/>
         <ProtectedRoute path='/budgets' component={BudgetsIndex} />
         <ProtectedRoute path="/procedures" component={ProceduresIndex}/>
         <ProtectedRoute path="/appointments" component={AppointmentsIndex}/>

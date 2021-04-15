@@ -37,10 +37,6 @@ const ControlBar = (props) => {
       onCompleted(cacheData) {
         setOpen(false);
         setError(false)
-        // const id = cacheData.createBudgetingTemplate.budgetingTemplate.id
-        // id && setRedirect(
-        //   <Redirect to={{ pathname: `/config/budget_templates/${id}/edit` }} />
-        // )
       }
     }
   )
@@ -131,7 +127,6 @@ const ControlBar = (props) => {
             size="small"
             disabled={ pristine }
           >
-            {/* { redirect  } */}
             Agregar
           </Button>
         </DialogActions>

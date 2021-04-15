@@ -20,7 +20,7 @@ import ClientPreviewDrawer          from './client_preview_drawer';
 
 
 export default (props) => {
-  const { page, per, sortDirection, sortField, searchField, searchValue, classes } = props
+  const { page, per, sortDirection, sortField, searchField, searchValue, classes, setTotalRecords } = props
   let variables = {
     page: page + 1,
     per: per,
@@ -37,6 +37,10 @@ export default (props) => {
   useEffect(() => {
     refetch(variables);
   }, [page, per, searchField, searchValue, sortField, sortDirection]);
+
+  useEffect(() => {
+    data && setTotalRecords(data.clientsCount)
+  }, [data]);
 
   if (loading || !data) {
     return(
@@ -62,6 +66,7 @@ export default (props) => {
               <TableCell align= "center">{ client.firstName }</TableCell>
               <TableCell align= "center">{ client.lastName }</TableCell>
               <TableCell align= "center">{ client.rfc }</TableCell>
+              <TableCell align= "center">{ client.curp }</TableCell>
               <TableCell align= "center">
                 <Grid>
                   <GenericDropdownMenu>

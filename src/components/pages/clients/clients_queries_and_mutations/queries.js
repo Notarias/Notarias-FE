@@ -13,6 +13,7 @@ export const GET_CLIENT = gql`
       category
       rfc
       serialNumber
+      curp
     }
   }
 `
@@ -72,7 +73,9 @@ export const LOAD_CLIENTS = gql`
       firstName
       lastName
       rfc
+      curp
     }
+    clientsCount
   }
 `
 
