@@ -1,12 +1,12 @@
 
-import React, { useEffect }                     from 'react';
+import React                                    from 'react';
 import { styles }                               from '../styles';
 import { withStyles }                           from '@material-ui/core/styles';
 import Typography                               from '@material-ui/core/Typography';
 import Grid                                     from '@material-ui/core/Grid';
 import Button                                   from '@material-ui/core/Button';
 import IconButton                               from '@material-ui/core/IconButton';
-import Menu                                     from '@material-ui/core/Menu';
+import Menu                                     from '@material-ui/core/Menu';  
 import MenuItem                                 from '@material-ui/core/MenuItem';
 import MoreVertIcon                             from '@material-ui/icons/MoreVert';
 import TextField                                from '@material-ui/core/TextField';
@@ -25,23 +25,21 @@ import DialogTitle                              from '@material-ui/core/DialogTi
 import DialogActions                            from '@material-ui/core/DialogActions';
 import ListItemIcon                             from '@material-ui/core/ListItemIcon';
 import ListItemText                             from '@material-ui/core/ListItemText';
-import { GLOBAL_MESSAGE }                       from '../../../../../resolvers/queries';
-import client, { cache }             from '../../../../../apollo'
 
 
 const TabMenu = (props) => {
   const { classes, proceduresTemplateId, selected, active, setCurrentTab } = props;
-  const [id, setId] = React.useState(props.id);
+  const [id] = React.useState(props.id);
   const [name, setName] = React.useState(props.name);
   const [editing, setEditing] =  React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openDialog, setOpenDialog] = React.useState(false);
-  const [updateLoading, setUpdateLoading] = React.useState(false)
+  const [setUpdateLoading] = React.useState(false)
 
   const [error, setError] = React.useState(false)
   const inputsList = ["name"]
 
-  const [updateProceduresTemplateTabMutation, updateProcessInfo] =
+  const [updateProceduresTemplateTabMutation] =
   useMutation(
     UPDATE_PROCEDURES_TEMPLATE_TAB,
     {
@@ -91,7 +89,7 @@ const TabMenu = (props) => {
     )
   }
 
-  const [destroyProceduresTemplateTabMutation, destroyProcessInfo] =
+  const [destroyProceduresTemplateTabMutation] =
   useMutation(
     DESTROY_PROCEDURES_TEMPLATE_TAB, 
     {

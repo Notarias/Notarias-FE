@@ -92,7 +92,7 @@ const ProcedureTemplateLinkButton = (props) => {
     updateBudgetingTemplateMutation({ variables: {"id": id, "proceduresTemplatesIds": []}})
   }
 
-  const { loading, data, refetch } = useQuery(
+  const { data } = useQuery(
     GET_PROCEDURES_TEMPLATES_QUICK_LIST ,
   );
 
@@ -171,7 +171,7 @@ const ProcedureTemplateLinkButton = (props) => {
         <ButtonGroup color={ colorOfButtonWhenTemplateIsLinked() } ref={anchorRef} aria-label="split button">
         <Button 
             size="small"
-            disabled={ proceduresTemplatesData && (proceduresTemplatesData == 0) }
+            disabled={ proceduresTemplatesData && (proceduresTemplatesData === 0) }
             onClick={ handleClickOpenProcedureLinkedList }
           >
             <Avatar
@@ -218,7 +218,7 @@ const ProcedureTemplateLinkButton = (props) => {
                     <Divider/>
                     <MenuItem
                       onClick={ updateUnlinkProcedureTemplate }
-                      disabled={ proceduresTemplatesData && (proceduresTemplatesData == 0) }
+                      disabled={ proceduresTemplatesData && (proceduresTemplatesData === 0) }
                     >
                       Desvincular
                     </MenuItem>

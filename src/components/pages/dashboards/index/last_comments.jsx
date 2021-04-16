@@ -16,7 +16,7 @@ class LastComments extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <Grid container spacing={3} style={{margin: "0px", overflowY: "scroll", height: "100%"}} spacing={3}>
+      <Grid container spacing={3} style={{margin: "0px", overflowY: "scroll", height: "100%"}}>
         <Grid item xs={12} style={{margin: "0px"}}>
           <Query query={GET_LATEST_COMMENTS}
           variables={{searchField: "created_at", sortDirection: "DESC", per: 10 }}

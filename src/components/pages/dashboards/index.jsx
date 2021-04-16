@@ -16,9 +16,7 @@ const BREADCRUMBS = [
 ]
 
 const DashboardsIndex = (props) => {
-  const componentDidMount = () => {
     setBreadcrumbsList([])
-  }
   const { classes } = props;
   return (
     <>

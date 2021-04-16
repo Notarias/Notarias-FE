@@ -1,4 +1,4 @@
-import React, { useEffect }                           from 'react';
+import React                                          from 'react';
 import Grid                                           from '@material-ui/core/Grid';
 import TextField                                      from '@material-ui/core/TextField';
 import Button                                         from '@material-ui/core/Button';
@@ -40,7 +40,7 @@ const Field = (props) => {
   const inputsList = ["name"]
   const [categoriesToSave, setCategoriesToSave] = React.useState(props.categories || [])
 
-  const [updateBudgetingTemplateTabFieldMutation, updateProcessInfo] =
+  const [updateBudgetingTemplateTabFieldMutation] =
     useMutation(
       UPDATE_BUDGETING_TEMPLATE_TAB_FIELD,
       {
@@ -131,7 +131,7 @@ const Field = (props) => {
     setOpenDialog(false);
   }
 
-  const [destroyBudgetingTemplateTabFieldMutation, destroyProcessInfo] =
+  const [destroyBudgetingTemplateTabFieldMutation] =
     useMutation(
       DESTROY_BUDGETING_TEMPLATE_TAB_FIELD, 
       {
@@ -154,10 +154,6 @@ const Field = (props) => {
 
   const handleNameChange = (event) => {
     setName(event.target.value);
-  };
-
-  const handleCategoryChange = (event) => {
-    setCategories(event.target.value);
   };
 
   const statusField = () => { 
@@ -224,7 +220,7 @@ const Field = (props) => {
       <Paper>
       <Grid container item className={ classes.fieldHeightRow }>
         { editing ? renderTextField() : renderInputField() }
-        <Grid container item direction="column"  alignItems="center" justify="center" item xs={4}>
+        <Grid container direction="column"  alignItems="center" justify="center" item xs={4}>
           <Chip
             avatar={<Avatar>{ categoriesToShow() }</Avatar>}
             label={ ` categorias` }
@@ -253,7 +249,7 @@ const Field = (props) => {
           </Dialog>
         </Grid>
 
-        <Grid container item direction="column"  alignItems="center" justify="center" item xs={1} onClick={ handleClickOpenDialog }>
+        <Grid container direction="column"  alignItems="center" justify="center" item xs={1} onClick={ handleClickOpenDialog }>
           {
           active ?
             <Button>
@@ -288,7 +284,7 @@ const Field = (props) => {
             </Button>
           </DialogActions>
         </Dialog>
-        <Grid container item direction="column"  alignItems="center" justify="center" item xs={1}>
+        <Grid container direction="column"  alignItems="center" justify="center" item xs={1}>
           <Button onClick={ handleClickOpen }>
             <DeleteForeverIcon/>
           </Button>

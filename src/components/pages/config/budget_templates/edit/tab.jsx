@@ -34,8 +34,6 @@ const Tab = (props) => {
         xs={10}
         onClick={ selectTab }
         id={ tab.id }
-        container
-        item
         direction="column"
         justify="flex-start"
         alignItems="center"

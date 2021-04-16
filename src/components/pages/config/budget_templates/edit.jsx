@@ -5,13 +5,10 @@ import Paper                                from '@material-ui/core/Paper';
 import Grid                                 from '@material-ui/core/Grid';
 import { styles }                           from './styles';
 import { withStyles }                       from '@material-ui/core/styles';
-import Button                               from '@material-ui/core/Button';
 import CircularProgress                     from '@material-ui/core/CircularProgress';
 import TemplateTitle                       from './edit/template_title';
 import { useQuery }                         from '@apollo/react-hooks';
 import { GET_BUDGETING_TEMPLATE }           from './queries_and_mutations/queries'
-import Typography                           from '@material-ui/core/Typography';
-import AddIcon                              from '@material-ui/icons/Add';
 import ActiveTemplateButton                 from './edit/active_template_button';
 import ProcedureTemplateLinkButton           from './edit/procedure_template_link_button';
 import Tabs                                 from './edit/tabs';
@@ -27,7 +24,7 @@ const BREADCRUMBS = [
 
 const Edit = (props) => {
   const { classes, match } = props
-  const { loading, data, refetch } = useQuery(GET_BUDGETING_TEMPLATE,
+  const { loading, data } = useQuery(GET_BUDGETING_TEMPLATE,
     { variables: {"id": match.params.id } } 
   );
 

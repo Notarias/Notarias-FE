@@ -27,25 +27,25 @@ const Details = (props) => {
       <Breadcrumbs breadcrumbs={BREADCRUMBS}/>
       <Grid item xs={12} style={{paddingTop:"3%", paddingLeft:"3%"}}>
         <Grid item xs={12} spacing={3} container >
-          <Grid item xs={4} container item alignItems="stretch" direction="row">
+          <Grid item xs={4} container alignItems="stretch" direction="row">
             <Grid item container>
               <CustomerInformation classes={ classes } history={props.history} match={props.match.params} data={data} />
             </Grid>
           </Grid>
           <Grid container xs={8} item spacing={3}>
-            <Grid item xs={12} item container spacing={3}>
-              <Grid container item xs={6} item>
+            <Grid item xs={12} container spacing={3}>
+              <Grid container item xs={6}>
                 <LastProcedures/>
               </Grid>
-              <Grid item xs={6} item>
+              <Grid item xs={6}>
                 <LastComments/>
               </Grid>
             </Grid>
-            <Grid item xs={12} item container spacing={3}>
-              <Grid item xs={6} item>
+            <Grid item xs={12} container spacing={3}>
+              <Grid item xs={6}>
                 <LastBudgets/>
               </Grid>
-              <Grid item xs={6} item>
+              <Grid item xs={6}>
                 <NextEvents/>
               </Grid>
             </Grid>

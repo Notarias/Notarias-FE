@@ -28,7 +28,6 @@ class NextEventsIndex extends Component {
                   id="date"
                   label="Reunion"
                   type="date"
-                  defaultValue="#"
                   classes={{root: classes.textFieldEvent}}
                   InputLabelProps={{
                     shrink: true,

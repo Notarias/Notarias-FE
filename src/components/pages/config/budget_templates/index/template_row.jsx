@@ -1,4 +1,4 @@
-import React, { useEffect }           from 'react';
+import React                          from 'react';
 import Grid                           from '@material-ui/core/Grid';
 import TableRow                       from '@material-ui/core/TableRow';
 import TableCell                      from '@material-ui/core/TableCell';
@@ -35,7 +35,7 @@ const TemplateRow = (props) => {
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const id = budgetingTemplate.id;
 
-  const { loading, data, refetch } = useQuery(GET_BUDGETING_TEMPLATE,
+  const { data } = useQuery(GET_BUDGETING_TEMPLATE,
     { variables: {"id": id } } 
   );
 
@@ -44,7 +44,7 @@ const TemplateRow = (props) => {
     return serial.toString().padStart(5, "0")
   }
 
-  const [updateBudgetingTemplateMutation, updateProcessInfo] =
+  const [updateBudgetingTemplateMutation] =
   useMutation(
     UPDATE_BUDGETING_TEMPLATE,
     {
@@ -140,7 +140,7 @@ const TemplateRow = (props) => {
                 onClose={ handleClose }
                 aria-labelledby="responsive-dialog-title"
               >
-                <DialogTitle id="responsive-dialog-title">{"Confirmar ", statusTemplate() }</DialogTitle>
+                <DialogTitle id="responsive-dialog-title">{"Confirmar " + statusTemplate() }</DialogTitle>
                 <DialogContent>
                   <DialogContentText>
                     ¿Realmente deseas { statusTemplate() } está plantilla de presupuesto ?

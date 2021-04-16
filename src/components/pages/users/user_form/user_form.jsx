@@ -89,7 +89,7 @@ class  UserForm extends Component {
   }
 
   render() {
-    const { classes, data, match } = this.props
+    const { classes } = this.props
     return (
       <Grid classes={{root: classes.editUserFormGrid}} >
         <Mutation
@@ -203,7 +203,7 @@ class  UserForm extends Component {
                     <Grid item xs={1}>
                     </Grid>
                     <Grid item xs={11}>
-                      <FormControl  className={classes.formControl, classes.userFormTextFieldEdit}>
+                      <FormControl  className={classes.formControl + classes.userFormTextFieldEdit}>
                       <InputLabel id="demo-simple-select-required-label" >Rol</InputLabel>
                         <Select
                           labelId="demo-simple-select-required-label"

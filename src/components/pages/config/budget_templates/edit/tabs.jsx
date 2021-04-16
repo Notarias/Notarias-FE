@@ -21,8 +21,8 @@ import client                               from '../../../../../apollo';
 
 const Tabs = (props) => {
 
-  const { classes, tabsData, currentTab, setCurrentTab, budgetingTemplateId } = props
-  const { loading, data } = useQuery(
+  const { classes, currentTab, setCurrentTab, budgetingTemplateId } = props
+  const { data } = useQuery(
     GET_BUDGETING_TEMPLATES_TABS, { variables: {"id": budgetingTemplateId }}
   );
 
@@ -39,7 +39,7 @@ const Tabs = (props) => {
     currentTab && setTabName(currentTab.name);
   }, [data])
 
-  const [createBudgetingTemplateTabMutation, createProcessInfo] =
+  const [createBudgetingTemplateTabMutation] =
   useMutation(
     CREATE_BUDGETING_TEMPLATES_TABS,
     {

@@ -10,7 +10,6 @@ import Avatar               from '@material-ui/core/Avatar';
 import { GET_CURRENT_USER } from '../../resolvers/queries';
 import { Query }            from '@apollo/react-components';
 import gql                  from 'graphql-tag';
-import { cache }            from '../../apollo';
 
 const USER_CHANGE = gql`
   subscription {

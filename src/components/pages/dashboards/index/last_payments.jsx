@@ -1,6 +1,5 @@
 import React, { Component }         from 'react';
 import Grid                         from '@material-ui/core/Grid';
-import Paper                        from '@material-ui/core/Paper';
 import { styles }                   from '../styles';
 import { withStyles }               from '@material-ui/core/styles';
 import Typography                   from '@material-ui/core/Typography';
@@ -9,7 +8,6 @@ import Link                 from '@material-ui/core/Link';
 class LastPayments extends Component {
 
   render() {
-    const { classes } = this.props;
     return (
       <div>
         <Grid container spacing={3}>

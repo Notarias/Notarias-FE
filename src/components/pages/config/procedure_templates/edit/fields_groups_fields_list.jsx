@@ -5,7 +5,7 @@ import { GET_PROCEDURES_TEMPLATE_FIELDS_GROUPS_FIELDS }     from '../queries_and
 
 const FieldsGroupFieldList = (props) => {
   const { groupId } = props
-  const { loading, data } = useQuery(
+  const { data } = useQuery(
     GET_PROCEDURES_TEMPLATE_FIELDS_GROUPS_FIELDS,
     {
       variables: {"id": groupId }

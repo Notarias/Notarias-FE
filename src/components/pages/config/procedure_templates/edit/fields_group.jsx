@@ -23,7 +23,7 @@ const FieldsGroup = (props) => {
   const [error, setError] = React.useState(false);
   const inputsList = ["name"];
 
-  const [updateProceduresTemplateTabFieldsGroupMutation, updateGroupProcessInfo] =
+  const [updateProceduresTemplateTabFieldsGroupMutation] =
   useMutation(
     UPDATE_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS,
     {
