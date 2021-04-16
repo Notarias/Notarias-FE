@@ -50,7 +50,6 @@ const renderSearchList = (searchList, checked, classes, handleToggle) => {
 
 const CategoriesSelectableList = (props) => {
   const { setCategoriesToSave, categoriesToSave, classes } = props;
-  const [categories, setCategories] = React.useState(data ? data.budgetingCategories : []);
   const [checked, setChecked] = React.useState(categoriesToSave);
   const [searchList, setSearchList] = React.useState([])
   const [initialList, setInitialList] = React.useState([])
@@ -78,13 +77,12 @@ const CategoriesSelectableList = (props) => {
     setChecked(newChecked);
   };
 
-  const { loading, data } = useQuery(
+  const { data } = useQuery(
     GET_BUDGETING_CATEGORIES,
     {}
   );
 
   useEffect(() => {
-    setCategories(data && data.budgetingCategories)
     setCategoriesToSave(checked)
     if (!initialized && data && data.budgetingCategories) {
       setInitialList(data.budgetingCategories)

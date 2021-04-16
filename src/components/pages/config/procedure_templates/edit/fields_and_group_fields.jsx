@@ -7,7 +7,7 @@ import FieldsGroupList              from './fields_group_list';
 import Typography                   from '@material-ui/core/Typography';
 
 const FieldsAndGroupFields = (props) => {
-  const { currentTab, classes, refreshAll } = props
+  const { currentTab } = props
 
   const renderFieldsAndGroups = () => {
 

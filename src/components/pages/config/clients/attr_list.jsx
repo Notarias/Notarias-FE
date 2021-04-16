@@ -40,9 +40,8 @@ const attrList = (props)=> {
   const [id, setId] = React.useState(props.id);
   const [pristine, setPristine] = React.useState(true)
   const [error, setError] = React.useState(false)
-  const [loading, setLoading] = React.useState(false)
 
-  const [destroyClientAttributeMutation, destroyProcessInfo] =
+  const [destroyClientAttributeMutation] =
     useMutation(
       DESTROY_CLIENT_ATTRIBUTE, 
       {
@@ -53,7 +52,7 @@ const attrList = (props)=> {
           let attr = clientAttrsData.clientAttributes
           let newArray = []
           for ( let i = 0; i < attr.length; i++) {
-            if (parseInt(attr[i].id) != parseInt(deleteId)) { 
+            if (parseInt(attr[i].id) !== parseInt(deleteId)) { 
               newArray.push(attr[i]) 
             }
           }

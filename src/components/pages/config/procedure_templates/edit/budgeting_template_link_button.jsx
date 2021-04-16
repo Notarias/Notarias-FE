@@ -94,7 +94,7 @@ const ButgetingTemplateLinkButton = (props) => {
     setToLinkSelectedOption([])
   }
 
-  const { loading, data, refetch } = useQuery(
+  const { data } = useQuery(
     GET_BUDGETING_TEMPLATES_QUICK_LIST,
   );
 
@@ -173,7 +173,7 @@ const ButgetingTemplateLinkButton = (props) => {
         <ButtonGroup color={ colorOfButtonWhenTemplateIsLinked() } ref={anchorRef} aria-label="split button">
           <Button 
             size="small"
-            disabled={ budgetingTemplatesData && (budgetingTemplatesData == 0) }
+            disabled={ budgetingTemplatesData && (budgetingTemplatesData === 0) }
             onClick={ handleClickOpenBudgetingLinkedList }
           >
             <Avatar
@@ -220,7 +220,7 @@ const ButgetingTemplateLinkButton = (props) => {
                     <Divider/>
                     <MenuItem
                       onClick={ updateUnlinkBudgetingTemplate }
-                      disabled={ budgetingTemplatesData && (budgetingTemplatesData == 0) }
+                      disabled={ budgetingTemplatesData && (budgetingTemplatesData === 0) }
                     >
                       Desvincular
                     </MenuItem>

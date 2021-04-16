@@ -32,12 +32,11 @@ import client                                   from '../../../../../apollo';
 
 const TabMenu = (props) => {
   const { classes, budgetingTemplateId, selected, active, setCurrentTab } = props;
-  const [id, setId] = React.useState(props.id);
+  const [id] = React.useState(props.id);
   const [name, setName] = React.useState(props.name);
   const [editing, setEditing] =  React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openDialog, setOpenDialog] = React.useState(false);
-  const [updateLoading, setUpdateLoading] = React.useState(false)
 
   const [error, setError] = React.useState(false)
   const inputsList = ["name"]
@@ -62,7 +61,6 @@ const TabMenu = (props) => {
       update(store, cacheData) {
         setError(false)
         setEditing(!editing)
-        setUpdateLoading(false)
       },
       refetchQueries: [{
         query: GET_BUDGETING_TEMPLATES_TABS,
@@ -93,7 +91,7 @@ const TabMenu = (props) => {
   }
 
   const changeStatus = (event) => {
-    setUpdateLoading(true)
+
     updateBudgetingTemplateTabMutation(
       { 
         variables: { id: id , active: !active},
@@ -102,7 +100,7 @@ const TabMenu = (props) => {
     )
   }
 
-  const [destroyBudgetingTemplateTabMutation, destroyProcessInfo] =
+  const [destroyBudgetingTemplateTabMutation] =
   useMutation(
     DESTROY_BUDGETING_TEMPLATE_TAB,
     {

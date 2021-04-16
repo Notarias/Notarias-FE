@@ -17,7 +17,7 @@ const TemplateTitle = (props) => {
 
   const { classes, templateData, match } = props
   const [active, setActive] = React.useState(templateData.active);
-  const [id, setId] = useState(match.id);
+  const [id] = useState(match.id);
   const [editing, setEditing] = useState(true);
   const [name, setName] = useState(templateData.name);
   const [error, setError] = useState(false)

@@ -68,12 +68,12 @@ class ClientCommentari extends Component {
                           <Button
                             color='primary'
                             variant="contained"
-                            onClick={(variavles) => refetch({
-                              per: (this.state.per+this.state.count),
-                              sortDirection: "ASC"
-                          }),()=>{
-                            this.setState({per: (this.state.per+this.state.count)})
-                          }}>
+                            onClick={
+                              () => refetch({
+                                per: (this.state.per+this.state.count),
+                                sortDirection: "ASC"
+                              })
+                            }>
                             Ver más
                           </Button>
                         </Grid>

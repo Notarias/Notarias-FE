@@ -36,7 +36,7 @@ const ButtonsNewFieldNewFieldsGroup = ({
   const [error, setError] = React.useState(false)
   const inputsList = ["name", "style"]
 
-  const [createProcedureTemplateTabFieldMutation, createProcessInfo] =
+  const [createProcedureTemplateTabFieldMutation] =
     useMutation(
       CREATE_PROCEDURES_TEMPLATE_TAB_FIELD,
       {
@@ -80,7 +80,7 @@ const ButtonsNewFieldNewFieldsGroup = ({
     )
   }
 
-  const [createProcedureTemplateTabFieldGroupsMutation, createGroupProcessInfo] =
+  const [createProcedureTemplateTabFieldGroupsMutation] =
   useMutation(
     CREATE_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS,
     {

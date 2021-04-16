@@ -16,7 +16,7 @@ import client                                         from '../../../../../apoll
 const ActiveTemplateButton = (props) => {
 
   const { classes, templateData, match } = props
-  const [id, setId] = React.useState(match.id);
+  const [id] = React.useState(match.id);
   const [active, setActive] = React.useState(templateData.active);
   const [open, setOpen] = React.useState(false);
 

@@ -79,7 +79,7 @@ class EditClientForm extends Component {
     return (
       <Grid container spacing={3} align="center">
         <Grid item xs={12}>
-          <Paper className={classes.root, classes.newClientForm} variant="outlined">
+          <Paper className={ classes.newClientForm} variant="outlined">
             <form onSubmit={(e) => e.preventDefault()}>
               <Grid item container className={classes.marginInputClient} >
                 <Grid item xs={1}>
@@ -230,7 +230,7 @@ class EditClientForm extends Component {
           </Paper>
         </Grid>
         <Grid item xs={12}>
-          <Paper className={classes.root, classes.newClientForm} variant="outlined">
+          <Paper className={ classes.newClientForm} variant="outlined">
             <form onSubmit={(e) => e.preventDefault()}>
               <Query query={GET_CLIENT_ATTRIBUTE}>
                 {

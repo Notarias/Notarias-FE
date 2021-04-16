@@ -49,7 +49,7 @@ const Field = (props) => {
   const [error, setError] = React.useState(false)
   const inputsList = ["name"]
 
-  const [updateProceduresTemplateTabFieldMutation, updateProcessInfo] =
+  const [updateProceduresTemplateTabFieldMutation] =
     useMutation(
       UPDATE_PROCEDURES_TEMPLATE_TAB_FIELD,
       {
@@ -125,7 +125,7 @@ const Field = (props) => {
     }
   }
 
-  const [destroyProceduresTemplateTabFieldMutation, destroyProcessInfo] =
+  const [destroyProceduresTemplateTabFieldMutation  ] =
     useMutation(
       DESTROY_PROCEDURES_TEMPLATE_TAB_FIELD, 
       {
@@ -228,7 +228,7 @@ const Field = (props) => {
       <Paper>
       <Grid container item className={ classes.fieldHeightRow }>
         { editing ? renderTextField() : renderInputField() }
-        <Grid container item direction="column"  alignItems="center" justify="center" item xs={1}>
+        <Grid container direction="column"  alignItems="center" justify="center" item xs={1}>
           <FormControlLabel
             control={<Checkbox 
               icon={<StarBorderIcon />} 
@@ -263,7 +263,7 @@ const Field = (props) => {
             </DialogActions>
           </Dialog>
         </Grid>
-        <Grid container item direction="column"  alignItems="center" justify="center" item xs={1}>
+        <Grid container direction="column"  alignItems="center" justify="center" item xs={1}>
           <Button onClick={ handleClickOpen }>
             <DeleteForeverIcon/>
           </Button>
@@ -290,7 +290,7 @@ const Field = (props) => {
             </DialogActions>
           </Dialog>
         </Grid>
-        <Grid container item direction="column"  alignItems="center" justify="center" item xs={1} onClick={ handleClickOpenDialog }>
+        <Grid container  direction="column"  alignItems="center" justify="center" item xs={1} onClick={ handleClickOpenDialog }>
           {
           active ?
             <Button>

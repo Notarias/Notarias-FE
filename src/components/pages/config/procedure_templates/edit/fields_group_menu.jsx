@@ -32,7 +32,7 @@ import { GET_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS }            from '../queries
 
 const FieldsGroupMenu = (props) => {
 
-  const { classes, groupName, active, changeStatus, currentTab, groupId, removeFromList, arrayIndex } = props
+  const { classes, groupName, active, changeStatus, currentTab, groupId } = props
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openB, setOpenB] = React.useState(false);
   const [openDialog, setOpenDialog] = React.useState(false);
@@ -42,7 +42,7 @@ const FieldsGroupMenu = (props) => {
   const [error, setError] = React.useState(false)
   const inputsList = ["name", "style"]
 
-  const [createProcedureTemplateTabFieldMutation, createProcessInfo] =
+  const [createProcedureTemplateTabFieldMutation] =
   useMutation(
     CREATE_PROCEDURES_TEMPLATE_TAB_FIELD,
     {
@@ -87,7 +87,7 @@ const FieldsGroupMenu = (props) => {
     )
   }
 
-  const [destroyProceduresTemplateTabFieldsGroupMutation, destroyProcessInfo] =
+  const [destroyProceduresTemplateTabFieldsGroupMutation] =
   useMutation(
     DESTROY_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS, 
     {

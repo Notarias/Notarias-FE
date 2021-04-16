@@ -12,14 +12,12 @@ import Drawer                   from '@material-ui/core/Drawer';
 import AppBar                   from '@material-ui/core/AppBar';
 import Toolbar                  from '@material-ui/core/Toolbar';
 import CssBaseline              from '@material-ui/core/CssBaseline';
-import List                     from '@material-ui/core/List';
 import Typography               from '@material-ui/core/Typography';
 import Divider                  from '@material-ui/core/Divider';
 import IconButton               from '@material-ui/core/IconButton';
 import ChevronLeftIcon          from '@material-ui/icons/ChevronLeft';
 import ChatIcon                 from '@material-ui/icons/Chat';
 import ChevronRightIcon         from '@material-ui/icons/ChevronRight';
-import ListItem                 from '@material-ui/core/ListItem';
 import Paper                    from '@material-ui/core/Paper';
 import { useTheme } from '@material-ui/core/styles';
 

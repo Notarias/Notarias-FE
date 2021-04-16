@@ -75,7 +75,6 @@ export const styles = theme => {
       height: "30%",
       overflowY: "scroll",
       width: '100%',
-      height: "500px"
     },
     commentsList: {
       width: "100%",
@@ -205,15 +204,6 @@ export const styles = theme => {
       width: '100%',
       height:" 500px"
     },
-    list: {
-      width: '350px',
-    },
-    fullList: {
-      width: 'auto',
-    },
-    infoAndSerialBox: {
-      width: '300px'
-    },
     moreDetailsLink: {
       width: '100%',
       height: '40%',
@@ -239,23 +229,6 @@ export const styles = theme => {
     },
     infoAndSerialBox: {
       width: '300px'
-    },
-    moreDetailsLink: {
-      width: '100%',
-      height: '40%',
-      display: 'flex',
-      padding: '16px 16px 16px 16px',
-      flexDirection: 'column-reverse'
-    },
-    serialNumberText: {
-      display: 'inline-block',
-      width: '160px',
-      textAlign: 'right'
-    },
-    informationText: {
-      display: 'inline-block',
-      width: '140px',
-      textAlign: 'right'
     },
     clientAtributes: {
       padding: theme.spacing(1),

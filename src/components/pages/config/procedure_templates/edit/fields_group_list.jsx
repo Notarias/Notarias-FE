@@ -7,7 +7,7 @@ import { GET_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS }    from '../queries_and_mut
 const FieldsGroupList = (props) => {
 
   const { currentTab } = props
-  const { loading, data } = useQuery(
+  const { data } = useQuery(
     GET_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS,
     {
       variables: {"id": currentTab.id }

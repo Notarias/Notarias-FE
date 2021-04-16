@@ -14,19 +14,17 @@ import { withStyles }                     from '@material-ui/core/styles';
 import PostAddIcon                        from '@material-ui/icons/PostAdd';
 import { useMutation }                    from '@apollo/react-hooks';
 import { CREATE_BUDGETING_TEMPLATE }      from '../queries_and_mutations/queries'
-import { Redirect }                       from 'react-router-dom';
 
 
 const ControlBar = (props) => {
   const { classes, searchLoading, onChangeSearch } = props;
   const [open, setOpen] = React.useState(false);
   const [templateName, setTemplateName] = useState(" ");
-  const [redirect, setRedirect] = useState(false)
   const [pristine, setPristine] = useState(true)
   const [error, setError] = useState(false)
   const inputsList = ["name"]
 
-  const [createBudgetingTemplateMutation, createProcessInfo] =
+  const [createBudgetingTemplateMutation] =
   useMutation(
     CREATE_BUDGETING_TEMPLATE,
     {

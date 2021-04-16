@@ -29,13 +29,13 @@ const TempleteRow = (props) => {
 
   const procedureTemplate  = props.data
   const { classes } = props
-  const [id, setId] = React.useState(procedureTemplate.id);
+  const [id] = React.useState(procedureTemplate.id);
   const [active, setActive] = React.useState(procedureTemplate.active);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const [open, setOpen] = React.useState(false);
 
-  const { loading, data, refetch } = useQuery(GET_PROCEDURE_TEMPLATE,
+  const { data } = useQuery(GET_PROCEDURE_TEMPLATE,
     { variables: {"id": id } } 
   );
 
@@ -43,7 +43,7 @@ const TempleteRow = (props) => {
     return serial.toString().padStart(5, "0")
   }
 
-  const [updateProcedureTemplatesMutation, updateProcessInfo] =
+  const [updateProcedureTemplatesMutation] =
   useMutation(
     UPDATE_PROCEDURE_TEMPLATES,
     {
@@ -124,7 +124,7 @@ const TempleteRow = (props) => {
                   onClose={ handleClose }
                   aria-labelledby="responsive-dialog-title"
                 >
-                  <DialogTitle id="responsive-dialog-title">{"Confirmar ", statusTemplate() }</DialogTitle>
+                  <DialogTitle id="responsive-dialog-title">{"Confirmar " + statusTemplate() }</DialogTitle>
                   <DialogContent>
                     <DialogContentText>
                       ¿Realmente deseas { statusTemplate() } está plantilla de trámite ?

@@ -29,7 +29,7 @@ const NewFieldButton = ({
   const [error, setError] = React.useState(false)
   const inputsList = ["name", "categories"]
 
-  const [createBudgetingTemplateTabFieldMutation, createProcessInfo] =
+  const [createBudgetingTemplateTabFieldMutation] =
     useMutation(
       CREATE_BUDGETING_TEMPLATE_TAB_FIELD,
       {

@@ -17,7 +17,7 @@ import { CREATE_PROCEDURE_TEMPLATE }      from '../queries_and_mutations/queries
 import { Redirect }                       from 'react-router-dom';
 
 const styles_control_bar = (props) => {
-  const { classes, searchLoading, onChangeSearch, getTemplatesVariables } = props;
+  const { classes, searchLoading, onChangeSearch } = props;
   const [open, setOpen] = useState(false);
   const [templateName, setTemplateName] = useState(" ");
   const [redirect, setRedirect] = useState(false)
@@ -25,7 +25,7 @@ const styles_control_bar = (props) => {
   const [error, setError] = useState(false)
   const inputsList = ["name"]
 
-  const [createProcedureTemplateMutation, createProcessInfo] =
+  const [createProcedureTemplateMutation] =
   useMutation(
     CREATE_PROCEDURE_TEMPLATE,
     {

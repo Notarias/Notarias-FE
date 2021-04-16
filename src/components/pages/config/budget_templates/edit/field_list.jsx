@@ -4,12 +4,11 @@ import { useQuery }                                 from '@apollo/react-hooks';
 import { GET_BUDGETING_TEMPLATE_TAB_FIELDS }        from '../queries_and_mutations/queries'
 import { styles }                                   from '../styles';
 import { withStyles }                               from '@material-ui/core/styles';
-import AddBoxIcon from '@material-ui/icons/AddBox';
 
 const FieldList = (props) => {
-  const { currentTab, classes} = props
+  const { currentTab} = props
 
-  const { loading, data } = useQuery(
+  const { data } = useQuery(
     GET_BUDGETING_TEMPLATE_TAB_FIELDS,
     {
       variables: { "id": currentTab.id }
@@ -52,12 +51,6 @@ const FieldList = (props) => {
           )
         }
       </>
-    )
-  }
-
-  const iconButtonType = () => {
-    return(
-      <AddBoxIcon/>
     )
   }
 

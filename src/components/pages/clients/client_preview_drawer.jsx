@@ -25,9 +25,9 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 const clientPreviewDrawer = (props) => {
 
-  const { classes, match } = props
-  const [id, setId] = React.useState(props.id);
-  const { loading, error, data } = useQuery(GET_CLIENT, { variables: { "id": id } });
+  const { classes } = props
+  const [id] = React.useState(props.id);
+  const { loading, data } = useQuery(GET_CLIENT, { variables: { "id": id } });
 
   const [state, setState] = React.useState({ right: false });
 

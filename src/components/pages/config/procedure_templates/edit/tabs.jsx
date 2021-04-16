@@ -19,8 +19,8 @@ import { CREATE_PROCEDURES_TEMPLATE_TAB }   from '../queries_and_mutations/queri
 
 const Tabs = (props) => {
 
-  const { classes, tabsData, currentTab, setCurrentTab, proceduresTemplateId } = props
-  const { loading, data } = useQuery(
+  const { classes, currentTab, setCurrentTab, proceduresTemplateId } = props
+  const { data } = useQuery(
     GET_PROCEDURES_TEMPLATE_TABS, { variables: {"proceduresTemplateId": proceduresTemplateId }}
   );
 
@@ -37,7 +37,7 @@ const Tabs = (props) => {
     currentTab && setTabName(currentTab.name);
   }, [data])
 
-  const [createProcedureTemplateTabMutation, createProcessInfo] =
+  const [createProcedureTemplateTabMutation] =
   useMutation(
     CREATE_PROCEDURES_TEMPLATE_TAB,
     {

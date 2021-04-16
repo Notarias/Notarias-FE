@@ -5,7 +5,6 @@ import Grid                                 from '@material-ui/core/Grid';
 import { styles }                           from './styles';
 import { withStyles }                       from '@material-ui/core/styles';
 import Divider                              from '@material-ui/core/Divider';
-import Button                               from '@material-ui/core/Button';
 import Tabs                                 from './edit/tabs';
 import ActiveTemplateButton                 from './edit/active_template_button';
 import TemplateTitle                       from './edit/template_title';
@@ -27,7 +26,7 @@ const BREADCRUMBS = [
 const Edit = (props) => {
   const { classes, match } = props
 
-  const { loading, data, refetch } = useQuery(GET_PROCEDURE_TEMPLATE,
+  const { loading, data } = useQuery(GET_PROCEDURE_TEMPLATE,
     { variables: {"id": match.params.id } } 
   );
   const [currentTab, setCurrentTab] = React.useState()
