@@ -25,6 +25,7 @@ import Dialog                             from '@material-ui/core/Dialog';
 import DialogContent                      from '@material-ui/core/DialogContent';
 import DialogTitle                        from '@material-ui/core/DialogTitle';
 import DialogActions                      from '@material-ui/core/DialogActions';
+import { Link }                           from 'react-router-dom';
 
 
 const BREADCRUMBS = [
@@ -457,6 +458,8 @@ const NewBudget = (props) => {
                       variant="contained"
                       color="primary"
                       className={classes.button}
+                      component={Link} 
+                      to="/budgets/new"
                     >
                       Redireccionar
                     </Button>

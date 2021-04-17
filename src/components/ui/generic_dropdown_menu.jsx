@@ -24,7 +24,7 @@ export default class GenericDropdownMenu extends React.Component {
     const { children, user, handleClose } = this.props;
 
     const open = Boolean(anchorEl);
-
+    console.log(children, "hijo")
     return (
       <div>
         <IconButton

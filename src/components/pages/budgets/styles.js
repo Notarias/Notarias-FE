@@ -92,6 +92,22 @@ export const styles = theme => {
       width: "100%",
       height: "330px",
     },
+    linkDefault: {
+      textDecoration:"none",
+      width: "200px"
+    },
+    defaultIcon:{
+      width:"30px", 
+      height:"30px",
+    },
+    budgetEditPaper: {
+      marginTop: '10px',
+      width: "100%",
+      height:"300px"
+    },
+    budgetEdit : {
+      height:"100px"
+    },
     
   })
 }

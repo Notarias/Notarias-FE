@@ -18,6 +18,7 @@ import DialogContentText              from '@material-ui/core/DialogContentText'
 import DialogTitle                    from '@material-ui/core/DialogTitle';
 import useMediaQuery                  from '@material-ui/core/useMediaQuery';
 import { useTheme }                   from '@material-ui/core/styles';
+import { Link }                       from 'react-router-dom';
 
 
 const TemplateRow = (props) => {
@@ -27,6 +28,7 @@ const TemplateRow = (props) => {
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
 
+  console.log(budget.id, "budg")
   return(
     <TableRow key={  "-row" } >
       <TableCell align= "center">{ budget.client.firstName }</TableCell>
@@ -43,6 +45,24 @@ const TemplateRow = (props) => {
       <TableCell align= "center">
         <Grid>
           <GenericDropdownMenu>
+            <MenuItem key={ budget.id + "-edit" }>
+                <Link
+                  to={`/budgets/${ budget.id }/edit`}
+                  color="inherit"
+                  underline="none"
+                  className={ classes.linkDefault }
+                >
+                <Grid container>
+                  <ListItemIcon>
+                    <CreateIcon className={ classes.defaultIcon }/>
+                  </ListItemIcon>
+                  <ListItemText primary="Editar" />
+                </Grid>
+              </Link>
+            </MenuItem>
+            <MenuItem>
+              "algo futuro"
+            </MenuItem>
           </GenericDropdownMenu>
         </Grid>
       </TableCell>
