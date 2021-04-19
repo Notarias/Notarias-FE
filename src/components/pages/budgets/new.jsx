@@ -258,10 +258,6 @@ const NewBudget = (props) => {
     setOpen(false);
   };
 
-
-  console.log(clientInfo.id, "client")
-  console.log(procedureInfo.budgetingTemplatesIds, "proc")
-  console.log(budgetInfo.id, "budget")
   return(
     <>
       <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>

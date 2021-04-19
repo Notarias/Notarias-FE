@@ -159,3 +159,31 @@ export const BUDGETING_TEMPLATE_BY_PROCEDURE_ID = gql`
     }
   }
 `
+
+export const GET_BUDGET = gql`
+  query budget(
+    $id: ID!
+  ){
+  budget(
+    id: $id
+    ){
+      budgetingTemplate{
+        active
+        id
+        name
+      },
+      client{
+        firstName
+        lastName
+        rfc
+        curp
+        id
+      },
+      proceduresTemplate{
+        active
+        name
+        id
+      }
+    }
+  }
+`

@@ -28,7 +28,6 @@ const TemplateRow = (props) => {
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
 
-  console.log(budget.id, "budg")
   return(
     <TableRow key={  "-row" } >
       <TableCell align= "center">{ budget.client.firstName }</TableCell>
@@ -60,7 +59,7 @@ const TemplateRow = (props) => {
                 </Grid>
               </Link>
             </MenuItem>
-            <MenuItem>
+            <MenuItem key={ budget.id + "-algo"}>
               "algo futuro"
             </MenuItem>
           </GenericDropdownMenu>

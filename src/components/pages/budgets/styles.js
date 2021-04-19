@@ -105,9 +105,20 @@ export const styles = theme => {
       width: "100%",
       height:"300px"
     },
+    budgetRightOptionsList: {
+      marginTop: '10px',
+      width: "100%",
+      height:"800px"
+    },
+    budgetTittle: {
+      height:"50px"
+    },
     budgetEdit : {
       height:"100px"
     },
+    spaceBetwenFirstNameAndLastName: {
+      marginLeft: "5px"
+    }
     
   })
 }
