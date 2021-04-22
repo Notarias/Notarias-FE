@@ -108,7 +108,7 @@ export const styles = theme => {
     budgetRightOptionsList: {
       marginTop: '10px',
       width: "100%",
-      height:"800px"
+      height:"600px"
     },
     budgetTittle: {
       height:"50px"
@@ -125,9 +125,18 @@ export const styles = theme => {
     budgetTabPanelFields: {
       marginLeft: "20px",
       height:"70px",
-
-    }
-
-    
+    },
+    titleFields: {
+      marginLeft: "20px",
+      height:"60px",
+    },
+    rootTab: {
+      flexGrow: 1,
+      backgroundColor: theme.palette.background.paper,
+    },
+    boxContainerFields: {
+      overflowY:"scroll",
+      maxHeight: "390px"
+    },
   })
 }

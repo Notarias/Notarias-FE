@@ -8,8 +8,11 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { useQuery }                         from '@apollo/react-hooks';
 import { GET_BUDGETING_TEMPLATES_TABS }     from '../queries_and_mutations/queries';
-import Fields                                from './fields';
-import Grid                                         from '@material-ui/core/Grid';
+import Fields                               from './fields';
+import Grid                                 from '@material-ui/core/Grid';
+import Divider                              from '@material-ui/core/Divider';
+import { withStyles }                       from '@material-ui/core/styles';
+import { styles }                           from '../styles';
 
 
 function a11yProps(index) {
@@ -20,15 +23,15 @@ function a11yProps(index) {
 }
 
 const useStyles = makeStyles((theme) => ({
-  root: {
+  rootTab: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
   },
 }));
 
 const InformationTabs = (props) => {
-  // const { classes } = props
-  const classes = useStyles();
+  const { classes } = props
+  // const classes = useStyles();
   const { budgetId } = props;
   const [value, setValue] = React.useState(0);
   const [tabList, setTabList] = React.useState(data ? data.budgetingTemplateTabs: []);
@@ -68,24 +71,31 @@ const InformationTabs = (props) => {
 
   console.log(currentTab && currentTab.id,"-----")
   return (
-    <div className={classes.root}>
+    <div className={classes.rootTab}>
       <AppBar position="static">
         <Tabs centered value={value} onChange={handleChange} aria-label="simple tabs example">
           { renderTab() }
         </Tabs>
       </AppBar>
-      <Grid container justify="flex-start" alignItems="center">
+      <Grid container justify="flex-start" alignItems="flex-end" className={classes.titleFields}>
         <Grid container item xs={3}>
-          Concepto
+          <Typography variant="h6" gutterBottom>
+            Concepto
+          </Typography>
         </Grid>
         <Grid container item xs={3}>
-          Total
+          <Typography variant="h6" gutterBottom>
+            Total
+          </Typography>
         </Grid>
         <Grid container item xs={3}>
-          Saldo
+          <Typography variant="h6" gutterBottom>
+            Saldo
+          </Typography>
         </Grid>
       </Grid>
-      <Grid container>
+      <Divider/>
+      <Grid container className={classes.boxContainerFields}>
         <Fields
           value={value}
           setValue={setValue}
@@ -97,4 +107,4 @@ const InformationTabs = (props) => {
   );
 }
 
-export default InformationTabs;
+export default withStyles(styles)(InformationTabs);

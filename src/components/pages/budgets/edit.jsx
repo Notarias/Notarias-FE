@@ -79,9 +79,9 @@ const BudgetsEdit = (props) => {
             </Grid>
             </Paper>
           </Grid>
-        <Grid container item xs={3} direction="column" alignItems="stretch" className={ classes.budgetEdit}>
+        <Grid container item xs={3} direction="row" justify="center" alignItems="stretch" className={ classes.budgetEdit}>
           <Paper className={ classes.budgetRightOptionsList}>
-            <Grid>
+            <Grid container item justify="center">
               listado de budget
             </Grid>
           </Paper>

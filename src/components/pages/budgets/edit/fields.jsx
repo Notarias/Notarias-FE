@@ -58,26 +58,38 @@ const Fields = (props) => {
 
     return(
       <>
-        <Grid item>
+
             {
               fields.map((field) => {
                 return(
-                  <Grid key={field.id + "-field"} container className={classes.budgetTabPanelFields}>
-                    <Typography variant="subtitle2" gutterBottom>
-                      {field.name}
-                    </Typography>
-                    <TextField
-                    label="Total"
-                    id="standard-start-adornment"
-                    InputProps={{
-                      startAdornment: <InputAdornment position="start">$</InputAdornment>,
-                    }}
-                    />
+                  <Grid 
+                    key={field.id + "-field"} 
+                    container
+                    alignItems="center"
+                    className={classes.budgetTabPanelFields}
+                  >
+                    <Grid container item xs={3} justify="flex-start" >
+                      <Typography variant="subtitle2" gutterBottom>
+                        {field.name}
+                      </Typography>
+                    </Grid>
+                    <Grid container item xs={2} justify="flex-start">
+                      <TextField
+                      label="Total"
+                      id="standard-start-adornment"
+                      InputProps={{
+                        startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                      }}
+                      />
+                    </Grid>
+                    <Grid>
+
+                    </Grid>
                   </Grid>
                 )
               })
             }
-        </Grid>
+
       </>
     )
   }
