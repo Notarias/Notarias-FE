@@ -118,7 +118,16 @@ export const styles = theme => {
     },
     spaceBetwenFirstNameAndLastName: {
       marginLeft: "5px"
+    },
+    marginTitleBudgetName: {
+      marginLeft: "20px"
+    },
+    budgetTabPanelFields: {
+      marginLeft: "20px",
+      height:"70px",
+
     }
+
     
   })
 }

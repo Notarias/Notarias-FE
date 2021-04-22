@@ -187,3 +187,34 @@ export const GET_BUDGET = gql`
     }
   }
 `
+
+export const GET_BUDGETING_TEMPLATES_TABS = gql`
+  query budgetingTemplateTabs ($id: ID! ) {
+    budgetingTemplateTabs (id: $id) {
+      active
+      id
+      name
+      budgetingTemplateId
+    }
+  }
+`
+
+export const GET_BUDGETING_TEMPLATE_TAB_FIELDS = gql`
+  query budgetingTemplateTabFields(
+    $id: ID!
+  )
+  {
+    budgetingTemplateTabFields(
+      id: $id
+    )
+    {
+      id
+      name
+      active
+      categories {
+        id
+        name
+      }
+    }
+  }
+`

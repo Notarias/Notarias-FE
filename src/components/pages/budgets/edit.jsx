@@ -5,11 +5,13 @@ import Breadcrumbs                          from '../../ui/breadcrumbs'
 import Grid                                 from '@material-ui/core/Grid';
 import Paper                                from '@material-ui/core/Paper';
 import Divider                              from '@material-ui/core/Divider';
-import InformationTabs                      from './edit/tabs'
+import InformationTabs                      from './edit/information_tabs'
 import GenericDropdownMenu                  from '../../ui/generic_dropdown_menu';
 import { useQuery }                         from '@apollo/react-hooks';
 import { GET_BUDGET }                       from './queries_and_mutations/queries'
 import Typography                           from '@material-ui/core/Typography';
+import OpenInNewIcon                        from '@material-ui/icons/OpenInNew';
+import Button                               from '@material-ui/core/Button';
 
 const BREADCRUMBS = [
   { name: "Inicio", path: "/" },
@@ -24,8 +26,6 @@ const BudgetsEdit = (props) => {
     GET_BUDGET, { variables: {"id": match.params.id } } 
   );
 
-  console.log("data", data)
-
   return(
     <>
       <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
@@ -33,11 +33,20 @@ const BudgetsEdit = (props) => {
           <Grid container item xs={9} alignItems="center" justify="center" direction="column">
           <Paper className={ classes.budgetEditPaper}>
             <Grid container item xs={12} alignItems="center" className={ classes.budgetTittle}>
-              <Grid item xs={5}>
-                { data && data.budget.budgetingTemplate.name }
+              <Grid container item xs={5} justify="flex-start" alignItems="center">
+                <Typography variant="h6" gutterBottom className={classes.marginTitleBudgetName}>
+                  { data ? data.budget.budgetingTemplate.name : "" }
+                  { data ? data.budget.budgetingTemplate.id : "" }
+                </Typography>
+                <Button>
+                  <OpenInNewIcon/>
+                </Button>
               </Grid>
               <Grid item xs={4}>
-                { data && data.budget.proceduresTemplate.name }
+                <Typography variant="subtitle2" gutterBottom>
+                  { data ? data.budget.proceduresTemplate.name : "" }
+                  { data ? data.budget.proceduresTemplate.id : "" }
+                </Typography>
               </Grid>
               <Grid container item xs={2} justify="flex-end">
                 Saldo pendiente
@@ -57,13 +66,16 @@ const BudgetsEdit = (props) => {
                 </Typography>
               </Grid>
               <Grid container item xs={3} justify="flex-start" alignItems="center">
-                <Typography variant="subtitle2" gutterBottom className={ classes.spaceBetwenFirstNameAndLastName}>
+                <Typography variant="subtitle2" gutterBottom className={classes.spaceBetwenFirstNameAndLastName}>
                   { data && data.budget.client.lastName }
+                  { data && data.budget.client.id }
                 </Typography>
               </Grid>
             </Grid>
             <Grid container item xs={12} justify="flex-start" >
-              <InformationTabs/>
+              <InformationTabs
+                budgetId={data && data.budget.budgetingTemplate.id}
+              />
             </Grid>
             </Paper>
           </Grid>
