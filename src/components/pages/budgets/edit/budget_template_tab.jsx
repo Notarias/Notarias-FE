@@ -5,7 +5,7 @@ import Tab from '@material-ui/core/Tab';
 const BudgetTemplateTab = (props) => {
 
   const [tab] = React.useState(props.tab)
-  console.log(props.index, "index")
+
 
  
   const onClick = () => {

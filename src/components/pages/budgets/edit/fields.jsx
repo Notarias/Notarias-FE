@@ -12,7 +12,7 @@ import { styles }                                   from '../styles';
 
 
 const Fields = (props) => {
-  const {value, setValue, currentTab, tabList, classes} = props;
+  const {value, setValue, currentTab, tabList, budgetInfo, classes} = props;
 
 
   // function TabPanel(props) {
@@ -54,47 +54,60 @@ const Fields = (props) => {
     data && setFields(data.budgetingTemplateTabFields);;
   }, [data])
 
+  const renderFieldValues = () => {
+    return(
+      budgetInfo.fieldValues 
+      ? 
+      budgetInfo.fieldValues.map(
+        (field) =>{
+          return(
+            field.value
+          )
+      }) : "S/N" 
+    )
+  }
+
   const renderFields = () => {
 
     return(
       <>
-
-            {
-              fields.map((field) => {
-                return(
-                  <Grid 
-                    key={field.id + "-field"} 
-                    container
-                    alignItems="center"
-                    className={classes.budgetTabPanelFields}
-                  >
-                    <Grid container item xs={3} justify="flex-start" >
-                      <Typography variant="subtitle2" gutterBottom>
-                        {field.name}
-                      </Typography>
-                    </Grid>
-                    <Grid container item xs={2} justify="flex-start">
-                      <TextField
-                      label="Total"
-                      id="standard-start-adornment"
-                      InputProps={{
-                        startAdornment: <InputAdornment position="start">$</InputAdornment>,
-                      }}
-                      />
-                    </Grid>
-                    <Grid>
-
-                    </Grid>
-                  </Grid>
-                )
-              })
-            }
-
+        {
+          fields.map((field) => {
+            return(
+              <Grid 
+                key={field.id + "-field"} 
+                container
+                alignItems="center"
+                className={classes.budgetTabPanelFields}
+              >
+                <Grid container item xs={3} justify="flex-start" >
+                  <Typography variant="subtitle2" gutterBottom>
+                    {field.name}
+                  </Typography>
+                  -{field.id}
+                </Grid>
+                <Grid container item xs={2} justify="flex-start">
+                  <TextField
+                  label="Total"
+                  value="10000"
+                  id="standard-start-adornment"
+                  InputProps={{
+                    startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                  }}
+                  />
+                </Grid>
+                <Grid container item xs={3} justify="center">
+                  {renderFieldValues()}
+                </Grid>
+              </Grid>
+            )
+          })
+        }
       </>
     )
   }
 
-  console.log(data, "tabList")
+  console.log(budgetInfo, "databudg")
   return(
     renderFields()
   )

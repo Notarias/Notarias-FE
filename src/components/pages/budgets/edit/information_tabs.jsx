@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const InformationTabs = (props) => {
-  const { classes } = props
+  const { classes, budgetInfo } = props
   // const classes = useStyles();
   const { budgetId } = props;
   const [value, setValue] = React.useState(0);
@@ -69,7 +69,6 @@ const InformationTabs = (props) => {
     )
   }
 
-  console.log(currentTab && currentTab.id,"-----")
   return (
     <div className={classes.rootTab}>
       <AppBar position="static">
@@ -101,6 +100,7 @@ const InformationTabs = (props) => {
           setValue={setValue}
           currentTab={currentTab && currentTab}
           tabList={tabList}
+          budgetInfo={budgetInfo}
         />
       </Grid>
     </div>

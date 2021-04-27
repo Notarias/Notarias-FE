@@ -138,5 +138,8 @@ export const styles = theme => {
       overflowY:"scroll",
       maxHeight: "390px"
     },
+    fixedRow: {
+      width:"200px",
+    },
   })
 }

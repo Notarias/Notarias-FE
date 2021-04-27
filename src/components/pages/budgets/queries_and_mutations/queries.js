@@ -64,10 +64,6 @@ export const GET_BUDGETS = gql`
         id
         active
         serialNumber
-        proceduresTemplates{
-          name
-          id
-        }
       }
       client{
         firstName
@@ -75,6 +71,12 @@ export const GET_BUDGETS = gql`
         id
         email
         phone
+      }
+      proceduresTemplate{
+        name
+        id
+        active
+        serialNumber
       }
       id
       serialNumber
@@ -183,6 +185,17 @@ export const GET_BUDGET = gql`
         active
         name
         id
+      },
+      fieldValues{
+        id
+        value
+        budgetId
+        budgetingTemplateFieldId
+        field{
+          name
+          id
+          budgetingTemplateTabId
+        }
       }
     }
   }
@@ -214,6 +227,62 @@ export const GET_BUDGETING_TEMPLATE_TAB_FIELDS = gql`
       categories {
         id
         name
+      }
+    }
+  }
+`
+
+export const UPDATE_BUDGET_FIELD_VALUE = gql`
+  mutation updateBudgetFieldValue(
+    $id: ID!,
+    $budgetingTemplateFieldId: ID,
+    $budgetId: ID,
+    $value: Int!,
+  ){
+    updateBudgetFieldValue(input:{
+      id: $id,
+      budgetingTemplateFieldId: $budgetingTemplateFieldId,
+      budgetId: $budgetId,
+      value: $value
+      }
+    ){
+      budgetFieldValue{
+        budgetId
+        budgetingTemplateFieldId
+        field{
+          name
+          id
+          budgetingTemplateTabId
+        }
+        id
+        value
+      }
+    }
+  }
+`
+
+export const CREATE_BUDGET_FIELD_VALUE = gql`
+  mutation createBudgetFieldValue(
+    $budgetingTemplateFieldId: ID,
+    $budgetId: ID,
+    $value: Int!,
+  ){
+    createBudgetFieldValue(input:{
+      budgetingTemplateFieldId: $budgetingTemplateFieldId,
+      budgetId: $budgetId,
+      value: $value
+      }
+    ){
+      budgetFieldValue{
+        budgetId
+        budgetingTemplateFieldId
+        field{
+          name
+          id
+          budgetingTemplateTabId
+        }
+        id
+        value
       }
     }
   }

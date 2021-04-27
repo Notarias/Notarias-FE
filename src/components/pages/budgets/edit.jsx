@@ -75,6 +75,7 @@ const BudgetsEdit = (props) => {
             <Grid container item xs={12} justify="flex-start" >
               <InformationTabs
                 budgetId={data && data.budget.budgetingTemplate.id}
+                budgetInfo={data && data.budget}
               />
             </Grid>
             </Paper>

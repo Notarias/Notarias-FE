@@ -28,10 +28,11 @@ const TemplateRow = (props) => {
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
 
+ 
   return(
-    <TableRow key={  "-row" } >
+    <TableRow key={  "-row" }>
       <TableCell align= "center">{ budget.client.firstName }</TableCell>
-      <TableCell align= "center">{ budget.budgetingTemplate.name }</TableCell>
+      <TableCell align= "center">{ budget.proceduresTemplate.name }</TableCell>
       <TableCell align= "center">
         { 
           <Chip
