@@ -5,7 +5,7 @@ import Breadcrumbs                          from '../../ui/breadcrumbs'
 import Grid                                 from '@material-ui/core/Grid';
 import Paper                                from '@material-ui/core/Paper';
 import Divider                              from '@material-ui/core/Divider';
-import InformationTabs                      from './edit/information_tabs'
+import InformationTabs                      from './edit/information_tabs/information_tabs'
 import GenericDropdownMenu                  from '../../ui/generic_dropdown_menu';
 import { useQuery }                         from '@apollo/react-hooks';
 import { GET_BUDGET }                       from './queries_and_mutations/queries'
@@ -25,6 +25,8 @@ const BudgetsEdit = (props) => {
   const { loading, data, refetch } = useQuery(
     GET_BUDGET, { variables: {"id": match.params.id } } 
   );
+
+  console.log(match.params.id , "budgId")
 
   return(
     <>
@@ -74,8 +76,9 @@ const BudgetsEdit = (props) => {
             </Grid>
             <Grid container item xs={12} justify="flex-start" >
               <InformationTabs
-                budgetId={data && data.budget.budgetingTemplate.id}
+                budgetTemplateId={data && data.budget.budgetingTemplate.id}
                 budgetInfo={data && data.budget}
+                budgetId={match.params.id}
               />
             </Grid>
             </Paper>
@@ -91,6 +94,5 @@ const BudgetsEdit = (props) => {
     </>
   )
 }
-
 
 export default withStyles(styles)(BudgetsEdit);

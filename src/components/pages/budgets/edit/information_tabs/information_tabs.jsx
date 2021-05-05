@@ -1,18 +1,18 @@
 import React, { useEffect }                 from 'react';
-import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import BudgetTemplateTab from './budget_template_tab';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
+import PropTypes                            from 'prop-types';
+import { makeStyles }                       from '@material-ui/core/styles';
+import AppBar                               from '@material-ui/core/AppBar';
+import Tabs                                 from '@material-ui/core/Tabs';
+import BudgetTemplateTab                    from './budget_template_tab';
+import Typography                           from '@material-ui/core/Typography';
+import Box                                  from '@material-ui/core/Box';
 import { useQuery }                         from '@apollo/react-hooks';
-import { GET_BUDGETING_TEMPLATES_TABS }     from '../queries_and_mutations/queries';
-import Fields                               from './fields';
+import { GET_BUDGETING_TEMPLATES_TABS }     from '../../queries_and_mutations/queries';
+import Fields                               from '../fields/fields';
 import Grid                                 from '@material-ui/core/Grid';
 import Divider                              from '@material-ui/core/Divider';
 import { withStyles }                       from '@material-ui/core/styles';
-import { styles }                           from '../styles';
+import { styles }                           from '../../styles';
 
 
 function a11yProps(index) {
@@ -30,15 +30,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const InformationTabs = (props) => {
-  const { classes, budgetInfo } = props
+  const { classes, budgetInfo, budgetId } = props
   // const classes = useStyles();
-  const { budgetId } = props;
+  const { budgetTemplateId } = props;
   const [value, setValue] = React.useState(0);
   const [tabList, setTabList] = React.useState(data ? data.budgetingTemplateTabs: []);
   const [currentTab, setCurrentTab] = React.useState( data ? data.budgetingTemplateTabs[0] : "")
 
   const { data } = useQuery(
-    GET_BUDGETING_TEMPLATES_TABS, { variables: {"id": budgetId }}
+    GET_BUDGETING_TEMPLATES_TABS, { variables: {"id": budgetTemplateId }}
   );
 
   useEffect(() => {
@@ -101,6 +101,7 @@ const InformationTabs = (props) => {
           currentTab={currentTab && currentTab}
           tabList={tabList}
           budgetInfo={budgetInfo}
+          budgetId={budgetId}
         />
       </Grid>
     </div>

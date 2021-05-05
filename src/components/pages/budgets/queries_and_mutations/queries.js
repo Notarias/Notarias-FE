@@ -169,6 +169,8 @@ export const GET_BUDGET = gql`
   budget(
     id: $id
     ){
+      total
+      totalCredit
       budgetingTemplate{
         active
         id
@@ -283,6 +285,29 @@ export const CREATE_BUDGET_FIELD_VALUE = gql`
         }
         id
         value
+      }
+    }
+  }
+`
+
+export const GET_BUDGET_FIELD_VALUE = gql`
+  query budgetFieldValue(
+    $budgetingTemplateFieldId: ID!,
+    $budgetId: ID!
+  ){
+  budgetFieldValue(
+    budgetingTemplateFieldId: $budgetingTemplateFieldId
+    budgetId: $budgetId
+    ){
+      budgetingTemplateFieldId
+      id
+      value
+      budgetId
+      budgetingTemplateFieldId
+      field{
+        id
+        name
+        budgetingTemplateTabId
       }
     }
   }

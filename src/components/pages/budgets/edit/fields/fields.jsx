@@ -1,6 +1,6 @@
 import React, { useState, useEffect }               from 'react';
 import { useQuery }                                 from '@apollo/react-hooks';
-import { GET_BUDGETING_TEMPLATE_TAB_FIELDS }        from '../queries_and_mutations/queries'
+import { GET_BUDGETING_TEMPLATE_TAB_FIELDS }        from '../../queries_and_mutations/queries'
 import Typography                                   from '@material-ui/core/Typography';
 import Box                                          from '@material-ui/core/Box';
 import PropTypes                                    from 'prop-types';
@@ -8,11 +8,15 @@ import Grid                                         from '@material-ui/core/Grid
 import TextField                                    from '@material-ui/core/TextField';
 import InputAdornment                               from '@material-ui/core/InputAdornment';
 import { withStyles }                               from '@material-ui/core/styles';
-import { styles }                                   from '../styles';
+import { styles }                                   from '../../styles';
+import FieldValue                                    from './field_value/field_value';
+
 
 
 const Fields = (props) => {
-  const {value, setValue, currentTab, tabList, budgetInfo, classes} = props;
+  const {value, setValue, currentTab, tabList, budgetInfo, classes, budgetId} = props;
+  const currentBudget = budgetId
+  const [currentFieldId, setCurrentFieldId] =  React.useState(null)
 
 
   // function TabPanel(props) {
@@ -67,6 +71,21 @@ const Fields = (props) => {
     )
   }
 
+  // const fieldVal = () => {
+  //     for (var i = 0; i < fields.length; i++) {
+  //       for (var x = 0; x < fields.length; x++) {
+  //         n += i;
+  //         mifuncion(n);
+  //      }
+  //    }
+  // }
+
+  const printValue = () => {
+    return(
+      "0"
+    )
+  }
+
   const renderFields = () => {
 
     return(
@@ -74,32 +93,11 @@ const Fields = (props) => {
         {
           fields.map((field) => {
             return(
-              <Grid 
-                key={field.id + "-field"} 
-                container
-                alignItems="center"
-                className={classes.budgetTabPanelFields}
-              >
-                <Grid container item xs={3} justify="flex-start" >
-                  <Typography variant="subtitle2" gutterBottom>
-                    {field.name}
-                  </Typography>
-                  -{field.id}
-                </Grid>
-                <Grid container item xs={2} justify="flex-start">
-                  <TextField
-                  label="Total"
-                  value="10000"
-                  id="standard-start-adornment"
-                  InputProps={{
-                    startAdornment: <InputAdornment position="start">$</InputAdornment>,
-                  }}
-                  />
-                </Grid>
-                <Grid container item xs={3} justify="center">
-                  {renderFieldValues()}
-                </Grid>
-              </Grid>
+              <FieldValue
+                currentBudget={currentBudget}
+                field={field}
+                key={field.id + "-field"}
+              />
             )
           })
         }
@@ -107,7 +105,6 @@ const Fields = (props) => {
     )
   }
 
-  console.log(budgetInfo, "databudg")
   return(
     renderFields()
   )
