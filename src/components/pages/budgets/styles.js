@@ -141,5 +141,14 @@ export const styles = theme => {
     fixedRow: {
       width:"200px",
     },
+    avatarInDialogToAddPayment: {
+      margin: "10px 10px 10px 5px",
+    },
+    dialogToAddPayment: {
+      width:"400px",
+    },
+    drawerPaymentList: {
+      width:'300px'
+    },
   })
 }

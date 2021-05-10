@@ -312,3 +312,40 @@ export const GET_BUDGET_FIELD_VALUE = gql`
     }
   }
 `
+
+export const CREATE_CREDIT_PAYMENT = gql`
+  mutation createCreditPayment(
+    $note: String,
+    $budgetId: ID!,
+    $total: Int!,
+  ){
+    createCreditPayment(input:{
+      note: $note,
+      budgetId: $budgetId,
+      total: $total,
+      }
+    ){
+      creditPayment{
+        budgetId
+        id
+        note
+        total
+      }
+    }
+  }
+`
+
+export const GET_BUDGET_TOTALS = gql`
+  query budgetTotals(
+    $id: ID!
+  ){
+    budgetTotals(
+      id: $id
+    ){
+      total
+      totalCredit
+      totalDistributed
+      totalDebt
+    }
+  }
+`

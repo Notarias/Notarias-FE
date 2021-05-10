@@ -4,9 +4,9 @@ import TextField                                    from '@material-ui/core/Text
 import InputAdornment                               from '@material-ui/core/InputAdornment';
 import Button                                       from '@material-ui/core/Button';
 import BorderColorIcon                              from '@material-ui/icons/BorderColor';
-import NumberFormat from 'react-number-format';
-import PropTypes from 'prop-types';
-import CancelIcon from '@material-ui/icons/Cancel';
+import NumberFormat                                 from 'react-number-format';
+import PropTypes                                    from 'prop-types';
+import CancelIcon                                   from '@material-ui/icons/Cancel';
 
 function NumberFormatCustom(props) {
   const { inputRef, onChange, ...other } = props;

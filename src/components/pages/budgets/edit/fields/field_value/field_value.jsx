@@ -51,7 +51,6 @@ const FieldValue = (props) => {
   //   setName(event.target.value);
   // };
 
-  console.log(data)
   return(
     <Grid 
       container
