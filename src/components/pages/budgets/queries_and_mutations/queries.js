@@ -349,3 +349,34 @@ export const GET_BUDGET_TOTALS = gql`
     }
   }
 `
+
+export const GET_CREDIT_PAYMENTS = gql`
+  query creditPayments(
+    $budgetId: ID!
+  ){
+    creditPayments(
+      budgetId: $budgetId
+    ){
+      id
+      note
+      total
+      voidAt
+      createdAt
+    }
+  }
+`
+
+export const VOID_OR_INVOID = gql`
+  mutation voidUnvoidCreditPayment(
+    $id: ID!
+  ){
+    voidUnvoidCreditPayment(input:{
+      id: $id
+    }
+    ){
+      creditPayment{
+        voidAt
+      }
+    }
+  }
+`

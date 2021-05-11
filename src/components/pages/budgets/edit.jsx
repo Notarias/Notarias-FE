@@ -29,6 +29,8 @@ import { useMutation }                      from '@apollo/react-hooks'
 import { CREATE_CREDIT_PAYMENT }            from './queries_and_mutations/queries'
 import PaymentDrawer                        from './edit/payment_drawer'
 import { GET_BUDGET_TOTALS }                from './queries_and_mutations/queries'
+import PaymentList                          from './edit/payment_list/payment_list'
+import ListItemText                         from '@material-ui/core/ListItemText';
 
 const BREADCRUMBS = [
   { name: "Inicio", path: "/" },
@@ -106,7 +108,6 @@ const BudgetsEdit = (props) => {
     }
   )
 
-  
   const setErrors = (apolloError) => {
     let errorsList = {}
     let errorTemplateList = apolloError.graphQLErrors
@@ -189,11 +190,13 @@ const BudgetsEdit = (props) => {
               <Grid item xs={1}>
                 <GenericDropdownMenu>
                   <MenuItem key="1-abono">
-                    <Button onClick={handleClickOpen}>
-                      Nuevo abono
-                    </Button>
+                    <ListItemText primary="Nuevo abono" onClick={handleClickOpen}/>
                   </MenuItem>
-                  <MenuItem key="menuItem-2"></MenuItem>
+                  <MenuItem key="2-paymentList">
+                  <PaymentList
+                    budgetId={match.params.id}
+                  />
+                  </MenuItem>
                 </GenericDropdownMenu>
                 <Dialog open={open} onClose={handleClose} fullWidth>
                   <DialogTitle>
