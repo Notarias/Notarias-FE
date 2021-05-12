@@ -3,20 +3,22 @@ import { withStyles }                               from '@material-ui/core/styl
 import { styles }                                   from '../../../styles';
 import { useQuery }                                 from '@apollo/react-hooks';
 import { GET_BUDGET_FIELD_VALUE }                   from '../../../queries_and_mutations/queries'
-
 import Typography                                   from '@material-ui/core/Typography';
-import Box                                          from '@material-ui/core/Box';
-import PropTypes                                    from 'prop-types';
 import Grid                                         from '@material-ui/core/Grid';
-import TextField                                    from '@material-ui/core/TextField';
-import InputAdornment                               from '@material-ui/core/InputAdornment';
 import GenericDropdownMenu                          from '../../../../../ui/generic_dropdown_menu';
 import AddFieldValue                                from './add_field_value';
 import TotalValue                                   from './total_value'
+import Payment                                      from './payment'
+import MenuItem                                     from '@material-ui/core/MenuItem';
+import NumberFormat                                 from 'react-number-format';
+import TextField                                    from '@material-ui/core/TextField';
+import InputAdornment                               from '@material-ui/core/InputAdornment';
+import Box                                          from '@material-ui/core/Box';
+import PropTypes                                    from 'prop-types';
 
 
 const FieldValue = (props) => {
-  const{classes, currentBudget, field } = props
+  const{classes, currentBudget, field, totalDebt, setTotalDebt } = props
   const [pristine, setPristine] = React.useState(false)
   const [initialFieldValue, setInitialFieldValue] = React.useState(0)
   const [withValue, setWithValue] = React.useState(data && data.budgetFieldValue ? true : false )
@@ -42,9 +44,13 @@ const FieldValue = (props) => {
                     true
                   :
                     false
-
+    let debt = data && data.budgetFieldValue ? 
+                data.budgetFieldValue.totalDebt / 100
+              :
+                0
     setInitialFieldValue(value);
     setWithValue(withId)
+    setTotalDebt(debt)
   }, [data])
 
   // const handleNameChange = (event) => {
@@ -75,8 +81,15 @@ const FieldValue = (props) => {
         />
       </Grid>
       <Grid container item xs={3} justify="center">
-        {/* {renderFieldValues(data.budgetFieldValue.value)} */}
-        0
+        <Typography gutterBottom>
+          <NumberFormat 
+            value={totalDebt} 
+            displayType={'text'} 
+            thousandSeparator={true} 
+            prefix={'$ '}
+            decimalScale={2}
+          />
+        </Typography>
       </Grid>
       <Grid container item xs={3} justify="center">
         <AddFieldValue
@@ -93,6 +106,13 @@ const FieldValue = (props) => {
           haveId={data && data.budgetFieldValue ? data.budgetFieldValue.id : "s/n"}
         />
         <GenericDropdownMenu>
+        <MenuItem key="1-pago">
+          <Payment
+            initialFieldValue={initialFieldValue}
+            totalDebt={totalDebt}
+          />
+        </MenuItem>
+        <MenuItem key="2-pago"></MenuItem>
         </GenericDropdownMenu>
       </Grid>
     </Grid>

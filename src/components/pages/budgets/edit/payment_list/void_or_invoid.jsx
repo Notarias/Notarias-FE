@@ -81,7 +81,6 @@ const VoidOrInvoid = (props) => {
       "cancelar")
   }
 
-  console.log(voidAt, "----")
   return(
     <>
       {showVoidOrInvoid()}

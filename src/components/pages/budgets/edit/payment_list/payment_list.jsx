@@ -70,8 +70,6 @@ const PaymentList = (props) => {
     setOpen(false);
   };
 
-
-  console.log(data, "datando")
   return(
     <>
       <ListItemText primary="Lista de abonos" onClick={handleClickOpen}/>

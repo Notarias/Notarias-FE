@@ -17,6 +17,7 @@ const Fields = (props) => {
   const {value, setValue, currentTab, tabList, budgetInfo, classes, budgetId} = props;
   const currentBudget = budgetId
   const [currentFieldId, setCurrentFieldId] =  React.useState(null)
+  const [totalDebt, setTotalDebt] = React.useState(0)
 
 
   // function TabPanel(props) {
@@ -94,6 +95,8 @@ const Fields = (props) => {
           fields.map((field) => {
             return(
               <FieldValue
+                totalDebt={totalDebt}
+                setTotalDebt={setTotalDebt}
                 currentBudget={currentBudget}
                 field={field}
                 key={field.id + "-field"}
@@ -101,6 +104,11 @@ const Fields = (props) => {
             )
           })
         }
+        <Grid>
+          <Typography>
+            Total {totalDebt}
+          </Typography>
+        </Grid>
       </>
     )
   }

@@ -171,6 +171,8 @@ export const GET_BUDGET = gql`
     ){
       total
       totalCredit
+      totalPaid
+      totalDebt
       budgetingTemplate{
         active
         id
@@ -304,6 +306,8 @@ export const GET_BUDGET_FIELD_VALUE = gql`
       value
       budgetId
       budgetingTemplateFieldId
+      totalDebt
+      totalPaid
       field{
         id
         name
@@ -375,6 +379,32 @@ export const VOID_OR_INVOID = gql`
     }
     ){
       creditPayment{
+        voidAt
+      }
+    }
+  }
+`
+
+export const CREATE_PAYMENT = gql`
+  mutation createPayment(
+    $budgetId: ID!,
+    $budgetFieldValueId: ID!,
+    $total: Int!,
+    $note: String
+  ){
+    createPayment(input:{
+      budgetId: $budgetId,
+      budgetFieldValueId: $budgetFieldValueId,
+      total: $total,
+      note: $note
+    }
+    ){
+      payment{
+        budgetFieldValueId
+        budgetId
+        id
+        note
+        total
         voidAt
       }
     }

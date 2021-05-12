@@ -142,7 +142,6 @@ const PaymentDrawer = (props) => {
     )
   };
 
-  console.log(data, "totals")
   return (
     <div>
       {[ 'right'].map((anchor) => (
