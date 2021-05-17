@@ -104,10 +104,41 @@ const Fields = (props) => {
             )
           })
         }
-        <Grid>
-          <Typography>
-            Total {totalDebt}
-          </Typography>
+        <Grid container justify="flex-end" className={ classes.totalsGrid }>
+          <Grid container item xs={5} alignItems="center">
+            <Grid container item xs={7} justify="flex-end">
+              <Typography>
+                Total cargos 
+              </Typography>
+            </Grid>
+            <Grid container item xs={5} justify="flex-end" className={classes.totalsGridAmount}>
+              100,000,000
+            </Grid>
+            <Grid container item xs={7} justify="flex-end">
+              <Typography>
+                Saldos
+              </Typography>
+            </Grid>
+            <Grid container item xs={5} justify="flex-end" className={classes.totalsGridAmount}>
+              20,000
+            </Grid>
+            <Grid container item xs={7} justify="flex-end">
+              <Typography>
+                Total pagos
+              </Typography>
+            </Grid>
+            <Grid container item xs={5} justify="flex-end" className={classes.totalsGridAmount}>
+              30,000
+            </Grid>
+            <Grid container item xs={7} justify="flex-end">
+              <Typography>
+                Presupuesto restante
+              </Typography>
+            </Grid>
+            <Grid container item xs={5} justify="flex-end" className={classes.totalsGridAmount}>
+              40,000
+            </Grid>
+          </Grid>
         </Grid>
       </>
     )

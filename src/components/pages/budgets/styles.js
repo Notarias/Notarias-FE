@@ -150,5 +150,12 @@ export const styles = theme => {
     drawerPaymentList: {
       width:'300px'
     },
+    totalsGrid: {
+      marginTop: "30px",
+      paddingRight: "85px"
+    },
+    totalsGridAmount: {
+      paddingLeft: "30px"
+    },
   })
 }
