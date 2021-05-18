@@ -9,7 +9,8 @@ import TextField                                    from '@material-ui/core/Text
 import InputAdornment                               from '@material-ui/core/InputAdornment';
 import { withStyles }                               from '@material-ui/core/styles';
 import { styles }                                   from '../../styles';
-import FieldValue                                    from './field_value/field_value';
+import FieldValue                                   from './field_value/field_value';
+import FieldTotalValues                             from './field_total_values';
 
 
 
@@ -17,7 +18,7 @@ const Fields = (props) => {
   const {value, setValue, currentTab, tabList, budgetInfo, classes, budgetId} = props;
   const currentBudget = budgetId
   const [currentFieldId, setCurrentFieldId] =  React.useState(null)
-  const [totalDebt, setTotalDebt] = React.useState(0)
+
 
 
   // function TabPanel(props) {
@@ -95,8 +96,6 @@ const Fields = (props) => {
           fields.map((field) => {
             return(
               <FieldValue
-                totalDebt={totalDebt}
-                setTotalDebt={setTotalDebt}
                 currentBudget={currentBudget}
                 field={field}
                 key={field.id + "-field"}
@@ -106,38 +105,9 @@ const Fields = (props) => {
         }
         <Grid container justify="flex-end" className={ classes.totalsGrid }>
           <Grid container item xs={5} alignItems="center">
-            <Grid container item xs={7} justify="flex-end">
-              <Typography>
-                Total cargos 
-              </Typography>
-            </Grid>
-            <Grid container item xs={5} justify="flex-end" className={classes.totalsGridAmount}>
-              100,000,000
-            </Grid>
-            <Grid container item xs={7} justify="flex-end">
-              <Typography>
-                Saldos
-              </Typography>
-            </Grid>
-            <Grid container item xs={5} justify="flex-end" className={classes.totalsGridAmount}>
-              20,000
-            </Grid>
-            <Grid container item xs={7} justify="flex-end">
-              <Typography>
-                Total pagos
-              </Typography>
-            </Grid>
-            <Grid container item xs={5} justify="flex-end" className={classes.totalsGridAmount}>
-              30,000
-            </Grid>
-            <Grid container item xs={7} justify="flex-end">
-              <Typography>
-                Presupuesto restante
-              </Typography>
-            </Grid>
-            <Grid container item xs={5} justify="flex-end" className={classes.totalsGridAmount}>
-              40,000
-            </Grid>
+            <FieldTotalValues
+              budgetId={budgetId}
+            />
           </Grid>
         </Grid>
       </>

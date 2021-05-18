@@ -14,7 +14,11 @@ import Avatar                               from '@material-ui/core/Avatar';
 import { Query }                            from '@apollo/react-components';
 import { GET_CURRENT_USER }                 from '../../../../../../resolvers/queries';
 import Typography                           from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
+import { useMutation }                      from '@apollo/react-hooks'
+import { CREATE_PAYMENT }                   from '../../../queries_and_mutations/queries'
+import { GET_BUDGET_FIELD_VALUE }           from '../../../queries_and_mutations/queries'
+import { GET_BUDGET_TOTALS }                from '../../../queries_and_mutations/queries'
+
 
 function NumberFormatCustom(props) {
   const { inputRef, onChange, ...other } = props;
@@ -48,18 +52,85 @@ NumberFormatCustom.propTypes = {
 };
 
 const Payment = (props) => {
-  const { initialFieldValue, totalDebt } = props
+  const { initialFieldValue, totalDebt, currentBudget, fieldValueId, fieldId } = props
+  const [notePayment, setNotePayment] = React.useState("")
+  const [valuePayment, setValuePayment] = React.useState(0)
+  const [pristine, setPristine] = React.useState(true)
+  const [error, setError] = useState(false)
 
+  const inputsList = ["total"]
+
+  const [createPaymentMutation, createPaymentProcessInfo] =
+  useMutation(
+    CREATE_PAYMENT,
+    {
+      onError(apolloError) {
+        setErrors(apolloError)
+        setPristine(false)
+      },
+      onCompleted(cacheData) {
+        setOpen(false);
+        setError(false)
+      },
+      refetchQueries: [
+        {
+        query: GET_BUDGET_FIELD_VALUE,
+          variables: { "budgetingTemplateFieldId": fieldId , "budgetId": currentBudget }
+        },
+        {
+          query: GET_BUDGET_TOTALS,
+          variables: {"id": currentBudget }
+        }
+      ],
+      awaitRefetchQueries: true
+    }
+  )
+
+  const setErrors = (apolloError) => {
+    let errorsList = {}
+    let errorTemplateList = apolloError.graphQLErrors
+    for ( let i = 0; i < errorTemplateList.length; i++) {
+      for( let n = 0; n < inputsList.length; n++) {
+        if(errorTemplateList[i].extensions.attribute === inputsList[n]){
+          errorsList[inputsList[n]] = errorTemplateList[i].message
+        }
+      }
+    }
+    setError(errorsList)
+  }
+
+  const createNewPayment = (event) => {
+    createPaymentMutation({
+       variables:{
+        "note": notePayment,
+        "budgetId": currentBudget,
+        "budgetFieldValueId":fieldValueId,
+        "total": (valuePayment * 100)
+       }
+    })
+  }
 
   const [open, setOpen] = React.useState(false)
 
   const handleClickOpen = () => {
     setOpen(true);
+    setPristine(true)
   };
 
   const handleClose = () => {
     setOpen(false);
+    setError(false)
   };
+
+  const handleNotePaymentChange = (event) => {
+    setNotePayment(event.target.value);
+  }
+
+  const handleValuePaymentChange = (event) => {
+    setValuePayment(event.target.value);
+    setPristine(false)
+    setError(false)
+  }
 
   return(
     <>
@@ -72,7 +143,7 @@ const Payment = (props) => {
           <Grid container >
             <Grid container item xs={6} alignItems="center" justify="center">
               <Typography variant="button" display="block" gutterBottom>
-                Total a pagar  
+                Total a pagar 
               </Typography>
               <Typography variant="h6" gutterBottom>
                 <NumberFormat 
@@ -83,37 +154,18 @@ const Payment = (props) => {
                   decimalScale={2}
                 />
               </Typography>
-              {/* <TextField
-                key={"payment"}
-                value={initialFieldValue}
-                label="Total"
-                id="total"
-
-                margin="none"
-                InputProps={{
-                  inputComponent: NumberFormatCustom,
-                  startAdornment: <InputAdornment position="start">$</InputAdornment>
-                }}
-              /> */}
-              {/* <InputBase
-                value={initialFieldValue}
-                label="Total"
-                inputProps={{ 
-                  inputComponent: NumberFormatCustom,
-                  startAdornment: <InputAdornment position="start">$</InputAdornment>
-              }}
-              /> */}
-              {/* <Typography>
-                $ {initialFieldValue}
-              </Typography> */}
             </Grid>
               <Grid  container item xs={6} alignItems="center" justify="center">
                 <TextField
                   key={"payment"}
+                  onChange={handleValuePaymentChange}
                   label="Abono"
                   autoFocus
+                  error={ !!error["total"] && true }
+                  helperText={ error["total"] || "Cantidad"}
+                  errorskey={ "total" }
+                  required
                   id="margin-normal"
-                  helperText="Cantidad"
                   margin="normal"
                   InputProps={{
                     inputComponent: NumberFormatCustom,
@@ -131,7 +183,6 @@ const Payment = (props) => {
                       <Grid container direction="column" alignItems="flex-start">
                         <Avatar 
                           src={data && data.currentUser && data.currentUser.avatarThumbUrl} 
-                          // className={classes.avatarInDialogToAddPayment}
                         />
                         <Typography variant="caption">{data.currentUser.firstName}</Typography>
                       </Grid>
@@ -143,7 +194,7 @@ const Payment = (props) => {
           <Grid>
             <TextField
               fullWidth
-              // onChange={handleNotePaymentChange}
+              onChange={handleNotePaymentChange}
               id="outlined-textarea"
               placeholder="Comentarios"
               multiline
@@ -155,7 +206,7 @@ const Payment = (props) => {
           <Button onClick={handleClose}>
             Cancelar
           </Button>
-          <Button>
+          <Button onClick={createNewPayment} disabled={pristine}>
             Aceptar
           </Button>
         </DialogActions>

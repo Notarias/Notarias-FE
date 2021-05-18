@@ -18,12 +18,13 @@ import PropTypes                                    from 'prop-types';
 
 
 const FieldValue = (props) => {
-  const{classes, currentBudget, field, totalDebt, setTotalDebt } = props
+  const{classes, currentBudget, field, } = props
   const [pristine, setPristine] = React.useState(false)
   const [initialFieldValue, setInitialFieldValue] = React.useState(0)
   const [withValue, setWithValue] = React.useState(data && data.budgetFieldValue ? true : false )
   const [changeInputStatus, setChangeInputStatus] =React.useState(false)
   const [changeFieldValue, setChangeFieldValue] = React.useState(initialFieldValue);
+  const [totalDebt, setTotalDebt] = React.useState(0)
 
 
   const { data } = useQuery(
@@ -110,6 +111,9 @@ const FieldValue = (props) => {
           <Payment
             initialFieldValue={initialFieldValue}
             totalDebt={totalDebt}
+            currentBudget={currentBudget}
+            fieldValueId={ data && data.budgetFieldValue ? data.budgetFieldValue.id : ""}
+            fieldId={field.id}
           />
         </MenuItem>
         <MenuItem key="2-pago"></MenuItem>

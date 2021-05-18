@@ -348,7 +348,7 @@ export const GET_BUDGET_TOTALS = gql`
     ){
       total
       totalCredit
-      totalDistributed
+      totalPaid
       totalDebt
     }
   }

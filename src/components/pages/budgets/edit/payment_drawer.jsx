@@ -111,7 +111,7 @@ const PaymentDrawer = (props) => {
           <TextField
             label="Total Distribuido"
             id="Total Distribuido"
-            value={data && data.budgetTotals ? data.budgetTotals.totalDistributed / 100 : 0}
+            value={data && data.budgetTotals ? data.budgetTotals.totalPaid / 100 : 0}
             disabled
             helperText="Cantidad"
             margin="normal"
