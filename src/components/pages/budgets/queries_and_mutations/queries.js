@@ -80,6 +80,10 @@ export const GET_BUDGETS = gql`
       }
       id
       serialNumber
+      total
+      totalCredit
+      totalDebt
+      totalPaid
     }
     budgetsCount
   }

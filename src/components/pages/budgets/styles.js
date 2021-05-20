@@ -157,5 +157,14 @@ export const styles = theme => {
     totalsGridAmount: {
       paddingLeft: "30px"
     },
+    tablecellWidth: {
+      maxWidth: "196px"
+    },
+    totalDebtInRed: {
+      color: "red"
+    },
+    totalPaidInGreen: {
+      color: "green"
+    }
   })
 }
