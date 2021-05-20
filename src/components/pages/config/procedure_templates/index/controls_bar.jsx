@@ -130,7 +130,7 @@ const styles_control_bar = (props) => {
             size="small"
             disabled={ pristine }
           >
-            { redirect  }
+            { redirect }
             Agregar
           </Button>
         </DialogActions>

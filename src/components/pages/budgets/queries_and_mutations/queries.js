@@ -64,10 +64,6 @@ export const GET_BUDGETS = gql`
         id
         active
         serialNumber
-        proceduresTemplates{
-          name
-          id
-        }
       }
       client{
         firstName
@@ -76,12 +72,23 @@ export const GET_BUDGETS = gql`
         email
         phone
       }
+      proceduresTemplate{
+        name
+        id
+        active
+        serialNumber
+      }
       id
       serialNumber
+      total
+      totalCredit
+      totalDebt
+      totalPaid
     }
     budgetsCount
   }
 `
+
 export const GET_PROCEDURES_TEMPLATES_QUICK_LIST = gql`
   query proceduresTemplatesQuickList{
     proceduresTemplatesQuickList{
@@ -156,6 +163,255 @@ export const BUDGETING_TEMPLATE_BY_PROCEDURE_ID = gql`
       name
       serialNumber
       active
+    }
+  }
+`
+
+export const GET_BUDGET = gql`
+  query budget(
+    $id: ID!
+  ){
+  budget(
+    id: $id
+    ){
+      total
+      totalCredit
+      totalPaid
+      totalDebt
+      budgetingTemplate{
+        active
+        id
+        name
+      },
+      client{
+        firstName
+        lastName
+        rfc
+        curp
+        id
+      },
+      proceduresTemplate{
+        active
+        name
+        id
+      },
+      fieldValues{
+        id
+        value
+        budgetId
+        budgetingTemplateFieldId
+        field{
+          name
+          id
+          budgetingTemplateTabId
+        }
+      }
+    }
+  }
+`
+
+export const GET_BUDGETING_TEMPLATES_TABS = gql`
+  query budgetingTemplateTabs ($id: ID! ) {
+    budgetingTemplateTabs (id: $id) {
+      active
+      id
+      name
+      budgetingTemplateId
+    }
+  }
+`
+
+export const GET_BUDGETING_TEMPLATE_TAB_FIELDS = gql`
+  query budgetingTemplateTabFields(
+    $id: ID!
+  )
+  {
+    budgetingTemplateTabFields(
+      id: $id
+    )
+    {
+      id
+      name
+      active
+      categories {
+        id
+        name
+      }
+    }
+  }
+`
+
+export const UPDATE_BUDGET_FIELD_VALUE = gql`
+  mutation updateBudgetFieldValue(
+    $id: ID!,
+    $budgetingTemplateFieldId: ID,
+    $budgetId: ID,
+    $value: Int!,
+  ){
+    updateBudgetFieldValue(input:{
+      id: $id,
+      budgetingTemplateFieldId: $budgetingTemplateFieldId,
+      budgetId: $budgetId,
+      value: $value
+      }
+    ){
+      budgetFieldValue{
+        budgetId
+        budgetingTemplateFieldId
+        field{
+          name
+          id
+          budgetingTemplateTabId
+        }
+        id
+        value
+      }
+    }
+  }
+`
+
+export const CREATE_BUDGET_FIELD_VALUE = gql`
+  mutation createBudgetFieldValue(
+    $budgetingTemplateFieldId: ID,
+    $budgetId: ID,
+    $value: Int!,
+  ){
+    createBudgetFieldValue(input:{
+      budgetingTemplateFieldId: $budgetingTemplateFieldId,
+      budgetId: $budgetId,
+      value: $value
+      }
+    ){
+      budgetFieldValue{
+        budgetId
+        budgetingTemplateFieldId
+        field{
+          name
+          id
+          budgetingTemplateTabId
+        }
+        id
+        value
+      }
+    }
+  }
+`
+
+export const GET_BUDGET_FIELD_VALUE = gql`
+  query budgetFieldValue(
+    $budgetingTemplateFieldId: ID!,
+    $budgetId: ID!
+  ){
+  budgetFieldValue(
+    budgetingTemplateFieldId: $budgetingTemplateFieldId
+    budgetId: $budgetId
+    ){
+      budgetingTemplateFieldId
+      id
+      value
+      budgetId
+      budgetingTemplateFieldId
+      totalDebt
+      totalPaid
+      field{
+        id
+        name
+        budgetingTemplateTabId
+      }
+    }
+  }
+`
+
+export const CREATE_CREDIT_PAYMENT = gql`
+  mutation createCreditPayment(
+    $note: String,
+    $budgetId: ID!,
+    $total: Int!,
+  ){
+    createCreditPayment(input:{
+      note: $note,
+      budgetId: $budgetId,
+      total: $total,
+      }
+    ){
+      creditPayment{
+        budgetId
+        id
+        note
+        total
+      }
+    }
+  }
+`
+
+export const GET_BUDGET_TOTALS = gql`
+  query budgetTotals(
+    $id: ID!
+  ){
+    budgetTotals(
+      id: $id
+    ){
+      total
+      totalCredit
+      totalPaid
+      totalDebt
+    }
+  }
+`
+
+export const GET_CREDIT_PAYMENTS = gql`
+  query creditPayments(
+    $budgetId: ID!
+  ){
+    creditPayments(
+      budgetId: $budgetId
+    ){
+      id
+      note
+      total
+      voidAt
+      createdAt
+    }
+  }
+`
+
+export const VOID_OR_INVOID = gql`
+  mutation voidUnvoidCreditPayment(
+    $id: ID!
+  ){
+    voidUnvoidCreditPayment(input:{
+      id: $id
+    }
+    ){
+      creditPayment{
+        voidAt
+      }
+    }
+  }
+`
+
+export const CREATE_PAYMENT = gql`
+  mutation createPayment(
+    $budgetId: ID!,
+    $budgetFieldValueId: ID!,
+    $total: Int!,
+    $note: String
+  ){
+    createPayment(input:{
+      budgetId: $budgetId,
+      budgetFieldValueId: $budgetFieldValueId,
+      total: $total,
+      note: $note
+    }
+    ){
+      payment{
+        budgetFieldValueId
+        budgetId
+        id
+        note
+        total
+        voidAt
+      }
     }
   }
 `

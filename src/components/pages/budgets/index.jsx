@@ -66,7 +66,7 @@ const BudgetsIndex = (props) => {
           classes={classes}
           searchLoading={searchLoading}
         />
-      </div>
+
       <div className={ classes.tableWrapper }>
         <Paper>
         <Table >
@@ -84,7 +84,7 @@ const BudgetsIndex = (props) => {
               setGetTemplatesVariables={ setGetTemplatesVariables }
             />
             <TableFooter>
-              <TableRow>
+              <TableRow >
               <TablePagination
                   page={ page }
                   rowsPerPage={ per }
@@ -98,6 +98,7 @@ const BudgetsIndex = (props) => {
             </TableFooter>
           </Table>
         </Paper>
+        </div>
       </div>
     </>
   )

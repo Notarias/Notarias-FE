@@ -25,6 +25,8 @@ import Dialog                             from '@material-ui/core/Dialog';
 import DialogContent                      from '@material-ui/core/DialogContent';
 import DialogTitle                        from '@material-ui/core/DialogTitle';
 import DialogActions                      from '@material-ui/core/DialogActions';
+import { Link }                           from 'react-router-dom';
+import { Redirect }                       from 'react-router-dom';
 
 
 const BREADCRUMBS = [
@@ -120,6 +122,7 @@ const NewBudget = (props) => {
   const [pristine, setPristine] = React.useState(true)
   const [error, setError] = React.useState(false)
   const inputsList = ["first_name", "last_name"]
+  const [redirect, setRedirect] = useState(false)
 
   let variables = {
     firstName: firstName,
@@ -164,8 +167,11 @@ const NewBudget = (props) => {
         // setPristine(true)
       },
       onCompleted(cacheData) {
-        setActiveStep((prevActiveStep) => prevActiveStep + 1)
-        //setLoading(false)
+        // setLoading(false)
+        const id = cacheData.createBudget.budget.id
+        id && setRedirect(
+          <Redirect to={{ pathname: `/budgets/${id}/edit` }} />
+        )
       },
       fetchPolicy: "no-cache",
     }
@@ -257,10 +263,6 @@ const NewBudget = (props) => {
     setOpen(false);
   };
 
-
-  console.log(clientInfo.id, "client")
-  console.log(procedureInfo.budgetingTemplatesIds, "proc")
-  console.log(budgetInfo.id, "budget")
   return(
     <>
       <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
@@ -440,6 +442,7 @@ const NewBudget = (props) => {
                       onClick={createNewBudget}
                       className={classes.button}
                     >
+                      { redirect }
                       Finalizar
                     </Button>
                   </Grid>
@@ -457,6 +460,8 @@ const NewBudget = (props) => {
                       variant="contained"
                       color="primary"
                       className={classes.button}
+                      component={Link} 
+                      to="/budgets/new"
                     >
                       Redireccionar
                     </Button>

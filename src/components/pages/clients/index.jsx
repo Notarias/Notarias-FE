@@ -61,10 +61,11 @@ const Clients = (props) => {
         <ControlsBar
           classes={classes}
           searchLoading={searchLoading}
-          onChangeSearch={onChangeSearch.bind(this)}/>
+          onChangeSearch={onChangeSearch.bind(this)}
+        />
         <div className={classes.tableWrapper}>
           <Paper >
-            <Table className={classes.table}>
+            <Table >
               <TableHeaders field={sortField} direction={sortDirection} sortHandler={sort.bind(this) }/>
               <ClientRows
               setTotalRecords={ setTotalRecords }

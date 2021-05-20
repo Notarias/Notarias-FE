@@ -31,7 +31,6 @@ const TableBodyTemplate = (props) => {
     totalCount && assingTotalRecords(totalCount)
   }, [page, per, search, sortField, sortDirection, totalCount]);
 
-  console.log("budg", data)
 
   if (loading || !data) {
     return(
@@ -49,7 +48,6 @@ const TableBodyTemplate = (props) => {
         {
           data.budgets.map(
             (budget) => {
-              console.log(budget)
               return(
                 <TemplateRow
                   budget={ budget }

@@ -3,46 +3,82 @@ import Grid                           from '@material-ui/core/Grid';
 import TableRow                       from '@material-ui/core/TableRow';
 import TableCell                      from '@material-ui/core/TableCell';
 import GenericDropdownMenu            from '../../../ui/generic_dropdown_menu';
-import Chip                           from '@material-ui/core/Chip';
 import Button                         from '@material-ui/core/Button';
 import CreateIcon                     from '@material-ui/icons/Create';
 import MenuItem                       from '@material-ui/core/MenuItem';
-import RadioButtonUncheckedIcon       from '@material-ui/icons/RadioButtonUnchecked';
-import RadioButtonCheckedIcon         from '@material-ui/icons/RadioButtonChecked';
 import ListItemIcon                   from '@material-ui/core/ListItemIcon';
 import ListItemText                   from '@material-ui/core/ListItemText';
-import Dialog                         from '@material-ui/core/Dialog';
-import DialogActions                  from '@material-ui/core/DialogActions';
-import DialogContent                  from '@material-ui/core/DialogContent';
-import DialogContentText              from '@material-ui/core/DialogContentText';
-import DialogTitle                    from '@material-ui/core/DialogTitle';
-import useMediaQuery                  from '@material-ui/core/useMediaQuery';
-import { useTheme }                   from '@material-ui/core/styles';
+import { Link }                       from 'react-router-dom';
+import NumberFormat                   from 'react-number-format';
+import { withStyles }                 from '@material-ui/core/styles';
+import { styles }                     from '../styles';
+import Typography                     from '@material-ui/core/Typography';
 
 
 const TemplateRow = (props) => {
 
-  const {budget} = props
-  const { classes } = props
+  const {budget, classes} = props
   const [open, setOpen] = React.useState(false);
-  const theme = useTheme();
 
+ 
   return(
-    <TableRow key={  "-row" } >
-      <TableCell align= "center">{ budget.client.firstName }</TableCell>
-      <TableCell align= "center">{ budget.budgetingTemplate.name }</TableCell>
-      <TableCell align= "center">
-        { 
-          <Chip
-            size="small" label={ "activo" }
-          />
-        }
+    <TableRow key={  "-row" }>
+      <TableCell align= "center" className={classes.tablecellWidth}>{ budget.client.firstName }</TableCell>
+      <TableCell align= "center" className={classes.tablecellWidth}>{ budget.proceduresTemplate.name }</TableCell>
+      <TableCell align= "center" className={classes.tablecellWidth}>
+        <NumberFormat 
+          value={ budget.total / 100}
+          displayType={'text'} 
+          thousandSeparator={true} 
+          prefix={'$ '}
+          decimalScale={2}
+        />
       </TableCell>
-      <TableCell align= "center">10,000</TableCell>
-      <TableCell align= "center">{ budget.serialNumber }</TableCell>
-      <TableCell align= "center">
+      <TableCell align= "center" className={classes.tablecellWidth}>
+        <Typography variant="subtitle2">
+          <NumberFormat 
+            value={ budget.totalDebt / 100 }
+            displayType={'text'} 
+            thousandSeparator={true} 
+            prefix={'$ '}
+            decimalScale={2}
+            className={budget.totalDebt ? classes.totalDebtInRed : ""}
+          />
+        </Typography>
+      </TableCell>
+      <TableCell align= "center" className={classes.tablecellWidth}>
+        <Typography variant="subtitle2">
+          <NumberFormat 
+            value={ budget.totalPaid / 100 }
+            displayType={'text'} 
+            thousandSeparator={true} 
+            prefix={'$ '}
+            decimalScale={2}
+            className={classes.totalPaidInGreen}
+          />
+        </Typography>
+      </TableCell>
+      <TableCell align= "center" className={classes.tablecellWidth}>
         <Grid>
           <GenericDropdownMenu>
+            <MenuItem key={ budget.id + "-edit" }>
+                <Link
+                  to={`/budgets/${ budget.id }/edit`}
+                  color="inherit"
+                  underline="none"
+                  className={ classes.linkDefault }
+                >
+                <Grid container>
+                  <ListItemIcon>
+                    <CreateIcon className={ classes.defaultIcon }/>
+                  </ListItemIcon>
+                  <ListItemText primary="Editar" />
+                </Grid>
+              </Link>
+            </MenuItem>
+            <MenuItem key={ budget.id + "-algo"}>
+              "algo futuro"
+            </MenuItem>
           </GenericDropdownMenu>
         </Grid>
       </TableCell>
@@ -50,4 +86,4 @@ const TemplateRow = (props) => {
   )
 }
 
-export default TemplateRow;
+export default withStyles(styles)(TemplateRow);

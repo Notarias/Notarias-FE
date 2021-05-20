@@ -92,6 +92,79 @@ export const styles = theme => {
       width: "100%",
       height: "330px",
     },
-    
+    linkDefault: {
+      textDecoration:"none",
+      width: "200px"
+    },
+    defaultIcon:{
+      width:"30px", 
+      height:"30px",
+    },
+    budgetEditPaper: {
+      marginTop: '10px',
+      width: "100%",
+      height:"300px"
+    },
+    budgetRightOptionsList: {
+      marginTop: '10px',
+      width: "100%",
+      height:"600px"
+    },
+    budgetTittle: {
+      height:"50px"
+    },
+    budgetEdit : {
+      height:"100px"
+    },
+    spaceBetwenFirstNameAndLastName: {
+      marginLeft: "5px"
+    },
+    marginTitleBudgetName: {
+      marginLeft: "20px"
+    },
+    budgetTabPanelFields: {
+      marginLeft: "20px",
+      height:"70px",
+    },
+    titleFields: {
+      marginLeft: "20px",
+      height:"60px",
+    },
+    rootTab: {
+      flexGrow: 1,
+      backgroundColor: theme.palette.background.paper,
+    },
+    boxContainerFields: {
+      overflowY:"scroll",
+      maxHeight: "390px"
+    },
+    fixedRow: {
+      width:"200px",
+    },
+    avatarInDialogToAddPayment: {
+      margin: "10px 10px 10px 5px",
+    },
+    dialogToAddPayment: {
+      width:"400px",
+    },
+    drawerPaymentList: {
+      width:'300px'
+    },
+    totalsGrid: {
+      marginTop: "30px",
+      paddingRight: "85px"
+    },
+    totalsGridAmount: {
+      paddingLeft: "30px"
+    },
+    tablecellWidth: {
+      maxWidth: "196px"
+    },
+    totalDebtInRed: {
+      color: "red"
+    },
+    totalPaidInGreen: {
+      color: "green"
+    }
   })
 }

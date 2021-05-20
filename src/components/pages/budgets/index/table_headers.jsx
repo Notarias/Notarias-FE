@@ -24,20 +24,22 @@ export default (props) => {
           callback={ sortHandler }
         />
         <SortHeader
-          text={ "Fecha" }
+          text={ "Total" }
+          field_property={ "total" }
           current_field={ field }
           sort_direction={ direction }
           callback={ sortHandler }
         />
         <SortHeader
-          text={ "Monto" }
+          text={ "Adeudo" }
+          field_property={ "totalDebt" }
           current_field={ field }
           sort_direction={ direction }
           callback={ sortHandler }
         />
         <SortHeader
-          text={ "#" }
-          field_property={ "serial_number" }
+          text={ "Capital" }
+          field_property={ "totalPaid" }
           current_field={ field }
           sort_direction={ direction }
           callback={ sortHandler }
