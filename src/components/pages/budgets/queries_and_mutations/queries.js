@@ -88,6 +88,7 @@ export const GET_BUDGETS = gql`
     budgetsCount
   }
 `
+
 export const GET_PROCEDURES_TEMPLATES_QUICK_LIST = gql`
   query proceduresTemplatesQuickList{
     proceduresTemplatesQuickList{
