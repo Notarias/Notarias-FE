@@ -7,7 +7,7 @@ import Table                        from '@material-ui/core/Table';
 import TableRow                     from '@material-ui/core/TableRow';
 import TableFooter                  from '@material-ui/core/TableFooter';
 import TablePagination              from '@material-ui/core/TablePagination';
-import TableBodyTemplate            from './index/table_body_template';
+import TableBodyTemplate            from './index/table_body';
 import ControlsBar                  from './index/controls_bar';
 import TableHeaders                 from './index/table_headers';
 

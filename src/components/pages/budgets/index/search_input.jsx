@@ -1,11 +1,6 @@
-import React, { useState }                from 'react'
+import React, { useState, createRef }     from 'react'
 import Grid                               from '@material-ui/core/Grid';
 import CircularProgress                   from '@material-ui/core/CircularProgress';
-import Dialog                             from '@material-ui/core/Dialog';
-import DialogContent                      from '@material-ui/core/DialogContent';
-import DialogTitle                        from '@material-ui/core/DialogTitle';
-import DialogActions                      from '@material-ui/core/DialogActions';
-import TextField                          from '@material-ui/core/TextField'
 import SearchIcon                         from '@material-ui/icons/Search';
 import InputBase                          from '@material-ui/core/InputBase';
 import Button                             from '@material-ui/core/Button';
@@ -15,17 +10,39 @@ import PostAddIcon                        from '@material-ui/icons/PostAdd';
 import PageviewIcon                       from '@material-ui/icons/Pageview';
 import { Link }             from 'react-router-dom';
 
-
 const SearchInput = (props) => {
-  const { classes, searchLoading } = props
+  const { 
+    classes, 
+    searchLoading, 
+    changeAdvanceSearch, 
+    setChangeAdvanceSearch,
+    onChangeSearch, 
+    setSimpleSearchValue,
+    setClientNameValue,
+    setProcedureNameValue,
+    setSerialNumberValue,
+    setMoreThanValue,
+    setLessThanValue,
+    advancedButtonClick,
+    advanceSearchActived,
+    setAdvanceSearchActived
+  } = props
   const [open, setOpen] = React.useState(false)
+  const simpleSearchInputRef = createRef()
 
   const handleClickOpen = (event) => {
     setOpen(true);
   };
 
-  const handleClose = () => {
-    setOpen(false)
+  const handleChangeInputsStatus = () => {
+    setChangeAdvanceSearch(!changeAdvanceSearch)
+    setAdvanceSearchActived(!advanceSearchActived)
+    setSimpleSearchValue(null)
+    setClientNameValue(null)
+    setProcedureNameValue(null)
+    setSerialNumberValue(null)
+    setMoreThanValue(null)
+    setLessThanValue(null)
   }
 
   return(
@@ -39,8 +56,10 @@ const SearchInput = (props) => {
           }
         </div>
         <InputBase
-          placeholder="Buscar…"
-          // onChange={onChangeSearch}
+          disabled={advanceSearchActived}
+          placeholder={ advanceSearchActived ? "Buscar por:" : "Buscar…"}
+          onChange={onChangeSearch}
+          inputRef={simpleSearchInputRef}
           classes={{
             root: classes.searchInputRoot,
             input: classes.searchInputInput,
@@ -51,7 +70,7 @@ const SearchInput = (props) => {
         variant="contained" 
         color="primary" 
         className={classes.advancedSearchButton}
-        // onClick={ handleClickOpen }
+        onClick={ advancedButtonClick(simpleSearchInputRef, handleChangeInputsStatus) }
       >
         <PageviewIcon/>
       </Button>
