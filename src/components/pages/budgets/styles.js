@@ -165,6 +165,25 @@ export const styles = theme => {
     },
     totalPaidInGreen: {
       color: "green"
+    },
+    GridInputAdvancedSearchHide: {
+      overflow: "hidden",
+      width: "0px",
+      height: "0px"
+    },
+    GridInputAdvancedSearch: {
+      overflow: "visible",
+      marginTop: "20px"
+    },
+    inputInAdvancedSearch: {
+      margin: "5px"
+    },
+    inputClientNameInAdvancedSearch: {
+      margin: "5px",
+      width: "428px"
+    },
+    paperAdvancedSearch: {
+      width: "800px"
     }
   })
 }

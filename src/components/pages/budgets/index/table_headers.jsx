@@ -11,7 +11,7 @@ export default (props) => {
       <TableRow>
         <SortHeader
           text={ "Cliente" }
-          field_property={ "name" }
+          field_property={ "client_name" }
           current_field={ field }
           sort_direction={ direction }
           callback={ sortHandler }
@@ -19,6 +19,13 @@ export default (props) => {
         <SortHeader
           text={ "Tramites" }
           field_property={ "procedure_name" }
+          current_field={ field }
+          sort_direction={ direction }
+          callback={ sortHandler }
+        />
+        <SortHeader
+          text={ "Numero de serie" }
+          field_property={ "serial_number" }
           current_field={ field }
           sort_direction={ direction }
           callback={ sortHandler }

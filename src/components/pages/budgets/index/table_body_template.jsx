@@ -10,11 +10,32 @@ import TemplateRow                    from './template_row';
 
 const TableBodyTemplate = (props) => {
 
-  const { page, per, sortDirection, sortField, search, assingTotalRecords, classes, setGetTemplatesVariables } = props
+  const { 
+    page,
+    per,
+    sortDirection,
+    sortField,
+    simpleSearchValue,
+    assingTotalRecords,
+    classes,
+    setGetTemplatesVariables,
+    clientNameValue,
+    procedureNameValue,
+    serialNumberValue,
+    moreThanValue,
+    lessThanValue,
+  } = props
   let variables = {
     page: page + 1,
     per: per,
-    search: search,
+    search: {
+      simpleSearch: simpleSearchValue,
+      clientName: clientNameValue,
+      templateName: procedureNameValue,
+      serialNumber: serialNumberValue,
+      totalMoreThanEq: moreThanValue,
+      totalLessThanEq: lessThanValue,
+    },
     sortDirection: sortDirection,
     sortField: sortField,
   }
@@ -26,10 +47,11 @@ const TableBodyTemplate = (props) => {
   let totalCount = data && data.budgetsCount
 
   useEffect(() => {
+    console.log(clientNameValue, procedureNameValue, "aqui--//")
     refetch(variables);
     setGetTemplatesVariables(variables)
     totalCount && assingTotalRecords(totalCount)
-  }, [page, per, search, sortField, sortDirection, totalCount]);
+  }, [page, per, simpleSearchValue, clientNameValue, procedureNameValue, sortField, sortDirection, totalCount,]);
 
 
   if (loading || !data) {
