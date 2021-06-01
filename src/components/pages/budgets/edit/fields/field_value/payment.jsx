@@ -18,6 +18,7 @@ import { useMutation }                      from '@apollo/react-hooks'
 import { CREATE_PAYMENT }                   from '../../../queries_and_mutations/queries'
 import { GET_BUDGET_FIELD_VALUE }           from '../../../queries_and_mutations/queries'
 import { GET_BUDGET_TOTALS }                from '../../../queries_and_mutations/queries'
+import { GET_PAYMENTS }                     from '../../../queries_and_mutations/queries'
 
 
 function NumberFormatCustom(props) {
@@ -78,6 +79,10 @@ const Payment = (props) => {
           variables: { "budgetingTemplateFieldId": fieldId , "budgetId": currentBudget }
         },
         {
+          query: GET_PAYMENTS,
+          variables: { "fieldValueId": fieldValueId }
+        },
+        {
           query: GET_BUDGET_TOTALS,
           variables: {"id": currentBudget }
         }
@@ -132,6 +137,21 @@ const Payment = (props) => {
     setError(false)
   }
 
+  const totalDebtAmount = () => {
+    return(
+      <Typography variant="h6" gutterBottom>
+        <NumberFormat 
+          value={totalDebt} 
+          displayType={'text'} 
+          thousandSeparator={true} 
+          prefix={'$ '}
+          decimalScale={2}
+        />
+      </Typography>
+    )
+  }
+
+
   return(
     <>
       <ListItemText primary="Pagar" onClick={handleClickOpen}/>
@@ -141,19 +161,11 @@ const Payment = (props) => {
         </DialogTitle>
         <DialogContent>
           <Grid container >
-            <Grid container item xs={6} alignItems="center" justify="center">
+            <Grid container direction="row" item xs={6} alignItems="center" justify="center">
               <Typography variant="button" display="block" gutterBottom>
-                Total a pagar 
+                A pagar {totalDebtAmount()}
               </Typography>
-              <Typography variant="h6" gutterBottom>
-                <NumberFormat 
-                  value={totalDebt} 
-                  displayType={'text'} 
-                  thousandSeparator={true} 
-                  prefix={'$ '}
-                  decimalScale={2}
-                />
-              </Typography>
+
             </Grid>
               <Grid  container item xs={6} alignItems="center" justify="center">
                 <TextField

@@ -28,7 +28,7 @@ import { useMutation }                      from '@apollo/react-hooks'
 import { CREATE_CREDIT_PAYMENT }            from './queries_and_mutations/queries'
 import PaymentDrawer                        from './edit/payment_drawer'
 import { GET_BUDGET_TOTALS }                from './queries_and_mutations/queries'
-import PaymentList                          from './edit/payment_list/payment_list'
+import PaymentList                          from './edit/credit_payment_list/credit_payment_list'
 import ListItemText                         from '@material-ui/core/ListItemText';
 
 const BREADCRUMBS = [

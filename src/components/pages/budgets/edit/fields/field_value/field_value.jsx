@@ -15,6 +15,7 @@ import TextField                                    from '@material-ui/core/Text
 import InputAdornment                               from '@material-ui/core/InputAdornment';
 import Box                                          from '@material-ui/core/Box';
 import PropTypes                                    from 'prop-types';
+import PaymentList                                  from './payment_list/payment_list';
 
 
 const FieldValue = (props) => {
@@ -33,8 +34,6 @@ const FieldValue = (props) => {
       variables: { "budgetingTemplateFieldId": field.id , "budgetId": currentBudget }
     }
   );
-
-  // const [fieldValue, setFieldValue] = React.useState(data ? data.budgetFieldValue.value : "0")
 
   useEffect(() => {
     let value = data && data.budgetFieldValue ? 
@@ -116,7 +115,14 @@ const FieldValue = (props) => {
             fieldId={field.id}
           />
         </MenuItem>
-        <MenuItem key="2-pago"></MenuItem>
+        <MenuItem key="2-pago">
+          <PaymentList
+            totalDebt={totalDebt}
+            initialDebt={initialFieldValue}
+            fieldValueId={data && data.budgetFieldValue.id}
+            budgetingTemplateFieldId={data && data.budgetFieldValue.budgetingTemplateFieldId}
+          />
+        </MenuItem>
         </GenericDropdownMenu>
       </Grid>
     </Grid>
