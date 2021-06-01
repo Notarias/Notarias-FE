@@ -1,14 +1,14 @@
-import React, { useEffect }           from 'react'
-import CircularProgress               from '@material-ui/core/CircularProgress';
-import TableRow                       from '@material-ui/core/TableRow';
-import TableCell                      from '@material-ui/core/TableCell';
-import TableBody                      from '@material-ui/core/TableBody';
-import { useQuery }                   from '@apollo/react-hooks';
-import { GET_BUDGETS }                from '../queries_and_mutations/queries';
-import TemplateRow                    from './template_row';
+import React, { useEffect }               from 'react'
+import CircularProgress                   from '@material-ui/core/CircularProgress';
+import TableRow                           from '@material-ui/core/TableRow';
+import TableCell                          from '@material-ui/core/TableCell';
+import TableBody                          from '@material-ui/core/TableBody';
+import { useQuery }                       from '@apollo/react-hooks';
+import { GET_BUDGETS }                    from '../queries_and_mutations/queries';
+import TemplateRow                        from './template_row';
 
 
-const TableBodyTemplate = (props) => {
+export default (props) => {
 
   const { 
     page,
@@ -47,7 +47,6 @@ const TableBodyTemplate = (props) => {
   let totalCount = data && data.budgetsCount
 
   useEffect(() => {
-    console.log(clientNameValue, procedureNameValue, "aqui--//")
     refetch(variables);
     setGetTemplatesVariables(variables)
     totalCount && assingTotalRecords(totalCount)
@@ -84,5 +83,3 @@ const TableBodyTemplate = (props) => {
     )
   }
 };
-
-export default TableBodyTemplate;
