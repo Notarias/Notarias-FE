@@ -1,42 +1,10 @@
-import React, {useState, createRef}         from 'react'
+import React, {useState}                    from 'react'
 import Grid                                 from '@material-ui/core/Grid';
 import TextField                            from '@material-ui/core/TextField';
-import NumberFormat                         from 'react-number-format';
-import PropTypes                            from 'prop-types';
-import InputAdornment                       from '@material-ui/core/InputAdornment';
 import { withStyles }                       from '@material-ui/core/styles';
 import { styles }                           from '../styles';
 import Paper                                from '@material-ui/core/Paper';
 import Button                               from '@material-ui/core/Button';
-
-function NumberFormatCustom(props) {
-  const { inputRef, onChange, ...other } = props;
-
-  return (
-    <NumberFormat
-      {...other}
-      getInputRef={inputRef}
-      onValueChange={(values) => {
-        onChange({
-          target: {
- 
-            value: values.value,
-          },
-        });
-      }}
-      thousandSeparator
-      isNumericString
-      decimalSeparator="."
-      decimalScale={2}
-      fixedDecimalScale
-
-    />
-  );
-}
-
-NumberFormatCustom.propTypes = {
-  onChange: PropTypes.func.isRequired,
-};
 
 const AdvancedSearchBudget = (props) => {
   const { 
@@ -94,7 +62,9 @@ const AdvancedSearchBudget = (props) => {
   }
 
   return(
-    <Grid container justify="flex-end" className={changeAdvanceSearch ? classes.GridInputAdvancedSearchHide : classes.GridInputAdvancedSearch}>
+    <Grid container justify="flex-end" className={changeAdvanceSearch ? 
+                                        classes.GridInputAdvancedSearchHide : classes.GridInputAdvancedSearch}
+    >
       <Grid container item xs={8} direction="row" justify="flex-end">
         <Paper className={classes.paperAdvancedSearch}>
         <Grid container item direction="row" justify="flex-end">
@@ -126,54 +96,24 @@ const AdvancedSearchBudget = (props) => {
               variant="outlined"
               className={classes.inputInAdvancedSearch}
             />
-          <TextField
-            inputRef={moreThanInputRef}
-            onChange={onChangeMoreThan}
-            size="small"
-            id="more_than"
-            label="Monto mayor a:"
-            variant="outlined"
-            className={classes.inputInAdvancedSearch}
-          />
-            {/* <CurrencyTextField
-            inputRef={moreThanInputRef}
-              label="Monto mayor a:"
-              variant="outlined"
+            <TextField
+              inputRef={moreThanInputRef}
+              onChange={onChangeMoreThan}
               size="small"
               id="more_than"
-              decimalCharacter="."
-              digitGroupSeparator=","
-              outputFormat="string"
-              // currencySymbol={false}
-              CurrencyTextField="string"
-              onChange={onChangeMoreThan}
-            /> */}
-          <TextField
-            inputRef={lessThanInputRef}
-            onChange={onChangeLessThan}
-            size="small"
-            id="less_than"
-            label="Monto menor a:"
-            variant="outlined"
-            className={classes.inputInAdvancedSearch}
-            // InputProps={{
-            //   inputComponent: NumberFormatCustom,
-            //   inputRef: lessThanInputRef
-            // }}
-
-          />
-            {/* <CurrencyTextField
-            inputRef={lessThanInputRef}
-              label="Monto menor a:"
+              label="Monto mayor a:"
               variant="outlined"
+              className={classes.inputInAdvancedSearch}
+            />
+            <TextField
+              inputRef={lessThanInputRef}
+              onChange={onChangeLessThan}
               size="small"
               id="less_than"
-              decimalCharacter="."
-              digitGroupSeparator=","
-              outputFormat="string"
-              // currencySymbol={false}
-              onChange={onChangeLessThan}
-            /> */}
+              label="Monto menor a:"
+              variant="outlined"
+              className={classes.inputInAdvancedSearch}
+            />
           </Grid>
           <Grid container item xs={2} alignItems="center" justify="center">
             <Button variant="outlined" onClick={startAdvanceSearch}>Buscar</Button>

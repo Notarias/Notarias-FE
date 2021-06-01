@@ -1,17 +1,16 @@
-import React, { useState, useRef, createRef, useEffect }                from 'react';
-import { withStyles }                     from '@material-ui/core/styles';
-import { styles }                         from './styles';
-import Breadcrumbs                        from '../../ui/breadcrumbs'
-import SearchInput                        from './index/search_input'
-import Paper                              from '@material-ui/core/Paper';
-import Table                              from '@material-ui/core/Table';
-import TableRow                           from '@material-ui/core/TableRow';
-import TableFooter                        from '@material-ui/core/TableFooter';
-import TablePagination                    from '@material-ui/core/TablePagination';
-import TableBodyTemplate                  from './index/table_body_template';
-import TableHeaders                       from './index/table_headers';
-import AdvancedSearchBudget               from './index/advanced_search_budget'
-import { ValuesOfCorrectTypeRule } from 'graphql';
+import React, { useState, useRef, createRef }       from 'react';
+import { withStyles }                               from '@material-ui/core/styles';
+import { styles }                                   from './styles';
+import Breadcrumbs                                  from '../../ui/breadcrumbs'
+import SearchInput                                  from './index/search_input'
+import Paper                                        from '@material-ui/core/Paper';
+import Table                                        from '@material-ui/core/Table';
+import TableRow                                     from '@material-ui/core/TableRow';
+import TableFooter                                  from '@material-ui/core/TableFooter';
+import TablePagination                              from '@material-ui/core/TablePagination';
+import TableBodyTemplate                            from './index/table_body_template';
+import TableHeaders                                 from './index/table_headers';
+import AdvancedSearchBudget                         from './index/advanced_search_budget'
 
 const BREADCRUMBS = [
   { name: "Inicio", path: "/" },
@@ -38,10 +37,6 @@ const BudgetsIndex = (props) => {
   const [lessThanValue, setLessThanValue] = React.useState(null)
   const [advanceSearchActived, setAdvanceSearchActived] = React.useState(false)
 
-  // useEffect(() => {
-  //   lessThanInputRef = lessThanInputRef && (lessThanInputRef.current.value = null)
-  // }, [changeAdvanceSearch])
-
   const clientNameInputRef = useRef()
   const procedureInputRef = useRef()
   const serialNumberInputRef = useRef()
@@ -55,8 +50,6 @@ const BudgetsIndex = (props) => {
     moreThanInputRef && (moreThanInputRef.current.value = null)
     lessThanInputRef && (lessThanInputRef.current.value =null)
        console.log( lessThanInputRef && lessThanInputRef.current.value, "///--")
-
-    // console.log( lessThanInputRef && { a: lessThanInputRef.current.value}, "///--")
   }
 
   const advancedButtonClick = (simpleSearchRef, callback) => {
@@ -129,8 +122,6 @@ const BudgetsIndex = (props) => {
           serialNumberInputRef={serialNumberInputRef}
           moreThanInputRef={moreThanInputRef}
           lessThanInputRef={lessThanInputRef}
-          // setInputClientName={setInputClientName}
-          // toEraseValue={toEraseValue}
         />
       <div className={ classes.tableWrapper }>
         <Paper>
