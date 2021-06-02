@@ -132,7 +132,6 @@ const TotalValue = (props) => {
      <Grid container item>
        <Grid container item xs={8} direction="row" justify="flex-end">
           <TextField
-
           label="Total"
           disabled
           value={initialFieldValue}

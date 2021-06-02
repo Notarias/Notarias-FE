@@ -415,3 +415,36 @@ export const CREATE_PAYMENT = gql`
     }
   }
 `
+
+export const GET_PAYMENTS = gql`
+query payments(
+  $fieldValueId: ID!
+){
+  payments (
+    fieldValueId: $fieldValueId
+  ){
+    budgetFieldValueId
+    budgetId
+    id
+    note
+    total
+    voidAt
+    createdAt
+  }
+}
+`
+
+export const VOID_OR_UNVOID_PAYMENT = gql`
+  mutation voidUnvoidPayment(
+    $id: ID!
+  ){
+    voidUnvoidPayment(input:{
+      id: $id
+    }
+    ){
+      payment{
+        voidAt
+      }
+    }
+  }
+`
