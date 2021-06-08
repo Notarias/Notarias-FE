@@ -12,7 +12,7 @@ import { CREATE_COMMENT }           from '../../queries_and_mutations/queries';
 import { GET_COMMENTABLE_COMMENTS } from '../../queries_and_mutations/queries';
 
 
-const CommentsInTabs = (props) => {
+const CreateComments = (props) => {
   const { classes, budgetId } = props
   const [textFieldSelected, setTextFieldSelected] = React.useState(false)
   const [commentValue, setCommentValue] = React.useState("")
@@ -79,6 +79,7 @@ const CommentsInTabs = (props) => {
             error={ !!error["body"] && true }
             helperText={error["body"] || " "}
             errorskey={ "body" }
+            multiline
           />
           <Button onClick={ handleCancel }>Cancelar</Button>
           <Button 
@@ -150,4 +151,4 @@ const CommentsInTabs = (props) => {
   )
 }
 
-export default withStyles(styles)(CommentsInTabs);
+export default withStyles(styles)(CreateComments);

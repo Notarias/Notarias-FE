@@ -186,11 +186,13 @@ export const styles = theme => {
       width: "800px"
     },
     gridCommentsContainer: {
-
       maxHeight: "96px"
     },
     avatarWithoutTopMargin: {
       marginTop: "0px"
+    },
+    totalValuesGridContainer: {
+      maxHeight: "96px"
     }
   })
 }
