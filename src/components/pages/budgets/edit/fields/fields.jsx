@@ -11,6 +11,7 @@ import { withStyles }                               from '@material-ui/core/styl
 import { styles }                                   from '../../styles';
 import FieldValue                                   from './field_value/field_value';
 import FieldTotalValues                             from './field_total_values';
+import CommentsInTabs                               from './comments_in_tabs';
 
 
 
@@ -104,7 +105,12 @@ const Fields = (props) => {
           })
         }
         <Grid container justify="flex-end" className={ classes.totalsGrid }>
-          <Grid container item xs={5} alignItems="center">
+          <Grid container item direction="row" xs={8}>
+            <CommentsInTabs
+              budgetId={budgetId}
+            />
+          </Grid>
+          <Grid container item xs={4} alignItems="center">
             <FieldTotalValues
               budgetId={budgetId}
             />
