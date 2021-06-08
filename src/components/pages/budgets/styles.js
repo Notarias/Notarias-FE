@@ -152,10 +152,10 @@ export const styles = theme => {
     },
     totalsGrid: {
       marginTop: "30px",
-      paddingRight: "85px"
+      paddingRight: "65px"
     },
     totalsGridAmount: {
-      paddingLeft: "30px"
+      paddingLeft: "20px"
     },
     tablecellWidth: {
       maxWidth: "196px"
@@ -184,6 +184,15 @@ export const styles = theme => {
     },
     paperAdvancedSearch: {
       width: "800px"
+    },
+    gridCommentsContainer: {
+      maxHeight: "96px"
+    },
+    avatarWithoutTopMargin: {
+      marginTop: "0px"
+    },
+    totalValuesGridContainer: {
+      maxHeight: "96px"
     }
   })
 }

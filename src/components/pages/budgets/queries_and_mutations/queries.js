@@ -448,3 +448,50 @@ export const VOID_OR_UNVOID_PAYMENT = gql`
     }
   }
 `
+
+export const CREATE_COMMENT = gql`
+  mutation createComment(
+    $commentableId: ID!,
+    $commentableType:String!
+    $body:String!
+  ){
+    createComment(input:{
+      commentableId: $commentableId
+      commentableType: $commentableType
+      body: $body
+    }
+    ){
+      comment{
+        body
+        commentableId
+        commentableType
+        id
+      }
+    }
+  }
+`
+
+export const GET_COMMENTABLE_COMMENTS = gql`
+  query commentableComments(
+    $commentableType: String!
+    $commentableId: ID!
+  ){
+    commentableComments (
+      commentableType: $commentableType
+      commentableId: $commentableId
+    ){
+      body
+      commentableId
+      commentableType
+      id
+      user{
+        avatarThumbUrl
+        avatarUrl
+        id
+        firstName
+        lastName
+        
+      }
+    }
+  }
+`

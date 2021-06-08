@@ -1,16 +1,12 @@
-import React, { useState, useEffect }               from 'react';
-import { useQuery }                                 from '@apollo/react-hooks';
-import { GET_BUDGETING_TEMPLATE_TAB_FIELDS }        from '../../queries_and_mutations/queries'
-import Typography                                   from '@material-ui/core/Typography';
-import Box                                          from '@material-ui/core/Box';
-import PropTypes                                    from 'prop-types';
-import Grid                                         from '@material-ui/core/Grid';
-import TextField                                    from '@material-ui/core/TextField';
-import InputAdornment                               from '@material-ui/core/InputAdornment';
-import { withStyles }                               from '@material-ui/core/styles';
-import { styles }                                   from '../../styles';
-import FieldValue                                   from './field_value/field_value';
-import FieldTotalValues                             from './field_total_values';
+import React, { useState, useEffect }         from 'react';
+import { useQuery }                           from '@apollo/react-hooks';
+import { GET_BUDGETING_TEMPLATE_TAB_FIELDS }  from '../../queries_and_mutations/queries'
+import Grid                                   from '@material-ui/core/Grid';
+import { withStyles }                         from '@material-ui/core/styles';
+import { styles }                             from '../../styles';
+import FieldValue                             from './field_value/field_value';
+import FieldTotalValues                       from './field_total_values';
+import CreateComments                         from './create_comments';
 
 
 
@@ -19,33 +15,6 @@ const Fields = (props) => {
   const currentBudget = budgetId
   const [currentFieldId, setCurrentFieldId] =  React.useState(null)
 
-
-
-  // function TabPanel(props) {
-  //   const { children, value, index, ...other } = props;
-  
-  //   return (
-  //     <div
-  //       role="tabpanel"
-  //       hidden={value !== index}
-  //       id={`simple-tabpanel-${index}`}
-  //       aria-labelledby={`simple-tab-${index}`}
-  //       {...other}
-  //     >
-  //       {value === index && (
-  //         <Box p={3}>
-  //           <Typography>{children}</Typography>
-  //         </Box>
-  //       )}
-  //     </div>
-  //   );
-  // }
-  
-  // TabPanel.propTypes = {
-  //   children: PropTypes.node,
-  //   index: PropTypes.any.isRequired,
-  //   value: PropTypes.any.isRequired,
-  // };
 
   const { data } = useQuery(
     GET_BUDGETING_TEMPLATE_TAB_FIELDS,
@@ -59,34 +28,6 @@ const Fields = (props) => {
   useEffect(() => {
     data && setFields(data.budgetingTemplateTabFields);;
   }, [data])
-
-  const renderFieldValues = () => {
-    return(
-      budgetInfo.fieldValues 
-      ? 
-      budgetInfo.fieldValues.map(
-        (field) =>{
-          return(
-            field.value
-          )
-      }) : "S/N" 
-    )
-  }
-
-  // const fieldVal = () => {
-  //     for (var i = 0; i < fields.length; i++) {
-  //       for (var x = 0; x < fields.length; x++) {
-  //         n += i;
-  //         mifuncion(n);
-  //      }
-  //    }
-  // }
-
-  const printValue = () => {
-    return(
-      "0"
-    )
-  }
 
   const renderFields = () => {
 
@@ -104,10 +45,17 @@ const Fields = (props) => {
           })
         }
         <Grid container justify="flex-end" className={ classes.totalsGrid }>
-          <Grid container item xs={5} alignItems="center">
-            <FieldTotalValues
+          <Grid container item direction="row" xs={8}>
+            <CreateComments
               budgetId={budgetId}
             />
+          </Grid>
+          <Grid container item xs={4} >
+            <Grid container item alignItems="center" className={classes.totalValuesGridContainer}>
+              <FieldTotalValues
+                budgetId={budgetId}
+              />
+            </Grid>
           </Grid>
         </Grid>
       </>
