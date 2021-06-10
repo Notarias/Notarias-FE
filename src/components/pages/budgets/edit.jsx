@@ -30,6 +30,7 @@ import PaymentDrawer                        from './edit/payment_drawer'
 import { GET_BUDGET_TOTALS }                from './queries_and_mutations/queries'
 import PaymentList                          from './edit/credit_payment_list/credit_payment_list'
 import ListItemText                         from '@material-ui/core/ListItemText';
+import Activities                           from './edit/activities/activities'
 
 const BREADCRUMBS = [
   { name: "Inicio", path: "/" },
@@ -163,7 +164,7 @@ const BudgetsEdit = (props) => {
     <>
       <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
       <Grid container item xs={12} direction="row" >
-          <Grid container item xs={9} alignItems="center" justify="center" direction="column">
+          <Grid container item xs={8} alignItems="center" justify="center" direction="column">
           <Paper className={ classes.budgetEditPaper}>
             <Grid container item xs={12} alignItems="center" className={ classes.budgetTittle}>
               <Grid container item xs={5} justify="flex-start" alignItems="center">
@@ -289,10 +290,12 @@ const BudgetsEdit = (props) => {
             </Grid>
             </Paper>
           </Grid>
-        <Grid container item xs={3} direction="row" justify="center" alignItems="stretch" className={ classes.budgetEdit}>
+        <Grid container item xs={4} direction="row" justify="center" alignItems="stretch" className={ classes.budgetEdit}>
           <Paper className={ classes.budgetRightOptionsList}>
             <Grid container direction="column" justify="center">
-              Contenido del budget
+              <Activities
+                budgetId={match.params.id}
+              />
             </Grid>
           </Paper>
         </Grid>

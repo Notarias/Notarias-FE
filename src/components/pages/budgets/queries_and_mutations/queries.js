@@ -495,3 +495,23 @@ export const GET_COMMENTABLE_COMMENTS = gql`
     }
   }
 `
+
+export const UPDATE_COMMENT = gql`
+  mutation updateComment(
+    $id: ID!,
+    $body:String!
+  ){
+    updateComment(input:{
+      id: $id
+      body: $body
+    }
+    ){
+      comment{
+        body
+        commentableId
+        commentableType
+        id
+      }
+    }
+  }
+`

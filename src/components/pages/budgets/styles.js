@@ -193,6 +193,28 @@ export const styles = theme => {
     },
     totalValuesGridContainer: {
       maxHeight: "96px"
+    },
+    fragmentComments: {
+      marginBottom: "5px",
+      marginTop: "5px"
+    },
+    commentsBudgetGrid: {
+      marginLeft: "53px"
+    },
+    commentEditingInputGrid: {
+      marginRight: "30px"
+    },
+    buttonTextComments: {
+      marginRight: "18px",
+      marginTop: "5px",
+      marginLeft: "2px"
+    },
+    buttonTextCommentsDisabled: {
+      marginRight: "18px",
+      marginTop: "5px",
+      marginLeft: "2px",
+      color: "gray",
+      textDecoration: "none !IMPORTANT"
     }
   })
 }
