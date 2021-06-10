@@ -515,3 +515,16 @@ export const UPDATE_COMMENT = gql`
     }
   }
 `
+
+export const DESTROY_COMMENT = gql`
+  mutation destroyComment(
+    $id: ID!,
+  ){
+    destroyComment(input:{
+      id: $id
+    }
+    ){
+      destroyed
+    }
+  }
+`

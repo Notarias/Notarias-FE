@@ -266,18 +266,44 @@ const BudgetsEdit = (props) => {
               </Grid>
             </Grid>
             <Grid container item xs={12} alignItems="center" className={ classes.budgetTittle} >
-              <Grid item xs={4}>
-                Nombre del encargado
+              <Grid container item xs={4} alignItems="center" justify="center">
+                <Grid container alignItems="flex-start" className={classes.inChargeText}>
+                  <Typography variant="caption">Encargado</Typography>
+                </Grid>
+                <Query
+                  query={GET_CURRENT_USER}
+                  >
+                  {({id, loading, error, data}) => {
+                      return(
+                        <Grid container direction="row" alignItems="center">
+                          <Avatar 
+                            src={data && data.currentUser && data.currentUser.avatarThumbUrl}
+                            className={classes.avatarOfInCharge}
+                            size="small"
+                          />
+                          <Typography variant="caption">{data.currentUser.firstName} {data.currentUser.lastName}</Typography>
+                        </Grid>
+                      )
+                    }
+                  }
+                </Query>
               </Grid>
-              <Grid container item xs={3} justify="flex-end" alignItems="center">
-                <Typography variant="subtitle2" gutterBottom>
-                  { data && data.budget.client.firstName }
-                </Typography>
+              <Grid container item xs={4} justify="center" alignItems="center">
+                <Grid container alignItems="flex-start" className={classes.inChargeText}>
+                  <Typography variant="caption">Reportador</Typography>
+                </Grid>
+                <Grid container direction="row" alignItems="center">
+                  <Avatar 
+                    src="/broken-image.jpg"
+                    className={classes.avatarOfInCharge}
+                    size="small"
+                  />
+                  <Typography variant="caption">Juan Perez Perez</Typography>
+                </Grid>
               </Grid>
-              <Grid container item xs={3} justify="flex-start" alignItems="center">
+              <Grid container item xs={4} justify="flex-start" alignItems="center">
                 <Typography variant="subtitle2" gutterBottom className={classes.spaceBetwenFirstNameAndLastName}>
-                  { data && data.budget.client.lastName }
-                  { data && data.budget.client.id }
+                  { data && data.budget.client.firstName } { data && data.budget.client.lastName } { data && data.budget.client.id }
                 </Typography>
               </Grid>
             </Grid>

@@ -1,15 +1,21 @@
-import React, {useEffect} from 'react'
-import { withStyles }                       from '@material-ui/core/styles';
-import { styles }                           from '../../../styles';
-import Avatar                               from '@material-ui/core/Avatar';
-import Typography                           from '@material-ui/core/Typography';
-import Grid                                 from '@material-ui/core/Grid';
-import Button                               from '@material-ui/core/Button';
-import TextField                            from '@material-ui/core/TextField';
-import { useMutation }                      from '@apollo/react-hooks';
-import { UPDATE_COMMENT }                   from '../../../queries_and_mutations/queries';
+import React, {useEffect}           from 'react'
+import { withStyles }               from '@material-ui/core/styles';
+import { styles }                   from '../../../styles';
+import Avatar                       from '@material-ui/core/Avatar';
+import Typography                   from '@material-ui/core/Typography';
+import Grid                         from '@material-ui/core/Grid';
+import Button                       from '@material-ui/core/Button';
+import TextField                    from '@material-ui/core/TextField';
+import { useMutation }              from '@apollo/react-hooks';
+import { UPDATE_COMMENT }           from '../../../queries_and_mutations/queries';
 import { GET_COMMENTABLE_COMMENTS } from '../../../queries_and_mutations/queries';
-import Link from '@material-ui/core/Link';
+import Link                         from '@material-ui/core/Link';
+import { DESTROY_COMMENT }          from  '../../../queries_and_mutations/queries';
+import Dialog                       from '@material-ui/core/Dialog';
+import DialogActions                from '@material-ui/core/DialogActions';
+import DialogContent                from '@material-ui/core/DialogContent';
+import DialogTitle                  from '@material-ui/core/DialogTitle';
+
 
 const CommentEdit = (props) => {
   const { classes, comment, budgetId } = props
@@ -17,6 +23,7 @@ const CommentEdit = (props) => {
 
   const [commentValue, setCommentValue] = React.useState(comment.body)
   const [commentShowed, setCommentShowed] = React.useState(true)
+  const [open, setOpen] = React.useState(false)
   const [pristine, setPristine] = React.useState(true)
   const [error, setError] = React.useState(false)
 
@@ -69,15 +76,52 @@ const CommentEdit = (props) => {
     )
   }
 
+  const [destroyCommentMutation, destroyCommentProcessInfo] =
+  useMutation(
+    DESTROY_COMMENT,
+    {
+      onError(apolloError) {
+        // setErrors(apolloError)
+        // setPristine(true)
+      },
+      onCompleted(cacheData) {
+      },
+      refetchQueries: [
+        {
+          query: GET_COMMENTABLE_COMMENTS,
+          variables: {"commentableType": "Budget" , commentableId: budgetId }
+        },
+      ],
+      awaitRefetchQueries: true
+    }
+  )
+
+  const destroyComment = (event) => {
+      destroyCommentMutation({
+        variables:{
+          "id": comment.id 
+        }
+      })
+  }
+
   const changingInputComment = () => {
     setCommentShowed(!commentShowed)
-
+    setCommentValue(comment.body)
+    setPristine(true)
   }
 
   const editingComment = (event) => {
     setCommentValue(event.target.value)
     setPristine(false)
   }
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const renderCommentEditingInput = (body) => {
     return (
@@ -128,7 +172,7 @@ const CommentEdit = (props) => {
       <Grid>
         <Grid container item className={classes.commentEditingInputGrid}>
           <Typography variant="caption" align="left">
-            {commentValue}
+            {comment.body}
           </Typography>
         </Grid>
         <Grid container item>
@@ -142,9 +186,23 @@ const CommentEdit = (props) => {
           <a
             href="#"
             className={classes.buttonTextComments}
+            onClick={handleClickOpen}
           >
             Eliminar
           </a>
+          <Dialog open={open} onClose={handleClose}>
+            <DialogTitle>
+              Se eliminará este comentario
+            </DialogTitle>
+            <DialogActions>
+              <Button onClick={handleClose}>
+                Cancelar
+              </Button>
+              <Button onClick={destroyComment}>
+                Aceptar
+              </Button>
+            </DialogActions>
+          </Dialog>
         </Grid>
       </Grid>
     )

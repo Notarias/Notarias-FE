@@ -215,6 +215,18 @@ export const styles = theme => {
       marginLeft: "2px",
       color: "gray",
       textDecoration: "none !IMPORTANT"
+    },
+    avatarOfInCharge : {
+      marginLeft: "10px",
+      marginRight: "10px",
+      marginBottom: "5px",
+      height: "20px",
+      width: "20px"
+    },
+    inChargeText: {
+      height: "10px",
+      marginBottom: "10px",
+      marginLeft: "12px"
     }
   })
 }

@@ -1,17 +1,19 @@
-import React from 'react'
-import Button from '@material-ui/core/Button';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import Grid                                 from '@material-ui/core/Grid';
-import Divider                              from '@material-ui/core/Divider';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import Typography                           from '@material-ui/core/Typography';
-import CommentsList from './comments_list/comments_list'
+import React                from 'react'
+import Button               from '@material-ui/core/Button';
+import Menu                 from '@material-ui/core/Menu';
+import MenuItem             from '@material-ui/core/MenuItem';
+import Grid                 from '@material-ui/core/Grid';
+import Divider              from '@material-ui/core/Divider';
+import ArrowDropDownIcon    from '@material-ui/icons/ArrowDropDown';
+import Typography           from '@material-ui/core/Typography';
+import CommentsList         from './comments_list/comments_list'
+import ActivitiesHistorial  from './historial'
 
 
 const Activities = (props) => {
   const { budgetId } = props
   const [anchorEl, setAnchorEl] = React.useState(null)
+  const [activity, setActivity] = React.useState("comments")
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -21,9 +23,47 @@ const Activities = (props) => {
     setAnchorEl(null);
   };
 
-  // const renderComments = () => {
-    
-  // }
+  const  renderActivitiesMenu = () => {
+    switch (activity) {
+      case "comments" :
+        return(
+          <CommentsList
+            budgetId={budgetId}
+          />
+        )
+        break;
+      case "historial" :
+        return(
+          <ActivitiesHistorial/>
+        )
+        break;
+      case "documents" :
+        return(
+          "Documentos"
+        )
+        break
+      default :
+        return(
+        <CommentsList
+          budgetId={budgetId}
+        />)
+    }
+  }
+
+  const handleComments = () => {
+    setActivity("comments")
+    setAnchorEl(null)
+  }
+
+  const handleHistorial = () => {
+    setActivity("historial")
+    setAnchorEl(null)
+  }
+
+  const handleDocuments = () => {
+    setActivity("documents")
+    setAnchorEl(null)
+  }
 
 
   return(
@@ -49,15 +89,13 @@ const Activities = (props) => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>Comentarios</MenuItem>
-        <MenuItem onClick={handleClose}>Historial</MenuItem>
-        <MenuItem onClick={handleClose}>Documentos</MenuItem>
+        <MenuItem onClick={handleComments}>Comentarios</MenuItem>
+        <MenuItem onClick={handleHistorial}>Historial</MenuItem>
+        <MenuItem onClick={handleDocuments}>Documentos</MenuItem>
       </Menu>
     </Grid>
     <Grid>
-      <CommentsList
-        budgetId={budgetId}
-      />
+      {renderActivitiesMenu()}
     </Grid>
     </>
   )

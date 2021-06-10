@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { withStyles }                       from '@material-ui/core/styles';
 import { styles }                           from '../../../styles';
 import { useQuery }                         from '@apollo/react-hooks';
@@ -18,6 +18,13 @@ const CommentsList = (props) => {
   );
 
   const [comments, setComments] = React.useState(data ? data.commentableComments : [])
+
+  useEffect(
+    () => {
+      setComments(data.commentableComments)
+    },
+    [data]
+  )
 
   return(
     comments.map((comment) => {
