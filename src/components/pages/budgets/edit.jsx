@@ -30,6 +30,7 @@ import PaymentDrawer                        from './edit/payment_drawer'
 import { GET_BUDGET_TOTALS }                from './queries_and_mutations/queries'
 import PaymentList                          from './edit/credit_payment_list/credit_payment_list'
 import ListItemText                         from '@material-ui/core/ListItemText';
+import Activities                           from './edit/activities/activities'
 
 const BREADCRUMBS = [
   { name: "Inicio", path: "/" },
@@ -78,8 +79,12 @@ const BudgetsEdit = (props) => {
 
   const inputsList = ["total"]
 
-  const { loading, data, refetch } = useQuery(
+  const { loading: queryALoading, data: queryAData , refetch } = useQuery(
     GET_BUDGET, { variables: {"id": match.params.id } }
+  );
+
+  const { loading: queryBLoading , data: queryBData } = useQuery(
+    GET_CURRENT_USER
   );
 
   const [createCreditPaymentMutation, createCreditPaymentProcessInfo] =
@@ -163,13 +168,13 @@ const BudgetsEdit = (props) => {
     <>
       <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
       <Grid container item xs={12} direction="row" >
-          <Grid container item xs={9} alignItems="center" justify="center" direction="column">
+          <Grid container item xs={8} alignItems="center" justify="center" direction="column">
           <Paper className={ classes.budgetEditPaper}>
             <Grid container item xs={12} alignItems="center" className={ classes.budgetTittle}>
               <Grid container item xs={5} justify="flex-start" alignItems="center">
                 <Typography variant="h6" gutterBottom className={classes.marginTitleBudgetName}>
-                  { data ? data.budget.budgetingTemplate.name : "" }
-                  { data ? data.budget.budgetingTemplate.id : "" }
+                  { queryAData ? queryAData.budget.budgetingTemplate.name : "" }
+                  { queryAData ? queryAData.budget.budgetingTemplate.id : "" }
                 </Typography>
                 <Button>
                   <OpenInNewIcon/>
@@ -177,8 +182,8 @@ const BudgetsEdit = (props) => {
               </Grid>
               <Grid item xs={4}>
                 <Typography variant="subtitle2" gutterBottom>
-                  { data ? data.budget.proceduresTemplate.name : "" }
-                  { data ? data.budget.proceduresTemplate.id : "" }
+                  { queryAData ? queryAData.budget.proceduresTemplate.name : "" }
+                  { queryAData ? queryAData.budget.proceduresTemplate.id : "" }
                 </Typography>
               </Grid>
               <Grid container item xs={2} justify="flex-end">
@@ -225,22 +230,13 @@ const BudgetsEdit = (props) => {
                       </Grid>
                     </Grid>
                     <Grid>
-                      <Query
-                      query={GET_CURRENT_USER}
-                      >
-                        {({id, loading, error, data}) => {
-                            return(
-                              <Grid container direction="row" alignItems="center">
-                                <Avatar 
-                                  src={data && data.currentUser && data.currentUser.avatarThumbUrl} 
-                                  className={classes.avatarInDialogToAddPayment}
-                                />
-                                <Typography variant="caption">{data.currentUser.firstName}</Typography>
-                              </Grid>
-                            )
-                          }
-                        }
-                      </Query>
+                      <Grid container direction="row" alignItems="center">
+                        <Avatar 
+                          src={queryBData && queryBData.currentUser && queryBData.currentUser.avatarThumbUrl} 
+                          className={classes.avatarInDialogToAddPayment}
+                        />
+                        <Typography variant="caption">{queryBData.currentUser.firstName}</Typography>
+                      </Grid>
                     </Grid>
                     <Grid>
                       <TextField
@@ -265,34 +261,53 @@ const BudgetsEdit = (props) => {
               </Grid>
             </Grid>
             <Grid container item xs={12} alignItems="center" className={ classes.budgetTittle} >
-              <Grid item xs={4}>
-                Nombre del encargado
+              <Grid container item xs={4} alignItems="center" justify="center">
+                <Grid container alignItems="flex-start" className={classes.inChargeText}>
+                  <Typography variant="caption">Encargado</Typography>
+                </Grid>
+                <Grid container direction="row" alignItems="center">
+                  <Avatar 
+                    src={queryBData && queryBData.currentUser && queryBData.currentUser.avatarThumbUrl}
+                    className={classes.avatarOfInCharge}
+                    size="small"
+                  />
+                  <Typography variant="caption">{queryBData.currentUser.firstName} {queryBData.currentUser.lastName}</Typography>
+                </Grid>
               </Grid>
-              <Grid container item xs={3} justify="flex-end" alignItems="center">
-                <Typography variant="subtitle2" gutterBottom>
-                  { data && data.budget.client.firstName }
-                </Typography>
+              <Grid container item xs={4} justify="center" alignItems="center">
+                <Grid container alignItems="flex-start" className={classes.inChargeText}>
+                  <Typography variant="caption">Reportador</Typography>
+                </Grid>
+                <Grid container direction="row" alignItems="center">
+                  <Avatar 
+                    src="/broken-image.jpg"
+                    className={classes.avatarOfInCharge}
+                    size="small"
+                  />
+                  <Typography variant="caption">Juan Perez Perez</Typography>
+                </Grid>
               </Grid>
-              <Grid container item xs={3} justify="flex-start" alignItems="center">
+              <Grid container item xs={4} justify="flex-start" alignItems="center">
                 <Typography variant="subtitle2" gutterBottom className={classes.spaceBetwenFirstNameAndLastName}>
-                  { data && data.budget.client.lastName }
-                  { data && data.budget.client.id }
+                  { queryAData && queryAData.budget.client.firstName } { queryAData && queryAData.budget.client.lastName } { queryAData && queryAData.budget.client.id }
                 </Typography>
               </Grid>
             </Grid>
             <Grid container item xs={12} justify="flex-start" >
               <InformationTabs
-                budgetTemplateId={data && data.budget.budgetingTemplate.id}
-                budgetInfo={data && data.budget}
+                budgetTemplateId={queryAData && queryAData.budget.budgetingTemplate.id}
+                budgetInfo={queryAData && queryAData.budget}
                 budgetId={match.params.id}
               />
             </Grid>
             </Paper>
           </Grid>
-        <Grid container item xs={3} direction="row" justify="center" alignItems="stretch" className={ classes.budgetEdit}>
+        <Grid container item xs={4} direction="row" justify="center" alignItems="stretch" className={ classes.budgetEdit}>
           <Paper className={ classes.budgetRightOptionsList}>
             <Grid container direction="column" justify="center">
-              Contenido del budget
+              <Activities
+                budgetId={match.params.id}
+              />
             </Grid>
           </Paper>
         </Grid>

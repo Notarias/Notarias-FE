@@ -22,7 +22,7 @@ const FieldTotalValues = (props) => {
   return(
     <>
       <Grid container item xs={7} justify="flex-end">
-        <Typography>
+        <Typography variant="body2">
           Total cargos 
         </Typography>
       </Grid>
@@ -36,7 +36,7 @@ const FieldTotalValues = (props) => {
         />
       </Grid>
       <Grid container item xs={7} justify="flex-end">
-        <Typography>
+        <Typography variant="body2">
           Saldos
         </Typography>
       </Grid>
@@ -50,7 +50,7 @@ const FieldTotalValues = (props) => {
         />
       </Grid>
       <Grid container item xs={7} justify="flex-end">
-        <Typography>
+        <Typography variant="body2">
           Total pagos
         </Typography>
       </Grid>
@@ -64,7 +64,7 @@ const FieldTotalValues = (props) => {
         />
       </Grid>
       <Grid container item xs={7} justify="flex-end">
-        <Typography>
+        <Typography variant="body2">
           Presupuesto restante
         </Typography>
       </Grid>

@@ -193,6 +193,40 @@ export const styles = theme => {
     },
     totalValuesGridContainer: {
       maxHeight: "96px"
+    },
+    fragmentComments: {
+      marginBottom: "5px",
+      marginTop: "5px"
+    },
+    commentsBudgetGrid: {
+      marginLeft: "53px"
+    },
+    commentEditingInputGrid: {
+      marginRight: "30px"
+    },
+    buttonTextComments: {
+      marginRight: "18px",
+      marginTop: "5px",
+      marginLeft: "2px"
+    },
+    buttonTextCommentsDisabled: {
+      marginRight: "18px",
+      marginTop: "5px",
+      marginLeft: "2px",
+      color: "gray",
+      textDecoration: "none !IMPORTANT"
+    },
+    avatarOfInCharge : {
+      marginLeft: "10px",
+      marginRight: "10px",
+      marginBottom: "5px",
+      height: "20px",
+      width: "20px"
+    },
+    inChargeText: {
+      height: "10px",
+      marginBottom: "10px",
+      marginLeft: "12px"
     }
   })
 }
