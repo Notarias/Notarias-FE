@@ -7,4 +7,4 @@ const ActivitiesHistorial = () => {
   )
 }
 
-export default ActivitiesHistorial; 
+export default ActivitiesHistorial;
