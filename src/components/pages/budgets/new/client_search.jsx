@@ -143,7 +143,7 @@ const ClientSearch = (props) => {
   return(
     <Grid container item xs={10} >
      { renderInputSearch() }
-      <Table className={classes.ClientSearchTable} size="small">
+      <Table className={classes.ClientSearchTable} >
         <TableHead>
           <TableRow>
           <SortHeader

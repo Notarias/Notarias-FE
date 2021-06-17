@@ -21,7 +21,7 @@ const CommentsList = (props) => {
 
   useEffect(
     () => {
-      setComments(data.commentableComments)
+      setComments(data ? data.commentableComments : [])
     },
     [data]
   )

@@ -37,11 +37,12 @@ const LOAD_USERS = gql`
       updatedAt
     }
   }
+  usersCount
 }
 `
 
 export default (props) => {
-  const { page, per, sortDirection, sortField, searchField, searchValue, classes } = props
+  const { page, per, sortDirection, sortField, searchField, searchValue, classes, setTotalRecords } = props
   let variables = {
     page: page + 1,
     per: per,
@@ -58,6 +59,10 @@ export default (props) => {
   useEffect(() => {
     refetch(variables);
   }, [page, per, searchField, searchValue, sortField, sortDirection]);
+
+  useEffect(() => {
+    data && setTotalRecords(data.usersCount)
+  }, [data]);
 
   if (loading || !data) {
     return(

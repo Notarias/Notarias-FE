@@ -31,6 +31,7 @@ import { GET_BUDGET_TOTALS }                from './queries_and_mutations/querie
 import PaymentList                          from './edit/credit_payment_list/credit_payment_list'
 import ListItemText                         from '@material-ui/core/ListItemText';
 import Activities                           from './edit/activities/activities'
+import Asignee                              from './edit/asignee'
 
 const BREADCRUMBS = [
   { name: "Inicio", path: "/" },
@@ -262,26 +263,17 @@ const BudgetsEdit = (props) => {
             </Grid>
             <Grid container item xs={12} alignItems="center" className={ classes.budgetTittle} >
               <Grid container item xs={4} alignItems="center" justify="center">
-                <Grid container alignItems="flex-start" className={classes.inChargeText}>
-                  <Typography variant="caption">Encargado</Typography>
-                </Grid>
-                <Grid container direction="row" alignItems="center">
-                  <Avatar 
-                    src={queryBData && queryBData.currentUser && queryBData.currentUser.avatarThumbUrl}
-                    className={classes.avatarOfInCharge}
-                    size="small"
-                  />
-                  <Typography variant="caption">{queryBData.currentUser.firstName} {queryBData.currentUser.lastName}</Typography>
-                </Grid>
+                <Asignee
+                  queryAData={queryAData}
+                  budgetId={match.params.id}
+                />
               </Grid>
               <Grid container item xs={4} justify="center" alignItems="center">
-                <Grid container alignItems="flex-start" className={classes.inChargeText}>
-                  <Typography variant="caption">Reportador</Typography>
-                </Grid>
                 <Grid container direction="row" alignItems="center">
+                  <Typography variant="caption">Reportador:</Typography>
                   <Avatar 
                     src="/broken-image.jpg"
-                    className={classes.avatarOfInCharge}
+                    className={classes.avatarOfReporter}
                     size="small"
                   />
                   <Typography variant="caption">Juan Perez Perez</Typography>

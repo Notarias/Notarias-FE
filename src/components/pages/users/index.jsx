@@ -27,7 +27,7 @@ const Users = (props) => {
   const [timeout, setSetTimeout]          = useState(null)
   const [page, setPage]                   = useState(0)
   const [per, setPer]                     = useState(5)
-  const [total_records, setTotalRecords]  = useState(10)
+  const [total_records, setTotalRecords]  = useState(0)
 
   const { classes } = props
 

@@ -90,7 +90,7 @@ export const styles = theme => {
     ClientSearchTable: {
       backgroundColor: 'inherit',
       width: "100%",
-      height: "330px",
+      maxHeight: "280px",
     },
     linkDefault: {
       textDecoration:"none",
@@ -217,16 +217,23 @@ export const styles = theme => {
       textDecoration: "none !IMPORTANT"
     },
     avatarOfInCharge : {
-      marginLeft: "10px",
+      marginLeft: "22px",
       marginRight: "10px",
       marginBottom: "5px",
       height: "20px",
       width: "20px"
     },
-    inChargeText: {
-      height: "10px",
-      marginBottom: "10px",
-      marginLeft: "12px"
-    }
+    avatarOfReporter : {
+      marginLeft: "10px",
+      marginRight: "10px",
+      height: "20px",
+      width: "20px"
+    },
+    aWithoutDecoration: {
+      textDecoration: "none !IMPORTANT"
+    },
+    searchAsigneeInput: {
+      marginBottom: "10px"
+    },
   })
 }
