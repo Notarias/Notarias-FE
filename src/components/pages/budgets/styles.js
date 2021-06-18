@@ -223,7 +223,7 @@ export const styles = theme => {
       height: "20px",
       width: "20px"
     },
-    avatarOfReporter : {
+    reporterAvatar : {
       marginLeft: "10px",
       marginRight: "10px",
       height: "20px",

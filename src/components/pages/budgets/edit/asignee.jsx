@@ -24,18 +24,18 @@ import { GET_BUDGET }                 from '../queries_and_mutations/queries'
 
 
 const renderSearchList = (searchList, classes, selectedIndex, handleListItemClick, haveThumbUrl) => {
-    return(
-      <List 
-        component="nav" 
-        aria-label="contacts" 
-        disablePadding={true}
-      >
+  return(
+    <List 
+      component="nav" 
+      aria-label="contacts" 
+      disablePadding={true}
+    >
       { 
         searchList.map(
-        (item) => {
+          (item) => {
             let obj = item.item || item
             return(
-            <React.Fragment key={obj.id + "fragment"}>
+              <React.Fragment key={obj.id + "fragment"}>
                 <ListItem 
                   key={obj.id} 
                   dense
@@ -52,38 +52,38 @@ const renderSearchList = (searchList, classes, selectedIndex, handleListItemClic
                     />
                 </ListItem>
                 <Divider/>
-            </React.Fragment>
+              </React.Fragment>
             )
           }
         )
       }
-      </List>
-    )
-  }
+    </List>
+  )
+}
 
 const Asignee = (props) => {
-  const { classes, queryAData, budgetId } = props
-  const [open, setOpen] = React.useState(false)
-  const [searchList, setSearchList] = React.useState([])
-  const [fuzzySearcher, setFuzzySearcher] = React.useState(new Fuse(users, { keys: ['firstName'] }))
-  const [initialized, setInitialized] = React.useState()
+  const { classes, asigneeData, budgetId }  = props
+  const [open, setOpen]                     = React.useState(false)
+  const [searchList, setSearchList]         = React.useState([])
+  const [fuzzySearcher, setFuzzySearcher]   = React.useState(new Fuse(users, { keys: ['firstName'] }))
+  const [initialized, setInitialized]       = React.useState()
 
   const defaultUser = {
-    avatarThumbUrl: queryAData && queryAData.budget.asignee ? queryAData.budget.asignee.avatarThumbUrl :"/broken-image.jpg",
-    firstName: queryAData && queryAData.budget.asignee ? queryAData.budget.asignee.firstName : "Añadir",
-    lastName: queryAData && queryAData.budget.asignee ? queryAData.budget.asignee.lastName :"encargado"
+    avatarThumbUrl: asigneeData ? asigneeData.avatarThumbUrl :"/broken-image.jpg",
+    firstName: asigneeData ? asigneeData.firstName : "Añadir",
+    lastName: asigneeData ? asigneeData.lastName :"encargado"
   }
 
-  const [selectedIndex, setSelectedIndex] = React.useState(1);
-  const [asignee, setAsignee] = React.useState(defaultUser)
-  const [sortField, setSortField]         = useState("first_name")
-  const [sortDirection, setSortDirection] = useState("desc")
-  const [searchField]                     = useState("first_name_or_last_name_or_email_cont")
-  const [searchValue, setSearchValue]     = useState("")
-  const [timeout, setSetTimeout]          = useState(null)
-  const [page, setPage]                   = useState(1)
-  const [per, setPer]                     = useState(100)
-  const [total_records, setTotalRecords]  = useState(0)
+  const [selectedIndex, setSelectedIndex]   = React.useState(1);
+  const [asignee, setAsignee]               = React.useState(defaultUser)
+  const [sortField, setSortField]           = useState("first_name")
+  const [sortDirection, setSortDirection]   = useState("desc")
+  const [searchField]                       = useState("first_name_or_last_name_or_email_cont")
+  const [searchValue, setSearchValue]       = useState("")
+  const [timeout, setSetTimeout]            = useState(null)
+  const [page, setPage]                     = useState(1)
+  const [per, setPer]                       = useState(100)
+  const [total_records, setTotalRecords]    = useState(0)
 
   let variables = {
     page: page,
@@ -140,19 +140,6 @@ const Asignee = (props) => {
       awaitRefetchQueries: true
     }
   )
-
-  // const setErrors = (apolloError) => {
-  //   let errorsList = {}
-  //   let errorTemplateList = apolloError.graphQLErrors
-  //   for ( let i = 0; i < errorTemplateList.length; i++) {
-  //     for( let n = 0; n < inputsList.length; n++) {
-  //       if(errorTemplateList[i].extensions.attribute === inputsList[n]){
-  //         errorsList[inputsList[n]] = errorTemplateList[i].message
-  //       }
-  //     }
-  //   }
-  //   setError(errorsList)
-  // }
 
   const assingUser = (event) => {
     updateBudgetMutation({

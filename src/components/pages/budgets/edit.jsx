@@ -80,7 +80,7 @@ const BudgetsEdit = (props) => {
 
   const inputsList = ["total"]
 
-  const { loading: queryALoading, data: queryAData , refetch } = useQuery(
+  const { loading: queryALoading, data: budgetData , refetch } = useQuery(
     GET_BUDGET, { variables: {"id": match.params.id } }
   );
 
@@ -174,8 +174,8 @@ const BudgetsEdit = (props) => {
             <Grid container item xs={12} alignItems="center" className={ classes.budgetTittle}>
               <Grid container item xs={5} justify="flex-start" alignItems="center">
                 <Typography variant="h6" gutterBottom className={classes.marginTitleBudgetName}>
-                  { queryAData ? queryAData.budget.budgetingTemplate.name : "" }
-                  { queryAData ? queryAData.budget.budgetingTemplate.id : "" }
+                  { budgetData ? budgetData.budget.budgetingTemplate.name : "" }
+                  { budgetData ? budgetData.budget.budgetingTemplate.id : "" }
                 </Typography>
                 <Button>
                   <OpenInNewIcon/>
@@ -183,8 +183,8 @@ const BudgetsEdit = (props) => {
               </Grid>
               <Grid item xs={4}>
                 <Typography variant="subtitle2" gutterBottom>
-                  { queryAData ? queryAData.budget.proceduresTemplate.name : "" }
-                  { queryAData ? queryAData.budget.proceduresTemplate.id : "" }
+                  { budgetData ? budgetData.budget.proceduresTemplate.name : "" }
+                  { budgetData ? budgetData.budget.proceduresTemplate.id : "" }
                 </Typography>
               </Grid>
               <Grid container item xs={2} justify="flex-end">
@@ -264,7 +264,7 @@ const BudgetsEdit = (props) => {
             <Grid container item xs={12} alignItems="center" className={ classes.budgetTittle} >
               <Grid container item xs={4} alignItems="center" justify="center">
                 <Asignee
-                  queryAData={queryAData}
+                  asigneeData={budgetData && budgetData.budget.asignee}
                   budgetId={match.params.id}
                 />
               </Grid>
@@ -273,7 +273,7 @@ const BudgetsEdit = (props) => {
                   <Typography variant="caption">Reportador:</Typography>
                   <Avatar 
                     src="/broken-image.jpg"
-                    className={classes.avatarOfReporter}
+                    className={classes.reporterAvatar}
                     size="small"
                   />
                   <Typography variant="caption">Juan Perez Perez</Typography>
@@ -281,14 +281,14 @@ const BudgetsEdit = (props) => {
               </Grid>
               <Grid container item xs={4} justify="flex-start" alignItems="center">
                 <Typography variant="subtitle2" gutterBottom className={classes.spaceBetwenFirstNameAndLastName}>
-                  { queryAData && queryAData.budget.client.firstName } { queryAData && queryAData.budget.client.lastName } { queryAData && queryAData.budget.client.id }
+                  { budgetData && budgetData.budget.client.firstName } { budgetData && budgetData.budget.client.lastName } { budgetData && budgetData.budget.client.id }
                 </Typography>
               </Grid>
             </Grid>
             <Grid container item xs={12} justify="flex-start" >
               <InformationTabs
-                budgetTemplateId={queryAData && queryAData.budget.budgetingTemplate.id}
-                budgetInfo={queryAData && queryAData.budget}
+                budgetTemplateId={budgetData && budgetData.budget.budgetingTemplate.id}
+                budgetInfo={budgetData && budgetData.budget}
                 budgetId={match.params.id}
               />
             </Grid>
