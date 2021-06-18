@@ -5,18 +5,34 @@ export const CREATE_BUDGET = gql`
     $proceduresTemplateId: ID!,
   	$clientId: ID!,
     $budgetingTemplateId: ID!,
-  	$clientMutationId:String
+  	$clientMutationId:String,
+    $asigneeId: ID
   ){
     createBudget (
       input: {
         proceduresTemplateId: $proceduresTemplateId,
         clientId: $clientId,
         budgetingTemplateId: $budgetingTemplateId,
-        clientMutationId: $clientMutationId
+        clientMutationId: $clientMutationId,
+        asigneeId: $asigneeId
       } 
     ) 
     {
       budget{
+        asignee{
+          firstName
+          lastName
+          avatarThumbUrl
+          id
+        }
+        asigneeId
+        reporter{
+          firstName
+          lastName
+          avatarThumbUrl
+          id
+        }
+        reporterId
       	budgetingTemplate{
         	active
         	id
@@ -36,6 +52,10 @@ export const CREATE_BUDGET = gql`
       	}
       	id
       	serialNumber
+        total
+        totalDebt
+        totalCredit
+        totalPaid
       }
       clientMutationId
     }
@@ -168,16 +188,30 @@ export const BUDGETING_TEMPLATE_BY_PROCEDURE_ID = gql`
 `
 
 export const GET_BUDGET = gql`
-  query budget(
+query budget(
     $id: ID!
   ){
   budget(
     id: $id
     ){
+      asignee{
+        firstName
+        lastName
+        avatarThumbUrl
+        id
+      }
+      asigneeId
       total
       totalCredit
       totalPaid
       totalDebt
+      reporter{
+        firstName
+        lastName
+        avatarThumbUrl
+        id
+      }
+      reporterId
       budgetingTemplate{
         active
         id
@@ -525,6 +559,82 @@ export const DESTROY_COMMENT = gql`
     }
     ){
       destroyed
+    }
+  }
+`
+
+export const LOAD_USERS = gql`
+  query searchUsers(
+      $page: Int,
+      $per: Int,
+      $sortField: String,
+      $sortDirection: String,
+      $searchField: String,
+      $searchValue: String
+    ) {
+    users(
+      page: $page,
+      per: $per,
+      sortField: $sortField,
+      sortDirection: $sortDirection,
+      searchField: $searchField,
+      searchValue: $searchValue
+    ) {
+      id
+      firstName
+      lastName
+      avatarThumbUrl
+    }
+    usersCount
+  }
+`
+
+export const UPDATE_BUDGET = gql`
+  mutation updateBudget(
+    $id: ID!,
+    $clientId: ID,
+    $proceduresTemplateId: ID,
+    $budgetingTemplateId: ID,
+    $asigneeId: ID,
+  ){
+    updateBudget(input :{
+      id: $id
+      clientId: $clientId
+      budgetingTemplateId: $budgetingTemplateId
+      proceduresTemplateId: $proceduresTemplateId
+      asigneeId: $asigneeId
+      }
+    ){
+      budget{
+        id
+        serialNumber
+        total
+        totalDebt
+        totalPaid
+        totalCredit
+        proceduresTemplate{
+          active
+          name
+          id
+          serialNumber
+        }
+        budgetingTemplate{
+          active
+          id
+          name
+          serialNumber
+        }
+        client{
+          firstName
+          lastName
+          id
+        }
+        fieldValues{
+          id
+          budgetId
+          value
+        }
+      }
     }
   }
 `

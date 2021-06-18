@@ -15,11 +15,10 @@ const Fields = (props) => {
   const currentBudget = budgetId
   const [currentFieldId, setCurrentFieldId] =  React.useState(null)
 
-
   const { data } = useQuery(
     GET_BUDGETING_TEMPLATE_TAB_FIELDS,
     {
-      variables: { "id": currentTab.id }
+      variables: { "id": currentTab && currentTab.id }
     }
   );
 

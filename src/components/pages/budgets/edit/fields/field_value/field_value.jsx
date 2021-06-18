@@ -119,8 +119,8 @@ const FieldValue = (props) => {
           <PaymentList
             totalDebt={totalDebt}
             initialDebt={initialFieldValue}
-            fieldValueId={data && data.budgetFieldValue.id}
-            budgetingTemplateFieldId={data && data.budgetFieldValue.budgetingTemplateFieldId}
+            fieldValueId={data && data.budgetFieldValue ? data.budgetFieldValue.id : ""}
+            budgetingTemplateFieldId={data && data.budgetFieldValue ? data.budgetFieldValue.budgetingTemplateFieldId : ""}
           />
         </MenuItem>
         </GenericDropdownMenu>

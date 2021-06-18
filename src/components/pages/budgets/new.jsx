@@ -27,6 +27,7 @@ import DialogTitle                        from '@material-ui/core/DialogTitle';
 import DialogActions                      from '@material-ui/core/DialogActions';
 import { Link }                           from 'react-router-dom';
 import { Redirect }                       from 'react-router-dom';
+import AddAsigneed from './new/add_asigneed';
 
 
 const BREADCRUMBS = [
@@ -36,7 +37,7 @@ const BREADCRUMBS = [
 ]
 
 const useStyles = makeStyles((theme) => ({
-  root: {
+  paperNewbudget: {
     width: '100%',
     marginTop: '20px'
   },
@@ -58,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
     height: "500px"
   },
   grid300: {
-    height: "420px"
+    height: "435px"
   },
   grid100: {
     height: "60px"
@@ -85,27 +86,25 @@ const useStyles = makeStyles((theme) => ({
   },
   titleDataProcedureInfo: {
     marginTop: "10px",
-    maxHeight: "100px"
+    marginLeft: "70px",
+    // maxHeight: "120px"
+  },
+  asigneeGrid: {
+    marginTop:"20px",
+    marginLeft: "45px"
   }
 }));
 
-// function getStepContent(step) {
-//   switch (step) {
-//     case 0:
-//       return `Selecciona un cliente de la tabla de búsqueda.`;
-//     case 1:
-//       return 'Crea un cliente.';
-//     case 2:
-//       return `Agrega un tramite desde la tabla de búsqueda.`;
-//     case 3:
-//       return `Agrega un tramite desde la tabla de búsqueda.`;
-//     default:
-//       return 'Unknown step';
-//   }
-// }
-
 const NewBudget = (props) => {
   const classes = useStyles();
+
+  const defaultUser = {
+    avatarThumbUrl: "/broken-image.jpg",
+    firstName: "Añadir",
+    lastName: "encargado",
+    id: null
+  }
+
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
   const [searchLoading, setSearchLoading] = useState(false);
@@ -123,6 +122,7 @@ const NewBudget = (props) => {
   const [error, setError] = React.useState(false)
   const inputsList = ["first_name", "last_name"]
   const [redirect, setRedirect] = useState(false)
+  const [asignee, setAsignee] = useState(defaultUser)
 
   let variables = {
     firstName: firstName,
@@ -143,14 +143,8 @@ const NewBudget = (props) => {
       onCompleted(cacheData) {
         setClientInfo(cacheData.createClient.client)
         setActiveStep((prevActiveStep) => prevActiveStep + 1)
-        //setLoading(false)
       },
       fetchPolicy: "no-cache",
-      // refetchQueries: [{
-      //   query: GET_BUDGETING_TEMPLATE_TAB_FIELDS,
-      //   variables: { "id": currentTab && currentTab.id },
-      // }],
-      // awaitRefetchQueries: true
     }
   )
 
@@ -163,11 +157,8 @@ const NewBudget = (props) => {
     CREATE_BUDGET,
     {
       onError(apolloError) {
-        // setErrors(apolloError)
-        // setPristine(true)
       },
       onCompleted(cacheData) {
-        // setLoading(false)
         const id = cacheData.createBudget.budget.id
         id && setRedirect(
           <Redirect to={{ pathname: `/budgets/${id}/edit` }} />
@@ -183,7 +174,8 @@ const NewBudget = (props) => {
         variables: { 
           "proceduresTemplateId": procedureInfo.id, 
           "clientId": clientInfo.id, 
-          "budgetingTemplateId": budgetInfo.id 
+          "budgetingTemplateId": budgetInfo.id,
+          "asigneeId": asignee.id
         }
       }
     )
@@ -269,7 +261,7 @@ const NewBudget = (props) => {
       <Divider/>
       <Grid container justify="center" className={classes.gridFather}>
         <Grid container item xs={7} direction="row" >
-        <Paper className={classes.root}>
+        <Paper className={classes.paperNewbudget}>
           <Grid container item xs={12} >
             <Stepper activeStep={activeStep} alternativeLabel className={classes.stepperIconLabel}>
               <Step key={ 0 + "step"}  >
@@ -472,7 +464,7 @@ const NewBudget = (props) => {
          </Paper>
         </Grid>
         <Grid container item xs={3} direction="row" justify="flex-end" alignItems="stretch">
-          <Paper className={classes.root}>
+          <Paper className={classes.paperNewbudget}>
             <Grid container item xs={12} justify="center" className={classes.titleDataInfo} >
               Datos del cliente
               <Grid>
@@ -506,21 +498,31 @@ const NewBudget = (props) => {
                 />
               </Grid>
             </Grid>
-            <Grid container item xs={12} justify="center" direction="column" alignItems="center">
-              <Grid container item justify="center" className={classes.titleDataProcedureInfo}>
+            <Grid container item xs={12} justify="center" direction="column">
+              <Grid container item justify="flex-start" className={classes.titleDataProcedureInfo}>
                 Nombre del trámite
               </Grid>
-              <Typography variant="body2" color="textSecondary" className={classes.procedureInfoText} >
-                { procedureInfo ? procedureInfo.name : "......................"}
-              </Typography>
+              <Grid container item justify="center">
+                <Typography variant="body2" color="textSecondary" className={classes.procedureInfoText} >
+                  { procedureInfo ? procedureInfo.name : "......................"}
+                </Typography>
+              </Grid>
             </Grid>
-            <Grid container item xs={12} justify="center" direction="column" alignItems="center">
-              <Grid container item justify="center" className={classes.titleDataProcedureInfo}>
+            <Grid container item xs={12} justify="center" direction="column">
+              <Grid container item justify="flex-start" className={classes.titleDataProcedureInfo}>
                 Presupuesto vinculado
               </Grid>
-              <Typography variant="body2" color="textSecondary" className={classes.titleDataInfo} >
-              { budgetInfo ? budgetInfo.name : "......................"}
-              </Typography>
+              <Grid container item justify="center">
+                <Typography variant="body2" color="textSecondary" className={classes.titleDataInfo} >
+                { budgetInfo ? budgetInfo.name : "......................"}
+                </Typography>
+              </Grid>
+            </Grid>
+            <Grid container item justify="flex-start" className={classes.asigneeGrid}>
+              <AddAsigneed
+                setAsignee={setAsignee}
+                asignee={asignee}
+              />
             </Grid>
           </Paper>
         </Grid>

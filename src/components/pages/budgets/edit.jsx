@@ -31,6 +31,7 @@ import { GET_BUDGET_TOTALS }                from './queries_and_mutations/querie
 import PaymentList                          from './edit/credit_payment_list/credit_payment_list'
 import ListItemText                         from '@material-ui/core/ListItemText';
 import Activities                           from './edit/activities/activities'
+import Asignee                              from './edit/asignee'
 
 const BREADCRUMBS = [
   { name: "Inicio", path: "/" },
@@ -70,18 +71,23 @@ NumberFormatCustom.propTypes = {
 };
 
 const BudgetsEdit = (props) => {
-  const { classes, match } = props
-  const [open, setOpen] = React.useState(false);
+  const { classes, match }              = props
+  const [open, setOpen]                 = React.useState(false);
   const [valuePayment, setValuePayment] = React.useState(0)
-  const [notePayment, setNotePayment] = React.useState("")
-  const [pristine, setPristine] = React.useState(false)
-  const [error, setError] = useState(false)
+  const [notePayment, setNotePayment]   = React.useState("")
+  const [pristine, setPristine]         = React.useState(false)
+  const [error, setError]               = useState(false)
+
 
   const inputsList = ["total"]
 
-  const { loading: queryALoading, data: queryAData , refetch } = useQuery(
+  const { loading: queryALoading, data: budgetData , refetch } = useQuery(
     GET_BUDGET, { variables: {"id": match.params.id } }
   );
+
+  const budget                          = budgetData && budgetData.budget
+  const budgetingTemplate               = budget && budget.budgetingTemplate
+  const proceduresTemplate              = budget && budget.proceduresTemplate  
 
   const { loading: queryBLoading , data: queryBData } = useQuery(
     GET_CURRENT_USER
@@ -162,7 +168,7 @@ const BudgetsEdit = (props) => {
     let year = newDate.getFullYear();
 
     return (`${year}${separator}${month<10?`0${month}`:`${month}`}${separator}${date}`)
-    }
+  }
 
   return(
     <>
@@ -173,8 +179,8 @@ const BudgetsEdit = (props) => {
             <Grid container item xs={12} alignItems="center" className={ classes.budgetTittle}>
               <Grid container item xs={5} justify="flex-start" alignItems="center">
                 <Typography variant="h6" gutterBottom className={classes.marginTitleBudgetName}>
-                  { queryAData ? queryAData.budget.budgetingTemplate.name : "" }
-                  { queryAData ? queryAData.budget.budgetingTemplate.id : "" }
+                  { budgetingTemplate && budgetingTemplate.name }
+                  { budgetingTemplate && budgetingTemplate.id }
                 </Typography>
                 <Button>
                   <OpenInNewIcon/>
@@ -182,8 +188,8 @@ const BudgetsEdit = (props) => {
               </Grid>
               <Grid item xs={4}>
                 <Typography variant="subtitle2" gutterBottom>
-                  { queryAData ? queryAData.budget.proceduresTemplate.name : "" }
-                  { queryAData ? queryAData.budget.proceduresTemplate.id : "" }
+                  { proceduresTemplate && proceduresTemplate.name }
+                  { proceduresTemplate && proceduresTemplate.name.id }
                 </Typography>
               </Grid>
               <Grid container item xs={2} justify="flex-end">
@@ -262,26 +268,17 @@ const BudgetsEdit = (props) => {
             </Grid>
             <Grid container item xs={12} alignItems="center" className={ classes.budgetTittle} >
               <Grid container item xs={4} alignItems="center" justify="center">
-                <Grid container alignItems="flex-start" className={classes.inChargeText}>
-                  <Typography variant="caption">Encargado</Typography>
-                </Grid>
-                <Grid container direction="row" alignItems="center">
-                  <Avatar 
-                    src={queryBData && queryBData.currentUser && queryBData.currentUser.avatarThumbUrl}
-                    className={classes.avatarOfInCharge}
-                    size="small"
-                  />
-                  <Typography variant="caption">{queryBData.currentUser.firstName} {queryBData.currentUser.lastName}</Typography>
-                </Grid>
+                <Asignee
+                  asigneeData={budget && budget.asignee}
+                  budgetId={match.params.id}
+                />
               </Grid>
               <Grid container item xs={4} justify="center" alignItems="center">
-                <Grid container alignItems="flex-start" className={classes.inChargeText}>
-                  <Typography variant="caption">Reportador</Typography>
-                </Grid>
                 <Grid container direction="row" alignItems="center">
+                  <Typography variant="caption">Reportador:</Typography>
                   <Avatar 
                     src="/broken-image.jpg"
-                    className={classes.avatarOfInCharge}
+                    className={classes.reporterAvatar}
                     size="small"
                   />
                   <Typography variant="caption">Juan Perez Perez</Typography>
@@ -289,14 +286,14 @@ const BudgetsEdit = (props) => {
               </Grid>
               <Grid container item xs={4} justify="flex-start" alignItems="center">
                 <Typography variant="subtitle2" gutterBottom className={classes.spaceBetwenFirstNameAndLastName}>
-                  { queryAData && queryAData.budget.client.firstName } { queryAData && queryAData.budget.client.lastName } { queryAData && queryAData.budget.client.id }
+                  { budget && budget.client.firstName } { budget && budget.client.lastName } { budget && budget.client.id }
                 </Typography>
               </Grid>
             </Grid>
             <Grid container item xs={12} justify="flex-start" >
               <InformationTabs
-                budgetTemplateId={queryAData && queryAData.budget.budgetingTemplate.id}
-                budgetInfo={queryAData && queryAData.budget}
+                budgetTemplateId={ budgetingTemplate && budgetingTemplate.id }
+                budgetInfo={ budget }
                 budgetId={match.params.id}
               />
             </Grid>
