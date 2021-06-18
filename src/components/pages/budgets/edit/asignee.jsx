@@ -101,8 +101,9 @@ const Asignee = (props) => {
   const [users, setUsers] = React.useState([])
 
   useEffect(() => {
-    setAsignee(defaultUser)
+
     if (!initialized && data && data.users) {
+      setAsignee(defaultUser)
       setUsers(data.users)
       setFuzzySearcher(new Fuse(data.users, { keys: ['firstName'] }))
       setSearchList(data.users)
