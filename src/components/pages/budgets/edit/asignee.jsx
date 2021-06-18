@@ -68,14 +68,8 @@ const Asignee = (props) => {
   const [fuzzySearcher, setFuzzySearcher]   = React.useState(new Fuse(users, { keys: ['firstName'] }))
   const [initialized, setInitialized]       = React.useState()
 
-  const defaultUser = {
-    avatarThumbUrl: asigneeData ? asigneeData.avatarThumbUrl :"/broken-image.jpg",
-    firstName: asigneeData ? asigneeData.firstName : "Añadir",
-    lastName: asigneeData ? asigneeData.lastName :"encargado"
-  }
-
   const [selectedIndex, setSelectedIndex]   = React.useState(1);
-  const [asignee, setAsignee]               = React.useState(defaultUser)
+  const [asignee, setAsignee]               = React.useState()
   const [sortField, setSortField]           = useState("first_name")
   const [sortDirection, setSortDirection]   = useState("desc")
   const [searchField]                       = useState("first_name_or_last_name_or_email_cont")
@@ -94,6 +88,12 @@ const Asignee = (props) => {
     sortField: sortField
   }
 
+  const defaultUser = {
+    avatarThumbUrl: "/broken-image.jpg",
+    firstName: "Añadir",
+    lastName: "encargado"
+  }
+
   const { loading, data, refetch } = useQuery(
     LOAD_USERS, { variables: variables }
   );
@@ -110,6 +110,16 @@ const Asignee = (props) => {
       setTotalRecords(data.usersCount)
     }
   }, [data]);
+
+  useEffect(() => {
+    if (asigneeData) {
+      setAsignee({
+        avatarThumbUrl: asigneeData.avatarThumbUrl,
+        firstName: asigneeData.firstName,
+        lastName: asigneeData.lastName
+      })
+    }
+  },[asigneeData]);
 
   function changeSearch(event) {
     let result = fuzzySearcher.search(event.target.value)
@@ -177,11 +187,11 @@ const Asignee = (props) => {
       <a href="#" className={classes.aWithoutDecoration} onClick={handleClickOpen}>
         <Grid container direction="row" alignItems="center">
           <Avatar 
-            src={asignee.avatarThumbUrl ? asignee.avatarThumbUrl : "/broken-image.jpg" }
+            src={asignee ? asignee.avatarThumbUrl : "/broken-image.jpg" }
             className={classes.avatarOfInCharge}
             size="small"
           />
-          <Typography variant="caption">{asignee.firstName} {asignee.lastName}</Typography>
+          <Typography variant="caption">{asignee && asignee.firstName} {asignee && asignee.lastName}</Typography>
         </Grid>
       </a>
       <Dialog open={open} onClose={handleClose}>
