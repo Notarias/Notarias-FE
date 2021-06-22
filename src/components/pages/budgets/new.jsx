@@ -1,4 +1,4 @@
-import React, { useState }                from 'react';
+import React, { useState, useEffect }     from 'react';
 import Breadcrumbs                        from '../../ui/breadcrumbs';
 import { makeStyles }                     from '@material-ui/core/styles';
 import Stepper                            from '@material-ui/core/Stepper';
@@ -118,6 +118,7 @@ const NewBudget = (props) => {
   const [rfcClient, setRfcClient] = useState("")
   const [curpClient, setCurpClient] = useState("")
   const [open, setOpen] = React.useState(false);
+  const [openNewBudget, setOpenNewBudget] = React.useState(false);
   const [pristine, setPristine] = React.useState(true)
   const [error, setError] = React.useState(false)
   const inputsList = ["first_name", "last_name"]
@@ -131,6 +132,10 @@ const NewBudget = (props) => {
     curp: curpClient
   }
 
+  useEffect(() => {
+    setProcedureInfo(procedureInfo)
+  }, [procedureInfo])
+
   const [createClientMutation, createClientProcessInfo] =
   useMutation(
     CREATE_CLIENT,
@@ -138,7 +143,7 @@ const NewBudget = (props) => {
       onError(apolloError) {
         setErrors(apolloError)
         setOpen(false);
-        // setPristine(true)
+        setPristine(true)
       },
       onCompleted(cacheData) {
         setClientInfo(cacheData.createClient.client)
@@ -226,6 +231,7 @@ const NewBudget = (props) => {
 
   const handleLastNameChange = (event) => {
     setLastName(event.target.value);
+    setPristine(false)
   };
 
   const handleRfcClientChange = (event) => {
@@ -255,40 +261,48 @@ const NewBudget = (props) => {
     setOpen(false);
   };
 
+  const clickOpenNewBudget = (event) => {
+    setOpenNewBudget(true);
+  };
+
+  const closeNewBudget = () => {
+    setOpenNewBudget(false);
+  };
+
   return(
     <>
       <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
       <Divider/>
       <Grid container justify="center" className={classes.gridFather}>
         <Grid container item xs={7} direction="row" >
-        <Paper className={classes.paperNewbudget}>
-          <Grid container item xs={12} >
-            <Stepper activeStep={activeStep} alternativeLabel className={classes.stepperIconLabel}>
-              <Step key={ 0 + "step"}  >
-                <StepLabel>{"Buscar cliente"}</StepLabel>
-              </Step>
-              <Step key={ 1 + "step"}>
-                <StepLabel>{"Crear cliente"}</StepLabel>
-              </Step>
-              <Step key={ 2 + "step"}>
-                <StepLabel>{"Buscar Trámite"}</StepLabel>
-              </Step>
-              <Step key={ 3 + "step"}>
-                <StepLabel>{"Seleccionar Presupuesto"}</StepLabel>
-              </Step>
-            </Stepper>
-          </Grid>
-          <Grid container item xs={12} >
-            { (activeStep === 0) && (
-            <>
-              <Grid container item alignItems="center" justify="center" className={classes.grid300}>
-                <ClientSearch
-                  searchLoading={searchLoading}
-                  onChangeSearch={onChangeSearch.bind(this)}
-                  setClientInfo={ setClientInfo }
-                />
-              </Grid>
-              <Grid container item alignItems="flex-start" justify="flex-end" className={classes.grid100}>
+          <Paper className={classes.paperNewbudget}>
+            <Grid container item xs={12} >
+              <Stepper activeStep={activeStep} alternativeLabel className={classes.stepperIconLabel}>
+                <Step key={ 0 + "step"}  >
+                  <StepLabel>{"Buscar cliente"}</StepLabel>
+                </Step>
+                <Step key={ 1 + "step"}>
+                  <StepLabel>{"Nuevo cliente"}</StepLabel>
+                </Step>
+                <Step key={ 2 + "step"}>
+                  <StepLabel>{"Trámite y Presupuesto"}</StepLabel>
+                </Step>
+                {/* <Step key={ 3 + "step"}>
+                  <StepLabel>{"Seleccionar Presupuesto"}</StepLabel>
+                </Step> */}
+              </Stepper>
+            </Grid>
+            <Grid container item xs={12} >
+              { (activeStep === 0) && (
+              <>
+                <Grid container item alignItems="center" justify="center" className={classes.grid300}>
+                  <ClientSearch
+                    searchLoading={searchLoading}
+                    onChangeSearch={onChangeSearch.bind(this)}
+                    setClientInfo={ setClientInfo }
+                  />
+                </Grid>
+                <Grid container item alignItems="flex-start" justify="flex-end" className={classes.grid100}>
                 <Grid>
                   <Button
                     variant="contained"
@@ -305,12 +319,12 @@ const NewBudget = (props) => {
                     onClick={createClient}
                     className={classes.button}
                   >
-                    Crear
+                    Nuevo
                   </Button>
                 </Grid>
               </Grid>
-            </>
-            )} 
+              </>
+              )} 
               { (activeStep === 1) && (
                 <Grid container item alignItems="center">
                   <Grid container item alignItems="center" justify="center" className={classes.grid300}>
@@ -369,6 +383,7 @@ const NewBudget = (props) => {
                       color="primary"
                       onClick={ handleClickOpen }
                       className={classes.button}
+                      disabled={pristine}
                     >
                       Guardar
                     </Button>
@@ -392,71 +407,59 @@ const NewBudget = (props) => {
                 </Grid>
               )}
               { (activeStep === 2) && (
-                <Grid  container item alignItems="center" justify="center" >
+                <Grid  container direction="row" item alignItems="center" justify="center" >
                   <Grid className={classes.grid300}>
+                    <Typography variant="body2" color="textSecondary" >
+                      Selecciona un trámite
+                    </Typography>
                     <ProceduresSearch
                       setProcedureInfo={ setProcedureInfo }
                     />
                   </Grid>
-                  <Grid container item alignItems="flex-start" justify="flex-end" className={classes.grid100}>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={ handleNext }
-                      className={classes.button}
-                    >
-                      Siguiente
-                    </Button>
-                  </Grid>
-                </Grid>
-              )}
-              { (activeStep === 3) && (
-                <Grid  container item alignItems="center" justify="center" >
-                  <Grid container item direction="column" alignItems="center" justify="center" className={classes.grid300}>
+                  <Grid className={classes.grid300}>
                     <Typography variant="body2" color="textSecondary" >
                       Selecciona un presupuesto ligado al trámite
                     </Typography>
                     <BudgetSelector
-                      procedureId={ procedureInfo ? procedureInfo.id : "" }
+                      procedureId={ procedureInfo && Number(procedureInfo.id)}
                       setbudgetInfo={ setbudgetInfo }
                     />
                   </Grid>
                   <Grid container item alignItems="flex-start" justify="flex-end" className={classes.grid100}>
-                  <Button
-                      onClick={handleBack}
-                      className={classes.button}
-                    >
-                      Atrás
-                    </Button>
                     <Button
                       variant="contained"
                       color="primary"
-                      onClick={createNewBudget}
+                      onClick={ clickOpenNewBudget }
                       className={classes.button}
                     >
-                      { redirect }
-                      Finalizar
+                      Siguiente
                     </Button>
-                  </Grid>
-                </Grid>
-              )}
-              { (activeStep === 4) && (
-                <Grid  container item alignItems="center" justify="center" >
-                  <Grid container item direction="column" alignItems="center" justify="center" className={classes.grid300}>
-                    <Typography variant="h6" color="textSecondary" >
-                      Se ha creado exitosamente el Presupuesto
-                    </Typography>
-                  </Grid>
-                  <Grid container item alignItems="flex-start" justify="flex-end" className={classes.grid100}>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      className={classes.button}
-                      component={Link} 
-                      to="/budgets/new"
-                    >
-                      Redireccionar
-                    </Button>
+                    <Dialog open={openNewBudget} onClose={ closeNewBudget }>
+                      <DialogTitle>
+                        Se creará un nuevo presupuesto
+                      </DialogTitle>
+                      <DialogContent>
+                        Los datos confirmados se muestran en la columna de la derecha
+                      </DialogContent>
+                      <DialogActions>
+                        <Button
+                          variant="contained"
+                          className={classes.button}
+                          onClick={closeNewBudget}
+                        >
+                          Cancelar
+                        </Button>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          className={classes.button}
+                          onClick={createNewBudget}
+                        >
+                          { redirect }
+                          Aceptar
+                        </Button>
+                      </DialogActions>
+                    </Dialog>
                   </Grid>
                 </Grid>
               )}
