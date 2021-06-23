@@ -220,14 +220,14 @@ export const styles = theme => {
       marginLeft: "22px",
       marginRight: "10px",
       marginBottom: "5px",
-      height: "20px",
-      width: "20px"
+      height: "30px",
+      width: "30px"
     },
     reporterAvatar : {
       marginLeft: "10px",
       marginRight: "10px",
-      height: "20px",
-      width: "20px"
+      height: "30px",
+      width: "30px"
     },
     aWithoutDecoration: {
       textDecoration: "none !IMPORTANT"
@@ -235,5 +235,11 @@ export const styles = theme => {
     searchAsigneeInput: {
       marginBottom: "10px"
     },
+    uditLogGrid: {
+      marginTop: "20px"
+    },
+    showCommentGrid: {
+      marginTop: "20px"
+    }
   })
 }

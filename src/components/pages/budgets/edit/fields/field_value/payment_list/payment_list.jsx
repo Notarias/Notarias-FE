@@ -96,96 +96,102 @@ const PaymentList = (props) => {
     )
   }
 
-  return(
-    <>
-      <ListItemText primary="Lista de pagos" onClick={handleClickOpen}/>
-      <Dialog open={open} onClose={handleClose} fullWidth>
-        <DialogTitle>
-          <Grid container direction="column">
-            <Grid item>
-              Lista de pagos
-            </Grid>
-            <Grid container item>
-              <Grid item xs={6}>
-                <Typography variant="button" display="block" gutterBottom>
-                  Monto inicial {initialDebtAmount()}
-                </Typography>
+  if (data && data.payments.length === 0) {
+    return(
+      <ListItemText primary="No hay Pagos" />
+    )
+  } else {
+    return(
+      <>
+        <ListItemText primary="Lista de pagos" onClick={handleClickOpen}/>
+        <Dialog open={open} onClose={handleClose} fullWidth>
+          <DialogTitle>
+            <Grid container direction="column">
+              <Grid item>
+                Lista de pagos
               </Grid>
-              <Grid item xs={6}>
-                <Typography variant="button" display="block" gutterBottom>
-                  A pagar {totalDebtAmount()}
-                </Typography>
+              <Grid container item>
+                <Grid item xs={6}>
+                  <Typography variant="button" display="block" gutterBottom>
+                    Monto inicial {initialDebtAmount()}
+                  </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography variant="button" display="block" gutterBottom>
+                    A pagar {totalDebtAmount()}
+                  </Typography>
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
-        </DialogTitle>
-        <DialogContent>
-          <Grid container direction="row">
-            {
-              payments.map((payment) => {
-                const getCurrentDate = (separator='/') => {
-                  let newDate = new Date(Date.parse(payment.createdAt))
-                  let date = newDate.getDate();
-                  let month = newDate.getMonth() + 1;
-                  let year = newDate.getFullYear();
-              
-                  return (`${year}${separator}${month<10?`0${month}`:`${month}`}${separator}${date}`)
-                  }
-                return(
-                  <React.Fragment key={payment.id + "fragment"}>
-                    <Grid container item xs={3} direction="column" alignItems="center" justify="center">
-                      <Grid>
-                        Numero de Folio
+          </DialogTitle>
+          <DialogContent>
+            <Grid container direction="row">
+              {
+                payments.map((payment) => {
+                  const getCurrentDate = (separator='/') => {
+                    let newDate = new Date(Date.parse(payment.createdAt))
+                    let date = newDate.getDate();
+                    let month = newDate.getMonth() + 1;
+                    let year = newDate.getFullYear();
+                
+                    return (`${year}${separator}${month<10?`0${month}`:`${month}`}${separator}${date}`)
+                    }
+                  return(
+                    <React.Fragment key={payment.id + "fragment"}>
+                      <Grid container item xs={3} direction="column" alignItems="center" justify="center">
+                        <Grid>
+                          Numero de Folio
+                        </Grid>
+                        <Grid>
+                          0000{payment.id}
+                        </Grid>
                       </Grid>
-                      <Grid>
-                        0000{payment.id}
+                      <Grid item xs={5}>
+                        <TextField
+                          key={payment.id + "creditPayment"}
+                          label="Abono"
+                          id="margin-normal"
+                          helperText="Cantidad"
+                          margin="normal"
+                          disabled
+                          value={payment.total / 100}
+                          InputProps={{
+                            inputComponent: NumberFormatCustom,
+                            startAdornment: <InputAdornment position="start">$</InputAdornment>
+                          }}
+                        />
                       </Grid>
-                    </Grid>
-                    <Grid item xs={5}>
-                      <TextField
-                        key={payment.id + "creditPayment"}
-                        label="Abono"
-                        id="margin-normal"
-                        helperText="Cantidad"
-                        margin="normal"
-                        disabled
-                        value={payment.total / 100}
-                        InputProps={{
-                          inputComponent: NumberFormatCustom,
-                          startAdornment: <InputAdornment position="start">$</InputAdornment>
-                        }}
-                      />
-                    </Grid>
-                    <Grid container item xs={2} alignItems="center" justify="center">
-                      {getCurrentDate()} 
-                    </Grid>
-                    <Grid container item xs={1} alignItems="center" justify="center">
-                      <VoidOrInvoidPayment
-                        voidAt={payment.voidAt}
-                        payment={payment}
-                        fieldValueId={fieldValueId}
-                        budgetingTemplateFieldId={budgetingTemplateFieldId}
-                      />
-                    </Grid>
-                    <Grid container item xs={1} alignItems="center" justify="center">
-                      <Button>
-                        <PrintIcon/>
-                      </Button>
-                    </Grid>
-                  </React.Fragment>
-                )
-              })
-            }
-          </Grid>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>
-            Cerrar
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </>
-  )
+                      <Grid container item xs={2} alignItems="center" justify="center">
+                        {getCurrentDate()} 
+                      </Grid>
+                      <Grid container item xs={1} alignItems="center" justify="center">
+                        <VoidOrInvoidPayment
+                          voidAt={payment.voidAt}
+                          payment={payment}
+                          fieldValueId={fieldValueId}
+                          budgetingTemplateFieldId={budgetingTemplateFieldId}
+                        />
+                      </Grid>
+                      <Grid container item xs={1} alignItems="center" justify="center">
+                        <Button>
+                          <PrintIcon/>
+                        </Button>
+                      </Grid>
+                    </React.Fragment>
+                  )
+                })
+              }
+            </Grid>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>
+              Cerrar
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </>
+    )
+  }
 }
 
 export default PaymentList;

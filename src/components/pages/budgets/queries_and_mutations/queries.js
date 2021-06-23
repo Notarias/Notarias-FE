@@ -638,3 +638,27 @@ export const UPDATE_BUDGET = gql`
     }
   }
 `
+
+export const GET_HISTORIAL = gql`
+  query auditLogsFromAuditable(
+    $auditableId: ID!
+    $auditableType: String!
+  ){
+  auditLogsFromAuditable(
+    auditableId: $auditableId
+    auditableType: $auditableType
+    ){
+      auditableId
+      auditableType
+      id
+      createdAt
+      message
+      user{
+        firstName
+        lastName
+        avatarThumbUrl
+        id
+      }
+    }
+  }
+`

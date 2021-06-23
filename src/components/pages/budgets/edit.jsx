@@ -203,9 +203,12 @@ const BudgetsEdit = (props) => {
                     <ListItemText primary="Nuevo abono" onClick={handleClickOpen}/>
                   </MenuItem>
                   <MenuItem key="2-paymentList">
-                  <PaymentList
-                    budgetId={match.params.id}
-                  />
+                    <PaymentList
+                      budgetId={match.params.id}
+                    />
+                  </MenuItem>
+                  <MenuItem key="3-paymentList">
+                    <ListItemText primary="Imprimir presupuesto"/>
                   </MenuItem>
                 </GenericDropdownMenu>
                 <Dialog open={open} onClose={handleClose} fullWidth>
@@ -275,7 +278,7 @@ const BudgetsEdit = (props) => {
               </Grid>
               <Grid container item xs={4} justify="center" alignItems="center">
                 <Grid container direction="row" alignItems="center">
-                  <Typography variant="caption">Reportador:</Typography>
+                  <Typography variant="subtitle2">Reportador:</Typography>
                   <Avatar 
                     src="/broken-image.jpg"
                     className={classes.reporterAvatar}
@@ -285,7 +288,8 @@ const BudgetsEdit = (props) => {
                 </Grid>
               </Grid>
               <Grid container item xs={4} justify="flex-start" alignItems="center">
-                <Typography variant="subtitle2" gutterBottom className={classes.spaceBetwenFirstNameAndLastName}>
+                <Typography variant="subtitle2">Cliente:</Typography>
+                <Typography variant="caption" className={classes.spaceBetwenFirstNameAndLastName}>
                   { budget && budget.client.firstName } { budget && budget.client.lastName } { budget && budget.client.id }
                 </Typography>
               </Grid>

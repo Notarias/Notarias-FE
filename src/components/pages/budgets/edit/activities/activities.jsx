@@ -1,4 +1,6 @@
 import React                from 'react'
+import { withStyles }       from '@material-ui/core/styles';
+import { styles }           from '../../styles';
 import Button               from '@material-ui/core/Button';
 import Menu                 from '@material-ui/core/Menu';
 import MenuItem             from '@material-ui/core/MenuItem';
@@ -7,11 +9,11 @@ import Divider              from '@material-ui/core/Divider';
 import ArrowDropDownIcon    from '@material-ui/icons/ArrowDropDown';
 import Typography           from '@material-ui/core/Typography';
 import CommentsList         from './comments_list/comments_list'
-import ActivitiesHistorial  from './historial'
+import AuditLog             from './audit_log'
 
 
 const Activities = (props) => {
-  const { budgetId } = props
+  const { budgetId, classes } = props
   const [anchorEl, setAnchorEl] = React.useState(null)
   const [activity, setActivity] = React.useState("comments")
 
@@ -34,7 +36,9 @@ const Activities = (props) => {
         break;
       case "historial" :
         return(
-          <ActivitiesHistorial/>
+          <AuditLog
+            budgetId={budgetId}
+          />
         )
         break;
       case "documents" :
@@ -94,11 +98,11 @@ const Activities = (props) => {
         <MenuItem onClick={handleDocuments}>Documentos</MenuItem>
       </Menu>
     </Grid>
-    <Grid>
+    <Grid className={classes.showCommentGrid}>
       {renderActivitiesMenu()}
     </Grid>
     </>
   )
 }
 
-export default Activities;
+export default withStyles(styles)(Activities);

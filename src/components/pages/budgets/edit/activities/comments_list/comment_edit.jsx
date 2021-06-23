@@ -125,7 +125,6 @@ const CommentEdit = (props) => {
 
   const renderCommentEditingInput = (body) => {
     return (
-
         <Grid container item direction="column" >
           <Grid item className={classes.commentEditingInputGrid}>
             <TextField
