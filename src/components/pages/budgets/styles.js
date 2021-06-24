@@ -108,7 +108,7 @@ export const styles = theme => {
     budgetRightOptionsList: {
       marginTop: '10px',
       width: "100%",
-      height:"600px"
+      height:"608px"
     },
     budgetTittle: {
       height:"50px"
@@ -236,10 +236,26 @@ export const styles = theme => {
       marginBottom: "10px"
     },
     uditLogGrid: {
-      marginTop: "20px"
+      marginTop: "5px",
+      overflowY:"scroll",
+      maxHeight: "530px"
     },
     showCommentGrid: {
       marginTop: "20px"
+    },
+    logoInInvoice: {
+      width: "400px",
+      height: "200px",
+    },
+    marginTopGridInvoice: {
+      marginTop: "20px"
+    },
+    topMarginGrid: {
+      marginTop: "10px"
+    },
+    messageToLeft: {
+      textAlign: "left"
     }
+    
   })
 }

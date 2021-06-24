@@ -10,24 +10,19 @@ import ArrowDropDownIcon    from '@material-ui/icons/ArrowDropDown';
 import Typography           from '@material-ui/core/Typography';
 import CommentsList         from './comments_list/comments_list'
 import AuditLog             from './audit_log'
+import AppBar from '@material-ui/core/AppBar';
 
 
 const Activities = (props) => {
   const { budgetId, classes } = props
-  const [anchorEl, setAnchorEl] = React.useState(null)
   const [activity, setActivity] = React.useState("comments")
+  const [goSelected, setGoSelected] = React.useState();
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
 
   const  renderActivitiesMenu = () => {
     switch (activity) {
       case "comments" :
+
         return(
           <CommentsList
             budgetId={budgetId}
@@ -35,6 +30,7 @@ const Activities = (props) => {
         )
         break;
       case "historial" :
+
         return(
           <AuditLog
             budgetId={budgetId}
@@ -42,6 +38,7 @@ const Activities = (props) => {
         )
         break;
       case "documents" :
+
         return(
           "Documentos"
         )
@@ -56,51 +53,48 @@ const Activities = (props) => {
 
   const handleComments = () => {
     setActivity("comments")
-    setAnchorEl(null)
+    setGoSelected(0)
   }
 
   const handleHistorial = () => {
     setActivity("historial")
-    setAnchorEl(null)
+    setGoSelected(1)
   }
 
   const handleDocuments = () => {
     setActivity("documents")
-    setAnchorEl(null)
+    setGoSelected(2)
   }
-
 
   return(
     <>
-    <Grid>
-      <Typography variant="h6">
-        Actividades
-      </Typography>
-      <Button
-        aria-controls="customized-menu"
-        aria-haspopup="true"
-        variant="contained"
-        color="primary"
-        onClick={handleClick}
-      >
-        <ArrowDropDownIcon/>
-      </Button>
-      <Divider/>
-      <Menu
-        id="simple-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
-        <MenuItem onClick={handleComments}>Comentarios</MenuItem>
-        <MenuItem onClick={handleHistorial}>Historial</MenuItem>
-        <MenuItem onClick={handleDocuments}>Documentos</MenuItem>
-      </Menu>
-    </Grid>
-    <Grid className={classes.showCommentGrid}>
-      {renderActivitiesMenu()}
-    </Grid>
+      <Grid container alignItems="center" justify="center">
+        <AppBar position="static" color="transparent">
+          <Grid container item direction="row" alignItems="center" justify="center">  
+            <Button
+              color={goSelected === 0 ? "primary" : "inherit"} 
+              onClick={handleComments}
+            >
+              Comentarios
+            </Button>
+            <Button
+              color={goSelected === 1 ? "primary" : "inherit"} 
+              onClick={handleHistorial}
+            >
+              Historial
+            </Button>
+            <Button
+              color={goSelected === 2 ? "primary" : "inherit"} 
+              onClick={handleDocuments}
+            >
+              Documentos
+            </Button>
+          </Grid> 
+        </AppBar>
+      </Grid>
+      <Grid className={classes.showCommentGrid}>
+        {renderActivitiesMenu()}
+      </Grid>
     </>
   )
 }

@@ -70,7 +70,6 @@ const PaymentList = (props) => {
     setOpen(false);
   };
 
-  console.log(data)
 
   if (data && data.creditPayments.length === 0) {
     return(

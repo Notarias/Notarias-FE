@@ -10,6 +10,7 @@ import Dialog                                       from '@material-ui/core/Dial
 import DialogActions                                from '@material-ui/core/DialogActions';
 import DialogContent                                from '@material-ui/core/DialogContent';
 import DialogTitle                                  from '@material-ui/core/DialogTitle';
+import { GET_BUDGETS_AUDITLOG } from '../../../queries_and_mutations/queries';
 
 const AddFieldValue = (props) => {
   const {
@@ -40,18 +41,21 @@ const AddFieldValue = (props) => {
     CREATE_BUDGET_FIELD_VALUE,
     {
       onError(apolloError) {
-        // setErrors(apolloError)
-        // setOpen(false);
-        // setPristine(true)
       },
       onCompleted(cacheData) {
         setWithValue(true)
         setPristine(false)
       },
-      refetchQueries: [{
-        query: GET_BUDGET_FIELD_VALUE,
-        variables: { "budgetingTemplateFieldId": fieldId , "budgetId": currentBudget }
-      }],
+      refetchQueries: [
+        {
+          query: GET_BUDGET_FIELD_VALUE,
+          variables: { "budgetingTemplateFieldId": fieldId , "budgetId": currentBudget }
+        },
+        {
+          query: GET_BUDGETS_AUDITLOG,
+          variables: { "budgetId": currentBudget }
+        }
+      ],
       awaitRefetchQueries: true
     }
   )
@@ -87,6 +91,10 @@ const AddFieldValue = (props) => {
         {
           query: GET_BUDGET,
           variables: {"id": currentBudget }
+        },
+        {
+          query: GET_BUDGETS_AUDITLOG,
+          variables: { "budgetId": currentBudget }
         }
       ],
       awaitRefetchQueries: true

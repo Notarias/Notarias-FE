@@ -32,6 +32,7 @@ import PaymentList                          from './edit/credit_payment_list/cre
 import ListItemText                         from '@material-ui/core/ListItemText';
 import Activities                           from './edit/activities/activities'
 import Asignee                              from './edit/asignee'
+import { GET_CREDIT_PAYMENTS }              from './queries_and_mutations/queries';
 
 const BREADCRUMBS = [
   { name: "Inicio", path: "/" },
@@ -107,11 +108,15 @@ const BudgetsEdit = (props) => {
       refetchQueries: [
         {
           query: GET_BUDGET,
-          variables: {"id": match.params.id }
+            variables: {"id": match.params.id }
         },
         {
           query: GET_BUDGET_TOTALS,
-          variables: {"id": match.params.id }
+            variables: {"id": match.params.id }
+        },
+        {
+          query: GET_CREDIT_PAYMENTS,
+            variables: { "budgetId": match.params.id }
         }
       ],
       awaitRefetchQueries: true

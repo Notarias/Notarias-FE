@@ -639,19 +639,18 @@ export const UPDATE_BUDGET = gql`
   }
 `
 
-export const GET_HISTORIAL = gql`
-  query auditLogsFromAuditable(
-    $auditableId: ID!
-    $auditableType: String!
+export const GET_BUDGETS_AUDITLOG = gql`
+query budgetAuditLogs(
+    $budgetId: ID!
   ){
-  auditLogsFromAuditable(
-    auditableId: $auditableId
-    auditableType: $auditableType
+  budgetAuditLogs(
+    budgetId: $budgetId
     ){
-      auditableId
+    	auditableId
       auditableType
       id
       createdAt
+      updatedAt
       message
       user{
         firstName
