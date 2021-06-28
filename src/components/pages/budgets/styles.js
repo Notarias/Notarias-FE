@@ -108,7 +108,7 @@ export const styles = theme => {
     budgetRightOptionsList: {
       marginTop: '10px',
       width: "100%",
-      height:"600px"
+      height:"608px"
     },
     budgetTittle: {
       height:"50px"
@@ -220,14 +220,14 @@ export const styles = theme => {
       marginLeft: "22px",
       marginRight: "10px",
       marginBottom: "5px",
-      height: "20px",
-      width: "20px"
+      height: "30px",
+      width: "30px"
     },
     reporterAvatar : {
       marginLeft: "10px",
       marginRight: "10px",
-      height: "20px",
-      width: "20px"
+      height: "30px",
+      width: "30px"
     },
     aWithoutDecoration: {
       textDecoration: "none !IMPORTANT"
@@ -235,5 +235,27 @@ export const styles = theme => {
     searchAsigneeInput: {
       marginBottom: "10px"
     },
+    uditLogGrid: {
+      marginTop: "5px",
+      overflowY:"scroll",
+      maxHeight: "530px"
+    },
+    showCommentGrid: {
+      marginTop: "20px"
+    },
+    logoInInvoice: {
+      width: "400px",
+      height: "200px",
+    },
+    marginTopGridInvoice: {
+      marginTop: "20px"
+    },
+    topMarginGrid: {
+      marginTop: "10px"
+    },
+    messageToLeft: {
+      textAlign: "left"
+    }
+    
   })
 }

@@ -638,3 +638,26 @@ export const UPDATE_BUDGET = gql`
     }
   }
 `
+
+export const GET_BUDGETS_AUDITLOG = gql`
+query budgetAuditLogs(
+    $budgetId: ID!
+  ){
+  budgetAuditLogs(
+    budgetId: $budgetId
+    ){
+    	auditableId
+      auditableType
+      id
+      createdAt
+      updatedAt
+      message
+      user{
+        firstName
+        lastName
+        avatarThumbUrl
+        id
+      }
+    }
+  }
+`

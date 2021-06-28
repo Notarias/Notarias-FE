@@ -6,7 +6,7 @@ import Button                                       from '@material-ui/core/Butt
 import BorderColorIcon                              from '@material-ui/icons/BorderColor';
 import NumberFormat                                 from 'react-number-format';
 import PropTypes                                    from 'prop-types';
-import CancelIcon                                   from '@material-ui/icons/Cancel';
+import ReplayIcon from '@material-ui/icons/Replay';
 
 function NumberFormatCustom(props) {
   const { inputRef, onChange, ...other } = props;
@@ -66,12 +66,6 @@ const TotalValue = (props) => {
     changeInputStatus ? setStatusChange(true) : false
     )
   }
-  // const [values, setValues] = React.useState("0");
-
-  // const handleChange = (event) => {
-  //   setValues(event.target.value);
-  // };
-
 
   const handleChange = (event) => {
     setChangeFieldValue(event.target.value);
@@ -103,13 +97,10 @@ const TotalValue = (props) => {
           {
             withValue ?
             <Button onClick={changeValueTypeToTrue} >
-              <CancelIcon/>
+              <ReplayIcon/>
             </Button>
             :
-            <Button  disabled={true}>
-            <CancelIcon/>
-          </Button>
-
+            ""
           }
         </Grid>
       </Grid>
