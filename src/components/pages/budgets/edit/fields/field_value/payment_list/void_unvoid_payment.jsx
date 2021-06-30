@@ -8,12 +8,12 @@ import Dialog                               from '@material-ui/core/Dialog';
 import DialogActions                        from '@material-ui/core/DialogActions';
 import DialogContent                        from '@material-ui/core/DialogContent';
 import DialogTitle                          from '@material-ui/core/DialogTitle';
-import { useMutation }                      from '@apollo/react-hooks'
-import { VOID_OR_UNVOID_PAYMENT }           from '../../../../queries_and_mutations/queries'
-import { GET_PAYMENTS }                     from '../../../../queries_and_mutations/queries'
-import { GET_BUDGET_TOTALS }                from '../../../../queries_and_mutations/queries'
-import { GET_BUDGET_FIELD_VALUE }           from '../../../../queries_and_mutations/queries'
-
+import { useMutation }                      from '@apollo/react-hooks';
+import { VOID_OR_UNVOID_PAYMENT }           from '../../../../queries_and_mutations/queries';
+import { GET_PAYMENTS }                     from '../../../../queries_and_mutations/queries';
+import { GET_BUDGET_TOTALS }                from '../../../../queries_and_mutations/queries';
+import { GET_BUDGET_FIELD_VALUE }           from '../../../../queries_and_mutations/queries';
+import { GET_BUDGETS_AUDITLOG }             from '../../../../queries_and_mutations/queries';
 
 const VoidOrInvoidPayment = (props) => {
   const { payment, fieldValueId, voidAt, budgetingTemplateFieldId } = props
@@ -46,6 +46,10 @@ const VoidOrInvoidPayment = (props) => {
           query: GET_BUDGET_FIELD_VALUE,
           variables: { "budgetingTemplateFieldId": budgetingTemplateFieldId , "budgetId":  payment.budgetId }
         },
+        {
+          query: GET_BUDGETS_AUDITLOG,  
+            variables: {"budgetId": payment.budgetId }
+        }
       ],
       awaitRefetchQueries: true
     }

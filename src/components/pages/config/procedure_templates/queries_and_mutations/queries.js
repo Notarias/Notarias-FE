@@ -73,6 +73,10 @@ export const GET_PROCEDURE_TEMPLATE = gql`
       budgetingTemplates{
         id
         name
+        proceduresTemplatesIds
+        proceduresTemplates{
+          id
+        }
       }
     }
   }

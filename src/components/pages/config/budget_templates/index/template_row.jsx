@@ -36,7 +36,7 @@ const TemplateRow = (props) => {
   const id = budgetingTemplate.id;
 
   const { data } = useQuery(GET_BUDGETING_TEMPLATE,
-    { variables: {"id": id } } 
+    { variables: {"id": id }, fetchPolicy: "no-cache" } 
   );
 
 
@@ -84,7 +84,7 @@ const TemplateRow = (props) => {
   }
 
   const procedureLinked = () => {
-    return data ? data.budgetingTemplate.proceduresTemplates.map((item) => item.id ) : "" 
+    return data ? data.budgetingTemplate.proceduresTemplates.length  : 0 
   }
 
   return(

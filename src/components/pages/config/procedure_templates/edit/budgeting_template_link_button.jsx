@@ -43,6 +43,8 @@ const ButgetingTemplateLinkButton = (props) => {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
 
+  const disabledButton = budgetingTemplatesData && (Number(budgetingTemplatesData) === 0)
+
   useEffect(() => {
     setBudgetingTemplates(budgetingTemplatesData)
   }, [budgetingTemplatesData])
@@ -69,11 +71,13 @@ const ButgetingTemplateLinkButton = (props) => {
           setOpen(false)
           setOpenDialog(false)
         },
-        refetchQueries: [{
-          query: GET_PROCEDURE_TEMPLATE,
-          variables: { "id": id },
-        }],
-        awaitRefetchQueries: true
+        refetchQueries: [
+          {
+            query: GET_PROCEDURE_TEMPLATE,
+            variables: { "id": id },
+          }
+        ],
+        awaitRefetchQueries: true,
       }
     )
 
@@ -173,7 +177,7 @@ const ButgetingTemplateLinkButton = (props) => {
         <ButtonGroup color={ colorOfButtonWhenTemplateIsLinked() } ref={anchorRef} aria-label="split button">
           <Button 
             size="small"
-            disabled={ budgetingTemplatesData && (budgetingTemplatesData === 0) }
+            disabled={ disabledButton }
             onClick={ handleClickOpenBudgetingLinkedList }
           >
             <Avatar
@@ -220,7 +224,7 @@ const ButgetingTemplateLinkButton = (props) => {
                     <Divider/>
                     <MenuItem
                       onClick={ updateUnlinkBudgetingTemplate }
-                      disabled={ budgetingTemplatesData && (budgetingTemplatesData === 0) }
+                      disabled={ disabledButton }
                     >
                       Desvincular
                     </MenuItem>

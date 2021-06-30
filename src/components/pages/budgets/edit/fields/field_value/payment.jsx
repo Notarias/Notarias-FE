@@ -19,6 +19,7 @@ import { CREATE_PAYMENT }                   from '../../../queries_and_mutations
 import { GET_BUDGET_FIELD_VALUE }           from '../../../queries_and_mutations/queries'
 import { GET_BUDGET_TOTALS }                from '../../../queries_and_mutations/queries'
 import { GET_PAYMENTS }                     from '../../../queries_and_mutations/queries'
+import { GET_BUDGETS_AUDITLOG }             from '../../../queries_and_mutations/queries';
 
 
 function NumberFormatCustom(props) {
@@ -85,6 +86,10 @@ const Payment = (props) => {
         {
           query: GET_BUDGET_TOTALS,
           variables: {"id": currentBudget }
+        },
+        {
+          query: GET_BUDGETS_AUDITLOG,  
+            variables: {"budgetId": currentBudget }
         }
       ],
       awaitRefetchQueries: true

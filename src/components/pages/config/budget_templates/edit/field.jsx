@@ -172,7 +172,7 @@ const Field = (props) => {
         </Grid>
         <Grid container item xs={5}>
           <Typography className={ classes.texPlainTittleName }>
-            { name } { id }
+            { name }
           </Typography>
         </Grid>
       </>

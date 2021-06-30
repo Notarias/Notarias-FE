@@ -22,7 +22,7 @@ import Popper                                         from '@material-ui/core/Po
 import MenuItem                                       from '@material-ui/core/MenuItem';
 import MenuList                                       from '@material-ui/core/MenuList';
 import { useQuery }                                   from '@apollo/react-hooks';
-import { GET_PROCEDURES_TEMPLATES_QUICK_LIST  }         from '../queries_and_mutations/queries';
+import { GET_PROCEDURES_TEMPLATES_QUICK_LIST  }       from '../queries_and_mutations/queries';
 import { GLOBAL_MESSAGE }                             from '../../../../../resolvers/queries';
 import client                                         from '../../../../../apollo';
 import { Link }                                       from 'react-router-dom';
@@ -41,6 +41,8 @@ const ProcedureTemplateLinkButton = (props) => {
   const [toLinkSelectedOption, setToLinkSelectedOption] = React.useState(proceduresTemplatesData || [])
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
+  const disabledButton = proceduresTemplatesData && (Number(proceduresTemplatesData) === 0)
+  const [ unlink, setUnlink] = React.useState(false)
 
   useEffect(() => {
     setProceduresTemplates(proceduresTemplatesData)
@@ -68,11 +70,13 @@ const ProcedureTemplateLinkButton = (props) => {
           setOpen(false)
           setOpenDialog(false)
         },
-        refetchQueries: [{
-          query: GET_BUDGETING_TEMPLATE,
-          variables: { "id": id },
-        }],
-        awaitRefetchQueries: true
+        refetchQueries: [
+          {
+            query: GET_BUDGETING_TEMPLATE,
+            variables: { "id": id },
+          }
+        ],
+        awaitRefetchQueries: true,
       }
     )
 
@@ -90,6 +94,7 @@ const ProcedureTemplateLinkButton = (props) => {
 
   const updateUnlinkProcedureTemplate = (event) => {
     updateBudgetingTemplateMutation({ variables: {"id": id, "proceduresTemplatesIds": []}})
+    setUnlink(true)
   }
 
   const { data } = useQuery(
@@ -171,7 +176,7 @@ const ProcedureTemplateLinkButton = (props) => {
         <ButtonGroup color={ colorOfButtonWhenTemplateIsLinked() } ref={anchorRef} aria-label="split button">
         <Button 
             size="small"
-            disabled={ proceduresTemplatesData && (proceduresTemplatesData === 0) }
+            disabled={ disabledButton }
             onClick={ handleClickOpenProcedureLinkedList }
           >
             <Avatar
@@ -218,7 +223,7 @@ const ProcedureTemplateLinkButton = (props) => {
                     <Divider/>
                     <MenuItem
                       onClick={ updateUnlinkProcedureTemplate }
-                      disabled={ proceduresTemplatesData && (proceduresTemplatesData === 0) }
+                      disabled={ disabledButton }
                     >
                       Desvincular
                     </MenuItem>

@@ -21,6 +21,7 @@ import { LOAD_USERS }                 from '../queries_and_mutations/queries'
 import { UPDATE_BUDGET }              from '../queries_and_mutations/queries'
 import Fuse                           from 'fuse.js';
 import { GET_BUDGET }                 from '../queries_and_mutations/queries'
+import { GET_BUDGETS_AUDITLOG }       from '../queries_and_mutations/queries';
 
 
 const renderSearchList = (searchList, classes, selectedIndex, handleListItemClick, haveThumbUrl) => {
@@ -147,6 +148,10 @@ const Asignee = (props) => {
           query: GET_BUDGET,
           variables: {"id": budgetId }
         },
+        {
+          query: GET_BUDGETS_AUDITLOG,  
+            variables: {"budgetId":budgetId}
+        }
       ],
       awaitRefetchQueries: true
     }

@@ -13,6 +13,7 @@ import { VOID_OR_INVOID }                   from '../../queries_and_mutations/qu
 import { useQuery }                         from '@apollo/react-hooks';
 import { GET_CREDIT_PAYMENTS }              from '../../queries_and_mutations/queries'
 import { GET_BUDGET_TOTALS }                from '../../queries_and_mutations/queries'
+import { GET_BUDGETS_AUDITLOG }             from '../../queries_and_mutations/queries';
 
 const VoidOrInvoid = (props) => {
   const { classes, voidAt, paymentId, budgetId } = props
@@ -42,6 +43,10 @@ const VoidOrInvoid = (props) => {
         {
           query: GET_BUDGET_TOTALS,
           variables: { "id": budgetId }
+        },
+        {
+          query: GET_BUDGETS_AUDITLOG,  
+            variables: {"budgetId": budgetId }
         }
       ],
       awaitRefetchQueries: true

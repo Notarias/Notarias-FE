@@ -27,7 +27,7 @@ const Edit = (props) => {
   const { classes, match } = props
 
   const { loading, data } = useQuery(GET_PROCEDURE_TEMPLATE,
-    { variables: {"id": match.params.id } } 
+    { variables: {"id": match.params.id }, fetchPolicy: "cache-and-network" } 
   );
   const [currentTab, setCurrentTab] = React.useState()
 

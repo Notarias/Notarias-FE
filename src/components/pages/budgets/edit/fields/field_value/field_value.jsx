@@ -57,6 +57,7 @@ const FieldValue = (props) => {
   //   setName(event.target.value);
   // };
 
+
   return(
     <Grid 
       container
@@ -67,7 +68,6 @@ const FieldValue = (props) => {
         <Typography variant="subtitle2" gutterBottom>
           {field.name}
         </Typography>
-        -{field.id}
       </Grid>
       <Grid container item xs={3} justify="flex-start">
         <TotalValue
