@@ -5,39 +5,13 @@ import UserForm               from './user_form/user_form';
 import Paper                  from '@material-ui/core/Paper';
 import Breadcrumbs            from '../../ui/breadcrumbs';
 import { useQuery }           from '@apollo/react-hooks';
-import gql                    from 'graphql-tag';
+import { GET_USER }           from './queries_and_mutations/queries';
 
 const BREADCRUMBS = [
   { name: "Inicio", path: "/" },
   { name: "Usuarios", path: "/users" },
   { name: "Editar", path: null }
 ]
-
-const GET_USER = gql`
-  query getuser($id: ID!){
-    user(id: $id) {
-      id
-      firstName
-      lastName
-      email
-      address
-      phone
-      lockedAt
-      roleId
-      role {
-        name
-        permanentLink
-        createdAt
-        updatedAt
-      }
-    }
-    roles{
-      name
-      createdAt
-      permanentLink
-    }
-  }
-`
 
 const Edit = (props) => {
   const { classes, match } = props;

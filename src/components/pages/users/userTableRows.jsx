@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import TableCell            from '@material-ui/core/TableCell';
 import TableRow             from '@material-ui/core/TableRow';
 import MenuItem             from '@material-ui/core/MenuItem';
-import gql                  from 'graphql-tag';
+import { UPDATE_USER }      from './queries_and_mutations/queries';
 import { Mutation }         from '@apollo/react-components';
 import Button               from '@material-ui/core/Button';
 import { styles }           from './styles';
@@ -11,21 +11,6 @@ import IconButton           from '@material-ui/core/IconButton';
 import Menu                 from '@material-ui/core/Menu';
 import MoreVertIcon         from '@material-ui/icons/MoreVert';
 import { Link }             from 'react-router-dom';
-
-const UPDATE_USER = gql`
-  mutation updateUser($id: ID!, $locked: Boolean) {
-    updateUser(input: {id:$id, locked: $locked}){
-      user{
-        firstName
-        lastName
-        lockedAt
-        role{
-          name
-        }
-      }
-    }
-  }
-`
 
 class  UserTableRows extends Component {
 
@@ -36,6 +21,39 @@ class  UserTableRows extends Component {
       anchorEl: ""
     }
   }
+
+  // [createCreditPaymentMutation, createCreditPaymentProcessInfo] =
+  // useMutation(
+  //   CREATE_CREDIT_PAYMENT,
+  //   {
+  //     onError(apolloError) {
+  //       setErrors(apolloError)
+  //       setPristine(false)
+  //     },
+  //     onCompleted(cacheData) {
+  //       setOpen(false);
+  //     },
+  //     refetchQueries: [
+  //       {
+  //         query: GET_BUDGET,
+  //           variables: {"id": match.params.id }
+  //       },
+  //       {
+  //         query: GET_BUDGET_TOTALS,
+  //           variables: {"id": match.params.id }
+  //       },
+  //       {
+  //         query: GET_CREDIT_PAYMENTS,
+  //           variables: { "budgetId": match.params.id }
+  //       },
+  //       {
+  //         query: GET_BUDGETS_AUDITLOG,  
+  //           variables: {"budgetId": match.params.id}
+  //       }
+  //     ],
+  //     awaitRefetchQueries: true
+  //   }
+  // )
 
   handleClick = (event) => {
     this.setState({anchorEl: event.currentTarget})
@@ -120,6 +138,7 @@ class  UserTableRows extends Component {
                         classes={{ root: classes.buttonMaxwidth }}
                         width={"100%"}
                         key="Desbloquear"
+                        disabled
                         onClick={ () => {
                           mutation({
                             variables: { id: user.id, locked: true }
