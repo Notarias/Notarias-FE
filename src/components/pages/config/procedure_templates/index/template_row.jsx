@@ -36,7 +36,7 @@ const TempleteRow = (props) => {
   const [open, setOpen] = React.useState(false);
 
   const { data } = useQuery(GET_PROCEDURE_TEMPLATE,
-    { variables: {"id": id } } 
+    { variables: {"id": id }, fetchPolicy: "no-cache" } 
   );
 
   const folioNumber = (serial) => {

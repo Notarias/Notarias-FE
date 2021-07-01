@@ -9,6 +9,10 @@ export const GET_BUDGETING_TEMPLATE = gql`
       proceduresTemplates{
         id
         name
+        budgetingTemplatesIds
+        budgetingTemplates{
+          id
+        }
       }
     }
   }
@@ -246,6 +250,34 @@ export const CREATE_BUDGETING_CATEGORIES = gql`
       budgetingCategory {
         id
         name
+      }
+    }
+  }
+`
+
+export const GET_BUDGETING_TEMPLATES_QUICK_LIST = gql`
+query budgetingTemplatesQuickList{
+  budgetingTemplatesQuickList{
+    name
+      id
+    }
+  }
+`
+
+export const GET_PROCEDURE_TEMPLATE = gql`
+  query proceduresTemplate ($id: ID! ) {
+    proceduresTemplate (id: $id) {
+      active
+      id
+      name
+      serialNumber
+      budgetingTemplates{
+        id
+        name
+        proceduresTemplatesIds
+        proceduresTemplates{
+          id
+        }
       }
     }
   }

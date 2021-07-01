@@ -33,6 +33,8 @@ import ListItemText                         from '@material-ui/core/ListItemText
 import Activities                           from './edit/activities/activities'
 import Asignee                              from './edit/asignee'
 import { GET_CREDIT_PAYMENTS }              from './queries_and_mutations/queries';
+import { Link }                       from 'react-router-dom';
+import { GET_BUDGETS_AUDITLOG } from './queries_and_mutations/queries';
 
 const BREADCRUMBS = [
   { name: "Inicio", path: "/" },
@@ -117,6 +119,10 @@ const BudgetsEdit = (props) => {
         {
           query: GET_CREDIT_PAYMENTS,
             variables: { "budgetId": match.params.id }
+        },
+        {
+          query: GET_BUDGETS_AUDITLOG,  
+            variables: {"budgetId": match.params.id}
         }
       ],
       awaitRefetchQueries: true
@@ -213,7 +219,14 @@ const BudgetsEdit = (props) => {
                     />
                   </MenuItem>
                   <MenuItem key="3-paymentList">
-                    <ListItemText primary="Imprimir presupuesto"/>
+                    <Link
+                      to={`/budgets/${ budget.id }/invoice`}
+                      color="inherit"
+                      underline="none"
+                      className={classes.linkDefault}
+                    >
+                      <ListItemText primary="Imprimir presupuesto"/>
+                    </Link>
                   </MenuItem>
                 </GenericDropdownMenu>
                 <Dialog open={open} onClose={handleClose} fullWidth>

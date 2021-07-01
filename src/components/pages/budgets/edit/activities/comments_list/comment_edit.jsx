@@ -15,6 +15,7 @@ import Dialog                       from '@material-ui/core/Dialog';
 import DialogActions                from '@material-ui/core/DialogActions';
 import DialogContent                from '@material-ui/core/DialogContent';
 import DialogTitle                  from '@material-ui/core/DialogTitle';
+import { GET_BUDGETS_AUDITLOG }     from '../../../queries_and_mutations/queries';
 
 
 const CommentEdit = (props) => {
@@ -47,6 +48,10 @@ const CommentEdit = (props) => {
           query: GET_COMMENTABLE_COMMENTS,
           variables: {"commentableType": "Budget" , commentableId: budgetId }
         },
+        {
+          query: GET_BUDGETS_AUDITLOG,  
+            variables: {"budgetId": budgetId}
+        }
       ],
       awaitRefetchQueries: true
     }
@@ -91,6 +96,10 @@ const CommentEdit = (props) => {
           query: GET_COMMENTABLE_COMMENTS,
           variables: {"commentableType": "Budget" , commentableId: budgetId }
         },
+        {
+          query: GET_BUDGETS_AUDITLOG,  
+            variables: {"budgetId": budgetId}
+        }
       ],
       awaitRefetchQueries: true
     }

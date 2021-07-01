@@ -11,12 +11,28 @@ import Typography                           from '@material-ui/core/Typography';
 import logo_notaria                         from '../../../../images/logo_notaria.JPG'
 import TextField                            from '@material-ui/core/TextField';
 import Button                               from '@material-ui/core/Button';
-
+import { useQuery }                         from '@apollo/react-hooks';
+import { GET_BUDGET }                       from '../queries_and_mutations/queries'
+import NumberFormat                                 from 'react-number-format';
+import Breadcrumbs                          from '../../../ui/breadcrumbs'
 
 
 const BudgetInvoice = (props) => {
-  const { classes } = props
+  const { classes, match } = props
   const [open, setOpen] = React.useState(false)
+
+  const { loading, data, refetch } = useQuery(
+    GET_BUDGET, { variables: {"id": match.params.id } }
+  );
+
+  const budget                          = data && data.budget
+
+  const BREADCRUMBS =  [
+    { name: "Inicio", path: "/" },
+    { name: "Presupuestos", path: '/budgets' },
+    { name: "Editar", path: `/budgets/${ match.params.id}/edit` },
+    { name: "Vista Previa", path: null }
+  ]
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -26,7 +42,45 @@ const BudgetInvoice = (props) => {
     setOpen(false);
   };
 
+  const renderFieldsInfo = () => {
+    return(
+      budget.fieldValues.map((toPrint) => {
+        if( toPrint.value !== 0){
+          return(
+            <Grid container item direction="row" key={toPrint.id + "values"}>
+              <Grid item xs={1}></Grid>
+              <Grid
+                container 
+                item 
+                xs={7}
+              >
+                <Typography> {toPrint.field.name} </Typography>
+              </Grid>
+              <Grid
+                container 
+                item 
+                xs={4}
+              >
+                <Typography gutterBottom>
+                  <NumberFormat 
+                    value={toPrint.value / 100} 
+                    displayType={'text'} 
+                    thousandSeparator={true} 
+                    prefix={'$ '}
+                    decimalScale={2}
+                  />
+                </Typography>
+              </Grid>
+            </Grid>
+          )}
+        }
+      )
+    )
+  }
+
   return(
+    <>
+    <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
     <Paper>
       <Grid container>
           <Grid container item justify="center" alignItems="center">
@@ -37,22 +91,22 @@ const BudgetInvoice = (props) => {
 
             </Grid>
             <Grid container item xs={1} direction="column" justify="flex-start" alignItems="flex-start">
-              <Typography>Causante:</Typography>
-              <Typography>Interesado:</Typography>
-              <Typography>Operación:</Typography>
-              <Typography>Abogado:</Typography>
+              <Typography variant="button">Causante:</Typography>
+              <Typography variant="button">Interesado:</Typography>
+              <Typography variant="button">Operación:</Typography>
+              <Typography variant="button">Abogado:</Typography>
             </Grid>
             <Grid container item xs={6} direction="column" justify="flex-start" alignItems="flex-start">
-              <Typography variant="button">Alguien apellio apellido</Typography>
-              <Typography variant="button">Alguien apellio apellido</Typography>
-              <Typography variant="button">Alguien apellio apellido</Typography>
-              <Typography variant="button">Alguien apellio apellido</Typography>
+              <Typography>Alguien apellio apellido</Typography>
+              <Typography>Alguien apellio apellido</Typography>
+              <Typography>Alguien apellio apellido</Typography>
+              <Typography>Alguien apellio apellido</Typography>
             </Grid>
             <Grid container item xs={1} direction="column" justify="flex-start" alignItems="flex-start">
-              <Typography>Presupuesto:</Typography>
-              <Typography>Fecha:</Typography>
-              <Typography>Expediente:</Typography>
-              <Typography>Escritura:</Typography>
+              <Typography variant="button">Presupuesto:</Typography>
+              <Typography variant="button">Fecha:</Typography>
+              <Typography variant="button">Expediente:</Typography>
+              <Typography variant="button">Escritura:</Typography>
             </Grid>
             <Grid container item xs={3} direction="column" justify="flex-start" alignItems="flex-start">
               <Typography>0000</Typography>
@@ -173,8 +227,199 @@ const BudgetInvoice = (props) => {
               <h3>CANTIDAD:</h3>
             </Grid>
           </Grid>
+          {renderFieldsInfo()}
+          <Grid container item direction="row">
+            <Grid container item xs={1}></Grid>
+            <Grid
+              container 
+              item 
+              xs={7} 
+              direction="column" 
+              justify="flex-start" 
+              alignItems="flex-start"
+            >
+              <h3>Total gastos, derechos e impuestos</h3>
+            </Grid>
+            <Grid
+              container 
+              item 
+              xs={4} 
+              direction="column" 
+              justify="flex-start" 
+              alignItems="flex-start"
+            >
+              <h3>
+                <NumberFormat 
+                  value={0.00} 
+                  displayType={'text'} 
+                  thousandSeparator={true} 
+                  prefix={'$ '}
+                  decimalScale={2}
+                />
+              </h3>
+            </Grid>
+          </Grid>
+          <Grid container item direction="row">
+            <Grid container item xs={1}></Grid>
+            <Grid
+              container 
+              item 
+              xs={7} 
+              direction="column" 
+              justify="flex-start" 
+              alignItems="flex-start"
+              
+            >
+              <h3 className={classes.honorariumGrid}>Honorarios</h3>
+              <h3 className={classes.honorariumGrid}>I.V.A.</h3>
+              <h3 className={classes.honorariumGrid}> Total honorarios</h3>
+            </Grid>
+            <Grid
+              container 
+              item 
+              xs={4} 
+              direction="column" 
+              justify="flex-start" 
+              alignItems="flex-start"
+
+            >
+              <h3               className={classes.honorariumGrid}>
+                <NumberFormat 
+                  value={0.00} 
+                  displayType={'text'} 
+                  thousandSeparator={true} 
+                  prefix={'$ '}
+                  decimalScale={2}
+                />
+              </h3>
+              <h3               className={classes.honorariumGrid}>
+                <NumberFormat 
+                  value={0.00} 
+                  displayType={'text'} 
+                  thousandSeparator={true} 
+                  prefix={'$ '}
+                  decimalScale={2}
+                />
+              </h3>
+              <h3               className={classes.honorariumGrid}>
+                <NumberFormat 
+                  value={0.00} 
+                  displayType={'text'} 
+                  thousandSeparator={true} 
+                  prefix={'$ '}
+                  decimalScale={2}
+                />
+              </h3>
+            </Grid>
+          </Grid>
+          <Grid container item direction="row">
+            <Grid container item xs={1}></Grid>
+            <Grid
+              container 
+              item 
+              xs={7} 
+              direction="column" 
+              justify="flex-start" 
+              alignItems="flex-start"
+            >
+              <h2 >Gran Total</h2>
+            </Grid>
+            <Grid
+              container 
+              item 
+              xs={4} 
+              direction="column" 
+              justify="flex-start" 
+              alignItems="flex-start"
+            >
+              <h2 >
+                <NumberFormat 
+                  value={budget.total / 100} 
+                  displayType={'text'} 
+                  thousandSeparator={true} 
+                  prefix={'$ '}
+                  decimalScale={2}
+                />
+              </h2>
+            </Grid>
+          </Grid>
+
+
+          <Grid container item direction="row">
+            <Grid container item xs={1}></Grid>
+            <Grid
+              container 
+              item 
+              xs={5} 
+              direction="column" 
+              justify="flex-start" 
+              alignItems="flex-start"
+            >
+             <h2 >TOTAL DE GASTOS, DERECHOS E IMPUESTOS</h2>
+             <h2 >
+                <NumberFormat 
+                  value={0.00} 
+                  displayType={'text'} 
+                  thousandSeparator={true} 
+                  prefix={'$ '}
+                  decimalScale={2}
+                />
+              </h2>
+              <Typography variant="subtitle2"> Cuenta: 0108511160 </Typography>
+              <Typography variant="subtitle2"> CLABE: 012694001085111605 </Typography>
+              <Typography variant="subtitle2"> Titular: JOSE ALFREDO ASUNCIO MARTIN VILLANUEVA </Typography>
+              <Typography variant="subtitle2"> Bancomer: BBVA Bancomer. </Typography>
+              <Typography variant="subtitle2"> Swif: BCMRMXMMPYM </Typography>
+              <Typography variant="subtitle2"> Dirección: Av. Paseo de la Reforma 510, Col. Juárez, </Typography>
+              <Typography variant="subtitle2"> C.P. 06600, Delegación Cuauhtémoc, D.F.</Typography>
+            </Grid>
+            <Grid
+              container 
+              item 
+              xs={5} 
+              direction="column" 
+              justify="flex-start" 
+              alignItems="flex-start"
+            >
+              <h2 >HONORARIOS</h2>
+             <h2 >
+                <NumberFormat 
+                  value={0.00} 
+                  displayType={'text'} 
+                  thousandSeparator={true} 
+                  prefix={'$ '}
+                  decimalScale={2}
+                />
+              </h2>
+              <Typography variant="subtitle2"> Cuenta: 0108764492 </Typography>
+              <Typography variant="subtitle2">  CLABE: 012691001087644924 </Typography>
+              <Typography variant="subtitle2"> Titular: CORPORATIVO N48, S.C. </Typography>
+              <Typography variant="subtitle2"> Bancomer: BBVA Bancomer. </Typography>
+              <Typography variant="subtitle2"> Swif: BCMRMXMMPYM </Typography>
+              <Typography variant="subtitle2"> Dirección: Av. Paseo de la Reforma 510, Col. Juárez,</Typography>
+              <Typography variant="subtitle2"> C.P. 06600, Delegación Cuauhtémoc, D.F. </Typography>
+            </Grid>
+          </Grid>
+          <Grid container item direction="row" className={classes.marginTopGridInvoice}>
+            <Grid container item xs={1}></Grid>
+            <Grid
+              container 
+              item 
+              xs={11} 
+              direction="column" 
+              justify="flex-start" 
+              alignItems="flex-start"
+            >
+              <h3 className={classes.honorariumGrid}>Observaciones:</h3>
+              <Typography variant="subtitle2"> 
+                Honorarios calculados de acuerdo al Arancel de Notarios para el estado de Quintana Roo publicado 
+                  en el Periódico Oficial del Estado el 9 de octubre de 2013. 
+              </Typography>
+            </Grid>
+          </Grid>
       </Grid>
     </Paper>
+    </>
   )
 
 }

@@ -46,7 +46,7 @@ export default function BaseRoutes(props) {
         <ProtectedRoute path='/clients/:id' component={ClientsShow}/> 
         <ProtectedRoute path="/clients" component={ClientsIndex}/>
         <ProtectedRoute path="/budgets/templates" component={BudgetBuilderIndex}/>
-        <ProtectedRoute path='/budgets/:id/edit/invoice' component={BudgetInvoice} />
+        <ProtectedRoute path='/budgets/:id/invoice' component={BudgetInvoice} />
         <ProtectedRoute path='/budgets/:id/edit' component={BudgetsEdit} />
         <ProtectedRoute path='/budgets/new' component={budgetsNew}/>{/* TODO: corregir a mayusculas*/}
         <ProtectedRoute path='/budgets' component={BudgetsIndex} />

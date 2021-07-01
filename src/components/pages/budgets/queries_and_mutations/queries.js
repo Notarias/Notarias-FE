@@ -200,6 +200,7 @@ query budget(
         avatarThumbUrl
         id
       }
+      id
       asigneeId
       total
       totalCredit
@@ -340,7 +341,6 @@ export const GET_BUDGET_FIELD_VALUE = gql`
     budgetingTemplateFieldId: $budgetingTemplateFieldId
     budgetId: $budgetId
     ){
-      budgetingTemplateFieldId
       id
       value
       budgetId
@@ -658,6 +658,18 @@ query budgetAuditLogs(
         avatarThumbUrl
         id
       }
+    }
+  }
+`
+
+export const GET_BUDGETING_TEMPLATE_FIELDS = gql`
+  query budgetingTemplateFields ($id: ID! ) {
+    budgetingTemplateFields (id: $id) {
+      active
+      id
+      name
+      extendable
+      budgetingTemplateTabId
     }
   }
 `

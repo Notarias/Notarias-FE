@@ -141,6 +141,7 @@ const NewFieldButton = ({
                 <TextField 
                   id="fieldName" 
                   label="Editar nombre"
+                  autoFocus
                   className={ classes.textInputTittleName }
                   value={ fieldName }
                   onChange={ handleFieldNameChange }
@@ -166,7 +167,7 @@ const NewFieldButton = ({
               variant="contained"
               disabled={ pristine }
             >
-              "Añadir campo"
+              Añadir campo
             </Button>
           </Grid>
         </DialogActions>

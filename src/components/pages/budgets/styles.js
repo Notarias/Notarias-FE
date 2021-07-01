@@ -255,6 +255,9 @@ export const styles = theme => {
     },
     messageToLeft: {
       textAlign: "left"
+    },
+    honorariumGrid: {
+      margin: "0px"
     }
     
   })

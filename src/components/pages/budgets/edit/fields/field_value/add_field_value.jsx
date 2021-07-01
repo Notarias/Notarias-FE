@@ -6,6 +6,7 @@ import { UPDATE_BUDGET_FIELD_VALUE }                from '../../../queries_and_m
 import { CREATE_BUDGET_FIELD_VALUE }                from '../../../queries_and_mutations/queries'
 import { GET_BUDGET_FIELD_VALUE }                   from '../../../queries_and_mutations/queries'
 import { GET_BUDGET }                               from '../../../queries_and_mutations/queries'
+import { GET_BUDGET_TOTALS }                        from '../../../queries_and_mutations/queries'
 import Dialog                                       from '@material-ui/core/Dialog';
 import DialogActions                                from '@material-ui/core/DialogActions';
 import DialogContent                                from '@material-ui/core/DialogContent';
@@ -54,6 +55,10 @@ const AddFieldValue = (props) => {
         {
           query: GET_BUDGETS_AUDITLOG,
           variables: { "budgetId": currentBudget }
+        },
+        {
+          query: GET_BUDGET_TOTALS,
+            variables: {"id": currentBudget }
         }
       ],
       awaitRefetchQueries: true
@@ -95,6 +100,10 @@ const AddFieldValue = (props) => {
         {
           query: GET_BUDGETS_AUDITLOG,
           variables: { "budgetId": currentBudget }
+        },
+        {
+          query: GET_BUDGET_TOTALS,
+            variables: {"id": currentBudget }
         }
       ],
       awaitRefetchQueries: true

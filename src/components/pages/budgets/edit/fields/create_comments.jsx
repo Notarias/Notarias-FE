@@ -10,6 +10,7 @@ import { GET_CURRENT_USER }         from '../../../../../resolvers/queries';
 import { useMutation }              from '@apollo/react-hooks'
 import { CREATE_COMMENT }           from '../../queries_and_mutations/queries';
 import { GET_COMMENTABLE_COMMENTS } from '../../queries_and_mutations/queries';
+import { GET_BUDGETS_AUDITLOG }     from '../../queries_and_mutations/queries';
 
 
 const CreateComments = (props) => {
@@ -37,6 +38,10 @@ const CreateComments = (props) => {
           query: GET_COMMENTABLE_COMMENTS,
           variables: {"commentableType": "Budget" , commentableId: budgetId }
         },
+        {
+          query: GET_BUDGETS_AUDITLOG,  
+            variables: {"budgetId": budgetId }
+        }
       ],
       awaitRefetchQueries: true
     }

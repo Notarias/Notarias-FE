@@ -23,6 +23,7 @@ const AuditLog = (props) => {
     [data]
   )
 
+
   return(
     <Grid className={classes.uditLogGrid}>
       {
@@ -39,6 +40,11 @@ const AuditLog = (props) => {
               `${date}${separator}${month<10?`0${month}`:`${month}`}${separator}${year}-${hours}:${minutes}`
               )
             }
+
+            function createMarkup() {
+              return {__html: obj.message};
+            }
+
           return(
             <React.Fragment key={obj.id + "fragment"}>
               <Grid container direction="row" alignItems="center" className={classes.topMarginGrid}>
@@ -51,7 +57,9 @@ const AuditLog = (props) => {
                 <Grid container item xs={10} direction="column" alignItems="flex-start" justify="flex-start">
                   <Typography variant="subtitle2">{obj.user.firstName} {obj.user.lastName}</Typography>
                   <Typography variant="caption"> fecha: {getCurrentDate()}</Typography>
-                  <Typography variant="caption" className={classes.messageToLeft}>{obj.message}</Typography>
+                  <Typography variant="caption" className={classes.messageToLeft} dangerouslySetInnerHTML={createMarkup()} >
+                    
+                  </Typography>
                 </Grid>
               </Grid>
             </React.Fragment>
