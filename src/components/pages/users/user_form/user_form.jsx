@@ -215,7 +215,7 @@ class  UserForm extends Component {
                           {
                             this.props.data.roles.map((role)=> {
                               return(
-                                <MenuItem  value={role.permanentLink}>
+                                <MenuItem key={role.createdAt + "role"} value={role.permanentLink}>
                                   {role.name}
                                 </MenuItem>
                               )

@@ -62,3 +62,37 @@ export const GET_CURRENT_USER = gql`
     }
   }
 `
+
+export const LOAD_USERS = gql`
+  query searchClients(
+    $page: Int,
+    $per: Int,
+    $sortField: String,
+    $sortDirection: String,
+    $searchField: String,
+    $searchValue: String
+  ) {
+  users(
+    page: $page,
+    per: $per,
+    sortField: $sortField,
+    sortDirection: $sortDirection,
+    searchField: $searchField,
+    searchValue: $searchValue
+    ) {
+      id
+      firstName
+      lastName
+      email
+      lockedAt
+      roleId
+      role {
+        name
+        permanentLink
+        createdAt
+        updatedAt
+      }
+    }
+    usersCount
+  }
+`

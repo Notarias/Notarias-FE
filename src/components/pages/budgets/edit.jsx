@@ -210,24 +210,25 @@ const BudgetsEdit = (props) => {
               </Grid>
               <Grid item xs={1}>
                 <GenericDropdownMenu>
-                  <MenuItem key="1-abono">
-                    <ListItemText primary="Nuevo abono" onClick={handleClickOpen}/>
+                  <MenuItem key="1-abono" onClick={handleClickOpen}>
+                    <ListItemText primary="Nuevo abono"/>
                   </MenuItem>
                   <MenuItem key="2-paymentList">
                     <PaymentList
                       budgetId={match.params.id}
                     />
                   </MenuItem>
-                  <MenuItem key="3-paymentList">
-                    <Link
-                      to={`/budgets/${ budget.id }/invoice`}
-                      color="inherit"
-                      underline="none"
-                      className={classes.linkDefault}
-                    >
+                  <Link
+                    to={`/budgets/${ match.params.id }/invoice`}
+                    color="inherit"
+                    underline="none"
+                    className={classes.linkDefault}
+                    key="3-paymentList"
+                  >
+                    <MenuItem >
                       <ListItemText primary="Imprimir presupuesto"/>
-                    </Link>
-                  </MenuItem>
+                    </MenuItem>
+                  </Link>
                 </GenericDropdownMenu>
                 <Dialog open={open} onClose={handleClose} fullWidth>
                   <DialogTitle>
