@@ -103,7 +103,7 @@ const PaymentList = (props) => {
   } else {
     return(
       <>
-        <ListItemText primary="Lista de pagos" onClick={handleClickOpen}/>
+        <ListItemText primary="Lista de pagos" onClick={handleClickOpen} fullWidth/>
         <Dialog open={open} onClose={handleClose} fullWidth>
           <DialogTitle>
             <Grid container direction="column">

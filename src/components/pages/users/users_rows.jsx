@@ -79,7 +79,15 @@ export default (props) => {
       <TableBody>
         {
           data.users.map(user => (
-            <UserTableRows user={user}/>
+            <UserTableRows 
+              user={user}
+              key={ user.id + "-userRow" }
+              page={page}
+              per={per}
+              searchField={searchField}
+              sortDirection={sortDirection}
+              sortField={sortField}
+            />
           ))
         }
       </TableBody>
