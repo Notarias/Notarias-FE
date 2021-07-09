@@ -13,7 +13,7 @@ import { BUDGETING_TEMPLATE_BY_PROCEDURE_ID }         from '../queries_and_mutat
 
 
 const BudgetSelector = (props) => {
-  const {classes, procedureId, setbudgetInfo, setDisabledNextButton } = props
+  const {classes, procedureId, setbudgetInfo, setDisableNextButton } = props
   const [searchList, setSearchList] = React.useState([])
   const [initialList, setInitialList] = React.useState([])
   const [fuzzySearcher, setFuzzySearcher] = React.useState(new Fuse(initialList, { keys: ['name'] }))
@@ -69,7 +69,7 @@ const BudgetSelector = (props) => {
                 setSelectedIndex(obj.id);
                 setbudgetInfo(obj)
               };
-              setDisabledNextButton(obj.id === selectedIndex ? false : true)
+              setDisableNextButton(obj.id === selectedIndex ? false : true)
               return(
               <React.Fragment key={obj.id + "fragment"}>
                 <ListItem 

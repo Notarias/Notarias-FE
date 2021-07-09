@@ -124,7 +124,7 @@ const NewBudget = (props) => {
   const inputsList = ["first_name", "last_name"]
   const [redirect, setRedirect] = useState(false)
   const [asignee, setAsignee] = useState(defaultUser)
-  const [disabledNextButton, setDisabledNextButton] = useState(true)
+  const [disableNextButton, setDisableNextButton] = useState(true)
 
   let variables = {
     firstName: firstName,
@@ -423,7 +423,7 @@ const NewBudget = (props) => {
                     <BudgetSelector
                       procedureId={ procedureInfo && Number(procedureInfo.id)}
                       setbudgetInfo={ setbudgetInfo }
-                      setDisabledNextButton={setDisabledNextButton}
+                      setDisableNextButton={setDisableNextButton}
                     />
                   </Grid>
                   <Grid container item alignItems="flex-start" justify="flex-end" className={classes.grid100}>
@@ -432,7 +432,7 @@ const NewBudget = (props) => {
                       color="primary"
                       onClick={ clickOpenNewBudget }
                       className={classes.button}
-                      disabled={disabledNextButton}
+                      disabled={disableNextButton}
                     >
                       Siguiente
                     </Button>
