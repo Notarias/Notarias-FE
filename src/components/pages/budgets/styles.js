@@ -176,11 +176,12 @@ export const styles = theme => {
       marginTop: "20px"
     },
     inputInAdvancedSearch: {
-      margin: "5px"
+      margin: "5px",
+      width: "160px"
     },
     inputClientNameInAdvancedSearch: {
       margin: "5px",
-      width: "428px"
+      width: "498px"
     },
     paperAdvancedSearch: {
       width: "800px"

@@ -45,7 +45,7 @@ const BudgetsIndex = (props) => {
 
   const toEraseValue = () => {
     clientNameInputRef && (clientNameInputRef.current.value = null)
-    procedureInputRef && (procedureInputRef.current.value = null)
+    // procedureInputRef && (procedureInputRef.current.value = null)
     serialNumberInputRef && (serialNumberInputRef.current.value = null)
     moreThanInputRef && (moreThanInputRef.current.value = null)
     lessThanInputRef && (lessThanInputRef.current.value =null)

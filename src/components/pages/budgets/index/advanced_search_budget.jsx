@@ -36,9 +36,10 @@ const AdvancedSearchBudget = (props) => {
   }
 
   const onChangeSerialNumber = (event) => {
-    const onlyNums = event.target.value.replace(/[^0-9]/g, '');
+    const onlyString = event.target.value.toString()
+    const onlyNums = onlyString.replace(/[^0-9]/g, '');
     event.target.value = onlyNums
-    setChangeSerialNumber(event.target.value)
+    setChangeSerialNumber(Number(event.target.value))
   }
 
   const onChangeMoreThan = (event) => {
@@ -48,7 +49,7 @@ const AdvancedSearchBudget = (props) => {
   }
 
   const onChangeLessThan = (event) => {
-    const onlyNums = event.target.value.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")
+    const onlyNums = event.target.value.replace(/[^0-9]/g, '');
     event.target.value = onlyNums
     setChangeLessThan(Number(event.target.value))
   }
@@ -56,18 +57,18 @@ const AdvancedSearchBudget = (props) => {
   const startAdvanceSearch = () => {
     setClientNameValue(changeClientName)
     setProcedureNameValue(changeProcedureName)
-    setSerialNumberValue(changeSerialNumber)
-    setMoreThanValue(changeMoreThan * 100)
-    setLessThanValue(changeLessThan * 100)
+    setSerialNumberValue(changeSerialNumber > 0 ? changeSerialNumber : null)
+    setMoreThanValue(changeMoreThan > 0 ? changeMoreThan * 100 : null)
+    setLessThanValue(changeLessThan > 0 ? changeLessThan * 100 : null)
   }
 
   return(
     <Grid container justify="flex-end" className={changeAdvanceSearch ? 
                                         classes.GridInputAdvancedSearchHide : classes.GridInputAdvancedSearch}
     >
-      <Grid container item xs={8} direction="row" justify="flex-end">
+      <Grid container item xs={6} direction="row" justify="flex-end">
         <Paper className={classes.paperAdvancedSearch}>
-        <Grid container item direction="row" justify="flex-end">
+        <Grid container item justify="flex-start">
           <Grid item xs={10}>
             <TextField
               inputRef={clientNameInputRef}
@@ -78,15 +79,17 @@ const AdvancedSearchBudget = (props) => {
               variant="outlined" 
               className={classes.inputClientNameInAdvancedSearch}
             />
-            <TextField
+          {/* </Grid> */}
+            {/* <TextField
               inputRef={procedureInputRef}
               onChange={onChangeProcedureName}
               size="small"
-              id="procedure"
-              label="Tramite"
+              id="budgeting"
+              label="Presupuesto"
               variant="outlined"
               className={classes.inputInAdvancedSearch}
-            />
+            /> */}
+            {/* <Grid item xs={10}> */}
             <TextField
               inputRef={serialNumberInputRef}
               onChange={onChangeSerialNumber}
