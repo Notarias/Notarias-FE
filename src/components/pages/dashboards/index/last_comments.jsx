@@ -24,38 +24,52 @@ class LastComments extends Component {
             {({ loading, error, data, refetch  }) => {
                 if (loading) return "Loading...";
                 if (error) return `Error! ${error.message}`;
+                console.log(data, "data")
                 return (
                   <div style={{ width: '100%', height:" 500px"}}>
                     {data.comments.map(comment => (
-                      <Link key={"comment-" + comment.id} href={`clients/${comment.commentableId}/edit`} color="inherit" textDecoration="none" underline= "none">
+                      // <Link 
+                      //   key={"comment-" + comment.id} 
+                      //   href={`clients/${comment.commentableId}/edit`} 
+                      //   color="inherit" 
+                      //   textDecoration="none" 
+                      //   underline= "none"
+                      // >
                         <ListItem >
-                          <Grid item container xs={4}>
+                          <Grid item container xs={3} alignItems="center" justify="center">
                             <ListItemAvatar align='center'>
-                              <Avatar key={comment.commentableId} src={comment.user.avatarMidUrl} className={classes.largeAvatar} />
+                              <Avatar 
+                                key={comment.commentableId} 
+                                src={comment.user.avatarMidUrl} 
+                                className={classes.largeAvatar}  
+                                size="small"
+                              />
                             </ListItemAvatar>
                           </Grid>
                           <Grid item container xs={8} classes={{root: classes.gridEllipsis}}>
-                            <ListItemText align='left' primary={
-                              <Grid item container xs={12}>
-                                <Grid item xs={12} sm={12} md={2} lg={2}>
+                            <ListItemText  primary={
+                              <Grid item container xs={12} direction="row">
+
+                                <Grid container item xs={6}>
                                   <Typography variant="subtitle2" color="primary">
-                                    {comment.user.firstName}
+                                    {comment.user.firstName} 
                                   </Typography>
                                 </Grid>
-                                <Grid item xs={12} sm={12} md={10} lg={10}>
+                                <Grid container item xs={6}>
                                   <Typography variant="body2" color="primary">
                                     {comment.user.createdAt.substr(0,10)}
                                   </Typography>
                                 </Grid>
+
                               </Grid>
                             } secondary={
-                              <Typography classes={{root: classes.gridEllipsis}}>
+                              <Typography variant="body2"classes={{root: classes.gridEllipsis}}>
                                 {comment.body}
                               </Typography>
                             } style={{ width: '100%', maxHeight: "50%" }}/>
                           </Grid>
                         </ListItem>
-                      </Link>
+                      // </Link>
                       ))
                     }
                   </div>
