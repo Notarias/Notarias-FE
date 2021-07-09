@@ -20,7 +20,6 @@ const TemplateRow = (props) => {
   const {budget, classes} = props
   const [open, setOpen] = React.useState(false);
 
-  console.log(typeof(budget.serialNumber), "data")
   return(
     <TableRow key={  "-row" }>
       <TableCell align= "center" className={classes.tablecellWidth}>{ budget.client.firstName }</TableCell>

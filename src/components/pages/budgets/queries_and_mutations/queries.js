@@ -612,6 +612,20 @@ export const UPDATE_BUDGET = gql`
         totalDebt
         totalPaid
         totalCredit
+        asignee{
+          firstName
+          lastName
+          id
+          avatarThumbUrl
+        }
+        asigneeId
+        reporter{
+          firstName
+          lastName
+          id
+          avatarThumbUrl
+        }
+        reporterId
         proceduresTemplate{
           active
           name
