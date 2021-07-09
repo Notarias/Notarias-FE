@@ -124,9 +124,10 @@ const ClientSearch = (props) => {
               hover 
               selected={client.id === selectedIndex} 
               onClick={ handleMenuItemClick }
+              
             >
-              <TableCell align= "center">{ client.firstName }</TableCell>
-              <TableCell align= "center">{ client.lastName }</TableCell>
+              <TableCell align= "center" className={classes.tableRowMax}>{ client.firstName }</TableCell>
+              <TableCell align= "center" className={classes.tableRowMax}>{ client.lastName }</TableCell>
               <TableCell align= "center">{ client.rfc }</TableCell>
               <TableCell align= "center">{ client.curp }</TableCell>
             </TableRow>
@@ -141,11 +142,11 @@ const ClientSearch = (props) => {
   let sortHandler = sort.bind(this)
 
   return(
-    <Grid container item xs={10} >
+    <Grid container item xs={10}>
      { renderInputSearch() }
       <Table className={classes.ClientSearchTable} >
-        <TableHead>
-          <TableRow>
+        <TableHead >
+          <TableRow >
           <SortHeader
               text={"Nombre"}
               field_property={"first_name"}
