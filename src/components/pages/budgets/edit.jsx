@@ -191,7 +191,6 @@ const BudgetsEdit = (props) => {
               <Grid container item xs={5} justify="flex-start" alignItems="center">
                 <Typography variant="h6" gutterBottom className={classes.marginTitleBudgetName}>
                   { budgetingTemplate && budgetingTemplate.name }
-                  { budgetingTemplate && budgetingTemplate.id }
                 </Typography>
                 <Button>
                   <OpenInNewIcon/>
@@ -200,7 +199,6 @@ const BudgetsEdit = (props) => {
               <Grid item xs={4}>
                 <Typography variant="subtitle2" gutterBottom>
                   { proceduresTemplate && proceduresTemplate.name }
-                  { proceduresTemplate && proceduresTemplate.name.id }
                 </Typography>
               </Grid>
               <Grid container item xs={2} justify="flex-end">
@@ -309,7 +307,7 @@ const BudgetsEdit = (props) => {
               <Grid container item xs={4} justify="flex-start" alignItems="center">
                 <Typography variant="subtitle2">Cliente:</Typography>
                 <Typography variant="caption" className={classes.spaceBetwenFirstNameAndLastName}>
-                  { budget && budget.client.firstName } { budget && budget.client.lastName } { budget && budget.client.id }
+                  { budget && budget.client.firstName } { budget && budget.client.lastName }
                 </Typography>
               </Grid>
             </Grid>
