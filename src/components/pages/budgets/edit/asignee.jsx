@@ -68,6 +68,7 @@ const Asignee = (props) => {
   const [searchList, setSearchList]         = React.useState([])
   const [fuzzySearcher, setFuzzySearcher]   = React.useState(new Fuse(users, { keys: ['firstName'] }))
   const [initialized, setInitialized]       = React.useState()
+  const [assigneToMutation, setAssigneToMutation] = React.useState()
 
   const [selectedIndex, setSelectedIndex]   = React.useState(1);
   const [asignee, setAsignee]               = React.useState()
@@ -79,6 +80,7 @@ const Asignee = (props) => {
   const [page, setPage]                     = useState(1)
   const [per, setPer]                       = useState(100)
   const [total_records, setTotalRecords]    = useState(0)
+  const [pristine, setPristine] = useState(true)
 
   let variables = {
     page: page,
@@ -102,9 +104,7 @@ const Asignee = (props) => {
   const [users, setUsers] = React.useState([])
 
   useEffect(() => {
-
     if (!initialized && data && data.users) {
-      setAsignee(defaultUser)
       setUsers(data.users)
       setFuzzySearcher(new Fuse(data.users, { keys: ['firstName'] }))
       setSearchList(data.users)
@@ -120,8 +120,11 @@ const Asignee = (props) => {
         firstName: asigneeData.firstName,
         lastName: asigneeData.lastName
       })
+    } else {
+      setAsignee(defaultUser)
     }
   },[asigneeData]);
+
 
   function changeSearch(event) {
     let result = fuzzySearcher.search(event.target.value)
@@ -142,6 +145,8 @@ const Asignee = (props) => {
       },
       onCompleted(cacheData) {
         setOpen(false);
+        setPristine(true)
+        console.log(cacheData.updateBudget.budget.assignee, "term")
       },
       refetchQueries: [
         {
@@ -161,7 +166,7 @@ const Asignee = (props) => {
     updateBudgetMutation({
        variables:{
         "id": budgetId ,
-        "asigneeId": asignee.id ,
+        "asigneeId": assigneToMutation.id ,
        }
     })
   }
@@ -177,7 +182,8 @@ const Asignee = (props) => {
 
   const handleListItemClick = (obj) => {
     setSelectedIndex(obj.id);
-    setAsignee(obj);
+    setPristine(false)
+    setAssigneToMutation(obj);
   };
 
   const haveThumbUrl = (obj) => {
@@ -188,6 +194,7 @@ const Asignee = (props) => {
     }
   }
 
+  console.log(assigneToMutation, "mut", asignee, "ass")
   return (
     <Grid container direction="row" alignItems="center">
       <a href="#" className={classes.aWithoutDecoration} onClick={handleClickOpen}>
@@ -221,7 +228,10 @@ const Asignee = (props) => {
           <Button onClick={handleClose}>
             Cancelar
           </Button>
-          <Button onClick={() => {assingUser()}}>
+          <Button 
+            onClick={() => {assingUser()}}
+            disabled={pristine || updateBudgetProcessInfo.loading}
+          >
             Aceptar
           </Button>
         </DialogActions>

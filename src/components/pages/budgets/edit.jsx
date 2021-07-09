@@ -181,6 +181,7 @@ const BudgetsEdit = (props) => {
     return (`${year}${separator}${month<10?`0${month}`:`${month}`}${separator}${date}`)
   }
 
+  console.log(budget && budget.asignee, "coso")
   return(
     <>
       <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
