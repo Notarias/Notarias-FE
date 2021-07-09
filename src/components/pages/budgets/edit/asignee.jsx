@@ -146,7 +146,6 @@ const Asignee = (props) => {
       onCompleted(cacheData) {
         setOpen(false);
         setPristine(true)
-        console.log(cacheData.updateBudget.budget.assignee, "term")
       },
       refetchQueries: [
         {
@@ -194,7 +193,6 @@ const Asignee = (props) => {
     }
   }
 
-  console.log(assigneToMutation, "mut", asignee, "ass")
   return (
     <Grid container direction="row" alignItems="center">
       <a href="#" className={classes.aWithoutDecoration} onClick={handleClickOpen}>
