@@ -24,7 +24,6 @@ class LastComments extends Component {
             {({ loading, error, data, refetch  }) => {
                 if (loading) return "Loading...";
                 if (error) return `Error! ${error.message}`;
-                console.log(data, "data")
                 return (
                   <div style={{ width: '100%', height:" 500px"}}>
                     {data.comments.map(comment => (
