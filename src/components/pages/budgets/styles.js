@@ -176,12 +176,11 @@ export const styles = theme => {
       marginTop: "20px"
     },
     inputInAdvancedSearch: {
-      margin: "5px",
-      width: "160px"
+      margin: "5px"
     },
     inputClientNameInAdvancedSearch: {
       margin: "5px",
-      width: "498px"
+      width: "428px"
     },
     paperAdvancedSearch: {
       width: "800px"
@@ -259,7 +258,11 @@ export const styles = theme => {
     },
     honorariumGrid: {
       margin: "0px"
+    },
+    tableRowMax: {
+      wordWrap: "break-word",
+      height: "50px",
+      padding: "5px"
     }
-    
   })
 }

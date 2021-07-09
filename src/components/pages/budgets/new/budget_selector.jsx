@@ -9,12 +9,11 @@ import ListItemText                                   from '@material-ui/core/Li
 import Grid                                           from '@material-ui/core/Grid';
 import Divider                                        from '@material-ui/core/Divider';
 import { useQuery }                                   from '@apollo/react-hooks';
-import { useLazyQuery } from '@apollo/react-hooks';
-import { BUDGETING_TEMPLATE_BY_PROCEDURE_ID }         from '../queries_and_mutations/queries'
+import { BUDGETING_TEMPLATE_BY_PROCEDURE_ID }         from '../queries_and_mutations/queries';
 
 
 const BudgetSelector = (props) => {
-  const {classes, procedureId, setbudgetInfo } = props
+  const {classes, procedureId, setbudgetInfo, setDisableNextButton } = props
   const [searchList, setSearchList] = React.useState([])
   const [initialList, setInitialList] = React.useState([])
   const [fuzzySearcher, setFuzzySearcher] = React.useState(new Fuse(initialList, { keys: ['name'] }))
@@ -70,6 +69,7 @@ const BudgetSelector = (props) => {
                 setSelectedIndex(obj.id);
                 setbudgetInfo(obj)
               };
+              setDisableNextButton(obj.id === selectedIndex ? false : true)
               return(
               <React.Fragment key={obj.id + "fragment"}>
                 <ListItem 

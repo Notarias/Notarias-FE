@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
     height: "500px"
   },
   grid300: {
-    height: "435px"
+    height: "400px"
   },
   grid100: {
     height: "60px"
@@ -124,6 +124,7 @@ const NewBudget = (props) => {
   const inputsList = ["first_name", "last_name"]
   const [redirect, setRedirect] = useState(false)
   const [asignee, setAsignee] = useState(defaultUser)
+  const [disableNextButton, setDisableNextButton] = useState(true)
 
   let variables = {
     firstName: firstName,
@@ -309,7 +310,6 @@ const NewBudget = (props) => {
                     color="primary"
                     onClick={handleToProcedure}
                     className={classes.button}
-                    disabled={ !clientInfo }
                   >
                     Siguiente
                   </Button>
@@ -423,6 +423,7 @@ const NewBudget = (props) => {
                     <BudgetSelector
                       procedureId={ procedureInfo && Number(procedureInfo.id)}
                       setbudgetInfo={ setbudgetInfo }
+                      setDisableNextButton={setDisableNextButton}
                     />
                   </Grid>
                   <Grid container item alignItems="flex-start" justify="flex-end" className={classes.grid100}>
@@ -431,6 +432,7 @@ const NewBudget = (props) => {
                       color="primary"
                       onClick={ clickOpenNewBudget }
                       className={classes.button}
+                      disabled={disableNextButton}
                     >
                       Siguiente
                     </Button>
@@ -454,6 +456,7 @@ const NewBudget = (props) => {
                           color="primary"
                           className={classes.button}
                           onClick={createNewBudget}
+                          disabled={createBudgetProcessInfo.loading}
                         >
                           { redirect }
                           Aceptar
