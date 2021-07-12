@@ -30,7 +30,7 @@ const CommentEdit = (props) => {
 
   const inputsList = ["body"]
 
-  const [updateCommentMutation, updateCommentProcessInfo] =
+  const [updateCommentMutation, {loading: updateCommentLoading}] =
   useMutation(
     UPDATE_COMMENT,
     {
@@ -81,7 +81,7 @@ const CommentEdit = (props) => {
     )
   }
 
-  const [destroyCommentMutation, destroyCommentProcessInfo] =
+  const [destroyCommentMutation, {loading: destroyCommentloading}] =
   useMutation(
     DESTROY_COMMENT,
     {
@@ -165,7 +165,7 @@ const CommentEdit = (props) => {
               size="small"
               variant="body2"
               onClick={updateComment}
-              disabled={pristine}
+              disabled={pristine || updateCommentLoading}
               className={ pristine ? classes.buttonTextCommentsDisabled : classes.buttonTextComments }
             >
               Aceptar
@@ -206,7 +206,7 @@ const CommentEdit = (props) => {
               <Button onClick={handleClose}>
                 Cancelar
               </Button>
-              <Button onClick={destroyComment}>
+              <Button onClick={destroyComment} disabled={destroyCommentloading}>
                 Aceptar
               </Button>
             </DialogActions>

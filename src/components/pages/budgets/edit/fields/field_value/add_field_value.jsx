@@ -37,7 +37,7 @@ const AddFieldValue = (props) => {
   };
 
 
-  const [createFieldValueMutation, createFieldValueProcessInfo] =
+  const [createFieldValueMutation, {loading: createFieldValueLoading}] =
   useMutation(
     CREATE_BUDGET_FIELD_VALUE,
     {
@@ -74,7 +74,7 @@ const AddFieldValue = (props) => {
     })
   }
 
-  const [updateFieldValueMutation, updateFieldValueProcessInfo] =
+  const [updateFieldValueMutation, {loading: updateFieldValueLoading}] =
   useMutation(
     UPDATE_BUDGET_FIELD_VALUE,
     {
@@ -127,7 +127,7 @@ const AddFieldValue = (props) => {
         </Button>
       :
         <Button
-          disabled={!pristine}
+          disabled={!pristine || createFieldValueLoading}
           onClick={ createNewFieldValue }
         >
           <SaveIcon/>
@@ -150,8 +150,11 @@ const AddFieldValue = (props) => {
         <Button onClick={ handleClose }>
           Cancelar
         </Button>
-        <Button  onClick={ updateNewFieldValue }>
-          Acceptar
+        <Button  
+          onClick={ updateNewFieldValue }
+          disabled={updateFieldValueLoading}
+        >
+          Aceptar
         </Button>
       </DialogActions>
     </Dialog>

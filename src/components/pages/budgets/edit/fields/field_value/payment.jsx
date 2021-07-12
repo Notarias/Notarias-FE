@@ -62,7 +62,7 @@ const Payment = (props) => {
 
   const inputsList = ["total"]
 
-  const [createPaymentMutation, createPaymentProcessInfo] =
+  const [createPaymentMutation, {loading: createPaymentLoading}] =
   useMutation(
     CREATE_PAYMENT,
     {
@@ -223,7 +223,7 @@ const Payment = (props) => {
           <Button onClick={handleClose}>
             Cancelar
           </Button>
-          <Button onClick={createNewPayment} disabled={pristine}>
+          <Button onClick={createNewPayment} disabled={pristine || createPaymentLoading}>
             Aceptar
           </Button>
         </DialogActions>

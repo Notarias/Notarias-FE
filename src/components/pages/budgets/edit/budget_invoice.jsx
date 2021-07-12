@@ -1,4 +1,4 @@
-import React, {useState}                    from 'react';
+import React, {useEffect}                    from 'react';
 import { withStyles }                       from '@material-ui/core/styles';
 import { styles }                           from '../styles';
 import Dialog                               from '@material-ui/core/Dialog';
@@ -21,11 +21,18 @@ const BudgetInvoice = (props) => {
   const { classes, match } = props
   const [open, setOpen] = React.useState(false)
 
+  let variables = {"id": match.params.id} 
+
   const { loading, data, refetch } = useQuery(
-    GET_BUDGET, { variables: {"id": match.params.id } }
+    GET_BUDGET, { variables: variables, fetchPolicy: "no-cache" }
   );
 
+  
   const budget                          = data && data.budget
+
+  useEffect(()=> {
+    refetch(variables);
+  }, [data])
 
   const BREADCRUMBS =  [
     { name: "Inicio", path: "/" },
@@ -44,7 +51,7 @@ const BudgetInvoice = (props) => {
 
   const renderFieldsInfo = () => {
     return(
-      budget.fieldValues.map((toPrint) => {
+      budget && budget.fieldValues.map((toPrint) => {
         if( toPrint.value !== 0){
           return(
             <Grid container item direction="row" key={toPrint.id + "values"}>
@@ -334,7 +341,7 @@ const BudgetInvoice = (props) => {
             >
               <h2 >
                 <NumberFormat 
-                  value={budget.total / 100} 
+                  value={budget && budget.total / 100} 
                   displayType={'text'} 
                   thousandSeparator={true} 
                   prefix={'$ '}

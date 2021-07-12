@@ -84,7 +84,7 @@ const BudgetsEdit = (props) => {
 
   const inputsList = ["total"]
 
-  const { loading: queryALoading, data: budgetData , refetch } = useQuery(
+  const { loading: budgetLoading, data: budgetData , refetch } = useQuery(
     GET_BUDGET, { variables: {"id": match.params.id } }
   );
 
@@ -92,11 +92,11 @@ const BudgetsEdit = (props) => {
   const budgetingTemplate               = budget && budget.budgetingTemplate
   const proceduresTemplate              = budget && budget.proceduresTemplate  
 
-  const { loading: queryBLoading , data: queryBData } = useQuery(
+  const { loading: currentUserLoading , data: queryBData } = useQuery(
     GET_CURRENT_USER
   );
 
-  const [createCreditPaymentMutation, createCreditPaymentProcessInfo] =
+  const [createCreditPaymentMutation, loading] =
   useMutation(
     CREATE_CREDIT_PAYMENT,
     {
@@ -279,7 +279,7 @@ const BudgetsEdit = (props) => {
                     <Button onClick={handleClose}>
                       Cancelar
                     </Button>
-                    <Button onClick={createNewCreditPayment} disabled={!pristine}>
+                    <Button onClick={createNewCreditPayment} disabled={!pristine || loading}>
                       Aceptar
                     </Button>
                   </DialogActions>
