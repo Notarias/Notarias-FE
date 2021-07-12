@@ -242,7 +242,7 @@ class EditClientForm extends Component {
                         {
                           data.clientAttributes.map(atribute => (
                             atribute.active &&
-                              <Grid item container>
+                              <Grid key={atribute.id} item container>
                                 <Grid item xs={1}>
                                   <PersonIcon classes={{root: classes.genericInputIcon}}/>
                                 </Grid>

@@ -47,17 +47,8 @@ const Edit = (props) => {
 
   return(
     <>
+    <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
       <Grid className={classes.rootEdit}>
-        <CssBaseline />
-          <AppBar
-            color="white"
-        >
-          <Toolbar>
-            <Typography style={{paddingLeft: '2%'}} variant="h6" noWrap className={classes.title}>
-              {<Breadcrumbs breadcrumbs={BREADCRUMBS}/>}
-            </Typography>
-          </Toolbar>
-        </AppBar>
         <main
           className={clsx(classes.content, {
             [classes.contentShift]: open,
@@ -65,13 +56,15 @@ const Edit = (props) => {
         >
           <div className={classes.drawerHeader} />
           <Grid container>
-            <Grid container direction="row" justify="center" alignItems="center"sm={11} >
+            <Grid container item direction="row" justify="center" alignItems="center"sm={11} >
               <EditForm classes={ classes } history={props.history} match={props.match.params} data={data} loadingClient={loading}/>
             </Grid>
-            <Grid sm={1} container
+            <Grid 
+              container
               direction="row"
               justify="flex-end"
-              alignItems="center">
+              alignItems="center"
+            >
               <Paper className={classes.paper_button_chat_margin}>
                 <div>
                   <IconButton
