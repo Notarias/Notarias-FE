@@ -24,7 +24,7 @@ const VoidOrInvoidPayment = (props) => {
     setStatusVoid(voidAt);;
   }, [voidAt])
 
-  const [voidOrUnvoidPaymentMutation, voidOrUnvoidPaymentProcessInfo] =
+  const [voidOrUnvoidPaymentMutation, {loading: voidOrUnvoidPaymentLoading}] =
   useMutation(
     VOID_OR_UNVOID_PAYMENT,
     {
@@ -107,7 +107,7 @@ const VoidOrInvoidPayment = (props) => {
           <Button onClick={handleClose}>
             Cancelar
           </Button>
-          <Button onClick={voidOrUnvoidPayment}>
+          <Button onClick={voidOrUnvoidPayment} disabled={voidOrUnvoidPaymentLoading}>
             Aceptar
           </Button>
         </DialogActions>

@@ -37,9 +37,10 @@ const AuditLog = (props) => {
             let minutes = newDate.getMinutes();
         
             return (
-              `${date}${separator}${month<10?`0${month}`:`${month}`}${separator}${year}-${hours}:${minutes}`
-              )
-            }
+              `${date}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${year}-
+                ${hours}:${minutes < 10 ? `0${minutes}` : `${minutes}`}`
+            )
+          }
 
             function createMarkup() {
               return {__html: obj.message};

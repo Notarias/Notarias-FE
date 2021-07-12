@@ -22,7 +22,7 @@ const CreateComments = (props) => {
 
   const inputsList = ["body"]
 
-  const [createCommentMutation, createCommentProcessInfo] =
+  const [createCommentMutation, {loading: createCommentLoading}] =
   useMutation(
     CREATE_COMMENT,
     {
@@ -78,6 +78,7 @@ const CreateComments = (props) => {
             value={commentValue}
             onChange={valueChange}
             onFocus={clearErrors}
+            autoFocus
             fullWidth
             placeholder="Agregar un comentario"
             variant="outlined"
@@ -89,7 +90,7 @@ const CreateComments = (props) => {
           <Button onClick={ handleCancel }>Cancelar</Button>
           <Button 
             onClick={ createNewComment }
-            disabled={pristine}
+            disabled={pristine || createCommentLoading}
           >
             Aceptar
           </Button>

@@ -135,7 +135,7 @@ const Asignee = (props) => {
     }
   }
 
-  const [updateBudgetMutation, updateBudgetProcessInfo] =
+  const [updateBudgetMutation, {loading: updateBudgetLoading}] =
   useMutation(
     UPDATE_BUDGET,
     {
@@ -169,6 +169,7 @@ const Asignee = (props) => {
        }
     })
   }
+
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -228,7 +229,7 @@ const Asignee = (props) => {
           </Button>
           <Button 
             onClick={() => {assingUser()}}
-            disabled={pristine || updateBudgetProcessInfo.loading}
+            disabled={pristine || updateBudgetLoading}
           >
             Aceptar
           </Button>

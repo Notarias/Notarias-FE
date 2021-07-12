@@ -158,7 +158,7 @@ const NewBudget = (props) => {
     createClientMutation({ variables: variables})
   }
 
-  const [createBudgetMutation, createBudgetProcessInfo] =
+  const [createBudgetMutation, {loading: createBudgetLoading}] =
   useMutation(
     CREATE_BUDGET,
     {
@@ -456,7 +456,7 @@ const NewBudget = (props) => {
                           color="primary"
                           className={classes.button}
                           onClick={createNewBudget}
-                          disabled={createBudgetProcessInfo.loading}
+                          disabled={createBudgetLoading}
                         >
                           { redirect }
                           Aceptar
