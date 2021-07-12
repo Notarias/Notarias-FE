@@ -96,7 +96,7 @@ const BudgetsEdit = (props) => {
     GET_CURRENT_USER
   );
 
-  const [createCreditPaymentMutation, loading] =
+  const [createCreditPaymentMutation, {loading: createCreditPaymentLoading}] =
   useMutation(
     CREATE_CREDIT_PAYMENT,
     {
@@ -279,7 +279,7 @@ const BudgetsEdit = (props) => {
                     <Button onClick={handleClose}>
                       Cancelar
                     </Button>
-                    <Button onClick={createNewCreditPayment} disabled={!pristine || loading}>
+                    <Button onClick={createNewCreditPayment} disabled={!pristine || createCreditPaymentLoading}>
                       Aceptar
                     </Button>
                   </DialogActions>
