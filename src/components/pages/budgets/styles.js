@@ -176,7 +176,13 @@ export const styles = theme => {
       marginTop: "20px"
     },
     inputInAdvancedSearch: {
-      margin: "5px"
+      margin: "5px",
+      width: "140px"
+    },
+    serialInAdvancedSearch: {
+      margin: "5px",
+      width: "125px",
+      wordWrap: "break-word"
     },
     inputClientNameInAdvancedSearch: {
       margin: "5px",
