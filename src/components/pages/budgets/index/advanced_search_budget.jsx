@@ -43,12 +43,14 @@ const AdvancedSearchBudget = (props) => {
   }
 
   const onChangeMoreThan = (event) => {
+    const onlyString = event.target.value.toString()
     const onlyNums = event.target.value.replace(/[^0-9]/g, '');
     event.target.value = onlyNums
     setChangeMoreThan(Number(event.target.value))
   }
 
   const onChangeLessThan = (event) => {
+    const onlyString = event.target.value.toString()
     const onlyNums = event.target.value.replace(/[^0-9]/g, '');
     event.target.value = onlyNums
     setChangeLessThan(Number(event.target.value))
@@ -56,11 +58,12 @@ const AdvancedSearchBudget = (props) => {
 
   const startAdvanceSearch = () => {
     setClientNameValue(changeClientName)
-    setProcedureNameValue(changeProcedureName)
+    // setProcedureNameValue(changeProcedureName)
     setSerialNumberValue(changeSerialNumber > 0 ? changeSerialNumber : null)
     setMoreThanValue(changeMoreThan > 0 ? changeMoreThan * 100 : null)
     setLessThanValue(changeLessThan > 0 ? changeLessThan * 100 : null)
   }
+
 
   return(
     <Grid container justify="flex-end" className={changeAdvanceSearch ? 
@@ -95,9 +98,9 @@ const AdvancedSearchBudget = (props) => {
               onChange={onChangeSerialNumber}
               size="small"
               id="serial_number"
-              label="Numero de serie"
+              label="No. serie"
               variant="outlined"
-              className={classes.inputInAdvancedSearch}
+              className={classes.serialInAdvancedSearch}
             />
             <TextField
               inputRef={moreThanInputRef}
