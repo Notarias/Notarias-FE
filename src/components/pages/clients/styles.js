@@ -140,7 +140,6 @@ export const styles = theme => {
     },
     rootEdit: {
       display: 'flex',
-      paddingTop: '3%',
     },
     appBar: {
       transition: theme.transitions.create(['margin', 'width'], {
