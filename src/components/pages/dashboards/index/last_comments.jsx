@@ -34,7 +34,7 @@ class LastComments extends Component {
                       //   textDecoration="none" 
                       //   underline= "none"
                       // >
-                        <ListItem >
+                        <ListItem key={comment.id + "-avatar"} >
                           <Grid item container xs={3} alignItems="center" justify="center">
                             <ListItemAvatar align='center'>
                               <Avatar 

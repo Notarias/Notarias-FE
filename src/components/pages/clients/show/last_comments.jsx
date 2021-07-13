@@ -23,7 +23,7 @@ class LastComments extends Component {
             </Typography>
           </Grid>
           <Grid item xs={12} classes={{root: classes.gridBottomComponents}}>
-            <MenuItem>
+            <MenuItem key="comment-1">
               <Grid container>
                 <Grid item classes={{root: classes.svgComment}}>
                   <SvgIcon  component={MessageOutlinedIcon} classes={{root: classes.commentIcon}}/>
@@ -35,7 +35,7 @@ class LastComments extends Component {
                 </Grid>
               </Grid>
             </MenuItem>
-            <MenuItem>
+            <MenuItem key="comment-2">
               <Grid container>
                 <Grid item classes={{root: classes.svgComment}}>
                   <SvgIcon  component={MessageOutlinedIcon} classes={{root: classes.commentIcon}}/>
@@ -47,7 +47,7 @@ class LastComments extends Component {
                 </Grid>
               </Grid>
             </MenuItem>
-            <MenuItem>
+            <MenuItem key="comment-3">
               <Grid container>
                 <Grid item classes={{root: classes.svgComment}}>
                   <SvgIcon  component={MessageOutlinedIcon} classes={{root: classes.commentIcon}}/>
@@ -59,7 +59,7 @@ class LastComments extends Component {
                 </Grid>
               </Grid>
             </MenuItem>
-            <MenuItem>
+            <MenuItem key="comment-4">
               <Grid container>
                 <Grid item classes={{root: classes.svgComment}}>
                   <SvgIcon  component={MessageOutlinedIcon} classes={{root: classes.commentIcon}}/>

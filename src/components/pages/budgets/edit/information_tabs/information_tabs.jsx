@@ -14,21 +14,6 @@ import Divider                              from '@material-ui/core/Divider';
 import { withStyles }                       from '@material-ui/core/styles';
 import { styles }                           from '../../styles';
 
-
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  };
-}
-
-const useStyles = makeStyles((theme) => ({
-  rootTab: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
-  },
-}));
-
 const InformationTabs = (props) => {
   const { classes, budgetInfo, budgetId } = props
   // const classes = useStyles();
@@ -70,7 +55,7 @@ const InformationTabs = (props) => {
   }
 
   return (
-    <div className={classes.rootTab}>
+    <div  className={classes.rootTab}>
       <AppBar position="static">
         <Tabs centered value={value} onChange={handleChange} aria-label="simple tabs example">
           { renderTab() }

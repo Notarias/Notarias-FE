@@ -18,7 +18,7 @@ export default (props) => {
         />
         <SortHeader
           text={ "Tramites" }
-          field_property={ "procedure_name" }
+          field_property={ "procedure_template_name" }
           current_field={ field }
           sort_direction={ direction }
           callback={ sortHandler }
@@ -39,14 +39,14 @@ export default (props) => {
         />
         <SortHeader
           text={ "Adeudo" }
-          field_property={ "totalDebt" }
+          field_property={ "total_debt" }
           current_field={ field }
           sort_direction={ direction }
           callback={ sortHandler }
         />
         <SortHeader
           text={ "Capital" }
-          field_property={ "totalPaid" }
+          field_property={ "total_paid" }
           current_field={ field }
           sort_direction={ direction }
           callback={ sortHandler }
