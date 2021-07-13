@@ -13,6 +13,8 @@ import NumberFormat                   from 'react-number-format';
 import { withStyles }                 from '@material-ui/core/styles';
 import { styles }                     from '../styles';
 import Typography                     from '@material-ui/core/Typography';
+import VisibilityIcon                 from '@material-ui/icons/Visibility';
+import PrintIcon                      from '@material-ui/icons/Print';
 
 
 const TemplateRow = (props) => {
@@ -22,7 +24,7 @@ const TemplateRow = (props) => {
 
   return(
     <TableRow key={  "-row" }>
-      <TableCell align= "center" className={classes.tablecellWidth}>{ budget.client.firstName }</TableCell>
+      <TableCell align= "center" className={classes.tablecellWidth}>{ budget.client.fullName }</TableCell>
       <TableCell align= "center" className={classes.tablecellWidth}>{ budget.proceduresTemplate.name }</TableCell>
       <TableCell align= "center" className={classes.tablecellWidth}>{ budget.serialNumber }</TableCell>
       <TableCell align= "center" className={classes.tablecellWidth}>
@@ -76,8 +78,35 @@ const TemplateRow = (props) => {
                 </Grid>
               </Link>
             </MenuItem>
-            <MenuItem key={ budget.id + "-algo"}>
-              "algo futuro"
+            <MenuItem key={ budget.id + "-preview"}>
+              <Link
+                to="#"
+                color="inherit"
+                underline="none"
+                className={ classes.linkDefault }
+              >
+                <Grid container>
+                  <ListItemIcon>
+                    <VisibilityIcon className={ classes.defaultIcon }/>
+                  </ListItemIcon>
+                  <ListItemText primary="Vista previa"/>
+                </Grid>
+              </Link>
+            </MenuItem>
+            <MenuItem key={ budget.id + "-print"}>
+              <Link
+                to="#"
+                color="inherit"
+                underline="none"
+                className={ classes.linkDefault }
+              >
+                <Grid container>
+                  <ListItemIcon>
+                    <PrintIcon className={ classes.defaultIcon }/>
+                  </ListItemIcon>
+                  <ListItemText primary="Imprimir"/>
+                </Grid>
+              </Link>
             </MenuItem>
           </GenericDropdownMenu>
         </Grid>

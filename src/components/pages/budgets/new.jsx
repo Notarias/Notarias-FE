@@ -309,6 +309,7 @@ const NewBudget = (props) => {
                     variant="contained"
                     color="primary"
                     onClick={handleToProcedure}
+                    disabled={!clientInfo}
                     className={classes.button}
                   >
                     Siguiente

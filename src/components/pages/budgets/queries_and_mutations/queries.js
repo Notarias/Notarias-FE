@@ -88,6 +88,7 @@ export const GET_BUDGETS = gql`
       client{
         firstName
         lastName
+        fullName
         id
         email
         phone

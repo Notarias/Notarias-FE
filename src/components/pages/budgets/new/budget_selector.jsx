@@ -42,6 +42,17 @@ const BudgetSelector = (props) => {
 
   }, [data, procedureId])
 
+  const handleMenuItemClick = (obj) => {
+   
+    return ((event) => {
+      setSelectedIndex(obj.id);
+      setbudgetInfo(obj)
+    })
+  }
+
+  useEffect (() => {
+    setDisableNextButton( selectedIndex ? false : true)
+  }, [selectedIndex])
 
   return (
     <Grid container item direction="column" alignItems="center" justify="center">
@@ -65,28 +76,24 @@ const BudgetSelector = (props) => {
           searchList.map(
             (item, index) => {
               let obj = item.item || item
-              const handleMenuItemClick = (event) => {
-                setSelectedIndex(obj.id);
-                setbudgetInfo(obj)
-              };
-              setDisableNextButton(obj.id === selectedIndex ? false : true)
+
               return(
-              <React.Fragment key={obj.id + "fragment"}>
-                <ListItem 
-                  key={obj.id} 
-                  role={undefined} 
-                  dense 
-                  button 
-                  onClick={ handleMenuItemClick }
-                  selected={obj.id === selectedIndex}
-                >
-                  <ListItemText 
-                    id={obj.id} 
-                    primary={obj.name}
-                  />
-                </ListItem>
-                <Divider/>
-              </React.Fragment>
+                <React.Fragment key={obj.id + "fragment"}>
+                  <ListItem 
+                    key={obj.id} 
+                    role={undefined} 
+                    dense 
+                    button 
+                    onClick={ handleMenuItemClick(obj) }
+                    selected={obj.id === selectedIndex}
+                  >
+                    <ListItemText 
+                      id={obj.id} 
+                      primary={obj.name}
+                    />
+                  </ListItem>
+                  <Divider/>
+                </React.Fragment>
               )
             }
           )
