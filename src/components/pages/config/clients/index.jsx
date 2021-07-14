@@ -81,10 +81,10 @@ const ConfigClientsIndex  = ()=> {
   return (
     <>
     <Breadcrumbs breadcrumbs={BREADCRUMBS}/>
-    <Grid container justify="center" className={classes.gridMargin}>
+    <Grid container justifyContent="center" className={classes.gridMargin}>
       <Grid item  xs={7}>
         <Paper>
-          <Grid container justify="flex-start" aling-item="right">
+          <Grid container justifyContent="flex-start" aling-item="right">
             <Grid item xs={4} className={classes.gridPadding}>
               <Typography variant="h4">
                 Atributos
@@ -105,7 +105,7 @@ const ConfigClientsIndex  = ()=> {
               </Grid>
             </Grid>
           </Grid>
-          <Grid container justify="center">
+          <Grid container justifyContent="center">
             <Grid container item className={classes.gridPadding}>
               {
                 loading ? 
@@ -114,7 +114,7 @@ const ConfigClientsIndex  = ()=> {
               }
             </Grid>
           </Grid>
-          <Grid container justify="center">
+          <Grid container justifyContent="center">
             <Grid item>
               Nuevo atributo de cliente
             </Grid>

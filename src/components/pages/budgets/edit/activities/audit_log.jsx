@@ -49,13 +49,13 @@ const AuditLog = (props) => {
           return(
             <React.Fragment key={obj.id + "fragment"}>
               <Grid container direction="row" alignItems="center" className={classes.topMarginGrid}>
-                <Grid container item xs={2} alignItems="center" justify="center">
+                <Grid container item xs={2} alignItems="center" justifyContent="center">
                   <Avatar 
                     src={obj.user.avatarThumbUrl ? obj.user.avatarThumbUrl : "/broken-image.jpg" }
                     size="small"
                   />
                 </Grid>
-                <Grid container item xs={10} direction="column" alignItems="flex-start" justify="flex-start">
+                <Grid container item xs={10} direction="column" alignItems="flex-start" justifyContent="flex-start">
                   <Typography variant="subtitle2">{obj.user.firstName} {obj.user.lastName}</Typography>
                   <Typography variant="caption"> fecha: {getCurrentDate()}</Typography>
                   <Typography variant="caption" className={classes.messageToLeft} dangerouslySetInnerHTML={createMarkup()} >

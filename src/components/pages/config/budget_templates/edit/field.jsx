@@ -163,7 +163,7 @@ const Field = (props) => {
   const renderTextField = () => {
     return(
       <>
-        <Grid container item xs={1} alignItems="center" justify="center">
+        <Grid container item xs={1} alignItems="center" justifyContent="center">
           <Button
             onClick={ editField }
           >
@@ -182,7 +182,7 @@ const Field = (props) => {
   const renderInputField = () => {
     return(
       <>
-        <Grid container item xs={1} alignItems="center" justify="center">
+        <Grid container item xs={1} alignItems="center" justifyContent="center">
           <Button
             onClick={ updateField }
           >
@@ -216,11 +216,11 @@ const Field = (props) => {
   }
 
   return (
-    <Grid container item alignItems="flex-start" justify="flex-start" className={ classes.fielPaddingBottom }>
+    <Grid container item alignItems="flex-start" justifyContent="flex-start" className={ classes.fielPaddingBottom }>
       <Paper>
       <Grid container item className={ classes.fieldHeightRow }>
         { editing ? renderTextField() : renderInputField() }
-        <Grid container direction="column"  alignItems="center" justify="center" item xs={4}>
+        <Grid container direction="column"  alignItems="center" justifyContent="center" item xs={4}>
           <Chip
             avatar={<Avatar>{ categoriesToShow() }</Avatar>}
             label={ ` categorias` }
@@ -249,7 +249,7 @@ const Field = (props) => {
           </Dialog>
         </Grid>
 
-        <Grid container direction="column"  alignItems="center" justify="center" item xs={1} onClick={ handleClickOpenDialog }>
+        <Grid container direction="column"  alignItems="center" justifyContent="center" item xs={1} onClick={ handleClickOpenDialog }>
           {
           active ?
             <Button>
@@ -284,7 +284,7 @@ const Field = (props) => {
             </Button>
           </DialogActions>
         </Dialog>
-        <Grid container direction="column"  alignItems="center" justify="center" item xs={1}>
+        <Grid container direction="column"  alignItems="center" justifyContent="center" item xs={1}>
           <Button onClick={ handleClickOpen }>
             <DeleteForeverIcon/>
           </Button>

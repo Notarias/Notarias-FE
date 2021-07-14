@@ -1,5 +1,5 @@
-import { fade }     from '@material-ui/core/styles/colorManipulator';
 import green        from '@material-ui/core/colors/green';
+import { alpha } from '@material-ui/core/styles'
 
 export const styles = theme => {
   return ({
@@ -25,9 +25,9 @@ export const styles = theme => {
       marginRight: "10px",
       position: 'relative',
       borderRadius: theme.shape.borderRadius,
-      backgroundColor: fade(theme.palette.common.white, 1),
+      backgroundColor: alpha(theme.palette.common.white, 1),
       '&:hover': {
-        backgroundColor: fade(theme.palette.common.white, 1),
+        backgroundColor: alpha(theme.palette.common.white, 1),
       },
       [theme.breakpoints.up('sm')]: {
         width: 'auto',

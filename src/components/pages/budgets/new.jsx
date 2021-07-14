@@ -137,7 +137,7 @@ const NewBudget = (props) => {
     setProcedureInfo(procedureInfo)
   }, [procedureInfo])
 
-  const [createClientMutation, createClientProcessInfo] =
+  const [createClientMutation, { loading: createClientLoading}] =
   useMutation(
     CREATE_CLIENT,
     {
@@ -274,7 +274,7 @@ const NewBudget = (props) => {
     <>
       <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
       <Divider/>
-      <Grid container justify="center" className={classes.gridFather}>
+      <Grid container justifyContent="center" className={classes.gridFather}>
         <Grid container item xs={7} direction="row" >
           <Paper className={classes.paperNewbudget}>
             <Grid container item xs={12} >
@@ -296,14 +296,14 @@ const NewBudget = (props) => {
             <Grid container item xs={12} >
               { (activeStep === 0) && (
               <>
-                <Grid container item alignItems="center" justify="center" className={classes.grid300}>
+                <Grid container item alignItems="center" justifyContent="center" className={classes.grid300}>
                   <ClientSearch
                     searchLoading={searchLoading}
                     onChangeSearch={onChangeSearch.bind(this)}
                     setClientInfo={ setClientInfo }
                   />
                 </Grid>
-                <Grid container item alignItems="flex-start" justify="flex-end" className={classes.grid100}>
+                <Grid container item alignItems="flex-start" justifyContent="flex-end" className={classes.grid100}>
                 <Grid>
                   <Button
                     variant="contained"
@@ -328,7 +328,7 @@ const NewBudget = (props) => {
               )} 
               { (activeStep === 1) && (
                 <Grid container item alignItems="center">
-                  <Grid container item alignItems="center" justify="center" className={classes.grid300}>
+                  <Grid container item alignItems="center" justifyContent="center" className={classes.grid300}>
                     <Grid>
                       <TextField 
                         id="first-name-basic" 
@@ -372,7 +372,7 @@ const NewBudget = (props) => {
                       />
                     </Grid>
                   </Grid>
-                  <Grid container item alignItems="flex-start" justify="flex-end" className={classes.grid100}>
+                  <Grid container item alignItems="flex-start" justifyContent="flex-end" className={classes.grid100}>
                     <Button
                       onClick={handleBack}
                       className={classes.button}
@@ -400,7 +400,7 @@ const NewBudget = (props) => {
                     <Button onClick={ handleClose }>
                       Cancelar
                     </Button>
-                    <Button onClick={ createNewClient }>
+                    <Button onClick={ createNewClient } disabled={createClientLoading}>
                       Continuar
                     </Button>
                   </DialogActions>
@@ -408,7 +408,7 @@ const NewBudget = (props) => {
                 </Grid>
               )}
               { (activeStep === 2) && (
-                <Grid  container direction="row" item alignItems="center" justify="center" >
+                <Grid  container direction="row" item alignItems="center" justifyContent="center" >
                   <Grid className={classes.grid300}>
                     <Typography variant="body2" color="textSecondary" >
                       Selecciona un trámite
@@ -427,7 +427,7 @@ const NewBudget = (props) => {
                       setDisableNextButton={setDisableNextButton}
                     />
                   </Grid>
-                  <Grid container item alignItems="flex-start" justify="flex-end" className={classes.grid100}>
+                  <Grid container item alignItems="flex-start" justifyContent="flex-end" className={classes.grid100}>
                     <Button
                       variant="contained"
                       color="primary"
@@ -470,9 +470,9 @@ const NewBudget = (props) => {
           </Grid>
          </Paper>
         </Grid>
-        <Grid container item xs={3} direction="row" justify="flex-end" alignItems="stretch">
+        <Grid container item xs={3} direction="row" justifyContent="flex-end" alignItems="stretch">
           <Paper className={classes.paperNewbudget}>
-            <Grid container item xs={12} justify="center" className={classes.titleDataInfo} >
+            <Grid container item xs={12} justifyContent="center" className={classes.titleDataInfo} >
               Datos del cliente
               <Grid>
                 <TextField 
@@ -505,27 +505,27 @@ const NewBudget = (props) => {
                 />
               </Grid>
             </Grid>
-            <Grid container item xs={12} justify="center" direction="column">
-              <Grid container item justify="flex-start" className={classes.titleDataProcedureInfo}>
+            <Grid container item xs={12} justifyContent="center" direction="column">
+              <Grid container item justifyContent="flex-start" className={classes.titleDataProcedureInfo}>
                 Nombre del trámite
               </Grid>
-              <Grid container item justify="center">
+              <Grid container item justifyContent="center">
                 <Typography variant="body2" color="textSecondary" className={classes.procedureInfoText} >
                   { procedureInfo ? procedureInfo.name : "......................"}
                 </Typography>
               </Grid>
             </Grid>
-            <Grid container item xs={12} justify="center" direction="column">
-              <Grid container item justify="flex-start" className={classes.titleDataProcedureInfo}>
+            <Grid container item xs={12} justifyContent="center" direction="column">
+              <Grid container item justifyContent="flex-start" className={classes.titleDataProcedureInfo}>
                 Presupuesto vinculado
               </Grid>
-              <Grid container item justify="center">
+              <Grid container item justifyContent="center">
                 <Typography variant="body2" color="textSecondary" className={classes.titleDataInfo} >
                 { budgetInfo ? budgetInfo.name : "......................"}
                 </Typography>
               </Grid>
             </Grid>
-            <Grid container item justify="flex-start" className={classes.asigneeGrid}>
+            <Grid container item justifyContent="flex-start" className={classes.asigneeGrid}>
               <AddAsigneed
                 setAsignee={setAsignee}
                 asignee={asignee}

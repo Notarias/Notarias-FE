@@ -61,7 +61,7 @@ const InformationTabs = (props) => {
           { renderTab() }
         </Tabs>
       </AppBar>
-      <Grid container justify="flex-start" alignItems="flex-end" className={classes.titleFields}>
+      <Grid container justifyContent="flex-start" alignItems="flex-end" className={classes.titleFields}>
         <Grid container item xs={3}>
           <Typography variant="h6" gutterBottom>
             Concepto

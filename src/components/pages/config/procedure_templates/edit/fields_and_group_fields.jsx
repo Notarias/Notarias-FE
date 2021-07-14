@@ -13,12 +13,12 @@ const FieldsAndGroupFields = (props) => {
 
     return(
       <Grid container item direction="column" alignItems="center">
-        <Grid container item xs={10} alignItems="center" justify="center">
+        <Grid container item xs={10} alignItems="center" justifyContent="center">
         <FieldList
           currentTab={ currentTab }
         />
         </Grid>
-        <Grid container item xs={10}  justify="center" alignItems="center">
+        <Grid container item xs={10}  justifyContent="center" alignItems="center">
         <FieldsGroupList
           currentTab={ currentTab }
         />
@@ -30,7 +30,7 @@ const FieldsAndGroupFields = (props) => {
   const renderFieldsAndGroupsEmpty = () => {
     return(
       <Grid container item direction="column" alignItems="center">
-        <Grid container item xs={10} alignItems="center" justify="center">
+        <Grid container item xs={10} alignItems="center" justifyContent="center">
           <Typography variant="h6">
             Agrega una pestaña para continuar 
           </Typography>

@@ -16,10 +16,10 @@ class LastPayments extends Component {
               Últimos Pagos
             </Typography>
           </Grid>
-          <Grid item container justify="center">
+          <Grid item container justifyContent="center">
             <Grid item style={{ backgroundColor: "black", width: "180px", height: "200px"}}></Grid>
           </Grid>
-          <Grid item xs={12} container justify="flex-end">
+          <Grid item xs={12} container justifyContent="flex-end">
             <Typography style={{paddingRight: "1%", paddingTop: "2%"}}>
                 <Link>
                   Ver más

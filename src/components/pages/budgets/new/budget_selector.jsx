@@ -55,7 +55,7 @@ const BudgetSelector = (props) => {
   }, [selectedIndex])
 
   return (
-    <Grid container item direction="column" alignItems="center" justify="center">
+    <Grid container item direction="column" alignItems="center" justifyContent="center">
       <div>
         <TextField 
           onChange={ changeSearch }

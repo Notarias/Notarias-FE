@@ -43,7 +43,7 @@ const Fields = (props) => {
             )
           })
         }
-        <Grid container justify="flex-end" className={ classes.totalsGrid }>
+        <Grid container justifyContent="flex-end" className={ classes.totalsGrid }>
           <Grid container item direction="row" xs={8}>
             <CreateComments
               budgetId={budgetId}

@@ -10,7 +10,7 @@ import { Link }             from 'react-router-dom';
 export default (props) => {
   const { classes, searchLoading, onChangeSearch } = props;
   return(
-    <Grid container  direction="row"  justify="flex-end"  alignItems="flex-end" className={classes.usersTableBarWrapper}>
+    <Grid container  direction="row"  justifyContent="flex-end"  alignItems="flex-end" className={classes.usersTableBarWrapper}>
       <div className={classes.search}>
         <div className={classes.searchIcon}>
           { 

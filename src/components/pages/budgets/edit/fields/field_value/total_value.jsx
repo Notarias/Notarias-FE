@@ -80,7 +80,7 @@ const TotalValue = (props) => {
   const totalInput = () => {
     return(
       <Grid container item>
-        <Grid container item xs={8} direction="row" justify="flex-end">
+        <Grid container item xs={8} direction="row" justifyContent="flex-end">
           <TextField
             onChange={handleChange}
             label="Total"
@@ -93,7 +93,7 @@ const TotalValue = (props) => {
             }}
           />
         </Grid>
-        <Grid  container item xs={4} alignItems="flex-end" justify="center">
+        <Grid  container item xs={4} alignItems="flex-end" justifyContent="center">
           {
             withValue ?
             <Button onClick={changeValueTypeToTrue} >
@@ -121,7 +121,7 @@ const TotalValue = (props) => {
   const totalFlat = () => {
     return(
      <Grid container item>
-       <Grid container item xs={8} direction="row" justify="flex-end">
+       <Grid container item xs={8} direction="row" justifyContent="flex-end">
           <TextField
           label="Total"
           disabled
@@ -133,7 +133,7 @@ const TotalValue = (props) => {
           }}
         />
       </Grid>
-      <Grid  container item xs={4} alignItems="flex-end" justify="center">
+      <Grid  container item xs={4} alignItems="flex-end" justifyContent="center">
         <Button onClick={changeValueType} >
           <BorderColorIcon/>
         </Button>

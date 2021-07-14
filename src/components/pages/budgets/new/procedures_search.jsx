@@ -87,7 +87,7 @@ const ProceduresSearch = (props) => {
   }, [data, checked])
 
   return (
-    <Grid container item direction="column" alignItems="center" justify="center">
+    <Grid container item direction="column" alignItems="center" justifyContent="center">
       <div>
         <TextField 
           onChange={ changeSearch }

@@ -22,7 +22,7 @@ class LastBudgetsIndex extends Component {
           </Grid>
           <Grid item container xs={12} spacing={2}>
             <Grid item container xs={12}>
-              <Grid item container xs={2} justify="flex-start" style={{paddingLeft: "3.3%"}}>
+              <Grid item container xs={2} justifyContent="flex-start" style={{paddingLeft: "3.3%"}}>
                 <CheckBoxIcon size={40} color="white" className={classes.svgCheckBoxIcon}/>
               </Grid>
               <Grid item xs={10}>
@@ -34,7 +34,7 @@ class LastBudgetsIndex extends Component {
               </Grid>
             </Grid>
             <Grid item container xs={12}>
-              <Grid item container xs={2} justify="flex-start" style={{paddingLeft: "3.3%"}}>
+              <Grid item container xs={2} justifyContent="flex-start" style={{paddingLeft: "3.3%"}}>
                 <Grid item className={classes.svgProceso}>
                   <Procedures arrowcolor="white" colornut="white" size={37} />
                 </Grid>
@@ -48,7 +48,7 @@ class LastBudgetsIndex extends Component {
               </Grid>
             </Grid>
             <Grid item container xs={12}>
-              <Grid item container xs={2} justify="flex-start" style={{paddingLeft: "3.3%"}}>
+              <Grid item container xs={2} justifyContent="flex-start" style={{paddingLeft: "3.3%"}}>
                 <CheckBoxIcon size={40} color="white" className={classes.svgCheckBoxIcon}/>
               </Grid>
               <Grid item xs={10}>
@@ -60,7 +60,7 @@ class LastBudgetsIndex extends Component {
               </Grid>
             </Grid>
             <Grid item container xs={12}>
-              <Grid item container xs={2} justify="flex-start" style={{paddingLeft: "3.3%"}}>
+              <Grid item container xs={2} justifyContent="flex-start" style={{paddingLeft: "3.3%"}}>
                 <Grid item className={classes.svgProceso}>
                   <Procedures arrowcolor="white" colornut="white" size={37} />
                 </Grid>
@@ -73,7 +73,7 @@ class LastBudgetsIndex extends Component {
                 </Typography>
               </Grid>
             </Grid>
-            <Grid container justify="flex-end">
+            <Grid container justifyContent="flex-end">
               <Grid item>
                 <Typography >
                     <Link>

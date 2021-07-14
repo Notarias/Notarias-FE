@@ -32,7 +32,7 @@ const dotsMenu  = ({
   let open = Boolean(anchorEl);
 
   return (
-    <Grid container item justify="flex-end" alignItems="center">
+    <Grid container item justifyContent="flex-end" alignItems="center">
       <IconButton
         aria-label="more"
         aria-controls="long-menu"

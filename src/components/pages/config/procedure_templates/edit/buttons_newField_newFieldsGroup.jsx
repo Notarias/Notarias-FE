@@ -145,7 +145,7 @@ const ButtonsNewFieldNewFieldsGroup = ({
 
   const renderNewFieldAndNewFieldsGroupButton = () => {
     return(
-      <Grid container  justify="center" alignItems="center" direction="row" >
+      <Grid container  justifyContent="center" alignItems="center" direction="row" >
         <Grid item xs={4}>
           <Typography variant="button" display="block" gutterBottom>
             {
@@ -182,7 +182,7 @@ const ButtonsNewFieldNewFieldsGroup = ({
 
   return (
     <>
-      <Grid container justify="center" alignItems="center" className={ classes.addFieldsAndGroupsButton } >
+      <Grid container justifyContent="center" alignItems="center" className={ classes.addFieldsAndGroupsButton } >
         { currentTab && renderNewFieldAndNewFieldsGroupButton() }
       </Grid>
       <Dialog open={open} onClose={ handleClose }>
@@ -254,7 +254,7 @@ const ButtonsNewFieldNewFieldsGroup = ({
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Grid container direction="row" justify="flex-end">
+          <Grid container direction="row" justifyContent="flex-end">
             <Button onClick={ handleClose } color="secondary" >
               Cancelar
             </Button>

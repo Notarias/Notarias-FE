@@ -120,7 +120,7 @@ class CustomerInformation extends Component {
                   </Typography>
                 </Grid>
               </Grid>
-              <Grid  container  direction="row"  justify="center"  alignItems="flex-end" classes={{root: classes.halfGridInformationTwo}}>
+              <Grid  container  direction="row"  justifyContent="center"  alignItems="flex-end" classes={{root: classes.halfGridInformationTwo}}>
                 <Grid item classes={{root: classes.fullWidth}}>
                   <Button href={`/clients/${this.state.id}/edit`} variant="contained" fullWidth color="default" style={{textTransform: 'none',}} >
                     Editar Datos
