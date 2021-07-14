@@ -87,7 +87,7 @@ const ActiveTemplateButton = (props) => {
 
   return(
     <>
-    <Grid container item justify="center" >
+    <Grid container item justifyContent="center" >
       { active ? renderDesactivedButton() : renderActivedButton() }
     </Grid>
     <Dialog open={open} onClose={ handleClose }>

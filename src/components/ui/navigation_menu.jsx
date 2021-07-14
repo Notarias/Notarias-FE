@@ -11,6 +11,7 @@ import ListItemText             from '@material-ui/core/ListItemText';
 import ExpandLess               from '@material-ui/icons/ExpandLess';
 import ExpandMore               from '@material-ui/icons/ExpandMore';
 import ContactsSharpIcon        from '@material-ui/icons/ContactsSharp';
+import HomeIcon                 from '@material-ui/icons/Home';
 import classNames               from 'classnames';
 import { styles }               from './navigation_menu_styles';
 import MenuLink                 from './menu_link'
@@ -55,6 +56,7 @@ class NavigationMenu extends Component {
         <List>
           <ProfileLink/>
           <Divider />
+          <MenuLink iconComponent={HomeIcon} linkPath="/" menuText="Inicio" rawIcon />
           <MenuLink iconComponent={ClientsIcon} linkPath="/clients" menuText="Clientes" />
           <MenuLink iconComponent={BudgetsIcon} linkPath="/budgets" menuText="Presupuestos" />
           <MenuLink iconComponent={FormsIcon} linkPath="/procedures" menuText="Trámites" />

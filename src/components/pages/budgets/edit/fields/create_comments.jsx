@@ -73,7 +73,7 @@ const CreateComments = (props) => {
   const renderTextField = () => {
     if(textFieldSelected) {
       return(
-        <Grid container item xs={10} direction="row" justify="flex-start" alignItems="flex-start">
+        <Grid container item xs={10} direction="row" justifyContent="flex-start" alignItems="flex-start">
           <TextField
             value={commentValue}
             onChange={valueChange}
@@ -98,7 +98,7 @@ const CreateComments = (props) => {
       )
     } else {
       return(
-        <Grid container item xs={10} direction="row" justify="flex-start" alignItems="flex-start">
+        <Grid container item xs={10} direction="row" justifyContent="flex-start" alignItems="flex-start">
           <TextField
             value={commentValue}
             fullWidth
@@ -134,13 +134,13 @@ const CreateComments = (props) => {
 
   return(
     <>
-      <Grid container item xs={2} justify="center" alignItems="flex-start">
+      <Grid container item xs={2} justifyContent="center" alignItems="flex-start">
         <Query
         query={GET_CURRENT_USER}
         >
           {({id, loading, error, data}) => {
               return(
-                <Grid container justify="center">
+                <Grid container justifyContent="center">
                   <Avatar 
                     src={data && data.currentUser && data.currentUser.avatarThumbUrl} 
                     className={classes.avatarInDialogToAddPayment}

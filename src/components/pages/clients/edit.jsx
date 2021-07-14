@@ -56,13 +56,13 @@ const Edit = (props) => {
         >
           <div className={classes.drawerHeader} />
           <Grid container>
-            <Grid container item direction="row" justify="center" alignItems="center"sm={11} >
+            <Grid container item direction="row" justifyContent="center" alignItems="center"sm={11} >
               <EditForm classes={ classes } history={props.history} match={props.match.params} data={data} loadingClient={loading}/>
             </Grid>
             <Grid 
               container
               direction="row"
-              justify="flex-end"
+              justifyContent="flex-end"
               alignItems="center"
             >
               <Paper className={classes.paper_button_chat_margin}>

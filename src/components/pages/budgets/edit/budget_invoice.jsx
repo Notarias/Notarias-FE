@@ -90,32 +90,32 @@ const BudgetInvoice = (props) => {
     <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
     <Paper>
       <Grid container>
-          <Grid container item justify="center" alignItems="center">
+          <Grid container item justifyContent="center" alignItems="center">
             <img className={classes.logoInInvoice} src={logo_notaria} alt="Logo"/>
           </Grid>
           <Grid container item direction="row" className={classes.marginTopGridInvoice}>
-            <Grid container item xs={1} direction="column" justify="flex-end" alignItems="flex-end">
+            <Grid container item xs={1} direction="column" justifyContent="flex-end" alignItems="flex-end">
 
             </Grid>
-            <Grid container item xs={1} direction="column" justify="flex-start" alignItems="flex-start">
+            <Grid container item xs={1} direction="column" justifyContent="flex-start" alignItems="flex-start">
               <Typography variant="button">Causante:</Typography>
               <Typography variant="button">Interesado:</Typography>
               <Typography variant="button">Operación:</Typography>
               <Typography variant="button">Abogado:</Typography>
             </Grid>
-            <Grid container item xs={6} direction="column" justify="flex-start" alignItems="flex-start">
+            <Grid container item xs={6} direction="column" justifyContent="flex-start" alignItems="flex-start">
               <Typography>Alguien apellio apellido</Typography>
               <Typography>Alguien apellio apellido</Typography>
               <Typography>Alguien apellio apellido</Typography>
               <Typography>Alguien apellio apellido</Typography>
             </Grid>
-            <Grid container item xs={1} direction="column" justify="flex-start" alignItems="flex-start">
+            <Grid container item xs={1} direction="column" justifyContent="flex-start" alignItems="flex-start">
               <Typography variant="button">Presupuesto:</Typography>
               <Typography variant="button">Fecha:</Typography>
               <Typography variant="button">Expediente:</Typography>
               <Typography variant="button">Escritura:</Typography>
             </Grid>
-            <Grid container item xs={3} direction="column" justify="flex-start" alignItems="flex-start">
+            <Grid container item xs={3} direction="column" justifyContent="flex-start" alignItems="flex-start">
               <Typography>0000</Typography>
               <Typography>00/00/0000</Typography>
               <Typography>0000</Typography>
@@ -131,7 +131,7 @@ const BudgetInvoice = (props) => {
               item 
               xs={7} 
               direction="column" 
-              justify="flex-start" 
+              justifyContent="flex-start" 
               alignItems="flex-start" 
               className={classes.marginTopGridInvoice}
             >
@@ -146,7 +146,7 @@ const BudgetInvoice = (props) => {
               item 
               xs={4}
               direction="column" 
-              justify="flex-start" 
+              justifyContent="flex-start" 
               alignItems="flex-start"
               className={classes.marginTopGridInvoice}
             >
@@ -166,7 +166,7 @@ const BudgetInvoice = (props) => {
               item 
               xs={1} 
               direction="column" 
-              justify="flex-start" 
+              justifyContent="flex-start" 
               alignItems="flex-start" 
             >
               <Typography variant="button">Imueble:</Typography>
@@ -176,7 +176,7 @@ const BudgetInvoice = (props) => {
               item 
               xs={5} 
               direction="column" 
-              justify="flex-start" 
+              justifyContent="flex-start" 
               alignItems="flex-start"
             >
               <a href="#" onClick={handleClickOpen}>
@@ -218,7 +218,7 @@ const BudgetInvoice = (props) => {
               item 
               xs={7} 
               direction="column" 
-              justify="flex-start" 
+              justifyContent="flex-start" 
               alignItems="flex-start"
             >
               <h3>CONCEPTO:</h3>
@@ -228,7 +228,7 @@ const BudgetInvoice = (props) => {
               item 
               xs={4} 
               direction="column" 
-              justify="flex-start" 
+              justifyContent="flex-start" 
               alignItems="flex-start"
             >
               <h3>CANTIDAD:</h3>
@@ -242,7 +242,7 @@ const BudgetInvoice = (props) => {
               item 
               xs={7} 
               direction="column" 
-              justify="flex-start" 
+              justifyContent="flex-start" 
               alignItems="flex-start"
             >
               <h3>Total gastos, derechos e impuestos</h3>
@@ -252,7 +252,7 @@ const BudgetInvoice = (props) => {
               item 
               xs={4} 
               direction="column" 
-              justify="flex-start" 
+              justifyContent="flex-start" 
               alignItems="flex-start"
             >
               <h3>
@@ -273,7 +273,7 @@ const BudgetInvoice = (props) => {
               item 
               xs={7} 
               direction="column" 
-              justify="flex-start" 
+              justifyContent="flex-start" 
               alignItems="flex-start"
               
             >
@@ -286,7 +286,7 @@ const BudgetInvoice = (props) => {
               item 
               xs={4} 
               direction="column" 
-              justify="flex-start" 
+              justifyContent="flex-start" 
               alignItems="flex-start"
 
             >
@@ -326,7 +326,7 @@ const BudgetInvoice = (props) => {
               item 
               xs={7} 
               direction="column" 
-              justify="flex-start" 
+              justifyContent="flex-start" 
               alignItems="flex-start"
             >
               <h2 >Gran Total</h2>
@@ -336,7 +336,7 @@ const BudgetInvoice = (props) => {
               item 
               xs={4} 
               direction="column" 
-              justify="flex-start" 
+              justifyContent="flex-start" 
               alignItems="flex-start"
             >
               <h2 >
@@ -359,7 +359,7 @@ const BudgetInvoice = (props) => {
               item 
               xs={5} 
               direction="column" 
-              justify="flex-start" 
+              justifyContent="flex-start" 
               alignItems="flex-start"
             >
              <h2 >TOTAL DE GASTOS, DERECHOS E IMPUESTOS</h2>
@@ -385,7 +385,7 @@ const BudgetInvoice = (props) => {
               item 
               xs={5} 
               direction="column" 
-              justify="flex-start" 
+              justifyContent="flex-start" 
               alignItems="flex-start"
             >
               <h2 >HONORARIOS</h2>
@@ -414,7 +414,7 @@ const BudgetInvoice = (props) => {
               item 
               xs={11} 
               direction="column" 
-              justify="flex-start" 
+              justifyContent="flex-start" 
               alignItems="flex-start"
             >
               <h3 className={classes.honorariumGrid}>Observaciones:</h3>

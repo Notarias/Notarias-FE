@@ -166,13 +166,13 @@ const Payment = (props) => {
         </DialogTitle>
         <DialogContent>
           <Grid container >
-            <Grid container direction="row" item xs={6} alignItems="center" justify="center">
+            <Grid container direction="row" item xs={6} alignItems="center" justifyContent="center">
               <Typography variant="button" display="block" gutterBottom>
                 A pagar {totalDebtAmount()}
               </Typography>
 
             </Grid>
-              <Grid  container item xs={6} alignItems="center" justify="center">
+              <Grid  container item xs={6} alignItems="center" justifyContent="center">
                 <TextField
                   key={"payment"}
                   onChange={handleValuePaymentChange}

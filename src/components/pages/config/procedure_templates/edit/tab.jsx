@@ -35,7 +35,7 @@ const Tab = (props) => {
       onClick={ selectTab }
       id={ tab.id }
       direction="column" 
-      justify="flex-start" 
+      justifyContent="flex-start" 
       alignItems="center"
       className={ selected ? classes.activeTab : classes.tabDefault }
       >

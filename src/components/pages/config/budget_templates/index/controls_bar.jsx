@@ -80,7 +80,7 @@ const ControlBar = (props) => {
   };
 
   return(
-    <Grid container  direction="row"  justify="flex-end"  alignItems="flex-end" >
+    <Grid container  direction="row"  justifyContent="flex-end"  alignItems="flex-end" >
       <div className={classes.search}>
         <div className={classes.searchIcon}>
           { 

@@ -118,7 +118,7 @@ const FieldsGroup = (props) => {
           <Grid container item xs={11} alignItems="flex-start">
             { editing ? renderTextGroupName() : renderInputGroupName() }
           </Grid>
-          <Grid container item xs={1} alignItems="center" justify="flex-end">
+          <Grid container item xs={1} alignItems="center" justifyContent="flex-end">
             <FieldsGroupMenu
               groupName={ groupName }
               active={ active }

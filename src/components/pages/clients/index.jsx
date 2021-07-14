@@ -84,8 +84,8 @@ const Clients = (props) => {
                     page={page}
                     rowsPerPage={per}
                     rowsPerPageOptions={[5, 10, 15, 20]}
-                    onChangePage={changePage}
-                    onChangeRowsPerPage={changeRowsPerPage}
+                    onPageChange={changePage}
+                    onRowsPerPageChange={changeRowsPerPage}
                     count={total_records}
                     labelRowsPerPage={"Filas por página:"}
                   />

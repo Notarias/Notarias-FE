@@ -13,14 +13,14 @@ const RenderFields = (props) => {
   const render = () => {
     if (loading || !data) {
       return (
-        <Grid container item className={ classes.circularProgressLoading } direction="column" alignItems="center" justify="center">
+        <Grid container item className={ classes.circularProgressLoading } direction="column" alignItems="center" justifyContent="center">
           <CircularProgress size={ 100 }/>
         </Grid>
       )
     } else if (currentTab) {
       return (
         <Grid container item direction="column" alignItems="center">
-          <Grid container item xs={10} alignItems="center" justify="center">
+          <Grid container item xs={10} alignItems="center" justifyContent="center">
             <FieldList
               currentTab={ currentTab }
             />
@@ -30,7 +30,7 @@ const RenderFields = (props) => {
     } else {
       return (
         <Grid container item direction="column" alignItems="center">
-          <Grid container item xs={10} alignItems="center" justify="center">
+          <Grid container item xs={10} alignItems="center" justifyContent="center">
             <Typography variant="h6">
               Agrega una pestaña para continuar
             </Typography>

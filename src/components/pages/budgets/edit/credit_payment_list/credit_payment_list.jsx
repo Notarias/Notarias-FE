@@ -98,7 +98,7 @@ const PaymentList = (props) => {
                     }
                   return(
                     <React.Fragment key={creditPayment.id + "fragment"}>
-                      <Grid container item xs={3} direction="column" alignItems="center" justify="center">
+                      <Grid container item xs={3} direction="column" alignItems="center" justifyContent="center">
                         <Grid>
                           Numero de Folio
                         </Grid>
@@ -124,17 +124,17 @@ const PaymentList = (props) => {
                           }}
                         />
                       </Grid>
-                      <Grid container item xs={2} alignItems="center" justify="center">
+                      <Grid container item xs={2} alignItems="center" justifyContent="center">
                         {getCurrentDate()}
                       </Grid>
-                      <Grid container item xs={1} alignItems="center" justify="center">
+                      <Grid container item xs={1} alignItems="center" justifyContent="center">
                         <VoidOrInvoid
                           voidAt={creditPayment.voidAt}
                           paymentId={creditPayment.id}
                           budgetId={budgetId}
                         />
                       </Grid>
-                      <Grid container item xs={1} alignItems="center" justify="center">
+                      <Grid container item xs={1} alignItems="center" justifyContent="center">
                         <Button>
                           <PrintIcon/>
                         </Button>

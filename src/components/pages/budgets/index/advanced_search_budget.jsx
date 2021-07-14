@@ -66,12 +66,12 @@ const AdvancedSearchBudget = (props) => {
 
 
   return(
-    <Grid container justify="flex-end" className={changeAdvanceSearch ? 
+    <Grid container justifyContent="flex-end" className={changeAdvanceSearch ? 
                                         classes.GridInputAdvancedSearchHide : classes.GridInputAdvancedSearch}
     >
-      <Grid container item xs={6} direction="row" justify="flex-end">
+      <Grid container item xs={6} direction="row" justifyContent="flex-end">
         <Paper className={classes.paperAdvancedSearch}>
-        <Grid container item justify="flex-start">
+        <Grid container item justifyContent="flex-start">
           <Grid item xs={10}>
             <TextField
               inputRef={clientNameInputRef}
@@ -121,7 +121,7 @@ const AdvancedSearchBudget = (props) => {
               className={classes.inputInAdvancedSearch}
             />
           </Grid>
-          <Grid container item xs={2} alignItems="center" justify="center">
+          <Grid container item xs={2} alignItems="center" justifyContent="center">
             <Button variant="outlined" onClick={startAdvanceSearch}>Buscar</Button>
           </Grid>
         </Grid>

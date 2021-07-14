@@ -98,7 +98,7 @@ class NextEventsIndex extends Component {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item container justify="flex-end"  style={{paddingTop: "6%"}}>
+          <Grid item container justifyContent="flex-end"  style={{paddingTop: "6%"}}>
             <Grid item>
               <Typography>
                   <Link>

@@ -72,7 +72,7 @@ class LastComments extends Component {
               </Grid>
             </MenuItem>
           </Grid>
-          <Grid container justify="flex-end" classes={{root: classes.seeMore}}>
+          <Grid container justifyContent="flex-end" classes={{root: classes.seeMore}}>
             <Grid item>
               <Typography >
                   <Link>

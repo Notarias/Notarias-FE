@@ -247,7 +247,7 @@ const FieldsGroupMenu = (props) => {
               </Grid>
             </DialogContent>
             <DialogActions>
-              <Grid container direction="row" justify="flex-end">
+              <Grid container direction="row" justifyContent="flex-end">
                 <Button onClick={ handleClose } color="secondary" >
                   Cancelar
                 </Button>

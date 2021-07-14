@@ -38,20 +38,20 @@ const Edit = (props) => {
       <Grid container direction="row">
         <Grid container item xs={9} direction="column">
             <Grid container direction="row"  alignItems="center" className={ classes.addTittleProcedure }>
-              <Grid container item xs={7} justify="flex-start">
+              <Grid container item xs={7} justifyContent="flex-start">
                 <TemplateTitle
                   templateData={ data ? data.proceduresTemplate : " " }
                   match={ props.match.params }
                 />
               </Grid>
-              <Grid container item xs={5} justify="center" alignItems="center">
-                <Grid container item xs={6} justify="center">
+              <Grid container item xs={5} justifyContent="center" alignItems="center">
+                <Grid container item xs={6} justifyContent="center">
                   <ButgetingTemplateLinkButton
                     id={ match.params.id }
                     budgetingTemplatesData={ data ? data.proceduresTemplate.budgetingTemplates : null }
                   />
                 </Grid>
-                <Grid container item xs={4} justify="center">
+                <Grid container item xs={4} justifyContent="center">
                   <ActiveTemplateButton
                     templateData={data ?  data.proceduresTemplate : [] }
                     match={ props.match.params }
@@ -66,7 +66,7 @@ const Edit = (props) => {
           { 
           (loading || !data) ?
             (
-              <Grid container item className={ classes.circularProgressLoading } direction="column" alignItems="center" justify="center">
+              <Grid container item className={ classes.circularProgressLoading } direction="column" alignItems="center" justifyContent="center">
                 <CircularProgress size={ 100 }/>
               </Grid>
             )
@@ -83,7 +83,7 @@ const Edit = (props) => {
             {
             (loading || !data) ?
               (
-                <Grid container item className={ classes.circularProgressLoading } direction="column" alignItems="center" justify="center">
+                <Grid container item className={ classes.circularProgressLoading } direction="column" alignItems="center" justifyContent="center">
                   <CircularProgress size={ 100 }/>
                 </Grid>
               )

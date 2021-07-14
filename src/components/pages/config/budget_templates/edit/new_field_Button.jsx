@@ -101,7 +101,7 @@ const NewFieldButton = ({
 
   const renderNewFieldButton = () => {
     return(
-      <Grid container  justify="center" alignItems="center" direction="row" >
+      <Grid container  justifyContent="center" alignItems="center" direction="row" >
         <Grid item xs={4}>
           <Typography variant="button" display="block" gutterBottom>
             {
@@ -123,7 +123,7 @@ const NewFieldButton = ({
 
   return (
     <>
-      <Grid container justify="center" alignItems="center" className={ classes.addFieldButton } >
+      <Grid container justifyContent="center" alignItems="center" className={ classes.addFieldButton } >
        { currentTab && renderNewFieldButton() }
       </Grid>
       <Dialog open={open} onClose={ handleClose }>
@@ -157,7 +157,7 @@ const NewFieldButton = ({
            </Grid>
         </DialogContent>
         <DialogActions>
-          <Grid container direction="row" justify="flex-end">
+          <Grid container direction="row" justifyContent="flex-end">
             <Button onClick={ handleClose } color="secondary" >
               Cancelar
             </Button>

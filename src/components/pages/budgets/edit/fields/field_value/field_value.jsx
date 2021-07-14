@@ -64,12 +64,12 @@ const FieldValue = (props) => {
       alignItems="center"
       className={classes.budgetTabPanelFields}
     >
-      <Grid container item xs={3} justify="flex-start" >
+      <Grid container item xs={3} justifyContent="flex-start" >
         <Typography variant="subtitle2" gutterBottom>
           {field.name}
         </Typography>
       </Grid>
-      <Grid container item xs={3} justify="flex-start">
+      <Grid container item xs={3} justifyContent="flex-start">
         <TotalValue
           setPristine={setPristine}
           withValue={withValue}
@@ -80,7 +80,7 @@ const FieldValue = (props) => {
           setChangeFieldValue={setChangeFieldValue}
         />
       </Grid>
-      <Grid container item xs={3} justify="center">
+      <Grid container item xs={3} justifyContent="center">
         <Typography gutterBottom>
           <NumberFormat 
             value={totalDebt} 
@@ -91,7 +91,7 @@ const FieldValue = (props) => {
           />
         </Typography>
       </Grid>
-      <Grid container item xs={3} justify="center">
+      <Grid container item xs={3} justifyContent="center">
         <AddFieldValue
           currentBudget={currentBudget}
           fieldId={field.id}

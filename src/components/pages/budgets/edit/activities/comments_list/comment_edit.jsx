@@ -149,7 +149,7 @@ const CommentEdit = (props) => {
               errorskey={ "body" }
             />
           </Grid>
-          <Grid container item justify="flex-start" >
+          <Grid container item justifyContent="flex-start" >
             <Link
               component="button"
               size="small"
@@ -219,10 +219,10 @@ const CommentEdit = (props) => {
   return(
     <React.Fragment key={comment.id + "fragment-Comment"}>
       <Grid container className={classes.fragmentComments}>
-        <Grid container item xs={2}  justify="center" alignItems="flex-start">
+        <Grid container item xs={2}  justifyContent="center" alignItems="flex-start">
           <Avatar src={ comment.user.avatarThumbUrl} size="small"/>
         </Grid>
-        <Grid container direction="column" item xs={10} justify="flex-start" alignItems="flex-start">
+        <Grid container direction="column" item xs={10} justifyContent="flex-start" alignItems="flex-start">
           <Grid container item>
           <Typography variant="subtitle2">
             {comment.user.firstName}  {comment.user.lastName}

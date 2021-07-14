@@ -21,12 +21,12 @@ const FieldTotalValues = (props) => {
 
   return(
     <>
-      <Grid container item xs={7} justify="flex-end">
+      <Grid container item xs={7} justifyContent="flex-end">
         <Typography variant="body2">
           Total cargos 
         </Typography>
       </Grid>
-      <Grid container item xs={5} justify="flex-end" className={classes.totalsGridAmount}>
+      <Grid container item xs={5} justifyContent="flex-end" className={classes.totalsGridAmount}>
         <NumberFormat 
           value={data && data.budgetTotals.total / 100}
           displayType={'text'} 
@@ -35,12 +35,12 @@ const FieldTotalValues = (props) => {
           decimalScale={2}
         />
       </Grid>
-      <Grid container item xs={7} justify="flex-end">
+      <Grid container item xs={7} justifyContent="flex-end">
         <Typography variant="body2">
           Saldos
         </Typography>
       </Grid>
-      <Grid container item xs={5} justify="flex-end" className={classes.totalsGridAmount}>
+      <Grid container item xs={5} justifyContent="flex-end" className={classes.totalsGridAmount}>
         <NumberFormat 
           value={data && data.budgetTotals.totalCredit / 100}
           displayType={'text'} 
@@ -49,12 +49,12 @@ const FieldTotalValues = (props) => {
           decimalScale={2}
         />
       </Grid>
-      <Grid container item xs={7} justify="flex-end">
+      <Grid container item xs={7} justifyContent="flex-end">
         <Typography variant="body2">
           Total pagos
         </Typography>
       </Grid>
-      <Grid container item xs={5} justify="flex-end" className={classes.totalsGridAmount}>
+      <Grid container item xs={5} justifyContent="flex-end" className={classes.totalsGridAmount}>
         <NumberFormat 
           value={data && data.budgetTotals.totalDebt / 100}
           displayType={'text'} 
@@ -63,12 +63,12 @@ const FieldTotalValues = (props) => {
           decimalScale={2}
         />
       </Grid>
-      <Grid container item xs={7} justify="flex-end">
+      <Grid container item xs={7} justifyContent="flex-end">
         <Typography variant="body2">
           Presupuesto restante
         </Typography>
       </Grid>
-      <Grid container item xs={5} justify="flex-end" className={classes.totalsGridAmount}>
+      <Grid container item xs={5} justifyContent="flex-end" className={classes.totalsGridAmount}>
         <NumberFormat 
           value={data && data.budgetTotals.totalPaid / 100}
           displayType={'text'} 

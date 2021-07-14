@@ -185,10 +185,10 @@ const BudgetsEdit = (props) => {
     <>
       <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
       <Grid container item xs={12} direction="row" >
-          <Grid container item xs={8} alignItems="center" justify="center" direction="column">
+          <Grid container item xs={8} alignItems="center" justifyContent="center" direction="column">
           <Paper className={ classes.budgetEditPaper}>
             <Grid container item xs={12} alignItems="center" className={ classes.budgetTittle}>
-              <Grid container item xs={5} justify="flex-start" alignItems="center">
+              <Grid container item xs={5} justifyContent="flex-start" alignItems="center">
                 <Typography variant="h6" gutterBottom className={classes.marginTitleBudgetName}>
                   { budgetingTemplate && budgetingTemplate.name }
                 </Typography>
@@ -201,7 +201,7 @@ const BudgetsEdit = (props) => {
                   { proceduresTemplate && proceduresTemplate.name }
                 </Typography>
               </Grid>
-              <Grid container item xs={2} justify="flex-end">
+              <Grid container item xs={2} justifyContent="flex-end">
                 <PaymentDrawer
                   budgetId={match.params.id}
                 />
@@ -234,10 +234,10 @@ const BudgetsEdit = (props) => {
                   </DialogTitle>
                   <DialogContent>
                     <Grid container direction="row" alignItems="center" >
-                      <Grid container item justify="center" alignItems="center">
+                      <Grid container item justifyContent="center" alignItems="center">
                         fecha:  {getCurrentDate()}
                       </Grid>
-                      <Grid container item justify="flex-end">
+                      <Grid container item justifyContent="flex-end">
                         <TextField
                           onChange={handleValuePaymentChange}
                           label="Abono"
@@ -287,13 +287,13 @@ const BudgetsEdit = (props) => {
               </Grid>
             </Grid>
             <Grid container item xs={12} alignItems="center" className={ classes.budgetTittle} >
-              <Grid container item xs={4} alignItems="center" justify="center">
+              <Grid container item xs={4} alignItems="center" justifyContent="center">
                 <Asignee
                   asigneeData={budget && budget.asignee}
                   budgetId={match.params.id}
                 />
               </Grid>
-              <Grid container item xs={4} justify="center" alignItems="center">
+              <Grid container item xs={4} justifyContent="center" alignItems="center">
                 <Grid container direction="row" alignItems="center">
                   <Typography variant="subtitle2">Reportador:</Typography>
                   <Avatar 
@@ -304,14 +304,14 @@ const BudgetsEdit = (props) => {
                   <Typography variant="caption">Juan Perez Perez</Typography>
                 </Grid>
               </Grid>
-              <Grid container item xs={4} justify="flex-start" alignItems="center">
+              <Grid container item xs={4} justifyContent="flex-start" alignItems="center">
                 <Typography variant="subtitle2">Cliente:</Typography>
                 <Typography variant="caption" className={classes.spaceBetwenFirstNameAndLastName}>
                   { budget && budget.client.firstName } { budget && budget.client.lastName }
                 </Typography>
               </Grid>
             </Grid>
-            <Grid container item xs={12} justify="flex-start" >
+            <Grid container item xs={12} justifyContent="flex-start" >
               <InformationTabs
                 budgetTemplateId={ budgetingTemplate && budgetingTemplate.id }
                 budgetInfo={ budget }
@@ -320,9 +320,9 @@ const BudgetsEdit = (props) => {
             </Grid>
             </Paper>
           </Grid>
-        <Grid container item xs={4} direction="row" justify="center" alignItems="stretch" className={ classes.budgetEdit}>
+        <Grid container item xs={4} direction="row" justifyContent="center" alignItems="stretch" className={ classes.budgetEdit}>
           <Paper className={ classes.budgetRightOptionsList}>
-            <Grid container direction="column" justify="center">
+            <Grid container direction="column" justifyContent="center">
               <Activities
                 budgetId={match.params.id}
               />

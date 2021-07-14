@@ -133,7 +133,7 @@ const Tabs = (props) => {
       </Grid>
       <Grid item >
         <Button variant="contained" onClick={ handleClickOpen } className={ classes.buttonTab }>
-          <Grid container direction="column" alignItems="center" justify="center">
+          <Grid container direction="column" alignItems="center" justifyContent="center">
             Agregar pestaña
             <AddIcon/>
           </Grid>

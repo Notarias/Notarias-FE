@@ -85,7 +85,7 @@ const ClientSearch = (props) => {
 
   const renderInputSearch = ( props) => {
     return(
-    <Grid container  direction="row"  justify="flex-end"  alignItems="flex-end" >
+    <Grid container  direction="row"  justifyContent="flex-end"  alignItems="flex-end" >
       <div className={classes.search}>
         <div className={classes.searchIcon}>
           { 
@@ -184,8 +184,8 @@ const ClientSearch = (props) => {
               page={page}
               rowsPerPage={per}
               rowsPerPageOptions={[5]}
-              onChangePage={changePage}
-              onChangeRowsPerPage={changeRowsPerPage}
+              onPageChange={changePage}
+              onRowsPerPageChange={changeRowsPerPage}
               count={total_records}
               labelRowsPerPage={"Filas por página:"}
             />

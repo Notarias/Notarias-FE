@@ -180,7 +180,7 @@ const TabMenu = (props) => {
   }
 
   return (
-    <Grid className={ markStatus() } container alignItems="center" justify="flex-start">
+    <Grid className={ markStatus() } container alignItems="center" justifyContent="flex-start">
       <IconButton
         aria-label="more"
         aria-controls="long-menu"

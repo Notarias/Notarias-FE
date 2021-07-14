@@ -101,7 +101,7 @@ class NextEvents extends Component {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid container direction="row"  justify="flex-end"  alignItems="flex-end" style={{height:"20%"}}>
+            <Grid container direction="row"  justifyContent="flex-end"  alignItems="flex-end" style={{height:"20%"}}>
               <Grid item style={{ paddingBottom:"4%", width:"25%" }}>
                 <Typography >
                     <Link>

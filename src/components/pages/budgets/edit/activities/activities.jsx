@@ -68,9 +68,9 @@ const Activities = (props) => {
 
   return(
     <>
-      <Grid container alignItems="center" justify="center">
+      <Grid container alignItems="center" justifyContent="center">
         <AppBar position="static" color="transparent">
-          <Grid container item direction="row" alignItems="center" justify="center">  
+          <Grid container item direction="row" alignItems="center" justifyContent="center">  
             <Button
               color={goSelected === 0 ? "primary" : "inherit"} 
               onClick={handleComments}
