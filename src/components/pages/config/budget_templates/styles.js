@@ -101,7 +101,20 @@ export const styles = theme => {
     },
     addFieldButton: {
       marginTop: "15px",
-      marginBottom: "4px",
+      marginBottom: "8px",
+      paddingRight: "30px"
+    },
+    addTaxFieldButton: {
+      marginTop: "15px",
+      marginBottom: "8px",
+    },
+    addTaxFieldButtonColor:{
+      backgroundColor: "green",
+      color: "white",
+      '&:hover': {
+        color: "black",
+      },
+
     },
     addIconMargin: {
       marginLeft: "10px",
@@ -239,6 +252,29 @@ export const styles = theme => {
     },
     buttonToAceptLinkedTemplate: {
       width: "80px",
+    },
+    InputPercentage: {
+      width: "80px",
+      height: "40px",
+      padding: "0",
+      marginBottom: "10px"
+    },
+    InputAdornmentInPercentage: {
+      marginRight: "5px"
+    },
+    operatorMenu: {
+      width: "90px",
+      marginBottom: "10px"
+    },
+    textFieldSearch: {
+      marginBottom: "10px"
+    },
+    gridSearchField: {
+      backgroundColor: 'inherit',
+      width: "350px",
+      height: "300px",
+      overflowY:"scroll",
+      marginTop: "10px"
     },
   })
 }

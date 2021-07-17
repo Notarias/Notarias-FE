@@ -14,6 +14,7 @@ import ProcedureTemplateLinkButton           from './edit/procedure_template_lin
 import Tabs                                 from './edit/tabs';
 import NewFieldButton                       from './edit/new_field_Button';
 import RenderFields                         from './edit/render_fields';
+import NewFliedTaxButton    from './edit/newFieldTaxButton/new_field_tax_button'
 
 
 const BREADCRUMBS = [
@@ -61,9 +62,14 @@ const Edit = (props) => {
               </Grid>
             </Grid>
             <Divider/>
-            <NewFieldButton
-              currentTab={ currentTab }
-            />
+            <Grid container direction="row">
+              <NewFieldButton
+                currentTab={ currentTab }
+              />
+              <NewFliedTaxButton
+                templateData={data ? data.budgetingTemplate.fields : [] }
+              />
+            </Grid>
             <RenderFields
               currentTab={ currentTab }
               data={ data }

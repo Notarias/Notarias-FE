@@ -24,7 +24,7 @@ export default (props) => {
           callback={ sortHandler }
         />
         <SortHeader
-          text={ "Numero de serie" }
+          text={ "No. de serie" }
           field_property={ "serial_number" }
           current_field={ field }
           sort_direction={ direction }

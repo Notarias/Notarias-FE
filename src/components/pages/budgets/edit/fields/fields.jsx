@@ -11,7 +11,7 @@ import CreateComments                         from './create_comments';
 
 
 const Fields = (props) => {
-  const {value, setValue, currentTab, tabList, budgetInfo, classes, budgetId} = props;
+  const { currentTab, budgetInfo, classes, budgetId} = props;
   const currentBudget = budgetId
   const [currentFieldId, setCurrentFieldId] =  React.useState(null)
 

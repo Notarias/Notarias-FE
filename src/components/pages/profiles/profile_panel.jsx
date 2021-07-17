@@ -31,7 +31,7 @@ const ProfilePanel = (props) => {
       </div>
       <div className={classes.columBody}>
       <Grid container alignItems='center' className={classes.gritFixed}>
-        <Grid container item alignItems='center' justify='center' xs={5}>
+        <Grid container item alignItems='center' justifyContent='center' xs={5}>
           <AvatarUploader classes={ classes } user={currentUser}/>
         </Grid>
         <Grid container item alignItems='center' xs={7}>

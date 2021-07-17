@@ -6,6 +6,15 @@ export const GET_BUDGETING_TEMPLATE = gql`
       active
       id
       name
+      fields{
+        active
+        budgetingTemplateTabId
+        defaultValue
+        extendable
+        fieldType
+        id
+        name
+      }
       proceduresTemplates{
         id
         name
@@ -277,6 +286,36 @@ export const GET_PROCEDURE_TEMPLATE = gql`
         proceduresTemplatesIds
         proceduresTemplates{
           id
+        }
+      }
+    }
+  }
+`
+
+export const CREATE_TAX_FIELD = gql`
+  mutation createTaxField(
+    $name: String,
+    $tabId: ID!,
+    $defaultValue: Int,
+    $taxedFieldsIds: [ID!]!,
+  ){
+    createTaxField(input :{
+      name: $name
+      tabId: $tabId
+      defaultValue: $defaultValue
+      taxedFieldsIds: $taxedFieldsIds
+      }
+    ){
+      fieldTax{
+        active
+        defaultValue
+        extendable
+        fieldType
+        id
+        name
+        categories{
+          id
+          name
         }
       }
     }

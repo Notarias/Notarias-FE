@@ -15,9 +15,7 @@ import { withStyles }                       from '@material-ui/core/styles';
 import { styles }                           from '../../styles';
 
 const InformationTabs = (props) => {
-  const { classes, budgetInfo, budgetId } = props
-  // const classes = useStyles();
-  const { budgetTemplateId } = props;
+  const { classes, budgetInfo, budgetId, budgetTemplateId } = props
   const [value, setValue] = React.useState(0);
   const [tabList, setTabList] = React.useState(data ? data.budgetingTemplateTabs: []);
   const [currentTab, setCurrentTab] = React.useState( data ? data.budgetingTemplateTabs[0] : "")
@@ -25,6 +23,10 @@ const InformationTabs = (props) => {
   const { data } = useQuery(
     GET_BUDGETING_TEMPLATES_TABS, { variables: {"id": budgetTemplateId }}
   );
+
+  // useEffect(() => {
+  //   setValue()
+  // }, [tab])
 
   useEffect(() => {
     currentTab || (data && setCurrentTab(data.budgetingTemplateTabs[0]));
@@ -35,7 +37,7 @@ const InformationTabs = (props) => {
     setValue(newValue);
   };
 
-  const renderTab = () => {
+  const renderTabs = () => {
     return(
       tabList.map(
         (tab, index) => {
@@ -43,7 +45,8 @@ const InformationTabs = (props) => {
             <BudgetTemplateTab
               key={tab.id + "-tab"} 
               setValue={setValue}
-              setCurrentTab={setCurrentTab} 
+              setCurrentTab={setCurrentTab}
+              currentTab={currentTab}
               tab={tab} 
               label={tab.name}
               index={index}
@@ -54,11 +57,17 @@ const InformationTabs = (props) => {
     )
   }
 
+  console.log(currentTab, "current")
   return (
     <div  className={classes.rootTab}>
       <AppBar position="static">
-        <Tabs centered value={value} onChange={handleChange} aria-label="simple tabs example">
-          { renderTab() }
+        <Tabs 
+          centered 
+          value={value} 
+          onChange={handleChange}
+          aria-label="simple tabs example"
+        >
+          { renderTabs() }
         </Tabs>
       </AppBar>
       <Grid container justifyContent="flex-start" alignItems="flex-end" className={classes.titleFields}>
@@ -81,10 +90,7 @@ const InformationTabs = (props) => {
       <Divider/>
       <Grid container className={classes.boxContainerFields}>
         <Fields
-          value={value}
-          setValue={setValue}
           currentTab={currentTab && currentTab}
-          tabList={tabList}
           budgetInfo={budgetInfo}
           budgetId={budgetId}
         />

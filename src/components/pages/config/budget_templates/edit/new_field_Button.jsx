@@ -17,7 +17,6 @@ import TextField                                                from '@material-
 import { GLOBAL_MESSAGE }                                       from '../../../../../resolvers/queries';
 import client                                                   from '../../../../../apollo';
 
-
 const NewFieldButton = ({
   currentTab,
   classes,
@@ -101,29 +100,21 @@ const NewFieldButton = ({
 
   const renderNewFieldButton = () => {
     return(
-      <Grid container  justifyContent="center" alignItems="center" direction="row" >
-        <Grid item xs={4}>
-          <Typography variant="button" display="block" gutterBottom>
-            {
-              <Button
-                variant="contained"
-                color="primary"
-                size="small"
-                disabled={ !currentTab }
-                onClick={ addNewFieldClickOpen }
-              >
-                Campo  <AddIcon className={ classes.addIconMargin }/>
-              </Button>
-            }
-          </Typography>
-        </Grid>
-      </Grid>
+      <Button
+        variant="contained"
+        color="primary"
+        size="small"
+        disabled={ !currentTab }
+        onClick={ addNewFieldClickOpen }
+      >
+        Campo  <AddIcon className={ classes.addIconMargin }/>
+      </Button>
     )
   }
 
   return (
     <>
-      <Grid container justifyContent="center" alignItems="center" className={ classes.addFieldButton } >
+      <Grid container item justifyContent="flex-end" alignItems="center" className={ classes.addFieldButton } xs={6} >
        { currentTab && renderNewFieldButton() }
       </Grid>
       <Dialog open={open} onClose={ handleClose }>
