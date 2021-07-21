@@ -24,10 +24,6 @@ const InformationTabs = (props) => {
     GET_BUDGETING_TEMPLATES_TABS, { variables: {"id": budgetTemplateId }}
   );
 
-  // useEffect(() => {
-  //   setValue()
-  // }, [tab])
-
   useEffect(() => {
     currentTab || (data && setCurrentTab(data.budgetingTemplateTabs[0]));
     data && setTabList(data.budgetingTemplateTabs);
@@ -57,7 +53,6 @@ const InformationTabs = (props) => {
     )
   }
 
-  console.log(currentTab, "current")
   return (
     <div  className={classes.rootTab}>
       <AppBar position="static">

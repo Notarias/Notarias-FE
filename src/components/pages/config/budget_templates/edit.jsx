@@ -68,6 +68,7 @@ const Edit = (props) => {
               />
               <NewFliedTaxButton
                 templateData={data ? data.budgetingTemplate.fields : [] }
+                currentTab={ currentTab }
               />
             </Grid>
             <RenderFields

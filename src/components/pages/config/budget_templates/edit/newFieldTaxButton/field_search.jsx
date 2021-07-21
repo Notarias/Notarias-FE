@@ -1,30 +1,25 @@
 import React, { useEffect } from 'react'
-import { styles }      from '../../styles';
-import { withStyles }  from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import Fuse                                           from 'fuse.js';
-import Grid from '@material-ui/core/Grid';
-import List from '@material-ui/core/List';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import Checkbox from '@material-ui/core/Checkbox';
-import Button from '@material-ui/core/Button';
-import Divider from '@material-ui/core/Divider';
-import Menu            from '@material-ui/core/Menu';
-import MenuItem        from '@material-ui/core/MenuItem';
-import InputAdornment                       from '@material-ui/core/InputAdornment';
-import Select from '@material-ui/core/Select';
-
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import InputLabel from '@material-ui/core/InputLabel';
-
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-
-
+import { styles }           from '../../styles';
+import { withStyles }       from '@material-ui/core/styles';
+import TextField            from '@material-ui/core/TextField';
+import Fuse                 from 'fuse.js';
+import Grid                 from '@material-ui/core/Grid';
+import List                 from '@material-ui/core/List';
+import Card                 from '@material-ui/core/Card';
+import ListItem             from '@material-ui/core/ListItem';
+import ListItemText         from '@material-ui/core/ListItemText';
+import ListItemIcon         from '@material-ui/core/ListItemIcon';
+import Checkbox             from '@material-ui/core/Checkbox';
+import Button               from '@material-ui/core/Button';
+import Divider              from '@material-ui/core/Divider';
+import MenuItem             from '@material-ui/core/MenuItem';
+import InputAdornment       from '@material-ui/core/InputAdornment';
+import Select               from '@material-ui/core/Select';
+import OutlinedInput        from '@material-ui/core/OutlinedInput';
+import InputLabel           from '@material-ui/core/InputLabel';
+import FormControl          from '@material-ui/core/FormControl';
+import ArrowBackIosIcon     from '@material-ui/icons/ArrowBackIos';
+import ArrowForwardIosIcon  from '@material-ui/icons/ArrowForwardIos';
 
 
 function not(a, b) {
@@ -39,101 +34,55 @@ function union(a, b) {
   return [...a, ...not(b, a)];
 }
 
-
-// const renderSearchList = (searchList, checked, classes, handleToggle) => {
-//   const checkedIds = checked.map((item) =>  item.id )
-//     return(
-//       <List 
-//         component="nav" 
-//         aria-label="contacts" 
-//         disablePadding={true}
-//       >
-//       { 
-//         searchList.map(
-//         (item) => {
-//             let obj = item.item || item
-//             return(
-//             <React.Fragment key={obj.id + "fragment"}>
-//                 <ListItem key={obj.id} role={undefined} dense button onClick={handleToggle(obj)}>
-//                 <ListItemIcon>
-//                     <Checkbox
-//                         edge="start"
-//                         checked={checkedIds.indexOf(obj.id) !== -1}
-//                         tabIndex={-1}
-//                         disableRipple
-//                         inputProps={{ 'aria-labelledby': obj.id }}
-//                     />
-//                     </ListItemIcon>
-//                     <ListItemText 
-//                     id={obj.id} 
-//                     primary={` ${ obj.name }`} 
-//                     />
-//                 </ListItem>
-//                 <Divider/>
-//             </React.Fragment>
-//             )
-//         }
-//         )
-//       }
-//       </List>
-//     )
-//   }
-
 const FieldSearch = (props) => {
-  const { classes, templateData } = props
+  const { classes, templateData, setTaxedFieldsIds, setDefaultValue, setOperator, setPristine } = props
 
   const [searchList, setSearchList] = React.useState(templateData)
   const [initialList, setInitialList] = React.useState(templateData)
   const [fuzzySearcher, setFuzzySearcher] = React.useState(new Fuse(initialList, { keys: ['name'] }))
-  const [initialized, setInitialized] = React.useState()
 
   const [checked, setChecked] = React.useState([]);
-  const [left, setLeft] = React.useState( searchList );
+  const [left, setLeft] = React.useState( templateData );
   const [right, setRight] = React.useState([]);
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [operator, setOperator] = React.useState('');
+  const [operatorValue, setOperatorValue] = React.useState("apply_all");
   const [percentage, setPercentage] = React.useState('3');
 
   const leftChecked = intersection(checked, left);
   const rightChecked = intersection(checked, right);
 
-  // useEffect(() => {
-  //   // setToLinkSelectedOption(checked)
-  //   if (!initialized && templateData) {
-  //     setInitialList(templateData)
-  //     setFuzzySearcher(new Fuse(templateData, { keys: ['name'] }))
-  //     // setSearchList(templateData)
-  //     setInitialized(true)
-  //   }
-  // }, [checked])
+  useEffect(() => {
+    if(right.length > 0){
+      setPristine(false)
+    } else {
+      setPristine(true)
+    }
+  }, [right])
 
   useEffect(() => {
-    setLeft(searchList)
-    setFuzzySearcher(new Fuse(templateData, { keys: ['name'] }))
-  }, [searchList])
+    setFuzzySearcher(new Fuse(left, { keys: ['name'] }))
+  }, [left])
+
+  useEffect(() => {
+    setTaxedFieldsIds(
+      right.map((field) => {
+        return(
+          field.id
+        )
+      })
+    )
+    setDefaultValue(Number(percentage))
+    setOperator(operatorValue)
+  }, [right, operatorValue, percentage ])
 
   function changeSearch(event) {
     let result = fuzzySearcher.search(event.target.value)
-    console.log(result,"res")
-    
     if (event.target.value.length === 0){
-      setSearchList(initialList)
+      setSearchList(left)
     } else {
       setSearchList(result)
     }
   }
-
-  // const handleToggle = (obj) => () => {
-  //   const checkedIds = checked.map((item) => item.id)
-  //   const currentIndex = checkedIds.indexOf(obj.id);
-  //   const newChecked = [...checked];
-  //   if (currentIndex === -1) {
-  //     newChecked.push(obj);
-  //   } else {
-  //     newChecked.splice(currentIndex, 1);
-  //   }
-  //   setChecked(newChecked);
-  // };
 
   const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value);
@@ -149,34 +98,23 @@ const FieldSearch = (props) => {
   };
 
   const handleOperatorChange = (event) => {
-    setOperator(event.target.value);
+    setOperatorValue(event.target.value);
   };
 
   const handlePercentageChange = (event) => {
     setPercentage(event.target.value)
+    setDefaultValue(percentage)
   }
-  // const handleOpenOperatorMenu = (event) => {
-  //   setAnchorEl(event.currentTarget);
-  // };
-
-  // const handleOperatorMenuClose = () => {
-  //   setAnchorEl(null);
-  // };
 
   const numberOfChecked = (items) => intersection(checked, items).length;
 
-  const handleToggleAll = (items) => () => {
-    if (numberOfChecked(items) === items.length) {
-      setChecked(not(checked, items));
-    } else {
-      setChecked(union(checked, items));
-    }
-  };
 
   const handleCheckedRight = () => {
+    const leftValues = not(left, leftChecked)
     setRight(right.concat(leftChecked));
-    setLeft(not(left, leftChecked));
+    setLeft(leftValues);
     setChecked(not(checked, leftChecked));
+    setSearchList(leftValues)
   };
 
   const handleCheckedLeft = () => {
@@ -187,34 +125,13 @@ const FieldSearch = (props) => {
 
   const customList = (title, items) => (
     <Card>
-      {/* <CardHeader
-        avatar={
-          <Checkbox
-            onClick={handleToggleAll(items)}
-            checked={numberOfChecked(items) === items.length && items.length !== 0}
-            indeterminate={numberOfChecked(items) !== items.length && numberOfChecked(items) !== 0}
-            disabled={items.length === 0}
-            inputProps={{ 'aria-label': 'all items selected' }}
-          />
-        }
-        title={title}
-        subheader={`${numberOfChecked(items)}/${items.length} selected`}
-      /> */}
       <Divider />
-      <List dense component="div" role="list">
+      <List dense component="div" role="list" className={classes.listComponent}>
         {items.map((item) => {
           let value = item.item || item
-          const labelId = `transfer-list-all-item-${value}-label`;
           return (
             <ListItem key={value.id} role="undefined" button onClick={handleToggle(value)}>
               <ListItemIcon>
-                    {/* <Checkbox
-                        edge="start"
-                        checked={checkedIds.indexOf(obj.id) !== -1}
-                        tabIndex={-1}
-                        disableRipple
-                        inputProps={{ 'aria-labelledby': obj.id }}
-                    /> */}
                 <Checkbox
                   checked={checked.indexOf(value) !== -1}
                   tabIndex={-1}
@@ -232,11 +149,10 @@ const FieldSearch = (props) => {
   );
 
 
-  // console.log(searchList, "dat")
   return(
     <>
       <Grid container >
-        <Grid container item xs={6} alignItems="center" justifyContent="center" >
+        <Grid container item xs={6} alignItems="center" justifyContent="flex-start">
           <TextField
             onChange={ changeSearch }
             size="small"
@@ -246,8 +162,8 @@ const FieldSearch = (props) => {
             className={classes.textFieldSearch}
           />
         </Grid>
-        <Grid container item xs={6} >
-          <Grid container item xs={6} alignItems="center" justifyContent="center">
+        <Grid container item xs={6} alignItems="center" justifyContent="center">
+          <Grid container item xs={6} alignItems="flex-start" justifyContent="center">
             <FormControl variant="outlined">
               <OutlinedInput
                 id="percentage"
@@ -260,49 +176,70 @@ const FieldSearch = (props) => {
               />
             </FormControl>
           </Grid>
-          <Grid container item xs={6} alignItems="center" justifyContent="flex-start">
-            <FormControl className={classes.operatorMenu}>
-              <InputLabel id="demo-simple-select-label">Operador</InputLabel>
+          <Grid container item xs={6} alignItems="center" justifyContent="flex-end">
+            <FormControl variant="outlined" className={classes.operatorMenu}>
+              <InputLabel id="demo-simple-select-outlined-label" >Operador</InputLabel>
               <Select
-                labelId="operator-menu-select-label"
-                id="operator-menu"
-                value={operator}
+                labelId="demo-simple-select-outlined-label"
+                id="demo-simple-select-outlined"
+                value={operatorValue}
                 onChange={handleOperatorChange}
+                label="operator"
+                classes={{ outlined: classes.selectOperatorMenu }}
               >
-                <MenuItem value={"uno"}>uno</MenuItem>
-                <MenuItem value={"dos"}>dos</MenuItem>
+                <MenuItem value={"highest"}>Alto</MenuItem>
+                <MenuItem value={"flat"}>Plano</MenuItem>
+                <MenuItem value={"apply_all"}>Todos</MenuItem>
               </Select>
             </FormControl>
           </Grid>
         </Grid>
-        <Grid container item xs={12} direction="row" alignItems="center"  justifyContent="center" >
-          <Button
-            variant="outlined"
-            size="small"
-            onClick={handleCheckedRight}
-            disabled={leftChecked.length === 0}
-            aria-label="move selected right"
-          >
-            &gt;
-          </Button>
-          <Button
-            variant="outlined"
-            size="small"
-            onClick={handleCheckedLeft}
-            disabled={rightChecked.length === 0}
-            aria-label="move selected left"
-          >
-            &lt;
-          </Button>
+        <Grid container item xs={12} direction="row" alignItems="center"  justifyContent="center" className={classes.changeButtonGrid}>
+          <Grid container item xs={6} alignItems="center" justifyContent="center">
+            <Button
+              variant="outlined"
+              size="small"
+              onClick={handleCheckedRight}
+              disabled={leftChecked.length === 0}
+              aria-label="move selected right"
+            >
+              <ArrowForwardIosIcon/>
+            </Button>
+          </Grid>
+          <Grid container item xs={6} alignItems="center" justifyContent="center">
+            <Button
+              variant="outlined"
+              size="small"
+              onClick={handleCheckedLeft}
+              disabled={rightChecked.length === 0}
+              aria-label="move selected left"
+            >
+              <ArrowBackIosIcon/>
+            </Button>
+          </Grid>
         </Grid>
         <Divider/>
-        <Grid container direction="row" item xs={12} className={classes.gridSearchField}>
-              {/* {
-                renderSearchList(searchList, checked, classes, handleToggle)
-              } */}
-
-          <Grid container item xs={6}  alignItems="center" justifyContent="center" >{customList('Choices', left)}</Grid>
-          <Grid container item xs={6}  alignItems="flex-start" justifyContent="center" >{customList('Chosen', right)}</Grid>
+        <Grid container direction="row" item xs={12}>
+          <Grid 
+            container 
+            item 
+            xs={6}  
+            alignItems="center" 
+            justifyContent="center"
+            className={classes.gridSearchField}
+          >
+            {customList('Choices', searchList)}
+          </Grid>
+          <Grid
+            container
+            item
+            xs={6}
+            alignItems="flex-start"
+            justifyContent="center"
+            className={classes.gridSearchField}
+          >
+            {customList('Chosen', right)}
+          </Grid>
         </Grid>
       </Grid>
     </>

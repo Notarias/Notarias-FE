@@ -209,7 +209,7 @@ const BudgetsEdit = (props) => {
               <Grid item xs={1}>
                 <GenericDropdownMenu>
                   <MenuItem key="1-abono" onClick={handleClickOpen}>
-                    <ListItemText primary="Nuevo abono"/>
+                    <ListItemText primary="Nuevo Ingreso"/>
                   </MenuItem>
                   <MenuItem key="2-paymentList">
                     <PaymentList
@@ -230,7 +230,7 @@ const BudgetsEdit = (props) => {
                 </GenericDropdownMenu>
                 <Dialog open={open} onClose={handleClose} fullWidth>
                   <DialogTitle>
-                    Datos del abono
+                    Datos del Ingreso
                   </DialogTitle>
                   <DialogContent>
                     <Grid container direction="row" alignItems="center" >
@@ -240,7 +240,7 @@ const BudgetsEdit = (props) => {
                       <Grid container item justifyContent="flex-end">
                         <TextField
                           onChange={handleValuePaymentChange}
-                          label="Abono"
+                          label="Ingreso"
                           id="margin-normal"
                           helperText="Cantidad"
                           margin="normal"

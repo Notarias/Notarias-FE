@@ -193,6 +193,7 @@ export const styles = theme => {
     },
     tittleDialogWidth: {
       width: "600px",
+      padding: "10px 24px"
     },
     textFieldTittleType: {
       width: "230px",
@@ -255,19 +256,24 @@ export const styles = theme => {
     },
     InputPercentage: {
       width: "80px",
-      height: "40px",
-      padding: "0",
-      marginBottom: "10px"
+      height: "38px",
+      padding: "0px",
+      marginRight: "20px"
     },
     InputAdornmentInPercentage: {
       marginRight: "5px"
     },
     operatorMenu: {
-      width: "90px",
-      marginBottom: "10px"
+      width: "110px",
+    },
+    selectOperatorMenu: {
+      padding: "9px",
+    },
+    taxFieldName: {
+      marginBottom: "15px"
     },
     textFieldSearch: {
-      marginBottom: "10px"
+      marginBottom: "5px"
     },
     gridSearchField: {
       backgroundColor: 'inherit',
@@ -275,6 +281,24 @@ export const styles = theme => {
       height: "300px",
       overflowY:"scroll",
       marginTop: "10px"
+    },
+    badgeGreenColor: {
+      backgroundColor: "green",
+      color: "white",
+      width: "50px",
+      height: "30px",
+      fontSize: "16px"
+    },
+    gridFieldsContainer: {
+      height: "90px"
+    },
+    changeButtonGrid:{
+      marginTop: "10px",
+      marginBottom: "5px"
+    },
+    listComponent: {
+      width: "220px",
+      minHeight: "290px"
     },
   })
 }

@@ -167,6 +167,11 @@ export const GET_BUDGETING_TEMPLATE_TAB_FIELDS = gql`
       id
       name
       active
+      budgetingTemplateTabId
+      defaultValue
+      extendable
+      fieldType
+      operator
       categories {
         id
         name
@@ -298,21 +303,25 @@ export const CREATE_TAX_FIELD = gql`
     $tabId: ID!,
     $defaultValue: Int,
     $taxedFieldsIds: [ID!]!,
+    $operator: String!
   ){
     createTaxField(input :{
       name: $name
       tabId: $tabId
       defaultValue: $defaultValue
       taxedFieldsIds: $taxedFieldsIds
+      operator: $operator
       }
     ){
       fieldTax{
         active
+        budgetingTemplateTabId
         defaultValue
         extendable
         fieldType
         id
         name
+        operator
         categories{
           id
           name

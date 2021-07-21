@@ -1,28 +1,107 @@
-import React           from 'react';
-import Button          from '@material-ui/core/Button';
-import Grid            from '@material-ui/core/Grid';
-import { styles }      from '../../styles';
-import { withStyles }  from '@material-ui/core/styles';
-import AddIcon         from '@material-ui/icons/Add'
-import Dialog          from '@material-ui/core/Dialog';
-import DialogContent   from '@material-ui/core/DialogContent';
-import DialogTitle     from '@material-ui/core/DialogTitle';
-import DialogActions   from '@material-ui/core/DialogActions';
-import Divider         from '@material-ui/core/Divider';
-import FieldSearch     from './field_search';
+import React                                  from 'react';
+import Button                                 from '@material-ui/core/Button';
+import Grid                                   from '@material-ui/core/Grid';
+import { styles }                             from '../../styles';
+import { withStyles }                         from '@material-ui/core/styles';
+import AddIcon                                from '@material-ui/icons/Add'
+import Dialog                                 from '@material-ui/core/Dialog';
+import DialogContent                          from '@material-ui/core/DialogContent';
+import DialogTitle                            from '@material-ui/core/DialogTitle';
+import DialogActions                          from '@material-ui/core/DialogActions';
+import Divider                                from '@material-ui/core/Divider';
+import FieldSearch                            from './field_search';
+import TextField                              from '@material-ui/core/TextField';
+import { useMutation }                        from '@apollo/react-hooks';
+import { CREATE_TAX_FIELD}                    from '../../queries_and_mutations/queries'
+import { GLOBAL_MESSAGE }                     from '../../../../../../resolvers/queries';
+import { GET_BUDGETING_TEMPLATE_TAB_FIELDS }  from '../../queries_and_mutations/queries'
+import client                                 from '../../../../../../apollo';
 
 const NewFliedTaxButton = (props) => {
-  const { classes, templateData } = props
+  const { classes, templateData, currentTab } = props
 
   const [open, setOpen] = React.useState(false);
+  const [fieldName, setFieldName] = React.useState()
+  const [defaultValue, setDefaultValue] = React.useState()
+  const [taxedFieldsIds, setTaxedFieldsIds] = React.useState([])
+  const [operator, setOperator] = React.useState()
+  const [pristine, setPristine] = React.useState(true)
+  const [withoutName, setWithoutName] = React.useState(true)
+  const [error, setError] = React.useState(false)
+  const inputsList = ["name"]
 
   const handleClose = () => {
     setOpen(false)
+    setFieldName("")
+    setPristine(true)
+    setWithoutName(true)
   }
 
   const handleOpen = () => {
     setOpen(true)
   }
+
+  const changeFieldName = (event) => {
+    setFieldName(event.target.value);
+    setWithoutName(false)
+  };
+
+  const [createBudgetingTemplateTabTaxFieldMutation, {loading: createBudgetingTemplateTabTaxFieldLoading} ] =
+  useMutation(
+    CREATE_TAX_FIELD,
+    {
+      onError(apolloError) {
+        setErrors(apolloError)
+        client.writeQuery({
+          query: GLOBAL_MESSAGE,
+          data: {
+            globalMessage: {
+              message: "Ocurrió un error",
+              type: "error",
+              __typename: "globalMessage"
+            }
+          }
+        })
+      },
+      onCompleted(cacheData) {
+        setError(false)
+        setOpen(false)
+        setPristine(true)
+        setWithoutName(true)
+      },
+      fetchPolicy: "no-cache",
+      refetchQueries: [{
+        query: GET_BUDGETING_TEMPLATE_TAB_FIELDS,
+        variables: { "id": currentTab && currentTab.id },
+      }],
+      awaitRefetchQueries: true
+    }
+  )
+
+  const setErrors = (apolloError) => {
+    let errorsList = {}
+    let errorTemplateList = apolloError.graphQLErrors
+    for ( let i = 0; i < errorTemplateList.length; i++) {
+      for( let n = 0; n < inputsList.length; n++) {
+        if(errorTemplateList[i].extensions.attribute === inputsList[n]){
+          errorsList[inputsList[n]] = errorTemplateList[i].message
+        }
+      }
+    }
+    setError(errorsList);
+  }
+
+  const addNewTaxField = (event) => {
+    setOpen(false)
+    createBudgetingTemplateTabTaxFieldMutation(
+      { 
+        variables: 
+          { "name": fieldName, "tabId": currentTab.id, "defaultValue": defaultValue , "taxedFieldsIds": taxedFieldsIds, "operator": operator },
+          fetchPolicy: "no-cache",
+      }
+    )
+  }
+
 
   return(
     <Grid container item justifyContent="flex-start" alignItems="center" className={ classes.addTaxFieldButton } xs={6}>
@@ -43,42 +122,25 @@ const NewFliedTaxButton = (props) => {
         </DialogTitle >
         <Divider/>
         <DialogContent>
+          <Grid container item xs={12} justifyContent="center" alignItems="center" >
+            <TextField
+              onChange={ changeFieldName }
+              size="small"
+              id="tax-field-name"
+              label="Nombre del campo"
+              className={classes.taxFieldName}
+              fullWidth
+              required
+            />
+          </Grid>
           <FieldSearch
             templateData={templateData}
+            setDefaultValue={setDefaultValue}
+            setTaxedFieldsIds={setTaxedFieldsIds}
+            setOperator={setOperator}
+            setPristine={setPristine}
           />
-          {/* <Grid container direction="row" alignItems="center"  >
-            <Grid container item xs={6} alignItems="center" justifyContent="center" >
-              <FormControl variant="outlined">
-                <OutlinedInput
-                  id="percentage"
-                  defaultValue={(Number("3"))}
-                  endAdornment={<InputAdornment className={classes.InputAdornmentInPercentage} position="end">%</InputAdornment>}
-                  size="small"
-                  type="number"
-                  className={classes.InputPercentage}
-                />
-              </FormControl>
-            </Grid>
-            <Grid container item xs={6} alignItems="center" justifyContent="center" >
-              <FormControl className={classes.operatorMenu}>
-                <InputLabel id="demo-simple-select-label">Operador</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={operator}
-                  onChange={handleOperatorChange}
-                  // className={classes.operatorMenu}
-                >
-                  <MenuItem value={"uno"}>uno</MenuItem>
-                  <MenuItem value={"dos"}>dos</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} >
-              <FieldSearch/>
-            </Grid>
-          </Grid> */}
-        </DialogContent>
+         </DialogContent>
         <Divider/>
         <DialogActions>
           <Grid container direction="row" justifyContent="flex-end">
@@ -88,9 +150,10 @@ const NewFliedTaxButton = (props) => {
             <Button 
               color="primary"
               variant="contained"
-              disabled
+              onClick={addNewTaxField}
+              disabled={withoutName || pristine || createBudgetingTemplateTabTaxFieldLoading}
             >
-              Añadir campo
+              Crear campo
             </Button>
           </Grid>
         </DialogActions>
