@@ -1,4 +1,4 @@
-import React                                          from 'react';
+import React, { useEffect }                                          from 'react';
 import Grid                                           from '@material-ui/core/Grid';
 import TextField                                      from '@material-ui/core/TextField';
 import Button                                         from '@material-ui/core/Button';
@@ -24,21 +24,24 @@ import Avatar                                         from '@material-ui/core/Av
 import CategoriesSelectableList                       from './categories_selectable_list'
 import { GLOBAL_MESSAGE }                             from '../../../../../resolvers/queries';
 import client                                         from '../../../../../apollo';
+import Badge from '@material-ui/core/Badge';
 
 
 const Field = (props) => {
 
-  const { classes, id, currentTab, removeFromList } = props
+  const { classes, id, currentTab, removeFromList, field } = props
   const [open, setOpen] = React.useState(false);
   const [openB, setOpenB] = React.useState(false);
   const [openDialog, setOpenDialog] = React.useState(false);
   const [editing, setEditing] = React.useState(true);
   const [name, setName] = React.useState(props.name)
+  const [type, setType] = React.useState(field.fieldType)
   const [categories, setCategories] = React.useState(props.categories);
   const [active, setActive] = React.useState(props.active || false);
   const [error, setError] = React.useState(false);
   const inputsList = ["name"]
   const [categoriesToSave, setCategoriesToSave] = React.useState(props.categories || [])
+
 
   const [updateBudgetingTemplateTabFieldMutation] =
     useMutation(
@@ -215,12 +218,22 @@ const Field = (props) => {
     }
   }
 
+
   return (
     <Grid container item alignItems="flex-start" justifyContent="flex-start" className={ classes.fielPaddingBottom }>
       <Paper>
       <Grid container item className={ classes.fieldHeightRow }>
         { editing ? renderTextField() : renderInputField() }
-        <Grid container direction="column"  alignItems="center" justifyContent="center" item xs={4}>
+        <Grid container alignItems="center" justifyContent="center" item xs={1}>
+          {
+            type === "tax" ?
+              <Badge classes={{badge: classes.badgeGreenColor}} overlap="circular" badgeContent={field.defaultValue + "%"}>
+                <div ></div>
+              </Badge>
+            : ""
+          } 
+        </Grid>
+        <Grid container direction="column"  alignItems="center" justifyContent="center" item xs={3}>
           <Chip
             avatar={<Avatar>{ categoriesToShow() }</Avatar>}
             label={ ` categorias` }

@@ -118,7 +118,7 @@ class ClientCommentari extends Component {
               </ListItem>
             </List>
           </Grid>
-          <Grid item container justify='flex-end'>
+          <Grid item container justifyContent='flex-end'>
             <Mutation
             mutation={CREATE_CLIENT_COMMENT_MUTATION}
             variables={{ ...this.state }}
@@ -127,7 +127,7 @@ class ClientCommentari extends Component {
                 {
                   (mutation, { loading, error, data }) => {
                     return(
-                      <Grid item container justify='flex-end' classes={{ root: classes.buttonFetch }}>
+                      <Grid item container justifyContent='flex-end' classes={{ root: classes.buttonFetch }}>
                         <Button
                           disabled={this.state.pristine || loading}
                           variant="contained"

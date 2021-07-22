@@ -162,21 +162,20 @@ const Payment = (props) => {
       <ListItemText primary="Pagar" onClick={handleClickOpen}/>
       <Dialog open={open} onClose={handleClose} fullWidth>
         <DialogTitle>
-          Agregar Pago
+          Agregar Egreso
         </DialogTitle>
         <DialogContent>
           <Grid container >
             <Grid container direction="row" item xs={6} alignItems="center" justifyContent="center">
               <Typography variant="button" display="block" gutterBottom>
-                A pagar {totalDebtAmount()}
+                Total {totalDebtAmount()}
               </Typography>
-
             </Grid>
               <Grid  container item xs={6} alignItems="center" justifyContent="center">
                 <TextField
                   key={"payment"}
                   onChange={handleValuePaymentChange}
-                  label="Abono"
+                  label="Egreso"
                   autoFocus
                   error={ !!error["total"] && true }
                   helperText={ error["total"] || "Cantidad"}

@@ -101,7 +101,20 @@ export const styles = theme => {
     },
     addFieldButton: {
       marginTop: "15px",
-      marginBottom: "4px",
+      marginBottom: "8px",
+      paddingRight: "30px"
+    },
+    addTaxFieldButton: {
+      marginTop: "15px",
+      marginBottom: "8px",
+    },
+    addTaxFieldButtonColor:{
+      backgroundColor: "green",
+      color: "white",
+      '&:hover': {
+        color: "black",
+      },
+
     },
     addIconMargin: {
       marginLeft: "10px",
@@ -180,6 +193,7 @@ export const styles = theme => {
     },
     tittleDialogWidth: {
       width: "600px",
+      padding: "10px 24px"
     },
     textFieldTittleType: {
       width: "230px",
@@ -239,6 +253,52 @@ export const styles = theme => {
     },
     buttonToAceptLinkedTemplate: {
       width: "80px",
+    },
+    InputPercentage: {
+      width: "80px",
+      height: "38px",
+      padding: "0px",
+      marginRight: "20px"
+    },
+    InputAdornmentInPercentage: {
+      marginRight: "5px"
+    },
+    operatorMenu: {
+      width: "110px",
+    },
+    selectOperatorMenu: {
+      padding: "9px",
+    },
+    taxFieldName: {
+      marginBottom: "15px"
+    },
+    textFieldSearch: {
+      marginBottom: "5px"
+    },
+    gridSearchField: {
+      backgroundColor: 'inherit',
+      width: "350px",
+      height: "300px",
+      overflowY:"scroll",
+      marginTop: "10px"
+    },
+    badgeGreenColor: {
+      backgroundColor: "green",
+      color: "white",
+      width: "50px",
+      height: "30px",
+      fontSize: "16px"
+    },
+    gridFieldsContainer: {
+      height: "90px"
+    },
+    changeButtonGrid:{
+      marginTop: "10px",
+      marginBottom: "5px"
+    },
+    listComponent: {
+      width: "220px",
+      minHeight: "290px"
     },
   })
 }

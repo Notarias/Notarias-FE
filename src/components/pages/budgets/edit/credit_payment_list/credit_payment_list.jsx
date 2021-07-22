@@ -73,15 +73,15 @@ const PaymentList = (props) => {
 
   if (data && data.creditPayments.length === 0) {
     return(
-      <ListItemText primary="No hay abonos" />
+      <ListItemText primary="No hay Ingresos" />
     )
   } else {
     return(
       <>
-        <ListItemText primary="Lista de abonos" onClick={handleClickOpen}/>
+        <ListItemText primary="Lista de Ingresos" onClick={handleClickOpen}/>
         <Dialog open={open} onClose={handleClose} fullWidth>
           <DialogTitle>
-            Lista de abonos
+            Lista de Ingresos
           </DialogTitle>
           <DialogContent>
             <Grid container direction="row">
@@ -109,7 +109,7 @@ const PaymentList = (props) => {
                       <Grid item xs={5}>
                         <TextField
                           key={creditPayment.id + "creditPayment"}
-                          label="Abono"
+                          label="Ingreso"
                           id="margin-normal"
                           helperText="Cantidad"
                           margin="normal"

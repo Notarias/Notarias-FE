@@ -185,7 +185,7 @@ const BudgetsEdit = (props) => {
     <>
       <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
       <Grid container item xs={12} direction="row" >
-          <Grid container item xs={8} alignItems="center" justifyContent="center" direction="column">
+        <Grid container item xs={8} alignItems="center" justifyContent="center" direction="column">
           <Paper className={ classes.budgetEditPaper}>
             <Grid container item xs={12} alignItems="center" className={ classes.budgetTittle}>
               <Grid container item xs={5} justifyContent="flex-start" alignItems="center">
@@ -209,7 +209,7 @@ const BudgetsEdit = (props) => {
               <Grid item xs={1}>
                 <GenericDropdownMenu>
                   <MenuItem key="1-abono" onClick={handleClickOpen}>
-                    <ListItemText primary="Nuevo abono"/>
+                    <ListItemText primary="Nuevo Ingreso"/>
                   </MenuItem>
                   <MenuItem key="2-paymentList">
                     <PaymentList
@@ -230,7 +230,7 @@ const BudgetsEdit = (props) => {
                 </GenericDropdownMenu>
                 <Dialog open={open} onClose={handleClose} fullWidth>
                   <DialogTitle>
-                    Datos del abono
+                    Datos del Ingreso
                   </DialogTitle>
                   <DialogContent>
                     <Grid container direction="row" alignItems="center" >
@@ -240,7 +240,7 @@ const BudgetsEdit = (props) => {
                       <Grid container item justifyContent="flex-end">
                         <TextField
                           onChange={handleValuePaymentChange}
-                          label="Abono"
+                          label="Ingreso"
                           id="margin-normal"
                           helperText="Cantidad"
                           margin="normal"
@@ -318,8 +318,8 @@ const BudgetsEdit = (props) => {
                 budgetId={match.params.id}
               />
             </Grid>
-            </Paper>
-          </Grid>
+          </Paper>
+        </Grid>
         <Grid container item xs={4} direction="row" justifyContent="center" alignItems="stretch" className={ classes.budgetEdit}>
           <Paper className={ classes.budgetRightOptionsList}>
             <Grid container direction="column" justifyContent="center">
