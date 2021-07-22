@@ -70,7 +70,6 @@ const PaymentList = (props) => {
     setOpen(false);
   };
 
-
   if (data && data.creditPayments.length === 0) {
     return(
       <ListItemText primary="No hay Ingresos" />
@@ -87,6 +86,32 @@ const PaymentList = (props) => {
             <Grid container direction="row">
               {
                 creditPayments.map((creditPayment) => {
+                  const  renderpaymentType = () => {
+                    switch (creditPayment.paymentType) {
+                      case "cash" :
+                
+                        return(
+                          "Efectivo"
+                        )
+                        break;
+                      case "deposit" :
+                
+                        return(
+                          "Deposito"
+                        )
+                        break;
+                      case "wire" :
+                
+                        return(
+                          "Transferencia"
+                        )
+                        break
+                      default :
+                        return(
+                          "NA"
+                        )
+                    }
+                  }
                   const getCurrentDate = (separator='/') => {
                     
                     let newDate = new Date(Date.parse(creditPayment.createdAt))
@@ -98,15 +123,18 @@ const PaymentList = (props) => {
                     }
                   return(
                     <React.Fragment key={creditPayment.id + "fragment"}>
-                      <Grid container item xs={3} direction="column" alignItems="center" justifyContent="center">
+                      <Grid container item xs={1} direction="column" alignItems="center" justifyContent="center">
                         <Grid>
-                          Numero de Folio
+                          # Folio
                         </Grid>
                         <Grid>
                           0000{creditPayment.id}
                         </Grid>
                       </Grid>
-                      <Grid item xs={5}>
+                      <Grid container item xs={3} direction="column" alignItems="center" justifyContent="center">
+                        {renderpaymentType()}
+                      </Grid>
+                      <Grid item xs={4}>
                         <TextField
                           key={creditPayment.id + "creditPayment"}
                           label="Ingreso"

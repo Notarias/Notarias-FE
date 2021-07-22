@@ -33,8 +33,11 @@ import ListItemText                         from '@material-ui/core/ListItemText
 import Activities                           from './edit/activities/activities'
 import Asignee                              from './edit/asignee'
 import { GET_CREDIT_PAYMENTS }              from './queries_and_mutations/queries';
-import { Link }                       from 'react-router-dom';
-import { GET_BUDGETS_AUDITLOG } from './queries_and_mutations/queries';
+import { Link }                             from 'react-router-dom';
+import { GET_BUDGETS_AUDITLOG }             from './queries_and_mutations/queries';
+import InputLabel                           from '@material-ui/core/InputLabel';
+import FormControl                          from '@material-ui/core/FormControl';
+import Select                               from '@material-ui/core/Select';
 
 const BREADCRUMBS = [
   { name: "Inicio", path: "/" },
@@ -79,6 +82,7 @@ const BudgetsEdit = (props) => {
   const [valuePayment, setValuePayment] = React.useState(0)
   const [notePayment, setNotePayment]   = React.useState("")
   const [pristine, setPristine]         = React.useState(false)
+  const [payType, setPayType]           = React.useState("cash")
   const [error, setError]               = useState(false)
 
 
@@ -147,7 +151,8 @@ const BudgetsEdit = (props) => {
        variables:{
         "note": notePayment,
         "budgetId": match.params.id, 
-        "total": (valuePayment * 100)
+        "total": (valuePayment * 100),
+        "paymentType":payType
        }
     })
   }
@@ -180,6 +185,11 @@ const BudgetsEdit = (props) => {
 
     return (`${year}${separator}${month<10?`0${month}`:`${month}`}${separator}${date}`)
   }
+
+  const handleSelectChange = (event) => {
+    setPayType(event.target.value)
+  }
+
 
   return(
     <>
@@ -233,26 +243,44 @@ const BudgetsEdit = (props) => {
                     Datos del Ingreso
                   </DialogTitle>
                   <DialogContent>
-                    <Grid container direction="row" alignItems="center" >
+                    <Grid container alignItems="center" >
                       <Grid container item justifyContent="center" alignItems="center">
                         fecha:  {getCurrentDate()}
                       </Grid>
-                      <Grid container item justifyContent="flex-end">
-                        <TextField
-                          onChange={handleValuePaymentChange}
-                          label="Ingreso"
-                          id="margin-normal"
-                          helperText="Cantidad"
-                          margin="normal"
-                          error={ !!error["total"] && true }
-                          helperText={error["total"] || " "}
-                          errorskey={ "total" }
-                          required
-                          InputProps={{
-                            inputComponent: NumberFormatCustom,
-                            startAdornment: <InputAdornment position="start">$</InputAdornment>
-                          }}
-                        />
+                      <Grid container item direction="row">
+                        <Grid container item xs={6} justifyContent="center" alignItems="center">
+                          <FormControl >
+                            <InputLabel htmlFor="age-native-simple">Tipo de pago"</InputLabel>
+                            <Select
+                              native
+                              value={payType}
+                              onChange={handleSelectChange}
+                              label="Tipo de pago"
+                            >
+                              <option value={"cash"}>Efectivo</option>
+                              <option value={"deposit"}>Deposito</option>
+                              <option value={"wire"}>Transferencia</option>
+                            </Select>
+                          </FormControl>
+                        </Grid>
+                        <Grid container item xs={6} justifyContent="flex-start" alignItems="center">
+                          <TextField
+                            className={classes.selectPayType}
+                            onChange={handleValuePaymentChange}
+                            label="Ingreso"
+                            id="margin-normal"
+                            helperText="Cantidad"
+                            margin="normal"
+                            error={ !!error["total"] && true }
+                            helperText={error["total"] || " "}
+                            errorskey={ "total" }
+                            required
+                            InputProps={{
+                              inputComponent: NumberFormatCustom,
+                              startAdornment: <InputAdornment position="start">$</InputAdornment>
+                            }}
+                          />
+                        </Grid>
                       </Grid>
                     </Grid>
                     <Grid>

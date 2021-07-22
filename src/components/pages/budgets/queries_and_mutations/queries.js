@@ -362,11 +362,13 @@ export const CREATE_CREDIT_PAYMENT = gql`
     $note: String,
     $budgetId: ID!,
     $total: Int!,
+    $paymentType: String!
   ){
     createCreditPayment(input:{
       note: $note,
       budgetId: $budgetId,
       total: $total,
+      paymentType: $paymentType
       }
     ){
       creditPayment{
@@ -374,6 +376,7 @@ export const CREATE_CREDIT_PAYMENT = gql`
         id
         note
         total
+        paymentType
       }
     }
   }
@@ -406,6 +409,7 @@ export const GET_CREDIT_PAYMENTS = gql`
       total
       voidAt
       createdAt
+      paymentType
     }
   }
 `
