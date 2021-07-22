@@ -269,6 +269,9 @@ export const styles = theme => {
       wordWrap: "break-word",
       height: "50px",
       padding: "5px"
-    }
+    },
+    selectPayType: {
+      marginTop: "35px"
+    },
   })
 }
