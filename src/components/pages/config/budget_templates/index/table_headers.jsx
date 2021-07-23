@@ -25,18 +25,24 @@ export default (props) => {
         />
         <SortHeader
           text={ "Estado" }
+          field_property={ "status" }
           current_field={ field }
           sort_direction={ direction }
           callback={ sortHandler }
         />
         <SortHeader
           text={ "Trámites" }
+          field_property={ "procedures" }
           current_field={ field }
           sort_direction={ direction }
           callback={ sortHandler }
         />
         <SortHeader
-          text={ "Version" }
+          text={ "Versión" }
+          field_property={ "version" }
+          current_field={ field }
+          sort_direction={ direction }
+          callback={ sortHandler }
         />
         <TableCell align="center">Opciones</TableCell>
       </TableRow>

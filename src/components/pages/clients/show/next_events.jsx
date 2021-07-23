@@ -101,9 +101,9 @@ class NextEvents extends Component {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid container direction="row"  justifyContent="flex-end"  alignItems="flex-end" style={{height:"20%"}}>
-              <Grid item style={{ paddingBottom:"4%", width:"25%" }}>
-                <Typography >
+            <Grid container style={{height:"20%"}}>
+              <Grid container item justifyContent="flex-end"  alignItems="center">
+                <Typography variant="subtitle2">
                     <Link>
                       Ir al calendario
                     </Link>
