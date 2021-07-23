@@ -206,9 +206,9 @@ class  UserFormNew extends Component {
                           onChange={this.handleChange.bind(this)}
                         >
                          {
-                            this.props.data.roles.map((role)=> {
+                            this.props.data && this.props.data.roles.map((role)=> {
                               return(
-                                <MenuItem value={role.permanentLink}>
+                                <MenuItem key={role.name + "role"} value={role.permanentLink}>
                                   {role.name}
                                 </MenuItem>
                               )
