@@ -39,6 +39,7 @@ class SessionsNew extends Component {
       <main className={classes.main}>
         <Paper className={classes.paper}>
           {this.state.errorMessage && <CustomSnackbarMessage
+            key="snackbar"
             variant="error"
             className={classes.margin}
             message={this.state.errorMessage}
