@@ -232,5 +232,20 @@ export const styles = theme => {
     clientAtributes: {
       padding: theme.spacing(1),
     },
+    paperBase: {
+      minWidth:"100%",
+      minHeight: "300px"
+    },
+    textFieldGeneralData: {
+      margin: "5px"
+    },
+    gridDivider: {
+      width: "688px",
+      minHeight: "30px"
+    },
+    gridGenaralData: {
+      margin: "10px 10px 10px 5px",
+    },
+
   })
 }
