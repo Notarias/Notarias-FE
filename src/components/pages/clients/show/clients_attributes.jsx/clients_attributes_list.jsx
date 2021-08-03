@@ -1,16 +1,18 @@
-import React, {useEffect}       from 'react'
-import { withStyles }           from '@material-ui/core/styles';
-import { styles }               from '../styles';
-import Typography               from '@material-ui/core/Typography';
-import { useQuery }             from '@apollo/react-hooks';
-import { GET_CLIENT_ATTRIBUTE } from '../../clients_queries_and_mutations/queries';
-import List                     from '@material-ui/core/List';
-import ListItem                 from '@material-ui/core/ListItem';
-import Paper                    from '@material-ui/core/Paper';
-import ClientAttribute          from './client_attribute';
+import React, {useEffect}               from 'react'
+import { withStyles }                   from '@material-ui/core/styles';
+import { styles }                       from '../styles';
+import Typography                       from '@material-ui/core/Typography';
+import { useQuery }                     from '@apollo/react-hooks';
+import { GET_CLIENT_ATTRIBUTE }         from '../../clients_queries_and_mutations/queries';
+import List                             from '@material-ui/core/List';
+import ListItem                         from '@material-ui/core/ListItem';
+import Paper                            from '@material-ui/core/Paper';
+import ClientAttribute                  from './client_attribute';
 
 const ClientsAttributesList = (props) => {
-  const { classes } = props
+  const { classes, match } = props
+
+
 
   const  {loading: loadingAttribute, data: dataAttribute}  = useQuery(GET_CLIENT_ATTRIBUTE)
 
@@ -28,6 +30,7 @@ const ClientsAttributesList = (props) => {
             <ListItem key={attr.id + "-attr"}>
               <ClientAttribute
                 attr={attr}
+                match={match}
               />
             </ListItem>
           )

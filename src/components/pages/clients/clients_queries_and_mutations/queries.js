@@ -133,3 +133,85 @@ export const GET_CLIENT_ATTRIBUTE = gql`
     }
   }
 `
+
+
+export const CREATE_CLIENT_ATTRIBUTE_VALUE = gql`
+  mutation createClientAttributeValue(
+    $clientId: ID!,
+    $clientAttributeId: ID!,
+    $value: String!,
+    ){
+      createClientAttributeValue(input:{
+        clientId: $clientId,
+        clientAttributeId: $clientAttributeId,
+        value: $value
+      }){
+        clientAttributeValue{
+          clientId
+          file
+          id
+          value
+          clientAttributeId
+        }
+      }
+    }
+  `
+
+export const GET_CLIENT_ATTRIBUTES_VALUES = gql`
+  query clientAttributesValues(
+    $clientId: ID!
+  ){
+    clientAttributesValues(
+      clientId: $clientId
+    ){
+      clientId
+      file
+      id
+      name
+      permanentLink
+      clientAttributeId
+      value
+    }
+  }
+`
+
+export const GET_CLIENT_ATTRIBUTE_VALUE = gql`
+  query clientAttributeValue(
+    $attributeId: ID!
+    $clientId: ID!
+  ){
+    clientAttributeValue(
+      attributeId: $attributeId,
+      clientId: $clientId
+    ){
+      clientId
+      file
+      id
+      name
+      permanentLink
+      clientAttributeId
+      value
+    }
+  }
+`
+
+export const UPDATE_CLIENT_ATTRIBUTE_VALUE = gql`
+  mutation UpdateClientAttributeValue(
+    $id: ID!
+    $value: String!
+  ){
+    updateClientAttributeValue(input:{
+          id: $id,
+      value: $value 
+    })
+    {
+      clientAttributeValue{
+        file
+        clientId
+        id
+        value
+        clientAttributeId
+      }
+    }
+  }
+`

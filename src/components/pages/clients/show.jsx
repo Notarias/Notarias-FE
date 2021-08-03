@@ -71,7 +71,9 @@ const Details = (props) => {
             <Typography style={{marginTop:"20px"}} variant="subtitle2">Otros datos</Typography>
           </Grid>
           <Grid container item xs={8}>
-            <ClientsAttributesList/>
+            <ClientsAttributesList
+              match={match}
+            />
           </Grid>
           <Grid container item xs={12}>
             <Divider fullwidth="true" component="li" style={{width:"98%", marginBottom: "6px", marginTop: "6px"}}/>

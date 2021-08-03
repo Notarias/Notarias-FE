@@ -104,7 +104,7 @@ const ClientsData = (props) => {
             <ListItemText>Nombres</ListItemText>
             <TextField
               id="outlined-firstName"
-              value={clientInfo.firstName}
+              value={clientInfo.firstName || ""}
               onChange={ (event)=> {
                 setClientInfo(
                   {...clientInfo,
@@ -120,7 +120,7 @@ const ClientsData = (props) => {
             <ListItemText>Apellidos</ListItemText>
             <TextField
               id="outlined-lastName"
-              value={clientInfo.lastName}
+              value={clientInfo.lastName || ""}
               onChange={ (event)=> {
                 setClientInfo({
                   ...clientInfo,
@@ -138,7 +138,7 @@ const ClientsData = (props) => {
             <ListItemText>RFC</ListItemText>
             <TextField
               id="outlined-rfc"
-              value={clientInfo.rfc}
+              value={clientInfo.rfc || ""}
               onChange={ (event)=> {
                 setClientInfo({
                   ...clientInfo,
@@ -154,7 +154,7 @@ const ClientsData = (props) => {
             <ListItemText>Curp</ListItemText>
             <TextField
               id="outlined-curp"
-              value={clientInfo.curp}
+              value={clientInfo.curp || ""}
               onChange={ (event)=> {
                 setClientInfo({
                   ...clientInfo,
@@ -172,7 +172,7 @@ const ClientsData = (props) => {
             <ListItemText>E-mail</ListItemText>
             <TextField
               id="outlined-email"
-              value={clientInfo.email}
+              value={clientInfo.email || ""}
               onChange={ (event)=> {
                 setClientInfo({
                   ...clientInfo,
@@ -188,7 +188,7 @@ const ClientsData = (props) => {
             <ListItemText>Categoria</ListItemText>
             <TextField
               id="outlined-category"
-              value={clientInfo.category}
+              value={clientInfo.category || ""}
               onChange={ (event)=> {
                 setClientInfo({
                   ...clientInfo,
@@ -206,7 +206,7 @@ const ClientsData = (props) => {
             <ListItemText>Empresa</ListItemText>
             <TextField
               id="outlined-business"
-              value={clientInfo.business}
+              value={clientInfo.business || ""}
               onChange={ (event)=> {
                 setClientInfo({
                   ...clientInfo,
@@ -222,7 +222,7 @@ const ClientsData = (props) => {
             <ListItemText>Telefono</ListItemText>
             <TextField
               id="outlined-phone"
-              value={clientInfo.phone}
+              value={clientInfo.phone || ""}
               onChange={ (event)=> {
                 const onlyString = event.target.value.toString()
                 const onlyNums = onlyString.replace(/[^0-9]/g, '');
@@ -243,7 +243,7 @@ const ClientsData = (props) => {
             <ListItemText>Dirección</ListItemText>
             <TextField
               id="outlined-address"
-              value={clientInfo.address}
+              value={clientInfo.address || ""}
               onChange={ (event)=> {
                 setClientInfo({
                   ...clientInfo,
