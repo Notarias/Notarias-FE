@@ -15,9 +15,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Paper from '@material-ui/core/Paper';
 import Divider                              from '@material-ui/core/Divider';
 import TextField from '@material-ui/core/TextField';
-import ClientsAttributesList from './show/clients_attributes.jsx/clients_attributes_list';
+import ClientsAttributesList from './show/clients_attributes/clients_attributes_list';
 import ClientsData from './show/clients_data';
-import ClientsBudgets from './show/clients_budgets';
+import ClientsBudgetsList from './show/clients_budgets/clients_budgets_list';
 import ClientsProcedures from './show/clients_procedures';
 import ClientsComments from './show/clients_comments'
 import IncomingEvents from './show/incoming_events'
@@ -82,7 +82,9 @@ const Details = (props) => {
             <Typography style={{marginTop:"20px"}} variant="subtitle2">Últimos Presupuestos</Typography>
           </Grid>
           <Grid container item xs={8}>
-            <ClientsBudgets/>
+            <ClientsBudgetsList
+              match={match}
+            />
           </Grid>
           <Grid container item xs={12}>
             <Divider fullwidth="true" component="li" style={{width:"98%", marginBottom: "6px", marginTop: "6px"}}/>

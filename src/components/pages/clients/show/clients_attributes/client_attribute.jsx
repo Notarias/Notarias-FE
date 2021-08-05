@@ -186,7 +186,6 @@ const ClientAttribute = (props) => {
     )
   }
 
-  console.log(attrValue, "data")
   return(
     <>
       {
