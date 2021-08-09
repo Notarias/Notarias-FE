@@ -77,6 +77,28 @@ export const styles = theme => {
     },
     paperFullHeight: {
       height:"100%"
+    },
+    commentEditingInputGrid: {
+      marginRight: "30px"
+    },
+    buttonTextComments: {
+      marginRight: "18px",
+      marginTop: "5px",
+      marginLeft: "2px"
+    },
+    buttonTextCommentsDisabled: {
+      marginRight: "18px",
+      marginTop: "5px",
+      marginLeft: "2px",
+      color: "gray",
+      textDecoration: "none !IMPORTANT"
+    },
+    gridCommentsContainer: {
+      marginBottom: "5px",
+      marginTop: "5px"
+    },
+    avatarComment: {
+      marginTop: "15px"
     }
   })
 }

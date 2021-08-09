@@ -1,21 +1,16 @@
-import React from 'react'
-import { withStyles }                       from '@material-ui/core/styles';
-import { styles }                           from '../styles';
-import { Grid }             from '@material-ui/core';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Paper from '@material-ui/core/Paper';
-import TextField from '@material-ui/core/TextField';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import Avatar from '@material-ui/core/Avatar';
-import ImageIcon from '@material-ui/icons/Image';
-import Typography                           from '@material-ui/core/Typography';
-import { useQuery }              from '@apollo/react-hooks';
-import { GET_BUDGETS }    from '../../clients_queries_and_mutations/queries'
-import { useEffect } from 'react';
-import ClientBudget from './client_budget'
-import { Link }                             from 'react-router-dom';
+import React            from 'react'
+import { withStyles }   from '@material-ui/core/styles';
+import { styles }       from '../styles';
+import { Grid }         from '@material-ui/core';
+import List             from '@material-ui/core/List';
+import ListItem         from '@material-ui/core/ListItem';
+import Paper            from '@material-ui/core/Paper';
+import Typography       from '@material-ui/core/Typography';
+import { useQuery }     from '@apollo/react-hooks';
+import { GET_BUDGETS }  from '../../clients_queries_and_mutations/queries'
+import { useEffect }    from 'react';
+import ClientBudget     from './client_budget'
+import { Link }         from 'react-router-dom';
 
 const ClientsBudgetsList = (props) => {
   const { classes, match }  = props

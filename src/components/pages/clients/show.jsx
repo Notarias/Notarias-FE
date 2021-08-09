@@ -1,26 +1,18 @@
-import React, {useEffect}                from 'react';
-import { withStyles }                       from '@material-ui/core/styles';
-import { styles }                           from './styles';
-import { Grid }             from '@material-ui/core';
-import CustomerInformation  from './show/customer_information';
-import LastProcedures       from './show/last_procedures';
-import LastComments         from './show/last_comments';
-import NextEvents           from './show/next_events';
-import LastBudgets          from './show/last_budgets';
-import Breadcrumbs          from '../../ui/breadcrumbs';
-import Typography                           from '@material-ui/core/Typography';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Paper from '@material-ui/core/Paper';
-import Divider                              from '@material-ui/core/Divider';
-import TextField from '@material-ui/core/TextField';
-import ClientsAttributesList from './show/clients_attributes/clients_attributes_list';
-import ClientsData from './show/clients_data';
-import ClientsBudgetsList from './show/clients_budgets/clients_budgets_list';
-import ClientsProcedures from './show/clients_procedures';
-import ClientsComments from './show/clients_comments'
-import IncomingEvents from './show/incoming_events'
+import React, {useEffect}     from 'react';
+import { withStyles }         from '@material-ui/core/styles';
+import { styles }             from './styles';
+import { Grid }               from '@material-ui/core';
+import Breadcrumbs            from '../../ui/breadcrumbs';
+import Typography             from '@material-ui/core/Typography';
+import List                   from '@material-ui/core/List';
+import ListItem               from '@material-ui/core/ListItem';
+import Divider                from '@material-ui/core/Divider';
+import ClientsAttributesList  from './show/clients_attributes/clients_attributes_list';
+import ClientsData            from './show/clients_data';
+import ClientsBudgetsList     from './show/clients_budgets/clients_budgets_list';
+import ClientsProcedures      from './show/clients_procedures';
+import ClientsComments        from './show/clients_comments/clients_comments'
+import IncomingEvents         from './show/incoming_events'
 
 const BREADCRUMBS = [
   { name: "Inicio", path: "/" },
@@ -32,10 +24,6 @@ const Details = (props) => {
   const { classes, match } = props
 
 
-  // if(loading) return <p>Loadng...</p>
-  // if(error) return <p> { `Error ${error.message}` } </p>
-
-
   return(
     <div style={{height:"auto"}}>
       <Breadcrumbs breadcrumbs={BREADCRUMBS}/>
@@ -45,7 +33,7 @@ const Details = (props) => {
         xs={12} 
         justifyContent="center"
         alignItems="center" 
-        style={{paddingLeft: "3%", overflowY: "scroll", maxHeight: "600px"}}
+        style={{paddingLeft: "3%",marginTop: "2px", overflowY: "scroll", maxHeight: "600px"}}
       >
         <Grid container item xs={8} style={{}}>
           <Grid container item xs={12}>
@@ -108,7 +96,9 @@ const Details = (props) => {
             <Divider fullwidth="true" component="li" style={{width:"98%", marginBottom: "6px", marginTop: "6px"}}/>
           </Grid>
           <Grid container item xs={12} justifyContent="center" alignItems="center" >
-            <ClientsComments/>
+            <ClientsComments
+              match={match}
+            />
           </Grid>
         </Grid>
       </Grid>

@@ -101,6 +101,8 @@ export const LOAD_CLIENT_COMMENTS = gql `
           commentableType
           body
           user{
+            firstName
+            lastName
             id
             avatarThumbUrl
           }
@@ -268,5 +270,82 @@ export const GET_BUDGETS = gql`
       }
     }
     budgetsCount
+  }
+`
+
+export const CREATE_COMMENT = gql`
+  mutation createComment(
+    $commentableId: ID!,
+    $commentableType:String!
+    $body:String!
+  ){
+    createComment(input:{
+      commentableId: $commentableId
+      commentableType: $commentableType
+      body: $body
+    }
+    ){
+      comment{
+        body
+        commentableId
+        commentableType
+        id
+      }
+    }
+  }
+`
+
+export const UPDATE_COMMENT = gql`
+  mutation updateComment(
+    $id: ID!,
+    $body:String!
+  ){
+    updateComment(input:{
+      id: $id
+      body: $body
+    }
+    ){
+      comment{
+        body
+        commentableId
+        commentableType
+        id
+      }
+    }
+  }
+`
+
+export const GET_CURRENT_USER = gql`
+  query currentUser {
+    currentUser @client {
+      firstName
+      lastName
+      id
+      address
+      email
+      lockedAt
+      phone
+      avatarThumbUrl
+      avatarMidUrl
+      avatarUrl
+      updatedAt
+      role {
+        name
+        permanentLink
+      }
+    }
+  }
+`
+
+export const DESTROY_COMMENT = gql`
+  mutation destroyComment(
+    $id: ID!,
+  ){
+    destroyComment(input:{
+      id: $id
+    }
+    ){
+      destroyed
+    }
   }
 `
