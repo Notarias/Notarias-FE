@@ -22,9 +22,9 @@ const ClientBudget = (props) => {
 
   return(
     <>
-      <Grid container direction="row" style={{marginRight:"10px"}}>
+      <Grid container direction="row" className={classes.gridsMarginRight}>
         <Grid container item xs={1}  justifyContent="center" alignItems="center">
-          <Avatar style={{width:"30px", height: "30px", margin: "10px 10px 5px 5px"}}>
+          <Avatar className={classes.avatarImageDefault}>
             <ImageIcon />
           </Avatar>
         </Grid>
@@ -33,15 +33,15 @@ const ClientBudget = (props) => {
         </Grid>
         <Grid container item xs={2} direction="column" justifyContent="center" alignItems="center">
           <Avatar 
-            style={{width:"30px", height: "30px", margin: "10px 5px 5px 5px"}}
+            className={classes.avatarInChargeBudget}
             src={(budget.asignee && budget.asignee.avatarThumbUrl) || "/broken-image.jpg"}
           />
         </Grid>
         <Grid container item xs={3} direction="column" justifyContent="center" alignItems="center">
-          <Typography style={{color: "green"}}>$ {budget.total / 100}</Typography>
+          <Typography className={classes.TypographyGreen}>$ {budget.total / 100}</Typography>
         </Grid>
         <Grid container item xs={3} direction="column" justifyContent="center" alignItems="center">
-          <Typography style={{color: "red"}}>$ {budget.totalDebt / 100}</Typography>
+          <Typography className={classes.TypographyRed}>$ {budget.totalDebt / 100}</Typography>
         </Grid>
       </Grid>
     </>

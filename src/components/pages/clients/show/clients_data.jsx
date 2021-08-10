@@ -1,26 +1,24 @@
-import React, { useEffect } from 'react'
-import { withStyles }                       from '@material-ui/core/styles';
-import { styles }                           from './styles';
-import { Grid }             from '@material-ui/core';
-import { GET_CLIENT }       from '../clients_queries_and_mutations/queries';
-import { useQuery }         from '@apollo/react-hooks';
-import TextField from '@material-ui/core/TextField';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Paper from '@material-ui/core/Paper';
-import Typography                           from '@material-ui/core/Typography';
-import Divider                              from '@material-ui/core/Divider';
-import Collapse from '@material-ui/core/Collapse';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import Button from '@material-ui/core/Button';
+import React, { useEffect }       from 'react'
+import { withStyles }             from '@material-ui/core/styles';
+import { styles }                 from './styles';
+import { Grid }                   from '@material-ui/core';
+import { GET_CLIENT }             from '../clients_queries_and_mutations/queries';
+import { useQuery }               from '@apollo/react-hooks';
+import TextField                  from '@material-ui/core/TextField';
+import List                       from '@material-ui/core/List';
+import ListItem                   from '@material-ui/core/ListItem';
+import ListItemText               from '@material-ui/core/ListItemText';
+import Paper                      from '@material-ui/core/Paper';
+import Typography                 from '@material-ui/core/Typography';
+import Divider                    from '@material-ui/core/Divider';
+import Collapse                   from '@material-ui/core/Collapse';
+import Button                     from '@material-ui/core/Button';
 import { UPDATE_CLIENT_MUTATION } from '../clients_queries_and_mutations/queries'
-import { useMutation }                      from '@apollo/react-hooks'
+import { useMutation }            from '@apollo/react-hooks'
 
 const ClientsData = (props) => {
   const { classes, match } = props
   const [open, setOpen] = React.useState(false);
-
 
   const openSaveButton = () => {
     setOpen(true);
@@ -56,7 +54,6 @@ const ClientsData = (props) => {
     UPDATE_CLIENT_MUTATION,
     {
       onError(apolloError) {
-        // setErrors(apolloError)
       },
       onCompleted(cacheData) {
         setOpen(false);
@@ -89,7 +86,7 @@ const ClientsData = (props) => {
   }
 
   return(
-    <Paper style={{width:"90%"}}>
+    <Paper className={classes.paperWidth}>
       <List>
         <ListItem>
           <Grid container item xs={12}>
@@ -100,7 +97,7 @@ const ClientsData = (props) => {
         </ListItem>
         <Divider fullwidth="true"/>
         <ListItem>
-          <Grid container item xs={6} direction="column" style={{marginRight:"10px"}}>
+          <Grid container item xs={6} direction="column" className={classes.gridsMarginRight}>
             <ListItemText>Nombres</ListItemText>
             <TextField
               id="outlined-firstName"
@@ -116,7 +113,7 @@ const ClientsData = (props) => {
               size="small"
             />
           </Grid>
-          <Grid container  item xs={6} direction="column" style={{marginLeft:"10px"}}>
+          <Grid container  item xs={6} direction="column" className={classes.gridsMarginLeft}>
             <ListItemText>Apellidos</ListItemText>
             <TextField
               id="outlined-lastName"
@@ -134,7 +131,7 @@ const ClientsData = (props) => {
           </Grid>
         </ListItem>
         <ListItem  >
-          <Grid container direction="column" style={{marginRight:"10px"}}>
+          <Grid container direction="column" className={classes.gridsMarginRight}>
             <ListItemText>RFC</ListItemText>
             <TextField
               id="outlined-rfc"
@@ -150,7 +147,7 @@ const ClientsData = (props) => {
               size="small"
             />
           </Grid>
-          <Grid container direction="column" style={{marginLeft:"10px"}}>
+          <Grid container direction="column" className={classes.gridsMarginLeft}>
             <ListItemText>Curp</ListItemText>
             <TextField
               id="outlined-curp"
@@ -168,7 +165,7 @@ const ClientsData = (props) => {
           </Grid>
         </ListItem>
         <ListItem>
-          <Grid container direction="column" style={{marginRight:"10px"}}>
+          <Grid container direction="column" className={classes.gridsMarginRight}>
             <ListItemText>E-mail</ListItemText>
             <TextField
               id="outlined-email"
@@ -184,7 +181,7 @@ const ClientsData = (props) => {
               size="small"
             />
           </Grid>
-          <Grid container direction="column" style={{marginLeft:"10px"}}>
+          <Grid container direction="column" className={classes.gridsMarginLeft}>
             <ListItemText>Categoria</ListItemText>
             <TextField
               id="outlined-category"
@@ -202,7 +199,7 @@ const ClientsData = (props) => {
           </Grid>
         </ListItem>
         <ListItem>
-          <Grid container direction="column" style={{marginRight:"10px"}}>
+          <Grid container direction="column" className={classes.gridsMarginRight}>
             <ListItemText>Empresa</ListItemText>
             <TextField
               id="outlined-business"
@@ -218,7 +215,7 @@ const ClientsData = (props) => {
               size="small"
             />
           </Grid>
-          <Grid container direction="column" style={{marginLeft:"10px"}}>
+          <Grid container direction="column" className={classes.gridsMarginLeft}>
             <ListItemText>Telefono</ListItemText>
             <TextField
               id="outlined-phone"
@@ -261,7 +258,7 @@ const ClientsData = (props) => {
         <Collapse in={open} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             <ListItem>
-              <Grid container direction="row" alignItems="center" justifyContent="center" style={{marginLeft:"10px"}}>
+              <Grid container direction="row" alignItems="center" justifyContent="center" className={classes.gridsMarginLeft}>
                 <Grid container item xs={8} alignItems="center" justifyContent="flex-end">
                   <Button onClick={claseSaveButton} variant="contained">Cancelar</Button>
                 </Grid>

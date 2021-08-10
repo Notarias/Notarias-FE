@@ -23,7 +23,7 @@ const ClientsAttributesList = (props) => {
   }, [dataAttribute])
 
   return (
-    <Paper style={{width:"90%"}}>
+    <Paper className={classes.paperWidth}>
       <List>
         {attributes.map((attr) => {
           return(

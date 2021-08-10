@@ -126,7 +126,7 @@ const ClientAttribute = (props) => {
           />
         </Grid>
         <Grid container item xs={2} direction="row">
-          <Button style={{width:"30px"}} disabled={pristine} onClick={() => {
+          <Button className={classes.buttonAttributeDefault} disabled={pristine} onClick={() => {
             setPristine(true) 
             setAttributeValue(attrValue ? dataAttributeValue.clientAttributeValue.value : "")
           }}
@@ -136,7 +136,7 @@ const ClientAttribute = (props) => {
         </Grid>
         <Grid container item xs={2} direction="row">
           <Button 
-            style={{width:"30px"}}
+            className={classes.buttonAttributeDefault}
             disabled={pristine || loadingCreateClientAttributeValue || loadingUpdateClientAttributeValue}
             onClick={attrValue ? updateClientAttributeValue : newClientAttributeValue}
           >
@@ -165,7 +165,7 @@ const ClientAttribute = (props) => {
           />
         </Grid>
         <Grid container item xs={2} direction="row">
-          <Button style={{width:"30px"}} disabled={pristine} onClick={() => {
+          <Button className={classes.buttonAttributeDefault} disabled={pristine} onClick={() => {
             setPristine(true) 
             setAttributeValue(attrValue ? dataAttributeValue.clientAttributeValue.value : "") 
           }}
@@ -175,7 +175,7 @@ const ClientAttribute = (props) => {
         </Grid>
         <Grid container item xs={2} direction="row">
           <Button 
-            style={{width:"30px"}}
+            className={classes.buttonAttributeDefault}
             disabled={pristine || loadingCreateClientAttributeValue || loadingUpdateClientAttributeValue}
             onClick={attrValue ? updateClientAttributeValue : newClientAttributeValue}
           >

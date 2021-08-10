@@ -25,27 +25,27 @@ const Details = (props) => {
 
 
   return(
-    <div style={{height:"auto"}}>
+    <div className={classes.principalContainer}>
       <Breadcrumbs breadcrumbs={BREADCRUMBS}/>
       <Grid 
         container 
         item 
         xs={12} 
         justifyContent="center"
-        alignItems="center" 
-        style={{paddingLeft: "3%",marginTop: "2px", overflowY: "scroll", maxHeight: "600px"}}
+        alignItems="center"
+        className={classes.gridOverflowContainer}
       >
-        <Grid container item xs={8} style={{}}>
+        <Grid container item xs={8}>
           <Grid container item xs={12}>
             <List >
-              <ListItem style={{paddingLeft:"0px"}}>
-                <Typography style={{margin:"10px 0px"}} variant="h6">Información general</Typography>
+              <ListItem className={classes.ListItemWithoutPadding}>
+                <Typography className={classes.TypographyGeneralData} variant="h6">Información general</Typography>
               </ListItem>
             </List>
-            <Divider fullwidth="true" component="li" style={{width:"93%", marginBottom: "6px"}}/>
+            <Divider fullwidth="true" component="li" className={classes.firstDivider}/>
           </Grid>
           <Grid container item xs={4}>
-            <Typography style={{marginTop:"20px"}} variant="subtitle2">Datos del cliente</Typography>
+            <Typography className={classes.TypographyMarginTop} variant="subtitle2">Datos del cliente</Typography>
           </Grid>
           <Grid container item xs={8}>
             <ClientsData
@@ -53,10 +53,10 @@ const Details = (props) => {
             />
           </Grid>
           <Grid container item xs={12}>
-            <Divider fullwidth="true" component="li" style={{width:"98%", marginBottom: "6px", marginTop: "6px"}}/>
+            <Divider fullwidth="true" component="li" className={classes.dividersStyles}/>
           </Grid>
           <Grid container item xs={4}>
-            <Typography style={{marginTop:"20px"}} variant="subtitle2">Otros datos</Typography>
+            <Typography className={classes.TypographyMarginTop} variant="subtitle2">Otros datos</Typography>
           </Grid>
           <Grid container item xs={8}>
             <ClientsAttributesList
@@ -64,10 +64,10 @@ const Details = (props) => {
             />
           </Grid>
           <Grid container item xs={12}>
-            <Divider fullwidth="true" component="li" style={{width:"98%", marginBottom: "6px", marginTop: "6px"}}/>
+            <Divider fullwidth="true" component="li" className={classes.dividersStyles}/>
           </Grid>
           <Grid container item xs={4}>
-            <Typography style={{marginTop:"20px"}} variant="subtitle2">Últimos Presupuestos</Typography>
+            <Typography className={classes.TypographyMarginTop} variant="subtitle2">Últimos Presupuestos</Typography>
           </Grid>
           <Grid container item xs={8}>
             <ClientsBudgetsList
@@ -75,25 +75,25 @@ const Details = (props) => {
             />
           </Grid>
           <Grid container item xs={12}>
-            <Divider fullwidth="true" component="li" style={{width:"98%", marginBottom: "6px", marginTop: "6px"}}/>
+            <Divider fullwidth="true" component="li" className={classes.dividersStyles}/>
           </Grid>
           <Grid container item xs={4}>
-            <Typography style={{marginTop:"20px"}} variant="subtitle2">Últimos Trámites</Typography>
+            <Typography className={classes.TypographyMarginTop} variant="subtitle2">Últimos Trámites</Typography>
           </Grid>
           <Grid container item xs={8}>
             <ClientsProcedures/>
           </Grid>
           <Grid container item xs={12}>
-            <Divider fullwidth="true" component="li" style={{width:"98%", marginBottom: "6px", marginTop: "6px"}}/>
+            <Divider fullwidth="true" component="li" className={classes.dividersStyles}/>
           </Grid>
             <Grid container item xs={4}>
-              <Typography style={{marginTop:"20px"}} variant="subtitle2">Próximos eventos</Typography>
+              <Typography className={classes.TypographyMarginTop} variant="subtitle2">Próximos eventos</Typography>
             </Grid>
             <Grid container item xs={8}>
               <IncomingEvents/>
             </Grid>
           <Grid container item xs={12}>
-            <Divider fullwidth="true" component="li" style={{width:"98%", marginBottom: "6px", marginTop: "6px"}}/>
+            <Divider fullwidth="true" component="li" className={classes.dividersStyles}/>
           </Grid>
           <Grid container item xs={12} justifyContent="center" alignItems="center" >
             <ClientsComments

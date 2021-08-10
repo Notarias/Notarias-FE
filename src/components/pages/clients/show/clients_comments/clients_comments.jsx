@@ -138,18 +138,18 @@ const ClientComments = (props) => {
   }
 
   return(
-    <Paper style={{width:"87%"}}>
+    <Paper className={classes.paperComments} >
       <List>
         <ListItem>
           <Grid  container item xs={12} direction="column">
             <Grid container item direction="row" justifyContent="center" alignItems="flex-start">
-              <Avatar style={{width:"30px", height: "30px", margin: "5px 10px 5px 5px"}}
+              <Avatar className={classes.avatarImageDefault}
                 src={(currentUserData && currentUserData.currentUser && currentUserData.currentUser.avatarThumbUrl)
                    || "/broken-image.jpg" }
               />
               {renderTextField()}
             </Grid>
-            <Grid container item xs={12} direction="column" style={{marginRight:"10px"}}>
+            <Grid container item xs={12} direction="column" className={classes.gridsMarginRight}>
               <Grid container item xs={12}>
                 <ListItemText>Comentarios</ListItemText>
               </Grid>

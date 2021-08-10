@@ -41,10 +41,10 @@ const ClientsBudgetsList = (props) => {
   }
 
   return(
-    <Paper style={{width:"90%"}}>
+    <Paper className={classes.paperWidth}>
       <List>
         <ListItem>
-          <Grid container direction="row" style={{marginRight:"10px"}}>
+          <Grid container direction="row" className={classes.gridsMarginRight}>
             <Grid container item xs={1}  justifyContent="center" alignItems="center">
             </Grid>
             <Grid container item xs={3} justifyContent="center" alignItems="center">
