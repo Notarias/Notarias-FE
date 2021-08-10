@@ -101,6 +101,8 @@ export const LOAD_CLIENT_COMMENTS = gql `
           commentableType
           body
           user{
+            firstName
+            lastName
             id
             avatarThumbUrl
           }
@@ -130,6 +132,220 @@ export const GET_CLIENT_ATTRIBUTE = gql`
       permanentLink
       style
       active
+    }
+  }
+`
+
+
+export const CREATE_CLIENT_ATTRIBUTE_VALUE = gql`
+  mutation createClientAttributeValue(
+    $clientId: ID!,
+    $clientAttributeId: ID!,
+    $value: String!,
+    ){
+      createClientAttributeValue(input:{
+        clientId: $clientId,
+        clientAttributeId: $clientAttributeId,
+        value: $value
+      }){
+        clientAttributeValue{
+          clientId
+          file
+          id
+          value
+          clientAttributeId
+        }
+      }
+    }
+  `
+
+export const GET_CLIENT_ATTRIBUTES_VALUES = gql`
+  query clientAttributesValues(
+    $clientId: ID!
+  ){
+    clientAttributesValues(
+      clientId: $clientId
+    ){
+      clientId
+      file
+      id
+      name
+      permanentLink
+      clientAttributeId
+      value
+    }
+  }
+`
+
+export const GET_CLIENT_ATTRIBUTE_VALUE = gql`
+  query clientAttributeValue(
+    $attributeId: ID!
+    $clientId: ID!
+  ){
+    clientAttributeValue(
+      attributeId: $attributeId,
+      clientId: $clientId
+    ){
+      clientId
+      file
+      id
+      name
+      permanentLink
+      clientAttributeId
+      value
+    }
+  }
+`
+
+export const UPDATE_CLIENT_ATTRIBUTE_VALUE = gql`
+  mutation UpdateClientAttributeValue(
+    $id: ID!
+    $value: String!
+  ){
+    updateClientAttributeValue(input:{
+          id: $id,
+      value: $value 
+    })
+    {
+      clientAttributeValue{
+        file
+        clientId
+        id
+        value
+        clientAttributeId
+      }
+    }
+  }
+`
+
+export const GET_BUDGETS = gql`
+  query budgets (
+    $page: Int,
+    $per: Int,
+    $sortDirection: String,
+    $sortField: String,
+    $search: BUDGET_SEARCH_INPUT
+  )
+  {
+    budgets (
+      page: $page,
+      per: $per,
+      sortDirection: $sortDirection,
+      sortField: $sortField,
+      search: $search,
+    )
+    {
+      budgetingTemplate{
+        name
+        id
+        active
+        serialNumber
+      }
+      client{
+        firstName
+        lastName
+        fullName
+        id
+        email
+        phone
+      }
+      proceduresTemplate{
+        name
+        id
+        active
+        serialNumber
+      }
+      id
+      serialNumber
+      total
+      totalCredit
+      totalDebt
+      totalPaid
+      createdAt
+      asigneeId
+      asignee{
+        firstName
+        lastName
+        avatarThumbUrl
+      }
+    }
+    budgetsCount
+  }
+`
+
+export const CREATE_COMMENT = gql`
+  mutation createComment(
+    $commentableId: ID!,
+    $commentableType:String!
+    $body:String!
+  ){
+    createComment(input:{
+      commentableId: $commentableId
+      commentableType: $commentableType
+      body: $body
+    }
+    ){
+      comment{
+        body
+        commentableId
+        commentableType
+        id
+      }
+    }
+  }
+`
+
+export const UPDATE_COMMENT = gql`
+  mutation updateComment(
+    $id: ID!,
+    $body:String!
+  ){
+    updateComment(input:{
+      id: $id
+      body: $body
+    }
+    ){
+      comment{
+        body
+        commentableId
+        commentableType
+        id
+      }
+    }
+  }
+`
+
+export const GET_CURRENT_USER = gql`
+  query currentUser {
+    currentUser @client {
+      firstName
+      lastName
+      id
+      address
+      email
+      lockedAt
+      phone
+      avatarThumbUrl
+      avatarMidUrl
+      avatarUrl
+      updatedAt
+      role {
+        name
+        permanentLink
+      }
+    }
+  }
+`
+
+export const DESTROY_COMMENT = gql`
+  mutation destroyComment(
+    $id: ID!,
+  ){
+    destroyComment(input:{
+      id: $id
+    }
+    ){
+      destroyed
     }
   }
 `

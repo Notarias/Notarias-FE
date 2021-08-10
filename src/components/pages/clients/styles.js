@@ -232,5 +232,47 @@ export const styles = theme => {
     clientAtributes: {
       padding: theme.spacing(1),
     },
+    paperBase: {
+      minWidth:"100%",
+      minHeight: "300px"
+    },
+    textFieldGeneralData: {
+      margin: "5px"
+    },
+    gridDivider: {
+      width: "688px",
+      minHeight: "30px"
+    },
+    gridGenaralData: {
+      margin: "10px 10px 10px 5px",
+    },
+    gridOverflowContainer:{
+      paddingLeft: "3%",
+      marginTop: "2px",
+      overflowY: "scroll",
+      maxHeight: "600px"
+    },
+    ListItemWithoutPadding: {
+      paddingLeft:"0px"
+    },
+    TypographyGeneralData: {
+      margin:"10px 0px"
+    },
+    TypographyMarginTop: {
+      marginTop:"20px"
+    },
+    principalContainer: {
+      height:"auto"
+    },
+    firstDivider: {
+      width:"93%",
+      marginBottom: "6px"
+    },
+    dividersStyles: {
+      width:"98%",
+      marginBottom: "6px",
+      marginTop: "6px"
+    },
+
   })
 }

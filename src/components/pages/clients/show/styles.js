@@ -77,6 +77,64 @@ export const styles = theme => {
     },
     paperFullHeight: {
       height:"100%"
+    },
+    commentEditingInputGrid: {
+      marginRight: "30px"
+    },
+    buttonTextComments: {
+      marginRight: "18px",
+      marginTop: "5px",
+      marginLeft: "2px"
+    },
+    buttonTextCommentsDisabled: {
+      marginRight: "18px",
+      marginTop: "5px",
+      marginLeft: "2px",
+      color: "gray",
+      textDecoration: "none !IMPORTANT"
+    },
+    gridCommentsContainer: {
+      marginBottom: "5px",
+      marginTop: "5px"
+    },
+    avatarComment: {
+      marginTop: "15px"
+    },
+    paperWidth: {
+      width:"90%"
+    },
+    paperComments: {
+      width:"87%"
+    },
+    avatarImageDefault: {
+      width:"30px",
+      height: "30px",
+      margin: "5px 10px 5px 5px"
+    },
+    avatarInChargeBudget:{
+      width:"30px",
+      height: "30px",
+      margin: "10px 5px 5px 5px"
+    },
+    gridsMarginRight: {
+      marginRight:"10px"
+    },
+    gridsMarginLeft: {
+      marginLeft:"10px"
+    },
+    avatarEvents: {
+      width:"30px",
+      height: "30px",
+      margin: "5px 10px 5px 5px"
+    },
+    TypographyGreen: {
+      color: "green"
+    },
+    TypographyRed: {
+      color: "red"
+    },
+    buttonAttributeDefault: {
+      width:"30px"
     }
   })
 }
