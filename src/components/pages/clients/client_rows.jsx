@@ -70,21 +70,21 @@ export default (props) => {
               <TableCell align= "center">
                 <Grid>
                   <GenericDropdownMenu>
-                    <MenuItem key={ client.id + "-details" }>
-                      <Link 
-                        href={ `/clients/${client.id}` }
-                        color="inherit"
-                        underline="none"
-                        className={ classes.linkWidthAndHeigth }
-                      >
+                    <Link 
+                      href={ `/clients/${client.id}` }
+                      color="inherit"
+                      underline="none"
+                      className={ classes.linkWidthAndHeigth }
+                    >
+                      <MenuItem key={ client.id + "-details" }>
                         <Grid container>
                           <VisibilityOutlinedIcon/>
                           <Typography className={ classes.genericPaddingLeft } >
                             Detalles
                           </Typography>
                         </Grid>
-                      </Link>
-                    </MenuItem>
+                      </MenuItem>
+                    </Link>
                     <MenuItem key={client.id + "-budgets"}>
                       <img alt={"presupuestos"} src={BudgetsIcon} className={ classes.imgIconGeneric }/>
                       <span className={ classes.genericPaddingLeft }>
@@ -108,21 +108,6 @@ export default (props) => {
                       <span className={ classes.genericPaddingLeft }>
                       Trámites
                       </span>
-                    </MenuItem>
-                    <MenuItem key={client.id + "-edit"}>
-                      <Link 
-                        href={`/clients/${client.id}/edit`}
-                        color="inherit"
-                        underline="none"
-                        className={ classes.linkWidthAndHeigth }
-                      >
-                        <Grid container>
-                          <EditOutlinedIcon/>
-                          <Typography className={ classes.editPaddingLeft } >
-                            Editar
-                          </Typography>
-                        </Grid>
-                      </Link>
                     </MenuItem>
                   </GenericDropdownMenu>
                 </Grid>
