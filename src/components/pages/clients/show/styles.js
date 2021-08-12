@@ -135,6 +135,13 @@ export const styles = theme => {
     },
     buttonAttributeDefault: {
       width:"30px"
+    },
+    ListItemNoPaddingBottom: {
+      paddingBottom: "0px",
+      paddingTop: "0px"
+    },
+    dividerInDataFirst: {
+      marginBottom: "10px"
     }
   })
 }
