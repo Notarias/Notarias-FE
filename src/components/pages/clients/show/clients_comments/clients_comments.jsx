@@ -115,7 +115,7 @@ const ClientComments = (props) => {
           />
           <Button onClick={ handleCancel }>Cancelar</Button>
           <Button 
-            disabled={pristine}
+            disabled={pristine || createCommentLoading}
             onClick={createNewClientComment}
           >
             Aceptar

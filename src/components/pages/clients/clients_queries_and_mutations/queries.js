@@ -32,8 +32,6 @@ export const UPDATE_CLIENT_MUTATION = gql`
         category
         rfc
       }
-      errors
-      pointers
     }
   }
 `

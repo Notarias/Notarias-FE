@@ -23,7 +23,6 @@ const BREADCRUMBS = [
 const Details = (props) => {
   const { classes, match } = props
 
-
   return(
     <div className={classes.principalContainer}>
       <Breadcrumbs breadcrumbs={BREADCRUMBS}/>
