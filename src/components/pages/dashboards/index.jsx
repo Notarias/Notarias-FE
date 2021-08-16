@@ -29,7 +29,7 @@ const DashboardsIndex = (props) => {
         alignItems="center" 
         className={classes.girdFatherIndexDashboard}
       >
-        <Grid container item xs={11} direction="row" style={{paddingLeft:"0px", marginTop: "1px"}}>
+        <Grid container item xs={12} direction="row" className={classes.gridContainerDashboard}>
           <Dashboard/>
           
         </Grid>
