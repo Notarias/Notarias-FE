@@ -51,15 +51,11 @@ export const styles = theme => {
       maxWidth: "80%"
     },
     girdFatherIndexDashboard: {
-      paddingLeft: "3%"
+      paddingLeft: "3%",
+      height: "94%"
     },
     girdFatherDashboard: {
       height: "300px"
-    },
-    paperContainer: {
-      width: "850px",
-      height: "610px",
-      overflowY:"scroll"
     },
     paperCalendar: {
       width: "300px",
@@ -67,6 +63,14 @@ export const styles = theme => {
     },
     noPaddingLeftListItem: {
       paddingLeft:"0px"
+    },
+    gridContainerDashboard: {
+      paddingLeft:"0px",
+      marginTop: "1px"
+    },
+    gridTabPanel: {
+      backgroundColor: "white",
+      overflowY:"scroll"
     }
   })
 }
