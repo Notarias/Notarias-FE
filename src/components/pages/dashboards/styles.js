@@ -49,6 +49,24 @@ export const styles = theme => {
       overflow: "hidden",
       whiteSpace: "nowrap",
       maxWidth: "80%"
+    },
+    girdFatherIndexDashboard: {
+      paddingLeft: "3%"
+    },
+    girdFatherDashboard: {
+      height: "300px"
+    },
+    paperContainer: {
+      width: "850px",
+      height: "610px",
+      overflowY:"scroll"
+    },
+    paperCalendar: {
+      width: "300px",
+      height: "310px"
+    },
+    noPaddingLeftListItem: {
+      paddingLeft:"0px"
     }
   })
 }
