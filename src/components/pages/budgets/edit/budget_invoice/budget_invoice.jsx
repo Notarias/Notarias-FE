@@ -1,20 +1,21 @@
-import React, {useEffect}                    from 'react';
-import { withStyles }                       from '@material-ui/core/styles';
-import { styles }                           from '../styles';
-import Dialog                               from '@material-ui/core/Dialog';
-import DialogActions                        from '@material-ui/core/DialogActions';
-import DialogContent                        from '@material-ui/core/DialogContent';
-import DialogTitle                          from '@material-ui/core/DialogTitle';
-import Grid                                 from '@material-ui/core/Grid';
-import Paper                                from '@material-ui/core/Paper';
-import Typography                           from '@material-ui/core/Typography';
-import logo_notaria                         from '../../../../images/logo_notaria.JPG'
-import TextField                            from '@material-ui/core/TextField';
-import Button                               from '@material-ui/core/Button';
-import { useQuery }                         from '@apollo/react-hooks';
-import { GET_BUDGET }                       from '../queries_and_mutations/queries'
-import NumberFormat                                 from 'react-number-format';
-import Breadcrumbs                          from '../../../ui/breadcrumbs'
+import React, {useEffect}   from 'react';
+import { withStyles }       from '@material-ui/core/styles';
+import { styles }           from '../../styles';
+import Dialog               from '@material-ui/core/Dialog';
+import DialogActions        from '@material-ui/core/DialogActions';
+import DialogContent        from '@material-ui/core/DialogContent';
+import DialogTitle          from '@material-ui/core/DialogTitle';
+import Grid                 from '@material-ui/core/Grid';
+import Paper                from '@material-ui/core/Paper';
+import Typography           from '@material-ui/core/Typography';
+import logo_notaria         from '../../../../../images/logo_notaria.JPG'
+import TextField            from '@material-ui/core/TextField';
+import Button               from '@material-ui/core/Button';
+import { useQuery }         from '@apollo/react-hooks';
+import { GET_BUDGET }       from '../../queries_and_mutations/queries'
+import NumberFormat         from 'react-number-format';
+import Breadcrumbs          from '../../../../ui/breadcrumbs';
+import TabSeccion           from './tab_seccion';
 
 
 const BudgetInvoice = (props) => {
@@ -29,6 +30,7 @@ const BudgetInvoice = (props) => {
 
   
   const budget                          = data && data.budget
+  const budgetId                        = data && data.budget.budgetingTemplate.id
 
   useEffect(()=> {
     refetch(variables);
@@ -49,41 +51,42 @@ const BudgetInvoice = (props) => {
     setOpen(false);
   };
 
-  const renderFieldsInfo = () => {
-    return(
-      budget && budget.fieldValues.map((toPrint) => {
-        if( toPrint.value !== 0){
-          return(
-            <Grid container item direction="row" key={toPrint.id + "values"}>
-              <Grid item xs={1}></Grid>
-              <Grid
-                container 
-                item 
-                xs={7}
-              >
-                <Typography> {toPrint.field.name} </Typography>
-              </Grid>
-              <Grid
-                container 
-                item 
-                xs={4}
-              >
-                <Typography gutterBottom>
-                  <NumberFormat 
-                    value={toPrint.value / 100} 
-                    displayType={'text'} 
-                    thousandSeparator={true} 
-                    prefix={'$ '}
-                    decimalScale={2}
-                  />
-                </Typography>
-              </Grid>
-            </Grid>
-          )}
-        }
-      )
-    )
-  }
+  // const renderFieldsInfo = () => {
+  //   return(
+  //     budget && budget.fieldValues.map((toPrint) => {
+  //       if(toPrint.value !== 0){
+
+  //         return(
+  //           <Grid container item direction="row" key={toPrint.id + "values"}>
+  //             <Grid item xs={1}></Grid>
+  //             <Grid
+  //               container 
+  //               item 
+  //               xs={7}
+  //             >
+  //               <Typography> {toPrint.field ? toPrint.field.name : "sin Nombre"} </Typography>
+  //             </Grid>
+  //             <Grid
+  //               container 
+  //               item 
+  //               xs={4}
+  //             >
+  //               <Typography gutterBottom>
+  //                 <NumberFormat 
+  //                   value={toPrint.value / 100} 
+  //                   displayType={'text'} 
+  //                   thousandSeparator={true} 
+  //                   prefix={'$ '}
+  //                   decimalScale={2}
+  //                 />
+  //               </Typography>
+  //             </Grid>
+  //           </Grid>
+  //         )}
+  //       }
+  //     )
+  //   )
+  // }
 
   return(
     <>
@@ -234,97 +237,22 @@ const BudgetInvoice = (props) => {
               <h3>CANTIDAD:</h3>
             </Grid>
           </Grid>
-          {renderFieldsInfo()}
+          {/* {renderFieldsInfo()} */}
           <Grid container item direction="row">
-            <Grid container item xs={1}></Grid>
-            <Grid
-              container 
-              item 
-              xs={7} 
-              direction="column" 
-              justifyContent="flex-start" 
-              alignItems="flex-start"
-            >
-              <h3>Total gastos, derechos e impuestos</h3>
-            </Grid>
-            <Grid
-              container 
-              item 
-              xs={4} 
-              direction="column" 
-              justifyContent="flex-start" 
-              alignItems="flex-start"
-            >
-              <h3>
-                <NumberFormat 
-                  value={0.00} 
-                  displayType={'text'} 
-                  thousandSeparator={true} 
-                  prefix={'$ '}
-                  decimalScale={2}
-                />
-              </h3>
-            </Grid>
-          </Grid>
-          <Grid container item direction="row">
-            <Grid container item xs={1}></Grid>
-            <Grid
-              container 
-              item 
-              xs={7} 
-              direction="column" 
-              justifyContent="flex-start" 
-              alignItems="flex-start"
-              
-            >
-              <h3 className={classes.honorariumGrid}>Honorarios</h3>
-              <h3 className={classes.honorariumGrid}>I.V.A.</h3>
-              <h3 className={classes.honorariumGrid}> Total honorarios</h3>
-            </Grid>
-            <Grid
-              container 
-              item 
-              xs={4} 
-              direction="column" 
-              justifyContent="flex-start" 
-              alignItems="flex-start"
+            
 
-            >
-              <h3               className={classes.honorariumGrid}>
-                <NumberFormat 
-                  value={0.00} 
-                  displayType={'text'} 
-                  thousandSeparator={true} 
-                  prefix={'$ '}
-                  decimalScale={2}
-                />
-              </h3>
-              <h3               className={classes.honorariumGrid}>
-                <NumberFormat 
-                  value={0.00} 
-                  displayType={'text'} 
-                  thousandSeparator={true} 
-                  prefix={'$ '}
-                  decimalScale={2}
-                />
-              </h3>
-              <h3               className={classes.honorariumGrid}>
-                <NumberFormat 
-                  value={0.00} 
-                  displayType={'text'} 
-                  thousandSeparator={true} 
-                  prefix={'$ '}
-                  decimalScale={2}
-                />
-              </h3>
-            </Grid>
+            <TabSeccion
+              budgetId={budgetId}
+              budget={budget}
+            />
+
           </Grid>
           <Grid container item direction="row">
             <Grid container item xs={1}></Grid>
             <Grid
               container 
               item 
-              xs={7} 
+              xs={8} 
               direction="column" 
               justifyContent="flex-start" 
               alignItems="flex-start"
@@ -334,7 +262,7 @@ const BudgetInvoice = (props) => {
             <Grid
               container 
               item 
-              xs={4} 
+              xs={3} 
               direction="column" 
               justifyContent="flex-start" 
               alignItems="flex-start"

@@ -13,7 +13,7 @@ import ClientsShow                    from '../components/pages/clients/show';
 import ClientsEdit                    from '../components/pages/clients/edit';
 import ClientsIndex                   from '../components/pages/clients/index';
 import BudgetBuilderIndex             from '../components/pages/budget_builders/index';
-import BudgetInvoice                  from '../components/pages/budgets/edit/budget_invoice';
+import BudgetInvoice                  from '../components/pages/budgets/edit/budget_invoice/budget_invoice';
 import BudgetsEdit                    from '../components/pages/budgets/edit';
 import budgetsNew                     from '../components/pages/budgets/new'
 import BudgetsIndex                   from '../components/pages/budgets/index';
