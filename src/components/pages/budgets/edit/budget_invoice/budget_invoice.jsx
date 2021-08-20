@@ -25,12 +25,12 @@ const BudgetInvoice = (props) => {
   let variables = {"id": match.params.id} 
 
   const { loading, data, refetch } = useQuery(
-    GET_BUDGET, { variables: variables, fetchPolicy: "no-cache" }
+    GET_BUDGET, { variables: variables, }
   );
 
   
   const budget                          = data && data.budget
-  const budgetId                        = data && data.budget.budgetingTemplate.id
+  const budgetingTemplateId             = data && data.budget.budgetingTemplate.id
 
   useEffect(()=> {
     refetch(variables);
@@ -50,43 +50,6 @@ const BudgetInvoice = (props) => {
   const handleClose = () => {
     setOpen(false);
   };
-
-  // const renderFieldsInfo = () => {
-  //   return(
-  //     budget && budget.fieldValues.map((toPrint) => {
-  //       if(toPrint.value !== 0){
-
-  //         return(
-  //           <Grid container item direction="row" key={toPrint.id + "values"}>
-  //             <Grid item xs={1}></Grid>
-  //             <Grid
-  //               container 
-  //               item 
-  //               xs={7}
-  //             >
-  //               <Typography> {toPrint.field ? toPrint.field.name : "sin Nombre"} </Typography>
-  //             </Grid>
-  //             <Grid
-  //               container 
-  //               item 
-  //               xs={4}
-  //             >
-  //               <Typography gutterBottom>
-  //                 <NumberFormat 
-  //                   value={toPrint.value / 100} 
-  //                   displayType={'text'} 
-  //                   thousandSeparator={true} 
-  //                   prefix={'$ '}
-  //                   decimalScale={2}
-  //                 />
-  //               </Typography>
-  //             </Grid>
-  //           </Grid>
-  //         )}
-  //       }
-  //     )
-  //   )
-  // }
 
   return(
     <>
@@ -127,7 +90,6 @@ const BudgetInvoice = (props) => {
           </Grid>
           <Grid container item direction="row">
             <Grid container item xs={1}>
-
             </Grid>
             <Grid 
               container 
@@ -237,15 +199,11 @@ const BudgetInvoice = (props) => {
               <h3>CANTIDAD:</h3>
             </Grid>
           </Grid>
-          {/* {renderFieldsInfo()} */}
           <Grid container item direction="row">
-            
-
             <TabSeccion
-              budgetId={budgetId}
+              budgetingTemplateId={budgetingTemplateId}
               budget={budget}
             />
-
           </Grid>
           <Grid container item direction="row">
             <Grid container item xs={1}></Grid>
@@ -278,8 +236,6 @@ const BudgetInvoice = (props) => {
               </h2>
             </Grid>
           </Grid>
-
-
           <Grid container item direction="row">
             <Grid container item xs={1}></Grid>
             <Grid
@@ -356,7 +312,6 @@ const BudgetInvoice = (props) => {
     </Paper>
     </>
   )
-
 }
 
 export default withStyles(styles)(BudgetInvoice);

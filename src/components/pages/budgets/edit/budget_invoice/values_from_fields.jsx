@@ -1,46 +1,68 @@
-import React, { useEffect }                 from 'react'
-import { withStyles }                       from '@material-ui/core/styles';
-import { styles }                           from '../../styles';
-import { useQuery }                         from '@apollo/react-hooks';
-import { GET_BUDGET_FIELD_VALUE }           from '../../queries_and_mutations/queries';
-import NumberFormat                         from 'react-number-format';
-import Typography                           from '@material-ui/core/Typography';
+import React, { useEffect }         from 'react'
+import { withStyles }               from '@material-ui/core/styles';
+import { styles }                   from '../../styles';
+import { useQuery }                 from '@apollo/react-hooks';
+import { GET_BUDGET_FIELD_VALUE }   from '../../queries_and_mutations/queries';
+import NumberFormat                 from 'react-number-format';
+import Typography                   from '@material-ui/core/Typography';
+import Grid                         from '@material-ui/core/Grid';
+
 
 const ValuesFromFields = (props) => {
-  const { classes, budget, fieldId, totalTab } = props
+  const { classes, budget, field} = props
 
   const { data } = useQuery(
     GET_BUDGET_FIELD_VALUE,
     {
-      variables: { "budgetingTemplateFieldId": Number(fieldId) , "budgetId": Number(budget.id) }
+      variables: { "budgetingTemplateFieldId": Number(field.id) , "budgetId": Number(budget.id) },fetchPolicy: "no-cache" 
     }
   );
 
-  const fieldValue = data && data.budgetFieldValue.value
+  const fieldValue = (data && data.budgetFieldValue ? data.budgetFieldValue.value / 100 : 0)
 
   useEffect(() => {
-    totalTab.push(fieldValue / 100)
-    console.log(totalTab, "useE")
+    (fieldValue !== 0 ? setShowWhitValue(true) : setShowWhitValue(false))
   }, [data])
 
-  // const [fieldValues, setFieldValues] = []
-
-  // console.log(data , "dat")
+  const [showWhitValue, setShowWhitValue] = React.useState(true)
 
   
-
-  // console.log(totalTab,"asas")
   return(
-    <Typography>
-      <NumberFormat 
-        value={fieldValue / 100} 
-        displayType={'text'} 
-        thousandSeparator={true} 
-        prefix={'$ '}
-        decimalScale={2}
-      />
-    </Typography> 
+    showWhitValue && (
+      <>
+        <Grid container item xs={1}></Grid>
+          <Grid
+            container 
+            item 
+            xs={7} 
+            direction="column" 
+            justifyContent="flex-start" 
+            alignItems="flex-start"
+          >
+            <Typography>{field.name}</Typography>
+          </Grid>
+          <Grid
+            container 
+            item 
+            xs={4} 
+            direction="column" 
+            justifyContent="flex-start" 
+            alignItems="flex-start"
+          >
+          <Typography>
+            <NumberFormat 
+              value={fieldValue}
+              displayType={'text'} 
+              thousandSeparator={true} 
+              prefix={'$ '}
+              decimalScale={2}
+            />
+          </Typography> 
+        </Grid>
+      </>
+    )
   )
+
 }
 
 export default withStyles(styles)(ValuesFromFields)

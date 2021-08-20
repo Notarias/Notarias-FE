@@ -1,20 +1,19 @@
-import React, { useEffect } from 'react'
+import React, { useEffect }                   from 'react'
 import { withStyles }                         from '@material-ui/core/styles';
 import { styles }                             from '../../styles';
-import Grid                                   from '@material-ui/core/Grid';
 import { useQuery }                           from '@apollo/react-hooks';
 import { GET_BUDGETING_TEMPLATE_TAB_FIELDS }  from '../../queries_and_mutations/queries';
-import Typography                             from '@material-ui/core/Typography';
 import ValuesFromFields                       from './values_from_fields';
+import Grid                                   from '@material-ui/core/Grid';
+import NumberFormat                           from 'react-number-format';
 
 const FieldFromTabs = (props) => {
-  const { classes, tabId, budgetId, budget } = props
-  const totalTab = []
+  const { classes, tab, budget, tabTotals } = props
 
     const { data: dataFields } = useQuery(
     GET_BUDGETING_TEMPLATE_TAB_FIELDS,
     {
-      variables: { "id": tabId }
+      variables: { "id": tab.id }
     }
   );
 
@@ -24,46 +23,54 @@ const FieldFromTabs = (props) => {
     dataFields && setFields(dataFields.budgetingTemplateTabFields);;
   }, [dataFields])
 
-  const suma = () => {
-    
-  }
 
-  // console.log(totalTab,"///")
   return(
-    fields.map(
-      (field) => {
-        return(
-          <React.Fragment key={field.id + "fragment"}>
-            <Grid container item xs={1}></Grid>
-            <Grid
-              container 
-              item 
-              xs={7} 
-              direction="column" 
-              justifyContent="flex-start" 
-              alignItems="flex-start"
-            >
-              <Typography>{field.name}</Typography>
-            </Grid>
-            <Grid
-              container 
-              item 
-              xs={4} 
-              direction="column" 
-              justifyContent="flex-start" 
-              alignItems="flex-start"
-            >
-              <ValuesFromFields
-                fieldId={field.id}
-                budget={budget}
-                totalTab={totalTab}
-              />
-            </Grid>
-          </React.Fragment>
+    <>
+    <Grid container item xs={1}></Grid>
+    <Grid
+      container 
+      item 
+      xs={8} 
+      direction="column" 
+      justifyContent="flex-start" 
+      alignItems="flex-start"
+    >
+      <h3 >Total {tab.name}</h3>
+    </Grid>
+    <Grid
+      container 
+      item 
+      xs={3} 
+      direction="column" 
+      justifyContent="flex-start" 
+      alignItems="flex-start"
+    >
+      <h3 >
+        <NumberFormat 
+          value={tabTotals / 100} 
+          displayType={'text'} 
+          thousandSeparator={true} 
+          prefix={'$ '}
+          decimalScale={2}
+        />
+      </h3>
+    </Grid>
+      {      
+        fields.map(
+          (field) => {
+            return(
+              <React.Fragment key={field.id + "fragment"}>
+                <ValuesFromFields
+                  field={field}
+                  budget={budget}
+                />
+              </React.Fragment>
+            )
+          }
         )
       }
-    )
+    </>
   )
 }
 
-export default  withStyles(styles)(FieldFromTabs);
+export default withStyles(styles)(FieldFromTabs);

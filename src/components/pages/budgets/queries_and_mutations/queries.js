@@ -692,3 +692,9 @@ export const GET_BUDGETING_TEMPLATE_FIELDS = gql`
     }
   }
 `
+
+export const GET_BUDGET_TAB_TOTALS = gql`
+  query budgetTabsTotals ($id: ID! ) {
+    budgetTabsTotals (id: $id)
+  }
+`

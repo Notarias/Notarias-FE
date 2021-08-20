@@ -1,26 +1,35 @@
-import React, { useEffect } from 'react'
+import React, { useEffect }                 from 'react'
 import { withStyles }                       from '@material-ui/core/styles';
 import { styles }                           from '../../styles';
-import Grid                                 from '@material-ui/core/Grid';
-import NumberFormat                         from 'react-number-format';
-import { useQuery }                           from '@apollo/react-hooks';
-import { GET_BUDGETING_TEMPLATE_TAB_FIELDS }  from '../../queries_and_mutations/queries'
+import { useQuery }                         from '@apollo/react-hooks';
 import { GET_BUDGETING_TEMPLATES_TABS }     from '../../queries_and_mutations/queries';
-import FieldsFromTabs from './fields_form_tabs';
+import FieldsFromTabs                       from './fields_form_tabs';
+import { GET_BUDGET_TAB_TOTALS }            from '../../queries_and_mutations/queries';
+
 
 const TabSeccion = (props) => {
-  const { classes, budgetId, budget } = props
-
-  const { data: dataTabs } = useQuery(
-    GET_BUDGETING_TEMPLATES_TABS, { variables: {"id": budgetId }}
+  const { classes, budgetingTemplateId, budget } = props
+  
+  const { data: dataTabsTotals } = useQuery(
+    GET_BUDGET_TAB_TOTALS,{ variables: { id: budget.id }, fetchPolicy: "no-cache"}
   );
 
   useEffect(() => {
-    // currentTab || (data && setCurrentTab(data.budgetingTemplateTabs[0]));
+    dataTabsTotals && setTabTotals(dataTabsTotals.budgetTabsTotals);
+  }, [dataTabsTotals])
+
+  const [tabTotals, setTabTotals] = React.useState();
+
+  const { data: dataTabs } = useQuery(
+    GET_BUDGETING_TEMPLATES_TABS, { variables: { id: budgetingTemplateId }}
+  );
+
+  useEffect(() => {
     dataTabs && setTabList(dataTabs.budgetingTemplateTabs);
   }, [dataTabs])
 
   const [tabList, setTabList] = React.useState(dataTabs ? dataTabs.budgetingTemplateTabs: []);
+
 
   const renderTabs = () => {
     return(
@@ -29,16 +38,17 @@ const TabSeccion = (props) => {
           return(
             <React.Fragment key={tab.id + "fragment"}>
               <FieldsFromTabs
-                tabId={tab.id}
-                budgetId={budgetId}
+                tab={tab}
                 budget={budget}
+                tabTotals={tabTotals && tabTotals[tab.id].total}
               />
             </React.Fragment>
-            )
+          )
         }
       )
     )
   }
+
 
   return(
     <>
