@@ -67,7 +67,6 @@ const ClientsData = (props) => {
         // if(data.data.updateClient.pointer){
         //   setErrors(data.data.updateClient.pointers)
         // }
-        // console.log(data.data.updateClient.pointers ? set, "upMut")
       },
       refetchQueries: [
         {

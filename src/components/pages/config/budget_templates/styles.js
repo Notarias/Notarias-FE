@@ -207,6 +207,10 @@ export const styles = theme => {
       height: "48px",
       paddingLeft: "10px",
       wordWrap: "break-word",
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      whiteSpace: "nowrap"
+      
     },
     textTittleType: {
       width: "230px",
