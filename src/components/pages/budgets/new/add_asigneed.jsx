@@ -129,9 +129,9 @@ const AddAsigneed = (props) => {
   }
 
   return(
-    <Grid container direction="row">
+    <Grid container direction="row" alignItems="center" justifyContent="center" className={classes.showCommentGrid}>
       <a href="#" className={classes.aWithoutDecoration} onClick={handleClickOpen}>
-        <Grid container item direction="row" >
+        <Grid container item direction="row" alignItems="center" justifyContent="center">
           <Avatar 
             src={asignee ? asignee.avatarThumbUrl : "/broken-image.jpg" }
             className={classes.avatarOfInCharge}

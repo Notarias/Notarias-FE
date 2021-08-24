@@ -13,10 +13,8 @@ import Grid                               from '@material-ui/core/Grid';
 import Divider                            from '@material-ui/core/Divider';
 import ProceduresSearch                   from './new/procedures_search';
 import BudgetSelector                     from './new/budget_selector'
-import SearchIcon                         from '@material-ui/icons/Search';
-import PageviewIcon                       from '@material-ui/icons/Pageview';
-import AccountCircleIcon                  from '@material-ui/icons/AccountCircle';
 import ClientSearch                       from './new/client_search';
+import CausantSearch                      from './new/causant_search';  
 import { useMutation }                    from '@apollo/react-hooks';
 import { CREATE_CLIENT }                  from './queries_and_mutations/queries'
 import { CREATE_BUDGET }                  from './queries_and_mutations/queries'
@@ -25,9 +23,8 @@ import Dialog                             from '@material-ui/core/Dialog';
 import DialogContent                      from '@material-ui/core/DialogContent';
 import DialogTitle                        from '@material-ui/core/DialogTitle';
 import DialogActions                      from '@material-ui/core/DialogActions';
-import { Link }                           from 'react-router-dom';
 import { Redirect }                       from 'react-router-dom';
-import AddAsigneed from './new/add_asigneed';
+import AddAsigneed                        from './new/add_asigneed';
 
 
 const BREADCRUMBS = [
@@ -65,16 +62,14 @@ const useStyles = makeStyles((theme) => ({
     height: "60px"
   },
   textClientInfo: {
-    height: "60px"
-  },
-  textFieldNames: {
-    height: "70px",
+    height: "60px",
     width: "200px",
-    margin: "5px"
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap"
   },
   textFieldNewClientInfo: {
     height: "70px",
-    width: "250px",
+    width: "300px",
     margin: "5px"
   },
   procedureInfoText: {
@@ -82,12 +77,12 @@ const useStyles = makeStyles((theme) => ({
     width: "182px"
   },
   titleDataInfo: {
-    marginTop: "10px"
+    marginTop: "10px",
   },
   titleDataProcedureInfo: {
     marginTop: "10px",
     marginLeft: "70px",
-    // maxHeight: "120px"
+
   },
   asigneeGrid: {
     marginTop:"20px",
@@ -100,7 +95,7 @@ const NewBudget = (props) => {
 
   const defaultUser = {
     avatarThumbUrl: "/broken-image.jpg",
-    firstName: "Añadir",
+    firstName: "Agregue un",
     lastName: "encargado",
     id: null
   }
@@ -118,6 +113,7 @@ const NewBudget = (props) => {
   const [rfcClient, setRfcClient] = useState("")
   const [curpClient, setCurpClient] = useState("")
   const [open, setOpen] = React.useState(false);
+  const [openSkip, setOpenSkip] = React.useState(false)
   const [openNewBudget, setOpenNewBudget] = React.useState(false);
   const [pristine, setPristine] = React.useState(true)
   const [error, setError] = React.useState(false)
@@ -125,12 +121,23 @@ const NewBudget = (props) => {
   const [redirect, setRedirect] = useState(false)
   const [asignee, setAsignee] = useState(defaultUser)
   const [disableNextButton, setDisableNextButton] = useState(true)
+  const [searchInitialView, setSearchInitialView] = useState(true)
+  const [selectCausantView, setSelectCausantView] = useState(true)
+  const [causantInfo, setCausantInfo] = useState("");
 
   let variables = {
     firstName: firstName,
     lastName: lastName,
     rfc: rfcClient,
     curp: curpClient
+  }
+
+  let causantVariables = {
+    firstName: firstName,
+    lastName: lastName,
+    rfc: rfcClient,
+    curp: curpClient,
+    causant: true
   }
 
   useEffect(() => {
@@ -147,7 +154,7 @@ const NewBudget = (props) => {
         setPristine(true)
       },
       onCompleted(cacheData) {
-        setClientInfo(cacheData.createClient.client)
+        (activeStep === 0) ? setClientInfo(cacheData.createClient.client) : setCausantInfo(cacheData.createClient.client)
         setActiveStep((prevActiveStep) => prevActiveStep + 1)
       },
       fetchPolicy: "no-cache",
@@ -155,7 +162,7 @@ const NewBudget = (props) => {
   )
 
   const createNewClient = (event) => {
-    createClientMutation({ variables: variables})
+    createClientMutation({ variables:(activeStep === 0) ? variables : causantVariables})
   }
 
   const [createBudgetMutation, {loading: createBudgetLoading}] =
@@ -181,7 +188,8 @@ const NewBudget = (props) => {
           "proceduresTemplateId": procedureInfo.id, 
           "clientId": clientInfo.id, 
           "budgetingTemplateId": budgetInfo.id,
-          "asigneeId": asignee.id
+          "asigneeId": asignee.id,
+          "causantId": causantInfo.id
         }
       }
     )
@@ -205,14 +213,20 @@ const NewBudget = (props) => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
-  const createClient = () => {
+  const handleOmitCausant = () => {
+    setCausantInfo(clientInfo)
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setClientInfo(false)
+  }
+
+  const changeInitialView = () => {
+    setSearchInitialView(!searchInitialView)
+    setClientInfo("")
   };
 
-  const handleToProcedure = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 2);
-  };
+  const changeCausantView = () => {
+    setSelectCausantView(!selectCausantView)
+    setCausantInfo("")
+  }
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -262,6 +276,14 @@ const NewBudget = (props) => {
     setOpen(false);
   };
 
+  const handleSkipOpen = () => {
+    setOpenSkip(true)
+  }
+
+  const handleSkipClose = () => {
+    setOpenSkip(false)
+  }
+
   const clickOpenNewBudget = (event) => {
     setOpenNewBudget(true);
   };
@@ -269,6 +291,270 @@ const NewBudget = (props) => {
   const closeNewBudget = () => {
     setOpenNewBudget(false);
   };
+
+  const renderInitialView = () => {
+    if(searchInitialView){
+      return(
+        <>
+          <Grid container item alignItems="center" justifyContent="center" className={classes.grid300}>
+            <ClientSearch
+              searchLoading={searchLoading}
+              onChangeSearch={onChangeSearch.bind(this)}
+              setClientInfo={ setClientInfo }
+            />
+          </Grid>
+          <Grid container item alignItems="flex-start" justifyContent="flex-end" className={classes.grid100}>
+            <Grid>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleNext}
+                disabled={!clientInfo}
+                className={classes.button}
+              >
+                Siguiente
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={changeInitialView}
+                className={classes.button}
+              >
+                Crear
+              </Button>
+            </Grid>
+          </Grid>
+        </>
+      )
+    } else {
+      return(
+        <Grid container item alignItems="center">
+          <Grid container item  direction="column" alignItems="center" justifyContent="center" className={classes.grid300}>
+
+              <TextField 
+                id="first-name-basic" 
+                label="Nombres" 
+                className={classes.textFieldNewClientInfo}
+                onChange={handleFirstNameChange}
+                required
+                variant="outlined"
+                error={ !!error["first_name"] && true }
+                helperText={error["first_name"] || " "}
+                errorskey={ "first_name" }
+                name={ "first_name" }
+              />
+              <TextField 
+                id="last-name-basic" 
+                label="Apellidos" 
+                className={classes.textFieldNewClientInfo}
+                onChange={handleLastNameChange}
+                required
+                variant="outlined"
+                error={ !!error["last_name"] && true }
+                helperText={error["last_name"] || " "}
+                errorskey={ "last_name" }
+                name={ "last_name" }
+              />
+              <TextField 
+                id="rfc-basic" 
+                label="RFC" 
+                className={classes.textFieldNewClientInfo}
+                onChange={handleRfcClientChange}
+                variant="outlined"
+              />
+              <TextField 
+                id="curp-basic" 
+                label="CURP" 
+                className={classes.textFieldNewClientInfo}
+                onChange={handleCurpClientChange}
+                variant="outlined"
+              />
+
+          </Grid>
+          <Grid container item alignItems="flex-start" justifyContent="flex-end" className={classes.grid100}>
+            <Button
+              onClick={changeInitialView}
+              className={classes.button}
+            >
+              Atrás
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={ handleClickOpen }
+              className={classes.button}
+              disabled={pristine}
+            >
+              Guardar
+            </Button>
+          </Grid>
+          <Dialog open={open} onClose={ handleClose }>
+          <DialogTitle>
+            Desea crear un nuevo cliente
+          </DialogTitle>
+          <DialogContent>
+            Verifique que la información sea correcta antes de continuar.
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={ handleClose }>
+              Cancelar
+            </Button>
+            <Button onClick={ createNewClient } disabled={createClientLoading}>
+              Continuar
+            </Button>
+          </DialogActions>
+          </Dialog>
+        </Grid>
+      )
+    }
+  }
+
+  const renderCausantView = () => {
+    if(selectCausantView){
+      return(
+        <>
+          <Grid container item alignItems="center" justifyContent="center" className={classes.grid300}>
+            <CausantSearch
+              searchLoading={searchLoading}
+              onChangeSearch={onChangeSearch.bind(this)}
+              setCausantInfo={setCausantInfo}
+            />
+          </Grid>
+          <Grid container item direction="row" className={classes.grid100}>
+            <Grid container item xs={2} alignItems="center" justifyContent="center">
+              <Button
+                onClick={handleBack}
+
+              >
+                Regresar
+              </Button>
+            </Grid>
+            <Grid container item xs={10} alignItems="flex-start" justifyContent="flex-end">
+              <Button
+                variant="contained"
+                color="inherit"
+                onClick={handleSkipOpen}
+                className={classes.button}
+              >
+                Omitir
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleNext}
+                disabled={!causantInfo}
+                className={classes.button}
+              >
+                Siguiente
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={changeCausantView}
+                className={classes.button}
+              >
+                Crear
+              </Button>
+            </Grid>
+          </Grid>
+          <Dialog open={openSkip} onClose={ handleSkipClose }>
+            <DialogTitle>
+              Omitir causante
+            </DialogTitle>
+            <DialogContent>
+              Se seleccionará al cliente como causante
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={ handleSkipClose }>
+                Cancelar
+              </Button>
+              <Button onClick={ handleOmitCausant }>
+                Continuar
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </>
+      )
+    } else {
+      return(
+        <Grid container item alignItems="center">
+          <Grid container item  direction="column" alignItems="center" justifyContent="center" className={classes.grid300}>
+            <TextField 
+              id="first-name-basic" 
+              label="Nombres" 
+              className={classes.textFieldNewClientInfo}
+              onChange={handleFirstNameChange}
+              required
+              variant="outlined"
+              error={ !!error["first_name"] && true }
+              helperText={error["first_name"] || " "}
+              errorskey={ "first_name" }
+              name={ "first_name" }
+            />
+            <TextField 
+              id="last-name-basic" 
+              label="Apellidos" 
+              className={classes.textFieldNewClientInfo}
+              onChange={handleLastNameChange}
+              required
+              variant="outlined"
+              error={ !!error["last_name"] && true }
+              helperText={error["last_name"] || " "}
+              errorskey={ "last_name" }
+              name={ "last_name" }
+            />
+            <TextField 
+              id="rfc-basic" 
+              label="RFC" 
+              className={classes.textFieldNewClientInfo}
+              onChange={handleRfcClientChange}
+              variant="outlined"
+            />
+            <TextField 
+              id="curp-basic" 
+              label="CURP" 
+              className={classes.textFieldNewClientInfo}
+              onChange={handleCurpClientChange}
+              variant="outlined"
+            />
+          </Grid>
+          <Grid container item alignItems="flex-start" justifyContent="flex-end" className={classes.grid100}>
+            <Button
+              onClick={changeCausantView}
+              className={classes.button}
+            >
+              Atrás
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={ handleClickOpen }
+              className={classes.button}
+              disabled={pristine}
+            >
+              Guardar
+            </Button>
+          </Grid>
+          <Dialog open={open} onClose={ handleClose }>
+          <DialogTitle>
+            Desea crear un nuevo causante
+          </DialogTitle>
+          <DialogContent>
+            Verifique que la información sea correcta antes de continuar.
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={ handleClose }>
+              Cancelar
+            </Button>
+            <Button onClick={ createNewClient } disabled={createClientLoading}>
+              Continuar
+            </Button>
+          </DialogActions>
+          </Dialog>
+        </Grid>
+      )
+    }
+  }
 
   return(
     <>
@@ -280,132 +566,22 @@ const NewBudget = (props) => {
             <Grid container item xs={12} >
               <Stepper activeStep={activeStep} alternativeLabel className={classes.stepperIconLabel}>
                 <Step key={ 0 + "step"}  >
-                  <StepLabel>{"Buscar cliente"}</StepLabel>
+                  <StepLabel>{"Agregar cliente"}</StepLabel>
                 </Step>
                 <Step key={ 1 + "step"}>
-                  <StepLabel>{"Nuevo cliente"}</StepLabel>
+                  <StepLabel>{"Agregar causante"}</StepLabel>
                 </Step>
                 <Step key={ 2 + "step"}>
                   <StepLabel>{"Trámite y Presupuesto"}</StepLabel>
                 </Step>
-                {/* <Step key={ 3 + "step"}>
-                  <StepLabel>{"Seleccionar Presupuesto"}</StepLabel>
-                </Step> */}
               </Stepper>
             </Grid>
             <Grid container item xs={12} >
               { (activeStep === 0) && (
-              <>
-                <Grid container item alignItems="center" justifyContent="center" className={classes.grid300}>
-                  <ClientSearch
-                    searchLoading={searchLoading}
-                    onChangeSearch={onChangeSearch.bind(this)}
-                    setClientInfo={ setClientInfo }
-                  />
-                </Grid>
-                <Grid container item alignItems="flex-start" justifyContent="flex-end" className={classes.grid100}>
-                <Grid>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleToProcedure}
-                    disabled={!clientInfo}
-                    className={classes.button}
-                  >
-                    Siguiente
-                  </Button>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={createClient}
-                    className={classes.button}
-                  >
-                    Nuevo
-                  </Button>
-                </Grid>
-              </Grid>
-              </>
+                renderInitialView()
               )} 
               { (activeStep === 1) && (
-                <Grid container item alignItems="center">
-                  <Grid container item alignItems="center" justifyContent="center" className={classes.grid300}>
-                    <Grid>
-                      <TextField 
-                        id="first-name-basic" 
-                        label="Nombres" 
-                        className={classes.textFieldNames}
-                        onChange={handleFirstNameChange}
-                        required
-                        variant="outlined"
-                        error={ !!error["first_name"] && true }
-                        helperText={error["first_name"] || " "}
-                        errorskey={ "first_name" }
-                        name={ "first_name" }
-                      />
-                      <TextField 
-                        id="last-name-basic" 
-                        label="Apellidos" 
-                        className={classes.textFieldNames}
-                        onChange={handleLastNameChange}
-                        required
-                        variant="outlined"
-                        error={ !!error["last_name"] && true }
-                        helperText={error["last_name"] || " "}
-                        errorskey={ "last_name" }
-                        name={ "last_name" }
-                      />
-                    </Grid>
-                    <Grid>
-                      <TextField 
-                        id="rfc-basic" 
-                        label="RFC" 
-                        className={classes.textFieldNewClientInfo}
-                        onChange={handleRfcClientChange}
-                        variant="outlined"
-                      />
-                      <TextField 
-                        id="curp-basic" 
-                        label="CURP" 
-                        className={classes.textFieldNewClientInfo}
-                        onChange={handleCurpClientChange}
-                        variant="outlined"
-                      />
-                    </Grid>
-                  </Grid>
-                  <Grid container item alignItems="flex-start" justifyContent="flex-end" className={classes.grid100}>
-                    <Button
-                      onClick={handleBack}
-                      className={classes.button}
-                    >
-                      Atrás
-                    </Button>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={ handleClickOpen }
-                      className={classes.button}
-                      disabled={pristine}
-                    >
-                      Guardar
-                    </Button>
-                  </Grid>
-                  <Dialog open={open} onClose={ handleClose }>
-                  <DialogTitle>
-                    Desea crear un nuevo cliente
-                  </DialogTitle>
-                  <DialogContent>
-                    Verifique que la información sea correcta antes de continuar.
-                  </DialogContent>
-                  <DialogActions>
-                    <Button onClick={ handleClose }>
-                      Cancelar
-                    </Button>
-                    <Button onClick={ createNewClient } disabled={createClientLoading}>
-                      Continuar
-                    </Button>
-                  </DialogActions>
-                  </Dialog>
-                </Grid>
+                renderCausantView()
               )}
               { (activeStep === 2) && (
                 <Grid  container direction="row" item alignItems="center" justifyContent="center" >
@@ -427,22 +603,37 @@ const NewBudget = (props) => {
                       setDisableNextButton={setDisableNextButton}
                     />
                   </Grid>
-                  <Grid container item alignItems="flex-start" justifyContent="flex-end" className={classes.grid100}>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={ clickOpenNewBudget }
-                      className={classes.button}
-                      disabled={disableNextButton}
-                    >
-                      Siguiente
-                    </Button>
+                  <Grid container item direction="row" className={classes.grid100}>
+                    <Grid container item xs={2} alignItems="center" justifyContent="center">
+                      <Button
+                        onClick={handleBack}
+                      >
+                        Regresar
+                      </Button>
+                    </Grid>
+                    <Grid container item xs={10} alignItems="flex-start" justifyContent="flex-end">
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={ clickOpenNewBudget }
+                        className={classes.button}
+                        disabled={disableNextButton}
+                      >
+                        Siguiente
+                      </Button>
+                    </Grid>
                     <Dialog open={openNewBudget} onClose={ closeNewBudget }>
                       <DialogTitle>
                         Se creará un nuevo presupuesto
                       </DialogTitle>
                       <DialogContent>
+
                         Los datos confirmados se muestran en la columna de la derecha
+                          <AddAsigneed
+                            setAsignee={setAsignee}
+                            asignee={asignee}
+                          />
+
                       </DialogContent>
                       <DialogActions>
                         <Button
@@ -507,11 +698,21 @@ const NewBudget = (props) => {
             </Grid>
             <Grid container item xs={12} justifyContent="center" direction="column">
               <Grid container item justifyContent="flex-start" className={classes.titleDataProcedureInfo}>
+                Causante asignado
+              </Grid>
+              <Grid container item justifyContent="flex-start" className={classes.titleDataProcedureInfo}>
+                <Typography variant="body2" color="textSecondary">
+                  { causantInfo ? causantInfo.firstName : "sin asignar"}
+                </Typography>
+              </Grid>
+            </Grid>
+            <Grid container item xs={12} justifyContent="center" direction="column">
+              <Grid container item justifyContent="flex-start" className={classes.titleDataProcedureInfo}>
                 Nombre del trámite
               </Grid>
-              <Grid container item justifyContent="center">
-                <Typography variant="body2" color="textSecondary" className={classes.procedureInfoText} >
-                  { procedureInfo ? procedureInfo.name : "......................"}
+              <Grid container item justifyContent="flex-start" className={classes.titleDataProcedureInfo}>
+                <Typography variant="body2" color="textSecondary">
+                  { procedureInfo ? procedureInfo.name : "....................................."}
                 </Typography>
               </Grid>
             </Grid>
@@ -519,17 +720,21 @@ const NewBudget = (props) => {
               <Grid container item justifyContent="flex-start" className={classes.titleDataProcedureInfo}>
                 Presupuesto vinculado
               </Grid>
-              <Grid container item justifyContent="center">
-                <Typography variant="body2" color="textSecondary" className={classes.titleDataInfo} >
-                { budgetInfo ? budgetInfo.name : "......................"}
+              <Grid container item justifyContent="flex-start" className={classes.titleDataProcedureInfo}>
+                <Typography variant="body2" color="textSecondary">
+                { budgetInfo ? budgetInfo.name : "....................................."}
                 </Typography>
               </Grid>
             </Grid>
-            <Grid container item justifyContent="flex-start" className={classes.asigneeGrid}>
-              <AddAsigneed
-                setAsignee={setAsignee}
-                asignee={asignee}
-              />
+            <Grid container item xs={12} justifyContent="center" direction="column">
+              <Grid container item justifyContent="flex-start" className={classes.titleDataProcedureInfo}>
+                Encargado asignado
+              </Grid>
+              <Grid container item justifyContent="flex-start" className={classes.titleDataProcedureInfo}>
+                <Typography variant="body2" color="textSecondary">
+                { asignee ? `${asignee.firstName} ${asignee.lastName}` : "......................"}
+                </Typography>
+              </Grid>
             </Grid>
           </Paper>
         </Grid>
