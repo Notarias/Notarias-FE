@@ -58,7 +58,7 @@ const renderSearchList = (searchList, classes, selectedIndex, handleListItemClic
 }
 
 const AddAsigneed = (props) => {
-  const { classes, setAsignee, asignee } = props
+  const { classes, setAsignee, asignee, defaultUser } = props
 
   const [open, setOpen] = React.useState(false)
   const [searchList, setSearchList] = React.useState([])
@@ -96,6 +96,11 @@ const AddAsigneed = (props) => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const handleCancel = () => {
+    setOpen(false);
+    setAsignee(defaultUser)
+  }
 
   useEffect(() => {
     if (!initialized && data && data.users) {
@@ -140,7 +145,7 @@ const AddAsigneed = (props) => {
           <Typography variant="caption">{asignee.firstName} {asignee.lastName}</Typography>
         </Grid>
       </a>
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog open={open} onClose={handleClose} disableBackdropClick disableEscapeKeyDown>
         <DialogTitle>
           Seleccione encargado
         </DialogTitle>
@@ -158,6 +163,9 @@ const AddAsigneed = (props) => {
           }
         </DialogContent>
         <DialogActions>
+          <Button onClick={handleCancel}>
+            Cancelar
+          </Button>
           <Button onClick={handleClose}>
             Aceptar
           </Button>

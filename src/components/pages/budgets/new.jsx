@@ -230,6 +230,7 @@ const NewBudget = (props) => {
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    setOpenSkip(false)
   };
 
   const handleReset = () => {
@@ -424,7 +425,6 @@ const NewBudget = (props) => {
             <Grid container item xs={2} alignItems="center" justifyContent="center">
               <Button
                 onClick={handleBack}
-
               >
                 Regresar
               </Button>
@@ -627,13 +627,12 @@ const NewBudget = (props) => {
                         Se creará un nuevo presupuesto
                       </DialogTitle>
                       <DialogContent>
-
                         Los datos confirmados se muestran en la columna de la derecha
-                          <AddAsigneed
-                            setAsignee={setAsignee}
-                            asignee={asignee}
-                          />
-
+                        <AddAsigneed
+                          setAsignee={setAsignee}
+                          asignee={asignee}
+                          defaultUser={defaultUser}
+                        />
                       </DialogContent>
                       <DialogActions>
                         <Button
