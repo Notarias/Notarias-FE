@@ -6,7 +6,8 @@ export const CREATE_BUDGET = gql`
   	$clientId: ID!,
     $budgetingTemplateId: ID!,
   	$clientMutationId:String,
-    $asigneeId: ID
+    $asigneeId: ID,
+    $causantId: ID
   ){
     createBudget (
       input: {
@@ -14,7 +15,8 @@ export const CREATE_BUDGET = gql`
         clientId: $clientId,
         budgetingTemplateId: $budgetingTemplateId,
         clientMutationId: $clientMutationId,
-        asigneeId: $asigneeId
+        asigneeId: $asigneeId,
+        causantId: $causantId
       } 
     ) 
     {
@@ -147,18 +149,48 @@ export const LOAD_CLIENTS = gql`
   }
 `
 
+export const LOAD_CAUSANTS = gql`
+  query searchCausants(
+      $page: Int,
+      $per: Int,
+      $sortField: String,
+      $sortDirection: String,
+      $searchField: String,
+      $searchValue: String
+    ) {
+    causants(
+      page: $page,
+      per: $per,
+      sortField: $sortField,
+      sortDirection: $sortDirection,
+      searchField: $searchField,
+      searchValue: $searchValue
+    ) {
+      id
+      firstName
+      lastName
+      rfc
+      curp
+      causant
+    }
+    causantsCount
+  }
+`
+
 export const CREATE_CLIENT = gql`
   mutation createClient(
     $firstName: String!,
     $lastName: String!,
     $curp: String,
-    $rfc: String
+    $rfc: String,
+    $causant: Boolean
   ) {
     createClient(input: {
       firstName: $firstName,
       lastName: $lastName,
       curp: $curp,
-      rfc: $rfc
+      rfc: $rfc,
+      causant: $causant
     }
   ) 
     {

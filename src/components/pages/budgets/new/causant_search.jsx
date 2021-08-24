@@ -14,10 +14,10 @@ import TableCell                      from '@material-ui/core/TableCell';
 import SortHeader                     from '../../../ui/sort_header';
 import TableRow                       from '@material-ui/core/TableRow';
 import { useQuery }                   from '@apollo/react-hooks';
-import { LOAD_CLIENTS }               from '../queries_and_mutations/queries';
+import { LOAD_CAUSANTS }               from '../queries_and_mutations/queries';
 
-const ClientSearch = (props) => {
-  const { classes, setClientInfo } = props
+const CausantSearch = (props) => {
+  const { classes, setCausantInfo } = props
   const [searchLoading, setSearchLoading] = useState(false);
   const [sortField, setSortField]         = useState("first_name")
   const [sortDirection, setSortDirection] = useState("desc")
@@ -39,7 +39,7 @@ const ClientSearch = (props) => {
   }
 
   const { loading, data, refetch } = useQuery(
-    LOAD_CLIENTS, { vairables: variables, errorPolicy: 'all' }
+    LOAD_CAUSANTS, { vairables: variables, errorPolicy: 'all' }
   );
 
   useEffect(() => {
@@ -47,12 +47,12 @@ const ClientSearch = (props) => {
   }, [page, per, searchField, searchValue, sortField, sortDirection]);
 
   useEffect(() => {
-    data && setTotalRecords(data.clientsCount)
+    data && setTotalRecords(data.causantsCount)
   }, [data]);
 
-  const handleMenuItemClick = (event, index) => {
-    setSelectedIndex(index);
-  };
+  // const handleMenuItemClick = (event, index) => {
+  //   setSelectedIndex(index);
+  // };
 
   const changeRowsPerPage = (event) => {
     let per = event.target.value
@@ -107,24 +107,25 @@ const ClientSearch = (props) => {
     return(
       <TableBody className={classes.ClientSearchTable}>
         {
-          data && data.clients.map((client, index ) => {
+          data && data.causants.map((causant, index ) => {
             
             const handleMenuItemClick = (event) => {
-              setSelectedIndex(client.id);
-              setClientInfo(client);
+              setSelectedIndex(causant.id);
+              setCausantInfo(causant);
             };
             return(
             <TableRow
-              index={ client.id }
-              key={client.id}
+              index={ causant.id }
+              key={causant.id}
               hover 
-              selected={client.id === selectedIndex} 
+              selected={causant.id === selectedIndex} 
               onClick={ handleMenuItemClick }
+              
             >
-              <TableCell align= "center" className={classes.tableRowMax}>{ client.firstName }</TableCell>
-              <TableCell align= "center" className={classes.tableRowMax}>{ client.lastName }</TableCell>
-              <TableCell align= "center">{ client.rfc }</TableCell>
-              <TableCell align= "center">{ client.curp }</TableCell>
+              <TableCell align= "center" className={classes.tableRowMax}>{ causant.firstName }</TableCell>
+              <TableCell align= "center" className={classes.tableRowMax}>{ causant.lastName }</TableCell>
+              <TableCell align= "center">{ causant.rfc }</TableCell>
+              <TableCell align= "center">{ causant.curp }</TableCell>
             </TableRow>
           )})
         }
@@ -191,4 +192,4 @@ const ClientSearch = (props) => {
   )
 }
 
-export default withStyles(styles)(ClientSearch);
+export default withStyles(styles)(CausantSearch);
