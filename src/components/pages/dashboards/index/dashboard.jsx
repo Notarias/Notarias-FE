@@ -12,6 +12,7 @@ import { withStyles }   from '@material-ui/core/styles';
 import List             from '@material-ui/core/List';
 import ListItem         from '@material-ui/core/ListItem';
 import Divider          from '@material-ui/core/Divider';
+import DashboarBudgets  from './dashboard_budgets'
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -84,6 +85,7 @@ const Dashboard = (props) => {
             onChange={handleChange}
             aria-label="Vertical tabs example"
             className={classes.tabs}
+            variant="fullWidth"
           >
             <Tab label="Ver trámites" {...a11yProps(0)} />
             <Tab label="Ver presupuestos" {...a11yProps(1)} />
@@ -100,8 +102,8 @@ const Dashboard = (props) => {
         <TabPanel value={value} index={0}>
           algo para mostrar
         </TabPanel>
-        <TabPanel value={value} index={1}>
-          Presupuestos
+        <TabPanel value={value} index={1} className={classes.tabPanelWidth}>
+          <DashboarBudgets/>
         </TabPanel>
         <TabPanel value={value} index={2}>
           Pagos
@@ -110,4 +112,5 @@ const Dashboard = (props) => {
     </>
   );
 }
+
 export default withStyles(styles)(Dashboard);

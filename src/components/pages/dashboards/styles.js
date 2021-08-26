@@ -70,7 +70,12 @@ export const styles = theme => {
     },
     gridTabPanel: {
       backgroundColor: "white",
-      overflowY:"scroll"
-    }
+      overflowY:"scroll",
+      width: "100%",
+      height: "600px"
+    },
+    tabPanelWidth: {
+      width: "100%"
+    },
   })
 }
