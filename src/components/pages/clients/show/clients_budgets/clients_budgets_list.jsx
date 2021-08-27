@@ -16,8 +16,7 @@ const ClientsBudgetsList = (props) => {
   const { classes, match }  = props
 
   let variables = {
-
-    search: {
+  search: {
       clientId: Number(match.params.id),
     },
   }
