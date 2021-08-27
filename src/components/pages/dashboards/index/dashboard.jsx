@@ -9,9 +9,6 @@ import Grid             from '@material-ui/core/Grid';
 import Paper            from '@material-ui/core/Paper';
 import { styles }       from '../styles';
 import { withStyles }   from '@material-ui/core/styles';
-import List             from '@material-ui/core/List';
-import ListItem         from '@material-ui/core/ListItem';
-import Divider          from '@material-ui/core/Divider';
 import DashboarBudgets  from './dashboard_budgets'
 
 function TabPanel(props) {
@@ -61,12 +58,37 @@ const useStyles = makeStyles((theme) => ({
 
 const Dashboard = (props) => {
   const {classes } = props
-  // const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState(1);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  const  renderDashboarView = () => {
+    switch (value) {
+      case (0) :
+        return(
+          "mostrando contenido"
+        )
+        break;
+      case (1) :
+
+        return(
+          <DashboarBudgets/>
+        )
+        break;
+      case (2) :
+
+        return(
+          "Otro contenido"
+        )
+        break
+      default :
+        return(
+          "Sin vista para mostrar"
+        )
+    }
+  }
 
   return (
     <>
@@ -85,7 +107,6 @@ const Dashboard = (props) => {
             onChange={handleChange}
             aria-label="Vertical tabs example"
             className={classes.tabs}
-            variant="fullWidth"
           >
             <Tab label="Ver trámites" {...a11yProps(0)} />
             <Tab label="Ver presupuestos" {...a11yProps(1)} />
@@ -99,15 +120,7 @@ const Dashboard = (props) => {
         </Grid>
       </Grid>
       <Grid container item xs={9} className={classes.gridTabPanel}>
-        <TabPanel value={value} index={0}>
-          algo para mostrar
-        </TabPanel>
-        <TabPanel value={value} index={1} className={classes.tabPanelWidth}>
-          <DashboarBudgets/>
-        </TabPanel>
-        <TabPanel value={value} index={2}>
-          Pagos
-        </TabPanel>
+        {renderDashboarView()}
       </Grid>
     </>
   );

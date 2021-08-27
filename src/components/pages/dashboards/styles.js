@@ -77,5 +77,11 @@ export const styles = theme => {
     tabPanelWidth: {
       width: "100%"
     },
+    redColor: {
+      color: "red"
+    },
+    greenColor: {
+      color: "green"
+    }
   })
 }

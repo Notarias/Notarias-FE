@@ -63,6 +63,7 @@ export const GET_BUDGETS = gql`
       createdAt
       asigneeId
       asignee{
+        id
         firstName
         lastName
         avatarThumbUrl
