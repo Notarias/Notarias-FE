@@ -65,7 +65,7 @@ const ProceduresSearch = (props) => {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
 
   const { loading, data, refetch } = useQuery(
-    GET_PROCEDURES_TEMPLATES_QUICK_LIST ,
+    GET_PROCEDURES_TEMPLATES_QUICK_LIST
   );
 
   function changeSearch(event) {
@@ -85,7 +85,6 @@ const ProceduresSearch = (props) => {
       setInitialized(true) 
     }
   }, [data, checked])
-
   return (
     <Grid container item direction="column" alignItems="center" justifyContent="center">
       <div>

@@ -37,15 +37,13 @@ export const UPDATE_CLIENT_MUTATION = gql`
 `
 
 export const CREATE_CLIENT_MUTATION = gql`
-  mutation createClient($firstName: String, $lastName: String) {
+  mutation createClient($firstName: String!, $lastName: String!) {
     createClient(input: { firstName: $firstName, lastName: $lastName }) {
       client {
         id
         firstName
         lastName
       }
-      errors
-      pointers
     }
   }
 `
