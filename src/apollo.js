@@ -7,7 +7,7 @@ import { BatchHttpLink }        from 'apollo-link-batch-http';
 import history                  from './history'
 import { resolvers, typeDefs }  from './resolvers/resolvers';
 import { createUploadLink }     from 'apollo-upload-client';
-import ActionCable              from 'actioncable'
+import { createConsumer }       from "@rails/actioncable"
 import ActionCableLink          from 'graphql-ruby-client/dist/subscriptions/ActionCableLink'
 
 export const cache = new InMemoryCache();
@@ -18,7 +18,13 @@ const URI = `http://${BASE_URI}/graphql`;
 
 const uploadLink = new createUploadLink({ uri: URI });
 // Change protocol wss to ws for localhost
-const cable = ActionCable.createConsumer(`http://${BASE_URI}/cable?token=${localStorage.getItem('jwtToken')}`)
+
+const cableTokenUriAssignation = function() {
+  return(`http://${BASE_URI}/cable?token=${localStorage.getItem('jwtToken')}`)
+}
+
+const cable = createConsumer(cableTokenUriAssignation)
+
 const batchLinkHttp = new BatchHttpLink({ uri: URI })
 
 let httpLink = ApolloLink.split(
