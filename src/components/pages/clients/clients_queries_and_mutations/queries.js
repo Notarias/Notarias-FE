@@ -14,13 +14,14 @@ export const GET_CLIENT = gql`
       rfc
       serialNumber
       curp
+      moral
     }
   }
 `
 
 export const UPDATE_CLIENT_MUTATION = gql`
-  mutation updateClient($id: ID!, $firstName: String, $lastName:String,$email: String, $rfc: String, $phone: String, $address: String, $business: String, $category: String){
-    updateClient(input: {id: $id, firstName: $firstName, lastName: $lastName, email: $email, rfc: $rfc, phone: $phone, address: $address, business: $business, category: $category }){
+  mutation updateClient($id: ID!, $firstName: String, $lastName:String,$email: String, $rfc: String, $curp: String, $phone: String, $address: String, $business: String, $category: String){
+    updateClient(input: {id: $id, firstName: $firstName, lastName: $lastName, email: $email, rfc: $rfc, curp: $curp, phone: $phone, address: $address, business: $business, category: $category }){
       client{
         id
         firstName
@@ -31,18 +32,22 @@ export const UPDATE_CLIENT_MUTATION = gql`
         business
         category
         rfc
+        curp
+        moral
       }
     }
   }
 `
 
 export const CREATE_CLIENT_MUTATION = gql`
-  mutation createClient($firstName: String!, $lastName: String!) {
-    createClient(input: { firstName: $firstName, lastName: $lastName }) {
+  mutation createClient($firstName: String!, $lastName: String!, $rfc: String! $moralFlag: Boolean!) {
+    createClient(input: { firstName: $firstName, lastName: $lastName, rfc: $rfc, moralFlag: $moralFlag}) {
       client {
         id
         firstName
         lastName
+        rfc
+        moral
       }
     }
   }
