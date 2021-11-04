@@ -1,23 +1,24 @@
-import React, { Component }           from 'react';
-import { withRouter }                 from 'react-router-dom';
-import { Mutation }                   from '@apollo/react-components';
-import PermIdentityIcon               from '@material-ui/icons/PermIdentity';
-import FormHelperText                 from '@material-ui/core/FormHelperText';
-import PhoneRoundedIcon               from '@material-ui/icons/PhoneRounded';
-import BusinessIcon                   from '@material-ui/icons/Business';
-import AssignmentIndIcon              from '@material-ui/icons/AssignmentInd';
-import EmojiTransportationIcon        from '@material-ui/icons/EmojiTransportation';
-import PersonIcon                     from '@material-ui/icons/Person';
-import MailOutlineIcon                from '@material-ui/icons/MailOutline';
-import CircularProgress               from '@material-ui/core/CircularProgress';
-import Button                         from '@material-ui/core/Button';
-import Grid                           from '@material-ui/core/Grid';
-import TextField                      from '@material-ui/core/TextField';
-import { GLOBAL_MESSAGE }         from '../../../../resolvers/queries';
-import { CREATE_CLIENT_MUTATION } from '../clients_queries_and_mutations/queries';
+import React, { Component }                            from 'react';
+import { withRouter }                                  from 'react-router-dom';
+import { Mutation }                                    from '@apollo/react-components';
+import PermIdentityIcon                                from '@material-ui/icons/PermIdentity';
+import FormHelperText                                  from '@material-ui/core/FormHelperText';
+import PhoneRoundedIcon                                from '@material-ui/icons/PhoneRounded';
+import BusinessIcon                                    from '@material-ui/icons/Business';
+import AssignmentIndIcon                               from '@material-ui/icons/AssignmentInd';
+import EmojiTransportationIcon                         from '@material-ui/icons/EmojiTransportation';
+import PersonIcon                                      from '@material-ui/icons/Person';
+import MailOutlineIcon                                 from '@material-ui/icons/MailOutline';
+import CircularProgress                                from '@material-ui/core/CircularProgress';
+import Button                                          from '@material-ui/core/Button';
+import Grid                                            from '@material-ui/core/Grid';
+import TextField                                       from '@material-ui/core/TextField';
+import FormControlLabel                                from '@material-ui/core/FormControlLabel';
+import Checkbox                                        from '@material-ui/core/Checkbox';
+import { GLOBAL_MESSAGE }                              from '../../../../resolvers/queries';
+import { LOAD_CLIENTS, CREATE_CLIENT_MUTATION }        from '../clients_queries_and_mutations/queries';
 
-
-class NewClientForm extends Component {
+class NewClientForm extends React.Component {
 
   constructor(props) {
     super(props)
@@ -31,9 +32,21 @@ class NewClientForm extends Component {
       category: "",
       address: "",
       email: "",
-      rfc: ""
+      rfc: "",
+      curp: null,
+      moral: false
     }
   }
+
+  changeMayus = ({ target }) => {
+    const {name, value} = target
+    this.setState({ [name]: value.toUpperCase() })
+  }
+
+  moralChange = (event) => {
+    this.setState ({ [event.target.name]: event.target.checked });
+    this.setState({ curp: "" })
+  };
 
   handleChange = ({ target }) => {
     const {name, value} = target
@@ -191,15 +204,51 @@ class NewClientForm extends Component {
               value={this.state.rfc}
               classes={{ root: classes.formTextFields }}
               onChange={this.handleChange.bind(this)}
+              onKeyUp={this.changeMayus.bind(this)}
               label="RFC"
               erros={this.state.errors.rfc}
               name="rfc"/>
             <FormHelperText error>{this.state.errors.rfc}</FormHelperText>
           </Grid>
         </Grid>
+        <Grid item container >
+          <Grid item xs={1}>
+
+          </Grid>
+          <Grid item xs={11}>
+            <TextField
+              
+              value={this.state.curp}
+              classes={{ root: classes.formTextFields }}
+              onChange={this.handleChange.bind(this)}
+              onKeyUp={this.changeMayus.bind(this)}
+              label="CURP"
+              erros={this.state.errors.curp}
+              name="curp"
+              disabled={ this.state.moral }/>
+            <FormHelperText error>{this.state.errors.curp}</FormHelperText>
+          </Grid>
+        </Grid>
+        <Grid item container >
+          <Grid item xs={1}>
+
+          </Grid>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={this.state.moral}
+                onChange={this.moralChange}
+                name="moral"
+                color="primary"
+              />
+            }
+            label="El Cliente es Persona Moral"
+          />
+        </Grid>
         <Grid item>
           <Mutation
             mutation={CREATE_CLIENT_MUTATION}
+            refetchQueries={[LOAD_CLIENTS]}
             variables={{ ...this.state }}
             onCompleted={this.onCompleteCreate.bind(this)}>
             {

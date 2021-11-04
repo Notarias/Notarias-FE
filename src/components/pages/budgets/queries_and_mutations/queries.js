@@ -183,6 +183,7 @@ export const CREATE_CLIENT = gql`
     $lastName: String!,
     $curp: String,
     $rfc: String,
+    $moral: Boolean,
     $causant: Boolean
   ) {
     createClient(input: {
@@ -190,6 +191,7 @@ export const CREATE_CLIENT = gql`
       lastName: $lastName,
       curp: $curp,
       rfc: $rfc,
+      moral: $moral,
       causant: $causant
     }
   ) 
@@ -200,6 +202,7 @@ export const CREATE_CLIENT = gql`
         lastName
         curp
         rfc
+        moral
       }
     }
   }

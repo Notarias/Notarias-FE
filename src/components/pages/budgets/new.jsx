@@ -9,6 +9,8 @@ import Button                             from '@material-ui/core/Button';
 import Paper                              from '@material-ui/core/Paper';
 import Typography                         from '@material-ui/core/Typography';
 import TextField                          from '@material-ui/core/TextField';
+import FormControlLabel                   from '@material-ui/core/FormControlLabel';
+import Checkbox                           from '@material-ui/core/Checkbox';
 import Grid                               from '@material-ui/core/Grid';
 import Divider                            from '@material-ui/core/Divider';
 import ProceduresSearch                   from './new/procedures_search';
@@ -100,7 +102,7 @@ const NewBudget = (props) => {
     id: null
   }
 
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = useState(0);
   const steps = getSteps();
   const [searchLoading, setSearchLoading] = useState(false);
   const [searchValue, setSearchValue]     = useState("");
@@ -108,28 +110,30 @@ const NewBudget = (props) => {
   const [clientInfo, setClientInfo] = useState("");
   const [procedureInfo, setProcedureInfo] = useState("");
   const [budgetInfo, setbudgetInfo] = useState("");
-  const [firstName, setFirstName] = useState("")
-  const [lastName, setLastName] = useState("")
-  const [rfcClient, setRfcClient] = useState("")
-  const [curpClient, setCurpClient] = useState("")
-  const [open, setOpen] = React.useState(false);
-  const [openSkip, setOpenSkip] = React.useState(false)
-  const [openNewBudget, setOpenNewBudget] = React.useState(false);
-  const [pristine, setPristine] = React.useState(true)
-  const [error, setError] = React.useState(false)
-  const inputsList = ["first_name", "last_name"]
-  const [redirect, setRedirect] = useState(false)
-  const [asignee, setAsignee] = useState(defaultUser)
-  const [disableNextButton, setDisableNextButton] = useState(true)
-  const [searchInitialView, setSearchInitialView] = useState(true)
-  const [selectCausantView, setSelectCausantView] = useState(true)
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [rfcClient, setRfcClient] = useState("");
+  const [curpClient, setCurpClient] = useState("");
+  const [moralClient, setMoralClient] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [openSkip, setOpenSkip] = useState(false);
+  const [openNewBudget, setOpenNewBudget] = useState(false);
+  const [pristine, setPristine] = useState(true);
+  const [error, setError] = useState(false);
+  const inputsList = ["first_name", "last_name"];
+  const [redirect, setRedirect] = useState(false);
+  const [asignee, setAsignee] = useState(defaultUser);
+  const [disableNextButton, setDisableNextButton] = useState(true);
+  const [searchInitialView, setSearchInitialView] = useState(true);
+  const [selectCausantView, setSelectCausantView] = useState(true);
   const [causantInfo, setCausantInfo] = useState("");
 
   let variables = {
     firstName: firstName,
     lastName: lastName,
     rfc: rfcClient,
-    curp: curpClient
+    curp: curpClient,
+    moral: moralClient
   }
 
   let causantVariables = {
@@ -137,6 +141,7 @@ const NewBudget = (props) => {
     lastName: lastName,
     rfc: rfcClient,
     curp: curpClient,
+    moral: moralClient,
     causant: true
   }
 
@@ -157,7 +162,7 @@ const NewBudget = (props) => {
         (activeStep === 0) ? setClientInfo(cacheData.createClient.client) : setCausantInfo(cacheData.createClient.client)
         setActiveStep((prevActiveStep) => prevActiveStep + 1)
       },
-      fetchPolicy: "no-cache",
+      fetchPolicy: "no-cache"
     }
   )
 
@@ -251,11 +256,16 @@ const NewBudget = (props) => {
   };
 
   const handleRfcClientChange = (event) => {
-    setRfcClient(event.target.value);
+    setRfcClient(event.target.value.toUpperCase()); 
   };
 
   const handleCurpClientChange = (event) => {
-    setCurpClient(event.target.value);
+    setCurpClient(event.target.value.toUpperCase());
+  };
+
+  const moralChange = (event) => {
+    setMoralClient(event.target.checked);
+    moralClient ? setCurpClient("") : setCurpClient("")
   };
 
   const onChangeSearch = (event) => {
@@ -331,46 +341,65 @@ const NewBudget = (props) => {
       return(
         <Grid container item alignItems="center">
           <Grid container item  direction="column" alignItems="center" justifyContent="center" className={classes.grid300}>
-
-              <TextField 
-                id="first-name-basic" 
-                label="Nombres" 
-                className={classes.textFieldNewClientInfo}
-                onChange={handleFirstNameChange}
-                required
-                variant="outlined"
-                error={ !!error["first_name"] && true }
-                helperText={error["first_name"] || " "}
-                errorskey={ "first_name" }
-                name={ "first_name" }
-              />
-              <TextField 
-                id="last-name-basic" 
-                label="Apellidos" 
-                className={classes.textFieldNewClientInfo}
-                onChange={handleLastNameChange}
-                required
-                variant="outlined"
-                error={ !!error["last_name"] && true }
-                helperText={error["last_name"] || " "}
-                errorskey={ "last_name" }
-                name={ "last_name" }
-              />
-              <TextField 
-                id="rfc-basic" 
-                label="RFC" 
-                className={classes.textFieldNewClientInfo}
-                onChange={handleRfcClientChange}
-                variant="outlined"
-              />
-              <TextField 
-                id="curp-basic" 
-                label="CURP" 
-                className={classes.textFieldNewClientInfo}
-                onChange={handleCurpClientChange}
-                variant="outlined"
-              />
-
+            <TextField 
+              id="first-name-basic" 
+              label="Nombres"
+              className={classes.textFieldNewClientInfo}
+              onChange={handleFirstNameChange}
+              required
+              variant="outlined"
+              error={ !!error["first_name"] && true }
+              helperText={error["first_name"] || " "}
+              errorskey={ "first_name" }
+              name={ "first_name" }
+            />
+            <TextField 
+              id="last-name-basic" 
+              label="Apellidos" 
+              className={classes.textFieldNewClientInfo}
+              onChange={handleLastNameChange}
+              required
+              variant="outlined"
+              error={ !!error["last_name"] && true }
+              helperText={error["last_name"] || " "}
+              errorskey={ "last_name" }
+              name={ "last_name" }
+            />
+            <TextField 
+              id="rfc-basic" 
+              label="RFC" 
+              className={classes.textFieldNewClientInfo}
+              onChange={handleRfcClientChange}
+              variant="outlined"
+              value={rfcClient}
+              error={ !!error["rfc"] && true }
+              helperText={error["rfc"] || " "}
+              errorskey={ "rfc" }
+            />
+            <TextField 
+              id="curp-basic" 
+              label="CURP" 
+              className={classes.textFieldNewClientInfo}
+              onChange={handleCurpClientChange}
+              variant="outlined"
+              value={curpClient}
+              disabled={moralClient}
+              error={ !!error["curp"] && true }
+              helperText={error["curp"] || " "}
+              errorskey={ "curp" }
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  id="moral-client-basic"
+                  checked={moralClient}
+                  onChange={moralChange}
+                  name="moralClient"
+                  color="primary"
+                />
+              }
+              label="El Cliente es Persona Moral"
+            />
           </Grid>
           <Grid container item alignItems="flex-start" justifyContent="flex-end" className={classes.grid100}>
             <Button
@@ -509,6 +538,7 @@ const NewBudget = (props) => {
               className={classes.textFieldNewClientInfo}
               onChange={handleRfcClientChange}
               variant="outlined"
+              value={rfcClient}
             />
             <TextField 
               id="curp-basic" 
@@ -528,7 +558,7 @@ const NewBudget = (props) => {
             <Button
               variant="contained"
               color="primary"
-              onClick={ handleClickOpen }
+              onClick={handleClickOpen}
               className={classes.button}
               disabled={pristine}
             >
