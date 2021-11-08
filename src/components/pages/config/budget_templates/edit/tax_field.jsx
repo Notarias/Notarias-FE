@@ -1,4 +1,4 @@
-import React, { useEffect }                                          from 'react';
+import React, { useEffect, useState }                                          from 'react';
 import Grid                                           from '@material-ui/core/Grid';
 import TextField                                      from '@material-ui/core/TextField';
 import Button                                         from '@material-ui/core/Button';
@@ -24,24 +24,25 @@ import Avatar                                         from '@material-ui/core/Av
 import CategoriesSelectableList                       from './categories_selectable_list'
 import { GLOBAL_MESSAGE }                             from '../../../../../resolvers/queries';
 import client                                         from '../../../../../apollo';
-import Badge from '@material-ui/core/Badge';
+import Badge                                          from '@material-ui/core/Badge';
+import TaxedFields                                     from './taxed_fields'
 
 
-const Field = (props) => {
+const TaxField = (props) => {
 
-  const { classes, id, currentTab, removeFromList, field } = props
-  const [open, setOpen] = React.useState(false);
-  const [openB, setOpenB] = React.useState(false);
-  const [openDialog, setOpenDialog] = React.useState(false);
-  const [editing, setEditing] = React.useState(true);
-  const [name, setName] = React.useState(props.name)
-  const [type, setType] = React.useState(field.fieldType)
-  const [categories, setCategories] = React.useState(props.categories);
-  const [active, setActive] = React.useState(props.active || false);
-  const [error, setError] = React.useState(false);
+  const { classes, currentTab, removeFromList } = props
+
+  const [open, setOpen] = useState(false);
+  const [field]         = useState(props.field)
+  const [categoryListOpen, setCategoryListOpen] = useState(false);
+  const [categoriesToSave, setCategoriesToSave] = useState([])
+  const [openDialog, setOpenDialog] = useState(false);
+  const [editing, setEditing]       = useState(true);
+  const [error, setError]           = useState(false);
+  const [name, setName]             = useState()
+  const [active, setActive]         = useState(false);
+  const [categories, setCategories] = useState([]);
   const inputsList = ["name"]
-  const [categoriesToSave, setCategoriesToSave] = React.useState(props.categories || [])
-
 
   const [updateBudgetingTemplateTabFieldMutation] =
     useMutation(
@@ -63,7 +64,7 @@ const Field = (props) => {
         update(store, cacheData) {
           setError(false)
           setEditing(true)
-          setOpenB(false)
+          setCategoryListOpen(false)
         },
         refetchQueries: [{
           query: GET_BUDGETING_TEMPLATE_TAB_FIELDS,
@@ -93,15 +94,19 @@ const Field = (props) => {
   }
 
   React.useEffect(() => {
-    setCategories(props.categories)
-  }, [props.categories])
+    if(field) {
+      setCategories(field.categories)
+      setName(field.name)
+      setActive(field.active)
+    }
+  }, [field && field.id])
 
   const updateField = (event) => {
-    updateBudgetingTemplateTabFieldMutation({ variables: { id: id, name: name}})
+    updateBudgetingTemplateTabFieldMutation({ variables: { id: field.id, name: name}})
   }
 
   const updateFieldCategories = (event) => {
-    updateBudgetingTemplateTabFieldMutation({ variables: { id: id, categoriesIds: categoriesSavedIds() }})
+    updateBudgetingTemplateTabFieldMutation({ variables: { id: field.id, categoriesIds: categoriesSavedIds() }})
   }
 
   const handleClickOpen = () => {
@@ -112,12 +117,12 @@ const Field = (props) => {
     setOpen(false);
   };
 
-  const openCategoryList = () => {
-    setOpenB(true);
+  const onClickOpenCategoryList = () => {
+    setCategoryListOpen(true);
   }
 
   const handleCloseCategoryList = () => {
-    setOpenB(false);
+    setCategoryListOpen(false);
   };
 
   const handleClickOpenDialog = () => {
@@ -129,7 +134,7 @@ const Field = (props) => {
   };
 
   const changeFieldStatus = (event) => {
-    updateBudgetingTemplateTabFieldMutation({ variables: { id: id, active: !active}})
+    updateBudgetingTemplateTabFieldMutation({ variables: { id: field.id, active: !active}})
     setActive(!active)
     setOpenDialog(false);
   }
@@ -147,7 +152,7 @@ const Field = (props) => {
     )
 
   const deleteFieldClick = () => {
-    removeFromList(props.arrayIndex, destroyBudgetingTemplateTabFieldMutation, { variables: { id: id } }, id )
+    removeFromList(props.arrayIndex, destroyBudgetingTemplateTabFieldMutation, { variables: { id: field.id } }, field.id )
     setOpen(false);
   }
 
@@ -218,23 +223,25 @@ const Field = (props) => {
     }
   }
 
-
   return (
-    <Grid container item alignItems="flex-start" justifyContent="flex-start" className={ classes.fielPaddingBottom } xs={12}>
-      <Paper className={ classes.fieldPaper }>
-        <Grid container>
+    <Grid container item alignItems="flex-start" justifyContent="flex-start" className={ classes.fielPaddingBottom }>
+      <Paper className={classes.fieldPaper}>
+        <Grid container item className={ classes.fieldHeightRow }>
           { editing ? renderTextField() : renderInputField() }
           <Grid container alignItems="center" justifyContent="center" item xs={1}>
+            <Badge classes={{badge: classes.badgeGreenColor}} overlap="circular" badgeContent={field && field.defaultValue + "%"}>
+              <div ></div>
+            </Badge>
           </Grid>
           <Grid container direction="column"  alignItems="center" justifyContent="center" item xs={3}>
             <Chip
               avatar={<Avatar>{ categoriesToShow() }</Avatar>}
               label={ ` categorias` }
               color={ categories.length > 0 ? "primary" : "default" }
-              onClick={ openCategoryList }
+              onClick={ onClickOpenCategoryList }
             />
             <Dialog
-              open={openB}
+              open={categoryListOpen}
               onClose={handleCloseCategoryList}
             >
               <DialogTitle>
@@ -319,8 +326,9 @@ const Field = (props) => {
           </Grid>
         </Grid>
       </Paper>
+      { field && <TaxedFields parentField={field}/> }
     </Grid>
   )
 }
 
-export default  withStyles(styles)(Field);
+export default  withStyles(styles)(TaxField);

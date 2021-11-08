@@ -12,7 +12,7 @@ import { GET_BUDGETING_TEMPLATE }           from './queries_and_mutations/querie
 import ActiveTemplateButton                 from './edit/active_template_button';
 import ProcedureTemplateLinkButton           from './edit/procedure_template_link_button';
 import Tabs                                 from './edit/tabs';
-import NewFieldButton                       from './edit/new_field_Button';
+import NewFieldButton                       from './edit/new_field_button';
 import RenderFields                         from './edit/render_fields';
 import NewFliedTaxButton    from './edit/newFieldTaxButton/new_field_tax_button'
 
@@ -37,47 +37,47 @@ const Edit = (props) => {
       <Divider/>
       <Grid container direction="row">
         <Grid container item xs={9} direction="column">
-            <Grid container direction="row"  alignItems="center" className={ classes.addTittleProcedure }>
-              <Grid container item xs={7} justifyContent="flex-start">
-                <TemplateTitle
-                  templateData={ data ? data.budgetingTemplate : " " }
-                  match={ props.match.params }
-                />
-              </Grid>
-              <Grid container item xs={5} justifyContent="flex-end" alignItems="center">
-                <Grid container item xs={3} justifyContent="center">
+          <Grid container direction="row"  alignItems="center" className={ classes.addTittleProcedure }>
+            <Grid container item xs={7} justifyContent="flex-start">
+              <TemplateTitle
+                templateData={ data ? data.budgetingTemplate : " " }
+                match={ props.match.params }
+              />
+            </Grid>
+            <Grid container item xs={5} justifyContent="flex-end" alignItems="center">
+              <Grid container item xs={3} justifyContent="center">
                 </Grid>
-                <Grid container item xs={5} justifyContent="center">
+              <Grid container item xs={5} justifyContent="center">
                   <ProcedureTemplateLinkButton
                     id={ match.params.id }
                     proceduresTemplatesData={ data ? data.budgetingTemplate.proceduresTemplates : null }
                   />
                 </Grid>
-                <Grid container item xs={4} justifyContent="center">
+              <Grid container item xs={4} justifyContent="center">
                   <ActiveTemplateButton
                     templateData={data ? data.budgetingTemplate : [] }
                     match={ props.match.params }
                   />
                 </Grid>
-              </Grid>
             </Grid>
-            <Divider/>
-            <Grid container direction="row">
-              <NewFieldButton
-                currentTab={ currentTab }
-              />
-              <NewFliedTaxButton
-                templateData={data ? data.budgetingTemplate.fields : [] }
-                currentTab={ currentTab }
-              />
-            </Grid>
-            <RenderFields
+          </Grid>
+          <Divider/>
+          <Grid container direction="row">
+            <NewFieldButton
               currentTab={ currentTab }
-              data={ data }
-              loading={ loading }
+            />
+            <NewFliedTaxButton
+              templateData={data ? data.budgetingTemplate.fields : [] }
+              currentTab={ currentTab }
             />
           </Grid>
-          <Grid container item xs={3} direction="column">
+          <RenderFields
+            currentTab={ currentTab }
+            data={ data }
+            loading={ loading }
+          />
+        </Grid>
+        <Grid container item xs={3} direction="column">
           <Paper>
             {
               (loading || !data) ?

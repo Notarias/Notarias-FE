@@ -1,5 +1,6 @@
 import React, { useEffect }                         from 'react';
 import Field                                        from './field';
+import TaxField                                     from './tax_field';
 import { useQuery }                                 from '@apollo/react-hooks';
 import { GET_BUDGETING_TEMPLATE_TAB_FIELDS }        from '../queries_and_mutations/queries'
 import { styles }                                   from '../styles';
@@ -12,6 +13,9 @@ const FieldList = (props) => {
     GET_BUDGETING_TEMPLATE_TAB_FIELDS,
     {
       variables: { "id": currentTab.id }
+    },
+    {
+      fetchPolicy: 'cache-and-network'
     }
   );
 
@@ -28,13 +32,22 @@ const FieldList = (props) => {
     setFields(newArray)
   }
 
-  const renderFields = () => {
-    return(
-      <>
-        {
-          fields.map(
-            (field, index) => {
-              return(
+  return (
+    <>
+      {
+        fields.map(
+          (field, index) => {
+            console.log(fields)
+            return(
+              field.fieldType == 'tax' ?
+                <TaxField 
+                  key={ field.id + "-field"}
+                  arrayIndex={ index }
+                  removeFromList={ removeFromList }
+                  currentTab={ currentTab }
+                  field={ field }
+                />
+                :
                 <Field
                   key={ field.id + "-field"}
                   arrayIndex={ index }
@@ -46,18 +59,9 @@ const FieldList = (props) => {
                   currentTab={ currentTab }
                   field={ field }
                 />
-              )
-            }
-          )
-        }
-      </>
-    )
-  }
-
-  return (
-    <>
-      {
-        renderFields()
+            )
+          }
+        )
       }
     </>
   )

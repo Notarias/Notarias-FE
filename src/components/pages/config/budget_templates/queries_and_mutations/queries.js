@@ -176,6 +176,33 @@ export const GET_BUDGETING_TEMPLATE_TAB_FIELDS = gql`
         id
         name
       }
+      taxes {
+        id
+        defaultValue
+        active
+        payable
+        fieldType
+        operator
+        budgetingTemplateTabId
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`
+
+export const GET_BUDGETING_TEMPLATE_TAXED_FIELDS = gql`
+  query getBudgetingTemplateTaxedFields(
+    $id: ID!
+  )
+  {
+    budgetingTemplateTaxedFields(
+      id: $id
+    ) {
+      id
+      name
+      defaultValue
+      defaultValueTax
     }
   }
 `

@@ -223,10 +223,11 @@ export const styles = theme => {
     fielPaddingBottom: {
       marginBottom: "2px"
     },
-    fieldHeightRow: {
-      padding: "10px",
-      width: "700px",
-    },    formControlPadding: {
+    fieldPaper: {
+      padding: theme.spacing(2),
+      width: '100%'
+    },
+    formControlPadding: {
       margin: "0px",
     },
     radioButtonActiveGreen:{
