@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { styles }           from '../../styles';
 import { withStyles }       from '@material-ui/core/styles';
 import TextField            from '@material-ui/core/TextField';
@@ -21,7 +21,6 @@ import FormControl          from '@material-ui/core/FormControl';
 import ArrowBackIosIcon     from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon  from '@material-ui/icons/ArrowForwardIos';
 
-
 function not(a, b) {
   return a.filter((value) => b.indexOf(value) === -1);
 }
@@ -35,18 +34,27 @@ function union(a, b) {
 }
 
 const FieldSearch = (props) => {
-  const { classes, templateData, setTaxedFieldsIds, setDefaultValue, setOperator, setPristine } = props
+  const {
+    classes,
+    templateData,
+    setTaxedFieldsIds,
+    setDefaultValue,
+    defaultValue,
+    setOperator,
+    setTaxableSelector,
+    setPristine,
+    operator,
+    taxableSelector
+  } = props
 
-  const [searchList, setSearchList] = React.useState(templateData)
-  const [initialList, setInitialList] = React.useState(templateData)
-  const [fuzzySearcher, setFuzzySearcher] = React.useState(new Fuse(initialList, { keys: ['name'] }))
+  const [searchList, setSearchList]       = useState(templateData)
+  const [initialList, setInitialList]     = useState(templateData)
+  const [fuzzySearcher, setFuzzySearcher] = useState(new Fuse(initialList, { keys: ['name'] }))
 
-  const [checked, setChecked] = React.useState([]);
-  const [left, setLeft] = React.useState( templateData );
-  const [right, setRight] = React.useState([]);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [operatorValue, setOperatorValue] = React.useState("apply_all");
-  const [percentage, setPercentage] = React.useState('3');
+  const [checked, setChecked]             = useState([]);
+  const [left, setLeft]                   = useState( templateData );
+  const [right, setRight]                 = useState([]);
+  const [anchorEl, setAnchorEl]           = useState(null);
 
   const leftChecked = intersection(checked, left);
   const rightChecked = intersection(checked, right);
@@ -71,9 +79,7 @@ const FieldSearch = (props) => {
         )
       })
     )
-    setDefaultValue(Number(percentage))
-    setOperator(operatorValue)
-  }, [right, operatorValue, percentage ])
+  }, [right])
 
   function changeSearch(event) {
     let result = fuzzySearcher.search(event.target.value)
@@ -98,12 +104,15 @@ const FieldSearch = (props) => {
   };
 
   const handleOperatorChange = (event) => {
-    setOperatorValue(event.target.value);
+    setOperator(event.target.value);
   };
 
+  const handleTaxableSelectorChange = (event) => {
+    setTaxableSelector(event.target.value);
+  }
+
   const handlePercentageChange = (event) => {
-    setPercentage(event.target.value)
-    setDefaultValue(percentage)
+    setDefaultValue(Number(event.target.value))
   }
 
   const numberOfChecked = (items) => intersection(checked, items).length;
@@ -148,26 +157,15 @@ const FieldSearch = (props) => {
     </Card>
   );
 
-
   return(
     <>
       <Grid container >
-        <Grid container item xs={6} alignItems="center" justifyContent="flex-start">
-          <TextField
-            onChange={ changeSearch }
-            size="small"
-            id="search_field"
-            label="Buscar campo"
-            variant="outlined"
-            className={classes.textFieldSearch}
-          />
-        </Grid>
-        <Grid container item xs={6} alignItems="center" justifyContent="center">
-          <Grid container item xs={6} alignItems="flex-start" justifyContent="center">
+        <Grid style={{ 'marginBottom': '12px' }} container item xs={12} alignItems="center" justifyContent="flex-start">
+          <Grid container item xs={2} alignItems="flex-start" justifyContent="center">
             <FormControl variant="outlined">
               <OutlinedInput
                 id="percentage"
-                value={Number(percentage)}
+                value={Number(defaultValue)}
                 onChange={handlePercentageChange}
                 endAdornment={<InputAdornment className={classes.InputAdornmentInPercentage} position="end">%</InputAdornment>}
                 size="small"
@@ -176,23 +174,54 @@ const FieldSearch = (props) => {
               />
             </FormControl>
           </Grid>
-          <Grid container item xs={6} alignItems="center" justifyContent="flex-end">
+          <Grid container item xs={5} alignItems="center" justifyContent="flex-end">
             <FormControl variant="outlined" className={classes.operatorMenu}>
-              <InputLabel id="demo-simple-select-outlined-label" >Operador</InputLabel>
               <Select
-                labelId="demo-simple-select-outlined-label"
+                style={{ height: "40px"}}
                 id="demo-simple-select-outlined"
-                value={operatorValue}
+                value={operator}
                 onChange={handleOperatorChange}
-                label="operator"
-                classes={{ outlined: classes.selectOperatorMenu }}
+                displayEmpty
+                size="small"
               >
-                <MenuItem value={"highest"}>Alto</MenuItem>
-                <MenuItem value={"flat"}>Plano</MenuItem>
-                <MenuItem value={"apply_all"}>Todos</MenuItem>
+                <MenuItem value="">
+                  <em>Operador</em>
+                </MenuItem>
+                <MenuItem value="percentile">Porcentual</MenuItem>
+                <MenuItem value="flat">Plano</MenuItem>
               </Select>
             </FormControl>
           </Grid>
+          <Grid container item xs={5} alignItems="center" justifyContent="flex-end">
+              <FormControl variant="outlined" className={classes.operatorMenu}>
+                <Select
+                  style={{ height: "40px"}}
+                  labelId="demo-simple-select-outlined-label"
+                  id="demo-simple-select-outlined"
+                  value={taxableSelector}
+                  onChange={handleTaxableSelectorChange}
+                  displayEmpty
+                  size="small"
+                >
+                   <MenuItem value="">
+                    <em>Selector</em>
+                  </MenuItem>
+                  <MenuItem value={"highest"}>Más Alto</MenuItem>
+                  <MenuItem value={"apply_all"}>Todos</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+        </Grid>
+        
+        <Grid container item xs={5} alignItems="center" justifyContent="flex-start">
+          <TextField
+            onChange={ changeSearch }
+            size="small"
+            id="search_field"
+            label="Buscar campo"
+            variant="outlined"
+            className={classes.textFieldSearch}
+          />
         </Grid>
         <Grid container item xs={12} direction="row" alignItems="center"  justifyContent="center" className={classes.changeButtonGrid}>
           <Grid container item xs={6} alignItems="center" justifyContent="center">

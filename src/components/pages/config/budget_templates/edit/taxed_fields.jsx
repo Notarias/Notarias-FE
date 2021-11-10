@@ -9,13 +9,12 @@ const TaxedFields = (props) => {
 
   const [taxedFields, setTaxedFields] = useState()
   const { loading, data, refetch } = useQuery(GET_BUDGETING_TEMPLATE_TAXED_FIELDS, { variables: { id: taxField.id } });
-  const { budgetingTemplateTaxedFields } = data;
 
-  if(budgetingTemplateTaxedFields) {
-    useEffect(() => {
-      setTaxedFields(budgetingTemplateTaxedFields)
-    }, [loading])
-  }
+  useEffect(() => {
+    if (data) {
+      setTaxedFields(data.budgetingTemplateTaxedFields)
+    }
+  }, [data && data.budgetingTemplateTaxedFields.length])
 
   const renderTaxedFields = () => {
     if(taxedFields) {

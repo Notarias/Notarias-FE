@@ -260,20 +260,19 @@ export const styles = theme => {
       width: "80px",
     },
     InputPercentage: {
-      width: "80px",
       height: "38px",
-      padding: "0px",
-      marginRight: "20px"
+      width: "100%"
     },
     InputAdornmentInPercentage: {
       marginRight: "5px"
     },
     operatorMenu: {
-      width: "110px",
+      width: "80%",
     },
     selectOperatorMenu: {
-      padding: "9px",
+      pfontSize: "16px"
     },
+    
     taxFieldName: {
       marginBottom: "15px"
     },

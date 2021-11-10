@@ -37,7 +37,6 @@ const FieldList = (props) => {
       {
         fields.map(
           (field, index) => {
-            console.log(fields)
             return(
               field.fieldType == 'tax' ?
                 <TaxField 

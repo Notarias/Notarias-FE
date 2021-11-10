@@ -1,4 +1,4 @@
-import React                                  from 'react';
+import React, { useEffect }                                  from 'react';
 import Button                                 from '@material-ui/core/Button';
 import Grid                                   from '@material-ui/core/Grid';
 import { styles }                             from '../../styles';
@@ -9,7 +9,7 @@ import DialogContent                          from '@material-ui/core/DialogCont
 import DialogTitle                            from '@material-ui/core/DialogTitle';
 import DialogActions                          from '@material-ui/core/DialogActions';
 import Divider                                from '@material-ui/core/Divider';
-import FieldSearch                            from './field_search';
+import FieldSearch                            from './operators_and_selectors';
 import TextField                              from '@material-ui/core/TextField';
 import { useMutation }                        from '@apollo/react-hooks';
 import { CREATE_TAX_FIELD}                    from '../../queries_and_mutations/queries'
@@ -21,12 +21,13 @@ const NewFliedTaxButton = (props) => {
   const { classes, templateData, currentTab } = props
 
   const [open, setOpen] = React.useState(false);
-  const [fieldName, setFieldName] = React.useState()
-  const [defaultValue, setDefaultValue] = React.useState()
+  const [fieldName, setFieldName] = React.useState("")
+  const [defaultValue, setDefaultValue] = React.useState(3)
   const [taxedFieldsIds, setTaxedFieldsIds] = React.useState([])
-  const [operator, setOperator] = React.useState()
+  const [operator, setOperator] = React.useState("")
+  const [taxableSelector, setTaxableSelector] = React.useState("")
   const [pristine, setPristine] = React.useState(true)
-  const [withoutName, setWithoutName] = React.useState(true)
+  const [allOptionsMarked, setAllOptionsMarked] = React.useState(false)
   const [error, setError] = React.useState(false)
   const inputsList = ["name"]
 
@@ -34,7 +35,7 @@ const NewFliedTaxButton = (props) => {
     setOpen(false)
     setFieldName("")
     setPristine(true)
-    setWithoutName(true)
+    setAllOptionsMarked(false)
   }
 
   const handleOpen = () => {
@@ -43,7 +44,6 @@ const NewFliedTaxButton = (props) => {
 
   const changeFieldName = (event) => {
     setFieldName(event.target.value);
-    setWithoutName(false)
   };
 
   const [createBudgetingTemplateTabTaxFieldMutation, {loading: createBudgetingTemplateTabTaxFieldLoading} ] =
@@ -67,7 +67,6 @@ const NewFliedTaxButton = (props) => {
         setError(false)
         setOpen(false)
         setPristine(true)
-        setWithoutName(true)
       },
       fetchPolicy: "no-cache",
       refetchQueries: [{
@@ -96,12 +95,26 @@ const NewFliedTaxButton = (props) => {
     createBudgetingTemplateTabTaxFieldMutation(
       { 
         variables: 
-          { "name": fieldName, "tabId": currentTab.id, "defaultValue": defaultValue , "taxedFieldsIds": taxedFieldsIds, "operator": operator },
+          {
+            "name": fieldName,
+            "tabId": currentTab.id,
+            "defaultValue": defaultValue ,
+            "taxedFieldsIds": taxedFieldsIds,
+            "operator": operator,
+            "taxableSelector": taxableSelector 
+          },
           fetchPolicy: "no-cache",
       }
     )
   }
 
+  useEffect(() => {
+    if(operator.length && taxableSelector.length && (fieldName && fieldName.length) && defaultValue && taxedFieldsIds.length) {
+      setAllOptionsMarked(true)
+    } else {
+      setAllOptionsMarked(false)
+    }
+  },[operator.length, taxableSelector.length, (fieldName && fieldName.length), (defaultValue && defaultValue.length), taxedFieldsIds.length])
 
   return(
     <Grid container item justifyContent="flex-start" alignItems="center" className={ classes.addTaxFieldButton } xs={6}>
@@ -122,7 +135,7 @@ const NewFliedTaxButton = (props) => {
         </DialogTitle >
         <Divider/>
         <DialogContent>
-          <Grid container item xs={12} justifyContent="center" alignItems="center" >
+          <Grid container item xs={12} justifyContent="center" alignItems="center">
             <TextField
               onChange={ changeFieldName }
               size="small"
@@ -131,13 +144,18 @@ const NewFliedTaxButton = (props) => {
               className={classes.taxFieldName}
               fullWidth
               required
+              variant="outlined"
             />
           </Grid>
           <FieldSearch
             templateData={templateData}
+            defaultValue={defaultValue}
             setDefaultValue={setDefaultValue}
             setTaxedFieldsIds={setTaxedFieldsIds}
             setOperator={setOperator}
+            operator={operator}
+            taxableSelector={taxableSelector}
+            setTaxableSelector={setTaxableSelector}
             setPristine={setPristine}
           />
          </DialogContent>
@@ -151,7 +169,7 @@ const NewFliedTaxButton = (props) => {
               color="primary"
               variant="contained"
               onClick={addNewTaxField}
-              disabled={withoutName || pristine || createBudgetingTemplateTabTaxFieldLoading}
+              disabled={!allOptionsMarked || pristine || createBudgetingTemplateTabTaxFieldLoading}
             >
               Crear campo
             </Button>
