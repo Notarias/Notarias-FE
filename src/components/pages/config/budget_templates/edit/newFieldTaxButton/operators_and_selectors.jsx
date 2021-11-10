@@ -128,6 +128,7 @@ const FieldSearch = (props) => {
 
   const handleCheckedLeft = () => {
     setLeft(left.concat(rightChecked));
+    setSearchList(left.concat(rightChecked));
     setRight(not(right, rightChecked));
     setChecked(not(checked, rightChecked));
   };
@@ -259,6 +260,7 @@ const FieldSearch = (props) => {
           >
             {customList('Choices', searchList)}
           </Grid>
+          {console.log(left, searchList)}
           <Grid
             container
             item
