@@ -39,7 +39,7 @@ const CausantSearch = (props) => {
   }
 
   const { loading, data, refetch } = useQuery(
-    LOAD_CAUSANTS, { vairables: variables, errorPolicy: 'all' }
+    LOAD_CAUSANTS, { vairables: variables, errorPolicy: 'all', fetchPolicy: "no-cache" }
   );
 
   useEffect(() => {

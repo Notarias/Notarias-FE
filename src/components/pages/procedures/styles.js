@@ -186,7 +186,7 @@ export const styles = theme => {
     },
     inputClientNameInAdvancedSearch: {
       margin: "5px",
-      width: "530px"
+      width: "300px"
     },
     paperAdvancedSearch: {
       width: "800px"

@@ -31,7 +31,7 @@ export default (props) => {
   }
 
   const { loading, data, refetch } = useQuery(
-    LOAD_CLIENTS, { vairables: variables, errorPolicy: 'all' }
+    LOAD_CLIENTS, { vairables: variables, errorPolicy: 'all', fetchPolicy: "no-cache" }
   );
 
   useEffect(() => {

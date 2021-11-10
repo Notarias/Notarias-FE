@@ -21,27 +21,27 @@ const BudgetsIndex = (props) => {
 
   const { classes } = props
   const [searchLoading, setSearchLoading] = useState(false);
-  const [sortField, setSortField]         = useState("serial_number")
-  const [sortDirection, setSortDirection] = useState("desc")
-  const [timeout, setSetTimeout]          = useState(null)
-  const [page, setPage]                   = useState(0)
-  const [per, setPer]                     = useState(5)
-  const [total_records, setTotalRecords]  = useState(0)
-  const [getTemplatesVariables, setGetTemplatesVariables] = useState({})
-  const [changeAdvanceSearch, setChangeAdvanceSearch] = React.useState(true)
-  const [simpleSearchValue, setSimpleSearchValue] = React.useState(null)
-  const [clientNameValue, setClientNameValue] = React.useState(null)
-  const [procedureNameValue, setProcedureNameValue] = React.useState(null)
-  const [serialNumberValue, setSerialNumberValue] = React.useState(null)
-  const [moreThanValue, setMoreThanValue] = React.useState(null)
-  const [lessThanValue, setLessThanValue] = React.useState(null)
-  const [advanceSearchActived, setAdvanceSearchActived] = React.useState(false)
+  const [sortField, setSortField]         = useState("serial_number");
+  const [sortDirection, setSortDirection] = useState("desc");
+  const [timeout, setSetTimeout]          = useState(null);
+  const [page, setPage]                   = useState(0);
+  const [per, setPer]                     = useState(5);
+  const [total_records, setTotalRecords]  = useState(0);
+  const [getTemplatesVariables, setGetTemplatesVariables] = useState({});
+  const [changeAdvanceSearch, setChangeAdvanceSearch] = useState(true);
+  const [simpleSearchValue, setSimpleSearchValue] = useState(null);
+  const [clientNameValue, setClientNameValue] = useState(null);
+  const [procedureNameValue, setProcedureNameValue] = useState(null);
+  const [serialNumberValue, setSerialNumberValue] = useState(null);
+  const [moreThanValue, setMoreThanValue] = useState(null);
+  const [lessThanValue, setLessThanValue] = useState(null);
+  const [advanceSearchActived, setAdvanceSearchActived] = useState(false);
 
-  const clientNameInputRef = useRef()
-  const procedureInputRef = useRef()
-  const serialNumberInputRef = useRef()
-  const moreThanInputRef = createRef()
-  const lessThanInputRef = React.createRef()
+  const clientNameInputRef = useRef();
+  const procedureInputRef = useRef();
+  const serialNumberInputRef = useRef();
+  const moreThanInputRef = createRef();
+  const lessThanInputRef = createRef();
 
   const toEraseValue = () => {
     clientNameInputRef && (clientNameInputRef.current.value = null)
@@ -53,7 +53,6 @@ const BudgetsIndex = (props) => {
 
   const advancedButtonClick = (simpleSearchRef, callback) => {
     return(() => {
-
       simpleSearchRef.current.value = null
       callback()
       toEraseValue()
@@ -92,6 +91,9 @@ const BudgetsIndex = (props) => {
   return(
     <>
       <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
+      <div>
+        <h1>Presupuestos</h1>
+      </div>
       <div className={ classes.root }>
         <SearchInput
           classes={classes}
@@ -134,6 +136,7 @@ const BudgetsIndex = (props) => {
               assingTotalRecords={ assingTotalRecords }
               classes={ classes }
               setGetTemplatesVariables={ setGetTemplatesVariables }
+              getTemplatesVariables={getTemplatesVariables}
               simpleSearchValue={ simpleSearchValue }
               clientNameValue={clientNameValue}
               procedureNameValue={procedureNameValue}

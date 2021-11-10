@@ -66,9 +66,8 @@ const AdvancedSearchBudget = (props) => {
 
 
   return(
-    <Grid container justifyContent="flex-end" className={changeAdvanceSearch ? 
-                                        classes.GridInputAdvancedSearchHide : classes.GridInputAdvancedSearch}
-    >
+    <Grid container justifyContent="flex-end"
+      className={changeAdvanceSearch ? classes.GridInputAdvancedSearchHide : classes.GridInputAdvancedSearch}>
       <Grid container item xs={6} direction="row" justifyContent="flex-end">
         <Paper className={classes.paperAdvancedSearch}>
         <Grid container item justifyContent="flex-start">
