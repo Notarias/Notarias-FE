@@ -17,13 +17,6 @@ const TableHeaders = (props) => {
           callback={ sortHandler }
         />
         <SortHeader
-          text={ "Causantes" }
-          field_property={ "causants" }
-          current_field={ field }
-          sort_direction={ direction }
-          callback={ sortHandler }
-        />
-        <SortHeader
           text={ "No. de serie" }
           field_property={ "serial_number" }
           current_field={ field }
@@ -45,13 +38,6 @@ const TableHeaders = (props) => {
           callback={ sortHandler }
         />
         <SortHeader
-          text={ "Operador" }
-          field_property={ "asignee_avatarThumbUrl" }
-          current_field={ field }
-          sort_direction={ direction }
-          callback={ sortHandler }
-        />
-        <SortHeader
           text={ "Responsable" }
           field_property={ "reporter_avatarThumbUrl" }
           current_field={ field }
@@ -60,13 +46,6 @@ const TableHeaders = (props) => {
         />
         <SortHeader
           text={ "Fecha Inicial" }
-          field_property={ "status" }
-          current_field={ field }
-          sort_direction={ direction }
-          callback={ sortHandler }
-        />
-        <SortHeader
-          text={ "Ultimo Cambio" }
           field_property={ "status" }
           current_field={ field }
           sort_direction={ direction }

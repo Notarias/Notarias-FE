@@ -43,28 +43,23 @@ query Procedures(
   $per: Int
   $sortDirection: String
   $sortField: String
-  $searchField: String
-  $searchValue: String
+  $search: PROCEDURES_SEARCH_INPUT
 ){
   procedures(
     page: $page
     per: $per
     sortDirection: $sortDirection
     sortField: $sortField
-    searchField: $searchField
-    searchValue: $searchValue)
+    search: $search)
   {
     id
     serialNumber
     client{ fullName }
-    causant{ fullName }
     budgetingTemplate { name }
     proceduresTemplate { name }
-    asignee { avatarThumbUrl }
     reporter { avatarThumbUrl }
     createdAt
-    updatedAt
-    completedAt
   }
+  proceduresCount
 }  
 `

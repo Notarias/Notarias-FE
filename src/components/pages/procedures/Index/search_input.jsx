@@ -41,7 +41,6 @@ const SearchInput = (props) => {
     setSimpleSearchValue(null)
     setSerialNumberValue(null)
     setClientFullName(null)
-    setCausantFullName(null)
     setBudgetingTemplateName(null)
     setProceduresTemplateName(null)
     setCreatedAt(null)

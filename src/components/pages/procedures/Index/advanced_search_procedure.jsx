@@ -11,13 +11,11 @@ const AdvancedSearchProcedure = (props) => {
     classes,
     changeAdvanceSearch,
     setClientNameValue,
-    setCausantNameValue,
     setSerialNumberValue,
     setBudgetTemplateNameValue,
     setProcedureTemplateNameValue,
     setCreatedAtValue,
     clientNameInputRef,
-    causantNameInputRef,
     serialNumberInputRef,
     budgetTempalteInputRef,
     procedureTemplateInputRef,
@@ -25,7 +23,6 @@ const AdvancedSearchProcedure = (props) => {
   } = props
  
   const [changeClientName, setChangeClientName] = React.useState(null)
-  const [changeCausantName, setChangeCausantName] = React.useState(null)
   const [changeSerialNumber, setChangeSerialNumber] = React.useState(null)
   const [changeBudgetTemplateName, setChangeBudgetTemplateName] = React.useState(null)
   const [changeProcedureTemplateName, setChangeProcedureTemplateName]  = React.useState(null)
@@ -34,10 +31,6 @@ const AdvancedSearchProcedure = (props) => {
 
   const onChangeClientName = (event) => {
     setChangeClientName(event.target.value)
-  }
-
-  const onChangeCausantName = (event) => {
-    setChangeCausantName(event.target.value)
   }
 
   const onChangeSerialNumber = (event) => {
@@ -61,21 +54,19 @@ const AdvancedSearchProcedure = (props) => {
 
   const startAdvanceSearch = () => {
     setClientNameValue(changeClientName)
-    setCausantNameValue(changeCausantName)
-    setSerialNumberValue(changeSerialNumber)
+    setSerialNumberValue(changeSerialNumber > 0 ? changeSerialNumber : null)
     setBudgetTemplateNameValue(changeBudgetTemplateName)
     setProcedureTemplateNameValue(changeProcedureTemplateName)
-    setSerialNumberValue(changeSerialNumber > 0 ? changeSerialNumber : null)
     setCreatedAtValue(changeCreatedAt)
   }
 
   return(
     <Grid container justifyContent="flex-end" 
       className={changeAdvanceSearch ? classes.GridInputAdvancedSearchHide : classes.GridInputAdvancedSearch}>
-      <Grid container item xs={10} direction="row" justifyContent="flex-end">
+      <Grid container item direction="row" justifyContent="flex-end">
         <Paper className={classes.paperAdvancedSearch}>
-          <Grid container item justifyContent="flex-start">
-            <Grid item xs={10}>
+          <Grid container spacing={2} direction="row" justifyContent="flex-end">
+            <Grid item xs={8}>
               <TextField
                 inputRef={clientNameInputRef}
                 onChange={onChangeClientName}
@@ -83,19 +74,11 @@ const AdvancedSearchProcedure = (props) => {
                 id="client_name" 
                 label="Nombre del cliente" 
                 variant="outlined" 
-                className={classes.inputClientNameInAdvancedSearch}
-              />
-              <TextField
-                inputRef={causantNameInputRef}
-                onChange={onChangeCausantName}
-                size="small" 
-                id="causant_name" 
-                label="Nombre del Causante" 
-                variant="outlined" 
+                fullWidth
                 className={classes.inputClientNameInAdvancedSearch}
               />
             </Grid>
-            <Grid item xs={10}>
+            <Grid item xs={4}>
               <TextField
                 inputRef={serialNumberInputRef}
                 onChange={onChangeSerialNumber}
@@ -103,8 +86,13 @@ const AdvancedSearchProcedure = (props) => {
                 id="serial_number"
                 label="No. serie"
                 variant="outlined"
+                fullWidth
                 className={classes.serialInAdvancedSearch}
               />
+            </Grid>
+          </Grid>
+          <Grid container spacing={3} direction="row" justifyContent="flex-end">            
+            <Grid item xs={4}>
               <TextField
                 inputRef={budgetTempalteInputRef}
                 onChange={onChangeBudgetTemplateName}
@@ -112,8 +100,11 @@ const AdvancedSearchProcedure = (props) => {
                 id="budget_templrate_name"
                 label="Presupuesto"
                 variant="outlined"
+                fullWidth
                 className={classes.serialInAdvancedSearch}
               />
+            </Grid>
+            <Grid item xs={4}>
               <TextField
                 inputRef={procedureTemplateInputRef}
                 onChange={onChangeProcedureTemplateName}
@@ -121,20 +112,24 @@ const AdvancedSearchProcedure = (props) => {
                 id="procedure_template_name"
                 label="Tramite"
                 variant="outlined"
+                fullWidth
                 className={classes.serialInAdvancedSearch}
               />
+            </Grid>
+            <Grid item xs={4}>
               <TextField
                 inputRef={createdAtInputRef}
                 onChange={onChangeCreatedAtName}
                 size="small"
                 id="created_at"
-                label="Fecha Iicial:"
+                label="Fecha Iicial"
                 variant="outlined"
+                fullWidth
                 className={classes.serialInAdvancedSearch}
               />
             </Grid>
           </Grid>
-          <Grid container item xs={10} alignItems="center" justifyContent="center">
+          <Grid container item xs={12} justifyContent="flex-end" className={classes.buttonPadding}>
             <Button variant="outlined" onClick={startAdvanceSearch}>Buscar</Button>
           </Grid>
         </Paper>

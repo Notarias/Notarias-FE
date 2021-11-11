@@ -27,14 +27,11 @@ const TemplateRow = (props) => {
   return(
     <TableRow key={  "-row" }>
       <TableCell align= "center" className={classes.tablecellWidth}>{ procedure.client.fullName }</TableCell>
-      <TableCell align= "center" className={classes.tablecellWidth}>{ procedure.causant.fullName }</TableCell>
       <TableCell align= "center" className={classes.tablecellWidth}>{ procedure.serialNumber }</TableCell>
       <TableCell align= "center" className={classes.tablecellWidth}>{ procedure.budgetingTemplate.name }</TableCell>
       <TableCell align= "center" className={classes.tablecellWidth}>{ procedure.proceduresTemplate.name }</TableCell>
-      <TableCell align= "center" className={classes.tablecellWidth}>{ procedure.asignee && procedure.asignee.avatarThumbUrl }</TableCell>
       <TableCell align= "center" className={classes.tablecellWidth}>{ procedure.reporter && procedure.reporter.avatarThumbUrl }</TableCell>
       <TableCell align= "center" className={classes.tablecellWidth}>{ procedure.createdAt }</TableCell>
-      <TableCell align= "center" className={classes.tablecellWidth}>{ procedure.completedAt }</TableCell>
       <TableCell align= "center" className={classes.tablecellWidth}>
         <Grid>
           <GenericDropdownMenu>

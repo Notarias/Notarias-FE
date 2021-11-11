@@ -29,29 +29,29 @@ const ProceduresIndex = (props) => {
   const [sortField, setSortField] = useState("serial_number");
   const [sortDirection, setSortDirection] = useState("desc");
   const [simpleSearchValue, setSimpleSearchValue] = useState(null);
+  const [clientFullNameValue, setClientFullNameValue] = useState(null);
   const [serialNumberValue, setSerialNumberValue] = useState(null);
+  const [budgetTemplateNameValue, setBudgetTemplateNameValue] = useState(null);
+  const [procedureTemplateNameValue, setProcedureTemplateNameValue] = useState(null);
+  const [createdAtValue, setCreatedAtValue] = useState(null);
   const [clientFullName, setClientFullName] = useState(null);
-  const [causantFullName, setCausantFullName] = useState(null);
-  const [budgetingTemplateName, setBudgetingTemplateName] = useState(null);
+  const [budgetTemplateName, setBudgetTemplateName] = useState(null);
   const [proceduresTemplateName, setProceduresTemplateName] = useState(null);
-  const [asigneeAvatarThumbUrl, setAsigneeAvatarThumbUrl] = useState(null);
   const [reporterAvatarThumbUrl, setReporterAvatarThumbUrl] = useState(null);
   const [createdAt, setCreatedAt] = useState(null);
-  const [updatedAt, setUpdatedAt] = useState(null);
   const [templatesVariables, setTemplatesVariables] = useState(null);
   const [total_records, setTotalRecords]  = useState(0);
 
   const clientNameInputRef = useRef();
-  const causantNameInputRef = useRef();
   const serialNumberInputRef = useRef();
   const budgetTempalteInputRef = useRef();
   const procedureTemplateInputRef = useRef();
   const createdAtInputRef = useRef();
 
   const toEraseValue = () => {
-    clientFullName && (clientFullName.current.value = null)
-    proceduresTemplateName && (proceduresTemplateName.current.value = null)
-    serialNumberValue && (serialNumberValue.current.value = null)
+    clientFullName && (clientFullName.current.value = "")
+    budgetTemplateName && (budgetTemplateName.current.value = "")
+    proceduresTemplateName && (proceduresTemplateName.current.value = "")
   }
 
   const advancedButtonClick = (simpleSearchRef, callback) => {
@@ -95,7 +95,7 @@ const ProceduresIndex = (props) => {
     <>
       <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
       <div>
-        <h1>Tramites / Procedures</h1>
+        <h1>Tramites</h1>
       </div>
       <div className={ classes.root }>
       <SearchInput
@@ -107,8 +107,7 @@ const ProceduresIndex = (props) => {
           setSimpleSearchValue={setSimpleSearchValue}
           setSerialNumberValue={setSerialNumberValue}
           setClientFullName={setClientFullName}
-          setCausantFullName={setCausantFullName}
-          setBudgetingTemplateName={setBudgetingTemplateName}
+          setBudgetingTemplateName={setBudgetTemplateName}
           setProceduresTemplateName={setProceduresTemplateName}
           setCreatedAt={setCreatedAt}
           advancedButtonClick={advancedButtonClick}
@@ -118,14 +117,12 @@ const ProceduresIndex = (props) => {
         <AdvancedSearchProcedure
           classes={classes}
           changeAdvanceSearch={changeAdvanceSearch}
-          setClientNameValue={setClientNameValue}
-          setCausantNameValue={setCausantNameValue}
+          setClientNameValue={setClientFullNameValue}
           setSerialNumberValue={setSerialNumberValue}
           setBudgetTemplateNameValue={setBudgetTemplateNameValue}
           setProcedureTemplateNameValue={setProcedureTemplateNameValue}
           setCreatedAtValue={setCreatedAtValue}
           clientNameInputRef={clientNameInputRef}
-          causantNameInputRef={causantNameInputRef}
           serialNumberInputRef={serialNumberInputRef}
           budgetTempalteInputRef={budgetTempalteInputRef}
           procedureTemplateInputRef={procedureTemplateInputRef}
@@ -143,15 +140,13 @@ const ProceduresIndex = (props) => {
               simpleSearchValue={simpleSearchValue}
               serialNumberValue={serialNumberValue}
               clientFullName ={clientFullName}
-              causantFullName={causantFullName}
-              budgetingTemplateName={budgetingTemplateName}
+              budgetingTemplateName={budgetTemplateName}
               proceduresTemplateName ={proceduresTemplateName}
-              asigneeAvatarThumbUrl={asigneeAvatarThumbUrl}
               reporterAvatarThumbUrl ={reporterAvatarThumbUrl}
               createdAt={createdAt}
-              updatedAt={updatedAt}
               templatesVariables={templatesVariables}
               setTemplatesVariables={setTemplatesVariables}
+              assingTotalRecords={assingTotalRecords}
               classes={classes}
               />
             </Table>
@@ -165,6 +160,7 @@ const ProceduresIndex = (props) => {
                   onRowsPerPageChange={ changeRowsPerPage }
                   count={ total_records }
                   labelRowsPerPage={ "Filas por página:" }
+                  classes={classes}
                 />
               </TableRow>
             </TableFooter>

@@ -14,16 +14,14 @@ const ProceduresTableBody = (props) => {
     per,
     sortDirection,
     sortField,
+    assingTotalRecords,
     simpleSearchValue,
-    serialNumber,
-    clientFullName,
-    causantFullName,
-    budgetingTemplateName,
-    proceduresTemplateName,
-    asigneeAvatarThumbUrl,
+    serialNumberValue,
+    clientFullNameValue,
+    budgetingTemplateNameValue,
+    proceduresTemplateNameValue,
     reporterAvatarThumbUrl,
-    createdAt,
-    updatedAt,
+    createdAtValue,
     templatesVariables,
     setTemplatesVariables,
     classes
@@ -34,33 +32,29 @@ const ProceduresTableBody = (props) => {
     per: per,
     search: {
       simpleSearch: simpleSearchValue,
-      serialNumber: serialNumber,
-      clientFullName: clientFullName,
-      causantFullName: causantFullName,
-      budgetingTemplateName: budgetingTemplateName,
-      proceduresTemplateName: proceduresTemplateName,
-      asigneeAvatarThumbUrl: asigneeAvatarThumbUrl,
-      reporterAvatarThumbUrl: reporterAvatarThumbUrl,
-      createdAt: createdAt,
-      updatedAt: updatedAt,
-      templatesVariables: templatesVariables,
-      classes: classes
+      serialNumber: serialNumberValue,
+      clientFullName: clientFullNameValue,
+      budgetingTemplateName: budgetingTemplateNameValue,
+      proceduresTemplateName: proceduresTemplateNameValue,
+      createdAt: createdAtValue
     },
     sortDirection: sortDirection,
-    sortField: sortField,
+    sortField: sortField
   }
 
   const { loading, data, refetch } = useQuery(
     GET_PROCEDURES, { variables: variables, fetchPolicy: "no-cache" }
   );
 
+  let totalCount = data && data.proceduresCount
+
   useEffect(() => {
     refetch(variables);
     setTemplatesVariables(variables)
-  }, [page, per, simpleSearchValue, serialNumber, clientFullName, causantFullName, budgetingTemplateName,
-    proceduresTemplateName, asigneeAvatarThumbUrl, reporterAvatarThumbUrl, createdAt, updatedAt ]);
+    totalCount && assingTotalRecords(totalCount)
+  }, [page, per, simpleSearchValue, serialNumberValue, clientFullNameValue, budgetingTemplateNameValue,
+    proceduresTemplateNameValue, createdAtValue, sortField, sortDirection, totalCount ]);
 
-console.log(loading, data,loading || !data)
   if (loading || !data) {
     return(
       <TableBody>
