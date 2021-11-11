@@ -8,10 +8,10 @@ import ListItemText                 from '@material-ui/core/ListItemText';
 import Paper                        from '@material-ui/core/Paper';
 import TextField                    from '@material-ui/core/TextField';
 import { LOAD_CLIENT_COMMENTS}      from '../../clients_queries_and_mutations/queries';
-import { useQuery }                 from '@apollo/react-hooks';
+import { useQuery }                 from '@apollo/client';
 import ImageIcon                    from '@material-ui/icons/Image';
 import Button                       from '@material-ui/core/Button';
-import { useMutation }              from '@apollo/react-hooks'
+import { useMutation }              from '@apollo/client'
 import { CREATE_COMMENT }           from '../../clients_queries_and_mutations/queries';
 import ClientComment                from './client_comment'
 import { GET_CURRENT_USER }         from '../../clients_queries_and_mutations/queries';

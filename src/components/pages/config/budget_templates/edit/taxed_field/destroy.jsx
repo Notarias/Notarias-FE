@@ -7,7 +7,7 @@ import DialogContentText  from '@material-ui/core/DialogContentText';
 import Button             from '@material-ui/core/Button';
 import DeleteForeverIcon  from '@material-ui/icons/DeleteForever';
 import IconButton         from '@material-ui/core/IconButton';
-import { useMutation }    from '@apollo/react-hooks';
+import { useMutation }    from '@apollo/client';
 import { DESTROY_TAXED_FIELD } from '../../queries_and_mutations/mutations';
 import { GET_BUDGETING_TEMPLATE_TAB_FIELDS, GET_BUDGETING_TEMPLATE_TAXED_FIELDS } from '../../queries_and_mutations/queries';
 

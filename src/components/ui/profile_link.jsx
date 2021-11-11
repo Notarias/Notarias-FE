@@ -8,8 +8,7 @@ import { styles }           from './navigation_menu_styles'
 import Grid                 from '@material-ui/core/Grid';
 import Avatar               from '@material-ui/core/Avatar';
 import { GET_CURRENT_USER } from '../../resolvers/queries';
-import { Query }            from '@apollo/react-components';
-import gql                  from 'graphql-tag';
+import { gql }                  from '@apollo/client';
 
 const USER_CHANGE = gql`
   subscription {
@@ -59,7 +58,7 @@ export default withStyles(styles)((props) => {
       <ListItem button>
         <ListItemIcon >
             <Grid>
-              <Query
+              {/* <Query
                query={GET_CURRENT_USER}
               >
                 {({id, loading, error, data, subscribeToMore}) => {
@@ -71,7 +70,7 @@ export default withStyles(styles)((props) => {
                     )
                   }
                 }
-              </Query>
+              </Query> */}
             </Grid>
           </ListItemIcon>
         <ListItemText primary="Perfil" />

@@ -1,7 +1,7 @@
 import React, { useEffect }         from 'react'
 import { withStyles }               from '@material-ui/core/styles';
 import { styles }                   from '../../styles';
-import { useQuery }                 from '@apollo/react-hooks';
+import { useQuery }                 from '@apollo/client';
 import { GET_BUDGET_FIELD_VALUE }   from '../../queries_and_mutations/queries';
 import NumberFormat                 from 'react-number-format';
 import Typography                   from '@material-ui/core/Typography';

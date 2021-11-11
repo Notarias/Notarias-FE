@@ -1,5 +1,4 @@
 import React                        from 'react';
-import { setBreadcrumbsList }       from './../../interfaces/breadcrumbs_interface';
 import Grid                         from '@material-ui/core/Grid';
 import { styles }                   from './styles';
 import { withStyles }               from '@material-ui/core/styles';
@@ -16,7 +15,6 @@ const BREADCRUMBS = [
 ]
 
 const DashboardsIndex = (props) => {
-    setBreadcrumbsList([])
   const { classes } = props;
   return (
     <>
@@ -31,7 +29,6 @@ const DashboardsIndex = (props) => {
       >
         <Grid container item xs={12} direction="row" className={classes.gridContainerDashboard}>
           <Dashboard/>
-          
         </Grid>
       </Grid>
     </>

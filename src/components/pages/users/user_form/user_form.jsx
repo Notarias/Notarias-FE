@@ -7,8 +7,7 @@ import CircularProgress     from '@material-ui/core/CircularProgress';
 import Grid                 from '@material-ui/core/Grid';
 import FormHelperText       from '@material-ui/core/FormHelperText';
 import TextField            from '@material-ui/core/TextField';
-import gql                  from 'graphql-tag';
-import { Mutation }         from '@apollo/react-components';
+import { gql }                  from '@apollo/client';
 import Select               from '@material-ui/core/Select';
 import InputLabel           from '@material-ui/core/InputLabel';
 import FormControl          from '@material-ui/core/FormControl';
@@ -92,7 +91,7 @@ class  UserForm extends Component {
     const { classes } = this.props
     return (
       <Grid classes={{root: classes.editUserFormGrid}} >
-        <Mutation
+        {/* <Mutation
           mutation={USER_EDIT_MUTATION}
           onCompleted={this.onCompleted.bind(this)}>
           {
@@ -242,7 +241,7 @@ class  UserForm extends Component {
               )
             }
           }
-        </Mutation>
+        </Mutation> */}
       </Grid>
     )
   }

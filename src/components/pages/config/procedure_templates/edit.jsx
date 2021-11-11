@@ -8,7 +8,7 @@ import Divider                              from '@material-ui/core/Divider';
 import Tabs                                 from './edit/tabs';
 import ActiveTemplateButton                 from './edit/active_template_button';
 import TemplateTitle                       from './edit/template_title';
-import { useQuery }                         from '@apollo/react-hooks';
+import { useQuery }                         from '@apollo/client';
 import { GET_PROCEDURE_TEMPLATE }           from './queries_and_mutations/queries'
 import CircularProgress                     from '@material-ui/core/CircularProgress';
 import FieldsAndGroupFields                 from './edit/fields_and_group_fields';

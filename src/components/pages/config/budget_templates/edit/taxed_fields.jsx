@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Grid           from '@material-ui/core/Grid';
-import { useQuery }   from '@apollo/react-hooks';
+import { useQuery }   from '@apollo/client';
 import { GET_BUDGETING_TEMPLATE_TAXED_FIELDS } from '../queries_and_mutations/queries'
 import TaxedField from './taxed_field/taxed_field'
 

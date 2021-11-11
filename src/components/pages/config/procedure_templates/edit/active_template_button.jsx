@@ -7,7 +7,7 @@ import Dialog                             from '@material-ui/core/Dialog';
 import DialogContent                      from '@material-ui/core/DialogContent';
 import DialogTitle                        from '@material-ui/core/DialogTitle';
 import DialogActions                      from '@material-ui/core/DialogActions';
-import { useMutation }                    from '@apollo/react-hooks';
+import { useMutation }                    from '@apollo/client';
 import { UPDATE_PROCEDURE_TEMPLATES }     from '../queries_and_mutations/queries'
 
 

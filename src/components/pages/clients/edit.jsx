@@ -4,7 +4,7 @@ import Grid                     from '@material-ui/core/Grid';
 import { styles }               from './styles';
 import Breadcrumbs              from '../../ui/breadcrumbs';
 import EditForm                 from './edit/form';
-import { useQuery }             from '@apollo/react-hooks';
+import { useQuery }             from '@apollo/client';
 import { GET_CLIENT }           from './clients_queries_and_mutations/queries';
 import AddComment               from './edit/client_comment_input';
 import clsx                     from 'clsx';

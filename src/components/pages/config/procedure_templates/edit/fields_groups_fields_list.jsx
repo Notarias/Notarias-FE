@@ -1,6 +1,6 @@
 import React                                                from 'react';
 import Field                                                from './field';
-import { useQuery }                                         from '@apollo/react-hooks';
+import { useQuery }                                         from '@apollo/client';
 import { GET_PROCEDURES_TEMPLATE_FIELDS_GROUPS_FIELDS }     from '../queries_and_mutations/queries';
 
 const FieldsGroupFieldList = (props) => {

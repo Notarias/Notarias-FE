@@ -2,8 +2,8 @@ import React, { useEffect }                from 'react'
 import TableCell            from '@material-ui/core/TableCell';
 import TableRow             from '@material-ui/core/TableRow';
 import MenuItem             from '@material-ui/core/MenuItem';
-import { useQuery }         from '@apollo/react-hooks';
-import { useMutation }      from '@apollo/react-hooks';
+import { useQuery }         from '@apollo/client';
+import { useMutation }      from '@apollo/client';
 import { UPDATE_USER }      from './queries_and_mutations/queries';
 import Button               from '@material-ui/core/Button';
 import { styles }           from './styles';

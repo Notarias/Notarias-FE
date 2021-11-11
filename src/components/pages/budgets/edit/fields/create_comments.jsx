@@ -5,9 +5,8 @@ import { withStyles }               from '@material-ui/core/styles';
 import { styles }                   from '../../styles';
 import Avatar                       from '@material-ui/core/Avatar';
 import Button                       from '@material-ui/core/Button';
-import { Query }                    from '@apollo/react-components';
 import { GET_CURRENT_USER }         from '../../../../../resolvers/queries';
-import { useMutation }              from '@apollo/react-hooks'
+import { useMutation }              from '@apollo/client'
 import { CREATE_COMMENT }           from '../../queries_and_mutations/queries';
 import { GET_COMMENTABLE_COMMENTS } from '../../queries_and_mutations/queries';
 import { GET_BUDGETS_AUDITLOG }     from '../../queries_and_mutations/queries';
@@ -135,7 +134,7 @@ const CreateComments = (props) => {
   return(
     <>
       <Grid container item xs={2} justifyContent="center" alignItems="flex-start">
-        <Query
+        {/* <Query
         query={GET_CURRENT_USER}
         >
           {({id, loading, error, data}) => {
@@ -150,7 +149,7 @@ const CreateComments = (props) => {
               )
             }
           }
-        </Query>
+        </Query> */}
       </Grid>
       {renderTextField()}
     </>

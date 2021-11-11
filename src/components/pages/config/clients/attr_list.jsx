@@ -7,7 +7,7 @@ import FormControl                       from '@material-ui/core/FormControl';
 import Select                            from '@material-ui/core/Select';
 import MenuItem                          from '@material-ui/core/MenuItem';
 import InputLabel                        from '@material-ui/core/InputLabel';
-import { useMutation }                   from '@apollo/react-hooks';
+import { useMutation }                   from '@apollo/client';
 import { GLOBAL_MESSAGE }                from '../../../../resolvers/queries';
 import { CREATE_CLIENT_ATTRIBUTE }       from './queries_and_mutations/queries';
 import { GET_CLIENT_ATTRIBUTES }         from './queries_and_mutations/queries';

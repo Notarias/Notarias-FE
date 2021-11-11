@@ -1,5 +1,5 @@
 import React, { useState, useEffect }         from 'react';
-import { useQuery }                           from '@apollo/react-hooks';
+import { useQuery }                           from '@apollo/client';
 import { GET_BUDGETING_TEMPLATE_TAB_FIELDS }  from '../../queries_and_mutations/queries'
 import Grid                                   from '@material-ui/core/Grid';
 import { withStyles }                         from '@material-ui/core/styles';

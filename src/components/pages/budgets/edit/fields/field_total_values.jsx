@@ -3,7 +3,7 @@ import Typography                                   from '@material-ui/core/Typo
 import Grid                                         from '@material-ui/core/Grid';
 import { withStyles }                               from '@material-ui/core/styles';
 import { styles }                                   from '../../styles';
-import { useQuery }                                 from '@apollo/react-hooks';
+import { useQuery }                                 from '@apollo/client';
 import { GET_BUDGET_TOTALS }                        from '../../queries_and_mutations/queries'
 import NumberFormat                                 from 'react-number-format';
 

@@ -6,7 +6,7 @@ import Typography                   from '@material-ui/core/Typography';
 import Grid                         from '@material-ui/core/Grid';
 import Button                       from '@material-ui/core/Button';
 import TextField                    from '@material-ui/core/TextField';
-import { useMutation }              from '@apollo/react-hooks';
+import { useMutation }              from '@apollo/client';
 import { UPDATE_COMMENT }           from '../../../queries_and_mutations/queries';
 import { GET_COMMENTABLE_COMMENTS } from '../../../queries_and_mutations/queries';
 import Link                         from '@material-ui/core/Link';

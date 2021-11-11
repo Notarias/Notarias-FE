@@ -9,14 +9,11 @@ import { styles }           from './styles';
 import TablePagination      from '@material-ui/core/TablePagination';
 import UserRows            from './users_rows';
 import ControlsBar          from './controls_bar';
-import { setBreadcrumbsList }                            from '../../interfaces/breadcrumbs_interface';
 
 const BREADCRUMBS = [
   { name: "Inicio", path: "/" },
   { name: "Usuarios", path: null }
 ]
-
-setBreadcrumbsList(BREADCRUMBS)
 
 const Users = (props) => {
   const [searchLoading, setSearchLoading] = useState(false);

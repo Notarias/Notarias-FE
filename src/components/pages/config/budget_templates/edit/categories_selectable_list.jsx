@@ -8,7 +8,7 @@ import ListItemText                         from '@material-ui/core/ListItemText
 import Checkbox                             from '@material-ui/core/Checkbox';
 import { Divider, TextField }               from '@material-ui/core';
 import { GET_BUDGETING_CATEGORIES }         from '../queries_and_mutations/queries'
-import { useQuery }                         from '@apollo/react-hooks';
+import { useQuery }                         from '@apollo/client';
 import Fuse                                 from 'fuse.js';
 
 

@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import { withStyles }                       from '@material-ui/core/styles';
 import { styles }                           from '../../../styles';
-import { useQuery }                         from '@apollo/react-hooks';
+import { useQuery }                         from '@apollo/client';
 import { GET_COMMENTABLE_COMMENTS } from '../../../queries_and_mutations/queries'
 import Avatar                               from '@material-ui/core/Avatar';
 import Typography                           from '@material-ui/core/Typography';

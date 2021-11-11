@@ -4,7 +4,7 @@ import Grid                     from '@material-ui/core/Grid';
 import { withStyles }           from '@material-ui/core/styles';
 import { styles }               from '../../styles';
 import Avatar                   from '@material-ui/core/Avatar';
-import { useQuery }             from '@apollo/react-hooks';
+import { useQuery }             from '@apollo/client';
 import { GET_BUDGETS_AUDITLOG } from '../../queries_and_mutations/queries';
 
 const AuditLog = (props) => {

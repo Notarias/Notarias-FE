@@ -10,7 +10,7 @@ import IconButton from '@material-ui/core/IconButton';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import WarningIcon from '@material-ui/icons/Warning';
 import { withStyles } from '@material-ui/core/styles';
-import { useMutation }                      from '@apollo/react-hooks'
+import { useMutation }             from '@apollo/client'
 import { REMOVE_MESSAGE_MUTATION } from '../../resolvers/queries'
 import { GLOBAL_MESSAGE }          from '../../resolvers/queries';
 import client                      from '../../apollo';

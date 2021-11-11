@@ -11,7 +11,7 @@ import Typography           from '@material-ui/core/Typography';
 import logo_notaria         from '../../../../../images/logo_notaria.JPG'
 import TextField            from '@material-ui/core/TextField';
 import Button               from '@material-ui/core/Button';
-import { useQuery }         from '@apollo/react-hooks';
+import { useQuery }         from '@apollo/client';
 import { GET_BUDGET }       from '../../queries_and_mutations/queries'
 import NumberFormat         from 'react-number-format';
 import Breadcrumbs          from '../../../../ui/breadcrumbs';

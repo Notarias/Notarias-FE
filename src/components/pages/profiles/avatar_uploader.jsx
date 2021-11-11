@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import Avatar              from '@material-ui/core/Avatar';
 import UserDefaultImg      from '../../../images/user_default_img.png';
 import Dropzone            from 'react-dropzone';
-import gql                 from 'graphql-tag';
-import { Mutation }        from '@apollo/react-components';
+import { gql }                 from '@apollo/client';
 import { GET_CURRENT_USER } from '../../../resolvers/queries';
-import { useQuery }         from '@apollo/react-hooks';
+import { useQuery }         from '@apollo/client';
 import CircularProgress     from '@material-ui/core/CircularProgress';
 
 const ADD_AVATAR = gql`
@@ -33,7 +32,6 @@ const AvatarUploader = (props) => {
   }
 
   const onDrop = (mutator, files) => { 
-    console.log(files, user.id)
     mutator(
       {
         variables: {
@@ -45,34 +43,37 @@ const AvatarUploader = (props) => {
   }
 
   return(
-    <Mutation
-      mutation={ADD_AVATAR}
-      context={{ hasUpload: true }}
-      onCompleted={onCompleteUpload.bind(this)}>
-      {
-        (mutator, { loading }) => (
-          <>
-            <Dropzone
-              accept="image/*"
-              multiple={false} // Only upload 1 file
-              onDrop={onDrop.bind(this, mutator)}>
-              {
-                ({getRootProps, getInputProps}) => (
-                  <div {...getRootProps()}>
-                    <input {...getInputProps()} />
-                    <div className={classes.avatarWrapper}>
-                      { loading && <CircularProgress thickness={1} size={326} className={classes.avatarUploadProgress}/> }
-                      <Avatar alt="default_img" src={image || UserDefaultImg} className={classes.large}/>
-                    </div>
-                  </div>
-                )
-              }
-            </Dropzone>
-          </>
-        )
-      }
-    </Mutation>
+    <div></div>
   )
+  //return(
+    // <Mutation
+    //   mutation={ADD_AVATAR}
+    //   context={{ hasUpload: true }}
+    //   onCompleted={onCompleteUpload.bind(this)}>
+    //   {
+    //     (mutator, { loading }) => (
+    //       <>
+    //         <Dropzone
+    //           accept="image/*"
+    //           multiple={false} // Only upload 1 file
+    //           onDrop={onDrop.bind(this, mutator)}>
+    //           {
+    //             ({getRootProps, getInputProps}) => (
+    //               <div {...getRootProps()}>
+    //                 <input {...getInputProps()} />
+    //                 <div className={classes.avatarWrapper}>
+    //                   { loading && <CircularProgress thickness={1} size={326} className={classes.avatarUploadProgress}/> }
+    //                   <Avatar alt="default_img" src={image || UserDefaultImg} className={classes.large}/>
+    //                 </div>
+    //               </div>
+    //             )
+    //           }
+    //         </Dropzone>
+    //       </>
+    //     )
+    //   }
+    // </Mutation>
+  //)
 }
 
 export default AvatarUploader;

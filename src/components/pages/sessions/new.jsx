@@ -3,7 +3,6 @@ import PropTypes                  from 'prop-types';
 import { withRouter }             from 'react-router-dom'
 import compose                    from 'recompose/compose';
 import CustomSnackbarMessage      from '../../ui/custom_snackbar_message';
-import { setBreadcrumbsList }     from '../../interfaces/breadcrumbs_interface';
 
 import { styles }  from './session_styles';
 import SessionForm from './session_form';
@@ -22,7 +21,6 @@ class SessionsNew extends Component {
   }
 
   componentDidMount() {
-    setBreadcrumbsList([])
   }
 
   signOut() {

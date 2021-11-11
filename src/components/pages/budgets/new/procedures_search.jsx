@@ -7,7 +7,7 @@ import { TextField }                                  from '@material-ui/core';
 import List                                           from '@material-ui/core/List';
 import ListItem                                       from '@material-ui/core/ListItem';
 import ListItemText                                   from '@material-ui/core/ListItemText';
-import { useQuery }                                   from '@apollo/react-hooks';
+import { useQuery }                                   from '@apollo/client';
 import { GET_PROCEDURES_TEMPLATES_QUICK_LIST  }       from '../queries_and_mutations/queries';
 import Grid                                           from '@material-ui/core/Grid';
 

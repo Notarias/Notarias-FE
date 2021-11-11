@@ -10,7 +10,7 @@ import Button                               from '@material-ui/core/Button';
 import Paper                                from '@material-ui/core/Paper';
 
 import { GET_BUDGETING_CATEGORIES }         from '../queries_and_mutations/queries'
-import { useQuery }                         from '@apollo/react-hooks';
+import { useQuery }                         from '@apollo/client';
 
 
 const useStyles = makeStyles((theme) => ({

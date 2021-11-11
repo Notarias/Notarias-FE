@@ -2,7 +2,7 @@ import React              from 'react';
 import ReactDOM           from 'react-dom';
 import { Router }         from 'react-router-dom';
 import history            from './history'
-import { ApolloProvider } from '@apollo/react-hooks'
+import { ApolloProvider } from '@apollo/client'
 import client, { cache }             from './apollo'
 import { persistCache }        from 'apollo-cache-persist';
 import App                from './App';

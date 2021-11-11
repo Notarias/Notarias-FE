@@ -2,7 +2,7 @@ import React        from 'react';
 import ProfilePanel from './profile_panel';
 import { withStyles }       from '@material-ui/core/styles';
 import { GET_CURRENT_USER } from '../../../resolvers/queries'
-import { useQuery }         from '@apollo/react-hooks';
+import { useQuery }         from '@apollo/client';
 
 const styles = {
   columsWraper: {

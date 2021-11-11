@@ -13,7 +13,7 @@ import Paper                                          from '@material-ui/core/Pa
 import Typography                                     from '@material-ui/core/Typography';
 import SaveIcon                                       from '@material-ui/icons/Save';
 import CreateIcon                                     from '@material-ui/icons/Create';
-import { useMutation }                                from '@apollo/react-hooks';
+import { useMutation }                                from '@apollo/client';
 import { UPDATE_BUDGETING_TEMPLATE_TAB_FIELD }        from '../queries_and_mutations/queries'
 import { DESTROY_BUDGETING_TEMPLATE_TAB_FIELD }       from '../queries_and_mutations/queries'
 import { GET_BUDGETING_TEMPLATE_TAB_FIELDS }          from '../queries_and_mutations/queries'

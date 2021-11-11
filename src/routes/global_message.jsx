@@ -1,6 +1,6 @@
 import React                  from 'react';
 import CustomSnackbarMessage  from '../components/ui/custom_snackbar_message';
-import { useQuery }           from "@apollo/react-hooks";
+import { useQuery }           from "@apollo/client";
 import { GLOBAL_MESSAGE }     from '../resolvers/queries';
 
 export default ({ classes }) => {

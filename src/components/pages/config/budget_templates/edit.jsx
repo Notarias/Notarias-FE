@@ -7,7 +7,7 @@ import { styles }                           from './styles';
 import { withStyles }                       from '@material-ui/core/styles';
 import CircularProgress                     from '@material-ui/core/CircularProgress';
 import TemplateTitle                       from './edit/template_title';
-import { useQuery }                         from '@apollo/react-hooks';
+import { useQuery }                         from '@apollo/client';
 import { GET_BUDGETING_TEMPLATE }           from './queries_and_mutations/queries'
 import ActiveTemplateButton                 from './edit/active_template_button';
 import ProcedureTemplateLinkButton           from './edit/procedure_template_link_button';

@@ -7,7 +7,7 @@ import Typography                         from '@material-ui/core/Typography';
 import Button                             from '@material-ui/core/Button';
 import SaveIcon                           from '@material-ui/icons/Save';
 import CreateIcon                         from '@material-ui/icons/Create';
-import { useMutation }                    from '@apollo/react-hooks';
+import { useMutation }                    from '@apollo/client';
 import { UPDATE_BUDGETING_TEMPLATE }      from '../queries_and_mutations/queries';
 import { GLOBAL_MESSAGE }                 from '../../../../../resolvers/queries';
 import client                             from '../../../../../apollo';

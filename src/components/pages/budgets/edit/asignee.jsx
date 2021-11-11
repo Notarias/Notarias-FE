@@ -15,8 +15,8 @@ import ListItem                       from '@material-ui/core/ListItem';
 import ListItemIcon                   from '@material-ui/core/ListItemIcon';
 import ListItemText                   from '@material-ui/core/ListItemText';
 import Divider                        from '@material-ui/core/Divider';
-import { useQuery }                   from '@apollo/react-hooks';
-import { useMutation }                from '@apollo/react-hooks';
+import { useQuery }                   from '@apollo/client';
+import { useMutation }                from '@apollo/client';
 import { LOAD_USERS }                 from '../queries_and_mutations/queries'
 import { UPDATE_BUDGET }              from '../queries_and_mutations/queries'
 import Fuse                           from 'fuse.js';

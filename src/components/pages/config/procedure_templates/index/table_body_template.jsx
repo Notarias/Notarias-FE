@@ -3,7 +3,7 @@ import CircularProgress               from '@material-ui/core/CircularProgress';
 import TableRow                       from '@material-ui/core/TableRow';
 import TableCell                      from '@material-ui/core/TableCell';
 import TableBody                      from '@material-ui/core/TableBody';
-import { useQuery }                   from '@apollo/react-hooks';
+import { useQuery }                   from '@apollo/client';
 import { PROCEDURE_TEMPLATES }        from '../queries_and_mutations/queries';
 import TemplateRow                    from './template_row';
 

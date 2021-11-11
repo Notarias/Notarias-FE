@@ -6,7 +6,7 @@ import DialogContent                        from '@material-ui/core/DialogConten
 import DialogTitle                          from '@material-ui/core/DialogTitle';
 import Button                               from '@material-ui/core/Button';
 import Grid                                 from '@material-ui/core/Grid';
-import { useQuery }                         from '@apollo/react-hooks';
+import { useQuery }                         from '@apollo/client';
 import { GET_PAYMENTS }                     from '../../../../queries_and_mutations/queries'
 import PrintIcon                            from '@material-ui/icons/Print';
 import TextField                            from '@material-ui/core/TextField'

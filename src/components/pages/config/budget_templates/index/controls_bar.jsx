@@ -12,7 +12,7 @@ import Button                                 from '@material-ui/core/Button';
 import { styles }                             from '../styles';
 import { withStyles }                         from '@material-ui/core/styles';
 import PostAddIcon                            from '@material-ui/icons/PostAdd';
-import { useMutation }                        from '@apollo/react-hooks';
+import { useMutation }                        from '@apollo/client';
 import { GET_BUDGETING_TEMPLATES_QUICK_LIST } from '../queries_and_mutations/queries'
 import { CREATE_BUDGETING_TEMPLATE }          from '../queries_and_mutations/queries'
 import { Redirect }                           from 'react-router-dom';

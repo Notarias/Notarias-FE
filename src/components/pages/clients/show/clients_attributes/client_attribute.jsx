@@ -7,9 +7,9 @@ import { Grid }                           from '@material-ui/core';
 import SaveIcon                           from '@material-ui/icons/Save';
 import CancelIcon                         from '@material-ui/icons/Cancel';
 import Button                             from '@material-ui/core/Button';
-import { useMutation }                    from '@apollo/react-hooks'
+import { useMutation }                    from '@apollo/client'
 import { CREATE_CLIENT_ATTRIBUTE_VALUE }  from '../../clients_queries_and_mutations/queries'
-import { useQuery }                       from '@apollo/react-hooks';
+import { useQuery }                       from '@apollo/client';
 import { GET_CLIENT_ATTRIBUTE_VALUE }     from '../../clients_queries_and_mutations/queries';
 import { UPDATE_CLIENT_ATTRIBUTE_VALUE }  from '../../clients_queries_and_mutations/queries';
 

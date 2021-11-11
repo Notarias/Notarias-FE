@@ -8,9 +8,9 @@ import Dialog                               from '@material-ui/core/Dialog';
 import DialogActions                        from '@material-ui/core/DialogActions';
 import DialogContent                        from '@material-ui/core/DialogContent';
 import DialogTitle                          from '@material-ui/core/DialogTitle';
-import { useMutation }                      from '@apollo/react-hooks'
+import { useMutation }                      from '@apollo/client'
 import { VOID_OR_INVOID }                   from '../../queries_and_mutations/queries'
-import { useQuery }                         from '@apollo/react-hooks';
+import { useQuery }                         from '@apollo/client';
 import { GET_CREDIT_PAYMENTS }              from '../../queries_and_mutations/queries'
 import { GET_BUDGET_TOTALS }                from '../../queries_and_mutations/queries'
 import { GET_BUDGETS_AUDITLOG }             from '../../queries_and_mutations/queries';

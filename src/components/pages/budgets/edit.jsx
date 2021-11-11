@@ -7,7 +7,7 @@ import Paper                                from '@material-ui/core/Paper';
 import Divider                              from '@material-ui/core/Divider';
 import InformationTabs                      from './edit/information_tabs/information_tabs'
 import GenericDropdownMenu                  from '../../ui/generic_dropdown_menu';
-import { useQuery }                         from '@apollo/react-hooks';
+import { useQuery }                         from '@apollo/client';
 import { GET_BUDGET }                       from './queries_and_mutations/queries'
 import Typography                           from '@material-ui/core/Typography';
 import OpenInNewIcon                        from '@material-ui/icons/OpenInNew';
@@ -22,9 +22,8 @@ import NumberFormat                         from 'react-number-format';
 import PropTypes                            from 'prop-types';
 import InputAdornment                       from '@material-ui/core/InputAdornment';
 import Avatar                               from '@material-ui/core/Avatar';
-import { Query }                            from '@apollo/react-components';
 import { GET_CURRENT_USER }                 from '../../../resolvers/queries';
-import { useMutation }                      from '@apollo/react-hooks'
+import { useMutation }                      from '@apollo/client'
 import { CREATE_CREDIT_PAYMENT }            from './queries_and_mutations/queries'
 import PaymentDrawer                        from './edit/payment_drawer'
 import { GET_BUDGET_TOTALS }                from './queries_and_mutations/queries'

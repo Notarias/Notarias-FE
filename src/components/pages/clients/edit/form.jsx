@@ -1,5 +1,4 @@
 import React, { Component }                             from 'react';
-import { Mutation }                                     from '@apollo/react-components';
 import PermIdentityIcon                                 from '@material-ui/icons/PermIdentity';
 import FormHelperText                                   from '@material-ui/core/FormHelperText';
 import PhoneRoundedIcon                                 from '@material-ui/icons/PhoneRounded';
@@ -17,8 +16,6 @@ import { styles }                                       from './../styles';
 import { GLOBAL_MESSAGE }                               from '../../../../resolvers/queries';
 import { UPDATE_CLIENT_MUTATION, GET_CLIENT_ATTRIBUTE } from '../clients_queries_and_mutations/queries';
 import Paper                                            from '@material-ui/core/Paper';
-import { Query }                                        from '@apollo/react-components';
-
 class EditClientForm extends Component {
 
   constructor(props) {
@@ -203,7 +200,7 @@ class EditClientForm extends Component {
                 </Grid>
               </Grid>
               <Grid item align="right">
-                <Mutation
+                {/* <Mutation
                   mutation={UPDATE_CLIENT_MUTATION}
                   variables={{ ...this.state }}
                   onCompleted={this.onCompleteCreate.bind(this)}>
@@ -224,7 +221,7 @@ class EditClientForm extends Component {
                       )
                     }
                   }
-                </Mutation>
+                </Mutation> */}
               </Grid>
             </form>
           </Paper>
@@ -232,7 +229,7 @@ class EditClientForm extends Component {
         <Grid item xs={12}>
           <Paper className={ classes.newClientForm} variant="outlined">
             <form onSubmit={(e) => e.preventDefault()}>
-              <Query query={GET_CLIENT_ATTRIBUTE}>
+              {/* <Query query={GET_CLIENT_ATTRIBUTE}>
                 {
                   ({ loading, error, data, }) => {
                     if (loading) return "Loading...";
@@ -260,7 +257,7 @@ class EditClientForm extends Component {
                     )
                   }
                 }
-              </Query>
+              </Query> */}
             </form>
           </Paper>
         </Grid>

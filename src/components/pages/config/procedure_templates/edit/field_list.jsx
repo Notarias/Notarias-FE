@@ -1,6 +1,6 @@
 import React, { useEffect }                         from 'react';
 import Field                                        from './field';
-import { useQuery }                                 from '@apollo/react-hooks';
+import { useQuery }                                 from '@apollo/client';
 import { GET_PROCEDURE_TEMPLATE_TAB_FIELDS }        from '../queries_and_mutations/queries'
 import { styles }                                   from '../styles';
 import { withStyles }                               from '@material-ui/core/styles';

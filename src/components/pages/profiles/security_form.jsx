@@ -8,8 +8,7 @@ import Visibility           from '@material-ui/icons/Visibility';
 import VisibilityOff        from '@material-ui/icons/VisibilityOff';
 import IconButton           from '@material-ui/core/IconButton';
 import InputAdornment       from '@material-ui/core/InputAdornment';
-import gql                  from 'graphql-tag';
-import { Mutation }         from '@apollo/react-components';
+import { gql }                  from '@apollo/client';
 import CircularProgress     from '@material-ui/core/CircularProgress';
 import { GET_CURRENT_USER } from '../../../resolvers/queries';
 import { GLOBAL_MESSAGE }   from '../../../resolvers/queries';
@@ -174,7 +173,7 @@ class SecurityForm extends Component {
                   </IconButton>
                 </InputAdornment>)}}
             />
-            <Mutation
+            {/* <Mutation
               mutation={UPDATE_USER_PASSWORD}
               onCompleted={this.onCompleteUpdate.bind(this)}>
               {
@@ -193,7 +192,7 @@ class SecurityForm extends Component {
                   )
                 }
               }
-            </Mutation>
+            </Mutation> */}
           </form>
         </div>
     )

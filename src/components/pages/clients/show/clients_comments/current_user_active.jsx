@@ -1,7 +1,7 @@
 import React from 'react'
 import { withStyles }               from '@material-ui/core/styles';
 import { styles }                   from '../styles';
-import { useMutation }              from '@apollo/react-hooks';
+import { useMutation }              from '@apollo/client';
 import { DESTROY_COMMENT }          from '../../clients_queries_and_mutations/queries';
 import { LOAD_CLIENT_COMMENTS}      from '../../clients_queries_and_mutations/queries';
 import Dialog                       from '@material-ui/core/Dialog';

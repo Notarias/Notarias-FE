@@ -11,10 +11,9 @@ import Grid                                 from '@material-ui/core/Grid';
 import TextField                            from '@material-ui/core/TextField';
 import Button                               from '@material-ui/core/Button';
 import Avatar                               from '@material-ui/core/Avatar';
-import { Query }                            from '@apollo/react-components';
 import { GET_CURRENT_USER }                 from '../../../../../../resolvers/queries';
 import Typography                           from '@material-ui/core/Typography';
-import { useMutation }                      from '@apollo/react-hooks'
+import { useMutation }                      from '@apollo/client'
 import { CREATE_PAYMENT }                   from '../../../queries_and_mutations/queries'
 import { GET_BUDGET_FIELD_VALUE }           from '../../../queries_and_mutations/queries'
 import { GET_BUDGET_TOTALS }                from '../../../queries_and_mutations/queries'
@@ -191,7 +190,7 @@ const Payment = (props) => {
               </Grid>
             </Grid>
             <Grid container >
-              <Query
+              {/* <Query
                 query={GET_CURRENT_USER}
               >
                 {({id, loading, error, data}) => {
@@ -205,7 +204,7 @@ const Payment = (props) => {
                     )
                   }
                 }
-              </Query>
+              </Query> */}
             </Grid>
           <Grid>
             <TextField

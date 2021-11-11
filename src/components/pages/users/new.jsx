@@ -4,8 +4,8 @@ import Paper                from '@material-ui/core/Paper';
 import { styles }           from './user_form/styles';
 import UserForm             from './user_form/user_form_new';
 import Breadcrumbs          from '../../ui/breadcrumbs';
-import gql                  from 'graphql-tag';
-import { useQuery }         from '@apollo/react-hooks';
+import { gql }                  from '@apollo/client';
+import { useQuery }         from '@apollo/client';
 
 const BREADCRUMBS = [
   { name: "Inicio", path: "/" },

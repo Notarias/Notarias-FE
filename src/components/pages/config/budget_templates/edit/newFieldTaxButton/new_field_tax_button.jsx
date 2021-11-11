@@ -11,7 +11,7 @@ import DialogActions                          from '@material-ui/core/DialogActi
 import Divider                                from '@material-ui/core/Divider';
 import FieldSearch                            from './operators_and_selectors';
 import TextField                              from '@material-ui/core/TextField';
-import { useMutation }                        from '@apollo/react-hooks';
+import { useMutation }                        from '@apollo/client';
 import { CREATE_TAX_FIELD}                    from '../../queries_and_mutations/queries'
 import { GLOBAL_MESSAGE }                     from '../../../../../../resolvers/queries';
 import { GET_BUDGETING_TEMPLATE_TAB_FIELDS }  from '../../queries_and_mutations/queries'

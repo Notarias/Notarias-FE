@@ -6,7 +6,7 @@ import DialogActions                                  from '@material-ui/core/Di
 import BudgetingTemplatesList                          from './budgeting_templates_list';
 import { styles }                                     from '../styles';
 import { withStyles }                                 from '@material-ui/core/styles';
-import { useMutation }                                from '@apollo/react-hooks';
+import { useMutation }                                from '@apollo/client';
 import { UPDATE_PROCEDURE_TEMPLATES }                  from '../queries_and_mutations/queries';
 import { GET_PROCEDURE_TEMPLATE }                     from '../queries_and_mutations/queries';
 import Divider                                        from '@material-ui/core/Divider';
@@ -21,7 +21,7 @@ import Paper                                          from '@material-ui/core/Pa
 import Popper                                         from '@material-ui/core/Popper';
 import MenuItem                                       from '@material-ui/core/MenuItem';
 import MenuList                                       from '@material-ui/core/MenuList';
-import { useQuery }                                   from '@apollo/react-hooks';
+import { useQuery }                                   from '@apollo/client';
 import { GET_BUDGETING_TEMPLATES_QUICK_LIST }         from '../queries_and_mutations/queries';
 import { GLOBAL_MESSAGE }                             from '../../../../../resolvers/queries';
 import client                                         from '../../../../../apollo';

@@ -10,7 +10,7 @@ import ListItemText                 from '@material-ui/core/ListItemText';
 import CloseIcon                    from '@material-ui/icons/Close';
 import VisibilityIcon               from '@material-ui/icons/Visibility';
 import Typography                   from '@material-ui/core/Typography';
-import { useQuery }                 from '@apollo/react-hooks';
+import { useQuery }                 from '@apollo/client';
 import { GET_CLIENT }               from './clients_queries_and_mutations/queries';
 import PersonIcon                   from '@material-ui/icons/Person';
 import MailOutlineIcon              from '@material-ui/icons/MailOutline';

@@ -1,6 +1,6 @@
 import React, { useEffect }                             from 'react';
 import FieldsGroup                                      from './fields_group';
-import { useQuery }                                     from '@apollo/react-hooks';
+import { useQuery }                                     from '@apollo/client';
 import { GET_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS }    from '../queries_and_mutations/queries'
 
 

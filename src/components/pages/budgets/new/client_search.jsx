@@ -13,7 +13,7 @@ import TableHead                      from '@material-ui/core/TableHead';
 import TableCell                      from '@material-ui/core/TableCell';
 import SortHeader                     from '../../../ui/sort_header';
 import TableRow                       from '@material-ui/core/TableRow';
-import { useQuery }                   from '@apollo/react-hooks';
+import { useQuery }                   from '@apollo/client';
 import { LOAD_CLIENTS }               from '../queries_and_mutations/queries';
 
 const ClientSearch = (props) => {

@@ -8,7 +8,7 @@ import { Link }                       from 'react-router-dom';
 import TableRow                       from '@material-ui/core/TableRow';
 import TableCell                      from '@material-ui/core/TableCell';
 import { UPDATE_PROCEDURE_TEMPLATES } from '../queries_and_mutations/queries';
-import { useMutation }                from '@apollo/react-hooks';
+import { useMutation }                from '@apollo/client';
 import Dialog                         from '@material-ui/core/Dialog';
 import DialogActions                  from '@material-ui/core/DialogActions';
 import DialogContent                  from '@material-ui/core/DialogContent';
@@ -20,7 +20,7 @@ import RadioButtonUncheckedIcon       from '@material-ui/icons/RadioButtonUnchec
 import RadioButtonCheckedIcon         from '@material-ui/icons/RadioButtonChecked';
 import ListItemIcon                   from '@material-ui/core/ListItemIcon';
 import ListItemText                   from '@material-ui/core/ListItemText';
-import { useQuery }                   from '@apollo/react-hooks';
+import { useQuery }                   from '@apollo/client';
 import { GET_PROCEDURE_TEMPLATE }     from '../queries_and_mutations/queries';
 
 

@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import TableCell            from '@material-ui/core/TableCell';
 import TableRow             from '@material-ui/core/TableRow';
-import gql                  from 'graphql-tag';
-import { useQuery }         from '@apollo/react-hooks';
+import { gql }                  from '@apollo/client';
+import { useQuery }         from '@apollo/client';
 import TableBody            from '@material-ui/core/TableBody';
 import CircularProgress     from '@material-ui/core/CircularProgress';
 import UserTableRows        from './userTableRows';

@@ -4,7 +4,6 @@ import { withStyles }               from '@material-ui/core/styles';
 import Grid                         from '@material-ui/core/Grid';
 import Typography                   from '@material-ui/core/Typography';
 import {GET_LATEST_COMMENTS}        from '../index_queries_and_mutations/queries';
-import { Query }                    from '@apollo/react-components';
 import ListItemAvatar                                           from '@material-ui/core/ListItemAvatar';
 import ListItem                                                 from '@material-ui/core/ListItem';
 import ListItemText                                             from '@material-ui/core/ListItemText';
@@ -18,7 +17,7 @@ class LastComments extends Component {
     return (
       <Grid container spacing={3} style={{margin: "0px", overflowY: "scroll", height: "100%"}}>
         <Grid item xs={12} style={{margin: "0px"}}>
-          <Query query={GET_LATEST_COMMENTS}
+          {/* <Query query={GET_LATEST_COMMENTS}
           variables={{searchField: "created_at", sortDirection: "DESC", per: 10 }}
           >
             {({ loading, error, data, refetch  }) => {
@@ -75,7 +74,7 @@ class LastComments extends Component {
                 )
               }
             }
-          </Query>
+          </Query> */}
         </Grid>
       </Grid>
     )

@@ -23,7 +23,7 @@ import DialogTitle                                              from '@material-
 import DialogActions                                            from '@material-ui/core/DialogActions';
 import ListItemIcon                                             from '@material-ui/core/ListItemIcon';
 import ListItemText                                             from '@material-ui/core/ListItemText';
-import { useMutation }                                          from '@apollo/react-hooks';
+import { useMutation }                                          from '@apollo/client';
 import { CREATE_PROCEDURES_TEMPLATE_TAB_FIELD }                 from '../queries_and_mutations/queries'
 import { GET_PROCEDURES_TEMPLATE_FIELDS_GROUPS_FIELDS }         from '../queries_and_mutations/queries'
 import { DESTROY_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS }        from '../queries_and_mutations/queries'

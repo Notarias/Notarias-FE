@@ -5,7 +5,7 @@ import Avatar                       from '@material-ui/core/Avatar';
 import Typography                   from '@material-ui/core/Typography';
 import Grid                         from '@material-ui/core/Grid';
 import TextField                    from '@material-ui/core/TextField';
-import { useMutation }              from '@apollo/react-hooks';
+import { useMutation }              from '@apollo/client';
 import { UPDATE_COMMENT }           from '../../clients_queries_and_mutations/queries';
 import { LOAD_CLIENT_COMMENTS}      from '../../clients_queries_and_mutations/queries';
 import Link                         from '@material-ui/core/Link';

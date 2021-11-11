@@ -17,7 +17,7 @@ import ProceduresSearch                   from './new/procedures_search';
 import BudgetSelector                     from './new/budget_selector'
 import ClientSearch                       from './new/client_search';
 import CausantSearch                      from './new/causant_search';  
-import { useMutation }                    from '@apollo/react-hooks';
+import { useMutation }                    from '@apollo/client';
 import { CREATE_CLIENT }                  from './queries_and_mutations/queries'
 import { CREATE_BUDGET }                  from './queries_and_mutations/queries'
 

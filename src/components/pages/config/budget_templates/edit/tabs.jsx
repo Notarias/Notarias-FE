@@ -10,8 +10,8 @@ import DialogActions                        from '@material-ui/core/DialogAction
 import DialogContent                        from '@material-ui/core/DialogContent';
 import DialogContentText                    from '@material-ui/core/DialogContentText';
 import DialogTitle                          from '@material-ui/core/DialogTitle';
-import { useQuery }                         from '@apollo/react-hooks';
-import { useMutation }                      from '@apollo/react-hooks';
+import { useQuery }                         from '@apollo/client';
+import { useMutation }                      from '@apollo/client';
 import { GET_BUDGETING_TEMPLATES_TABS }     from '../queries_and_mutations/queries'
 import { CREATE_BUDGETING_TEMPLATES_TABS }  from '../queries_and_mutations/queries'
 import Tab                                  from './tab';

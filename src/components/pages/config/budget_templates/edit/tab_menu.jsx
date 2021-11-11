@@ -22,7 +22,7 @@ import ListItemIcon                             from '@material-ui/core/ListItem
 import ListItemText                             from '@material-ui/core/ListItemText';
 import RadioButtonUncheckedIcon                 from '@material-ui/icons/RadioButtonUnchecked';
 import RadioButtonCheckedIcon                   from '@material-ui/icons/RadioButtonChecked';
-import { useMutation }                          from '@apollo/react-hooks';
+import { useMutation }                          from '@apollo/client';
 import { GET_BUDGETING_TEMPLATES_TABS }         from '../queries_and_mutations/queries'
 import { UPDATE_BUDGETING_TEMPLATE_TAB }        from '../queries_and_mutations/queries'
 import { DESTROY_BUDGETING_TEMPLATE_TAB }       from '../queries_and_mutations/queries'

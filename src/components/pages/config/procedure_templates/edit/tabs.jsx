@@ -11,8 +11,8 @@ import DialogContent                        from '@material-ui/core/DialogConten
 import DialogContentText                    from '@material-ui/core/DialogContentText';
 import DialogTitle                          from '@material-ui/core/DialogTitle';
 import Tab                                  from './tab';
-import { useQuery }                         from '@apollo/react-hooks';
-import { useMutation }                      from '@apollo/react-hooks';
+import { useQuery }                         from '@apollo/client';
+import { useMutation }                      from '@apollo/client';
 import { GET_PROCEDURES_TEMPLATE_TABS }     from '../queries_and_mutations/queries'
 import { CREATE_PROCEDURES_TEMPLATE_TAB }   from '../queries_and_mutations/queries'
 

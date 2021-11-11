@@ -1,6 +1,5 @@
 import React, { Component }                            from 'react';
 import { withRouter }                                  from 'react-router-dom';
-import { Mutation }                                    from '@apollo/react-components';
 import PermIdentityIcon                                from '@material-ui/icons/PermIdentity';
 import FormHelperText                                  from '@material-ui/core/FormHelperText';
 import PhoneRoundedIcon                                from '@material-ui/icons/PhoneRounded';
@@ -246,7 +245,7 @@ class NewClientForm extends React.Component {
           />
         </Grid>
         <Grid item>
-          <Mutation
+          {/* <Mutation
             mutation={CREATE_CLIENT_MUTATION}
             refetchQueries={[LOAD_CLIENTS]}
             variables={{ ...this.state }}
@@ -268,7 +267,7 @@ class NewClientForm extends React.Component {
                 )
               }
             }
-          </Mutation>
+          </Mutation> */}
         </Grid>
       </form>
     )

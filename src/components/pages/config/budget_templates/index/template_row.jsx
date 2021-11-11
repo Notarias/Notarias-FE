@@ -19,9 +19,9 @@ import DialogTitle                    from '@material-ui/core/DialogTitle';
 import useMediaQuery                  from '@material-ui/core/useMediaQuery';
 import { useTheme }                   from '@material-ui/core/styles';
 import { Link }                       from 'react-router-dom';
-import { useMutation }                from '@apollo/react-hooks';
+import { useMutation }                from '@apollo/client';
 import { UPDATE_BUDGETING_TEMPLATE }  from '../queries_and_mutations/queries'
-import { useQuery }                   from '@apollo/react-hooks';
+import { useQuery }                   from '@apollo/client';
 import { GET_BUDGETING_TEMPLATE }     from '../queries_and_mutations/queries'
 
 

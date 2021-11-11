@@ -1,7 +1,7 @@
 import React, { useEffect }                 from 'react'
 import { withStyles }                       from '@material-ui/core/styles';
 import { styles }                           from '../../styles';
-import { useQuery }                         from '@apollo/react-hooks';
+import { useQuery }                         from '@apollo/client';
 import { GET_BUDGETING_TEMPLATES_TABS }     from '../../queries_and_mutations/queries';
 import FieldsFromTabs                       from './fields_form_tabs';
 import { GET_BUDGET_TAB_TOTALS }            from '../../queries_and_mutations/queries';

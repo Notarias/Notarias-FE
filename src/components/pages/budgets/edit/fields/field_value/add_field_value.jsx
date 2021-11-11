@@ -1,7 +1,7 @@
 import React, { useState, useEffect }               from 'react';
 import Button                                       from '@material-ui/core/Button';
 import SaveIcon                                     from '@material-ui/icons/Save';
-import { useMutation }                              from '@apollo/react-hooks';
+import { useMutation }                              from '@apollo/client';
 import { UPDATE_BUDGET_FIELD_VALUE }                from '../../../queries_and_mutations/queries'
 import { CREATE_BUDGET_FIELD_VALUE }                from '../../../queries_and_mutations/queries'
 import { GET_BUDGET_FIELD_VALUE }                   from '../../../queries_and_mutations/queries'

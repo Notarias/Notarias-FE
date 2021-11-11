@@ -8,7 +8,7 @@ import ListItem                                       from '@material-ui/core/Li
 import ListItemText                                   from '@material-ui/core/ListItemText';
 import Grid                                           from '@material-ui/core/Grid';
 import Divider                                        from '@material-ui/core/Divider';
-import { useQuery }                                   from '@apollo/react-hooks';
+import { useQuery }                                   from '@apollo/client';
 import { BUDGETING_TEMPLATE_BY_PROCEDURE_ID }         from '../queries_and_mutations/queries';
 
 

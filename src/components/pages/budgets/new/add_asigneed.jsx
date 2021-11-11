@@ -16,7 +16,7 @@ import ListItemIcon                   from '@material-ui/core/ListItemIcon';
 import ListItemText                   from '@material-ui/core/ListItemText';
 import Divider                        from '@material-ui/core/Divider';
 import Fuse                           from 'fuse.js';
-import { useQuery }                   from '@apollo/react-hooks';
+import { useQuery }                   from '@apollo/client';
 import { LOAD_USERS }                 from '../queries_and_mutations/queries';
 
 const renderSearchList = (searchList, classes, selectedIndex, handleListItemClick, haveThumbUrl) => {

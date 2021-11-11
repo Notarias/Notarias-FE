@@ -12,7 +12,7 @@ import Button                             from '@material-ui/core/Button';
 import { styles }                         from '../styles';
 import { withStyles }                     from '@material-ui/core/styles';
 import PostAddIcon                        from '@material-ui/icons/PostAdd';
-import { useMutation }                    from '@apollo/react-hooks';
+import { useMutation }                    from '@apollo/client';
 import { CREATE_PROCEDURE_TEMPLATE }      from '../queries_and_mutations/queries'
 import { Redirect }                       from 'react-router-dom';
 

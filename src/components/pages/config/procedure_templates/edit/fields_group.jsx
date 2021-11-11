@@ -7,7 +7,7 @@ import TextField                                                from '@material-
 import FieldsGroupFieldList                                     from './fields_groups_fields_list';
 import Paper                                                    from '@material-ui/core/Paper';
 import Divider                                                  from '@material-ui/core/Divider';
-import { useMutation }                                          from '@apollo/react-hooks';
+import { useMutation }                                          from '@apollo/client';
 import { UPDATE_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS }         from '../queries_and_mutations/queries'
 import Typography                                               from '@material-ui/core/Typography';
 import FieldsGroupMenu                                          from './fields_group_menu';

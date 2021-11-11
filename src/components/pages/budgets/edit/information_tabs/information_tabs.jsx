@@ -6,7 +6,7 @@ import Tabs                                 from '@material-ui/core/Tabs';
 import BudgetTemplateTab                    from './budget_template_tab';
 import Typography                           from '@material-ui/core/Typography';
 import Box                                  from '@material-ui/core/Box';
-import { useQuery }                         from '@apollo/react-hooks';
+import { useQuery }                         from '@apollo/client';
 import { GET_BUDGETING_TEMPLATES_TABS }     from '../../queries_and_mutations/queries';
 import Fields                               from '../fields/fields';
 import Grid                                 from '@material-ui/core/Grid';

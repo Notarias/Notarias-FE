@@ -8,7 +8,7 @@ import Grid                                                     from '@material-
 import Typography                                               from '@material-ui/core/Typography';
 import { styles }                                               from '../styles';
 import { withStyles }                                           from '@material-ui/core/styles';
-import { useMutation }                                          from '@apollo/react-hooks';
+import { useMutation }                                          from '@apollo/client';
 import { GET_PROCEDURE_TEMPLATE_TAB_FIELDS }                    from '../queries_and_mutations/queries'
 import { CREATE_PROCEDURES_TEMPLATE_TAB_FIELD }                 from '../queries_and_mutations/queries'
 import { GET_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS }            from '../queries_and_mutations/queries'

@@ -7,7 +7,7 @@ import List                           from '@material-ui/core/List';
 import ListItem                       from '@material-ui/core/ListItem';
 import Divider                        from '@material-ui/core/Divider';
 import Typography                     from '@material-ui/core/Typography';
-import { useQuery }                   from '@apollo/react-hooks';
+import { useQuery }                   from '@apollo/client';
 import { GET_BUDGETS }                from '../index_queries_and_mutations/queries';
 import { Link }                       from 'react-router-dom';
 import Avatar                         from '@material-ui/core/Avatar';

@@ -12,7 +12,7 @@ import MoreVertIcon                             from '@material-ui/icons/MoreVer
 import TextField                                from '@material-ui/core/TextField';
 import SaveIcon                                 from '@material-ui/icons/Save';
 import CreateIcon                               from '@material-ui/icons/Create'
-import { useMutation }                          from '@apollo/react-hooks';
+import { useMutation }                          from '@apollo/client';
 import { GET_PROCEDURES_TEMPLATE_TABS }         from '../queries_and_mutations/queries'
 import { UPDATE_PROCEDURES_TEMPLATE_TAB }       from '../queries_and_mutations/queries'
 import { DESTROY_PROCEDURES_TEMPLATE_TAB }      from '../queries_and_mutations/queries'

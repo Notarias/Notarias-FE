@@ -4,7 +4,7 @@ import { withStyles }         from '@material-ui/core/styles';
 import UserForm               from './user_form/user_form';
 import Paper                  from '@material-ui/core/Paper';
 import Breadcrumbs            from '../../ui/breadcrumbs';
-import { useQuery }           from '@apollo/react-hooks';
+import { useQuery }           from '@apollo/client';
 import { GET_USER }           from './queries_and_mutations/queries';
 
 const BREADCRUMBS = [

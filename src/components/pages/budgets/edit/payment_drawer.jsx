@@ -14,7 +14,7 @@ import TextField                            from '@material-ui/core/TextField';
 import NumberFormat                         from 'react-number-format';
 import PropTypes                            from 'prop-types';
 import InputAdornment                       from '@material-ui/core/InputAdornment';
-import { useQuery }                         from '@apollo/react-hooks';
+import { useQuery }                         from '@apollo/client';
 import { GET_BUDGET_TOTALS }                from '../queries_and_mutations/queries'
 
 

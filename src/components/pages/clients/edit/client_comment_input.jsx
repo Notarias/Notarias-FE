@@ -10,10 +10,7 @@ import ListItemAvatar                                           from '@material-
 import Grid                                                     from '@material-ui/core/Grid';
 import { styles }                                               from '../styles';
 import { CREATE_CLIENT_COMMENT_MUTATION, LOAD_CLIENT_COMMENTS } from '../clients_queries_and_mutations/queries';
-import { Mutation }                                             from '@apollo/react-components';
 import CircularProgress                                         from '@material-ui/core/CircularProgress';
-import { Query }                                                from '@apollo/react-components';
-
 
 class ClientCommentari extends Component {
 
@@ -46,7 +43,7 @@ class ClientCommentari extends Component {
       return(
         <div>
           <Grid item container classes={{root: classes.WindowComment}}>
-            <Query query={LOAD_CLIENT_COMMENTS}
+            {/* <Query query={LOAD_CLIENT_COMMENTS}
               variables={{ clientId : this.props.data.client.id, per: this.state.per, sortDirection: "DESC"}}
             >
               {({ loading, error, data, refetch  }) => {
@@ -83,13 +80,13 @@ class ClientCommentari extends Component {
                 )
               }
               }
-            </Query>
+            </Query> */}
           </Grid>
           <Grid>
             <List>
               <ListItem alignItems="flex-start" style={{width:"100%"}} >
                 <Grid>
-                  <Query query={LOAD_CLIENT_COMMENTS}
+                  {/* <Query query={LOAD_CLIENT_COMMENTS}
                     variables={{clientId : this.props.data.client.id, per: 1}}
                   >
                     {({ loading, error, data  }) => {
@@ -102,7 +99,7 @@ class ClientCommentari extends Component {
                             ))}
                           </div>
                       )}}
-                  </Query>
+                  </Query> */}
                 </Grid>
                 <Grid style={{paddingLeft:"5%", width:"100%"}}>
                   <TextField
@@ -119,7 +116,7 @@ class ClientCommentari extends Component {
             </List>
           </Grid>
           <Grid item container justifyContent='flex-end'>
-            <Mutation
+            {/* <Mutation
             mutation={CREATE_CLIENT_COMMENT_MUTATION}
             variables={{ ...this.state }}
             onCompleted={this.onCompleteCreate.bind(this)}
@@ -142,7 +139,7 @@ class ClientCommentari extends Component {
                     )
                   }
                 }
-          </Mutation>
+          </Mutation> */}
         </Grid>
       </div>
     )
