@@ -59,6 +59,8 @@ query Procedures(
     proceduresTemplate { name }
     reporter { avatarThumbUrl }
     createdAt
+    updatedAt
+    completedAt
   }
   proceduresCount
 }  

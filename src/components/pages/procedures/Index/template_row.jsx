@@ -15,6 +15,8 @@ import { styles }                     from '../styles';
 import Typography                     from '@material-ui/core/Typography';
 import VisibilityIcon                 from '@material-ui/icons/Visibility';
 import PrintIcon                      from '@material-ui/icons/Print';
+import Chip                           from '@material-ui/core/Chip';
+
 
 
 const TemplateRow = (props) => {
@@ -22,7 +24,13 @@ const TemplateRow = (props) => {
   const {procedure, classes} = props
   const [open, setOpen] = React.useState(false);
 
-  console.log(procedure)
+  const estatus = (params) => {
+    if (params.completedAt) {
+      return <Chip color="primary" label="Completado" />
+    } else {
+      return <Chip color="secondary" label="En Proceso" />
+    }
+  }
 
   return(
     <TableRow key={  "-row" }>
@@ -32,6 +40,7 @@ const TemplateRow = (props) => {
       <TableCell align= "center" className={classes.tablecellWidth}>{ procedure.proceduresTemplate.name }</TableCell>
       <TableCell align= "center" className={classes.tablecellWidth}>{ procedure.reporter && procedure.reporter.avatarThumbUrl }</TableCell>
       <TableCell align= "center" className={classes.tablecellWidth}>{ procedure.createdAt }</TableCell>
+      <TableCell align= "center" className={classes.tablecellWidth}>{ estatus(procedure) }</TableCell>
       <TableCell align= "center" className={classes.tablecellWidth}>
         <Grid>
           <GenericDropdownMenu>

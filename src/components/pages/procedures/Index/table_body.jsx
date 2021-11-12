@@ -16,12 +16,12 @@ const ProceduresTableBody = (props) => {
     sortField,
     assingTotalRecords,
     simpleSearchValue,
-    serialNumberValue,
     clientFullNameValue,
+    serialNumberValue,
     budgetingTemplateNameValue,
     proceduresTemplateNameValue,
-    reporterAvatarThumbUrl,
     createdAtValue,
+    reporterAvatarThumbUrl,
     templatesVariables,
     setTemplatesVariables,
     classes
@@ -36,7 +36,7 @@ const ProceduresTableBody = (props) => {
       clientFullName: clientFullNameValue,
       budgetingTemplateName: budgetingTemplateNameValue,
       proceduresTemplateName: proceduresTemplateNameValue,
-      createdAt: createdAtValue
+      createdAt: createdAtValue,
     },
     sortDirection: sortDirection,
     sortField: sortField

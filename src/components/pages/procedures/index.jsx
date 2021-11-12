@@ -8,7 +8,7 @@ import TableRow from '@material-ui/core/TableRow';
 import TableFooter from '@material-ui/core/TableFooter';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableHeaders from './Index/table_headers'; 
-import ProceduresTableBody from './Index/procedure_table_body';
+import ProceduresTableBody from './Index/table_body';
 import SearchInput from './Index/search_input'
 import AdvancedSearchProcedure from './Index/advanced_search_procedure';
 
@@ -39,6 +39,8 @@ const ProceduresIndex = (props) => {
   const [proceduresTemplateName, setProceduresTemplateName] = useState(null);
   const [reporterAvatarThumbUrl, setReporterAvatarThumbUrl] = useState(null);
   const [createdAt, setCreatedAt] = useState(null);
+  const [updatedAt, setUpdatedAt] = useState(null);
+  const [completedAt, setCompletedAt] = useState(null);
   const [templatesVariables, setTemplatesVariables] = useState(null);
   const [total_records, setTotalRecords]  = useState(0);
 
@@ -98,7 +100,7 @@ const ProceduresIndex = (props) => {
         <h1>Tramites</h1>
       </div>
       <div className={ classes.root }>
-      <SearchInput
+        <SearchInput
           classes={classes}
           searchLoading={searchLoading}
           changeAdvanceSearch={changeAdvanceSearch}
@@ -131,39 +133,47 @@ const ProceduresIndex = (props) => {
         <div className={ classes.tableWrapper }>
           <Paper>
             <Table>
-              <TableHeaders field={ sortField } direction={ sortDirection } sortHandler={ sort.bind(this) }/>
+              <TableHeaders 
+                field={ sortField }
+                direction={ sortDirection }
+                sortHandler={ sort.bind(this) }
+              />
               <ProceduresTableBody
-              page={page}
-              per={per}
-              sortField={sortField}
-              sortDirection={sortDirection}
-              simpleSearchValue={simpleSearchValue}
-              serialNumberValue={serialNumberValue}
-              clientFullName ={clientFullName}
-              budgetingTemplateName={budgetTemplateName}
-              proceduresTemplateName ={proceduresTemplateName}
-              reporterAvatarThumbUrl ={reporterAvatarThumbUrl}
-              createdAt={createdAt}
-              templatesVariables={templatesVariables}
-              setTemplatesVariables={setTemplatesVariables}
-              assingTotalRecords={assingTotalRecords}
-              classes={classes}
+                page={page}
+                per={per}
+                sortField={sortField}
+                sortDirection={sortDirection}
+                simpleSearchValue={simpleSearchValue}
+                serialNumberValue={serialNumberValue}
+                clientFullName ={clientFullName}
+                budgetingTemplateName={budgetTemplateName}
+                proceduresTemplateName ={proceduresTemplateName}
+                reporterAvatarThumbUrl ={reporterAvatarThumbUrl}
+                createdAt={createdAt}
+                updatedAt={updatedAt}
+                completedAt={completedAt}
+                templatesVariables={templatesVariables}
+                setTemplatesVariables={setTemplatesVariables}
+                assingTotalRecords={assingTotalRecords}
+                classes={classes}
               />
             </Table>
-            <TableFooter>
-              <TableRow >
-              <TablePagination
-                  page={ page }
-                  rowsPerPage={ per }
-                  rowsPerPageOptions={ [5, 10, 15, 20] }
-                  onPageChange={ changePage }
-                  onRowsPerPageChange={ changeRowsPerPage }
-                  count={ total_records }
-                  labelRowsPerPage={ "Filas por página:" }
-                  classes={classes}
-                />
-              </TableRow>
-            </TableFooter>
+            <Table>
+              <TableFooter>
+                <TableRow>
+                  <TablePagination
+                    page={ page }
+                    rowsPerPage={ per }
+                    rowsPerPageOptions={ [5, 10, 15, 20] }
+                    onPageChange={ changePage }
+                    onRowsPerPageChange={ changeRowsPerPage }
+                    count={ total_records }
+                    labelRowsPerPage={ "Filas por página:" }
+                    classes={classes}
+                  />
+                </TableRow>
+              </TableFooter>
+            </Table>
           </Paper>
         </div>
       </div>
