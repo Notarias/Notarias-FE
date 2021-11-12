@@ -4,7 +4,7 @@ import UserDefaultImg      from '../../../images/user_default_img.png';
 import Dropzone            from 'react-dropzone';
 import { gql }                 from '@apollo/client';
 import { GET_CURRENT_USER } from '../../../resolvers/queries';
-import { useQuery }         from '@apollo/client';
+import { useQuery, useMutation }         from '@apollo/client';
 import CircularProgress     from '@material-ui/core/CircularProgress';
 
 const ADD_AVATAR = gql`
@@ -13,8 +13,6 @@ const ADD_AVATAR = gql`
       midUrl
       thumbUrl
       url
-      errors
-      pointers
     }
   }
 `;
@@ -22,58 +20,51 @@ const ADD_AVATAR = gql`
 const AvatarUploader = (props) => {
   const { classes, user } = props
   // const { loading, data, refetch } = useQuery(
-  const { data } = useQuery(
+  const { data: currentUserData } = useQuery(
     GET_CURRENT_USER, { vairables: {}, errorPolicy: 'all' }
   );
-  const [image, setImage] = useState(data && data.currentUser && data.currentUser.avatarUrl)
+  const [image, setImage] = useState(currentUserData && currentUserData.currentUser && currentUserData.currentUser.avatarUrl)
 
-  const onCompleteUpload = (data) => {
-    setImage(data.avatarUpload.url)
-  }
+  const [uploadImageMutation, { loading: uploadingImageLoading}] =
+    useMutation(
+      ADD_AVATAR,
+      {
+        context: { hasUpload: true },
+        onCompleted(cacheData) {
+          setImage(cacheData.avatarUpload.url)
+        },
+      }
+    )
 
-  const onDrop = (mutator, files) => { 
-    mutator(
+  const onDrop = (files) => {
+    uploadImageMutation(
       {
         variables: {
           id: user.id,
-          avatar: files
+          avatar: files[0]
         }
       }
     )
   }
 
   return(
-    <div></div>
+    <Dropzone
+      accept="image/*"
+      multiple={false}
+      onDrop={onDrop}>
+      {
+        ({getRootProps, getInputProps}) => (
+          <div {...getRootProps()}>
+            <input {...getInputProps()} />
+            <div className={classes.avatarWrapper}>
+              { uploadingImageLoading && <CircularProgress thickness={1} size={326} className={classes.avatarUploadProgress}/> }
+              <Avatar alt="default_img" src={image || UserDefaultImg} className={classes.large}/>
+            </div>
+          </div>
+        )
+      }
+    </Dropzone>
   )
-  //return(
-    // <Mutation
-    //   mutation={ADD_AVATAR}
-    //   context={{ hasUpload: true }}
-    //   onCompleted={onCompleteUpload.bind(this)}>
-    //   {
-    //     (mutator, { loading }) => (
-    //       <>
-    //         <Dropzone
-    //           accept="image/*"
-    //           multiple={false} // Only upload 1 file
-    //           onDrop={onDrop.bind(this, mutator)}>
-    //           {
-    //             ({getRootProps, getInputProps}) => (
-    //               <div {...getRootProps()}>
-    //                 <input {...getInputProps()} />
-    //                 <div className={classes.avatarWrapper}>
-    //                   { loading && <CircularProgress thickness={1} size={326} className={classes.avatarUploadProgress}/> }
-    //                   <Avatar alt="default_img" src={image || UserDefaultImg} className={classes.large}/>
-    //                 </div>
-    //               </div>
-    //             )
-    //           }
-    //         </Dropzone>
-    //       </>
-    //     )
-    //   }
-    // </Mutation>
-  //)
 }
 
 export default AvatarUploader;

@@ -21,6 +21,7 @@ import TextField                            from '@material-ui/core/TextField';
 import NumberFormat                         from 'react-number-format';
 import PropTypes                            from 'prop-types';
 import InputAdornment                       from '@material-ui/core/InputAdornment';
+import CurrentUserAvatar                    from './edit/current_user_avatar';
 import Avatar                               from '@material-ui/core/Avatar';
 import { GET_CURRENT_USER }                 from '../../../resolvers/queries';
 import { useMutation }                      from '@apollo/client'
@@ -282,15 +283,7 @@ const BudgetsEdit = (props) => {
                         </Grid>
                       </Grid>
                     </Grid>
-                    <Grid>
-                      <Grid container direction="row" alignItems="center">
-                        <Avatar 
-                          src={queryBData && queryBData.currentUser && queryBData.currentUser.avatarThumbUrl} 
-                          className={classes.avatarInDialogToAddPayment}
-                        />
-                        <Typography variant="caption">{queryBData.currentUser.firstName}</Typography>
-                      </Grid>
-                    </Grid>
+                    <CurrentUserAvatar classes={classes}/>
                     <Grid>
                       <TextField
                         fullWidth

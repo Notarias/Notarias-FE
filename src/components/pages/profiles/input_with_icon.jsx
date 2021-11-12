@@ -19,6 +19,7 @@ class InputWithIcon extends React.Component  {
 
   render() {
     const { classes, errors, inputProps } = this.props;
+
     return(
       <div className={classes.margin}>
         <Grid container spacing={1} alignItems="flex-end">
@@ -34,7 +35,7 @@ class InputWithIcon extends React.Component  {
               fullWidth
               InputProps={{...inputProps}}
               onChange={this.props.handleChange}/>
-            <FormHelperText error>{ errors[this.props.errorsKey] && errors[this.props.errorsKey][0] }</FormHelperText>
+            <FormHelperText error>{ errors[this.props.errorsKey] }</FormHelperText>
           </Grid>
         </Grid>
       </div>

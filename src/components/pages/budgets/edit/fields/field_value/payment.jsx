@@ -10,8 +10,7 @@ import InputAdornment                       from '@material-ui/core/InputAdornme
 import Grid                                 from '@material-ui/core/Grid';
 import TextField                            from '@material-ui/core/TextField';
 import Button                               from '@material-ui/core/Button';
-import Avatar                               from '@material-ui/core/Avatar';
-import { GET_CURRENT_USER }                 from '../../../../../../resolvers/queries';
+import Avatar                               from './current_user_avatar';
 import Typography                           from '@material-ui/core/Typography';
 import { useMutation }                      from '@apollo/client'
 import { CREATE_PAYMENT }                   from '../../../queries_and_mutations/queries'
@@ -189,23 +188,7 @@ const Payment = (props) => {
                 />
               </Grid>
             </Grid>
-            <Grid container >
-              {/* <Query
-                query={GET_CURRENT_USER}
-              >
-                {({id, loading, error, data}) => {
-                    return(
-                      <Grid container direction="column" alignItems="flex-start">
-                        <Avatar 
-                          src={data && data.currentUser && data.currentUser.avatarThumbUrl} 
-                        />
-                        <Typography variant="caption">{data.currentUser.firstName}</Typography>
-                      </Grid>
-                    )
-                  }
-                }
-              </Query> */}
-            </Grid>
+            <Avatar/>
           <Grid>
             <TextField
               fullWidth
