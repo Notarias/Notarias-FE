@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import Button               from '@material-ui/core/Button';
 import MenuItem             from '@material-ui/core/MenuItem';
 import withStyles           from '@material-ui/core/styles/withStyles';
@@ -11,9 +11,10 @@ import { gql, useMutation } from '@apollo/client';
 import Select               from '@material-ui/core/Select';
 import InputLabel           from '@material-ui/core/InputLabel';
 import FormControl          from '@material-ui/core/FormControl';
+import { Redirect }         from 'react-router-dom';
 
-const USER_EDIT_MUTATION = gql`
-  mutation createUser($firstName: String, $lastName:String, $email: String, $rolePermanentLink: String, $authProvider: AuthProviderSignupData){
+const USER_CREATE_MUTATION = gql`
+  mutation createUser($firstName: String, $lastName: String, $email: String, $rolePermanentLink: String, $authProvider: AuthProviderSignupData){
     createUser(input: {firstName: $firstName, lastName: $lastName, email: $email, rolePermanentLink: $rolePermanentLink, authProvider: $authProvider}){
       user{
         firstName
@@ -29,12 +30,22 @@ const USER_EDIT_MUTATION = gql`
 `
 
 const UserFormNew = (props) => {
-  const { classes } = this.props
+  const { classes } = props
 
   const [errors, setErrors]     = useState({})
-  const [user, setUser]         = useState({})
   const [pristine, setPristine] = useState(true)
   const [redirect, setRedirect] = useState(false)
+  const [user, setUser]         = useState({
+                                    id: "",
+                                    firstName: "",
+                                    lastName: "",
+                                    email: "",
+                                    address: "",
+                                    phone: "",
+                                    rolePermanentLink: "",
+                                    password: null,
+                                    passwordConfirmation: null
+                                  })
 
   const handleChange = ({ target }) => {
     const {name, value} = target
@@ -42,7 +53,7 @@ const UserFormNew = (props) => {
     setPristine(false)
   }
 
-  const onCompleted = (data) => {
+  const onCompletedSave = (data) => {
     if (data.createUser.pointers) {
       setErrors(data.createUser.pointers)
     } else {
@@ -52,7 +63,7 @@ const UserFormNew = (props) => {
 
   const [updateUserMutation, {loading}] =
     useMutation(
-      USER_EDIT_MUTATION,
+      USER_CREATE_MUTATION,
       {
         onError(error) {
           let errorsHash = {}
@@ -63,7 +74,7 @@ const UserFormNew = (props) => {
           setPristine(true)
         },
         onCompleted(cacheData) {
-          onCompleted(cacheData)
+          onCompletedSave(cacheData)
         }
       }
     )
@@ -75,7 +86,7 @@ const UserFormNew = (props) => {
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
-        address: user.address,submitForm,
+        address: user.address,
         phone: user.phone,
         rolePermanentLink: user.rolePermanentLink,
         authProvider: {
@@ -84,36 +95,32 @@ const UserFormNew = (props) => {
             passwordConfirmation: user.passwordConfirmation
           }
         }
-      } 
+      }
     })
   }
 
-  render() {
-    
-    return (
+  return (
+    <>
+      { redirect && <Redirect to={{ pathname: `/users` }} /> }
       <Grid classes={{root: classes.editUserFormGrid}} >
         <form onSubmit={(e) => e.preventDefault()}>
-          <Grid item container classes={{ root: classes.gridTextFieldTop}} >
-            <Grid item xs={1}>
-            </Grid>
-            <Grid item xs={11}>
-              <TextFieldsubmitForm
+          <Grid item container justifyContent="center" classes={{ root: classes.gridTextFieldTop}} >
+            <Grid item  md={5} xs={10}>
+              <TextField
                 value={user.firstName}
-                classes={{ root: classes.userFormTextFieldEdit }}
                 onChange={handleChange}
                 label="Nombre"
+                fullWidth
                 error={errors.firstName}
                 name="firstName"/>
               <FormHelperText error>{errors.first_name}</FormHelperText>
             </Grid>
           </Grid>
-          <Grid item container >
-            <Grid item xs={1}>
-            </Grid>
-            <Grid item xs={11}>
+          <Grid item container justifyContent="center">
+            <Grid item md={5} xs={10}>
               <TextField
+                fullWidth
                 value={user.lastName}
-                classes={{ root: classes.userFormTextFieldEdit }}
                 onChange={handleChange}
                 label="Apellido"
                 error={errors.lastName}
@@ -121,13 +128,11 @@ const UserFormNew = (props) => {
               <FormHelperText error>{errors.last_name}</FormHelperText>
             </Grid>
           </Grid>
-          <Grid item container >
-            <Grid item xs={1}>
-            </Grid>
-            <Grid item xs={11}>
+          <Grid item container justifyContent="center">
+            <Grid item md={5} xs={10}>
               <TextField
+                fullWidth
                 value={user.email}
-                classes={{ root: classes.userFormTextFieldEdit }}
                 onChange={handleChange}
                 label="Correo"
                 error={errors.email}
@@ -135,13 +140,11 @@ const UserFormNew = (props) => {
               <FormHelperText error>{errors.email}</FormHelperText>
             </Grid>
           </Grid>
-          <Grid item container >
-            <Grid item xs={1}>
-            </Grid>
-            <Grid item xs={11}>
+          <Grid item container justifyContent="center">
+            <Grid item md={5} xs={10}>
               <TextField
-                value={this.state.address}
-                classes={{ root: classes.userFormTextFieldEdit }}
+                fullWidth
+                value={user.address}
                 onChange={handleChange}
                 label="Dirección"
                 error={errors.address}
@@ -149,13 +152,11 @@ const UserFormNew = (props) => {
               <FormHelperText error>{errors.address}</FormHelperText>
             </Grid>
           </Grid>
-          <Grid item container >
-            <Grid item xs={1}>
-            </Grid>
-            <Grid item xs={11}>
+          <Grid item container justifyContent="center">
+            <Grid item md={5} xs={10}>
               <TextField
-                value={this.state.phone}
-                classes={{ root: classes.userFormTextFieldEdit }}
+                fullWidth
+                value={user.phone}
                 onChange={handleChange}
                 label="Telefono"
                 error={errors.phone}
@@ -163,14 +164,12 @@ const UserFormNew = (props) => {
               <FormHelperText error>{errors.phone}</FormHelperText>
             </Grid>
           </Grid>
-          <Grid item container >
-            <Grid item xs={1}>
-            </Grid>
-            <Grid item xs={11}>
+          <Grid item container justifyContent="center">
+            <Grid item md={5} xs={10}>
               <TextField
+                fullWidth
                 type={'password'}
-                value={this.state.password}
-                classes={{ root: classes.userFormTextFieldEdit }}
+                value={user.password}
                 onChange={handleChange}
                 label="Contraseña"
                 error={errors.password}
@@ -178,14 +177,12 @@ const UserFormNew = (props) => {
               <FormHelperText error>{errors.password}</FormHelperText>
             </Grid>
           </Grid>
-          <Grid item container >
-            <Grid item xs={1}>
-            </Grid>
-            <Grid item xs={11}>
+          <Grid item container justifyContent="center">
+            <Grid item md={5} xs={10}>
               <TextField
+                fullWidth
                 type={'password'}
-                value={this.state.passwordConfirmation}
-                classes={{ root: classes.userFormTextFieldEdit }}
+                value={user.passwordConfirmation}
                 onChange={handleChange}
                 label="Confirmar Contraseña"
                 error={errors.passwordConfirmation}
@@ -193,21 +190,20 @@ const UserFormNew = (props) => {
               <FormHelperText error>{errors.password_confirmation}</FormHelperText>
             </Grid>
           </Grid>
-          <Grid item container >
-            <Grid item xs={1}>
-            </Grid>
-            <Grid item xs={11}>
-              <FormControl  className={classes.formControl}>
-              <InputLabel id="demo-simple-select-required-label" >Rol</InputLabel>
+          <Grid item container justifyContent="center">
+            <Grid item md={5} xs={10}>
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-required-label" >Rol</InputLabel>
                 <Select
+                  fullWidth
                   labelId="demo-simple-select-required-label"
                   id="demo-simple-select-required"
                   name={"rolePermanentLink"}
-                  value={this.state.rolePermanentLink}
+                  value={user.rolePermanentLink}
                   onChange={handleChange}
                 >
                   {
-                    this.props.data && this.props.data.roles.map((role)=> {
+                    props.data && props.data.roles.map((role)=> {
                       return(
                         <MenuItem key={role.name + "role"} value={role.permanentLink}>
                           {role.name}
@@ -220,22 +216,25 @@ const UserFormNew = (props) => {
               </FormControl>
             </Grid>
           </Grid>
-          <Grid item classes={{ root: classes.buttonMarginBottom}}>
-            <Button
-              disabled={this.state.pristine || loading}
-              variant="contained"
-              color="primary"
-              type="submit"
-              classes={{ root: classes.editUserFormSubmitButton }}
-              onClick={ submitForm }>
-              Guardar Cambios
-              { loading && <CircularProgress className={classes.buttonProgress} size={24} /> }
-            </Button>
+          <Grid item container xs={12} justifyContent="center">
+            <Grid item md={5} xs={10} className={ classes.submitButtonWrapper }>
+              <Button
+                disabled={user.pristine || loading}
+                variant="contained"
+                color="primary"
+                type="submit"
+                fullWidth
+                classes={{ root: classes.editUserFormSubmitButton }}
+                onClick={ submitForm }>
+                Guardar Cambios
+                { loading && <CircularProgress className={classes.buttonProgress} size={24} /> }
+              </Button>
+            </Grid>
           </Grid>
         </form>
       </Grid>
-    )
-  }
+    </>
+  )
 }
 
 export default withStyles(styles)(UserFormNew)

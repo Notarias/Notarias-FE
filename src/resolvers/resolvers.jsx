@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import { gql } from '@apollo/client';
 //import { GLOBAL_MESSAGE } from './queries'
 
 export const typeDefs = gql`

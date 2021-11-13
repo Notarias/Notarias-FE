@@ -20,7 +20,6 @@ export const styles = theme => ({
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      paddingRight: "4%",
       padding: `${theme.spacing(2)}px ${theme.spacing()}px ${theme.spacing()}px`,
       margin: `${theme.spacing(.2)}% ${theme.spacing(3)}% ${theme.spacing()}%`
     },
@@ -37,24 +36,22 @@ export const styles = theme => ({
       marginTop: '10%',
       marginBottom: '10%'
     },
-    userFormTextFieldEdit: {
-      width: '80%'
-    },
     editUserFormGrid: {
       width: "100%"
     },
     editUserFormSubmitButton: {
-      width: '46%',
-      marginLeft: "8%",
-      marginTop: "2%"
     },
     marginInputs: {
       marginButtom: "20%"
     },
-    gridTextFieldTop: {
-      marginTop: "15px"
-    },
     buttonMarginBottom: {
       marginBottom: "15px"
+    },
+    formControl: {
+      width: "100%"
+    },
+    submitButtonWrapper: {
+      paddingTop: "15px",
+      paddingBottom: "15px"
     }
   });
