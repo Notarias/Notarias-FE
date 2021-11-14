@@ -1,4 +1,4 @@
-import React, { useEffect }                 from 'react';
+import React, { useEffect, useRef }                 from 'react';
 import PropTypes                            from 'prop-types';
 import { makeStyles }                       from '@material-ui/core/styles';
 import AppBar                               from '@material-ui/core/AppBar';
@@ -19,6 +19,7 @@ const InformationTabs = (props) => {
   const [value, setValue] = React.useState(0);
   const [tabList, setTabList] = React.useState(data ? data.budgetingTemplateTabs: []);
   const [currentTab, setCurrentTab] = React.useState( data ? data.budgetingTemplateTabs[0] : "")
+  const fieldListWrapperElement = useRef()
 
   const { data } = useQuery(
     GET_BUDGETING_TEMPLATES_TABS, { variables: {"id": budgetTemplateId }}
@@ -53,44 +54,49 @@ const InformationTabs = (props) => {
     )
   }
 
+
+
   return (
-    <div  className={classes.rootTab}>
-      <AppBar position="static">
-        <Tabs 
-          centered 
-          value={value} 
-          onChange={handleChange}
-          aria-label="simple tabs example"
-        >
-          { renderTabs() }
-        </Tabs>
-      </AppBar>
-      <Grid container justifyContent="flex-start" alignItems="flex-end" className={classes.titleFields}>
-        <Grid container item xs={3}>
+    <Grid container item style={{ flexGrow: "1" }} direction="column"  justifyContent="flex-start" alignItems="stretch" >
+      <Grid item>
+        <AppBar position="static">
+          <Tabs 
+            centered 
+            value={value} 
+            onChange={handleChange}
+            aria-label="simple tabs example"
+          >
+            { renderTabs() }
+          </Tabs>
+        </AppBar>
+      </Grid>
+      <Grid item container justifyContent="flex-start" alignItems="flex-end" style={{ paddingTop: "15px", paddingBottom: "5px"}}>
+        <Grid item xs={3}>
           <Typography variant="h6" gutterBottom>
             Concepto
           </Typography>
         </Grid>
-        <Grid container item xs={3}>
+        <Grid item xs={4}>
           <Typography variant="h6" gutterBottom>
             Total
           </Typography>
         </Grid>
-        <Grid container item xs={3}>
+        <Grid item xs={3}>
           <Typography variant="h6" gutterBottom>
             Saldo
           </Typography>
         </Grid>
       </Grid>
       <Divider/>
-      <Grid container className={classes.boxContainerFields}>
+      <Grid item container justifyContent='flex-start' style={{ flexGrow: '1'}} ref={fieldListWrapperElement}>
         <Fields
+          parentRef={fieldListWrapperElement}
           currentTab={currentTab && currentTab}
           budgetInfo={budgetInfo}
           budgetId={budgetId}
         />
       </Grid>
-    </div>
+    </Grid>
   );
 }
 

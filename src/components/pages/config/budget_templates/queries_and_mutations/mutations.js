@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import { gql } from '@apollo/client';
 
 export const DESTROY_TAXED_FIELD = gql`
   mutation destroyTaxedFieldRelation($taxedFieldId: ID!, $taxFieldId: ID!){

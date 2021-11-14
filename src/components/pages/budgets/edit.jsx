@@ -193,161 +193,169 @@ const BudgetsEdit = (props) => {
 
   return(
     <>
-      <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
-      <Grid container item xs={12} direction="row" >
-        <Grid container item xs={8} alignItems="center" justifyContent="center" direction="column">
-          <Paper className={ classes.budgetEditPaper}>
-            <Grid container item xs={12} alignItems="center" className={ classes.budgetTittle}>
-              <Grid container item xs={5} justifyContent="flex-start" alignItems="center">
-                <Typography variant="h6" gutterBottom className={classes.marginTitleBudgetName}>
-                  { budgetingTemplate && budgetingTemplate.name }
-                </Typography>
-                <Button>
-                  <OpenInNewIcon/>
-                </Button>
-              </Grid>
-              <Grid item xs={4}>
-                <Typography variant="subtitle2" gutterBottom>
-                  { proceduresTemplate && proceduresTemplate.name }
-                </Typography>
-              </Grid>
-              <Grid container item xs={2} justifyContent="flex-end">
-                <PaymentDrawer
-                  budgetId={match.params.id}
-                />
-              </Grid>
-              <Grid item xs={1}>
-                <GenericDropdownMenu>
-                  <MenuItem key="1-abono" onClick={handleClickOpen}>
-                    <ListItemText primary="Nuevo Ingreso"/>
-                  </MenuItem>
-                  <MenuItem key="2-paymentList">
-                    <PaymentList
+      <Grid container direction="column"  justifyContent="flex-start" alignItems="stretch" style={{ height: "100%" }}>
+        <Grid container item>
+          <Grid item xs={12}>
+            <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
+          </Grid>
+        </Grid>
+        <Grid container item style={{ flexGrow: "1" }} >
+          <Grid item xs={8}>
+            <Paper className={ classes.budgetEditPaper} elevation={0} variant='outlined'>
+              <Grid container item direction="column"  justifyContent="flex-start" alignItems="stretch" style={{ height: "100%" }}>
+                <Grid container item alignItems="center" className={ classes.budgetTittle}>
+                  <Grid container item xs={5} justifyContent="flex-start" alignItems="center">
+                    <Typography variant="h6" gutterBottom className={classes.marginTitleBudgetName}>
+                      { budgetingTemplate && budgetingTemplate.name }
+                    </Typography>
+                    <Button>
+                      <OpenInNewIcon/>
+                    </Button>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Typography variant="subtitle2" gutterBottom>
+                      { proceduresTemplate && proceduresTemplate.name }
+                    </Typography>
+                  </Grid>
+                  <Grid container item xs={2} justifyContent="flex-end">
+                    <PaymentDrawer
                       budgetId={match.params.id}
                     />
-                  </MenuItem>
-                  <Link
-                    to={`/budgets/${ match.params.id }/invoice`}
-                    color="inherit"
-                    underline="none"
-                    className={classes.linkDefault}
-                    key="3-paymentList"
-                  >
-                    <MenuItem >
-                      <ListItemText primary="Imprimir presupuesto"/>
-                    </MenuItem>
-                  </Link>
-                </GenericDropdownMenu>
-                <Dialog open={open} onClose={handleClose} fullWidth>
-                  <DialogTitle>
-                    Datos del Ingreso
-                  </DialogTitle>
-                  <DialogContent>
-                    <Grid container alignItems="center" >
-                      <Grid container item justifyContent="center" alignItems="center">
-                        fecha:  {getCurrentDate()}
-                      </Grid>
-                      <Grid container item direction="row">
-                        <Grid container item xs={6} justifyContent="center" alignItems="center">
-                          <FormControl >
-                            <InputLabel htmlFor="age-native-simple">Tipo de pago"</InputLabel>
-                            <Select
-                              native
-                              value={payType}
-                              onChange={handleSelectChange}
-                              label="Tipo de pago"
-                            >
-                              <option value={"cash"}>Efectivo</option>
-                              <option value={"deposit"}>Deposito</option>
-                              <option value={"wire"}>Transferencia</option>
-                            </Select>
-                          </FormControl>
+                  </Grid>
+                  <Grid item xs={1}>
+                    <GenericDropdownMenu>
+                      <MenuItem key="1-abono" onClick={handleClickOpen}>
+                        <ListItemText primary="Nuevo Ingreso"/>
+                      </MenuItem>
+                      <MenuItem key="2-paymentList">
+                        <PaymentList
+                          budgetId={match.params.id}
+                        />
+                      </MenuItem>
+                      <Link
+                        to={`/budgets/${ match.params.id }/invoice`}
+                        color="inherit"
+                        underline="none"
+                        className={classes.linkDefault}
+                        key="3-paymentList"
+                      >
+                        <MenuItem >
+                          <ListItemText primary="Imprimir presupuesto"/>
+                        </MenuItem>
+                      </Link>
+                    </GenericDropdownMenu>
+                    <Dialog open={open} onClose={handleClose} fullWidth>
+                      <DialogTitle>
+                        Datos del Ingreso
+                      </DialogTitle>
+                      <DialogContent>
+                        <Grid container alignItems="center" >
+                          <Grid container item justifyContent="center" alignItems="center">
+                            fecha:  {getCurrentDate()}
+                          </Grid>
+                          <Grid container item direction="row">
+                            <Grid container item xs={6} justifyContent="center" alignItems="center">
+                              <FormControl >
+                                <InputLabel htmlFor="age-native-simple">Tipo de pago"</InputLabel>
+                                <Select
+                                  native
+                                  value={payType}
+                                  onChange={handleSelectChange}
+                                  label="Tipo de pago"
+                                >
+                                  <option value={"cash"}>Efectivo</option>
+                                  <option value={"deposit"}>Deposito</option>
+                                  <option value={"wire"}>Transferencia</option>
+                                </Select>
+                              </FormControl>
+                            </Grid>
+                            <Grid container item xs={6} justifyContent="flex-start" alignItems="center">
+                              <TextField
+                                className={classes.selectPayType}
+                                onChange={handleValuePaymentChange}
+                                label="Ingreso"
+                                id="margin-normal"
+                                helperText="Cantidad"
+                                margin="normal"
+                                error={ !!error["total"] && true }
+                                helperText={error["total"] || " "}
+                                errorskey={ "total" }
+                                required
+                                InputProps={{
+                                  inputComponent: NumberFormatCustom,
+                                  startAdornment: <InputAdornment position="start">$</InputAdornment>
+                                }}
+                              />
+                            </Grid>
+                          </Grid>
                         </Grid>
-                        <Grid container item xs={6} justifyContent="flex-start" alignItems="center">
+                        <CurrentUserAvatar classes={classes}/>
+                        <Grid>
                           <TextField
-                            className={classes.selectPayType}
-                            onChange={handleValuePaymentChange}
-                            label="Ingreso"
-                            id="margin-normal"
-                            helperText="Cantidad"
-                            margin="normal"
-                            error={ !!error["total"] && true }
-                            helperText={error["total"] || " "}
-                            errorskey={ "total" }
-                            required
-                            InputProps={{
-                              inputComponent: NumberFormatCustom,
-                              startAdornment: <InputAdornment position="start">$</InputAdornment>
-                            }}
+                            fullWidth
+                            onChange={handleNotePaymentChange}
+                            id="outlined-textarea"
+                            placeholder="Comentarios"
+                            multiline
+                            variant="outlined"
                           />
                         </Grid>
-                      </Grid>
-                    </Grid>
-                    <CurrentUserAvatar classes={classes}/>
-                    <Grid>
-                      <TextField
-                        fullWidth
-                        onChange={handleNotePaymentChange}
-                        id="outlined-textarea"
-                        placeholder="Comentarios"
-                        multiline
-                        variant="outlined"
+                      </DialogContent>
+                      <DialogActions>
+                        <Button onClick={handleClose}>
+                          Cancelar
+                        </Button>
+                        <Button onClick={createNewCreditPayment} disabled={!pristine || createCreditPaymentLoading}>
+                          Aceptar
+                        </Button>
+                      </DialogActions>
+                    </Dialog>
+                  </Grid>
+                </Grid>
+                <Grid container item alignItems="center" className={ classes.budgetTittle} >
+                  <Grid container item xs={4} alignItems="center" justifyContent="center">
+                    <Asignee
+                      asigneeData={budget && budget.asignee}
+                      budgetId={match.params.id}
+                    />
+                  </Grid>
+                  <Grid container item xs={4} justifyContent="center" alignItems="center">
+                    <Grid container direction="row" alignItems="center">
+                      <Typography variant="subtitle2">Reportador:</Typography>
+                      <Avatar 
+                        src="/broken-image.jpg"
+                        className={classes.reporterAvatar}
+                        size="small"
                       />
+                      <Typography variant="caption">Juan Perez Perez</Typography>
                     </Grid>
-                  </DialogContent>
-                  <DialogActions>
-                    <Button onClick={handleClose}>
-                      Cancelar
-                    </Button>
-                    <Button onClick={createNewCreditPayment} disabled={!pristine || createCreditPaymentLoading}>
-                      Aceptar
-                    </Button>
-                  </DialogActions>
-                </Dialog>
+                  </Grid>
+                  <Grid container item xs={4} justifyContent="flex-start" alignItems="center">
+                    <Typography variant="subtitle2">Cliente:</Typography>
+                    <Typography variant="caption" className={classes.spaceBetwenFirstNameAndLastName}>
+                      { budget && budget.client.firstName } { budget && budget.client.lastName }
+                    </Typography>
+                  </Grid>
+                </Grid>
+                <Grid container item style={{ flexGrow: "1" }}  alignItems="stretch">
+                  <InformationTabs
+                    budgetTemplateId={ budgetingTemplate && budgetingTemplate.id }
+                    budgetInfo={ budget }
+                    budgetId={match.params.id}
+                  />
+                </Grid>
               </Grid>
-            </Grid>
-            <Grid container item xs={12} alignItems="center" className={ classes.budgetTittle} >
-              <Grid container item xs={4} alignItems="center" justifyContent="center">
-                <Asignee
-                  asigneeData={budget && budget.asignee}
+            </Paper>
+          </Grid>
+          <Grid item xs={4} >
+            <Paper className={ classes.budgetRightOptionsList}>
+              <Grid container direction="column" justifyContent="center">
+                <Activities
                   budgetId={match.params.id}
                 />
               </Grid>
-              <Grid container item xs={4} justifyContent="center" alignItems="center">
-                <Grid container direction="row" alignItems="center">
-                  <Typography variant="subtitle2">Reportador:</Typography>
-                  <Avatar 
-                    src="/broken-image.jpg"
-                    className={classes.reporterAvatar}
-                    size="small"
-                  />
-                  <Typography variant="caption">Juan Perez Perez</Typography>
-                </Grid>
-              </Grid>
-              <Grid container item xs={4} justifyContent="flex-start" alignItems="center">
-                <Typography variant="subtitle2">Cliente:</Typography>
-                <Typography variant="caption" className={classes.spaceBetwenFirstNameAndLastName}>
-                  { budget && budget.client.firstName } { budget && budget.client.lastName }
-                </Typography>
-              </Grid>
-            </Grid>
-            <Grid container item xs={12} justifyContent="flex-start" >
-              <InformationTabs
-                budgetTemplateId={ budgetingTemplate && budgetingTemplate.id }
-                budgetInfo={ budget }
-                budgetId={match.params.id}
-              />
-            </Grid>
-          </Paper>
-        </Grid>
-        <Grid container item xs={4} direction="row" justifyContent="center" alignItems="stretch" className={ classes.budgetEdit}>
-          <Paper className={ classes.budgetRightOptionsList}>
-            <Grid container direction="column" justifyContent="center">
-              <Activities
-                budgetId={match.params.id}
-              />
-            </Grid>
-          </Paper>
+            </Paper>
+          </Grid>
         </Grid>
       </Grid>
     </>

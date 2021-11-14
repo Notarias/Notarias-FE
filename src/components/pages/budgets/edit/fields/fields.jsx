@@ -11,9 +11,10 @@ import CreateComments                         from './create_comments';
 
 
 const Fields = (props) => {
-  const { currentTab, budgetInfo, classes, budgetId} = props;
+  const { currentTab, budgetInfo, classes, budgetId, parentRef} = props;
   const currentBudget = budgetId
   const [currentFieldId, setCurrentFieldId] =  React.useState(null)
+  const [scrollHeight, setScrollHeight] = useState()
 
   const { data } = useQuery(
     GET_BUDGETING_TEMPLATE_TAB_FIELDS,
@@ -28,36 +29,45 @@ const Fields = (props) => {
     data && setFields(data.budgetingTemplateTabFields);;
   }, [data])
 
+  useEffect(() => {
+    if (parentRef.current && !scrollHeight) {
+      setScrollHeight(parentRef.current.scrollHeight)
+    }
+  }, [parentRef.current && parentRef.current.scrollHeight])
+  console.log(scrollHeight)
+
   const renderFields = () => {
 
     return(
-      <>
-        {
-          fields.map((field) => {
-            return(
-              <FieldValue
-                currentBudget={currentBudget}
-                field={field}
-                key={field.id + "-field"}
-              />
-            )
-          })
-        }
-        <Grid container justifyContent="flex-end" className={ classes.totalsGrid }>
-          <Grid container item direction="row" xs={8}>
-            <CreateComments
-              budgetId={budgetId}
-            />
-          </Grid>
-          <Grid container item xs={4} >
-            <Grid container item alignItems="center" className={classes.totalValuesGridContainer}>
-              <FieldTotalValues
-                budgetId={budgetId}
-              />
+          <Grid item container style={{ maxHeight: scrollHeight, overflowY: "scroll" }}>
+            <Grid item container style={{ height: 'fit-content' }}justifyContent="flex-end">
+              <Grid item container justifyContent="flex-start" direction='column' xs={12}>
+                {
+                  fields.map((field) => {
+                    return(
+                      <FieldValue
+                        currentBudget={currentBudget}
+                        field={field}
+                        key={field.id + "-field"}
+                      />
+                    )
+                  })
+                }
+              </Grid>
+              <Grid container item xs={12}>
+                <Grid container item direction="row" xs={8}>
+                  <CreateComments
+                    budgetId={budgetId}
+                  />
+                </Grid>
+                <Grid container item xs={4} alignItems="center" className={classes.totalValuesGridContainer}>
+                  <FieldTotalValues
+                    budgetId={budgetId}
+                  />
+                </Grid>
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
-      </>
     )
   }
 

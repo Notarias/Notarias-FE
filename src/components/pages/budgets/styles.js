@@ -101,9 +101,8 @@ export const styles = theme => {
       height:"30px",
     },
     budgetEditPaper: {
-      marginTop: '10px',
       width: "100%",
-      height:"300px"
+      height: "100%"
     },
     budgetRightOptionsList: {
       marginTop: '10px',
@@ -113,9 +112,6 @@ export const styles = theme => {
     budgetTittle: {
       height:"50px"
     },
-    budgetEdit : {
-      height:"100px"
-    },
     spaceBetwenFirstNameAndLastName: {
       marginLeft: "5px"
     },
@@ -123,20 +119,13 @@ export const styles = theme => {
       marginLeft: "20px"
     },
     budgetTabPanelFields: {
-      marginLeft: "20px",
       height:"70px",
     },
-    titleFields: {
-      marginLeft: "20px",
-      height:"60px",
-    },
     rootTab: {
-      flexGrow: 1,
-      backgroundColor: theme.palette.background.paper,
     },
     boxContainerFields: {
-      overflowY:"scroll",
-      maxHeight: "390px"
+      overflowY: "scroll",
+      // overflowX:"hidden"
     },
     fixedRow: {
       width:"200px",
@@ -149,10 +138,6 @@ export const styles = theme => {
     },
     drawerPaymentList: {
       width:'300px'
-    },
-    totalsGrid: {
-      marginTop: "30px",
-      paddingRight: "65px"
     },
     totalsGridAmount: {
       paddingLeft: "20px"
