@@ -1,5 +1,5 @@
 
-import gql from 'graphql-tag';
+import { gql } from '@apollo/client';
 
 export const GLOBAL_MESSAGE = gql`
   query {

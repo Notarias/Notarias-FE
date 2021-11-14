@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import { gql } from '@apollo/client';
 
 export const GET_LATEST_COMMENTS = gql`
   query latestComments($searchField: String, $searchValue: String, $per: Int){

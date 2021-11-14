@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import { gql } from '@apollo/client';
 
 export const CREATE_CLIENT_ATTRIBUTE = gql`
   mutation createClientAttribute ($name: String!, $style: String!, $active: Boolean! ) {

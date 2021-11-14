@@ -39,13 +39,13 @@ export const styles = theme => ({
     editUserFormGrid: {
       width: "100%"
     },
-    editUserFormSubmitButton: {
-    },
     marginInputs: {
-      marginButtom: "20%"
+      marginTop: "10px",
+      marginBottom: "10px"
     },
-    buttonMarginBottom: {
-      marginBottom: "15px"
+    buttonMargin: {
+      marginTop: "20px",
+      marginBottom: "20px"
     },
     formControl: {
       width: "100%"

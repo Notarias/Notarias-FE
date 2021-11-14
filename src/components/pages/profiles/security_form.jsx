@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import InputText            from "./input_with_icon"
 import VpnKeyIcon           from '@material-ui/icons/VpnKey';
 import VpnKeyOutlinedIcon   from '@material-ui/icons/VpnKeyOutlined';
@@ -8,7 +8,7 @@ import Visibility           from '@material-ui/icons/Visibility';
 import VisibilityOff        from '@material-ui/icons/VisibilityOff';
 import IconButton           from '@material-ui/core/IconButton';
 import InputAdornment       from '@material-ui/core/InputAdornment';
-import { gql }                  from '@apollo/client';
+import { gql, useMutation }                  from '@apollo/client';
 import CircularProgress     from '@material-ui/core/CircularProgress';
 import { GET_CURRENT_USER } from '../../../resolvers/queries';
 import { GLOBAL_MESSAGE }   from '../../../resolvers/queries';
@@ -45,69 +45,45 @@ mutation updateUser($input: UpdateUserInput!) {
 }
 `
 
-class SecurityForm extends Component {
+const SecurityForm = (props) => {
+  const { classes } = props
 
-  constructor(props) {
-    super(props)
+  const [user, setUser] = useState({ id: props.currentUser.id, password: "", passwordConfirmation: "" })
+  const [errors, setErrors] = useState({});
+  const [pristine, setPristine] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
 
-    this.state = {
-      id: props.currentUser.id,
-      password: "",
-      passwordConfirmation: "",
-      errors: {},
-      submitting: false,
-      pristine: true,
-      showPassword: false,
-    }
-  }
-
-  onCompleteUpdate(data) {
-    this.setState({ errors: data.updateUser.pointers || {} })
-  }
-
-  onSubmit(e) {
+  const onSubmit = (e) => {
     e.preventDefault()
   }
 
-  handleChange = ({ target }) => {
+  const handleChange = ({ target }) => {
     const {name, value} = target
-    this.setState({ [name]: value, pristine: false })
+    setUser({ ...user, [name]: value })
+    setPristine(false)
   }
 
-  canSubmit(loading) {
-    if (this.state.pristine === true && !loading) {
-      return true
-    } else if (this.state.pristine === false && !loading) {
-      return false
-    } else if (this.state.pristine === false && loading) {
-      return true
-    }
-  }
-
-  handleClickShowPassword = event => {
-    this.setState({ showPassword: !this.state.showPassword });
+  const handleClickShowPassword = (event) => {
+    setShowPassword(!showPassword);
   };
 
-  handleMouseDownPassword = event => {
+  const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
 
-  submitForm(mutation, e) {
-    e.preventDefault()
-    mutation(
+  const [updateUserMutation, { loading }] =
+    useMutation(
+      UPDATE_USER_PASSWORD,
       {
-        variables: {
-          input: {
-            id: this.state.id,
-            authProvider: {
-              credentials: {
-                password: this.state.password,
-                passwordConfirmation: this.state.passwordConfirmation
-              }
-            },
-          }
+        onError(error) {
+          let errorsHash = {}
+          error.graphQLErrors.map((error) => {
+            errorsHash[error.extensions.attribute] = error.message
+          }) 
+          setErrors(errorsHash)
+          setPristine(true)
         },
-        update: (store, { data: { updateUser } }) => {
+        update(store, { data: { updateUser } }) {
           store.writeQuery({ query: GET_CURRENT_USER, data: { currentUser: updateUser.user } });
           store.writeQuery({
             query: GLOBAL_MESSAGE,
@@ -119,84 +95,104 @@ class SecurityForm extends Component {
               }
             }
           })
+        },
+        onCompleted(data) {
+          setPristine(true)
+          setUser({ ...user, password: "", passwordConfirmation: "" })
+        }
+      }
+    )
+  
+  const canSubmit = () => {
+    if (pristine === true && !loading) {
+      return true
+    } else if (pristine === false && !loading) {
+      return false
+    } else if (pristine === false && loading) {
+      return true
+    }
+  }
+  
+
+  const submitForm = (e) => {
+    e.preventDefault()
+    updateUserMutation(
+      {
+        variables: {
+          input: {
+            id: user.id,
+            authProvider: {
+              credentials: {
+                password: user.password,
+                passwordConfirmation: user.passwordConfirmation
+              }
+            },
+          }
         }
       }
     )
   }
 
-  render() {
-    const { classes } = this.props
-    return(
-        <div>
-          <form onSubmit={ this.onSubmit.bind(this) }>
-            <InputText
-              className={classes.iconStyle}
-              errors={this.state.errors} 
-              errorsKey={"password"}
-              name='password' 
-              handleChange={this.handleChange.bind(this)}
-              type={this.state.showPassword ? 'text' : 'password'}
-              htmlFor="standard-adornment-password"
-              value={this.state.password}
-              label="Contraseña"
-              icon={ <VpnKeyIcon/>}
-              inputProps={{endAdornment:
-                (<InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={this.handleClickShowPassword.bind(this)}
-                    onMouseDown={this.handleMouseDownPassword.bind(this)}
-                  >
-                    {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
-                  </IconButton>
-                </InputAdornment>)}}
-              />
-            <InputText
-              style={{ marginBottom: '30px' }}
-              errors={this.state.errors}
-              errorsKey={"password_confirmation"}
-              name='passwordConfirmation'
-              handleChange={this.handleChange.bind(this)}
-              type={this.state.showPassword ? 'text' : 'password'}
-              htmlFor="standard-adornment-password"
-              value={this.state.passwordConfirmation}
-              label="Confirmar Contraseña"
-              icon={ < VpnKeyOutlinedIcon/>}
-              inputProps={{endAdornment:
-                (<InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={this.handleClickShowPassword.bind(this)}
-                    onMouseDown={this.handleMouseDownPassword.bind(this)}
-                  >
-                    {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
-                  </IconButton>
-                </InputAdornment>)}}
+  return(
+      <div>
+        <form onSubmit={ onSubmit }>
+          <InputText
+            className={classes.iconStyle}
+            errors={errors} 
+            errorsKey={"password"}
+            name='password' 
+            handleChange={handleChange}
+            type={showPassword ? 'text' : 'password'}
+            htmlFor="standard-adornment-password"
+            value={user.password}
+            label="Contraseña"
+            icon={ <VpnKeyIcon/>}
+            inputProps={{endAdornment:
+              (<InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                >
+                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>)}}
             />
-            {/* <Mutation
-              mutation={UPDATE_USER_PASSWORD}
-              onCompleted={this.onCompleteUpdate.bind(this)}>
-              {
-                (mutation, { loading, error, data }) => {
-                  return(
-                    <Button
-                      disabled={this.canSubmit(loading)}
-                      variant="contained"
-                      color="primary"
-                      type="submit"
-                      className={classes.inputBase}
-                      onClick={ this.submitForm.bind(this, mutation) }>
-                      Guardar Cambios
-                      { loading && <CircularProgress className={classes.buttonProgress} size={24} /> }
-                    </Button>
-                  )
-                }
-              }
-            </Mutation> */}
-          </form>
-        </div>
-    )
-  }
+          <InputText
+            style={{ marginBottom: '30px' }}
+            errors={errors}
+            errorsKey={"password_confirmation"}
+            name='passwordConfirmation'
+            handleChange={handleChange}
+            type={showPassword ? 'text' : 'password'}
+            htmlFor="standard-adornment-password"
+            value={user.passwordConfirmation}
+            label="Confirmar Contraseña"
+            icon={ < VpnKeyOutlinedIcon/>}
+            inputProps={{endAdornment:
+              (<InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                >
+                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>)}}
+          />
+          <Button
+            disabled={canSubmit(loading)}
+            variant="contained"
+            color="primary"
+            type="submit"
+            className={classes.inputBase}
+            onClick={ submitForm }>
+            Guardar Cambios
+            { loading && <CircularProgress className={classes.buttonProgress} size={24} /> }
+          </Button>
+        </form>
+      </div>
+  )
 }
 
 export default withStyles(styles)(SecurityForm);

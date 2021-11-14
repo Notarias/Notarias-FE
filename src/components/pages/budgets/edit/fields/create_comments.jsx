@@ -6,10 +6,11 @@ import { styles }                   from '../../styles';
 import Avatar                       from '@material-ui/core/Avatar';
 import Button                       from '@material-ui/core/Button';
 import { GET_CURRENT_USER }         from '../../../../../resolvers/queries';
-import { useMutation }              from '@apollo/client'
+import { useMutation, useQuery }              from '@apollo/client'
 import { CREATE_COMMENT }           from '../../queries_and_mutations/queries';
 import { GET_COMMENTABLE_COMMENTS } from '../../queries_and_mutations/queries';
 import { GET_BUDGETS_AUDITLOG }     from '../../queries_and_mutations/queries';
+import { CodeSharp } from "@material-ui/icons";
 
 
 const CreateComments = (props) => {
@@ -130,26 +131,21 @@ const CreateComments = (props) => {
     setError(false)
   }
 
+  const { loading, data } = useQuery(GET_CURRENT_USER)
 
   return(
     <>
       <Grid container item xs={2} justifyContent="center" alignItems="flex-start">
-        {/* <Query
-        query={GET_CURRENT_USER}
-        >
-          {({id, loading, error, data}) => {
-              return(
-                <Grid container justifyContent="center">
-                  <Avatar 
-                    src={data && data.currentUser && data.currentUser.avatarThumbUrl} 
-                    className={classes.avatarInDialogToAddPayment}
-                    className={classes.avatarWithoutTopMargin}
-                  />
-                </Grid>
-              )
-            }
+        <Grid container justifyContent="center">
+          {
+            !loading && data &&
+            <Avatar 
+              src={data.currentUser.avatarThumbUrl} 
+              className={classes.avatarInDialogToAddPayment}
+              className={classes.avatarWithoutTopMargin}
+            />
           }
-        </Query> */}
+        </Grid>
       </Grid>
       {renderTextField()}
     </>
