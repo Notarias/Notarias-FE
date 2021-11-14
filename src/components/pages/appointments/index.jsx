@@ -1,13 +1,94 @@
-import React, { Component } from 'react';
+import React, { useState, useQuery } from 'react';
 import { withStyles }       from '@material-ui/core/styles';
+import { styles }                   from './styles';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import Calendar from 'react-calendar'
+import 'react-calendar/dist/Calendar.css';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import NewDialog from './newDialog/index';
+import EventList from './eventList/index';
+import { LOAD_USERS }           from '../users/queries_and_mutations/queries';
 
-class AppointmentsIndex extends Component {
-    render() {
-        return(
-            <div>
-                <h1>Appointments</h1>
-            </div>
-        )
-      }
-    }
-export default withStyles(()=>{})(AppointmentsIndex);
+const AppointmentsIndex = (props) => {
+  // variables = {
+  //   page: $page,
+  //   per: $per,
+  //   sortField: $sortField,
+  //   sortDirection: $sortDirection,
+  //   searchField: $searchField,
+  //   searchValue: $searchValue
+  // }
+
+  // const { loading, data } = useQuery(LOAD_USERS, {variables: variables});
+  const { classes } = props
+  const [date, setDate] = useState(new Date());
+  const [openNewDialog, setOpenNewDialog] = useState(false);
+  const [data] = useState(
+    [
+      { id: 1, attorney: 'abogado 1',  ini_date: new Date().toLocaleDateString(), fin_date: new Date().toLocaleDateString(), place: 'oficina 1' },
+      { id: 2, attorney: 'abogado 2',  ini_date: new Date().toLocaleDateString(), fin_date: new Date().toLocaleDateString(), place: 'oficina 2' },
+      { id: 3, attorney: 'abogado 3',  ini_date: new Date().toLocaleDateString(), fin_date: new Date().toLocaleDateString(), place: 'oficina 3' },
+      { id: 4, attorney: 'abogado 4',  ini_date: new Date().toLocaleDateString(), fin_date: new Date().toLocaleDateString(), place: 'oficina 4' },
+      { id: 5, attorney: 'abogado 5',  ini_date: new Date().toLocaleDateString(), fin_date: new Date().toLocaleDateString(), place: 'oficina 5' },
+      { id: 6, attorney: 'abogado 6',  ini_date: new Date().toLocaleDateString(), fin_date: new Date().toLocaleDateString(), place: 'oficina 6' },
+      { id: 7, attorney: 'abogado 7',  ini_date: new Date().toLocaleDateString(), fin_date: new Date().toLocaleDateString(), place: 'oficina 7' },
+    ]
+  )
+
+  const onChange = (date) => {
+    setDate(date)
+  }
+
+  const handleClickOpenNewDialog = () => {
+    setOpenNewDialog(true);
+  };
+
+  const handleCloseNewDialog = (value) => {
+    setOpenNewDialog(false);
+  };
+
+  return(
+    <Grid>
+      <h1>Appointments</h1>
+      <Grid container spacing={3}>
+        <Grid item xs={4}></Grid>
+        <Grid item xs={8} container justifyContent="flex-start">
+          <Typography variant="h4" component="h2" >Fecha</Typography>
+        </Grid>
+      </Grid>
+      <Grid container spacing={3} >
+        <Grid item xs={4}>
+          <Paper className={classes.marginLeftCalendarPaper} >
+            <Typography variant="h4" component="h2">Calendar</Typography>
+            <Grid container justifyContent="center" >
+              <Calendar
+                onChange={onChange}
+                value={date}
+              />
+            </Grid>
+            <NewDialog handleCloseNewDialog={handleCloseNewDialog} openNewDialog={openNewDialog}/>
+            <Grid className={classes.calendarNew}>
+              <Grid container justifyContent="flex-end">
+                <Button variant="contained" color="primary" onClick={handleClickOpenNewDialog}>
+                  New Event
+                </Button>
+              </Grid>
+            </Grid>
+          </Paper>
+        </Grid>
+        <Grid item xs={8}>
+          <Grid className={classes.windowScrollEventList}>
+            {
+              data.map( eventDay  => {
+                return <EventList eventDay={eventDay} key={eventDay.id}/>
+              })
+            }
+          </Grid>
+        </Grid>
+      </Grid>
+    </Grid>
+  )
+}
+export default withStyles(styles)(AppointmentsIndex);
