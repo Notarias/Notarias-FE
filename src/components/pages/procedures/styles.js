@@ -181,15 +181,13 @@ export const styles = theme => {
     },
     serialInAdvancedSearch: {
       margin: "5px",
-      width: "125px",
       wordWrap: "break-word"
     },
     inputClientNameInAdvancedSearch: {
-      margin: "5px",
-      width: "530px"
+      margin: "5px"
     },
     paperAdvancedSearch: {
-      width: "800px"
+      width: "600px"
     },
     gridCommentsContainer: {
       maxHeight: "96px"
@@ -272,6 +270,11 @@ export const styles = theme => {
     },
     selectPayType: {
       marginTop: "35px"
+    },
+    buttonPadding: {
+      padding: "5px",
+      margin: "10px",
+      wordWrap: "break-word"
     },
   })
 }

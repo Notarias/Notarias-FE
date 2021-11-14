@@ -32,7 +32,8 @@ const AvatarUploader = (props) => {
     setImage(data.avatarUpload.url)
   }
 
-  const onDrop = (mutator, files) => {
+  const onDrop = (mutator, files) => { 
+    console.log(files, user.id)
     mutator(
       {
         variables: {

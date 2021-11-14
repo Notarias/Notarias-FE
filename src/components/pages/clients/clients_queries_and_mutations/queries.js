@@ -40,8 +40,8 @@ export const UPDATE_CLIENT_MUTATION = gql`
 `
 
 export const CREATE_CLIENT_MUTATION = gql`
-  mutation createClient($firstName: String!, $lastName: String!, $rfc: String! $moralFlag: Boolean!) {
-    createClient(input: { firstName: $firstName, lastName: $lastName, rfc: $rfc, moralFlag: $moralFlag}) {
+  mutation createClient($firstName: String!, $lastName: String!, $rfc: String! $moral: Boolean!) {
+    createClient(input: { firstName: $firstName, lastName: $lastName, rfc: $rfc, moral: $moral}) {
       client {
         id
         firstName

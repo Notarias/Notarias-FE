@@ -68,7 +68,7 @@ const Clients = (props) => {
             <Table >
               <TableHeaders field={sortField} direction={sortDirection} sortHandler={sort.bind(this) }/>
               <ClientRows
-              setTotalRecords={ setTotalRecords }
+                setTotalRecords={ setTotalRecords }
                 page={ page }
                 per={ per }
                 search={{}}

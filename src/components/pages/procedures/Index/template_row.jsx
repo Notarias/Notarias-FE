@@ -15,57 +15,38 @@ import { styles }                     from '../styles';
 import Typography                     from '@material-ui/core/Typography';
 import VisibilityIcon                 from '@material-ui/icons/Visibility';
 import PrintIcon                      from '@material-ui/icons/Print';
+import Chip                           from '@material-ui/core/Chip';
+
 
 
 const TemplateRow = (props) => {
 
-  const {budget, classes} = props
+  const {procedure, classes} = props;
   const [open, setOpen] = React.useState(false);
+
+  const estatus = (params) => {
+    if (params.completedAt) {
+      return <Chip color="primary" label="Completado" />
+    } else {
+      return <Chip color="secondary" label="En Proceso" />
+    }
+  }
 
   return(
     <TableRow key={  "-row" }>
-      <TableCell align= "center" className={classes.tablecellWidth}>{ budget.client.fullName }</TableCell>
-      <TableCell align= "center" className={classes.tablecellWidth}>{ budget.proceduresTemplate.name }</TableCell>
-      <TableCell align= "center" className={classes.tablecellWidth}>{ budget.serialNumber }</TableCell>
-      <TableCell align= "center" className={classes.tablecellWidth}>
-        <NumberFormat 
-          value={ budget.total / 100}
-          displayType={'text'} 
-          thousandSeparator={true} 
-          prefix={'$ '}
-          decimalScale={2}
-        />
-      </TableCell>
-      <TableCell align= "center" className={classes.tablecellWidth}>
-        <Typography variant="subtitle2">
-          <NumberFormat 
-            value={ budget.totalDebt / 100 }
-            displayType={'text'} 
-            thousandSeparator={true} 
-            prefix={'$ '}
-            decimalScale={2}
-            className={budget.totalDebt ? classes.totalDebtInRed : ""}
-          />
-        </Typography>
-      </TableCell>
-      <TableCell align= "center" className={classes.tablecellWidth}>
-        <Typography variant="subtitle2">
-          <NumberFormat 
-            value={ budget.totalPaid / 100 }
-            displayType={'text'} 
-            thousandSeparator={true} 
-            prefix={'$ '}
-            decimalScale={2}
-            className={classes.totalPaidInGreen}
-          />
-        </Typography>
-      </TableCell>
+      <TableCell align= "center" className={classes.tablecellWidth}>{ procedure.client.fullName }</TableCell>
+      <TableCell align= "center" className={classes.tablecellWidth}>{ procedure.serialNumber }</TableCell>
+      <TableCell align= "center" className={classes.tablecellWidth}>{ procedure.budgetingTemplate.name }</TableCell>
+      <TableCell align= "center" className={classes.tablecellWidth}>{ procedure.proceduresTemplate.name }</TableCell>
+      <TableCell align= "center" className={classes.tablecellWidth}>{ procedure.reporter && procedure.reporter.avatarThumbUrl }</TableCell>
+      <TableCell align= "center" className={classes.tablecellWidth}>{ procedure.createdAt }</TableCell>
+      <TableCell align= "center" className={classes.tablecellWidth}>{ estatus(procedure) }</TableCell>
       <TableCell align= "center" className={classes.tablecellWidth}>
         <Grid>
           <GenericDropdownMenu>
-            <MenuItem key={ budget.id + "-edit" }>
+            <MenuItem key={ procedure.id + "-edit" }>
                 <Link
-                  to={`/budgets/${ budget.id }/edit`}
+                  to={`/procedures/${ procedure.id }/edit`}
                   color="inherit"
                   underline="none"
                   className={ classes.linkDefault }
@@ -78,7 +59,7 @@ const TemplateRow = (props) => {
                 </Grid>
               </Link>
             </MenuItem>
-            <MenuItem key={ budget.id + "-preview"}>
+            <MenuItem key={ procedure.id + "-preview"}>
               <Link
                 to="#"
                 color="inherit"
@@ -93,7 +74,7 @@ const TemplateRow = (props) => {
                 </Grid>
               </Link>
             </MenuItem>
-            <MenuItem key={ budget.id + "-print"}>
+            <MenuItem key={ procedure.id + "-print"}>
               <Link
                 to="#"
                 color="inherit"
