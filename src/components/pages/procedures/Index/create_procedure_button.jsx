@@ -15,7 +15,7 @@ import StepperBudget                      from './stepper_budget';
 
 const CreateBudgetButton = (props) => {
   const {classes} = props
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = useState(false)
 
   const handleClickOpen = (event) => {
     setOpen(true);

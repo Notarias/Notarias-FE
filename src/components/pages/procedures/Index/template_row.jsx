@@ -21,7 +21,7 @@ import Chip                           from '@material-ui/core/Chip';
 
 const TemplateRow = (props) => {
 
-  const {procedure, classes} = props
+  const {procedure, classes} = props;
   const [open, setOpen] = React.useState(false);
 
   const estatus = (params) => {

@@ -21,8 +21,8 @@ const ProceduresIndex = (props) => {
 
   const { classes } = props
   const [searchLoading, setSearchLoading] = useState(false);
-  const [changeAdvanceSearch, setChangeAdvanceSearch] = React.useState(true);
-  const [advanceSearchActived, setAdvanceSearchActived] = React.useState(false);
+  const [changeAdvanceSearch, setChangeAdvanceSearch] = useState(true);
+  const [advanceSearchActived, setAdvanceSearchActived] = useState(false);
   const [page, setPage] = useState(0);
   const [per, setPer] = useState(5);
   const [timeout, setSetTimeout] = useState(null);

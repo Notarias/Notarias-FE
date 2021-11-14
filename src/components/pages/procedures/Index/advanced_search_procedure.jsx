@@ -1,4 +1,4 @@
-import React, {useState}                    from 'react'
+import React, { useState }                    from 'react'
 import Grid                                 from '@material-ui/core/Grid';
 import TextField                            from '@material-ui/core/TextField';
 import { withStyles }                       from '@material-ui/core/styles';
@@ -22,11 +22,11 @@ const AdvancedSearchProcedure = (props) => {
     createdAtInputRef
   } = props
  
-  const [changeClientName, setChangeClientName] = React.useState(null)
-  const [changeSerialNumber, setChangeSerialNumber] = React.useState(null)
-  const [changeBudgetTemplateName, setChangeBudgetTemplateName] = React.useState(null)
-  const [changeProcedureTemplateName, setChangeProcedureTemplateName]  = React.useState(null)
-  const [changeCreatedAt, setChangeCreatedAt] = React.useState(null)
+  const [changeClientName, setChangeClientName] = useState(null)
+  const [changeSerialNumber, setChangeSerialNumber] = useState(null)
+  const [changeBudgetTemplateName, setChangeBudgetTemplateName] = useState(null)
+  const [changeProcedureTemplateName, setChangeProcedureTemplateName]  = useState(null)
+  const [changeCreatedAt, setChangeCreatedAt] = useState(null)
   
 
   const onChangeClientName = (event) => {

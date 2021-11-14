@@ -1,4 +1,4 @@
-import React, { createRef }               from 'react'
+import React, { useState, createRef }     from 'react'
 import Grid                               from '@material-ui/core/Grid';
 import CircularProgress                   from '@material-ui/core/CircularProgress';
 import SearchIcon                         from '@material-ui/icons/Search';
@@ -20,7 +20,6 @@ const SearchInput = (props) => {
     setSimpleSearchValue,
     setSerialNumberValue,
     setClientFullName,
-    setCausantFullName,
     setBudgetingTemplateName,
     setProceduresTemplateName,
     setCreatedAt,
@@ -28,7 +27,7 @@ const SearchInput = (props) => {
     advanceSearchActived,
     setAdvanceSearchActived
   } = props
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = useState(false)
   const simpleSearchInputRef = createRef()
 
   const handleClickOpen = (event) => {
