@@ -47,39 +47,32 @@ const Edit = (props) => {
 
   return(
     <>
-    <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
-      <Grid className={classes.rootEdit}>
-        <main
-          className={clsx(classes.content, {
-            [classes.contentShift]: open,
-          })}
-        >
-          <div className={classes.drawerHeader} />
-          <Grid container>
-            <Grid container item direction="row" justifyContent="center" alignItems="center"sm={11} >
-              <EditForm classes={ classes } history={props.history} match={props.match.params} data={data} loadingClient={loading}/>
-            </Grid>
-            <Grid 
-              container
-              direction="row"
-              justifyContent="flex-end"
-              alignItems="center"
-            >
-              <Paper className={classes.paper_button_chat_margin}>
-                <div>
-                  <IconButton
-                    color="inherit"
-                    aria-label="open drawer"
-                    onClick={handleDrawerOpen}
-                    className={clsx(open && classes.hide)}
-                  >
-                    <ChatIcon fontSize="large" />
-                  </IconButton>
-                </div>
-              </Paper>
-            </Grid>
+      <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
+      <Grid>
+        <Grid container>
+          <Grid container item direction="row" justifyContent="center" alignItems="center"sm={11} >
+            <EditForm classes={ classes } history={props.history} match={props.match.params} data={data} loadingClient={loading}/>
           </Grid>
-        </main>
+          <Grid 
+            container
+            direction="row"
+            justifyContent="flex-end"
+            alignItems="center"
+          >
+            <Paper className={classes.paper_button_chat_margin}>
+              <div>
+                <IconButton
+                  color="inherit"
+                  aria-label="open drawer"
+                  onClick={handleDrawerOpen}
+                  className={clsx(open && classes.hide)}
+                >
+                  <ChatIcon fontSize="large" />
+                </IconButton>
+              </div>
+            </Paper>
+          </Grid>
+        </Grid>
         <Drawer
           className={classes.drawer}
           variant="persistent"

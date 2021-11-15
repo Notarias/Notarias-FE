@@ -32,7 +32,7 @@ export default function BaseRoutes(props) {
   const { styles } = props
 
   return(
-    <div style={{ height: "100%" }}>
+    <div style={{ minHeight: "100vh" }}>
       <GlobalMessage classes={styles}/>
       <Switch>
         { !localStorage.jwtToken &&

@@ -76,7 +76,7 @@ const FieldValue = (props) => {
           {field.name}
         </Typography>
       </Grid>
-      <Grid item xs={3} justifyContent="flex-start">
+      <Grid item xs={3}>
         <TotalValue
           setPristine={setPristine}
           withValue={withValue}
@@ -87,7 +87,7 @@ const FieldValue = (props) => {
           setChangeFieldValue={setChangeFieldValue}
         />
       </Grid>
-      <Grid item xs={3} justifyContent="center">
+      <Grid item xs={3}>
         <Typography gutterBottom align='center'>
           <NumberFormat 
             value={totalDebt} 

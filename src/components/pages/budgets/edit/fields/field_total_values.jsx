@@ -6,6 +6,8 @@ import { styles }                                   from '../../styles';
 import { useQuery }                                 from '@apollo/client';
 import { GET_BUDGET_TOTALS }                        from '../../queries_and_mutations/queries'
 import NumberFormat                                 from 'react-number-format';
+import Box                                          from '@material-ui/core/Box';
+import Divider                                      from '@material-ui/core/Divider';
 
 
 const FieldTotalValues = (props) => {
@@ -21,61 +23,79 @@ const FieldTotalValues = (props) => {
 
   return(
     <>
-      <Grid container item xs={7} justifyContent="flex-end">
-        <Typography variant="body2">
-          Total cargos 
-        </Typography>
-      </Grid>
-      <Grid container item xs={5} justifyContent="flex-end" className={classes.totalsGridAmount}>
-        <NumberFormat 
-          value={data && data.budgetTotals.total / 100}
-          displayType={'text'} 
-          thousandSeparator={true} 
-          prefix={'$ '}
-          decimalScale={2}
-        />
-      </Grid>
-      <Grid container item xs={7} justifyContent="flex-end">
-        <Typography variant="body2">
-          Ingresos
-        </Typography>
-      </Grid>
-      <Grid container item xs={5} justifyContent="flex-end" className={classes.totalsGridAmount}>
-        <NumberFormat 
-          value={data && data.budgetTotals.totalCredit / 100}
-          displayType={'text'} 
-          thousandSeparator={true} 
-          prefix={'$ '}
-          decimalScale={2}
-        />
-      </Grid>
-      <Grid container item xs={7} justifyContent="flex-end">
-        <Typography variant="body2">
-          Por saldar
-        </Typography>
-      </Grid>
-      <Grid container item xs={5} justifyContent="flex-end" className={classes.totalsGridAmount}>
-        <NumberFormat 
-          value={data && data.budgetTotals.totalDebt / 100}
-          displayType={'text'} 
-          thousandSeparator={true} 
-          prefix={'$ '}
-          decimalScale={2}
-        />
-      </Grid>
-      <Grid container item xs={7} justifyContent="flex-end">
-        <Typography variant="body2">
-          Egresos
-        </Typography>
-      </Grid>
-      <Grid container item xs={5} justifyContent="flex-end" className={classes.totalsGridAmount}>
-        <NumberFormat 
-          value={data && data.budgetTotals.totalPaid / 100}
-          displayType={'text'} 
-          thousandSeparator={true} 
-          prefix={'$ '}
-          decimalScale={2}
-        />
+      <Grid container item direction="column"  justifyContent="flex-start" alignItems="stretch">
+        <Grid container item>
+          <Grid container item xs={7} justifyContent="flex-end">
+            <Typography component="div" variant="body1">
+              <Box color="success.main">
+                Ingresos
+              </Box>
+            </Typography>
+          </Grid>
+          <Grid container item xs={5} justifyContent="flex-start" className={classes.totalsGridAmount}>
+            <Typography component="div" variant="body1">
+              <NumberFormat 
+                value={data && data.budgetTotals.totalCredit / 100}
+                displayType={'text'} 
+                thousandSeparator={true} 
+                prefix={'$ '}
+                decimalScale={2}
+              />
+            </Typography>
+          </Grid>
+        </Grid>
+        <Grid container item>
+          <Grid container item xs={7} justifyContent="flex-end">
+            <Typography component="div" variant="body1">
+              Total cargos 
+            </Typography>
+          </Grid>
+          <Grid container item xs={5} justifyContent="flex-start" className={classes.totalsGridAmount}>
+            <NumberFormat 
+              value={data && data.budgetTotals.total / 100}
+              displayType={'text'} 
+              thousandSeparator={true} 
+              prefix={'$ '}
+              decimalScale={2}
+            />
+          </Grid>
+        </Grid>
+        <Grid container item>
+          <Grid container item xs={7} justifyContent="flex-end">
+            <Box color="secondary.main">
+              <Typography variant="body2">
+                Egresos
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid container item xs={5} justifyContent="flex-start" className={classes.totalsGridAmount}>
+            <NumberFormat 
+              value={data && data.budgetTotals.totalPaid / 100}
+              displayType={'text'} 
+              thousandSeparator={true} 
+              prefix={'$ '}
+              decimalScale={2}
+            />
+          </Grid>
+        </Grid>
+        <Grid container item>
+          <Grid container item xs={7} justifyContent="flex-end">
+            <Box color={"primary.main"}>
+              <Typography variant="body2">
+                Por saldar
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid container item xs={5} justifyContent="flex-start" className={classes.totalsGridAmount}>
+            <NumberFormat 
+              value={data && data.budgetTotals.totalDebt / 100}
+              displayType={'text'} 
+              thousandSeparator={true} 
+              prefix={'$ '}
+              decimalScale={2}
+            />
+          </Grid>
+        </Grid>
       </Grid>
     </>
   )

@@ -64,14 +64,14 @@ const renderSearchList = (searchList, classes, selectedIndex, handleListItemClic
 
 const Asignee = (props) => {
   const { classes, asigneeData, budgetId }  = props
-  const [open, setOpen]                     = React.useState(false)
-  const [searchList, setSearchList]         = React.useState([])
-  const [fuzzySearcher, setFuzzySearcher]   = React.useState(new Fuse(users, { keys: ['firstName'] }))
-  const [initialized, setInitialized]       = React.useState()
-  const [assigneToMutation, setAssigneToMutation] = React.useState()
+  const [open, setOpen]                     = useState(false)
+  const [searchList, setSearchList]         = useState([])
+  const [fuzzySearcher, setFuzzySearcher]   = useState(new Fuse(users, { keys: ['firstName'] }))
+  const [initialized, setInitialized]       = useState()
+  const [assigneToMutation, setAssigneToMutation] = useState()
 
-  const [selectedIndex, setSelectedIndex]   = React.useState(1);
-  const [asignee, setAsignee]               = React.useState()
+  const [selectedIndex, setSelectedIndex]   = useState(1);
+  const [asignee, setAsignee]               = useState()
   const [sortField, setSortField]           = useState("first_name")
   const [sortDirection, setSortDirection]   = useState("desc")
   const [searchField]                       = useState("first_name_or_last_name_or_email_cont")
@@ -80,7 +80,8 @@ const Asignee = (props) => {
   const [page, setPage]                     = useState(1)
   const [per, setPer]                       = useState(100)
   const [total_records, setTotalRecords]    = useState(0)
-  const [pristine, setPristine] = useState(true)
+  const [pristine, setPristine]             = useState(true)
+  const [users, setUsers]                   = useState([])
 
   let variables = {
     page: page,
@@ -100,8 +101,6 @@ const Asignee = (props) => {
   const { loading, data, refetch } = useQuery(
     LOAD_USERS, { variables: variables }
   );
-
-  const [users, setUsers] = React.useState([])
 
   useEffect(() => {
     if (!initialized && data && data.users) {
@@ -195,17 +194,18 @@ const Asignee = (props) => {
   }
 
   return (
-    <Grid container direction="row" alignItems="center">
-      <a href="#" className={classes.aWithoutDecoration} onClick={handleClickOpen}>
-        <Grid container direction="row" alignItems="center">
-          <Avatar 
+    <Grid container direction="row" alignItems="flex-start">
+      <Grid container alignItems="center" justifyContent='flex-start' onClick={handleClickOpen}>
+        <Grid item xs={3} md={2} lg={1}>
+          <Avatar
             src={asignee ? asignee.avatarThumbUrl : "/broken-image.jpg" }
-            className={classes.avatarOfInCharge}
             size="small"
           />
-          <Typography variant="caption">{asignee && asignee.firstName} {asignee && asignee.lastName}</Typography>
+        </Grid> 
+        <Grid item xs={9} md={10} lg={11}>
+          <Typography noWrap align='left' style={{ paddingLeft: "10px", paddingRight: "10px" }}>{asignee && asignee.firstName} {asignee && asignee.lastName}</Typography>
         </Grid>
-      </a>
+      </Grid>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>
           Asignar encargado

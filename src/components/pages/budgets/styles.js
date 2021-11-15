@@ -105,7 +105,6 @@ export const styles = theme => {
       height: "100%"
     },
     budgetRightOptionsList: {
-      marginTop: '10px',
       width: "100%",
       height:"608px"
     },
@@ -208,11 +207,7 @@ export const styles = theme => {
       textDecoration: "none !IMPORTANT"
     },
     avatarOfInCharge : {
-      marginLeft: "22px",
-      marginRight: "10px",
-      marginBottom: "5px",
-      height: "30px",
-      width: "30px"
+      
     },
     reporterAvatar : {
       marginLeft: "10px",
@@ -221,7 +216,7 @@ export const styles = theme => {
       width: "30px"
     },
     aWithoutDecoration: {
-      textDecoration: "none !IMPORTANT"
+      textDecoration: "none !important"
     },
     searchAsigneeInput: {
       marginBottom: "10px"

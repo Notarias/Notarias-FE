@@ -264,7 +264,12 @@ export const GET_BUDGETS = gql`
       totalPaid
       createdAt
       asigneeId
-      asignee{
+      asignee {
+        firstName
+        lastName
+        avatarThumbUrl
+      }
+      reporter {
         firstName
         lastName
         avatarThumbUrl

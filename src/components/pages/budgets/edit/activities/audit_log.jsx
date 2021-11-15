@@ -23,32 +23,31 @@ const AuditLog = (props) => {
     [data]
   )
 
-
   return(
-    <Grid className={classes.uditLogGrid}>
-      {
-        auditLog.map((obj) => {
-          const getCurrentDate = (separator='/') => {
-            let newDate = new Date(Date.parse(obj.createdAt))
-            let date = newDate.getDate();
-            let month = newDate.getMonth() + 1;
-            let year = newDate.getFullYear();
-            let hours = newDate.getHours();
-            let minutes = newDate.getMinutes();
-        
-            return (
-              `${date}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${year}-
-                ${hours}:${minutes < 10 ? `0${minutes}` : `${minutes}`}`
-            )
-          }
-
-            function createMarkup() {
-              return {__html: obj.message};
+    <Grid container item style={{}}>
+      <Grid container item justifyContent="flex-start" style={{ height: 'fit-content' }}>
+        {
+          auditLog.map((obj) => {
+            const getCurrentDate = (separator='/') => {
+              let newDate = new Date(Date.parse(obj.createdAt))
+              let date = newDate.getDate();
+              let month = newDate.getMonth() + 1;
+              let year = newDate.getFullYear();
+              let hours = newDate.getHours();
+              let minutes = newDate.getMinutes();
+          
+              return (
+                `${date}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${year}-
+                  ${hours}:${minutes < 10 ? `0${minutes}` : `${minutes}`}`
+              )
             }
 
-          return(
-            <React.Fragment key={obj.id + "fragment"}>
-              <Grid container direction="row" alignItems="center" className={classes.topMarginGrid}>
+              function createMarkup() {
+                return {__html: obj.message};
+              }
+
+            return(
+              <Grid container item key={obj.id + "fragment"} direction="row" alignItems="center" tyle={{ marginTop: "10px" }}>
                 <Grid container item xs={2} alignItems="center" justifyContent="center">
                   <Avatar 
                     src={obj.user.avatarThumbUrl ? obj.user.avatarThumbUrl : "/broken-image.jpg" }
@@ -63,10 +62,10 @@ const AuditLog = (props) => {
                   </Typography>
                 </Grid>
               </Grid>
-            </React.Fragment>
-          )
-        })
-      }
+            )
+          })
+        }
+      </Grid>
     </Grid>
   )
 }

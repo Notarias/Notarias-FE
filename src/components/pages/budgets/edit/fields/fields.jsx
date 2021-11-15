@@ -3,6 +3,7 @@ import { useQuery }                           from '@apollo/client';
 import { GET_BUDGETING_TEMPLATE_TAB_FIELDS }  from '../../queries_and_mutations/queries'
 import Grid                                   from '@material-ui/core/Grid';
 import { withStyles }                         from '@material-ui/core/styles';
+import Divider                                from '@material-ui/core/Divider';
 import { styles }                             from '../../styles';
 import FieldValue                             from './field_value/field_value';
 import FieldTotalValues                       from './field_total_values';
@@ -29,45 +30,43 @@ const Fields = (props) => {
     data && setFields(data.budgetingTemplateTabFields);;
   }, [data])
 
-  useEffect(() => {
-    if (parentRef.current && !scrollHeight) {
-      setScrollHeight(parentRef.current.scrollHeight)
-    }
-  }, [parentRef.current && parentRef.current.scrollHeight])
-  console.log(scrollHeight)
+  // useEffect(() => {
+  //   if (parentRef.current && !scrollHeight) {
+  //     setScrollHeight(parentRef.current.scrollHeight)
+  //   }
+  // }, [parentRef.current && parentRef.current.scrollHeight])
 
   const renderFields = () => {
 
     return(
-          <Grid item container style={{ maxHeight: scrollHeight, overflowY: "scroll" }}>
-            <Grid item container style={{ height: 'fit-content' }}justifyContent="flex-end">
-              <Grid item container justifyContent="flex-start" direction='column' xs={12}>
-                {
-                  fields.map((field) => {
-                    return(
-                      <FieldValue
-                        currentBudget={currentBudget}
-                        field={field}
-                        key={field.id + "-field"}
-                      />
-                    )
-                  })
-                }
-              </Grid>
-              <Grid container item xs={12}>
-                <Grid container item direction="row" xs={8}>
-                  <CreateComments
-                    budgetId={budgetId}
-                  />
-                </Grid>
-                <Grid container item xs={4} alignItems="center" className={classes.totalValuesGridContainer}>
-                  <FieldTotalValues
-                    budgetId={budgetId}
-                  />
-                </Grid>
-              </Grid>
+      <Grid item container style={{ flex: '1 1 auto' }} direction='column' alignItems="stretch" justifyContent="flex-start" >
+        <Grid item container justifyContent="flex-start">
+          {
+            fields.map((field) => {
+              return(
+                <FieldValue
+                  currentBudget={currentBudget}
+                  field={field}
+                  key={field.id + "-field"}
+                />
+              )
+            })
+          }
+        </Grid>
+        <Divider variant="middle"/>
+        <Grid container  justifyContent="flex-end" item style={{ paddingTop: "20px", paddingBottom: "20px" }}>
+            <Grid container item direction="row" xs={8}>
+              <CreateComments
+                budgetId={budgetId}
+              />
+            </Grid>
+            <Grid container item xs={4} alignItems="center" className={classes.totalValuesGridContainer}>
+              <FieldTotalValues
+                budgetId={budgetId}
+              />
             </Grid>
           </Grid>
+      </Grid>
     )
   }
 

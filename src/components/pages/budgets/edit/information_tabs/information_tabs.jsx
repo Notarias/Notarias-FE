@@ -1,4 +1,4 @@
-import React, { useEffect, useRef }                 from 'react';
+import React, { useEffect, useRef, useState }                 from 'react';
 import PropTypes                            from 'prop-types';
 import { makeStyles }                       from '@material-ui/core/styles';
 import AppBar                               from '@material-ui/core/AppBar';
@@ -16,10 +16,10 @@ import { styles }                           from '../../styles';
 
 const InformationTabs = (props) => {
   const { classes, budgetInfo, budgetId, budgetTemplateId } = props
-  const [value, setValue] = React.useState(0);
-  const [tabList, setTabList] = React.useState(data ? data.budgetingTemplateTabs: []);
-  const [currentTab, setCurrentTab] = React.useState( data ? data.budgetingTemplateTabs[0] : "")
-  const fieldListWrapperElement = useRef()
+  const [value, setValue] = useState(0);
+  const [tabList, setTabList] = useState(data ? data.budgetingTemplateTabs: []);
+  const [currentTab, setCurrentTab] = useState( data ? data.budgetingTemplateTabs[0] : "");
+  const fieldListWrapperElement = useRef();
 
   const { data } = useQuery(
     GET_BUDGETING_TEMPLATES_TABS, { variables: {"id": budgetTemplateId }}
@@ -57,7 +57,7 @@ const InformationTabs = (props) => {
 
 
   return (
-    <Grid container item style={{ flexGrow: "1" }} direction="column"  justifyContent="flex-start" alignItems="stretch" >
+    <Grid container item direction="column"  justifyContent="flex-start" alignItems="stretch" >
       <Grid item>
         <AppBar position="static">
           <Tabs 
@@ -88,7 +88,7 @@ const InformationTabs = (props) => {
         </Grid>
       </Grid>
       <Divider/>
-      <Grid item container justifyContent='flex-start' style={{ flexGrow: '1'}} ref={fieldListWrapperElement}>
+      <Grid item container justifyContent='flex-start' style={{ flex: '1 1 auto'}}>
         <Fields
           parentRef={fieldListWrapperElement}
           currentTab={currentTab && currentTab}
