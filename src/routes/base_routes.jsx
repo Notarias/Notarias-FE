@@ -17,6 +17,7 @@ import BudgetInvoice                  from '../components/pages/budgets/edit/bud
 import BudgetsEdit                    from '../components/pages/budgets/edit';
 import budgetsNew                     from '../components/pages/budgets/new'
 import BudgetsIndex                   from '../components/pages/budgets/index';
+import ProcedureNew                   from '../components/pages/procedures/new';
 import ProceduresIndex                from '../components/pages/procedures/index';
 import AppointmentsIndex              from '../components/pages/appointments/index';
 import ReportsIndex                   from '../components/pages/reports/index';
@@ -50,6 +51,7 @@ export default function BaseRoutes(props) {
         <ProtectedRoute path='/budgets/:id/edit' component={BudgetsEdit} />
         <ProtectedRoute path='/budgets/new' component={budgetsNew}/>{/* TODO: corregir a mayusculas*/}
         <ProtectedRoute path='/budgets' component={BudgetsIndex} />
+        <ProtectedRoute path="/procedures/new" component={ProcedureNew}/>
         <ProtectedRoute path="/procedures" component={ProceduresIndex}/>
         <ProtectedRoute path="/appointments" component={AppointmentsIndex}/>
         <ProtectedRoute path="/reports" component={ReportsIndex}/>
