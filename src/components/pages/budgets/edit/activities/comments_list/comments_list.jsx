@@ -1,20 +1,16 @@
 import React, {useEffect} from 'react'
 import { withStyles }                       from '@material-ui/core/styles';
-import { styles }                           from '../../../styles';
+import Grid                                 from '@material-ui/core/Grid';
 import { useQuery }                         from '@apollo/client';
-import { GET_COMMENTABLE_COMMENTS } from '../../../queries_and_mutations/queries'
-import Avatar                               from '@material-ui/core/Avatar';
-import Typography                           from '@material-ui/core/Typography';
-import Grid                         from '@material-ui/core/Grid';
-import Button                               from '@material-ui/core/Button';
-import TextField                            from '@material-ui/core/TextField';
+import { styles }                           from '../../../styles';
+import { GET_COMMENTABLE_COMMENTS }         from '../../../queries_and_mutations/queries'
 import CommentEdit                          from './comment_edit';
 
 const CommentsList = (props) => {
-  const { classes, budgetId } = props
+  const { budget } = props
 
   const { loading, data, refetch } = useQuery(
-    GET_COMMENTABLE_COMMENTS, { variables: {"commentableType": "Budget", "commentableId": budgetId } }
+    GET_COMMENTABLE_COMMENTS, { variables: {"commentableType": "Budget", "commentableId": budget.id }, fetchPolicy: "no-cache" }
   );
 
   const [comments, setComments] = React.useState(data ? data.commentableComments : [])
@@ -27,15 +23,19 @@ const CommentsList = (props) => {
   )
 
   return(
-    comments.map((comment) => {
-      return(
-        <CommentEdit
-          key={comment.id + "comment-edit"}
-          comment={comment}
-          budgetId={budgetId}
-        />
-      )
-    })
+    <Grid item container justifyContent='flex-start' spacing={2}>
+      {
+        comments.map((comment) => {
+          return(
+            <CommentEdit
+              key={comment.id + "comment-edit"}
+              comment={comment}
+              budget={budget}
+            />
+          )
+        })
+      }
+    </Grid>
   )
 }
 

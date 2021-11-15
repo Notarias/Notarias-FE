@@ -15,14 +15,14 @@ import { withStyles }                       from '@material-ui/core/styles';
 import { styles }                           from '../../styles';
 
 const InformationTabs = (props) => {
-  const { classes, budgetInfo, budgetId, budgetTemplateId } = props
+  const { classes, budget } = props
   const [value, setValue] = useState(0);
   const [tabList, setTabList] = useState(data ? data.budgetingTemplateTabs: []);
   const [currentTab, setCurrentTab] = useState( data ? data.budgetingTemplateTabs[0] : "");
   const fieldListWrapperElement = useRef();
 
   const { data } = useQuery(
-    GET_BUDGETING_TEMPLATES_TABS, { variables: {"id": budgetTemplateId }}
+    GET_BUDGETING_TEMPLATES_TABS, { variables: {"id": budget.budgetingTemplate.id }}
   );
 
   useEffect(() => {
@@ -92,8 +92,7 @@ const InformationTabs = (props) => {
         <Fields
           parentRef={fieldListWrapperElement}
           currentTab={currentTab && currentTab}
-          budgetInfo={budgetInfo}
-          budgetId={budgetId}
+          budget={budget}
         />
       </Grid>
     </Grid>

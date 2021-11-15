@@ -22,7 +22,7 @@ import PaymentList                                  from './payment_list/payment
 
 
 const FieldValue = (props) => {
-  const { classes, currentBudget, field: templateField } = props
+  const { classes, budget, field: templateField } = props
   const [pristine, setPristine] = useState(false)
   const [initialFieldValue, setInitialFieldValue] = useState(0)
   const [withValue, setWithValue] = useState(data && data.budgetFieldValue ? true : false )
@@ -35,7 +35,7 @@ const FieldValue = (props) => {
   const { data } = useQuery(
     GET_BUDGET_FIELD_VALUE,
     {
-      variables: { "budgetingTemplateFieldId": field.id , "budgetId": currentBudget }
+      variables: { "budgetingTemplateFieldId": field.id , "budgetId": budget.id }
     }
   );
 
@@ -101,7 +101,7 @@ const FieldValue = (props) => {
       <Grid container item xs={2} direction='row' justifyContent="flex-start" alignItems="center">
         <Grid item xs={3}>
           <AddFieldValue
-            currentBudget={currentBudget}
+            budget={budget}
             fieldId={field.id}
             withValue={withValue}
             setWithValue={setWithValue}
@@ -120,7 +120,7 @@ const FieldValue = (props) => {
               <Payment
                 initialFieldValue={initialFieldValue}
                 totalDebt={totalDebt}
-                currentBudget={currentBudget}
+                budget={budget}
                 fieldValueId={ data && data.budgetFieldValue ? data.budgetFieldValue.id : ""}
                 fieldId={field.id}
               />

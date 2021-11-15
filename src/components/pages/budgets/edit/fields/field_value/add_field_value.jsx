@@ -15,7 +15,7 @@ import { GET_BUDGETS_AUDITLOG } from '../../../queries_and_mutations/queries';
 
 const AddFieldValue = (props) => {
   const {
-    currentBudget, 
+    budget, 
     fieldId,
     withValue, 
     setWithValue, 
@@ -50,15 +50,15 @@ const AddFieldValue = (props) => {
       refetchQueries: [
         {
           query: GET_BUDGET_FIELD_VALUE,
-          variables: { "budgetingTemplateFieldId": fieldId , "budgetId": currentBudget }
+          variables: { "budgetingTemplateFieldId": fieldId , "budgetId": budget.id }
         },
         {
           query: GET_BUDGETS_AUDITLOG,
-          variables: { "budgetId": currentBudget }
+          variables: { "budgetId": budget.id }
         },
         {
           query: GET_BUDGET_TOTALS,
-            variables: {"id": currentBudget }
+            variables: { "id": budget.id }
         }
       ],
       awaitRefetchQueries: true
@@ -69,7 +69,7 @@ const AddFieldValue = (props) => {
     createFieldValueMutation({
        variables:{
         "budgetingTemplateFieldId": fieldId,
-        "budgetId": currentBudget, 
+        "budgetId": budget.id, 
         "value": (changeFieldValue * 100)}
     })
   }
@@ -91,19 +91,19 @@ const AddFieldValue = (props) => {
       refetchQueries: [
         {
           query: GET_BUDGET_FIELD_VALUE,
-          variables: { "budgetingTemplateFieldId": fieldId , "budgetId": currentBudget }
+          variables: { "budgetingTemplateFieldId": fieldId , "budgetId": budget.id }
         },
         {
           query: GET_BUDGET,
-          variables: {"id": currentBudget }
+          variables: {"id": budget.id }
         },
         {
           query: GET_BUDGETS_AUDITLOG,
-          variables: { "budgetId": currentBudget }
+          variables: { "budgetId": budget.id }
         },
         {
           query: GET_BUDGET_TOTALS,
-            variables: {"id": currentBudget }
+            variables: {"id": budget.id }
         }
       ],
       awaitRefetchQueries: true

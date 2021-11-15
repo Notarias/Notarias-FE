@@ -12,8 +12,7 @@ import CreateComments                         from './create_comments';
 
 
 const Fields = (props) => {
-  const { currentTab, budgetInfo, classes, budgetId, parentRef} = props;
-  const currentBudget = budgetId
+  const { currentTab, budget, classes} = props;
   const [currentFieldId, setCurrentFieldId] =  React.useState(null)
   const [scrollHeight, setScrollHeight] = useState()
 
@@ -45,7 +44,7 @@ const Fields = (props) => {
             fields.map((field) => {
               return(
                 <FieldValue
-                  currentBudget={currentBudget}
+                  budget={budget}
                   field={field}
                   key={field.id + "-field"}
                 />
@@ -56,14 +55,10 @@ const Fields = (props) => {
         <Divider variant="middle"/>
         <Grid container  justifyContent="flex-end" item style={{ paddingTop: "20px", paddingBottom: "20px" }}>
             <Grid container item direction="row" xs={8}>
-              <CreateComments
-                budgetId={budgetId}
-              />
+              <CreateComments budget={budget}/>
             </Grid>
             <Grid container item xs={4} alignItems="center" className={classes.totalValuesGridContainer}>
-              <FieldTotalValues
-                budgetId={budgetId}
-              />
+              <FieldTotalValues budget={budget}/>
             </Grid>
           </Grid>
       </Grid>

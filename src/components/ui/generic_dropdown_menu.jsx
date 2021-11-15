@@ -21,9 +21,10 @@ export default class GenericDropdownMenu extends React.Component {
 
   render() {
     const { anchorEl } = this.state;
-    const { children, user, handleClose } = this.props;
+    const { children, user, handleClose, icon: Icon } = this.props;
 
     const open = Boolean(anchorEl);
+    console.log(Icon)
     return (
       <div>
         <IconButton
@@ -32,7 +33,7 @@ export default class GenericDropdownMenu extends React.Component {
           aria-haspopup="true"
           onClick={this.handleClick}
         >
-          <MoreVertIcon />
+          { Icon ? <Icon/> : <MoreVertIcon /> }
         </IconButton>
         <Menu
           id="long-menu"

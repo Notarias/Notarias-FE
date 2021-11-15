@@ -26,7 +26,7 @@ import { GET_BUDGETS_AUDITLOG }       from '../queries_and_mutations/queries';
 
 export default (props) => {
 
-  const { classes, reporterData, budgetId } = props
+  const { reporterData } = props
 
   const [reporter, setReporter] = useState(reporterData)
 
@@ -35,9 +35,9 @@ export default (props) => {
   }, [!!reporterData])
 
   return(
-    <Grid container direction="row" alignItems="left">
-      <Button fullWidth style={{ }} >
-        <Grid container xs={12} alignItems="center" justifyContent='flex-start' style={{ cursor: 'pointer' }}>
+    <Grid container direction="row">
+      <Button fullWidth style={{ padding: '10px' }}>
+        <Grid container alignItems="center" justifyContent='flex-start'>
           <Grid item xs={3} md={2} lg={1}>
             <Avatar
               src={reporter ? reporter.avatarThumbUrl : "/broken-image.jpg" }
@@ -45,39 +45,12 @@ export default (props) => {
             />
           </Grid> 
           <Grid item xs={9} md={10} lg={11}>
-            <Typography noWrap align='left' style={{ paddingLeft: "10px", paddingRight: "10px" }}>{reporter && reporter.firstName} {reporter && reporter.lastName}</Typography>
+            <Typography noWrap align='left' style={{ paddingLeft: "10px", paddingRight: "10px" }}>
+              <strong>{reporter && reporter.firstName} {reporter && reporter.lastName}</strong>
+            </Typography>
           </Grid>
         </Grid>
       </Button>
-      {/* <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>
-          Asignar encargado
-        </DialogTitle>
-        <DialogContent>
-          <TextField
-            onChange={ changeSearch }
-            id="fuse-basic"
-            label="Buscar"
-            variant="outlined"
-            fullWidth
-            className={classes.searchReporterInput}
-          />
-          {
-            renderSearchList(searchList, classes,  selectedIndex, handleListItemClick, haveThumbUrl)
-          }
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>
-            Cancelar
-          </Button>
-          <Button 
-            onClick={() => {assingUser()}}
-            disabled={pristine || updateBudgetLoading}
-          >
-            Aceptar
-          </Button>
-        </DialogActions>
-      </Dialog> */}
     </Grid>
   )
 }

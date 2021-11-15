@@ -63,7 +63,7 @@ const renderSearchList = (searchList, classes, selectedIndex, handleListItemClic
 }
 
 const Asignee = (props) => {
-  const { classes, asigneeData, budgetId }  = props
+  const { classes, asigneeData, budget }  = props
   const [open, setOpen]                     = useState(false)
   const [searchList, setSearchList]         = useState([])
   const [fuzzySearcher, setFuzzySearcher]   = useState(new Fuse(users, { keys: ['firstName'] }))
@@ -149,11 +149,11 @@ const Asignee = (props) => {
       refetchQueries: [
         {
           query: GET_BUDGET,
-          variables: {"id": budgetId }
+          variables: {"id": budget.id }
         },
         {
           query: GET_BUDGETS_AUDITLOG,  
-            variables: {"budgetId":budgetId}
+            variables: { "budgetId": budget.id }
         }
       ],
       awaitRefetchQueries: true
@@ -163,7 +163,7 @@ const Asignee = (props) => {
   const assingUser = (event) => {
     updateBudgetMutation({
        variables:{
-        "id": budgetId ,
+        "id": budget.id ,
         "asigneeId": assigneToMutation.id ,
        }
     })
@@ -195,17 +195,21 @@ const Asignee = (props) => {
 
   return (
     <Grid container direction="row" alignItems="flex-start">
-      <Grid container alignItems="center" justifyContent='flex-start' onClick={handleClickOpen}>
-        <Grid item xs={3} md={2} lg={1}>
-          <Avatar
-            src={asignee ? asignee.avatarThumbUrl : "/broken-image.jpg" }
-            size="small"
-          />
-        </Grid> 
-        <Grid item xs={9} md={10} lg={11}>
-          <Typography noWrap align='left' style={{ paddingLeft: "10px", paddingRight: "10px" }}>{asignee && asignee.firstName} {asignee && asignee.lastName}</Typography>
+      <Button fullWidth style={{ padding: '10px' }}>
+        <Grid container alignItems="center" justifyContent='flex-start' onClick={handleClickOpen}>
+          <Grid item xs={3} md={2} lg={1}>
+            <Avatar
+              src={asignee ? asignee.avatarThumbUrl : "/broken-image.jpg" }
+              size="small"
+            />
+          </Grid> 
+          <Grid item xs={9} md={10} lg={11}>
+            <Typography noWrap align='left' style={{ paddingLeft: "10px", paddingRight: "10px" }}>
+              <strong>{asignee && asignee.firstName} {asignee && asignee.lastName}</strong>
+            </Typography>
+          </Grid>
         </Grid>
-      </Grid>
+      </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>
           Asignar encargado

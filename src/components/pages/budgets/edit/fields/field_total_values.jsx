@@ -11,13 +11,13 @@ import Divider                                      from '@material-ui/core/Divi
 
 
 const FieldTotalValues = (props) => {
-  const { classes, budgetId } = props
+  const { classes, budget } = props
 
 
   const { data } = useQuery(
     GET_BUDGET_TOTALS,
     {
-      variables: { "id": budgetId }
+      variables: { "id": budget.id }
     }
   );
 

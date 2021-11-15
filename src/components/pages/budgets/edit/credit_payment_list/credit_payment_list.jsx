@@ -50,12 +50,12 @@ NumberFormatCustom.propTypes = {
 
 
 const PaymentList = (props) => {
-  const {budgetId} = props
+  const { budget } = props
   const [open, setOpen] = React.useState(false)
   const [creditPayments, setCreditPayments] = React.useState(data ? data.creditPayments : [])
 
   const { loading, data, refetch } = useQuery(
-    GET_CREDIT_PAYMENTS, { variables: { "budgetId": budgetId } }
+    GET_CREDIT_PAYMENTS, { variables: { "budgetId": budget.id } }
   );
 
   useEffect(() => {
@@ -159,7 +159,7 @@ const PaymentList = (props) => {
                         <VoidOrInvoid
                           voidAt={creditPayment.voidAt}
                           paymentId={creditPayment.id}
-                          budgetId={budgetId}
+                          budget={budget}
                         />
                       </Grid>
                       <Grid container item xs={1} alignItems="center" justifyContent="center">

@@ -16,7 +16,7 @@ import { GET_BUDGET_TOTALS }                from '../../queries_and_mutations/qu
 import { GET_BUDGETS_AUDITLOG }             from '../../queries_and_mutations/queries';
 
 const VoidOrInvoid = (props) => {
-  const { classes, voidAt, paymentId, budgetId } = props
+  const { voidAt, paymentId, budget } = props
   const [statusVoid, setStatusVoid] =  React.useState(voidAt)
   const [open, setOpen] = React.useState(false)
 
@@ -38,15 +38,15 @@ const VoidOrInvoid = (props) => {
       refetchQueries: [
         {
           query: GET_CREDIT_PAYMENTS,
-          variables: {"budgetId": budgetId }
+          variables: { "budgetId": budget.id }
         },
         {
           query: GET_BUDGET_TOTALS,
-          variables: { "id": budgetId }
+          variables: { "id": budget.id }
         },
         {
           query: GET_BUDGETS_AUDITLOG,  
-            variables: {"budgetId": budgetId }
+            variables: { "budgetId": budget.id }
         }
       ],
       awaitRefetchQueries: true

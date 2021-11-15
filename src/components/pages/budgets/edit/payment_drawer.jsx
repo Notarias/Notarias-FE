@@ -50,13 +50,13 @@ NumberFormatCustom.propTypes = {
 };
 
 const PaymentDrawer = (props) => {
-  const { classes, budgetId } = props
+  const { classes, budget } = props
   const [state, setState] = React.useState({
     right: false,
   });
 
   const { loading, data, refetch } = useQuery(
-    GET_BUDGET_TOTALS, { variables: {"id": budgetId} }
+    GET_BUDGET_TOTALS, { variables: {"id": budget.id} }
   );
 
   const toggleDrawer = (anchor, open) => (event) => {
@@ -68,7 +68,6 @@ const PaymentDrawer = (props) => {
   };
 
   const list = (anchor) => {
-
     return(
       <div
         className={classes.drawerPaymentList}
@@ -76,8 +75,8 @@ const PaymentDrawer = (props) => {
         onClick={toggleDrawer(anchor, false)}
         onKeyDown={toggleDrawer(anchor, false)}
       >
-      <List>
-        <ListItem button key={"drawer-1"}>
+        <List>
+          <ListItem button key={"drawer-1"}>
           <TextField
             label="Total por pagar"
             id="Total"
@@ -90,8 +89,8 @@ const PaymentDrawer = (props) => {
               startAdornment: <InputAdornment position="start">$</InputAdornment>
             }}
           />
-        </ListItem>
-      <Divider />
+          </ListItem>
+          <Divider />
           <ListItem button key={"drawer-2"}>
             <TextField
               label="Total Abonado"
@@ -143,16 +142,12 @@ const PaymentDrawer = (props) => {
   };
 
   return (
-    <div>
-      {[ 'right'].map((anchor) => (
-        <React.Fragment key={anchor}>
-          <Button size="small" onClick={toggleDrawer(anchor, true)}>Saldo Pendiente</Button>
-          <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
-            {list(anchor)}
-          </Drawer>
-        </React.Fragment>
-      ))}
-    </div>
+    <>
+      <Button size="small" onClick={toggleDrawer('right', true)}>Saldo Pendiente</Button>
+      <Drawer anchor='right' open={state['right']} onClose={toggleDrawer('right', false)}>
+        { list('right') }
+      </Drawer>
+    </>
   );
 }
 

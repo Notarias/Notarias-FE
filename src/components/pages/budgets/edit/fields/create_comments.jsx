@@ -14,10 +14,10 @@ import { CodeSharp } from "@material-ui/icons";
 
 
 const CreateComments = (props) => {
-  const { classes, budgetId } = props
-  const [textFieldSelected, setTextFieldSelected] = React.useState(false)
-  const [commentValue, setCommentValue] = React.useState("")
-  const [pristine, setPristine] = React.useState(true)
+  const { classes, budget } = props
+  const [textFieldSelected, setTextFieldSelected] = useState(false)
+  const [commentValue, setCommentValue]           = useState("")
+  const [pristine, setPristine]                   = useState(true)
   const [error, setError] = useState(false)
 
   const inputsList = ["body"]
@@ -36,11 +36,11 @@ const CreateComments = (props) => {
       refetchQueries: [
         {
           query: GET_COMMENTABLE_COMMENTS,
-          variables: {"commentableType": "Budget" , commentableId: budgetId }
+          variables: { "commentableType": "Budget" , commentableId: budget.id }
         },
         {
           query: GET_BUDGETS_AUDITLOG,  
-            variables: {"budgetId": budgetId }
+            variables: { "budgetId": budget.id }
         }
       ],
       awaitRefetchQueries: true
@@ -63,12 +63,34 @@ const CreateComments = (props) => {
   const createNewComment = (event) => {
     createCommentMutation({
        variables:{
-        "commentableId": budgetId ,
+        "commentableId": budget.id ,
         "commentableType": "budget" , 
         "body": commentValue
        }
     })
   }
+
+  const { loading, data } = useQuery(GET_CURRENT_USER)
+
+  const valueChange = (event) => {
+    setCommentValue(event.target.value)
+    setPristine(false)
+  }
+
+  const changeTextField = () => {
+    setTextFieldSelected(true)
+  }
+
+  const handleCancel = () => {
+    setTextFieldSelected(false)
+    setPristine(true)
+    setCommentValue("")
+  }
+
+  const clearErrors = () => {
+    setError(false)
+  }
+
 
   const renderTextField = () => {
     if(textFieldSelected) {
@@ -111,27 +133,6 @@ const CreateComments = (props) => {
       )
     }
   }
-
-  const valueChange = (event) => {
-    setCommentValue(event.target.value)
-    setPristine(false)
-  }
-
-  const changeTextField = () => {
-    setTextFieldSelected(true)
-  }
-
-  const handleCancel = () => {
-    setTextFieldSelected(false)
-    setPristine(true)
-    setCommentValue("")
-  }
-
-  const clearErrors = () => {
-    setError(false)
-  }
-
-  const { loading, data } = useQuery(GET_CURRENT_USER)
 
   return(
     <>

@@ -1,4 +1,4 @@
-import React, {useEffect}           from 'react'
+import React                       from 'react'
 import { withStyles }               from '@material-ui/core/styles';
 import { styles }                   from '../../../styles';
 import Avatar                       from '@material-ui/core/Avatar';
@@ -6,20 +6,20 @@ import Typography                   from '@material-ui/core/Typography';
 import Grid                         from '@material-ui/core/Grid';
 import Button                       from '@material-ui/core/Button';
 import TextField                    from '@material-ui/core/TextField';
-import { useMutation }              from '@apollo/client';
-import { UPDATE_COMMENT }           from '../../../queries_and_mutations/queries';
-import { GET_COMMENTABLE_COMMENTS } from '../../../queries_and_mutations/queries';
 import Link                         from '@material-ui/core/Link';
-import { DESTROY_COMMENT }          from  '../../../queries_and_mutations/queries';
 import Dialog                       from '@material-ui/core/Dialog';
 import DialogActions                from '@material-ui/core/DialogActions';
 import DialogContent                from '@material-ui/core/DialogContent';
 import DialogTitle                  from '@material-ui/core/DialogTitle';
+import { useMutation }              from '@apollo/client';
+import { UPDATE_COMMENT }           from '../../../queries_and_mutations/queries';
+import { GET_COMMENTABLE_COMMENTS } from '../../../queries_and_mutations/queries';
+import { DESTROY_COMMENT }          from  '../../../queries_and_mutations/queries';
 import { GET_BUDGETS_AUDITLOG }     from '../../../queries_and_mutations/queries';
 
 
 const CommentEdit = (props) => {
-  const { classes, comment, budgetId } = props
+  const { classes, comment, budget } = props
   let body = comment.body
 
   const [commentValue, setCommentValue] = React.useState(comment.body)
@@ -46,11 +46,11 @@ const CommentEdit = (props) => {
       refetchQueries: [
         {
           query: GET_COMMENTABLE_COMMENTS,
-          variables: {"commentableType": "Budget" , commentableId: budgetId }
+          variables: {"commentableType": "Budget" , commentableId: budget.id }
         },
         {
           query: GET_BUDGETS_AUDITLOG,  
-            variables: {"budgetId": budgetId}
+            variables: { "budgetId": budget.id }
         }
       ],
       awaitRefetchQueries: true
@@ -94,11 +94,11 @@ const CommentEdit = (props) => {
       refetchQueries: [
         {
           query: GET_COMMENTABLE_COMMENTS,
-          variables: {"commentableType": "Budget" , commentableId: budgetId }
+          variables: {"commentableType": "Budget" , commentableId: budget.id }
         },
         {
           query: GET_BUDGETS_AUDITLOG,  
-            variables: {"budgetId": budgetId}
+            variables: {"budgetId": budget.id}
         }
       ],
       awaitRefetchQueries: true
@@ -177,7 +177,7 @@ const CommentEdit = (props) => {
 
   const renderTextComment = (body) => {
     return(
-      <Grid>
+      <Grid container item>
         <Grid container item className={classes.commentEditingInputGrid}>
           <Typography variant="caption" align="left">
             {comment.body}

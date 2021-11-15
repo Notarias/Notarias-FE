@@ -17,17 +17,17 @@ import Tab                  from '@material-ui/core/Tab';
 
 
 const Activities = (props) => {
-  const { budgetId } = props
+  const { budget } = props
   const [activity, setActivity] = useState(0)
 
   const  renderActivitiesMenu = () => {
     switch (activity) {
       case 0 :
-        return(<GeneralInformation budgetId={budgetId}/>)
+        return(<GeneralInformation budget={budget}/>)
       case 1 :
-        return(<CommentsList budgetId={budgetId}/>)
+        return(<CommentsList budget={budget}/>)
       case 2 :
-        return(<AuditLog budgetId={budgetId}/>)
+        return(<AuditLog budget={budget}/>)
     }
   }
 
@@ -38,7 +38,7 @@ const Activities = (props) => {
   return(
     <Grid container direction="column" justifyContent="flex-start" alignItems="stretch" style={{ height: '100%' }}>
       <Divider />
-      <Grid item justifyContent="center">
+      <Grid item>
         <Tabs variant="fullWidth" value={activity} indicatorColor='primary' textColor='primary' onChange={handleChange}>
           <Tab label='General'/>
           <Tab label='Comentarios'/>

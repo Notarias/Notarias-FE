@@ -52,7 +52,7 @@ NumberFormatCustom.propTypes = {
 };
 
 const Payment = (props) => {
-  const { initialFieldValue, totalDebt, currentBudget, fieldValueId, fieldId } = props
+  const { initialFieldValue, totalDebt, budget, fieldValueId, fieldId } = props
   const [notePayment, setNotePayment] = React.useState("")
   const [valuePayment, setValuePayment] = React.useState(0)
   const [pristine, setPristine] = React.useState(true)
@@ -75,7 +75,7 @@ const Payment = (props) => {
       refetchQueries: [
         {
         query: GET_BUDGET_FIELD_VALUE,
-          variables: { "budgetingTemplateFieldId": fieldId , "budgetId": currentBudget }
+          variables: { "budgetingTemplateFieldId": fieldId , "budgetId": budget.id }
         },
         {
           query: GET_PAYMENTS,
@@ -83,11 +83,11 @@ const Payment = (props) => {
         },
         {
           query: GET_BUDGET_TOTALS,
-          variables: {"id": currentBudget }
+          variables: { "id": budget.id }
         },
         {
           query: GET_BUDGETS_AUDITLOG,  
-            variables: {"budgetId": currentBudget }
+            variables: {"budgetId": budget.id }
         }
       ],
       awaitRefetchQueries: true
@@ -111,7 +111,7 @@ const Payment = (props) => {
     createPaymentMutation({
        variables:{
         "note": notePayment,
-        "budgetId": currentBudget,
+        "budgetId": budget.id,
         "budgetFieldValueId":fieldValueId,
         "total": (valuePayment * 100)
        }
