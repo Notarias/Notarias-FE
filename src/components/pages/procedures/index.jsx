@@ -96,9 +96,6 @@ const ProceduresIndex = (props) => {
   return(
     <>
       <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
-      <div>
-        <h1>Tramites</h1>
-      </div>
       <div className={ classes.root }>
         <SearchInput
           classes={classes}

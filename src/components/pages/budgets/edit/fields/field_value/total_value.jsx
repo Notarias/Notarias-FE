@@ -57,21 +57,13 @@ const TotalValue = (props) => {
   }, [withValue])
 
   useEffect(() => {
-    changingIntime()
-
+    changeInputStatus && setStatusChange(true)
   }, [changeInputStatus])
-
-  const changingIntime = () => {
-    return(
-    changeInputStatus ? setStatusChange(true) : false
-    )
-  }
 
   const handleChange = (event) => {
     setChangeFieldValue(event.target.value);
     setPristine(true)
   }
-
 
   const onFocusPue = () => {
     setChangeInputStatus(false)

@@ -5,7 +5,8 @@ import Grid                                   from '@material-ui/core/Grid';
 import { withStyles }                         from '@material-ui/core/styles';
 import Divider                                from '@material-ui/core/Divider';
 import { styles }                             from '../../styles';
-import FieldValue                             from './field_value/field_value';
+import FieldValue                             from './field_value';
+import TaxFieldValue                          from './tax_field_value';
 import FieldTotalValues                       from './field_total_values';
 import CreateComments                         from './create_comments';
 
@@ -43,6 +44,12 @@ const Fields = (props) => {
           {
             fields.map((field) => {
               return(
+                field.fieldType == "tax" ?
+                <TaxFieldValue
+                  budget={budget}
+                  field={field}
+                  key={field.id + "-field"}
+                /> :
                 <FieldValue
                   budget={budget}
                   field={field}

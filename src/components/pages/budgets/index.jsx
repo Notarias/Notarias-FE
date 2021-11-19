@@ -91,9 +91,6 @@ const BudgetsIndex = (props) => {
   return(
     <>
       <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
-      <div>
-        <h1>Presupuestos</h1>
-      </div>
       <div className={ classes.root }>
         <SearchInput
           classes={classes}

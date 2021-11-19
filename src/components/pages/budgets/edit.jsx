@@ -40,7 +40,7 @@ const BudgetsEdit = (props) => {
 
   return(
     <Grid container direction='column' alignItems="stretch" justifyContent="flex-start" style={{ minHeight: "100vh" }}>
-      <Grid item >
+      <Grid item>
         <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
       </Grid>
       <Grid container item style={{ flex: '1 1 auto' }}>
