@@ -69,7 +69,7 @@ export default (props) => {
     createFieldValueMutation({
        variables: {
         "budgetingTemplateFieldId": templateField.id,
-        "budgetId": budget.id, 
+        "budgetId": budget.id,
         "value": (editingValue * 100)}
     })
   }

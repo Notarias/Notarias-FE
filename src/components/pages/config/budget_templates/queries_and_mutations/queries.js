@@ -187,6 +187,11 @@ export const GET_BUDGETING_TEMPLATE_TAB_FIELDS = gql`
         createdAt
         updatedAt
       }
+      taxable_taxes {
+        id
+        name
+        total
+      }
     }
   }
 `
