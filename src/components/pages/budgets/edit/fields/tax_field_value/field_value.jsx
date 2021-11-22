@@ -6,6 +6,7 @@ import { GET_BUDGET_FIELD_VALUE }                   from '../../../queries_and_m
 import GenericDropdownMenu                          from '../../../../../ui/generic_dropdown_menu';
 import SaveButton                                   from './save_button';
 import TotalValue                                   from './total_value';
+import TaxedFields                                  from './taxed_fields';
 // import Payment                                      from './payment'
 import MenuItem                                     from '@material-ui/core/MenuItem';
 import AccountBalanceIcon                           from '@material-ui/icons/AccountBalance';
@@ -16,8 +17,11 @@ import Box                                          from '@material-ui/core/Box'
 import Typography                                   from '@material-ui/core/Typography';
 import Grid                                         from '@material-ui/core/Grid';
 import { green }                                    from '@material-ui/core/colors';
+import ExpandMoreIcon                               from '@material-ui/icons/ExpandMore';
+import IconButton                                   from '@material-ui/core/IconButton';
 import PropTypes                                    from 'prop-types';
 import NumberFormat                                 from 'react-number-format';
+
 // import PaymentList                                  from './payment_list/payment_list';
 
 
@@ -30,6 +34,7 @@ const FieldValue = (props) => {
   const [editing, setEditing] = useState(false)
   const [editingValue, setEditingValue] = useState()
   const [budgetFieldValue, setBudgetFieldValue] = useState()
+  const [expandTaxedFields, setExpandTaxedFields] = useState(false)
   // const [withValue, setWithValue] = useState(false)
   const [templateField] = useState(field)
 
@@ -70,48 +75,53 @@ const FieldValue = (props) => {
   //   setName(event.target.value);
   // };
 
+  const handleExpandTaxedFields = (e) => {
+    setExpandTaxedFields(!expandTaxedFields)
+  }
+
   return(
     <Grid 
       container
       item
-      alignItems="center"
-      className={classes.budgetTabPanelFields}
+      direction='column'
+      justifyContent='center'
     >
-      <Grid item xs={1}>
-        <AccountBalanceIcon style={{ color: green[500] }}/>
-      </Grid>
-      <Grid item xs={3}>
-        <Typography variant="subtitle2" gutterBottom align='left'>
-          {templateField.name}
-        </Typography>
-      </Grid>
-      <Grid item xs={3}>
-        { (value == 0 || value >= 0) && 
-            <TotalValue
-              pristine
-              setPristine={setPristine}
-              editing={editing}
-              setEditing={setEditing}
-              editingValue={editingValue}
-              setEditingValue={setEditingValue}
-              setValue={setValue}
-              value={value}
-              budgetFieldValue={budgetFieldValue}
+      <Grid item container alignItems="center" style={{ minHeight: '70px' }}>
+        <Grid item xs={1}>
+          <AccountBalanceIcon style={{ color: green[500] }}/>
+        </Grid>
+        <Grid item xs={3}>
+          <Typography variant="subtitle2" gutterBottom align='left'>
+            {templateField.name}
+          </Typography>
+        </Grid>
+        <Grid item xs={3}>
+          { (value == 0 || value >= 0) && 
+              <TotalValue
+                pristine
+                setPristine={setPristine}
+                editing={editing}
+                setEditing={setEditing}
+                editingValue={editingValue}
+                setEditingValue={setEditingValue}
+                setValue={setValue}
+                value={value}
+                budgetFieldValue={budgetFieldValue}
+              />
+          }
+        </Grid>
+        <Grid item xs={3}>
+          <Typography gutterBottom align='center'>
+            <NumberFormat 
+              value={totalDebt} 
+              displayType={'text'} 
+              thousandSeparator={true} 
+              prefix={'$ '}
+              decimalScale={2}
             />
-        }
-      </Grid>
-      <Grid item xs={3}>
-        <Typography gutterBottom align='center'>
-          <NumberFormat 
-            value={totalDebt} 
-            displayType={'text'} 
-            thousandSeparator={true} 
-            prefix={'$ '}
-            decimalScale={2}
-          />
-        </Typography>
-      </Grid>
-      <Grid container item xs={2} direction='row' justifyContent="flex-start" alignItems="center">
+          </Typography>
+        </Grid>
+        <Grid container item xs={2} direction='row' justifyContent="flex-start" alignItems="center">
         <Grid item xs={3}>
           <SaveButton
             budget={budget}
@@ -146,6 +156,15 @@ const FieldValue = (props) => {
             </MenuItem>
           </GenericDropdownMenu>
         </Grid>
+        <Grid item xs={3}>
+          <IconButton  color="primary" onClick={handleExpandTaxedFields}>
+            <ExpandMoreIcon/>
+          </IconButton>
+        </Grid>
+      </Grid>
+      </Grid>
+      <Grid item container>
+        <TaxedFields budget={budget} templateField={templateField} expandTaxedFields={expandTaxedFields} setExpandTaxedFields={setExpandTaxedFields}/>
       </Grid>
     </Grid>
   )

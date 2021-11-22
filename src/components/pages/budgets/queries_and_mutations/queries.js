@@ -734,3 +734,21 @@ export const GET_BUDGET_TAB_TOTALS = gql`
     budgetTabsTotals (id: $id)
   }
 `
+
+export const BUDGET_TAXED_FIELDS_FOR_FIELD = gql`
+  query budgetTaxedFieldsForField(
+    $fieldId: ID!,
+    $budgetId: ID!
+  )
+  {
+    budgetTaxedFieldsForField(
+      fieldId: $fieldId,
+      budgetId: $budgetId
+    ) {
+      id
+      name
+      defaultValue
+      tax
+    }
+  }
+`

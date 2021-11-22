@@ -1,12 +1,12 @@
-import React, { useState, useEffect }               from 'react';
-import Grid                                         from '@material-ui/core/Grid';
-import TextField                                    from '@material-ui/core/TextField';
-import InputAdornment                               from '@material-ui/core/InputAdornment';
-import Button                                       from '@material-ui/core/Button';
-import BorderColorIcon                              from '@material-ui/icons/BorderColor';
-import NumberFormat                                 from 'react-number-format';
-import PropTypes                                    from 'prop-types';
-import ReplayIcon from '@material-ui/icons/Replay';
+import React, { useState, useEffect } from 'react';
+import Grid                           from '@material-ui/core/Grid';
+import TextField                      from '@material-ui/core/TextField';
+import InputAdornment                 from '@material-ui/core/InputAdornment';
+import Button                         from '@material-ui/core/Button';
+import BorderColorIcon                from '@material-ui/icons/BorderColor';
+import NumberFormat                   from 'react-number-format';
+import PropTypes                      from 'prop-types';
+import ReplayIcon                     from '@material-ui/icons/Replay';
 
 function NumberFormatCustom(props) {
   const { inputRef, onChange, ...other } = props;
@@ -18,7 +18,6 @@ function NumberFormatCustom(props) {
       onValueChange={(values) => {
         onChange({
           target: {
- 
             value: values.value,
           },
         });
@@ -28,7 +27,6 @@ function NumberFormatCustom(props) {
       decimalSeparator="."
       decimalScale={2}
       fixedDecimalScale
-
     />
   );
 }

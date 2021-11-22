@@ -187,27 +187,22 @@ export const GET_BUDGETING_TEMPLATE_TAB_FIELDS = gql`
         createdAt
         updatedAt
       }
-      taxable_taxes {
-        id
-        name
-        total
-      }
     }
   }
 `
 
 export const GET_BUDGETING_TEMPLATE_TAXED_FIELDS = gql`
   query getBudgetingTemplateTaxedFields(
-    $id: ID!
+    $fieldId: ID!
   )
   {
     budgetingTemplateTaxedFields(
-      id: $id
+      fieldId: $fieldId
     ) {
       id
       name
       defaultValue
-      defaultValueTax
+      tax
     }
   }
 `

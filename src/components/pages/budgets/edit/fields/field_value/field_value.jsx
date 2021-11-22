@@ -66,7 +66,7 @@ const FieldValue = (props) => {
       container
       item
       alignItems="center"
-      className={classes.budgetTabPanelFields}
+      style={{ minHeight: '70px' }}
     >
       <Grid item xs={1}>
         { field.fieldType == "tax" ? <AccountBalanceIcon style={{ color: green[500] }}/> : <AccountBalanceWalletIcon color="action"/> }

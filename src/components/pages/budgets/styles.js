@@ -118,7 +118,6 @@ export const styles = theme => {
       marginLeft: "20px"
     },
     budgetTabPanelFields: {
-      height:"70px",
     },
     rootTab: {
     },

@@ -44,17 +44,21 @@ const Fields = (props) => {
           {
             fields.map((field) => {
               return(
-                field.fieldType == "tax" ?
-                <TaxFieldValue
-                  budget={budget}
-                  field={field}
-                  key={field.id + "-field"}
-                /> :
-                <FieldValue
-                  budget={budget}
-                  field={field}
-                  key={field.id + "-field"}
-                />
+                <Grid container item style={{ minHeight: '70px' }}>
+                  {
+                    field.fieldType == "tax" ?
+                    <TaxFieldValue
+                      budget={budget}
+                      field={field}
+                      key={field.id + "-field"}
+                    /> :
+                    <FieldValue
+                      budget={budget}
+                      field={field}
+                      key={field.id + "-field"}
+                    />
+                  }
+                </Grid>
               )
             })
           }

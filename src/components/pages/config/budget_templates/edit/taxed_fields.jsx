@@ -8,7 +8,10 @@ const TaxedFields = (props) => {
   const { parentField: taxField } = props
 
   const [taxedFields, setTaxedFields] = useState()
-  const { loading, data, refetch } = useQuery(GET_BUDGETING_TEMPLATE_TAXED_FIELDS, { variables: { id: taxField.id } });
+  const { loading, data, refetch } =
+    useQuery(
+      GET_BUDGETING_TEMPLATE_TAXED_FIELDS,
+      { variables: { fieldId: taxField.id } });
 
   useEffect(() => {
     if (data) {
