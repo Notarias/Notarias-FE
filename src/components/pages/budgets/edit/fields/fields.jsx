@@ -44,7 +44,7 @@ const Fields = (props) => {
           {
             fields.map((field) => {
               return(
-                <Grid container item style={{ minHeight: '70px' }}>
+                <Grid container item style={{ minHeight: '70px' }} key={field.id + 'field-row'}>
                   {
                     field.fieldType == "tax" ?
                     <TaxFieldValue

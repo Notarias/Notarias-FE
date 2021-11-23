@@ -19,12 +19,13 @@ const TaxedFields = (props) => {
     }
   }, [data && data.budgetingTemplateTaxedFields.length])
 
+  console.log(taxField.id, "--------------")
   const renderTaxedFields = () => {
     if(taxedFields) {
       return(
         taxedFields.map((taxedField, index) => {
           return(
-            <TaxedField key={taxedField.id + 'taxed-field'} taxedField={taxedField} taxField={taxField} refetchTaxedFields={refetch} />
+            <TaxedField key={taxedField.id + '-taxed-field-' + taxField.id} taxedField={taxedField} taxField={taxField} refetchTaxedFields={refetch} />
           )
         })
       )

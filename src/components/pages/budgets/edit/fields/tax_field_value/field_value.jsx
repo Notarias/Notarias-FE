@@ -14,6 +14,8 @@ import AccountBalanceWalletIcon                     from '@material-ui/icons/Acc
 import TextField                                    from '@material-ui/core/TextField';
 import InputAdornment                               from '@material-ui/core/InputAdornment';
 import Box                                          from '@material-ui/core/Box';
+
+import Divider                                      from '@material-ui/core/Divider';
 import Typography                                   from '@material-ui/core/Typography';
 import Grid                                         from '@material-ui/core/Grid';
 import { green }                                    from '@material-ui/core/colors';
