@@ -3,16 +3,15 @@ import Breadcrumbs from '../../ui/breadcrumbs';
 import { Divider, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
-
 import ClientSearch from './new/client_search';
 import CausantSearch from './new/causant_search';
+import FastCreateClientForm from './new/fast_create_client_form';
 import SelectorList from './new/selector_list';
 
 const BREADCRUMBS = [
@@ -26,7 +25,6 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),  
   },
   marginButtons: {
-    marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
 
   },
@@ -39,18 +37,47 @@ function getSteps() {
   return ['Agregar cliente', 'Agregar causante', 'Trámite y Presupuesto'];
 }
 
-function getStepContent(stepIndex, listsData) {
+function getStepContent(stepIndex, listData) {
+
   switch (stepIndex) {
     case 0:
       return (
         <Grid container justifyContent="center">
-           <ClientSearch/>
+          {
+            listData.newClientForm ? 
+              <FastCreateClientForm
+              newClientForm={listData.newClientForm}
+              setNewClientForm={listData.setNewClientForm}
+                activeStep={stepIndex}
+                setActiveStep={listData.setActiveStep}
+                setClientInfo={listData.setClientInfo}
+                handleNext={listData.handleNext}
+              /> : 
+              <ClientSearch
+                setNewClientForm={listData.setNewClientForm}
+                setClientInfo={listData.setClientInfo}
+              />
+          }
         </Grid>
       )
     case 1:
       return (
         <Grid container justifyContent="center">
-           <CausantSearch/>
+          { 
+            listData.newClientForm ? 
+              <FastCreateClientForm
+                newClientForm={listData.newClientForm}
+                setNewClientForm={listData.setNewClientForm}
+                activeStep={stepIndex}
+                setActiveStep={listData.setActiveStep}
+                setCausantInfo={listData.setCausantInfo}
+                handleNext={listData.handleNext}
+              /> : 
+              <CausantSearch
+                setNewClientForm={listData.setNewClientForm}
+                setCausantInfo={listData.setCausantInfo}
+              />
+          }
         </Grid>
       )
     case 2:
@@ -58,8 +85,8 @@ function getStepContent(stepIndex, listsData) {
         <Grid  container direction="row" spacing={3} item alignItems="center" justifyContent="center" >
           <Grid item xs={5}>
             <SelectorList 
-              selectedProcedure={listsData.selectedProcedure}
-              setSelectedProcedure={listsData.setSelectedProcedure}
+              selectedProcedure={listData.selectedProcedure}
+              setSelectedProcedure={listData.setSelectedProcedure}
             />
           </Grid>
           <Grid item xs={5}>
@@ -80,27 +107,15 @@ const NewProcedure = (params) => {
     lastName: "encargado",
     id: null
   }
-  
-  let listsData = {
-    selectedProcedure: selectedProcedure,
-    setSelectedProcedure: setSelectedProcedure,
-    selectedBudget: selectedBudget,
-    setSelectedBudget: setSelectedBudget
-  }
-  
+
+  const [clientInfo, setClientInfo] = useState("");
+  const [causantInfo, setCausantInfo] = useState("");
   const [selectedProcedure, setSelectedProcedure] = useState("");
   const [selectedBudget, setSelectedBudget] = useState("");
-  const [clientInfo, setClientInfo] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [rfcClient, setRfcClient] = useState("");
-  const [curpClient, setCurpClient] = useState("");
-  const [moralClient, setMoralClient] = useState(false);
-  const [causantInfo, setCausantInfo] = useState("");
   const [asignee, setAsignee] = useState(defaultUser);
-
-  const classes = useStyles();
   const [activeStep, setActiveStep] = useState(0);
+  const [newClientForm, setNewClientForm] = useState(false);
+  const classes = useStyles();
   const steps = getSteps();
 
   const handleNext = () => {
@@ -112,12 +127,28 @@ const NewProcedure = (params) => {
   };
 
   const handleReset = () => {
+    setClientInfo("");
+    setCausantInfo("");
+    setNewClientForm(false);
     setActiveStep(0);
   };
 
   useEffect(() => {
     setSelectedBudget(selectedBudget)
   }, [selectedBudget])
+
+  let listData = {
+    setClientInfo: setClientInfo,
+    setCausantInfo: setCausantInfo,
+    selectedProcedure: selectedProcedure,
+    setSelectedProcedure: setSelectedProcedure,
+    selectedBudget: selectedBudget,
+    setSelectedBudget: setSelectedBudget,
+    setActiveStep: setActiveStep,
+    handleNext: handleNext,
+    newClientForm: newClientForm,
+    setNewClientForm: setNewClientForm,
+  }
   
   return (
     <Grid container direction="column" alignItems="stretch" justifyContent="flex-start" style={{minHeight: "100vh"}}>
@@ -148,20 +179,42 @@ const NewProcedure = (params) => {
                 ) : (
                   <>
                     <Typography>
-                      {getStepContent(activeStep, listsData)}
+                      {getStepContent(activeStep, listData)}
                     </Typography>
                   </>
                 )}
               </Grid>
               <Grid container item direction="column" justifyContent="flex-end"  style={{ flex: "1 1 auto" }} className={classes.marginButtons}>
-                <Grid item>
-                  <Button onClick={handleReset}>Cancelar</Button>
-                  <Button disabled={activeStep === 0} onClick={handleBack}>
-                    Regresar
-                  </Button>
-                  <Button variant="contained" color="primary" onClick={handleNext}>
-                    {activeStep === steps.length - 1 ? 'Finalizar' : 'Sigiente'}
-                  </Button>
+                <Grid container item justifyContent="center">
+                  <Grid container item xs={6} justifyContent="flex-start">
+                    <Grid item>
+                      <Button
+                        onClick={handleReset}
+                        color="secondary"
+                        hidden={activeStep ? true : false}>
+                        Cancelar
+                      </Button>
+                    </Grid>
+                  </Grid>
+                  <Grid container item xs={2} justifyContent="flex-end">
+                    <Grid item>
+                      <Button disabled={activeStep === 0} onClick={handleBack}>
+                        Regresar
+                      </Button>
+                      </Grid>
+                  </Grid>
+                  <Grid container item xs={2} justifyContent="flex-end">
+                    <Grid item>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={handleNext}
+                        disabled={clientInfo ? false : true}
+                      >
+                        {activeStep === steps.length - 1 ? 'Finalizar' : 'Sigiente'}
+                      </Button>
+                    </Grid>
+                  </Grid>
                 </Grid>
               </Grid>
             </Grid>

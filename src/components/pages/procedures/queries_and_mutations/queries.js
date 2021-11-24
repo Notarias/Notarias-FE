@@ -129,3 +129,33 @@ export const GET_PROCEDURES_TEMPLATES_QUICK_LIST = gql`
     }
   }
 `
+export const CREATE_CLIENT = gql`
+  mutation createClient(
+    $firstName: String!,
+    $lastName: String!,
+    $curp: String,
+    $rfc: String,
+    $moral: Boolean,
+    $causant: Boolean
+  ) {
+    createClient(input: {
+      firstName: $firstName,
+      lastName: $lastName,
+      curp: $curp,
+      rfc: $rfc,
+      moral: $moral,
+      causant: $causant
+    }
+  ) 
+    {
+      client {
+        id
+        firstName
+        lastName
+        curp
+        rfc
+        moral
+      }
+    }
+  }
+`
