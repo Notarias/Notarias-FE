@@ -46,6 +46,7 @@ const TotalValue = (props) => {
     pristine,
     setValue,
     budgetFieldValue,
+    templateField,
     editingValue,
     setEditingValue
   } = props
@@ -83,10 +84,26 @@ const TotalValue = (props) => {
     }
   }, [editing, pristine])
 
+  const inferOperatorAdornment = () => {
+    if(templateField.operator == 'percentile') {
+      return('%')
+    } else {
+      return('$')
+    }
+  }
+  
+  console.log(budgetFieldValue)
+
   return(
     <Grid container item>
       <Grid container item xs={8} direction="row" justifyContent="flex-end">
-        <TextField
+        <Grid item>
+          {inferOperatorAdornment()}{value}
+        </Grid>
+        <Grid item>
+          {}
+        </Grid>
+        {/* <TextField
           onChange={editing ? handleChange : () => {}}
           label="Total"
           disabled={!editing}
@@ -95,14 +112,14 @@ const TotalValue = (props) => {
           InputProps={{
             ref: inputRef,
             inputComponent: NumberFormatCustom,
-            startAdornment: <InputAdornment position="start">$</InputAdornment>
+            startAdornment: <InputAdornment position="start">{inferOperatorAdornment()}</InputAdornment>
           }}
-        />
+        /> */}
       </Grid>
       <Grid  container item xs={4} alignItems="flex-end" justifyContent="center">
-        <Button onClick={editing ? cancelEditing : enableEditing}>
+        {/* <Button onClick={editing ? cancelEditing : enableEditing}>
           { editing ? <ClearIcon/> : <BorderColorIcon/> }
-        </Button>
+        </Button> */}
       </Grid>
     </Grid>
   )

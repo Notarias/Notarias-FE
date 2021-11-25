@@ -305,6 +305,9 @@ export const GET_BUDGETING_TEMPLATE_TAB_FIELDS = gql`
       name
       active
       fieldType
+      operator
+      taxableSelector
+      defaultValue
       categories {
         id
         name

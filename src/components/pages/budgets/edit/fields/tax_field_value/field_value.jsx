@@ -52,7 +52,11 @@ const FieldValue = (props) => {
     if(budgetFieldValue) {
       return budgetFieldValue.value / 100 
     } else if(templateField.defaultValue) {
-      return templateField.defaultValue / 100
+      if (templateField.operator == 'percentile') {
+        return templateField.defaultValue
+      } else {
+        return templateField.defaultValue / 100
+      }
     } else {
       return 0
     }
@@ -88,7 +92,7 @@ const FieldValue = (props) => {
       direction='column'
       justifyContent='center'
     >
-      <Grid item container alignItems="center" style={{ minHeight: '70px' }}>
+      <Grid item container alignItems="center" style={{ minHeight: '70px' }} key={`fields-${budget.id}`}>
         <Grid item xs={1}>
           <AccountBalanceIcon style={{ color: green[500] }}/>
         </Grid>
@@ -108,6 +112,7 @@ const FieldValue = (props) => {
                 setEditingValue={setEditingValue}
                 setValue={setValue}
                 value={value}
+                templateField={templateField}
                 budgetFieldValue={budgetFieldValue}
               />
           }
@@ -165,7 +170,7 @@ const FieldValue = (props) => {
         </Grid>
       </Grid>
       </Grid>
-      <Grid item container>
+      <Grid item key={`taxed-fields-${budget.id}`}>
         <TaxedFields budget={budget} templateField={templateField} expandTaxedFields={expandTaxedFields} setExpandTaxedFields={setExpandTaxedFields}/>
       </Grid>
     </Grid>

@@ -3,6 +3,9 @@ import Grid                       from '@material-ui/core/Grid';
 import { grey }                   from '@material-ui/core/colors';
 import Divider                    from '@material-ui/core/Divider';
 import Collapse                   from '@material-ui/core/Collapse';
+import Typography                 from '@material-ui/core/Typography';
+import AttachMoneyIcon            from '@material-ui/icons/AttachMoney';
+import Chip                       from '@material-ui/core/Chip';
 import { useQuery }               from '@apollo/client';
 import { BUDGET_TAXED_FIELDS_FOR_FIELD } from '../../../queries_and_mutations/queries';
 
@@ -29,23 +32,43 @@ export default (props) => {
 
  // style={{ height: expandTaxedFields ? `${taxedFields ? (30 * taxedFields.length) : 0}px` : '0px', overflow: 'hidden', transition: 'height 0.19s ease-out' }} 
   // style={{ height: '30px', backgroundColor: grey[300] }}
+
  return(
-    <Grid item container direction='column' style={{ backgroundColor: grey[100]}}>
-      <Collapse in={expandTaxedFields}>
-      <Divider/>
-      {
-        taxedFields && taxedFields.map((taxedField) => {
-          return(
-            <>
-              <Grid container item key={ `${taxedField.id}-taxed-field-${templateField.id}` } style={{ padding: '10px' }}>
-                {taxedField.tax}
-              </Grid>
-              <Divider/>
-            </>
-          )
-        })
-      }
-      </Collapse>
-    </Grid>
+    <Collapse in={expandTaxedFields}>
+      <Grid item container direction='column' style={{ backgroundColor: grey[100]}}>
+        <Divider/>
+        {
+          taxedFields && taxedFields.map((taxedField) => {
+            return(
+              <React.Fragment key={ `${taxedField.id}-taxed-field-${templateField.id}` }>
+                <Grid container item style={{ padding: '10px' }}>
+                  <Grid container xs={3} item justifyContent='flex-end'>
+                    <Grid item>
+                      <Typography align='left'>{taxedField.name}</Typography>
+                    </Grid>
+                  </Grid>
+                  <Grid container xs={4} item justifyContent='center'>
+                    <Grid item>
+                      <Chip
+                        icon={<AttachMoneyIcon/>}
+                        label={`Total: ${taxedField.defaultValue || 0}`}
+                      />
+                    </Grid>
+                  </Grid>
+                  <Grid item>
+                    <Grid item>
+                      <Chip
+                        icon={<AttachMoneyIcon/>}
+                        label={`Impuesto: ${taxedField.tax}`}
+                      />
+                    </Grid></Grid>
+                </Grid>
+                <Divider/>
+              </React.Fragment>
+            )
+          })
+        }
+      </Grid>
+    </Collapse>
   )
 }
