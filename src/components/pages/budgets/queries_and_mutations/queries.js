@@ -387,11 +387,6 @@ export const GET_BUDGET_FIELD_VALUE = gql`
       budgetingTemplateFieldId
       totalDebt
       totalPaid
-      field{
-        id
-        name
-        budgetingTemplateTabId
-      }
     }
   }
 `
@@ -752,6 +747,10 @@ export const BUDGET_TAXED_FIELDS_FOR_FIELD = gql`
       name
       defaultValue
       tax
+      fieldValue {
+        id
+        value
+      }
     }
   }
 `

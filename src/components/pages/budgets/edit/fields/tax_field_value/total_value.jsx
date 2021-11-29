@@ -1,12 +1,15 @@
-import React, { useState, useEffect, useRef }               from 'react';
-import Grid                                         from '@material-ui/core/Grid';
-import TextField                                    from '@material-ui/core/TextField';
-import InputAdornment                               from '@material-ui/core/InputAdornment';
-import Button                                       from '@material-ui/core/Button';
-import BorderColorIcon                              from '@material-ui/icons/BorderColor';
-import NumberFormat                                 from 'react-number-format';
-import PropTypes                                    from 'prop-types';
-import ClearIcon                                    from '@material-ui/icons/Clear';
+import React, { useState, useEffect, useRef } from 'react';
+import Grid                                   from '@material-ui/core/Grid';
+import TextField                              from '@material-ui/core/TextField';
+import InputAdornment                         from '@material-ui/core/InputAdornment';
+import Button                                 from '@material-ui/core/Button';
+import Chip                                   from '@material-ui/core/Chip';
+import Avatar                                 from '@material-ui/core/Avatar';
+import BorderColorIcon                        from '@material-ui/icons/BorderColor';
+import AttachMoneyIcon                        from '@material-ui/icons/AttachMoney';
+import NumberFormat                           from 'react-number-format';
+import PropTypes                              from 'prop-types';
+import ClearIcon                              from '@material-ui/icons/Clear';
 
 function NumberFormatCustom(props) {
   const { inputRef, onChange, ...other } = props;
@@ -86,41 +89,54 @@ const TotalValue = (props) => {
 
   const inferOperatorAdornment = () => {
     if(templateField.operator == 'percentile') {
-      return('%')
-    } else {
-      return('$')
+      return(`%${templateField.defaultValue || 0}`)
     }
   }
-  
-  console.log(budgetFieldValue)
+
+  const formatValue = (value) => {
+    value = value || 0
+    return((value * 1.0) / 100).toFixed(2)
+  }
+
+  const loadChip = () => {
+    return(
+      <Chip
+        icon={<AttachMoneyIcon/>}
+        label={`${formatValue(budgetFieldValue.value)}`}
+      />
+    )
+  }
 
   return(
     <Grid container item>
-      <Grid container item xs={8} direction="row" justifyContent="flex-end">
-        <Grid item>
-          {inferOperatorAdornment()}{value}
+      <Grid container item direction="row" justifyContent="flex-end">
+        <Grid item container spacing={1}>
+          <Grid item>
+            <Chip label={`${inferOperatorAdornment()}`} variant="outlined" color='secondary' />
+          </Grid>
+          <Grid item>
+            {budgetFieldValue && loadChip()}
+          </Grid>
         </Grid>
-        <Grid item>
-          {}
-        </Grid>
-        {/* <TextField
-          onChange={editing ? handleChange : () => {}}
-          label="Total"
-          disabled={!editing}
-          value={editing ? editingValue : value}
-          id="standard-start-adornment"
-          InputProps={{
-            ref: inputRef,
-            inputComponent: NumberFormatCustom,
-            startAdornment: <InputAdornment position="start">{inferOperatorAdornment()}</InputAdornment>
-          }}
-        /> */}
+        {/*
+          <TextField
+            onChange={editing ? handleChange : () => {}}
+            label="Total"
+            disabled={!editing}
+            value={editing ? editingValue : value}
+            id="standard-start-adornment"
+            InputProps={{
+              ref: inputRef,
+              inputComponent: NumberFormatCustom,
+              startAdornment: <InputAdornment position="start">{inferOperatorAdornment()}</InputAdornment>
+            }}/>
+        */}
       </Grid>
-      <Grid  container item xs={4} alignItems="flex-end" justifyContent="center">
-        {/* <Button onClick={editing ? cancelEditing : enableEditing}>
+      {/* <Grid  container item xs={4} alignItems="flex-end" justifyContent="center">
+        <Button onClick={editing ? cancelEditing : enableEditing}>
           { editing ? <ClearIcon/> : <BorderColorIcon/> }
-        </Button> */}
-      </Grid>
+        </Button>
+      </Grid> */}
     </Grid>
   )
 } 

@@ -33,7 +33,11 @@ export default (props) => {
  // style={{ height: expandTaxedFields ? `${taxedFields ? (30 * taxedFields.length) : 0}px` : '0px', overflow: 'hidden', transition: 'height 0.19s ease-out' }} 
   // style={{ height: '30px', backgroundColor: grey[300] }}
 
- return(
+  const formatValue = (value) => {
+    return((value * 1.0) / 100).toFixed(2)
+  }
+
+  return(
     <Collapse in={expandTaxedFields}>
       <Grid item container direction='column' style={{ backgroundColor: grey[100]}}>
         <Divider/>
@@ -51,7 +55,7 @@ export default (props) => {
                     <Grid item>
                       <Chip
                         icon={<AttachMoneyIcon/>}
-                        label={`Total: ${taxedField.defaultValue || 0}`}
+                        label={`Total: ${formatValue(taxedField.fieldValue ? taxedField.fieldValue.value : taxedField.defaultValue) || 0}`}
                       />
                     </Grid>
                   </Grid>
@@ -59,7 +63,7 @@ export default (props) => {
                     <Grid item>
                       <Chip
                         icon={<AttachMoneyIcon/>}
-                        label={`Impuesto: ${taxedField.tax}`}
+                        label={`Impuesto: ${formatValue(taxedField.tax)}`}
                       />
                     </Grid></Grid>
                 </Grid>

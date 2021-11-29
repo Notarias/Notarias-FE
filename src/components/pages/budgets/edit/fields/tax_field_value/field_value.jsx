@@ -44,7 +44,8 @@ const FieldValue = (props) => {
   const { loading, data } = useQuery(
     GET_BUDGET_FIELD_VALUE,
     {
-      variables: { "budgetingTemplateFieldId": templateField.id , "budgetId": budget.id }
+      variables: { "budgetingTemplateFieldId": templateField.id , "budgetId": budget.id },
+      fetchPolicy: "no-cache"
     }
   );
 
@@ -67,7 +68,8 @@ const FieldValue = (props) => {
   }
 
   useEffect(() => {
-    if (data) {
+    console.log(data, "--------------------")
+    if (data && data.budgetFieldValue) {
       let value = fieldValueCalculation(data.budgetFieldValue);
       let debt = totalDebtCalculation(data.budgetFieldValue);
       setBudgetFieldValue(data.budgetFieldValue);
@@ -75,7 +77,7 @@ const FieldValue = (props) => {
       setEditingValue(value)
       setTotalDebt(debt);
     }
-  }, [loading, data])
+  }, [loading, data && data.budgetFieldValue])
 
   // const handleNameChange = (event) => {
   //   setName(event.target.value);
