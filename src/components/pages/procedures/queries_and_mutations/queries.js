@@ -1,8 +1,7 @@
-import gql          from 'graphql-tag';
+import gql from 'graphql-tag';
 
-export const CREATE_PROCEDURES = gql`
-
-mutation CreateProcedures(
+export const CREATE_PROCEDURE = gql`
+mutation CreateProcedure(
   $clientId: ID!,
   $causantId: ID,
   $proceduresTemplateId: ID!,
@@ -36,8 +35,8 @@ mutation CreateProcedures(
   }
 }
 `
+
 export const GET_PROCEDURES = gql`
-  
 query Procedures(
   $page: Int
   $per: Int
@@ -120,15 +119,7 @@ export const LOAD_CAUSANTS = gql`
     causantsCount
   }
 `
-export const GET_PROCEDURES_TEMPLATES_QUICK_LIST = gql`
-  query proceduresTemplatesQuickList{
-    proceduresTemplatesQuickList{
-      name
-      id
-      budgetingTemplatesIds
-    }
-  }
-`
+
 export const CREATE_CLIENT = gql`
   mutation createClient(
     $firstName: String!,
@@ -156,6 +147,31 @@ export const CREATE_CLIENT = gql`
         rfc
         moral
       }
+    }
+  }
+`
+
+export const GET_PROCEDURES_TEMPLATES_QUICK_LIST = gql`
+  query proceduresTemplatesQuickList{
+    proceduresTemplatesQuickList{
+      name
+      id
+      budgetingTemplatesIds
+    }
+  }
+`
+
+export const BUDGETING_TEMPLATE_BY_PROCEDURE_ID = gql`
+  query budgetingTemplatesByProcedureId (
+    $proceduresTemplateId: ID!
+  ){
+    budgetingTemplatesByProcedureId(
+       proceduresTemplateId: $proceduresTemplateId
+    ){
+      id
+      name
+      serialNumber
+      active
     }
   }
 `

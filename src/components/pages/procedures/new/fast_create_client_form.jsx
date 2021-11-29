@@ -8,7 +8,6 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import { useMutation } from '@apollo/client';
 import { CREATE_CLIENT } from '../queries_and_mutations/queries'
-import { Hidden } from '@material-ui/core';
 
 const FastCreateClientForm = (props) => {
 
@@ -36,8 +35,12 @@ const FastCreateClientForm = (props) => {
   }
 
   const setFormValue = ({ target }) => {
-    const {name, value} = target
-    setNewClient({ ...newClient, [name]: value })
+    const {name, value, checked} = target
+    if (name === "moral"){
+      setNewClient({ ...newClient, [name]: checked })
+    } else {
+      setNewClient({ ...newClient, [name]: value })
+    } 
     setPristine(false)
   }
 
@@ -90,7 +93,6 @@ const FastCreateClientForm = (props) => {
                 margin="dense"
                 required
               />
-              {console.log(errors)}
             </Grid>
             <Grid item xs={12}>
               <TextField 
@@ -140,6 +142,7 @@ const FastCreateClientForm = (props) => {
                   <Checkbox
                     id="moral-client-basic"
                     checked={newClient.moral}
+                    onChange={setFormValue}
                     name="moral"
                     color="primary"
                   />

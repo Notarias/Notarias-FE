@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Redirect } from 'react-router-dom';
 import Breadcrumbs from '../../ui/breadcrumbs';
 import { Divider, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -8,11 +9,18 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
+import List from '@material-ui/core/List';
+import Dialog from '@material-ui/core/Dialog';
 import ClientSearch from './new/client_search';
 import CausantSearch from './new/causant_search';
 import FastCreateClientForm from './new/fast_create_client_form';
-import SelectorList from './new/selector_list';
+import ProcedureSelectorList from './new/procedure_selector_list';
+import BudgetSelectorList from './new/budget_selector_list';
+import Summary from './new/summary';
+import ConfirmDialog from './new/confirm_dialog';
+import { useMutation } from '@apollo/client';
+import { CREATE_PROCEDURE } from './queries_and_mutations/queries'
+
 
 const BREADCRUMBS = [
   { name: "Inicio", path: "/" },
@@ -38,7 +46,6 @@ function getSteps() {
 }
 
 function getStepContent(stepIndex, listData) {
-
   switch (stepIndex) {
     case 0:
       return (
@@ -84,13 +91,19 @@ function getStepContent(stepIndex, listData) {
       return (
         <Grid  container direction="row" spacing={3} item alignItems="center" justifyContent="center" >
           <Grid item xs={5}>
-            <SelectorList 
-              selectedProcedure={listData.selectedProcedure}
-              setSelectedProcedure={listData.setSelectedProcedure}
-            />
+            <List>
+              <ProcedureSelectorList 
+                selectedProcedure={listData.selectedProcedure}
+                setSelectedProcedure={listData.setSelectedProcedure}
+              />
+            </List>
           </Grid>
           <Grid item xs={5}>
-            <SelectorList/>
+            <BudgetSelectorList
+              selectedProcedure={listData.selectedProcedure}
+              selectedBudget={listData.selectedBudget}
+              setSelectedBudget={listData.setSelectedBudget}
+            />
           </Grid>
         </Grid>
       )
@@ -112,19 +125,68 @@ const NewProcedure = (params) => {
   const [causantInfo, setCausantInfo] = useState("");
   const [selectedProcedure, setSelectedProcedure] = useState("");
   const [selectedBudget, setSelectedBudget] = useState("");
-  const [asignee, setAsignee] = useState(defaultUser);
+  const [asignee, setAsignee] = useState("");
   const [activeStep, setActiveStep] = useState(0);
   const [newClientForm, setNewClientForm] = useState(false);
+  const [redirect, setRedirect] = useState();
+  const [openConfirmation, setOpenConfirmation] = useState(false);
   const classes = useStyles();
   const steps = getSteps();
 
   const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    if (activeStep < steps.length) {
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);}
   };
 
   const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    if (activeStep > 0) {
+      setActiveStep((prevActiveStep) => prevActiveStep - 1);}
   };
+
+  const clientAsCausant = () => {
+    setCausantInfo(clientInfo);
+    handleNext();
+  }
+
+  const [createProcedureMutation, { loading: createProcedureLoading }] =
+  useMutation(
+    CREATE_PROCEDURE,
+    {
+      onError(apolloError) {
+      },
+      onCompleted(cacheData) {
+        const id = cacheData.createProcedure.procedure.id
+        id && setRedirect(
+          <Redirect to={{ pathname: `/procedure/${id}/edit` }} />
+        )
+      },
+      fetchPolicy: "no-cache",
+    }
+  )
+  
+  const createNewProcedure = (event) => {
+    createProcedureMutation(
+      { 
+        variables: { 
+          "clientId": clientInfo.id,
+          "causantId": causantInfo.id,
+          "proceduresTemplateId": selectedProcedure.id,
+          "budgetingTemplateId": selectedBudget.id,
+          "asigneeId": asignee.id
+        }
+      }
+    )
+  }
+
+  const openSaveConfirm = () => {
+    console.log("abre cofirmacion")
+    console.log(openConfirmation)
+    setOpenConfirmation(true);
+  }
+
+  const closeSaveConfirm = () => {
+    setOpenConfirmation(false);
+  }
 
   const handleReset = () => {
     setClientInfo("");
@@ -133,9 +195,44 @@ const NewProcedure = (params) => {
     setActiveStep(0);
   };
 
-  useEffect(() => {
-    setSelectedBudget(selectedBudget)
-  }, [selectedBudget])
+  const stepperButtons = (stepIndex) => {
+    switch (stepIndex) {
+      case 0:
+        return (
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleNext}
+            disabled={clientInfo ? false : true}
+          >
+            Sigiente
+          </Button>
+        )
+      case 1:
+        return (
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={causantInfo ? handleNext : clientAsCausant}
+          >
+            {causantInfo ? 'Siguiente' : 'Omitir'}
+          </Button>
+        )
+      case 2:
+        return (
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={openSaveConfirm}
+            disabled={selectedProcedure &&  selectedBudget ? false : true}
+          >
+            Guardar
+          </Button>
+        )
+      default:
+        return 'Unknown stepIndex';
+    }
+  };
 
   let listData = {
     setClientInfo: setClientInfo,
@@ -169,7 +266,7 @@ const NewProcedure = (params) => {
                   ))}
                 </Stepper>
               </Grid>
-              <Grid item style={{ height: "69%" }}>
+              <Grid container item direction="column" justifyContent="flex-start" style={{ height: "69%" }}>
                 {activeStep === steps.length ? (
                   <>
                     <Typography>
@@ -178,9 +275,7 @@ const NewProcedure = (params) => {
                   </>
                 ) : (
                   <>
-                    <Typography>
-                      {getStepContent(activeStep, listData)}
-                    </Typography>
+                    {getStepContent(activeStep, listData)}
                   </>
                 )}
               </Grid>
@@ -205,14 +300,7 @@ const NewProcedure = (params) => {
                   </Grid>
                   <Grid container item xs={2} justifyContent="flex-end">
                     <Grid item>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={handleNext}
-                        disabled={clientInfo ? false : true}
-                      >
-                        {activeStep === steps.length - 1 ? 'Finalizar' : 'Sigiente'}
-                      </Button>
+                      {stepperButtons(activeStep)}
                     </Grid>
                   </Grid>
                 </Grid>
@@ -223,77 +311,24 @@ const NewProcedure = (params) => {
         <Grid item xs={3}>
           <Paper style={{ height: "75%" }}>
             <Grid container item xs={12} justifyContent="center">
-              Datos del cliente
-              <Grid>
-                <TextField 
-                  id="Nombres-toShow" 
-                  label={ clientInfo ? clientInfo.firstName : "Nombres"} 
-                  disabled
-                  helperText={ clientInfo ? "Nombres" : ""}
-                />
-                <TextField 
-                  id="Apellidos-toShow" 
-                  label={ clientInfo ? clientInfo.lastName : "Apellidos"}
-                  disabled
-                  helperText={ clientInfo ? "Apellidos" : ""}
-                />
-                <TextField 
-                  id="RFC-toShow" 
-                  label={ clientInfo ? clientInfo.rfc : "RFC"} 
-                  disabled
-                  helperText={ clientInfo ? "RFC" : ""}
-                />
-                <TextField 
-                  id="curp-toShow" 
-                  label={ clientInfo ? clientInfo.curp : "CURP"} 
-                  disabled
-                  helperText={ clientInfo ? "CURP" : ""}
-                />
-              </Grid>
-            </Grid>
-            <Grid container item xs={12} justifyContent="center" direction="column">
-              <Grid container item justifyContent="flex-start">
-                Causante asignado
-              </Grid>
-              <Grid container item justifyContent="flex-start">
-                <Typography variant="body2" color="textSecondary">
-                  { causantInfo ? causantInfo.firstName : "sin asignar"}
-                </Typography>
-              </Grid>
-            </Grid>
-            <Grid container item xs={12} justifyContent="center" direction="column">
-              <Grid container item justifyContent="flex-start">
-                Nombre del trámite
-              </Grid>
-              <Grid container item justifyContent="flex-start">
-                <Typography variant="body2" color="textSecondary">
-                  { setSelectedBudget ? setSelectedBudget.name : "....................................."}
-                </Typography>
-              </Grid>
-            </Grid>
-            <Grid container item xs={12} justifyContent="center" direction="column">
-              <Grid container item justifyContent="flex-start">
-                Presupuesto vinculado
-              </Grid>
-              <Grid container item justifyContent="flex-start">
-                <Typography variant="body2" color="textSecondary">
-                { selectedBudget ? selectedBudget.name : "....................................."}
-                </Typography>
-              </Grid>
-            </Grid>
-            <Grid container item xs={12} justifyContent="center" direction="column">
-              <Grid container item justifyContent="flex-start">
-                Encargado asignado
-              </Grid>
-              <Grid container item justifyContent="flex-start">
-                <Typography variant="body2" color="textSecondary">
-                { asignee ? `${asignee.firstName} ${asignee.lastName}` : "......................"}
-                </Typography>
-              </Grid>
+              <Summary
+                clientInfo={clientInfo}
+                causantInfo={causantInfo}
+                selectedProcedure={selectedProcedure}
+                selectedBudget={selectedBudget}
+              />
             </Grid>
           </Paper>
         </Grid>
       </Grid>
+      <Dialog open={openConfirmation} onClose={ closeSaveConfirm }>
+        <ConfirmDialog
+          createNewProcedure={createNewProcedure}
+          openConfisrmation={openConfirmation}
+          closeSaveConfirm={closeSaveConfirm}
+          redirect={redirect}
+        />
+      </Dialog>
     </Grid>
   )
 }

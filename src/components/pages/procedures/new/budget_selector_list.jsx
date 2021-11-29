@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import TextField from '@material-ui/core/TextField';
@@ -9,11 +8,11 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import SearchIcon from '@material-ui/icons/Search';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import Fuse from 'fuse.js';
-
 import { useQuery } from '@apollo/client';
-import { GET_PROCEDURES_TEMPLATES_QUICK_LIST  } from '../queries_and_mutations/queries';
+import { BUDGETING_TEMPLATE_BY_PROCEDURE_ID } from '../queries_and_mutations/queries';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,46 +30,58 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const SelectorList = (props) => {
+const BudgetSelectorList = (props) => {
 
-  const { selectedProcedure, setSelectedProcedure } = props;
+  const { selectedProcedure, selectedBudget, setSelectedBudget } = props;
 
-  const [procedureList, setProcedureList] = useState();
+  const [budgetList, setBudgetList] = useState();
   const [searchList, setSearchList] = useState();
 
   const classes = useStyles();
   
   const { loading, data, refetch } = useQuery(
-    GET_PROCEDURES_TEMPLATES_QUICK_LIST,
-    { fetchPolicy: 'no-cache', }
+    BUDGETING_TEMPLATE_BY_PROCEDURE_ID, { variables: {"proceduresTemplateId": selectedProcedure.id} }
   );
 
-  let fuzzySearch = new Fuse(procedureList, { keys: ['name'] })
+  let fuzzySearch = new Fuse(budgetList, { keys: ['name'] });
 
   useEffect( () => {
-    if(data && data.proceduresTemplatesQuickList){
-      setProcedureList(data.proceduresTemplatesQuickList);
-      setSearchList(data.proceduresTemplatesQuickList);
+    if(data && data.budgetingTemplatesByProcedureId){
+      setBudgetList(data.budgetingTemplatesByProcedureId);
+      setSearchList(data.budgetingTemplatesByProcedureId);
     }
   }, [data]);
 
-  const searchProcedure = (event) => {
+  const searchBudget = (event) => {
     let searchResult = fuzzySearch.search(event.target.value);
     if (event.target.value.length === 0) {
-      setSearchList(procedureList);
+      setSearchList(budgetList);
     } else {
       setSearchList(searchResult);
     }
   }
 
-  const proceduresRows = (searchList) => {
+  const selectItem = (event, index, data) => {
+    setSelectedBudget({id: index, name: data});
+  }
+
+  const budgetsRows = (searchList) => {
     return(
       searchList.map((item) => {
         item = item.item ? item.item : item
         return(
           <>
-            <ListItem key={item.id} button>
-              {item.name}
+            <ListItem
+              key={item.id}
+              button
+              dense={true}
+              selected={selectedBudget.id === item.id}
+              onClick={(event) => selectItem(event, item.id, item.name)}
+              >
+              <ListItemText 
+                id={item.id} 
+                primary={item.name}
+              />
             </ListItem>
             <Divider/>
           </>
@@ -87,7 +98,7 @@ const SelectorList = (props) => {
       <TextField
         id="outlined-basic"
         label="Buscar Tramite"
-        onChange={searchProcedure}
+        onChange={searchBudget}
         variant="outlined"
         InputProps={{
           startAdornment: (
@@ -100,7 +111,7 @@ const SelectorList = (props) => {
       <Card className={classes.root} variant="outlined" style={{ overflowY: "scroll" }}>
         <CardContent>
           <List>
-            {searchList && proceduresRows(searchList)}
+            {searchList && budgetsRows(searchList)}
           </List>
         </CardContent>
       </Card>
@@ -108,4 +119,4 @@ const SelectorList = (props) => {
   );
 };
 
-export default SelectorList;
+export default BudgetSelectorList;
