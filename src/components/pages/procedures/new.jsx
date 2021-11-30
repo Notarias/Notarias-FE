@@ -53,16 +53,17 @@ function getSteps() {
 }
 
 function getStepContent(stepIndex, listData) {
-  const { setClientInfo, 
-          setCausantInfo, 
-          selectedProcedure, 
-          setSelectedProcedure, 
-          selectedBudget, 
-          setSelectedBudget, 
-          setActiveStep, 
-          handleNext, 
-          newClientForm, 
-          setNewClientForm
+  const {
+    setClientInfo, 
+    setCausantInfo, 
+    selectedProcedure, 
+    setSelectedProcedure, 
+    selectedBudget, 
+    setSelectedBudget, 
+    setActiveStep, 
+    handleNext, 
+    newClientForm, 
+    setNewClientForm
    } = listData
 
   switch (stepIndex) {
