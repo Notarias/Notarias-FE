@@ -18,7 +18,7 @@ import Grid                                         from '@material-ui/core/Grid
 import { green }                                    from '@material-ui/core/colors';
 import PropTypes                                    from 'prop-types';
 import NumberFormat                                 from 'react-number-format';
-import PaymentList                                  from './payment_list/payment_list';
+import PaymentList                                  from './payment_list';
 
 
 const FieldValue = (props) => {
@@ -40,18 +40,9 @@ const FieldValue = (props) => {
   );
 
   useEffect(() => {
-    let value = data && data.budgetFieldValue ? 
-                  data.budgetFieldValue.value / 100
-                : 
-                  0
-    let withId = data && data.budgetFieldValue ?
-                    true
-                  :
-                    false
-    let debt = data && data.budgetFieldValue ? 
-                data.budgetFieldValue.totalDebt / 100
-              :
-                0
+    let value = data && data.budgetFieldValue ? ((data.budgetFieldValue.value * 1.0) / 100).toFixed(2) : 0.0
+    let withId = data && data.budgetFieldValue ? true : false
+    let debt = data && data.budgetFieldValue ? ((data.budgetFieldValue.totalDebt * 1.0) / 100).toFixed(2) : 0.0
     setInitialFieldValue(value);
     setWithValue(withId)
     setTotalDebt(debt)

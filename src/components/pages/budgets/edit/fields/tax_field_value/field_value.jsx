@@ -7,6 +7,8 @@ import GenericDropdownMenu                          from '../../../../../ui/gene
 import SaveButton                                   from './save_button';
 import TotalValue                                   from './total_value';
 import TaxedFields                                  from './taxed_fields';
+import Payment                                      from './payment';
+import PaymentList                                  from './payment_list';
 // import Payment                                      from './payment'
 import MenuItem                                     from '@material-ui/core/MenuItem';
 import AccountBalanceIcon                           from '@material-ui/icons/AccountBalance';
@@ -40,23 +42,21 @@ const FieldValue = (props) => {
   // const [withValue, setWithValue] = useState(false)
   const [templateField] = useState(field)
 
-
   const { loading, data } = useQuery(
     GET_BUDGET_FIELD_VALUE,
     {
-      variables: { "budgetingTemplateFieldId": templateField.id , "budgetId": budget.id },
-      fetchPolicy: "no-cache"
+      variables: { "budgetingTemplateFieldId": templateField.id , "budgetId": budget.id }
     }
   );
 
   const fieldValueCalculation = (budgetFieldValue) => {
     if(budgetFieldValue) {
-      return budgetFieldValue.value / 100 
+      return ((budgetFieldValue.value * 1.0) / 100).toFixed(2)
     } else if(templateField.defaultValue) {
       if (templateField.operator == 'percentile') {
-        return templateField.defaultValue
+        return (templateField.defaultValue * 1.0).toFixed(2)
       } else {
-        return templateField.defaultValue / 100
+        return ((templateField.defaultValue * 1.0) / 100.0).toFixed(2)
       }
     } else {
       return 0
@@ -64,20 +64,23 @@ const FieldValue = (props) => {
   }
 
   const totalDebtCalculation = (budgetFieldValue) => {
-    return(budgetFieldValue ? budgetFieldValue.totalDebt / 100 : 0)
+    return((budgetFieldValue ? (budgetFieldValue.totalDebt * 1.0) / 100 : 0.0).toFixed(2))
+  }
+
+  const totalsCalculation = () => {
+    let value = fieldValueCalculation(data.budgetFieldValue);
+    let debt = totalDebtCalculation(data.budgetFieldValue);
+    setBudgetFieldValue(data.budgetFieldValue);
+    setValue(value);
+    setEditingValue(value)
+    setTotalDebt(debt);
   }
 
   useEffect(() => {
-    console.log(data, "--------------------")
     if (data && data.budgetFieldValue) {
-      let value = fieldValueCalculation(data.budgetFieldValue);
-      let debt = totalDebtCalculation(data.budgetFieldValue);
-      setBudgetFieldValue(data.budgetFieldValue);
-      setValue(value);
-      setEditingValue(value)
-      setTotalDebt(debt);
+      totalsCalculation()
     }
-  }, [loading, data && data.budgetFieldValue])
+  }, [loading, data && data.budgetFieldValue, data && data.budgetFieldValue.totalDebt])
 
   // const handleNameChange = (event) => {
   //   setName(event.target.value);
@@ -121,10 +124,10 @@ const FieldValue = (props) => {
         </Grid>
         <Grid item xs={3}>
           <Typography gutterBottom align='center'>
-            <NumberFormat 
-              value={totalDebt} 
-              displayType={'text'} 
-              thousandSeparator={true} 
+            <NumberFormat
+              value={totalDebt}
+              displayType={'text'}
+              thousandSeparator={true}
               prefix={'$ '}
               decimalScale={2}
             />
@@ -147,21 +150,27 @@ const FieldValue = (props) => {
         <Grid item xs={3}>
           <GenericDropdownMenu>
             <MenuItem key="1-pago">
-              {/* <Payment
-                initialFieldValue={initialFieldValue}
-                totalDebt={totalDebt}
-                budget={budget}
-                fieldValueId={ data && data.budgetFieldValue ? data.budgetFieldValue.id : ""}
-                fieldId={templateField.id}
-              /> */}
+              {
+                budgetFieldValue &&
+                  <Payment
+                    value={value}
+                    totalDebt={totalDebt}
+                    budget={budget}
+                    budgetFieldValue={budgetFieldValue}
+                    field={templateField}
+                  />
+              }
             </MenuItem>
             <MenuItem key="2-pago">
-              {/* <PaymentList
-                totalDebt={totalDebt}
-                initialDebt={initialFieldValue}
-                fieldValueId={data && data.budgetFieldValue ? data.budgetFieldValue.id : ""}
-                budgetingTemplateFieldId={data && data.budgetFieldValue ? data.budgetFieldValue.budgetingTemplateFieldId : ""}
-              /> */}
+              {
+                budgetFieldValue &&
+                  <PaymentList
+                    totalDebt={totalDebt}
+                    value={value}
+                    budgetFieldValue={budgetFieldValue}
+                    field={templateField}
+                  />
+              }
             </MenuItem>
           </GenericDropdownMenu>
         </Grid>
