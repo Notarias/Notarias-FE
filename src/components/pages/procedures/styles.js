@@ -87,7 +87,7 @@ export const styles = theme => {
     labelLeft: {
       textAlign: "left",
     },
-    ClientSearchTable: {
+    clientSearchTable: {
       backgroundColor: 'inherit',
       width: "100%",
       maxHeight: "280px",
@@ -166,12 +166,12 @@ export const styles = theme => {
     totalPaidInGreen: {
       color: "green"
     },
-    GridInputAdvancedSearchHide: {
+    gridInputAdvancedSearchHide: {
       overflow: "hidden",
       width: "0px",
       height: "0px"
     },
-    GridInputAdvancedSearch: {
+    gridInputAdvancedSearch: {
       overflow: "visible",
       marginTop: "20px"
     },

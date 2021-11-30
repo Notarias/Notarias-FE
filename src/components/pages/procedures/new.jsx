@@ -20,6 +20,8 @@ import Summary from './new/summary';
 import ConfirmDialog from './new/confirm_dialog';
 import { useMutation } from '@apollo/client';
 import { CREATE_PROCEDURE } from './queries_and_mutations/queries';
+import { GLOBAL_MESSAGE } from '../../../resolvers/queries';
+import client from '../../../apollo';
 
 
 const BREADCRUMBS = [
@@ -38,6 +40,12 @@ const useStyles = makeStyles((theme) => ({
   buttonsMargin: {
     marginTop: theme.spacing(1),
   },
+  errorMesages: {
+    width: '100%',
+    '& > * + *': {
+      marginTop: theme.spacing(2),
+    },
+  },
 }));
 
 function getSteps() {
@@ -45,23 +53,35 @@ function getSteps() {
 }
 
 function getStepContent(stepIndex, listData) {
+  const { setClientInfo, 
+          setCausantInfo, 
+          selectedProcedure, 
+          setSelectedProcedure, 
+          selectedBudget, 
+          setSelectedBudget, 
+          setActiveStep, 
+          handleNext, 
+          newClientForm, 
+          setNewClientForm
+   } = listData
+
   switch (stepIndex) {
     case 0:
       return (
         <Grid container justifyContent="center">
           {
-            listData.newClientForm ? 
+            newClientForm ? 
               <FastCreateClientForm
-              newClientForm={listData.newClientForm}
-              setNewClientForm={listData.setNewClientForm}
+              newClientForm={newClientForm}
+              setNewClientForm={setNewClientForm}
                 activeStep={stepIndex}
-                setActiveStep={listData.setActiveStep}
-                setClientInfo={listData.setClientInfo}
-                handleNext={listData.handleNext}
+                setActiveStep={setActiveStep}
+                setClientInfo={setClientInfo}
+                handleNext={handleNext}
               /> : 
               <ClientSearch
-                setNewClientForm={listData.setNewClientForm}
-                setClientInfo={listData.setClientInfo}
+                setNewClientForm={setNewClientForm}
+                setClientInfo={setClientInfo}
               />
           }
         </Grid>
@@ -70,18 +90,18 @@ function getStepContent(stepIndex, listData) {
       return (
         <Grid container justifyContent="center">
           { 
-            listData.newClientForm ? 
+            newClientForm ? 
               <FastCreateClientForm
-                newClientForm={listData.newClientForm}
-                setNewClientForm={listData.setNewClientForm}
+                newClientForm={newClientForm}
+                setNewClientForm={setNewClientForm}
                 activeStep={stepIndex}
-                setActiveStep={listData.setActiveStep}
-                setCausantInfo={listData.setCausantInfo}
-                handleNext={listData.handleNext}
+                setActiveStep={setActiveStep}
+                setCausantInfo={setCausantInfo}
+                handleNext={handleNext}
               /> : 
               <CausantSearch
-                setNewClientForm={listData.setNewClientForm}
-                setCausantInfo={listData.setCausantInfo}
+                setNewClientForm={setNewClientForm}
+                setCausantInfo={setCausantInfo}
               />
           }
         </Grid>
@@ -92,16 +112,17 @@ function getStepContent(stepIndex, listData) {
           <Grid item xs={5}>
             <List>
               <ProcedureSelectorList 
-                selectedProcedure={listData.selectedProcedure}
-                setSelectedProcedure={listData.setSelectedProcedure}
+                selectedProcedure={selectedProcedure}
+                setSelectedProcedure={setSelectedProcedure}
+                setSelectedBudget={setSelectedBudget}
               />
             </List>
           </Grid>
           <Grid item xs={5}>
             <BudgetSelectorList
-              selectedProcedure={listData.selectedProcedure}
-              selectedBudget={listData.selectedBudget}
-              setSelectedBudget={listData.setSelectedBudget}
+              selectedProcedure={selectedProcedure}
+              selectedBudget={selectedBudget}
+              setSelectedBudget={setSelectedBudget}
             />
           </Grid>
         </Grid>
@@ -113,13 +134,6 @@ function getStepContent(stepIndex, listData) {
 
 const NewProcedure = (params) => {
 
-  const defaultUser = {
-    avatarThumbUrl: "/broken-image.jpg",
-    firstName: "Agregue un",
-    lastName: "encargado",
-    id: null
-  }
-
   const [clientInfo, setClientInfo] = useState("");
   const [causantInfo, setCausantInfo] = useState("");
   const [selectedProcedure, setSelectedProcedure] = useState("");
@@ -129,6 +143,7 @@ const NewProcedure = (params) => {
   const [newClientForm, setNewClientForm] = useState(false);
   const [redirect, setRedirect] = useState();
   const [openConfirmation, setOpenConfirmation] = useState(false);
+  const [errors, setErrors] = useState();
   const classes = useStyles();
   const steps = getSteps();
 
@@ -148,20 +163,32 @@ const NewProcedure = (params) => {
   }
 
   const [createProcedureMutation, { loading: createProcedureLoading }] =
-  useMutation(
-    CREATE_PROCEDURE,
-    {
-      onError(apolloError) {
-      },
-      onCompleted(cacheData) {
-        const id = cacheData.createProcedure.procedure.id
-        id && setRedirect(
-          <Redirect to={{ pathname: `/procedure/${id}/edit` }} />
-        )
-      },
-      fetchPolicy: "no-cache",
-    }
-  )
+    useMutation(
+      CREATE_PROCEDURE,
+      {
+        onError(apolloError) {
+          setErrors(apolloError)
+          client.writeQuery({
+            query: GLOBAL_MESSAGE,
+            data: {
+              globalMessage: {
+                message: "Ocurrió un error",
+                type: "error",
+                __typename: "globalMessage"
+              }
+            }
+          })
+          setOpenConfirmation(false);
+        },
+        onCompleted(cacheData) {
+          const id = cacheData.createProcedure.procedure.id
+          id && setRedirect(
+            <Redirect to={{ pathname: `/procedure/${id}/edit` }} />
+          );
+        },
+        fetchPolicy: "no-cache",
+      }
+    )
   
   const createNewProcedure = (event) => {
     createProcedureMutation(
@@ -188,6 +215,8 @@ const NewProcedure = (params) => {
   const handleReset = () => {
     setClientInfo("");
     setCausantInfo("");
+    setSelectedProcedure("");
+    setSelectedBudget("");
     setNewClientForm(false);
     setActiveStep(0);
   };
@@ -221,7 +250,6 @@ const NewProcedure = (params) => {
             variant="contained"
             color="primary"
             onClick={openSaveConfirm}
-            disabled={selectedProcedure &&  selectedBudget ? false : true}
           >
             Guardar
           </Button>
@@ -243,7 +271,7 @@ const NewProcedure = (params) => {
     newClientForm: newClientForm,
     setNewClientForm: setNewClientForm,
   }
-  
+
   return (
     <Grid container direction="column" alignItems="stretch" justifyContent="flex-start" style={{minHeight: "100vh"}}>
       <Grid item>

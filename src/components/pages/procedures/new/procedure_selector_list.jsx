@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ProcedureSelectorList = (props) => {
 
-  const { selectedProcedure, setSelectedProcedure } = props;
+  const { selectedProcedure, setSelectedProcedure, setSelectedBudget } = props;
 
   const [procedureList, setProcedureList] = useState();
   const [searchList, setSearchList] = useState();
@@ -64,6 +64,7 @@ const ProcedureSelectorList = (props) => {
 
   const selectItem = (event, index, name) => {
     setSelectedProcedure({id: index, name: name});
+    setSelectedBudget(0);
   }
 
   const proceduresRows = (searchList) => {

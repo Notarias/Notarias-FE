@@ -83,7 +83,7 @@ const Summary = (props) => {
       </Grid>
       <Divider/>
       <Grid container item justifyContent="center" style={{marginTop: "10px"}}>
-        <Grid item justifyContent="center" >
+        <Grid item>
             <Typography variant="subtitle2">
               {asignee ? "Responsable Asignado" : "Asignar Responsable" }
             </Typography>
@@ -93,7 +93,7 @@ const Summary = (props) => {
             {asignee ? <Chip icon={<FaceIcon />} label={asignee.fullName} onDelete={deleteAsigneed}/> : <Grid/> }
           </Grid>
         </Grid>
-        <Grid item justifyContent="center">
+        <Grid item>
           <Button onClick={openAsigneeDialog}>
             Asignar Responsable
           </Button>

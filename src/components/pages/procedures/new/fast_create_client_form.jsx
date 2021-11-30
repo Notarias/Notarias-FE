@@ -25,15 +25,6 @@ const FastCreateClientForm = (props) => {
                                       causant: false,
                                     });
 
-  let variables = {
-    firstName: newClient.firstName,
-    lastName: newClient.lastName,
-    rfc: newClient.rfc,
-    curp: newClient.curp,
-    moral: newClient.moral,
-    causant: newClient.causant,
-  }
-
   const setFormValue = ({ target }) => {
     const {name, value, checked} = target
     if (name === "moral"){
@@ -70,6 +61,15 @@ const FastCreateClientForm = (props) => {
       fetchPolicy: "no-cache"
     }
   )
+
+  let variables = {
+    firstName: newClient.firstName,
+    lastName: newClient.lastName,
+    rfc: newClient.rfc,
+    curp: newClient.curp,
+    moral: newClient.moral,
+    causant: newClient.causant,
+  }
 
   const createNewClient = (event) => {
     createClient({ variables: variables })

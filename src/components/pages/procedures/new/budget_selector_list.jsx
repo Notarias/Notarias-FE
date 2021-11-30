@@ -40,7 +40,10 @@ const BudgetSelectorList = (props) => {
   const classes = useStyles();
   
   const { loading, data, refetch } = useQuery(
-    BUDGETING_TEMPLATE_BY_PROCEDURE_ID, { variables: {"proceduresTemplateId": selectedProcedure.id} }
+    BUDGETING_TEMPLATE_BY_PROCEDURE_ID, {
+      variables: {"proceduresTemplateId": selectedProcedure.id},
+      fetchPolicy: "no-cache"
+    }
   );
 
   let fuzzySearch = new Fuse(budgetList, { keys: ['name'] });

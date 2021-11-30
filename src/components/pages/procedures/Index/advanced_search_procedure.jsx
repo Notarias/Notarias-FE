@@ -62,7 +62,7 @@ const AdvancedSearchProcedure = (props) => {
 
   return(
     <Grid container justifyContent="flex-end" 
-      className={changeAdvanceSearch ? classes.GridInputAdvancedSearchHide : classes.GridInputAdvancedSearch}>
+      className={changeAdvanceSearch ? classes.gridInputAdvancedSearchHide : classes.gridInputAdvancedSearch}>
       <Paper className={classes.paperAdvancedSearch}>
         <Grid container spacing={2} justifyContent="flex-end">
           <Grid item xs={8}>

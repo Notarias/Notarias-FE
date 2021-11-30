@@ -81,7 +81,7 @@ const ClientSearch = (props) => {
   const renderInputSearch = () => {
     return(
       <Grid container  direction="row" spacing={3} justifyContent="flex-end">
-        <Grid item justifyContent="flex-end">
+        <Grid item>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               { 
@@ -100,7 +100,7 @@ const ClientSearch = (props) => {
             />
           </div>
         </Grid>
-        <Grid item justifyContent="flex-end">
+        <Grid item>
           <Button
             onClick={openCreateClienteForm}
             variant="contained"
@@ -120,7 +120,7 @@ const ClientSearch = (props) => {
     const { setClientInfo } = props
     
     return(
-      <TableBody className={classes.ClientSearchTable}>
+      <TableBody className={classes.clientSearchTable}>
         {
           data && data.clients.map((client, index ) => {
 
@@ -130,11 +130,11 @@ const ClientSearch = (props) => {
             };
             return(
             <TableRow
-              index={ client.id }
+              index={client.id}
               key={client.id}
               hover 
               selected={client.id === selectedIndex} 
-              onClick={ handleMenuItemClick }
+              onClick={handleMenuItemClick}
             >
               <TableCell align= "center" className={classes.tableRowMax}>{ client.firstName }</TableCell>
               <TableCell align= "center" className={classes.tableRowMax}>{ client.lastName }</TableCell>
@@ -147,42 +147,40 @@ const ClientSearch = (props) => {
     )
   }
 
-  let field = sortField
-  let direction = sortDirection
   let sortHandler = sort.bind(this)
 
   return(
     <Grid container item xs={10}>
       { renderInputSearch() }
-      <Table className={classes.ClientSearchTable} >
+      <Table className={classes.clientSearchTable} >
         <TableHead >
           <TableRow >
           <SortHeader
-              text={"Nombre"}
-              field_property={"first_name"}
-              current_field={field}
-              sort_direction={direction}
+              text="Nombre"
+              field_property="first_name"
+              current_field={sortField}
+              sort_direction={sortDirection}
               callback={sortHandler}
             />
             <SortHeader
-              text={"Apellido"}
-              field_property={"last_name"}
-              current_field={field}
-              sort_direction={direction}
+              text="Apellido"
+              field_property="last_name"
+              current_field={sortField}
+              sort_direction={sortDirection}
               callback={sortHandler}
             />
             <SortHeader
-              text={"RFC"}
-              field_property={"rfc"}
-              current_field={field}
-              sort_direction={direction}
+              text="RFC"
+              field_property="rfc"
+              current_field={sortField}
+              sort_direction={sortDirection}
               callback={sortHandler}
             />
             <SortHeader
-              text={"CURP"}
-              field_property={"curp"}
-              current_field={field}
-              sort_direction={direction}
+              text="CURP"
+              field_property="curp"
+              current_field={sortField}
+              sort_direction={sortDirection}
               callback={sortHandler}
             />
           </TableRow>
@@ -197,7 +195,7 @@ const ClientSearch = (props) => {
               onPageChange={changePage}
               onRowsPerPageChange={changeRowsPerPage}
               count={total_records}
-              labelRowsPerPage={"Filas por página:"}
+              labelRowsPerPage="Filas por página:"
             />
           </TableRow>
         </TableFooter>
