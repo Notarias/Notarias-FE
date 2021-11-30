@@ -19,7 +19,7 @@ import BudgetSelectorList from './new/budget_selector_list';
 import Summary from './new/summary';
 import ConfirmDialog from './new/confirm_dialog';
 import { useMutation } from '@apollo/client';
-import { CREATE_PROCEDURE } from './queries_and_mutations/queries'
+import { CREATE_PROCEDURE } from './queries_and_mutations/queries';
 
 
 const BREADCRUMBS = [
@@ -34,7 +34,6 @@ const useStyles = makeStyles((theme) => ({
   },
   marginButtons: {
     marginBottom: theme.spacing(2),
-
   },
   buttonsMargin: {
     marginTop: theme.spacing(1),
@@ -179,8 +178,6 @@ const NewProcedure = (params) => {
   }
 
   const openSaveConfirm = () => {
-    console.log("abre cofirmacion")
-    console.log(openConfirmation)
     setOpenConfirmation(true);
   }
 
@@ -296,7 +293,7 @@ const NewProcedure = (params) => {
                       <Button disabled={activeStep === 0} onClick={handleBack}>
                         Regresar
                       </Button>
-                      </Grid>
+                    </Grid>
                   </Grid>
                   <Grid container item xs={2} justifyContent="flex-end">
                     <Grid item>
@@ -316,6 +313,8 @@ const NewProcedure = (params) => {
                 causantInfo={causantInfo}
                 selectedProcedure={selectedProcedure}
                 selectedBudget={selectedBudget}
+                asignee={asignee}
+                setAsignee={setAsignee}
               />
             </Grid>
           </Paper>

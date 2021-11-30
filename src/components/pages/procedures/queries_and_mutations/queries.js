@@ -175,3 +175,14 @@ export const BUDGETING_TEMPLATE_BY_PROCEDURE_ID = gql`
     }
   }
 `
+
+export const USERS_QUICK_LIST = gql`
+  query usersQuickList{
+    usersQuickList{
+      id
+      firstName
+      lastName
+      avatarThumbUrl
+    }
+  }
+`
