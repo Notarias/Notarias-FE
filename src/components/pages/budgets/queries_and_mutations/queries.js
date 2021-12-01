@@ -321,13 +321,15 @@ export const UPDATE_BUDGET_FIELD_VALUE = gql`
     $id: ID!,
     $budgetingTemplateFieldId: ID,
     $budgetId: ID,
-    $value: Int!,
+    $value: Int,
+    $active: Boolean
   ){
     updateBudgetFieldValue(input:{
       id: $id,
       budgetingTemplateFieldId: $budgetingTemplateFieldId,
       budgetId: $budgetId,
-      value: $value
+      value: $value,
+      active: $active
       }
     ){
       budgetFieldValue{
@@ -340,6 +342,7 @@ export const UPDATE_BUDGET_FIELD_VALUE = gql`
         }
         id
         value
+        active
       }
     }
   }
@@ -387,6 +390,7 @@ export const GET_BUDGET_FIELD_VALUE = gql`
       budgetingTemplateFieldId
       totalDebt
       totalPaid
+      active
     }
   }
 `

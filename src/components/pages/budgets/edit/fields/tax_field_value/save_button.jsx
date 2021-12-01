@@ -37,33 +37,33 @@ export default (props) => {
 
 
   const [createFieldValueMutation, {loading: createFieldValueLoading}] =
-  useMutation(
-    CREATE_BUDGET_FIELD_VALUE,
-    {
-      onError(apolloError) {
-      },
-      onCompleted(cacheData) {
-        setEditing(false)
-        setPristine(false)
-        // setEditingValue(cacheData)
-      },
-      refetchQueries: [
-        {
-          query: GET_BUDGET_FIELD_VALUE,
-          variables: { "budgetingTemplateFieldId": templateField.id , "budgetId": budget.id }
+    useMutation(
+      CREATE_BUDGET_FIELD_VALUE,
+      {
+        onError(apolloError) {
         },
-        {
-          query: GET_BUDGETS_AUDITLOG,
-          variables: { "budgetId": budget.id }
+        onCompleted(cacheData) {
+          setEditing(false)
+          setPristine(false)
+          // setEditingValue(cacheData)
         },
-        {
-          query: GET_BUDGET_TOTALS,
-            variables: { "id": budget.id }
-        }
-      ],
-      awaitRefetchQueries: true
-    }
-  )
+        refetchQueries: [
+          {
+            query: GET_BUDGET_FIELD_VALUE,
+            variables: { "budgetingTemplateFieldId": templateField.id , "budgetId": budget.id }
+          },
+          {
+            query: GET_BUDGETS_AUDITLOG,
+            variables: { "budgetId": budget.id }
+          },
+          {
+            query: GET_BUDGET_TOTALS,
+              variables: { "id": budget.id }
+          }
+        ],
+        awaitRefetchQueries: true
+      }
+    )
 
   const createNewFieldValue = (event) => {
     createFieldValueMutation({
@@ -75,40 +75,40 @@ export default (props) => {
   }
 
   const [updateFieldValueMutation, {loading: updateFieldValueLoading}] =
-  useMutation(
-    UPDATE_BUDGET_FIELD_VALUE,
-    {
-      onError(apolloError) {
-        // setErrors(apolloError)
-        // setOpen(false);
-        // setPristine(true)
-      },
-      onCompleted(cacheData) {
-        setEditing(false)
-        setPristine(false)
-        setOpen(false);
-      },
-      refetchQueries: [
-        {
-          query: GET_BUDGET_FIELD_VALUE,
-          variables: { "budgetingTemplateFieldId": templateField.id, "budgetId": budget.id }
+    useMutation(
+      UPDATE_BUDGET_FIELD_VALUE,
+      {
+        onError(apolloError) {
+          // setErrors(apolloError)
+          // setOpen(false);
+          // setPristine(true)
         },
-        {
-          query: GET_BUDGET,
-          variables: {"id": budget.id }
+        onCompleted(cacheData) {
+          setEditing(false)
+          setPristine(false)
+          setOpen(false);
         },
-        {
-          query: GET_BUDGETS_AUDITLOG,
-          variables: { "budgetId": budget.id }
-        },
-        {
-          query: GET_BUDGET_TOTALS,
+        refetchQueries: [
+          {
+            query: GET_BUDGET_FIELD_VALUE,
+            variables: { "budgetingTemplateFieldId": templateField.id, "budgetId": budget.id }
+          },
+          {
+            query: GET_BUDGET,
             variables: {"id": budget.id }
-        }
-      ],
-      awaitRefetchQueries: true
-    }
-  )
+          },
+          {
+            query: GET_BUDGETS_AUDITLOG,
+            variables: { "budgetId": budget.id }
+          },
+          {
+            query: GET_BUDGET_TOTALS,
+              variables: {"id": budget.id }
+          }
+        ],
+        awaitRefetchQueries: true
+      }
+    )
 
   const updateNewFieldValue = (event) => {
     updateFieldValueMutation({ variables: {"id": budgetFieldValue ? budgetFieldValue.id : "No", "value": (editingValue * 100)}})

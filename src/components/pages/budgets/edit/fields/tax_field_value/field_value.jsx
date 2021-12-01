@@ -1,30 +1,25 @@
-import React, { useState, useEffect }               from 'react';
-import { withStyles }                               from '@material-ui/core/styles';
-import { styles }                                   from '../../../styles';
-import { useQuery }                                 from '@apollo/client';
-import { GET_BUDGET_FIELD_VALUE }                   from '../../../queries_and_mutations/queries'
-import GenericDropdownMenu                          from '../../../../../ui/generic_dropdown_menu';
-import SaveButton                                   from './save_button';
-import TotalValue                                   from './total_value';
-import TaxedFields                                  from './taxed_fields';
-import Payment                                      from './payment';
-import PaymentList                                  from './payment_list';
-// import Payment                                      from './payment'
-import MenuItem                                     from '@material-ui/core/MenuItem';
-import AccountBalanceIcon                           from '@material-ui/icons/AccountBalance';
-import AccountBalanceWalletIcon                     from '@material-ui/icons/AccountBalanceWallet';
-import TextField                                    from '@material-ui/core/TextField';
-import InputAdornment                               from '@material-ui/core/InputAdornment';
-import Box                                          from '@material-ui/core/Box';
-
-import Divider                                      from '@material-ui/core/Divider';
-import Typography                                   from '@material-ui/core/Typography';
-import Grid                                         from '@material-ui/core/Grid';
-import { green }                                    from '@material-ui/core/colors';
-import ExpandMoreIcon                               from '@material-ui/icons/ExpandMore';
-import IconButton                                   from '@material-ui/core/IconButton';
-import PropTypes                                    from 'prop-types';
-import NumberFormat                                 from 'react-number-format';
+import React, { useState, useEffect } from 'react';
+import { withStyles }                 from '@material-ui/core/styles';
+import { styles }                     from '../../../styles';
+import { useQuery }                   from '@apollo/client';
+import { GET_BUDGET_FIELD_VALUE }     from '../../../queries_and_mutations/queries'
+import GenericDropdownMenu            from '../../../../../ui/generic_dropdown_menu';
+import SaveButton                     from './save_button';
+import TotalValue                     from './total_value';
+import TaxedFields                    from './taxed_fields';
+import Payment                        from './payment';
+import PaymentList                    from './payment_list';
+import ActiveSwitch                   from './active_switch';
+// import Payment                        from './payment'
+import MenuItem                       from '@material-ui/core/MenuItem';
+import AccountBalanceIcon             from '@material-ui/icons/AccountBalance';
+import Typography                     from '@material-ui/core/Typography';
+import Grid                           from '@material-ui/core/Grid';
+import { green }                      from '@material-ui/core/colors';
+import ExpandMoreIcon                 from '@material-ui/icons/ExpandMore';
+import IconButton                     from '@material-ui/core/IconButton';
+import { grey }                       from '@material-ui/core/colors';
+import NumberFormat                   from 'react-number-format';
 
 // import PaymentList                                  from './payment_list/payment_list';
 
@@ -42,7 +37,7 @@ const FieldValue = (props) => {
   // const [withValue, setWithValue] = useState(false)
   const [templateField] = useState(field)
 
-  const { loading, data } = useQuery(
+  const { loading, data, refetch } = useQuery(
     GET_BUDGET_FIELD_VALUE,
     {
       variables: { "budgetingTemplateFieldId": templateField.id , "budgetId": budget.id }
@@ -96,6 +91,7 @@ const FieldValue = (props) => {
       item
       direction='column'
       justifyContent='center'
+      style={ budgetFieldValue && budgetFieldValue.active ? {} : { backgroundColor: grey[300]}}
     >
       <Grid item container alignItems="center" style={{ minHeight: '70px' }} key={`fields-${budget.id}`}>
         <Grid item xs={1}>
@@ -135,7 +131,7 @@ const FieldValue = (props) => {
         </Grid>
         <Grid container item xs={2} direction='row' justifyContent="flex-start" alignItems="center">
         <Grid item xs={3}>
-          <SaveButton
+          {/* <SaveButton
             budget={budget}
             templateField={templateField}
             pristine={pristine}
@@ -145,7 +141,7 @@ const FieldValue = (props) => {
             editingValue={editingValue}
             setEditingValue={setEditingValue}
             setEditing={setEditing}
-          />
+          /> */}
         </Grid>
         <Grid item xs={3}>
           <GenericDropdownMenu>
@@ -170,6 +166,16 @@ const FieldValue = (props) => {
                     budgetFieldValue={budgetFieldValue}
                     field={templateField}
                   />
+              }
+            </MenuItem>
+            <MenuItem key="activar-desactivar">
+              { 
+                budgetFieldValue &&
+                  <ActiveSwitch
+                    refetch={refetch}
+                    budgetFieldValue={budgetFieldValue}
+                    templateField={templateField}
+                    budget={budget}/> 
               }
             </MenuItem>
           </GenericDropdownMenu>
