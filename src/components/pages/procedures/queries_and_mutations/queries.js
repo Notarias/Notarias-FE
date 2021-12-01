@@ -1,8 +1,7 @@
-import gql          from 'graphql-tag';
+import gql from 'graphql-tag';
 
-export const CREATE_PROCEDURES = gql`
-
-mutation CreateProcedures(
+export const CREATE_PROCEDURE = gql`
+mutation CreateProcedure(
   $clientId: ID!,
   $causantId: ID,
   $proceduresTemplateId: ID!,
@@ -36,8 +35,8 @@ mutation CreateProcedures(
   }
 }
 `
+
 export const GET_PROCEDURES = gql`
-  
 query Procedures(
   $page: Int
   $per: Int
@@ -64,4 +63,126 @@ query Procedures(
   }
   proceduresCount
 }  
+`
+
+export const LOAD_CLIENTS = gql`
+  query searchClients(
+      $page: Int,
+      $per: Int,
+      $sortField: String,
+      $sortDirection: String,
+      $searchField: String,
+      $searchValue: String
+    ) {
+    clients(
+      page: $page,
+      per: $per,
+      sortField: $sortField,
+      sortDirection: $sortDirection,
+      searchField: $searchField,
+      searchValue: $searchValue
+    ) {
+      id
+      firstName
+      lastName
+      rfc
+      curp
+    }
+    clientsCount
+  }
+`
+
+export const LOAD_CAUSANTS = gql`
+  query searchCausants(
+      $page: Int,
+      $per: Int,
+      $sortField: String,
+      $sortDirection: String,
+      $searchField: String,
+      $searchValue: String
+    ) {
+    causants(
+      page: $page,
+      per: $per,
+      sortField: $sortField,
+      sortDirection: $sortDirection,
+      searchField: $searchField,
+      searchValue: $searchValue
+    ) {
+      id
+      firstName
+      lastName
+      rfc
+      curp
+      causant
+    }
+    causantsCount
+  }
+`
+
+export const CREATE_CLIENT = gql`
+  mutation createClient(
+    $firstName: String!,
+    $lastName: String!,
+    $curp: String,
+    $rfc: String,
+    $moral: Boolean,
+    $causant: Boolean
+  ) {
+    createClient(input: {
+      firstName: $firstName,
+      lastName: $lastName,
+      curp: $curp,
+      rfc: $rfc,
+      moral: $moral,
+      causant: $causant
+    }
+  ) 
+    {
+      client {
+        id
+        firstName
+        lastName
+        curp
+        rfc
+        moral
+      }
+    }
+  }
+`
+
+export const GET_PROCEDURES_TEMPLATES_QUICK_LIST = gql`
+  query proceduresTemplatesQuickList{
+    proceduresTemplatesQuickList{
+      name
+      id
+      budgetingTemplatesIds
+    }
+  }
+`
+
+export const BUDGETING_TEMPLATE_BY_PROCEDURE_ID = gql`
+  query budgetingTemplatesByProcedureId (
+    $proceduresTemplateId: ID!
+  ){
+    budgetingTemplatesByProcedureId(
+       proceduresTemplateId: $proceduresTemplateId
+    ){
+      id
+      name
+      serialNumber
+      active
+    }
+  }
+`
+
+export const USERS_QUICK_LIST = gql`
+  query usersQuickList{
+    usersQuickList{
+      id
+      firstName
+      lastName
+      avatarThumbUrl
+    }
+  }
 `

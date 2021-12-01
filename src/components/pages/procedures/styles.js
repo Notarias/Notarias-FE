@@ -68,7 +68,7 @@ export const styles = theme => {
       marginRight: "5px",
       marginLeft: "10px"
     },
-    newBudgetButton: {
+    newButton: {
       marginLeft: "5px"
     },
     textFieldSearchInTable: {
@@ -87,7 +87,7 @@ export const styles = theme => {
     labelLeft: {
       textAlign: "left",
     },
-    ClientSearchTable: {
+    clientSearchTable: {
       backgroundColor: 'inherit',
       width: "100%",
       maxHeight: "280px",
@@ -100,29 +100,29 @@ export const styles = theme => {
       width:"30px", 
       height:"30px",
     },
-    budgetEditPaper: {
+    editPaper: {
       marginTop: '10px',
       width: "100%",
       height:"300px"
     },
-    budgetRightOptionsList: {
+    procedureRightOptionsList: {
       marginTop: '10px',
       width: "100%",
       height:"608px"
     },
-    budgetTittle: {
+    procedureTittle: {
       height:"50px"
     },
-    budgetEdit : {
+    procedureEdit : {
       height:"100px"
     },
     spaceBetwenFirstNameAndLastName: {
       marginLeft: "5px"
     },
-    marginTitleBudgetName: {
+    marginTitleProcedureName: {
       marginLeft: "20px"
     },
-    budgetTabPanelFields: {
+    procedureTabPanelFields: {
       marginLeft: "20px",
       height:"70px",
     },
@@ -166,28 +166,24 @@ export const styles = theme => {
     totalPaidInGreen: {
       color: "green"
     },
-    GridInputAdvancedSearchHide: {
+    gridInputAdvancedSearchHide: {
       overflow: "hidden",
       width: "0px",
       height: "0px"
     },
-    GridInputAdvancedSearch: {
+    gridInputAdvancedSearch: {
       overflow: "visible",
       marginTop: "20px"
     },
-    inputInAdvancedSearch: {
-      margin: "5px",
-      width: "140px"
-    },
-    serialInAdvancedSearch: {
-      margin: "5px",
-      wordWrap: "break-word"
-    },
-    inputClientNameInAdvancedSearch: {
-      margin: "5px"
-    },
     paperAdvancedSearch: {
-      width: "600px"
+      width: "700px"
+    },
+    advancedSearchImputs: {
+      margin: "5px",
+      margin: "dense"
+    },
+    advancedSearchContainer: {
+      padding: "10px"
     },
     gridCommentsContainer: {
       maxHeight: "96px"
@@ -202,7 +198,7 @@ export const styles = theme => {
       marginBottom: "5px",
       marginTop: "5px"
     },
-    commentsBudgetGrid: {
+    commentsProcedureGrid: {
       marginLeft: "53px"
     },
     commentEditingInputGrid: {
@@ -270,11 +266,6 @@ export const styles = theme => {
     },
     selectPayType: {
       marginTop: "35px"
-    },
-    buttonPadding: {
-      padding: "5px",
-      margin: "10px",
-      wordWrap: "break-word"
     },
   })
 }

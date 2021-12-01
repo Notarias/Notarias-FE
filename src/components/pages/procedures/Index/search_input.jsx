@@ -77,10 +77,10 @@ const SearchInput = (props) => {
       <Button 
         variant="contained" 
         color="primary"
-        className={classes.newBudgetButton}
+        className={classes.newButton}
         onClick={ handleClickOpen }
         component={Link} 
-        to="/budgets/new"
+        to="/procedures/new"
       >
         <PostAddIcon/>
       </Button>

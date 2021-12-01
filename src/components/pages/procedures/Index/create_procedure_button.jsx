@@ -30,7 +30,7 @@ const CreateBudgetButton = (props) => {
       <Button 
         variant="contained" 
         color="primary"
-        className={classes.newBudgetButton}
+        className={classes.newButton}
         onClick={ handleClickOpen }
       >
         <PostAddIcon/>

@@ -62,78 +62,74 @@ const AdvancedSearchProcedure = (props) => {
 
   return(
     <Grid container justifyContent="flex-end" 
-      className={changeAdvanceSearch ? classes.GridInputAdvancedSearchHide : classes.GridInputAdvancedSearch}>
-      <Grid container item direction="row" justifyContent="flex-end">
-        <Paper className={classes.paperAdvancedSearch}>
-          <Grid container spacing={2} direction="row" justifyContent="flex-end">
-            <Grid item xs={8}>
-              <TextField
-                inputRef={clientNameInputRef}
-                onChange={onChangeClientName}
-                size="small" 
-                id="client_name" 
-                label="Nombre del cliente" 
-                variant="outlined" 
-                fullWidth
-                className={classes.inputClientNameInAdvancedSearch}
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <TextField
-                inputRef={serialNumberInputRef}
-                onChange={onChangeSerialNumber}
-                size="small"
-                id="serial_number"
-                label="No. serie"
-                variant="outlined"
-                fullWidth
-                className={classes.serialInAdvancedSearch}
-              />
-            </Grid>
+      className={changeAdvanceSearch ? classes.gridInputAdvancedSearchHide : classes.gridInputAdvancedSearch}>
+      <Paper className={classes.paperAdvancedSearch}>
+        <Grid container spacing={2} justifyContent="flex-end">
+          <Grid item xs={8}>
+            <TextField
+              inputRef={clientNameInputRef}
+              onChange={onChangeClientName}
+              size="small" 
+              id="client_name" 
+              label="Nombre del cliente" 
+              variant="outlined" 
+              fullWidth
+              className={classes.advancedSearchImputs}
+            />
           </Grid>
-          <Grid container spacing={3} direction="row" justifyContent="flex-end">            
-            <Grid item xs={4}>
-              <TextField
-                inputRef={budgetTempalteInputRef}
-                onChange={onChangeBudgetTemplateName}
-                size="small"
-                id="budget_templrate_name"
-                label="Presupuesto"
-                variant="outlined"
-                fullWidth
-                className={classes.serialInAdvancedSearch}
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <TextField
-                inputRef={procedureTemplateInputRef}
-                onChange={onChangeProcedureTemplateName}
-                size="small"
-                id="procedure_template_name"
-                label="Tramite"
-                variant="outlined"
-                fullWidth
-                className={classes.serialInAdvancedSearch}
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <TextField
-                inputRef={createdAtInputRef}
-                onChange={onChangeCreatedAtName}
-                size="small"
-                id="created_at"
-                label="Fecha Iicial"
-                variant="outlined"
-                fullWidth
-                className={classes.serialInAdvancedSearch}
-              />
-            </Grid>
+          <Grid item xs={4}>
+            <TextField
+              inputRef={serialNumberInputRef}
+              onChange={onChangeSerialNumber}
+              size="small"
+              id="serial_number"
+              label="No. serie"
+              variant="outlined"
+              fullWidth
+              className={classes.advancedSearchImputs}
+            />
           </Grid>
-          <Grid container item xs={12} justifyContent="flex-end" className={classes.buttonPadding}>
-            <Button variant="outlined" onClick={startAdvanceSearch}>Buscar</Button>
+          <Grid item xs={4}>
+            <TextField
+              inputRef={budgetTempalteInputRef}
+              onChange={onChangeBudgetTemplateName}
+              size="small"
+              id="budget_templrate_name"
+              label="Presupuesto"
+              variant="outlined"
+              fullWidth
+              className={classes.advancedSearchImputs}
+            />
           </Grid>
-        </Paper>
-      </Grid>
+          <Grid item xs={4}>
+            <TextField
+              inputRef={procedureTemplateInputRef}
+              onChange={onChangeProcedureTemplateName}
+              size="small"
+              id="procedure_template_name"
+              label="Tramite"
+              variant="outlined"
+              fullWidth
+              className={classes.advancedSearchImputs}
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <TextField
+              inputRef={createdAtInputRef}
+              onChange={onChangeCreatedAtName}
+              size="small"
+              id="created_at"
+              label="Fecha Iicial"
+              variant="outlined"
+              fullWidth
+              className={classes.advancedSearchImputs}
+            />
+          </Grid>
+          <Grid item xs={4} >
+            <Button variant="outlined" className={classes.advancedSearchImputs} onClick={startAdvanceSearch}>Buscar</Button>
+          </Grid>
+        </Grid>
+      </Paper>
     </Grid>
   )
 }
