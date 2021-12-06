@@ -254,7 +254,7 @@ query budget(
         id
         name
       },
-      client{
+      client {
         firstName
         lastName
         rfc
@@ -276,6 +276,50 @@ query budget(
           id
           budgetingTemplateTabId
         }
+      }
+    }
+  }
+`
+
+export const GET_PRINT_BUDGET = gql`
+query budget(
+    $id: ID!
+  ){
+  budget(
+    id: $id
+    ){
+      id
+      total
+      totalCredit
+      totalPaid
+      totalDebt
+      serialNumber
+      createdAt
+      asignee {
+        fullName
+        avatarThumbUrl
+        id
+      }
+      budgetingTemplate{
+        active
+        id
+        name
+      }
+      client {
+        fullName
+        rfc
+        curp
+        id
+      }
+      causant {
+        fullName
+        rfc
+        curp
+        id
+      }
+      tabs {
+        id
+        name
       }
     }
   }
