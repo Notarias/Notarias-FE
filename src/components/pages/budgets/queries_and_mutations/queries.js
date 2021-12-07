@@ -320,6 +320,7 @@ query budget(
       tabs {
         id
         name
+        fieldValuesTotal
       }
     }
   }
@@ -332,6 +333,16 @@ export const GET_BUDGETING_TEMPLATES_TABS = gql`
       id
       name
       budgetingTemplateId
+    }
+  }
+`
+
+export const GET_BUDGETING_TAB_TOTALS = gql`
+  query budgetingTemplateTabTotals ($id: ID!, $budgetId: ID!) {
+    tabTotals (id: $id, budgetId: $budgetId) {
+      total
+      totalDebt
+      totalPaid
     }
   }
 `

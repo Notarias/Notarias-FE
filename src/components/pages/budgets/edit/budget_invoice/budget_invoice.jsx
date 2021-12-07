@@ -231,7 +231,7 @@ const BudgetInvoice = (props) => {
               <Typography variant='h5' align='right'>CANTIDAD:</Typography>
             </Grid>
           </Grid>
-          <Grid container item xs={8} direction="column" spacing={2}>
+          <Grid container item xs={8} direction="column">
             {
               tabs && tabs.map((tab) => {
                 return(
@@ -240,28 +240,14 @@ const BudgetInvoice = (props) => {
               })
             }
           </Grid>
-          <Grid container item xs={8} direction="row">
-            <Grid
-              container 
-              item 
-              xs={8} 
-              direction="column" 
-              justifyContent="flex-start" 
-              alignItems="flex-start"
-            >
-              <h2 >Gran Total</h2>
+          <Grid container item xs={8} style={{ marginTop: "20px" }}>
+            <Grid item xs={6}>
+              <Typography align='left' variant='h6'>Gran Total</Typography>
             </Grid>
-            <Grid
-              container 
-              item 
-              xs={3} 
-              direction="column" 
-              justifyContent="flex-start" 
-              alignItems="flex-start"
-            >
-              <h2>
+            <Grid item xs={6}>
+              <Typography align='right' variant='h6'>
                 { budget && ((budget.totalDebt * 1.0) / 100).toFixed(2) }
-              </h2>
+              </Typography>
             </Grid>
           </Grid>
           <Grid container item xs={8} direction="row">

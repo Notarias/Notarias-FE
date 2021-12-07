@@ -34,6 +34,11 @@ export default (props) => {
           )
         })
       }
+      <Grid item>
+        <Typography align='right' variant='h6'>
+          {((tab.fieldValuesTotal * 1.0) / 100).toFixed(2)}
+        </Typography>
+      </Grid>
     </Grid>
   )
 }
