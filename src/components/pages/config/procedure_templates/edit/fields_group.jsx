@@ -1,9 +1,9 @@
-import React                                                    from 'react';
+import React, { useState }                                                    from 'react';
 import { styles }                                               from '../styles';
 import { withStyles }                                           from '@material-ui/core/styles';
 import Grid                                                     from '@material-ui/core/Grid';
 import Button                                                   from '@material-ui/core/Button';
-import TextField                                                from '@material-ui/core/TextField';
+import InputBase                                                from '@material-ui/core/InputBase';
 import FieldsGroupFieldList                                     from './fields_groups_fields_list';
 import Paper                                                    from '@material-ui/core/Paper';
 import Divider                                                  from '@material-ui/core/Divider';
@@ -18,9 +18,9 @@ import CreateIcon                                               from '@material-
 const FieldsGroup = (props) => {
 
   const { classes, group, groupId, currentTab, active} = props;
-  const [groupName, setGroupName] = React.useState(group.name);
-  const [editing, setEditing] = React.useState(true);
-  const [error, setError] = React.useState(false);
+  const [groupName, setGroupName] = useState(group.name);
+  const [editing, setEditing] = useState(true);
+  const [error, setError] = useState(false);
   const inputsList = ["name"];
 
   const [updateProceduresTemplateTabFieldsGroupMutation] =
@@ -74,48 +74,55 @@ const FieldsGroup = (props) => {
 
   const renderTextGroupName = () => {
     return(
-      <>
-        <Grid className={ classes.textPlainGoupName } onClick={ editFieldGroup }>
-          <Typography variant="overline">
+      <Grid container item xs={12} direction="row">
+        <Grid item xs={10} className={ classes.textPlainGoupName } onClick={ editFieldGroup } style={{ marginTop: "2px"}}>
+          <Typography>
             { groupName }
           </Typography>
         </Grid>
+        <Grid item xs={1}>
           <Button onClick={ editFieldGroup } className={ classes.editGroupNameIcon }>
             <CreateIcon />
           </Button>
-      </>
+        </Grid>
+      </Grid>
     )
   }
 
   const renderInputGroupName = () => {
     return(
       <>
-        <TextField 
-          id="filled-basic"
-          label="Nombre del Grupo"
-          value={ groupName } 
-          variant="filled" 
-          size="small"
-          className={ classes.inputTittleGroupName }
-          onChange={ handleGroupNameChange }
-          error={ !!error["name"] && true }
-          helperText={error["name"] || " "}
-          errorskey={ "name" }
-          name='name'
-        />
-        <Button  onClick={ updateFieldsGroup }>
-          <SaveIcon color="primary" className={ classes.saveGroupNameIcon }/>
-        </Button>
+        <Grid item xs={10} className={ classes.textPlainGoupName }>
+          <InputBase 
+            id="filled-basic"
+            label="Nombre del Grupo"
+            value={ groupName } 
+            variant="filled" 
+            size="small"
+            className={ classes.inputTittleGroupName }
+            onChange={ handleGroupNameChange }
+            error={ !!error["name"] && true }
+            helperText={error["name"] || " "}
+            errorskey={ "name" }
+            name='name'
+            inputProps={{ 'aria-label': 'naked' }}
+          />
+        </Grid>
+        <Grid item xs={1}>
+          <Button  onClick={ updateFieldsGroup }>
+            <SaveIcon color="primary" className={ classes.saveGroupNameIcon }/>
+          </Button>
+        </Grid>
       </>
     )
   }
 
   return(
-    <Paper className={ classes.roundedBorderGruop }>
-      <Divider/>
-      <Grid container>
-        <Grid container  alignItems="center" className={ markStatus() }>
-          <Grid container item xs={11} alignItems="flex-start">
+    <Grid container item xs={12} alignItems="center" justifyContent="center" className={ classes.fielPaddingBottom }>
+      <Paper className={ classes.roundedBorderGruop }>
+        <Divider/>
+        <Grid container item alignItems="center" className={ classes.fieldHeightRow }>
+          <Grid container item xs={11} direction="row" alignItems="flex-start" >
             { editing ? renderTextGroupName() : renderInputGroupName() }
           </Grid>
           <Grid container item xs={1} alignItems="center" justifyContent="flex-end">
@@ -130,8 +137,8 @@ const FieldsGroup = (props) => {
           </Grid>
         </Grid>
         <FieldsGroupFieldList groupId={ groupId } />
-      </Grid>
-    </Paper>
+      </Paper>
+    </Grid>
   )
 }
 

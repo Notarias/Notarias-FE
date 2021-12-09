@@ -35,67 +35,69 @@ const Edit = (props) => {
     <>
       <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
       <Divider/>
-      <Grid container direction="row">
-        <Grid container item xs={9} direction="column">
-            <Grid container direction="row"  alignItems="center" className={ classes.addTittleProcedure }>
-              <Grid container item xs={7} justifyContent="flex-start">
-                <TemplateTitle
-                  templateData={ data ? data.proceduresTemplate : " " }
-                  match={ props.match.params }
-                />
-              </Grid>
-              <Grid container item xs={5} justifyContent="center" alignItems="center">
-                <Grid container item xs={6} justifyContent="center">
-                  <ButgetingTemplateLinkButton
-                    id={ match.params.id }
-                    budgetingTemplatesData={ data ? data.proceduresTemplate.budgetingTemplates : null }
-                  />
-                </Grid>
-                <Grid container item xs={4} justifyContent="center">
-                  <ActiveTemplateButton
-                    templateData={data ?  data.proceduresTemplate : [] }
-                    match={ props.match.params }
-                  />
-                </Grid>
-              </Grid>
+      <Grid container direction="column">
+        <Grid container item xs={12} direction="column">
+          <Grid container direction="row"  alignItems="center" className={ classes.addTittleProcedure }>
+            <Grid container item xs={6} justifyContent="flex-start">
+              <TemplateTitle
+                templateData={ data ? data.proceduresTemplate : " " }
+                match={ props.match.params }
+              />
             </Grid>
+            <Grid container item xs={3} justifyContent="center">
+              <ButgetingTemplateLinkButton
+                id={ match.params.id }
+                budgetingTemplatesData={ data ? data.proceduresTemplate.budgetingTemplates : null }
+              />
+            </Grid>
+            <Grid container item xs={3} justifyContent="center">
+              <ActiveTemplateButton
+                templateData={data ?  data.proceduresTemplate : [] }
+                match={ props.match.params }
+              />
+            </Grid>
+          </Grid>
           <Divider/>
-          <ButtonsNewFieldNewFieldsGroup
-            currentTab={ currentTab }
-          />
-          { 
-          (loading || !data) ?
-            (
-              <Grid container item className={ classes.circularProgressLoading } direction="column" alignItems="center" justifyContent="center">
-                <CircularProgress size={ 100 }/>
-              </Grid>
-            )
-          :
-            (
-              <FieldsAndGroupFields
+          <Grid container item xs={12} direction="row">
+            <Grid container item xs={9} justifyContent="center">
+              <ButtonsNewFieldNewFieldsGroup
                 currentTab={ currentTab }
               />
-            )
-          }
-        </Grid>
-        <Grid container item xs={3} direction="column">
-          <Paper>
-            {
-            (loading || !data) ?
-              (
-                <Grid container item className={ classes.circularProgressLoading } direction="column" alignItems="center" justifyContent="center">
-                  <CircularProgress size={ 100 }/>
-                </Grid>
-              )
-            :
-              <Tabs 
-                tabsData={data ? data.proceduresTemplate.tabs : []}
-                currentTab={currentTab }
-                setCurrentTab={ setCurrentTab }
-                proceduresTemplateId={data ? data.proceduresTemplate.id : " " }
-              />
-            }
-          </Paper>
+              { 
+              (loading || !data) ?
+                (
+                  <Grid container item className={ classes.circularProgressLoading } direction="column" alignItems="center" justifyContent="center">
+                    <CircularProgress size={ 100 }/>
+                  </Grid>
+                )
+              :
+                (
+                  <FieldsAndGroupFields
+                    currentTab={ currentTab }
+                  />
+                )
+              }
+            </Grid>
+            <Grid container item xs={3} justifyContent="center">
+              <Paper>
+                {
+                (loading || !data) ?
+                  (
+                    <Grid container item className={ classes.circularProgressLoading } direction="column" alignItems="center" justifyContent="center">
+                      <CircularProgress size={ 100 }/>
+                    </Grid>
+                  )
+                :
+                  <Tabs 
+                    tabsData={data ? data.proceduresTemplate.tabs : []}
+                    currentTab={currentTab }
+                    setCurrentTab={ setCurrentTab }
+                    proceduresTemplateId={data ? data.proceduresTemplate.id : " " }
+                  />
+                }
+              </Paper>
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     </>
