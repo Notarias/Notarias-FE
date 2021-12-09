@@ -4,7 +4,6 @@ import TextField                                from '@material-ui/core/TextFiel
 import IconButton                               from '@material-ui/core/IconButton';
 import Menu                                     from '@material-ui/core/Menu';
 import MenuItem                                 from '@material-ui/core/MenuItem';
-import Switch                                   from '@material-ui/core/Switch';
 import SaveIcon                                 from '@material-ui/icons/Save';
 import EditIcon                                 from '@material-ui/icons/Edit';
 import ClearIcon                                from '@material-ui/icons/Clear';
@@ -21,10 +20,9 @@ const FieldsRows = (props) => {
 
   const [selected, setSelected] = useState(null);
   const [menuState, setMenuState] = useState(false);
-  const [anchorEl, setAnchorEl] = useState(null);
   const [fieldValueId, setFieldValueId] = useState();
   const [fieldValue, setFieldValue] = useState("");
-  const [fieldValueActive, setFieldValueActive] = useState(true);
+  const [fieldValueActive, setFieldValueActive] = useState();
   const [initFieldValue, setInitFieldValue] = useState("");
   const [saveButtonStatus, setSaveButtonStatus] = useState(true);
   const [fieldStatus, setFieldStatus] = useState(false);
@@ -43,24 +41,21 @@ const FieldsRows = (props) => {
       setInitFieldValue(data.procedureFieldValue.value);
       setFieldValue(data.procedureFieldValue.value);
       setFieldValueActive(data.procedureFieldValue.active)
-      setFieldStatus(!data.procedureFieldValue.value ? false : true);
+      setFieldStatus(true);
     }
   }, [loading, data]);
 
-  const openMenu = ( event ) => {
+  const openMenu = () => {
     setMenuState(true);
-    setAnchorEl(event.currentTarget);
   }
 
   const closeMenu = () => {
     setMenuState(false);
-    setAnchorEl(null);
   }
 
   const cancelMenu = () => {
     setSelected(null);
-    setMenuState(false);
-    setAnchorEl(null);
+    closeMenu();
   }
 
   const cancelEditField = () => {
@@ -74,11 +69,11 @@ const FieldsRows = (props) => {
   const fieldValueChange = ({ target }) => {
     let { value } = target
     setFieldValue(value);
-    setSaveButtonStatus(false);    
-  }
-
-  const saveNewFieldValue = ( event ) => {
-    createProcedureFieldValue ({ variables: {"proceduresTemplateFieldId": field.id, "procedureId": procedure.id, "value": fieldValue} })
+    if(value === "") {
+      setSaveButtonStatus(true);
+    } else {
+      setSaveButtonStatus(false);
+    }
   }
 
   const [createProcedureFieldValue, { loading: createProcedureFieldValueLoading }] =
@@ -88,7 +83,6 @@ const FieldsRows = (props) => {
       onCompleted(cacheData) {
         setInitFieldValue(cacheData && cacheData.createProcedureFieldValue.procedureFieldValue.value);
         setFieldValueId(cacheData && cacheData.createProcedureFieldValue.procedureFieldValue.id);
-        setFieldValueActive(cacheData && cacheData.createProcedureFieldValue.procedureFieldValue.active);
         setFieldStatus(true);
         setSaveButtonStatus(true);
       },
@@ -102,14 +96,10 @@ const FieldsRows = (props) => {
     }
   )
 
-  const updateFieldValue = ( event ) => {
-    updateProcedureFieldValue ({ variables: {"id": fieldValueId, "value": fieldValue} })
+  const saveNewFieldValue = ( event ) => {
+    createProcedureFieldValue ({ variables: {"proceduresTemplateFieldId": field.id, "procedureId": procedure.id, "value": fieldValue} })
   }
-
-  const updateFieldValueActive = ( checked ) => {
-    updateProcedureFieldValue ({ variables: {"id": fieldValueId, "active": checked} })
-  }
-
+  
   const [updateProcedureFieldValue, { loading: updateProcedureFieldValueLoading }] =
     useMutation(
       UPDATE_PROCEDURE_FIELD_VALUE,
@@ -117,7 +107,6 @@ const FieldsRows = (props) => {
         onCompleted(cacheData) {
           setInitFieldValue(cacheData && cacheData.updateProcedureFieldValue.procedureFieldValue.value);
           setFieldValueId(cacheData && cacheData.updateProcedureFieldValue.procedureFieldValue.id);
-          setFieldValueActive(cacheData && cacheData.updateProcedureFieldValue.procedureFieldValue.active);
           setFieldStatus(true);
           setSaveButtonStatus(true);
         },
@@ -131,9 +120,9 @@ const FieldsRows = (props) => {
       }
     )
 
-  const handleChange = (event) => {
-    updateFieldValueActive(event.target.checked);
-  };
+  const updateNewFieldValue = ( event ) => {
+    updateProcedureFieldValue ({ variables: {"id": fieldValueId, "value": fieldValue, "active": fieldValueActive} })
+  }
 
   return (
     <Grid container item style={{ minHeight: '70px' }} key={field.id + 'field-row'} justifyContent="center" >
@@ -149,13 +138,12 @@ const FieldsRows = (props) => {
                 value={fieldValue}
                 disabled={fieldStatus}
                 multiline
-                fullWidth
-              />
+                fullWidth/>
             </Grid>
           </Grid>
           <Grid container item xs={2} width="100%" justifyContent="flex-end">
             <Grid item>
-              { !fieldValue === "" ? 
+              { !initFieldValue ? 
                 <IconButton style={{"padding": "10px"}} disabled={true}>
                   <EditIcon/>
                 </IconButton>
@@ -170,32 +158,26 @@ const FieldsRows = (props) => {
               <IconButton
                 disabled={saveButtonStatus}
                 style={{"padding": "10px"}}
-                onClick={updateFieldValue}
+                onClick={initFieldValue ? updateNewFieldValue : saveNewFieldValue}
               >
                 <SaveIcon/>
               </IconButton>
-              <IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={openMenu}>
-                <MoreVertIcon/>
-              </IconButton>
-              <Menu
-                id="simple-menu"
-                anchorEl={anchorEl}
-                keepMounted
-                open={menuState}
-                onClose={cancelMenu}
+              <IconButton
+                aria-label="more"
+                aria-controls="simple-menu"
+                aria-haspopup="true"
+                onClick={openMenu}
+                style={{"padding": "10px"}}
               >
-                <MenuItem>
-                  {fieldValueActive ? "Activo" : "Inactivo"}
-                  <Switch
-                    onChange={handleChange}
-                    color="primary"
-                    name="active"
-                    inputProps={{ 'aria-label': 'primary checkbox' }}
-                    checked={fieldValueActive}
-                  />
+                <MoreVertIcon />
+              </IconButton>
+              <Menu id="simple-menu" keepMounted anchorEl={selected} open={menuState} onClose={cancelMenu} >
+                <MenuItem onClick={closeMenu}>
+                  Menu1
                 </MenuItem>
-                <MenuItem onClick={closeMenu}>My account</MenuItem>
-                <MenuItem onClick={closeMenu}>Logout</MenuItem>
+                <MenuItem onClick={closeMenu}>
+                  Menu1
+                </MenuItem>
               </Menu>
             </Grid>
           </Grid>

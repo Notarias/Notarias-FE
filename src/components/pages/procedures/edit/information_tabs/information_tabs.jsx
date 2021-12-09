@@ -2,9 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import ProcedureTemplateTab from './procedure_template_tab';
+import Typography from '@material-ui/core/Typography';
 import Fields from '../fields/fields';
-import FieldsGroups from '../fields_groups/fields_groups';
-import CreateComments from './create_comments';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import { withStyles } from '@material-ui/core/styles';
@@ -14,10 +13,10 @@ import { GET_PROCEDURES_TEMPLATES_TABS } from '../../queries_and_mutations/queri
 
 const InformationTabs = (props) => {
   const { classes, procedure } = props
-
   const [value, setValue] = useState(0);
-  const [tabList, setTabList] = useState();
-  const [currentTab, setCurrentTab] = useState();
+  const [tabList, setTabList] = useState(data ? data.proceduresTemplateTabs:[]);
+  const [currentTab, setCurrentTab] = useState( data ? data.proceduresTemplateTabs[0] : "");
+  const fieldListWrapperElement = useRef();
 
   const { data } = useQuery(
     GET_PROCEDURES_TEMPLATES_TABS, { variables: {"id": procedure.proceduresTemplate.id },
@@ -25,7 +24,7 @@ const InformationTabs = (props) => {
   );
 
   useEffect(() => {
-    data && setCurrentTab(data.proceduresTemplateTabs[0]);
+    currentTab || (data && setCurrentTab(data.proceduresTemplateTabs[0]));
     data && setTabList(data.proceduresTemplateTabs);
   }, [data])
 
@@ -35,7 +34,7 @@ const InformationTabs = (props) => {
 
   const renderTabs = () => {
     return(
-      tabList && tabList.map(
+      tabList.map(
         (tab, index) => {
           return(
             <ProcedureTemplateTab
@@ -54,8 +53,8 @@ const InformationTabs = (props) => {
   }
 
   return (
-    <Grid container item xs={12} direction="column"  justifyContent="flex-start">
-      <Grid container item justifyContent="flex-start">
+    <Grid container item direction="column"  justifyContent="flex-start" alignItems="stretch" >
+      <Grid item>
         <AppBar position="static">
           <Tabs 
             centered 
@@ -67,26 +66,20 @@ const InformationTabs = (props) => {
           </Tabs>
         </AppBar>
       </Grid>
-      <Grid container item justifyContent="flex-start" style={{ paddingTop: "10px" }}>
-        {currentTab && <Fields
-          currentTab={currentTab}
-          procedure={procedure}
-        />}
-      </Grid>
-      <Grid container item justifyContent="flex-start" style={{ paddingTop: "10px" }}>
-        {currentTab && <FieldsGroups
-          currentTab={currentTab}
-          procedure={procedure}
-        />}
-      </Grid>
-      <Divider variant="middle"/>
-      <Grid container item justifyContent="flex-end" item style={{ paddingTop: "10px" }}>
-        <Grid container item direction="row" xs={8}>
-          <CreateComments procedure={procedure}/>
+      <Grid item container justifyContent="flex-start" alignItems="flex-end" style={{ paddingTop: "15px", paddingBottom: "5px"}}>
+        <Grid item xs={12}>
+          <Typography variant="h6" gutterBottom>
+            Campos
+          </Typography>
         </Grid>
-        <Grid container item xs={4} alignItems="center" className={classes.totalValuesGridContainer}>
-          
-        </Grid>
+      </Grid>
+      <Divider/>
+      <Grid item container justifyContent='flex-start' style={{ flex: '1 1 auto'}}>
+        <Fields
+          parentRef={fieldListWrapperElement}
+          currentTab={currentTab && currentTab}
+          procedure={procedure}
+        />
       </Grid>
     </Grid>
   );
