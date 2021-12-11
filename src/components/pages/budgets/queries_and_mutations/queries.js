@@ -326,6 +326,17 @@ query budget(
   }
 `
 
+export const GET_BUDGET_PROCEDURE_PRINTABLE_FIELDS = gql`
+  query budgetProcedurePrintableFields($budgetId: ID!) {
+    budgetProcedurePrintableFields(budgetId: $budgetId) {
+      name
+      printable
+      style
+      active
+    }
+  }
+`
+
 export const GET_BUDGETING_TEMPLATES_TABS = gql`
   query budgetingTemplateTabs ($id: ID! ) {
     budgetingTemplateTabs (id: $id) {

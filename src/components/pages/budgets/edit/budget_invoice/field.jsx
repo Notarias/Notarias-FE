@@ -30,13 +30,13 @@ export default (props) => {
   return(
     <>
       {
-        value && value.value ? (
+        value && value.value && value.active ? (
           <Grid container item>
             <Grid xs={6} item>
               <Typography align='left'>{field.name}</Typography>
             </Grid>
             <Grid xs={6} item>
-              <Typography align='right'>{value && formatValue()}</Typography>
+              <Typography align='right'>${value && formatValue()}</Typography>
             </Grid>
           </Grid>
         ) : ("")

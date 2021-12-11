@@ -41,9 +41,11 @@ const FieldList = (props) => {
                   arrayIndex={ index }
                   currentTab={ currentTab }
                   removeFromList={ removeFromList }
-                  name={ field.name }
-                  style={ field.style }
-                  favourite={ field.favourite }
+                  name={ field.name || "" }
+                  printable={ field.printable || false }
+                  style={ field.style || "" }
+                  favourite={ field.favourite || false }
+                  id={ field.id || " " }
                   active={ field.active }
                   printable={ field.printable }
                 />
