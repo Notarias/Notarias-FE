@@ -8,7 +8,7 @@ export default (props) => {
   const [fields, setFields] = useState()
 
   const { loading, data, refetch } = useQuery(
-    GET_BUDGET_PROCEDURE_PRINTABLE_FIELDS, { variables: { "id": budget.id } }
+    GET_BUDGET_PROCEDURE_PRINTABLE_FIELDS, { variables: { "budgetId": budget.id }, fetchPolicy: 'no-cache' }
   );
 
   useEffect(() => {
@@ -22,9 +22,9 @@ export default (props) => {
     {
       fields && fields.map((field) => {
         return(
-          <>
-            { field.active && <ProcedureField field={field}/> }
-          </>
+          <React.Fragment key={`${field.id}-printable-field-budget-${budget.id}`}>
+            { field.active && field.printable && <ProcedureField field={field} budget={budget}/> }
+          </React.Fragment>
         )
       })
     }

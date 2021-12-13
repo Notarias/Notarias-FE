@@ -177,8 +177,10 @@ const BudgetInvoice = (props) => {
               <Typography >$ 0.00</Typography>
             </Grid>
           </Grid> */}
-          { budget && <ProcedureFields budget={budget}/> }
-          <Grid container item xs={8} direction="row" className={classes.marginTopGridInvoice}>
+          <Grid container item xs={8} >
+            { budget && <ProcedureFields key={`${budget.id}-budget`} budget={budget}/> }
+          </Grid>
+          <Grid container item xs={8} className={classes.marginTopGridInvoice}>
             <Grid
               item 
               xs={6} 
