@@ -72,6 +72,10 @@ const FieldsGroupsRows = (props) => {
           setFieldValueActive(cacheData && cacheData.createProcedureFieldValue.procedureFieldValue.active);
           setFieldStatus(true);
           setSaveButtonStatus(true);
+<<<<<<< HEAD
+=======
+          console.log("create")
+>>>>>>> Build template fields and field groups view and value saving process
         },
         refetchQueries: [
           {
@@ -101,6 +105,10 @@ const FieldsGroupsRows = (props) => {
           setFieldValueActive(cacheData && cacheData.updateProcedureFieldValue.procedureFieldValue.active);
           setFieldStatus(true);
           setSaveButtonStatus(true);
+<<<<<<< HEAD
+=======
+          console.log("update")
+>>>>>>> Build template fields and field groups view and value saving process
         },
         refetchQueries: [
           {
@@ -186,4 +194,8 @@ const FieldsGroupsRows = (props) => {
   )
 }
 
+<<<<<<< HEAD
 export default FieldsGroupsRows;
+=======
+export default FieldsGroupsRows;
+>>>>>>> Build template fields and field groups view and value saving process

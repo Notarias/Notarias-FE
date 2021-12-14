@@ -43,7 +43,7 @@ const FieldsRows = (props) => {
       setInitFieldValue(data.procedureFieldValue.value);
       setFieldValue(data.procedureFieldValue.value);
       setFieldValueActive(data.procedureFieldValue.active)
-      setFieldStatus(true);
+      setFieldStatus(!data.procedureFieldValue.value ? false : true);
     }
   }, [loading, data]);
 
@@ -74,11 +74,11 @@ const FieldsRows = (props) => {
   const fieldValueChange = ({ target }) => {
     let { value } = target
     setFieldValue(value);
-    if(value === "") {
-      setSaveButtonStatus(true);
-    } else {
-      setSaveButtonStatus(false);
-    }
+    setSaveButtonStatus(false);    
+  }
+
+  const saveNewFieldValue = ( event ) => {
+    createProcedureFieldValue ({ variables: {"proceduresTemplateFieldId": field.id, "procedureId": procedure.id, "value": fieldValue} })
   }
 
   const [createProcedureFieldValue, { loading: createProcedureFieldValueLoading }] =
@@ -88,7 +88,7 @@ const FieldsRows = (props) => {
       onCompleted(cacheData) {
         setInitFieldValue(cacheData && cacheData.createProcedureFieldValue.procedureFieldValue.value);
         setFieldValueId(cacheData && cacheData.createProcedureFieldValue.procedureFieldValue.id);
-        setFieldValueActive(cacheData && cacheData.updateProcedureFieldValue.procedureFieldValue.active);
+        setFieldValueActive(cacheData && cacheData.createProcedureFieldValue.procedureFieldValue.active);
         setFieldStatus(true);
         setSaveButtonStatus(true);
       },
@@ -102,10 +102,14 @@ const FieldsRows = (props) => {
     }
   )
 
-  const saveNewFieldValue = ( event ) => {
-    createProcedureFieldValue ({ variables: {"proceduresTemplateFieldId": field.id, "procedureId": procedure.id, "value": fieldValue} })
+  const updateFieldValue = ( event ) => {
+    updateProcedureFieldValue ({ variables: {"id": fieldValueId, "value": fieldValue} })
   }
-  
+
+  const updateFieldValueActive = ( checked ) => {
+    updateProcedureFieldValue ({ variables: {"id": fieldValueId, "active": checked} })
+  }
+
   const [updateProcedureFieldValue, { loading: updateProcedureFieldValueLoading }] =
     useMutation(
       UPDATE_PROCEDURE_FIELD_VALUE,
@@ -127,12 +131,8 @@ const FieldsRows = (props) => {
       }
     )
 
-  const updateNewFieldValue = ( checked ) => {
-    updateProcedureFieldValue ({ variables: {"id": fieldValueId, "value": fieldValue, "active": checked} })
-  }
-
   const handleChange = (event) => {
-    updateNewFieldValue(event.target.checked);
+    updateFieldValueActive(event.target.checked);
   };
 
   return (
@@ -141,6 +141,7 @@ const FieldsRows = (props) => {
         <Grid container xs={12} item >
           <Grid container item xs={10} justifyContent="flex-start">
             <Grid item xs={12}>
+              {console.log(fieldStatus)}
               <TextField 
                 id={field.id}
                 key={field.name}
@@ -155,7 +156,7 @@ const FieldsRows = (props) => {
           </Grid>
           <Grid container item xs={2} width="100%" justifyContent="flex-end">
             <Grid item>
-              { !initFieldValue ? 
+              { !fieldValue === "" ? 
                 <IconButton style={{"padding": "10px"}} disabled={true}>
                   <EditIcon/>
                 </IconButton>
@@ -170,7 +171,7 @@ const FieldsRows = (props) => {
               <IconButton
                 disabled={saveButtonStatus}
                 style={{"padding": "10px"}}
-                onClick={initFieldValue ? updateNewFieldValue : saveNewFieldValue}
+                onClick={updateFieldValue}
               >
                 <SaveIcon/>
               </IconButton>
@@ -191,6 +192,7 @@ const FieldsRows = (props) => {
                     color="primary"
                     name="active"
                     inputProps={{ 'aria-label': 'primary checkbox' }}
+                    checked={fieldValueActive}
                   />
                 </MenuItem>
                 <MenuItem onClick={closeMenu}>My account</MenuItem>
