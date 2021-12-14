@@ -7,7 +7,6 @@ mutation CreateProcedure(
   $proceduresTemplateId: ID!,
   $budgetingTemplateId: ID!,
   $asigneeId: ID,
-  $reporterId: ID
 ){
   createProcedure (
     input:{
@@ -16,7 +15,6 @@ mutation CreateProcedure(
       proceduresTemplateId: $proceduresTemplateId
       budgetingTemplateId: $budgetingTemplateId
       asigneeId: $asigneeId
-      reporterId: $reporterId
     }
   ){
     procedure {
@@ -27,7 +25,6 @@ mutation CreateProcedure(
       budgetingTemplate { name }
       proceduresTemplate { name }
       asignee { avatarThumbUrl }
-      reporter { avatarThumbUrl }
       createdAt
       updatedAt
       completedAt
@@ -56,6 +53,7 @@ query Procedures(
     client{ fullName }
     budgetingTemplate { name }
     proceduresTemplate { name }
+    asignee { avatarThumbUrl }
     reporter { avatarThumbUrl }
     createdAt
     updatedAt
@@ -422,6 +420,47 @@ export const GET_PROCEDURES_TEMPLATE_TAB_FIELDS = gql`
       style
       favourite
       proceduresTemplateFieldsGroupId
+    }
+  }
+`
+
+export const GET_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS = gql`
+  query proceduresTemplateTabFieldsGroups($id: ID!){
+    proceduresTemplateTabFieldsGroups(tabId: $id) {
+      id
+      name
+      tabId
+      fields{
+        id
+        name
+        printable
+        proceduresTemplateFieldsGroupId
+      }
+    }
+  }
+`
+
+export const GET_PROCEDURE_FIELD_GROUP_VALUES = gql`
+  query ProcedureFieldGroupValues(
+    $fieldGroupId: ID!,
+    $procedureId: ID!
+  ){
+    procedureFieldGroupValues(
+      fieldGroupId: $fieldGroupId, 
+      procedureId: $procedureId
+    ){
+      id
+      proceduresTemplateField{
+        id
+        name
+        printable
+      }
+      procedureFieldValue{
+        id
+        value
+        active
+        proceduresTemplateFieldId
+      }
     }
   }
 `

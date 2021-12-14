@@ -15,38 +15,20 @@ import { CREATE_PROCEDURE_FIELD_VALUE }         from '../../queries_and_mutation
 import { UPDATE_PROCEDURE_FIELD_VALUE }         from '../../queries_and_mutations/queries';
 import { GET_PROCEDURE_FIELD_VALUES }           from '../../queries_and_mutations/queries';
 
-const FieldsRows = (props) => {
+const FieldsGroupsRows = (props) => {
 
-  const { procedure, field } = props
+  const { procedure, groupFieldValue } = props
 
   const [selected, setSelected] = useState(null);
   const [menuState, setMenuState] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [fieldValueId, setFieldValueId] = useState();
-  const [fieldValue, setFieldValue] = useState("");
-  const [fieldValueActive, setFieldValueActive] = useState(true);
-  const [initFieldValue, setInitFieldValue] = useState("");
+  const [field, setField] = useState(groupFieldValue && groupFieldValue.proceduresTemplateField);
+  const [procedureFieldValue, setProcedureFieldValue] = useState(groupFieldValue && groupFieldValue.procedureFieldValue);
+  const [fieldValueActive, setFieldValueActive] = useState(groupFieldValue && groupFieldValue.procedureFieldValue.active);
+  const [value, setValue] = useState(groupFieldValue && groupFieldValue.procedureFieldValue.value);
+  const [fieldStatus, setFieldStatus] = useState(groupFieldValue && !groupFieldValue.procedureFieldValue.value ? false : true);
   const [saveButtonStatus, setSaveButtonStatus] = useState(true);
-  const [fieldStatus, setFieldStatus] = useState(false);
   
-  const {  loading, data, refetch } = useQuery(
-    GET_PROCEDURE_FIELD_VALUES,
-    {
-      variables: { "proceduresTemplateFieldId": field.id, "procedureId": procedure.id },
-      fetchPolicy: "no-cache"
-    }
-  );
-
-  useEffect(() => {
-    if(data && data.procedureFieldValue) {
-      setFieldValueId(data.procedureFieldValue.id);
-      setInitFieldValue(data.procedureFieldValue.value);
-      setFieldValue(data.procedureFieldValue.value);
-      setFieldValueActive(data.procedureFieldValue.active)
-      setFieldStatus(!data.procedureFieldValue.value ? false : true);
-    }
-  }, [loading, data]);
-
   const openMenu = ( event ) => {
     setMenuState(true);
     setAnchorEl(event.currentTarget);
@@ -64,7 +46,7 @@ const FieldsRows = (props) => {
   }
 
   const cancelEditField = () => {
-    setFieldValue(initFieldValue);
+    setValue(procedureFieldValue.value);
     setFieldStatus(true);
   }
 
@@ -72,42 +54,43 @@ const FieldsRows = (props) => {
     setFieldStatus(false);
   }
   const fieldValueChange = ({ target }) => {
-    let { value } = target
-    setFieldValue(value);
+    let { value: targetValue } = target
+    setValue(targetValue);
     setSaveButtonStatus(false);    
   }
 
   const saveNewFieldValue = ( event ) => {
-    createProcedureFieldValue ({ variables: {"proceduresTemplateFieldId": field.id, "procedureId": procedure.id, "value": fieldValue} })
+    createProcedureFieldValue ({ variables: {"proceduresTemplateFieldId": field.id, "procedureId": procedure.id, "value": value} })
   }
 
   const [createProcedureFieldValue, { loading: createProcedureFieldValueLoading }] =
-  useMutation(
-    CREATE_PROCEDURE_FIELD_VALUE,
-    {
-      onCompleted(cacheData) {
-        setInitFieldValue(cacheData && cacheData.createProcedureFieldValue.procedureFieldValue.value);
-        setFieldValueId(cacheData && cacheData.createProcedureFieldValue.procedureFieldValue.id);
-        setFieldValueActive(cacheData && cacheData.createProcedureFieldValue.procedureFieldValue.active);
-        setFieldStatus(true);
-        setSaveButtonStatus(true);
-      },
-      refetchQueries: [
-        {
-          query: GET_PROCEDURE_FIELD_VALUES,
-          variables: { "proceduresTemplateFieldId": field.id, "procedureId": procedure.id }
-        }
-      ],
-      awaitRefetchQueries: true
-    }
-  )
+    useMutation(
+      CREATE_PROCEDURE_FIELD_VALUE,
+      {
+        onCompleted(cacheData) {
+          setValue(cacheData && cacheData.createProcedureFieldValue.procedureFieldValue.value);
+          setFieldValueActive(cacheData && cacheData.createProcedureFieldValue.procedureFieldValue.active);
+          setFieldStatus(true);
+          setSaveButtonStatus(true);
+          console.log("create")
+        },
+        refetchQueries: [
+          {
+            query: GET_PROCEDURE_FIELD_VALUES,
+            variables: { "proceduresTemplateFieldId": field.id, "procedureId": procedure.id }
+          }
+        ],
+        awaitRefetchQueries: true
+      }
+    )
 
+  
   const updateFieldValue = ( event ) => {
-    updateProcedureFieldValue ({ variables: {"id": fieldValueId, "value": fieldValue} })
+    updateProcedureFieldValue ({ variables: {"id": procedureFieldValue.id, "value": value} })
   }
 
   const updateFieldValueActive = ( checked ) => {
-    updateProcedureFieldValue ({ variables: {"id": fieldValueId, "active": checked} })
+    updateProcedureFieldValue ({ variables: {"id": procedureFieldValue.id, "active": checked} })
   }
 
   const [updateProcedureFieldValue, { loading: updateProcedureFieldValueLoading }] =
@@ -115,11 +98,11 @@ const FieldsRows = (props) => {
       UPDATE_PROCEDURE_FIELD_VALUE,
       {
         onCompleted(cacheData) {
-          setInitFieldValue(cacheData && cacheData.updateProcedureFieldValue.procedureFieldValue.value);
-          setFieldValueId(cacheData && cacheData.updateProcedureFieldValue.procedureFieldValue.id);
+          setValue(cacheData && cacheData.updateProcedureFieldValue.procedureFieldValue.value);
           setFieldValueActive(cacheData && cacheData.updateProcedureFieldValue.procedureFieldValue.active);
           setFieldStatus(true);
           setSaveButtonStatus(true);
+          console.log("update")
         },
         refetchQueries: [
           {
@@ -141,13 +124,12 @@ const FieldsRows = (props) => {
         <Grid container xs={12} item >
           <Grid container item xs={10} justifyContent="flex-start">
             <Grid item xs={12}>
-              {console.log(fieldStatus)}
               <TextField 
                 id={field.id}
                 key={field.name}
                 label={field.name}
                 onChange={fieldValueChange}
-                value={fieldValue}
+                value={value}
                 disabled={fieldStatus}
                 multiline
                 fullWidth
@@ -156,7 +138,7 @@ const FieldsRows = (props) => {
           </Grid>
           <Grid container item xs={2} width="100%" justifyContent="flex-end">
             <Grid item>
-              { !fieldValue === "" ? 
+              { !!value === "" ? 
                 <IconButton style={{"padding": "10px"}} disabled={true}>
                   <EditIcon/>
                 </IconButton>
@@ -206,4 +188,4 @@ const FieldsRows = (props) => {
   )
 }
 
-export default FieldsRows;
+export default FieldsGroupsRows;
