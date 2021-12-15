@@ -75,7 +75,7 @@ const FieldValue = (props) => {
     if (data && data.budgetFieldValue) {
       totalsCalculation()
     }
-  }, [loading, data && data.budgetFieldValue, data && data.budgetFieldValue.totalDebt])
+  }, [loading, data && data.budgetFieldValue, data && data.budgetFieldValue && data.budgetFieldValue.totalDebt])
 
   // const handleNameChange = (event) => {
   //   setName(event.target.value);

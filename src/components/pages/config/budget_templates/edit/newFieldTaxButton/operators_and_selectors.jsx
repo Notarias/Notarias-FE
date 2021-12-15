@@ -260,7 +260,6 @@ const FieldSearch = (props) => {
           >
             {customList('Choices', searchList)}
           </Grid>
-          {console.log(left, searchList)}
           <Grid
             container
             item

@@ -184,7 +184,7 @@ const NewProcedure = (params) => {
         onCompleted(cacheData) {
           const id = cacheData.createProcedure.procedure.id
           id && setRedirect(
-            <Redirect to={{ pathname: `/procedure/${id}/edit` }} />
+            <Redirect to={{ pathname: `/procedures/${id}/edit` }} />
           );
         },
         fetchPolicy: "no-cache",

@@ -132,7 +132,7 @@ const GeneralForm = (props) => {
       }
     )
   }
-
+  
   return(
       <div>
         <form onSubmit={onSubmit}>

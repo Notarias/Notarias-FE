@@ -12,16 +12,16 @@ const FieldsAndGroupFields = (props) => {
   const renderFieldsAndGroups = () => {
 
     return(
-      <Grid container item direction="column" alignItems="center">
-        <Grid container item xs={10} alignItems="center" justifyContent="center">
-        <FieldList
-          currentTab={ currentTab }
-        />
+      <Grid container item xs={12} direction="row" alignItems="center">
+        <Grid container item xs={12} alignItems="center" justifyContent="center">
+          <FieldList
+            currentTab={ currentTab }
+          />
         </Grid>
-        <Grid container item xs={10}  justifyContent="center" alignItems="center">
-        <FieldsGroupList
-          currentTab={ currentTab }
-        />
+        <Grid container item xs={12} alignItems="center" justifyContent="center">
+          <FieldsGroupList
+            currentTab={ currentTab }
+          />
         </Grid>
       </Grid>
     )
