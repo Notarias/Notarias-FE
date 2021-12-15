@@ -228,7 +228,7 @@ const Field = (props) => {
   return (
     <Grid container item alignItems="center" justifyContent="center" className={ classes.fielPaddingBottom }>
       <Paper>
-        <Grid container item className={ classes.fieldHeightRow }>
+        <Grid container className={ classes.fieldHeightRow }>
           { editing ? renderTextField() : renderInputField() }
           <Grid container direction="column"  alignItems="center" justifyContent="center" item xs={1}>
             <FormControlLabel
