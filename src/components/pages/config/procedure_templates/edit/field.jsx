@@ -1,4 +1,4 @@
-import React                                          from 'react';
+import React, { useState }                            from 'react';
 import Grid                                           from '@material-ui/core/Grid';
 import InputBase                                      from '@material-ui/core/InputBase';
 import StarsIcon                                      from '@material-ui/icons/Stars';
@@ -38,15 +38,15 @@ const INPUT_TYPES = {
 const Field = (props) => {
 
   const { classes, id, groupId, currentTab, removeFromList } = props
-  const [open, setOpen] = React.useState(false);
-  const [openb, setOpenb] = React.useState(false);
-  const [openDialog, setOpenDialog] = React.useState(false);
-  const [editing, setEditing] = React.useState(true);
-  const [name, setName] = React.useState(props.name)
-  const [style, setStyle] = React.useState(props.style)
-  const [active, setActive] = React.useState(props.active)
-  const [favourite, setFavourite] = React.useState(props.favourite)
-  const [error, setError] = React.useState(false)
+  const [favDialog, setFavDialog] = useState(false);
+  const [deleteDialog, setDeleteDialog] = useState(false);
+  const [statusDialog, setStatusDialog] = useState(false);
+  const [editing, setEditing] = useState(true);
+  const [name, setName] = useState(props.name)
+  const [style, setStyle] = useState(props.style)
+  const [active, setActive] = useState(props.active)
+  const [favourite, setFavourite] = useState(props.favourite)
+  const [error, setError] = useState(false)
   const inputsList = ["name"]
 
   const [updateProceduresTemplateTabFieldMutation] =
@@ -82,49 +82,6 @@ const Field = (props) => {
     updateProceduresTemplateTabFieldMutation({ variables: { id: id, name: name, style: style}})
   }
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleClickOpenb = () => {
-    setOpenb(true);
-  }
-
-  const handleCloseb = () => {
-    setOpenb(false);
-  };
-
-  const handleClickOpenDialog = () => {
-    setOpenDialog(true);
-  }
-
-  const handleCloseDialog = () => {
-    setOpenDialog(false);
-  };
-
-  const checkedStar = () => {
-    updateProceduresTemplateTabFieldMutation({ variables: { id: id, favourite: !favourite }})
-    setOpenb(false);
-  }
-
-  const changeFieldStatus = (event) => {
-    updateProceduresTemplateTabFieldMutation({ variables: { id: id, active: !active }})
-    setActive(!active)
-    setOpenDialog(false);
-  }
-
-  const colorButton = () => {
-    if (favourite === true) {
-      return 'secondary'
-    } else {
-      return "primary"
-    }
-  }
-
   const [destroyProceduresTemplateTabFieldMutation  ] =
     useMutation(
       DESTROY_PROCEDURES_TEMPLATE_TAB_FIELD, 
@@ -137,9 +94,53 @@ const Field = (props) => {
       }
     )
 
+
+  const openFavDialog = () => {
+    setFavDialog(true);
+  };
+
+  const closeFavDialog = () => {
+    setFavDialog(false);
+  };
+
+  const openDeleteDialog = () => {
+    setDeleteDialog(true);
+  }
+
+  const closeDeleteDialog = () => {
+    setDeleteDialog(false);
+  };
+
+  const openStatusDialog = () => {
+    setStatusDialog(true);
+  }
+
+  const closeStatusDialog = () => {
+    setStatusDialog(false);
+  };
+
+  const checkedStar = () => {
+    updateProceduresTemplateTabFieldMutation({ variables: { id: id, favourite: !favourite }})
+    setFavDialog(false);
+  }
+
   const deleteFieldClick = () => {
     removeFromList(props.arrayIndex, destroyProceduresTemplateTabFieldMutation, { variables: { id: id } }, id )
-    setOpen(false);
+    setDeleteDialog(false);
+  }
+
+  const changeFieldStatus = (event) => {
+    updateProceduresTemplateTabFieldMutation({ variables: { id: id, active: !active }})
+    setActive(!active)
+    setStatusDialog(false);
+  }
+
+  const colorButton = () => {
+    if (favourite === true) {
+      return 'secondary'
+    } else {
+      return "primary"
+    }
   }
 
   const editField = () => {
@@ -240,11 +241,11 @@ const Field = (props) => {
               label=" "
               color="primary"
               className={ classes.formControlPadding }
-              onChange={ handleClickOpenb }
+              onChange={ openFavDialog }
             />
             <Dialog
-              open={openb}
-              onClose={handleClose}
+              open={favDialog}
+              onClose={closeFavDialog}
               aria-labelledby="favorite-alert"
               aria-describedby="favorite-alert-dialog"
             >
@@ -255,7 +256,7 @@ const Field = (props) => {
               { favourite === true ? "Este campo dejará de ser importante": "Se marcará este campo como importante"}
               </DialogContent>
               <DialogActions>
-                <Button onClick={ handleCloseb } color="secondary">
+                <Button onClick={ closeFavDialog } color="secondary">
                   Cancelar
                 </Button>
                 <Button color={ colorButton() } autoFocus onClick={ checkedStar } variant="contained">
@@ -265,12 +266,12 @@ const Field = (props) => {
             </Dialog>
           </Grid>
           <Grid container direction="column"  alignItems="center" justifyContent="center" item xs={1}>
-            <Button onClick={ handleClickOpen }>
+            <Button onClick={ openDeleteDialog }>
               <DeleteForeverIcon/>
             </Button>
             <Dialog
-              open={open}
-              onClose={handleClose}
+              open={deleteDialog}
+              onClose={closeDeleteDialog}
               aria-labelledby="alert-dialog-title"
               aria-describedby="alert-dialog-description"
             >
@@ -282,7 +283,7 @@ const Field = (props) => {
                 </Typography>
               </DialogContent>
               <DialogActions>
-                <Button onClick={ handleClose } color="secondary">
+                <Button onClick={ closeDeleteDialog } color="secondary">
                   Cancelar
                 </Button>
                 <Button color="primary" autoFocus onClick={ deleteFieldClick }>
@@ -291,7 +292,7 @@ const Field = (props) => {
               </DialogActions>
             </Dialog>
           </Grid>
-          <Grid container  direction="column"  alignItems="center" justifyContent="center" item xs={1} onClick={ handleClickOpenDialog }>
+          <Grid container  direction="column"  alignItems="center" justifyContent="center" item xs={1} onClick={ openStatusDialog }>
             {
             active ?
               <Button>
@@ -304,8 +305,8 @@ const Field = (props) => {
             }
           </Grid>
           <Dialog
-            open={openDialog}
-            onClose={handleCloseDialog}
+            open={statusDialog}
+            onClose={closeStatusDialog}
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
           >
@@ -314,7 +315,7 @@ const Field = (props) => {
               Realmente deseas { statusField() }
             </DialogContent>
             <DialogActions>
-              <Button onClick={ handleCloseDialog } color="secondary">
+              <Button onClick={ closeStatusDialog } color="secondary">
                 Cancelar
               </Button>
               <Button

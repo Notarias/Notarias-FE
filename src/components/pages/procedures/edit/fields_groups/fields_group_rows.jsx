@@ -72,7 +72,6 @@ const FieldsGroupsRows = (props) => {
           setFieldValueActive(cacheData && cacheData.createProcedureFieldValue.procedureFieldValue.active);
           setFieldStatus(true);
           setSaveButtonStatus(true);
-          console.log("create")
         },
         refetchQueries: [
           {
@@ -102,7 +101,6 @@ const FieldsGroupsRows = (props) => {
           setFieldValueActive(cacheData && cacheData.updateProcedureFieldValue.procedureFieldValue.active);
           setFieldStatus(true);
           setSaveButtonStatus(true);
-          console.log("update")
         },
         refetchQueries: [
           {

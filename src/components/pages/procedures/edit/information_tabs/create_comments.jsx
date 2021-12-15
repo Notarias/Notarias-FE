@@ -94,7 +94,6 @@ const CreateComments = (props) => {
 
   const renderTextField = () => {
     if(textFieldSelected) {
-      console.log("if - true")
       return(
         <Grid container item xs={10} direction="row" justifyContent="flex-start" alignItems="flex-start">
           <TextField
@@ -120,7 +119,6 @@ const CreateComments = (props) => {
         </Grid>
       )
     } else {
-      console.log("if - false")
       return(
         <Grid container item xs={10} direction="row" justifyContent="flex-start" alignItems="flex-start">
           <TextField
