@@ -121,11 +121,7 @@ const FieldsGroup = (props) => {
     <Grid container item xs={12} alignItems="center" justifyContent="center" className={ classes.fielPaddingBottom }>
       <Paper className={ classes.roundedBorderGruop }>
         <Divider/>
-<<<<<<< HEAD
         <Grid container alignItems="center" className={ classes.fieldHeightRow }>
-=======
-        <Grid container item alignItems="center" className={ classes.fieldHeightRow }>
->>>>>>> Fix issues on config procedure templates view
           <Grid container item xs={11} direction="row" alignItems="flex-start" >
             { editing ? renderTextGroupName() : renderInputGroupName() }
           </Grid>

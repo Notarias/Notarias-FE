@@ -127,90 +127,6 @@ const CommentEdit = (props) => {
     setOpen(false);
   };
 
-  const renderCommentEditingInput = (body) => {
-    return (
-        <Grid container item direction="column" >
-          <Grid item className={classes.commentEditingInputGrid}>
-            <TextField
-              value={commentValue}
-              onChange={editingComment}
-              autoFocus
-              size="small"
-              fullWidth
-              variant="outlined"
-              multiline
-              error={ !!error["body"] && true }
-              helperText={error["body"] || " "}
-              errorskey={ "body" }
-            />
-          </Grid>
-          <Grid container item justifyContent="flex-start" >
-            <Link
-              component="button"
-              size="small"
-              variant="body2"
-              onClick={changingInputComment}
-              className={classes.buttonTextComments}
-              color="textPrimary"
-            >
-              Cancelar
-            </Link>
-            <Link
-              component="button"
-              size="small"
-              variant="body2"
-              onClick={updateComment}
-              disabled={pristine || updateCommentLoading}
-              className={ pristine ? classes.buttonTextCommentsDisabled : classes.buttonTextComments }
-            >
-              Aceptar
-            </Link>
-          </Grid>
-        </Grid>
-    )
-  }
-
-  const renderTextComment = (body) => {
-    return(
-      <Grid container item>
-        <Grid container item className={classes.commentEditingInputGrid}>
-          <Typography variant="caption" align="left">
-            {comment.body}
-          </Typography>
-        </Grid>
-        <Grid container item>
-          <a
-            href="#"
-            onClick={changingInputComment}
-            className={classes.buttonTextComments}
-          >
-            Editar
-          </a>
-          <a
-            href="#"
-            className={classes.buttonTextComments}
-            onClick={handleClickOpen}
-          >
-            Eliminar
-          </a>
-          <Dialog open={open} onClose={handleClose}>
-            <DialogTitle>
-              Se eliminará este comentario
-            </DialogTitle>
-            <DialogActions>
-              <Button onClick={handleClose}>
-                Cancelar
-              </Button>
-              <Button onClick={destroyComment} disabled={destroyCommentloading}>
-                Aceptar
-              </Button>
-            </DialogActions>
-          </Dialog>
-        </Grid>
-      </Grid>
-    )
-  }
-
   return(
     <React.Fragment key={comment.id + "fragment-Comment"}>
       <Grid container className={classes.fragmentComments}>
@@ -223,7 +139,29 @@ const CommentEdit = (props) => {
             {comment.user.firstName}  {comment.user.lastName}
           </Typography>
           </Grid>
-          {commentShowed ? renderTextComment() : renderCommentEditingInput()}
+          {
+            commentShowed ? 
+            <renderTextComment
+              classes={classes}
+              comment={comment}
+              open={open}
+              changingInputComment={changingInputComment}
+              handleClickOpen={handleClickOpen}
+              handleClose={handleClose}
+              destroyComment={destroyComment}
+              destroyCommentloading={destroyCommentloading}
+            /> 
+            : 
+            <renderCommentEditingInput
+              classes={classes}
+              commentValue={commentValue}
+              error={error}
+              pristine={pristine}
+              updateCommentLoading={updateCommentLoading}
+              editingComment={editingComment}
+              changingInputComment={changingInputComment}
+            />
+          }
         </Grid>
       </Grid>
     </React.Fragment>

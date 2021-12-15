@@ -94,10 +94,6 @@ const CreateComments = (props) => {
 
   const renderTextField = () => {
     if(textFieldSelected) {
-<<<<<<< HEAD
-=======
-      console.log("if - true")
->>>>>>> Build template fields and field groups view and value saving process
       return(
         <Grid container item xs={10} direction="row" justifyContent="flex-start" alignItems="flex-start">
           <TextField
@@ -123,10 +119,6 @@ const CreateComments = (props) => {
         </Grid>
       )
     } else {
-<<<<<<< HEAD
-=======
-      console.log("if - false")
->>>>>>> Build template fields and field groups view and value saving process
       return(
         <Grid container item xs={10} direction="row" justifyContent="flex-start" alignItems="flex-start">
           <TextField

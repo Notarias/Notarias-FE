@@ -141,7 +141,6 @@ const FieldsRows = (props) => {
         <Grid container xs={12} item >
           <Grid container item xs={10} justifyContent="flex-start">
             <Grid item xs={12}>
-              {console.log(fieldStatus)}
               <TextField 
                 id={field.id}
                 key={field.name}

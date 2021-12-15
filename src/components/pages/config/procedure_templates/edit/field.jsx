@@ -228,11 +228,7 @@ const Field = (props) => {
   return (
     <Grid container item alignItems="center" justifyContent="center" className={ classes.fielPaddingBottom }>
       <Paper>
-<<<<<<< HEAD
         <Grid container className={ classes.fieldHeightRow }>
-=======
-        <Grid container item className={ classes.fieldHeightRow }>
->>>>>>> Fix issues on config procedure templates view
           { editing ? renderTextField() : renderInputField() }
           <Grid container direction="column"  alignItems="center" justifyContent="center" item xs={1}>
             <FormControlLabel
@@ -245,19 +241,11 @@ const Field = (props) => {
               label=" "
               color="primary"
               className={ classes.formControlPadding }
-<<<<<<< HEAD
               onChange={ openFavDialog }
             />
             <Dialog
               open={favDialog}
               onClose={closeFavDialog}
-=======
-              onChange={ handleClickOpenb }
-            />
-            <Dialog
-              open={openb}
-              onClose={handleClose}
->>>>>>> Fix issues on config procedure templates view
               aria-labelledby="favorite-alert"
               aria-describedby="favorite-alert-dialog"
             >
@@ -268,11 +256,7 @@ const Field = (props) => {
               { favourite === true ? "Este campo dejará de ser importante": "Se marcará este campo como importante"}
               </DialogContent>
               <DialogActions>
-<<<<<<< HEAD
                 <Button onClick={ closeFavDialog } color="secondary">
-=======
-                <Button onClick={ handleCloseb } color="secondary">
->>>>>>> Fix issues on config procedure templates view
                   Cancelar
                 </Button>
                 <Button color={ colorButton() } autoFocus onClick={ checkedStar } variant="contained">
@@ -282,21 +266,12 @@ const Field = (props) => {
             </Dialog>
           </Grid>
           <Grid container direction="column"  alignItems="center" justifyContent="center" item xs={1}>
-<<<<<<< HEAD
             <Button onClick={ openDeleteDialog }>
               <DeleteForeverIcon/>
             </Button>
             <Dialog
               open={deleteDialog}
               onClose={closeDeleteDialog}
-=======
-            <Button onClick={ handleClickOpen }>
-              <DeleteForeverIcon/>
-            </Button>
-            <Dialog
-              open={open}
-              onClose={handleClose}
->>>>>>> Fix issues on config procedure templates view
               aria-labelledby="alert-dialog-title"
               aria-describedby="alert-dialog-description"
             >
@@ -308,11 +283,7 @@ const Field = (props) => {
                 </Typography>
               </DialogContent>
               <DialogActions>
-<<<<<<< HEAD
                 <Button onClick={ closeDeleteDialog } color="secondary">
-=======
-                <Button onClick={ handleClose } color="secondary">
->>>>>>> Fix issues on config procedure templates view
                   Cancelar
                 </Button>
                 <Button color="primary" autoFocus onClick={ deleteFieldClick }>
@@ -321,11 +292,7 @@ const Field = (props) => {
               </DialogActions>
             </Dialog>
           </Grid>
-<<<<<<< HEAD
           <Grid container  direction="column"  alignItems="center" justifyContent="center" item xs={1} onClick={ openStatusDialog }>
-=======
-          <Grid container  direction="column"  alignItems="center" justifyContent="center" item xs={1} onClick={ handleClickOpenDialog }>
->>>>>>> Fix issues on config procedure templates view
             {
             active ?
               <Button>
@@ -338,13 +305,8 @@ const Field = (props) => {
             }
           </Grid>
           <Dialog
-<<<<<<< HEAD
             open={statusDialog}
             onClose={closeStatusDialog}
-=======
-            open={openDialog}
-            onClose={handleCloseDialog}
->>>>>>> Fix issues on config procedure templates view
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
           >
@@ -353,11 +315,7 @@ const Field = (props) => {
               Realmente deseas { statusField() }
             </DialogContent>
             <DialogActions>
-<<<<<<< HEAD
               <Button onClick={ closeStatusDialog } color="secondary">
-=======
-              <Button onClick={ handleCloseDialog } color="secondary">
->>>>>>> Fix issues on config procedure templates view
                 Cancelar
               </Button>
               <Button
