@@ -10,8 +10,8 @@ export default (props) => {
   const { loading, error, data } = useQuery(GET_CURRENT_USER)
 
   return(
-    <Grid>
-      <Grid container direction="row" alignItems="center">
+    <Grid container>
+      <Grid item direction="row" alignItems="center">
         <Avatar src={data && data.currentUser && data.currentUser.avatarThumbUrl} />
         <Typography variant="caption">{data.currentUser.firstName}</Typography>
       </Grid>

@@ -20,8 +20,7 @@ const InformationTabs = (props) => {
   const [currentTab, setCurrentTab] = useState();
 
   const { data } = useQuery(
-    GET_PROCEDURES_TEMPLATES_TABS, { variables: {"id": procedure.proceduresTemplate.id },
-    fetchPolicy: "no-cache"}
+    GET_PROCEDURES_TEMPLATES_TABS, { variables: {"id": procedure.proceduresTemplate.id }}
   );
 
   useEffect(() => {
@@ -55,7 +54,7 @@ const InformationTabs = (props) => {
 
   return (
     <Grid container item xs={12} direction="column"  justifyContent="flex-start">
-      <Grid container item justifyContent="flex-start">
+      <Grid item justifyContent="flex-start">
         <AppBar position="static">
           <Tabs 
             centered 

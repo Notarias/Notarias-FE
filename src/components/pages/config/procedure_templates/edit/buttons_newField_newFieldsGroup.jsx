@@ -149,17 +149,15 @@ const ButtonsNewFieldNewFieldsGroup = ({
         <Grid container  justifyContent="center" alignItems="center" direction="row" >
           <Grid item xs={3}>
             <Typography variant="button" display="block" gutterBottom>
-              {
-                <Button
-                  variant="contained"
-                  color="primary"
-                  size="small"
-                  disabled={ !currentTab }
-                  onClick={ fieldHandleClickOpen }
-                >
-                  Campo  <AddIcon className={ classes.addIconMargin }/>
-                </Button>
-              }
+              <Button
+                variant="contained"
+                color="primary"
+                size="small"
+                disabled={ !currentTab }
+                onClick={ fieldHandleClickOpen }
+              >
+                Campo  <AddIcon className={ classes.addIconMargin }/>
+              </Button>
             </Typography>
           </Grid>
           <Grid item xs={3}>
