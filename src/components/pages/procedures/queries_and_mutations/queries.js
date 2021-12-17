@@ -297,28 +297,6 @@ mutation UpdateProcedure(
 }
 `
 
-export const CREATE_COMMENT = gql`
-  mutation createComment(
-    $commentableId: ID!,
-    $commentableType:String!
-    $body:String!
-  ){
-    createComment(input:{
-      commentableId: $commentableId
-      commentableType: $commentableType
-      body: $body
-    }
-    ){
-      comment{
-        body
-        commentableId
-        commentableType
-        id
-      }
-    }
-  }
-`
-
 export const GET_COMMENTABLE_COMMENTS = gql`
   query commentableComments(
     $commentableType: String!
@@ -332,6 +310,8 @@ export const GET_COMMENTABLE_COMMENTS = gql`
       commentableId
       commentableType
       id
+      createdAt
+      updatedAt
       user{
         avatarThumbUrl
         avatarUrl
@@ -526,4 +506,24 @@ export const GET_PROCEDURE_FIELD_VALUES = gql`
     }
   }
 `
-
+export const CREATE_COMMENT = gql`
+  mutation createComment(
+    $commentableId: ID!,
+    $commentableType: String!,
+    $body: String!
+  ){
+    createComment(input:{
+      commentableId: $commentableId,
+      commentableType: $commentableType,
+      body: $body,
+    }
+    ){
+      comment{
+        id
+        commentableId
+        commentableType
+        body
+      }
+    }
+  }
+`

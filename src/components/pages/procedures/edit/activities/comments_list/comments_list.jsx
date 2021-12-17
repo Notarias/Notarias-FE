@@ -10,10 +10,10 @@ const CommentsList = (props) => {
   const { procedure } = props
 
   const { loading, data, refetch } = useQuery(
-    GET_COMMENTABLE_COMMENTS, { variables: {"commentableType": "Procedure", "commentableId": procedure.id }, fetchPolicy: "no-cache" }
+    GET_COMMENTABLE_COMMENTS, { variables: {"commentableType": "Procedure", "commentableId": procedure.id } }
   );
 
-  const [comments, setComments] = useState(data ? data.commentableComments : [])
+  const [comments, setComments] = useState([])
 
   useEffect(
     () => {
@@ -23,7 +23,7 @@ const CommentsList = (props) => {
   )
 
   return(
-    <Grid item container justifyContent='flex-start' spacing={2}>
+    <Grid container item xs={12} direction="row" justifyContent='center' spacing={3}>
       {
         comments.map((comment) => {
           return(

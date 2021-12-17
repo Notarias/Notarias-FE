@@ -20,7 +20,7 @@ const renderTextComment = (props) => {
 
   return(
     <Grid container item>
-      <Grid container item className={classes.commentEditingInputGrid}>
+      <Grid container item>
         <Typography variant="caption" align="left">
           {comment.body}
         </Typography>

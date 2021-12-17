@@ -3,23 +3,20 @@ import Grid                           from '@material-ui/core/Grid';
 import TableRow                       from '@material-ui/core/TableRow';
 import TableCell                      from '@material-ui/core/TableCell';
 import GenericDropdownMenu            from '../../../ui/generic_dropdown_menu';
-import Button                         from '@material-ui/core/Button';
 import CreateIcon                     from '@material-ui/icons/Create';
 import MenuItem                       from '@material-ui/core/MenuItem';
 import ListItemIcon                   from '@material-ui/core/ListItemIcon';
 import ListItemText                   from '@material-ui/core/ListItemText';
 import { Link }                       from 'react-router-dom';
-import NumberFormat                   from 'react-number-format';
 import { withStyles }                 from '@material-ui/core/styles';
 import { styles }                     from '../styles';
-import Typography                     from '@material-ui/core/Typography';
 import VisibilityIcon                 from '@material-ui/icons/Visibility';
 import PrintIcon                      from '@material-ui/icons/Print';
 import Chip                           from '@material-ui/core/Chip';
 
 
 
-const TemplateRow = (props) => {
+const TableRows = (props) => {
 
   const {procedure, classes} = props;
   const [open, setOpen] = React.useState(false);
@@ -31,6 +28,7 @@ const TemplateRow = (props) => {
       return <Chip color="secondary" label="En Proceso" />
     }
   }
+  console.log(procedure)
 
   return(
     <TableRow key={  "-row" }>
@@ -96,4 +94,4 @@ const TemplateRow = (props) => {
   )
 }
 
-export default withStyles(styles)(TemplateRow);
+export default withStyles(styles)(TableRows);
