@@ -18,9 +18,6 @@ export default (props) => {
     <Grid container item alignItems="center" spacing={3}>
       <Grid item container xs={12} style={{ padding: "0" }} justifyContent='flex-end' alignItems='center' spacing={2}>
         <Grid item>
-          
-        </Grid>
-        <Grid item>
           <Link
             to={`/procedures/${ procedure.id }/invoice`}
             color="inherit"

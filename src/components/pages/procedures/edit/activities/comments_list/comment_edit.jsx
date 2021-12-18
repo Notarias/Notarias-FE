@@ -182,7 +182,7 @@ const CommentEdit = (props) => {
 
   return(
     <>
-      <Grid container item
+      <Grid item
         key={comment.id + 'group-row'}
         style={{ flex: '1 1 auto' }}
         direction='column'
