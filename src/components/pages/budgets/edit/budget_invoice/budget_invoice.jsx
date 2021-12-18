@@ -15,6 +15,10 @@ import Breadcrumbs          from '../../../../ui/breadcrumbs';
 import Tab                  from './tab';
 import logo_notaria         from '../../../../../images/logo_notaria.JPG'
 import ProcedureFields      from './procedure_fields';
+import logo_notaria         from '../../../../../images/logo_notaria.JPG';
+import { Button }           from '@material-ui/core';
+import { BASE_URI }         from '../../../../../apollo'
+
 
 const months = [
   'Ene',
@@ -82,6 +86,11 @@ const BudgetInvoice = (props) => {
   return(
     <>
     <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
+    <Paper>
+      <Grid>
+        { budget && <a href={`http://${BASE_URI}/invoices/${budget.id}.pdf?auth=${localStorage.getItem('jwtToken')}`}>descargar</a> }
+      </Grid>
+    </Paper>
     <Paper>
       <Grid container  direction='column' alignItems="center">
           <Grid item style={{ marginBottom: '30px' }}>

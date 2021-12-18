@@ -48,7 +48,7 @@ export default (props) => {
       }
       <Grid item>
         <Typography align='right' variant='h6'>
-          ${((totalsData.tabTotals.total * 1.0) / 100).toFixed(2)}
+          ${totalsData && totalsData.tabTotals && ((totalsData.tabTotals.total * 1.0) / 100).toFixed(2)}
         </Typography>
       </Grid>
     </Grid>
