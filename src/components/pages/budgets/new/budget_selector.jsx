@@ -36,9 +36,9 @@ const BudgetSelector = (props) => {
 
   useEffect(() => {
     if (procedureId)
-    {setInitialList(data.budgetingTemplatesByProcedureId)
-    setFuzzySearcher(new Fuse(data.budgetingTemplatesByProcedureId, { keys: ['name'] }))
-    setSearchList(data.budgetingTemplatesByProcedureId)}
+    {setInitialList(data && data.budgetingTemplatesByProcedureId)
+    setFuzzySearcher(new Fuse(data && data.budgetingTemplatesByProcedureId, { keys: ['name'] }))
+    setSearchList(data && data.budgetingTemplatesByProcedureId)}
 
   }, [data, procedureId])
 
@@ -73,7 +73,7 @@ const BudgetSelector = (props) => {
         disablePadding={true}
       >
         { 
-          searchList.map(
+          searchList && searchList.map(
             (item, index) => {
               let obj = item.item || item
 
