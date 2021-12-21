@@ -15,7 +15,7 @@ export default (props) => {
   }, [!!reporterData])
 
   return(
-    <Grid container direction="row">
+    <Grid container>
       <Button fullWidth style={{ padding: '10px' }}>
         <Grid container alignItems="center" justifyContent='flex-start'>
           <Grid item xs={3} md={2} lg={1}>

@@ -265,7 +265,7 @@ const Field = (props) => {
               </DialogActions>
             </Dialog>
           </Grid>
-          <Grid container direction="column"  alignItems="center" justifyContent="center" item xs={1}>
+          <Grid container item xs={1} >
             <Button onClick={ openDeleteDialog }>
               <DeleteForeverIcon/>
             </Button>

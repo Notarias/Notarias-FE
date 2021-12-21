@@ -42,7 +42,7 @@ const AuditLog = (props) => {
   )
 
   return(
-    <Grid container item style={{}}>
+    <Grid container item>
       <Grid container item justifyContent="flex-start" spacing={2}>
         {
           auditLog.map((obj) => {
