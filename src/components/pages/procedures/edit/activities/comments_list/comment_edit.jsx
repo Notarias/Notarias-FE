@@ -83,17 +83,6 @@ const CommentEdit = (props) => {
     setError(errorsList)
   }
 
-  /* const updateComment = (event) => {
-    !pristine && (
-      updateCommentMutation({
-        variables:{
-          "id": comment.id ,
-          "body": commentValue
-        }
-      })
-    )
-  } */
-
   const [destroyCommentMutation, {loading: destroyCommentloading}] =
     useMutation(
       DESTROY_COMMENT,

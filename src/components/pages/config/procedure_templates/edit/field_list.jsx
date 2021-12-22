@@ -1,4 +1,4 @@
-import React, { useEffect }                         from 'react';
+import React, { useState, useEffect }               from 'react';
 import Field                                        from './field';
 import { useQuery }                                 from '@apollo/client';
 import { GET_PROCEDURE_TEMPLATE_TAB_FIELDS }        from '../queries_and_mutations/queries'
@@ -15,7 +15,7 @@ const FieldList = (props) => {
     }
   );
 
-  const [fields, setFields] = React.useState(data ? data.proceduresTemplateTabFields : [])
+  const [fields, setFields] = useState(data ? data.proceduresTemplateTabFields : [])
 
   useEffect(() => {
     data && setFields(data.proceduresTemplateTabFields);;
@@ -37,14 +37,15 @@ const FieldList = (props) => {
               return(
                 <Field
                   key={ field.id + "-field"}
+                  id={ field.id }
                   arrayIndex={ index }
-                  removeFromList={ removeFromList }
-                  name={ field.name || "" }
-                  style={ field.style || "" }
-                  favourite={ field.favourite || false }
-                  id={ field.id || " " }
-                  active={ field.active }
                   currentTab={ currentTab }
+                  removeFromList={ removeFromList }
+                  name={ field.name }
+                  style={ field.style }
+                  favourite={ field.favourite }
+                  active={ field.active }
+                  printable={ field.printable }
                 />
               )
             }

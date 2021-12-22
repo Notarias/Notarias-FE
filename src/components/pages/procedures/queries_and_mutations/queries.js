@@ -399,6 +399,7 @@ export const GET_PROCEDURES_TEMPLATE_TAB_FIELDS = gql`
       name
       style
       favourite
+      printable
       proceduresTemplateFieldsGroupId
     }
   }

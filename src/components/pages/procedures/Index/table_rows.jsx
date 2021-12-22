@@ -28,7 +28,6 @@ const TableRows = (props) => {
       return <Chip color="secondary" label="En Proceso" />
     }
   }
-  console.log(procedure)
 
   return(
     <TableRow key={  "-row" }>
