@@ -1,6 +1,11 @@
 import React, { useState, useEffect }           from 'react';
 import Grid                                     from '@material-ui/core/Grid';
-import TextField                                from '@material-ui/core/TextField';
+import FormControl from '@material-ui/core/FormControl';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import Typography from '@material-ui/core/Typography';
 import IconButton                               from '@material-ui/core/IconButton';
 import Menu                                     from '@material-ui/core/Menu';
 import MenuItem                                 from '@material-ui/core/MenuItem';
@@ -139,34 +144,37 @@ const FieldsRows = (props) => {
     <Grid container item style={{ minHeight: '70px' }} key={field.id + 'field-row'} justifyContent="center" >
       {
         <Grid container xs={12} item >
-          <Grid container item xs={10} justifyContent="flex-start">
+          <Grid container item xs={9} xl={10} justifyContent="flex-start">
             <Grid item xs={12}>
-              <TextField 
-                id={field.id}
-                key={field.name}
-                label={field.name}
-                onChange={fieldValueChange}
-                value={fieldValue}
-                disabled={fieldStatus}
-                multiline
-                fullWidth
-              />
+              <FormControl variant="outlined" fullWidth>
+                <InputLabel htmlFor={field.id}>{field.name}</InputLabel>
+                <Input
+                  id={field.id}
+                  key={field.name}
+                  label={field.name}
+                  value={fieldValue}
+                  onChange={fieldValueChange}
+                  disabled={fieldStatus}
+                  size="small"
+                  variant="outlined"
+                  fullWidth
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="cancel_edit"
+                        onClick={cancelEditField}
+                        edge="end"
+                      >
+                        {fieldStatus ? "" : <ClearIcon/>}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                />
+              </FormControl>
             </Grid>
           </Grid>
-          <Grid container item xs={2} width="100%" justifyContent="flex-end">
+          <Grid container item xs={3} xl={2} width="100%" justifyContent="flex-end">
             <Grid item>
-              { !fieldValue === "" ? 
-                <IconButton style={{"padding": "10px"}} disabled={true}>
-                  <EditIcon/>
-                </IconButton>
-              :
-                <IconButton
-                  style={{"padding": "10px"}}
-                  onClick={fieldStatus ? enableEditField : cancelEditField}
-                >
-                  {fieldStatus ? <EditIcon/> : <ClearIcon/>}
-                </IconButton>
-              }
               <IconButton
                 disabled={saveButtonStatus}
                 style={{"padding": "10px"}}
@@ -184,6 +192,14 @@ const FieldsRows = (props) => {
                 open={menuState}
                 onClose={cancelMenu}
               >
+                <MenuItem disabled={!fieldStatus}>
+                  <ListItemIcon onClick={enableEditField}>
+                    <EditIcon fontSize="small"/>
+                  </ListItemIcon>
+                  <Typography>
+                    Editar
+                  </Typography>
+                </MenuItem>
                 <MenuItem>
                   {fieldValueActive ? "Activo" : "Inactivo"}
                   <Switch
@@ -194,8 +210,6 @@ const FieldsRows = (props) => {
                     checked={fieldValueActive}
                   />
                 </MenuItem>
-                <MenuItem onClick={closeMenu}>My account</MenuItem>
-                <MenuItem onClick={closeMenu}>Logout</MenuItem>
               </Menu>
             </Grid>
           </Grid>

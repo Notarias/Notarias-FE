@@ -13,6 +13,6 @@ export default ({ classes }) => {
       message={ data.globalMessage.message }
       actionable={ true }
       autohide={ true }
-    />)|| ""
+    />)|| ""
   )
 }
