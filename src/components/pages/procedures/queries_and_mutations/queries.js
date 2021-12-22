@@ -430,6 +430,7 @@ export const GET_PROCEDURE_FIELD_GROUP_VALUES = gql`
       procedureId: $procedureId
     ){
       id
+      duplicate
       proceduresTemplateField{
         id
         name
@@ -506,6 +507,29 @@ export const GET_PROCEDURE_FIELD_VALUES = gql`
     }
   }
 `
+
+export const CREATE_PROCEDURE_FIELD_GROUP_VALUE = gql`
+  mutation CreateProcedureFieldGroupValues(
+    $proceduresTemplateFieldsGroupId: ID!,
+    $procedureId: ID!
+  ){
+    createProcedureFieldGroupValues(input:{
+      proceduresTemplateFieldsGroupId: $proceduresTemplateFieldsGroupId,
+      procedureId: $procedureId
+      }
+    ){
+      procedureFieldGroupValues{
+        procedureFieldValue{
+          id
+        }
+        proceduresTemplateField{
+          id
+        }
+      }
+    }
+  }
+`
+
 export const CREATE_COMMENT = gql`
   mutation createComment(
     $commentableId: ID!,
@@ -524,6 +548,14 @@ export const CREATE_COMMENT = gql`
         commentableType
         body
       }
+    }
+  }
+`
+
+export const DESTROY_PROCEDURE_FIELD_GROUP_VALUES = gql`
+  mutation destroyProcedureFieldGroupValues ($id: ID!){
+    destroyProcedureFieldGroupValues (input:{id: $id}){
+      destroyed
     }
   }
 `

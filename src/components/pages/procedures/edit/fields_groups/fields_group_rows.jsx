@@ -1,46 +1,47 @@
-import React, { useState, useEffect }           from 'react';
+import React, { useState }           from 'react';
 import Grid                                     from '@material-ui/core/Grid';
-import TextField                                from '@material-ui/core/TextField';
+import FormControl from '@material-ui/core/FormControl';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import Typography                               from '@material-ui/core/Typography';
 import IconButton                               from '@material-ui/core/IconButton';
 import Menu                                     from '@material-ui/core/Menu';
 import MenuItem                                 from '@material-ui/core/MenuItem';
+import ListItemIcon                             from '@material-ui/core/ListItemIcon';
 import Switch                                   from '@material-ui/core/Switch';
 import SaveIcon                                 from '@material-ui/icons/Save';
 import EditIcon                                 from '@material-ui/icons/Edit';
 import ClearIcon                                from '@material-ui/icons/Clear';
+import DeleteForeverIcon                        from '@material-ui/icons/DeleteForever';
 import MoreVertIcon                             from '@material-ui/icons/MoreVert';
-import { useQuery }                             from '@apollo/client';
 import { useMutation }                          from '@apollo/client';
-import { CREATE_PROCEDURE_FIELD_VALUE }         from '../../queries_and_mutations/queries';
 import { UPDATE_PROCEDURE_FIELD_VALUE }         from '../../queries_and_mutations/queries';
-import { GET_PROCEDURE_FIELD_VALUES }           from '../../queries_and_mutations/queries';
+import { GET_PROCEDURE_FIELD_GROUP_VALUES }     from '../../queries_and_mutations/queries';
+import { DESTROY_PROCEDURE_FIELD_GROUP_VALUES } from '../../queries_and_mutations/queries';
+import { GLOBAL_MESSAGE }                       from '../../../../../resolvers/queries';
+import client                                   from '../../../../../../src/apollo';
 
 const FieldsGroupsRows = (props) => {
 
-  const { procedure, groupFieldValue } = props
+  const { procedure, group, fieldGroupValue } = props
 
-  const [selected, setSelected] = useState(null);
   const [menuState, setMenuState] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [field, setField] = useState(groupFieldValue && groupFieldValue.proceduresTemplateField);
-  const [procedureFieldValue, setProcedureFieldValue] = useState(groupFieldValue && groupFieldValue.procedureFieldValue);
-  const [fieldValueActive, setFieldValueActive] = useState(groupFieldValue && groupFieldValue.procedureFieldValue.active);
-  const [value, setValue] = useState(groupFieldValue && groupFieldValue.procedureFieldValue.value);
-  const [fieldStatus, setFieldStatus] = useState(groupFieldValue && !groupFieldValue.procedureFieldValue.value ? false : true);
+  const [duplicate, setDuplicate] = useState(fieldGroupValue && fieldGroupValue.duplicate);
+  const [field, setField] = useState(fieldGroupValue && fieldGroupValue.proceduresTemplateField);
+  const [procedureFieldValue, setProcedureFieldValue] = useState(fieldGroupValue && fieldGroupValue.procedureFieldValue);
+  const [fieldValueActive, setFieldValueActive] = useState(fieldGroupValue && fieldGroupValue.procedureFieldValue.active);
+  const [value, setValue] = useState(fieldGroupValue && fieldGroupValue.procedureFieldValue.value);
+  const [fieldStatus, setFieldStatus] = useState(fieldGroupValue && !fieldGroupValue.procedureFieldValue.value ? false : true);
   const [saveButtonStatus, setSaveButtonStatus] = useState(true);
-  
+  console.log(fieldGroupValue)
   const openMenu = ( event ) => {
     setMenuState(true);
     setAnchorEl(event.currentTarget);
   }
 
   const closeMenu = () => {
-    setMenuState(false);
-    setAnchorEl(null);
-  }
-
-  const cancelMenu = () => {
-    setSelected(null);
     setMenuState(false);
     setAnchorEl(null);
   }
@@ -58,31 +59,6 @@ const FieldsGroupsRows = (props) => {
     setValue(targetValue);
     setSaveButtonStatus(false);    
   }
-
-  const saveNewFieldValue = ( event ) => {
-    createProcedureFieldValue ({ variables: {"proceduresTemplateFieldId": field.id, "procedureId": procedure.id, "value": value} })
-  }
-
-  const [createProcedureFieldValue, { loading: createProcedureFieldValueLoading }] =
-    useMutation(
-      CREATE_PROCEDURE_FIELD_VALUE,
-      {
-        onCompleted(cacheData) {
-          setValue(cacheData && cacheData.createProcedureFieldValue.procedureFieldValue.value);
-          setFieldValueActive(cacheData && cacheData.createProcedureFieldValue.procedureFieldValue.active);
-          setFieldStatus(true);
-          setSaveButtonStatus(true);
-        },
-        refetchQueries: [
-          {
-            query: GET_PROCEDURE_FIELD_VALUES,
-            variables: { "proceduresTemplateFieldId": field.id, "procedureId": procedure.id }
-          }
-        ],
-        awaitRefetchQueries: true
-      }
-    )
-
   
   const updateFieldValue = ( event ) => {
     updateProcedureFieldValue ({ variables: {"id": procedureFieldValue.id, "value": value} })
@@ -91,7 +67,7 @@ const FieldsGroupsRows = (props) => {
   const updateFieldValueActive = ( checked ) => {
     updateProcedureFieldValue ({ variables: {"id": procedureFieldValue.id, "active": checked} })
   }
-
+  
   const [updateProcedureFieldValue, { loading: updateProcedureFieldValueLoading }] =
     useMutation(
       UPDATE_PROCEDURE_FIELD_VALUE,
@@ -104,8 +80,8 @@ const FieldsGroupsRows = (props) => {
         },
         refetchQueries: [
           {
-            query: GET_PROCEDURE_FIELD_VALUES,
-            variables: { "proceduresTemplateFieldId": field.id, "procedureId": procedure.id }
+            query: GET_PROCEDURE_FIELD_GROUP_VALUES,
+            variables: { "fieldGroupId": group.id, "procedureId": procedure.id }
           }
         ],
         awaitRefetchQueries: true
@@ -116,39 +92,88 @@ const FieldsGroupsRows = (props) => {
     updateFieldValueActive(event.target.checked);
   };
 
+  const [destroyProcedureFieldGroupValues, { loading: destroyProcedureFieldGroupValuesLoading }] =
+    useMutation(
+      DESTROY_PROCEDURE_FIELD_GROUP_VALUES,
+      { onCompleted(cacheData) {
+          client.writeQuery({
+            query: GLOBAL_MESSAGE,
+            data: {
+              globalMessage: {
+                message: "Campo eliminado con éxito",
+                type: "success",
+                __typename: "globalMessage"
+              }
+            }
+          })
+        },
+        onError(errorData) {
+          let errorsHash = {}
+          errorData.graphQLErrors.map((error) => {
+            errorsHash[error.extensions.attribute] = error.message
+          })
+          client.writeQuery({
+            query: GLOBAL_MESSAGE,
+            data: {
+              globalMessage: {
+                message: errorsHash.duplicate,
+                type: "error",
+                __typename: "globalMessage"
+              }
+            }
+          })
+        },
+        refetchQueries: [
+          {
+            query: GET_PROCEDURE_FIELD_GROUP_VALUES,
+            variables: { "fieldGroupId": group.id, "procedureId": procedure.id }
+          }
+        ],
+        awaitRefetchQueries: true
+      }
+    )
+
+  const destroyFieldGroup = () => {
+    destroyProcedureFieldGroupValues({ variables: {"id": fieldGroupValue.id} });
+    closeMenu();
+  }
+  
   return (
     <Grid container item style={{ minHeight: '70px' }} key={field.id + 'field-row'} justifyContent="center" >
       {
         <Grid container xs={12} item >
-          <Grid container item xs={10} justifyContent="flex-start">
+          <Grid container item xs={9} xl={10} justifyContent="flex-start">
             <Grid item xs={12}>
-              <TextField 
-                id={field.id}
-                key={field.name}
-                label={field.name}
-                onChange={fieldValueChange}
-                value={value}
-                disabled={fieldStatus}
-                multiline
-                fullWidth
-              />
+              <FormControl variant="outlined" fullWidth>
+                <InputLabel htmlFor={field.id}>{field.name}</InputLabel>
+                <Input
+                  id={field.id}
+                  key={field.name}
+                  label={field.name}
+                  value={value}
+                  onChange={fieldValueChange}
+                  disabled={fieldStatus}
+                  size="small"
+                  variant="outlined"
+                  fullWidth
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="cancel_edit"
+                        onClick={cancelEditField}
+                        edge="end"
+                      >
+                        {fieldStatus ? "" : <ClearIcon/>}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                />
+              </FormControl>
             </Grid>
           </Grid>
-          <Grid container item xs={2} width="100%" justifyContent="flex-end">
+          <Grid container item xs={3} xl={2} width="100%" justifyContent="flex-end">
             <Grid item>
-              { !!value === "" ? 
-                <IconButton style={{"padding": "10px"}} disabled={true}>
-                  <EditIcon/>
-                </IconButton>
-              :
-                <IconButton
-                  style={{"padding": "10px"}}
-                  onClick={fieldStatus ? enableEditField : cancelEditField}
-                >
-                  {fieldStatus ? <EditIcon/> : <ClearIcon/>}
-                </IconButton>
-              }
-              <IconButton
+            <IconButton
                 disabled={saveButtonStatus}
                 style={{"padding": "10px"}}
                 onClick={updateFieldValue}
@@ -163,8 +188,24 @@ const FieldsGroupsRows = (props) => {
                 anchorEl={anchorEl}
                 keepMounted
                 open={menuState}
-                onClose={cancelMenu}
+                onClose={closeMenu}
               >
+                <MenuItem disabled={!fieldStatus}>
+                  <ListItemIcon onClick={enableEditField}>
+                    <EditIcon fontSize="small"/>
+                  </ListItemIcon>
+                  <Typography>
+                    Editar
+                  </Typography>
+                </MenuItem>
+                <MenuItem onClick={destroyFieldGroup} disabled={!duplicate}>
+                  <ListItemIcon>
+                    <DeleteForeverIcon fontSize="small" color="secondary"/>
+                  </ListItemIcon>
+                  <Typography>
+                    Eliminar
+                  </Typography>
+                </MenuItem>
                 <MenuItem>
                   {fieldValueActive ? "Activo" : "Inactivo"}
                   <Switch
@@ -175,8 +216,6 @@ const FieldsGroupsRows = (props) => {
                     checked={fieldValueActive}
                   />
                 </MenuItem>
-                <MenuItem onClick={closeMenu}>My account</MenuItem>
-                <MenuItem onClick={closeMenu}>Logout</MenuItem>
               </Menu>
             </Grid>
           </Grid>
