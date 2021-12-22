@@ -166,19 +166,19 @@ const Field = (props) => {
   const renderTextField = () => {
     return(
       <>
-        <Grid container item xs={1} alignItems="center" justifyContent="center">
+        <Grid item xs={1} alignItems="center" justifyContent="center">
           <Button
             onClick={ editField }
           >
             <CreateIcon/>
           </Button>
         </Grid>
-        <Grid container item xs={4}>
+        <Grid item xs={4}>
           <Typography className={ classes.texPlainTittleName }>
             { name }
           </Typography>
         </Grid>
-        <Grid container item xs={3}>
+        <Grid item xs={3}>
         <Typography className={ classes.textTittleType }>
             {  INPUT_TYPES[style] }
           </Typography>
@@ -190,14 +190,14 @@ const Field = (props) => {
   const renderInputField = () => {
     return(
       <>
-        <Grid container item xs={1} alignItems="center" justifyContent="center">
+        <Grid item xs={1} alignItems="center" justifyContent="center">
           <Button
             onClick={ updateField }
           >
             <SaveIcon />
           </Button>
         </Grid>
-        <Grid container item xs={4}>
+        <Grid item xs={4}>
           <InputBase 
             id="standard-basic" 
             label="Nombre del campo"
@@ -211,7 +211,7 @@ const Field = (props) => {
             inputProps={{ 'aria-label': 'naked' }}
           />
         </Grid>
-        <Grid container item xs={3}>
+        <Grid item xs={3}>
           <FormControl variant="outlined" className={ classes.textFieldTittleType }>
             <InputLabel id="label-field">Tipo de campo</InputLabel>
             <Select
@@ -234,7 +234,7 @@ const Field = (props) => {
       <Paper>
         <Grid container className={ classes.fieldHeightRow }>
           { editing ? renderTextField() : renderInputField() }
-          <Grid container direction="column"  alignItems="center" justifyContent="center" item xs={1}>
+          <Grid direction="column"  alignItems="center" justifyContent="center" item xs={1}>
             <FormControlLabel
               control={<Checkbox 
                 icon={<StarBorderIcon />} 
@@ -269,7 +269,7 @@ const Field = (props) => {
               </DialogActions>
             </Dialog>
           </Grid>
-          <Grid container item xs={1} >
+          <Grid item xs={1} >
             <Button onClick={ openPrintDialog }>
             {printable ? <PrintIcon/> : <PrintDisabledIcon color="disabled"/>}
             </Button>
@@ -295,7 +295,7 @@ const Field = (props) => {
               </DialogActions>
             </Dialog>
           </Grid>
-          <Grid container item xs={1} >
+          <Grid item xs={1} >
             <Button onClick={ openDeleteDialog }>
               <DeleteForeverIcon/>
             </Button>
@@ -322,7 +322,7 @@ const Field = (props) => {
               </DialogActions>
             </Dialog>
           </Grid>
-          <Grid container  direction="column"  alignItems="center" justifyContent="center" item xs={1} onClick={ openStatusDialog }>
+          <Grid direction="column"  alignItems="center" justifyContent="center" item xs={1} onClick={ openStatusDialog }>
             {
             active ?
               <Button>
