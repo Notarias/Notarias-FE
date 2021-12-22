@@ -6,6 +6,8 @@ import FormControlLabel                               from '@material-ui/core/Fo
 import Checkbox                                       from '@material-ui/core/Checkbox';
 import StarBorderIcon                                 from '@material-ui/icons/StarBorder';
 import Button                                         from '@material-ui/core/Button';
+import PrintIcon                                      from '@material-ui/icons/Print';
+import PrintDisabledIcon                              from '@material-ui/icons/PrintDisabled';
 import DeleteForeverIcon                              from '@material-ui/icons/DeleteForever';
 import { withStyles }                                 from '@material-ui/core/styles';
 import { styles }                                     from '../styles';
@@ -37,17 +39,19 @@ const INPUT_TYPES = {
 
 const Field = (props) => {
 
-  const { classes, id, groupId, currentTab, removeFromList } = props
+  const { classes, id, groupId, currentTab, removeFromList } = props;
   const [favDialog, setFavDialog] = useState(false);
+  const [printDialog, setPrintDialog] = useState(false);
   const [deleteDialog, setDeleteDialog] = useState(false);
   const [statusDialog, setStatusDialog] = useState(false);
   const [editing, setEditing] = useState(true);
-  const [name, setName] = useState(props.name)
-  const [style, setStyle] = useState(props.style)
-  const [active, setActive] = useState(props.active)
-  const [favourite, setFavourite] = useState(props.favourite)
-  const [error, setError] = useState(false)
-  const inputsList = ["name"]
+  const [name, setName] = useState(props.name);
+  const [active, setActive] = useState(props.active);
+  const [favourite, setFavourite] = useState(props.favourite);
+  const [printable, setPrintable] = useState(props.printable);
+  const [style, setStyle] = useState(props.style);
+  const [error, setError] = useState(false);
+  const inputsList = ["name"];
 
   const [updateProceduresTemplateTabFieldMutation] =
     useMutation(
@@ -57,10 +61,11 @@ const Field = (props) => {
           setErrors(apolloError)
         },
         update(store, cacheData) {
-          setFavourite(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.favourite)
-          setActive(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.active)
-          setError(false)
-          setEditing(true)
+          setFavourite(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.favourite);
+          setActive(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.active);
+          setPrintable(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.printable);
+          setError(false);
+          setEditing(true);
         }
       }
     )
@@ -79,7 +84,9 @@ const Field = (props) => {
     }
 
   const updateField = (event) => {
-    updateProceduresTemplateTabFieldMutation({ variables: { id: id, name: name, style: style}})
+    updateProceduresTemplateTabFieldMutation(
+      { variables: { id: id, name: name, printable: printable, active: active, style: style}}
+    )
   }
 
   const [destroyProceduresTemplateTabFieldMutation  ] =
@@ -96,43 +103,40 @@ const Field = (props) => {
 
 
   const openFavDialog = () => {
-    setFavDialog(true);
-  };
-
-  const closeFavDialog = () => {
-    setFavDialog(false);
-  };
+    setFavDialog(!favDialog);
+  }
 
   const openDeleteDialog = () => {
-    setDeleteDialog(true);
+    setDeleteDialog(!deleteDialog);
   }
-
-  const closeDeleteDialog = () => {
-    setDeleteDialog(false);
-  };
 
   const openStatusDialog = () => {
-    setStatusDialog(true);
+    setStatusDialog(!statusDialog);
   }
 
-  const closeStatusDialog = () => {
-    setStatusDialog(false);
-  };
+  const openPrintDialog = () => {
+    setPrintDialog(!printDialog);
+  }
 
   const checkedStar = () => {
-    updateProceduresTemplateTabFieldMutation({ variables: { id: id, favourite: !favourite }})
+    updateProceduresTemplateTabFieldMutation({ variables: { id: id, favourite: !favourite }});
     setFavDialog(false);
+  }
+
+  const checkedPrintable = () => {
+    updateProceduresTemplateTabFieldMutation({ variables: { id: id, printable: !printable }});
+    setPrintDialog(false);
+  }
+
+  const changeFieldStatus = () => {
+    updateProceduresTemplateTabFieldMutation({ variables: { id: id, active: !active }})
+    setActive(!active)
+    setStatusDialog(false);
   }
 
   const deleteFieldClick = () => {
     removeFromList(props.arrayIndex, destroyProceduresTemplateTabFieldMutation, { variables: { id: id } }, id )
     setDeleteDialog(false);
-  }
-
-  const changeFieldStatus = (event) => {
-    updateProceduresTemplateTabFieldMutation({ variables: { id: id, active: !active }})
-    setActive(!active)
-    setStatusDialog(false);
   }
 
   const colorButton = () => {
@@ -169,7 +173,7 @@ const Field = (props) => {
             <CreateIcon/>
           </Button>
         </Grid>
-        <Grid container item xs={5}>
+        <Grid container item xs={4}>
           <Typography className={ classes.texPlainTittleName }>
             { name }
           </Typography>
@@ -193,7 +197,7 @@ const Field = (props) => {
             <SaveIcon />
           </Button>
         </Grid>
-        <Grid container item xs={5}>
+        <Grid container item xs={4}>
           <InputBase 
             id="standard-basic" 
             label="Nombre del campo"
@@ -245,7 +249,7 @@ const Field = (props) => {
             />
             <Dialog
               open={favDialog}
-              onClose={closeFavDialog}
+              onClose={openFavDialog}
               aria-labelledby="favorite-alert"
               aria-describedby="favorite-alert-dialog"
             >
@@ -256,11 +260,37 @@ const Field = (props) => {
               { favourite === true ? "Este campo dejará de ser importante": "Se marcará este campo como importante"}
               </DialogContent>
               <DialogActions>
-                <Button onClick={ closeFavDialog } color="secondary">
+                <Button onClick={ openFavDialog } color="secondary">
                   Cancelar
                 </Button>
                 <Button color={ colorButton() } autoFocus onClick={ checkedStar } variant="contained">
                   { favourite ? "Quitar": "Añadir"}
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </Grid>
+          <Grid container item xs={1} >
+            <Button onClick={ openPrintDialog }>
+            {printable ? <PrintIcon/> : <PrintDisabledIcon color="disabled"/>}
+            </Button>
+            <Dialog
+              open={printDialog}
+              onClose={openPrintDialog}
+              aria-labelledby="favorite-alert"
+              aria-describedby="favorite-alert-dialog"
+            >
+              <DialogTitle id="favorite-alert">
+                { printable ? "Desmarcar como imprimible" : "Marcar como imprimible"}
+              </DialogTitle>
+              <DialogContent>
+              { printable ? "Este campo dejará de ser imprimible" : "Este campo se volvera imprimible"}
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={ openPrintDialog } color="secondary">
+                  Cancelar
+                </Button>
+                <Button color={ colorButton() } autoFocus onClick={ checkedPrintable } variant="contained">
+                  { printable ? "Desmarcar" : "Marcar"}
                 </Button>
               </DialogActions>
             </Dialog>
@@ -271,7 +301,7 @@ const Field = (props) => {
             </Button>
             <Dialog
               open={deleteDialog}
-              onClose={closeDeleteDialog}
+              onClose={openDeleteDialog}
               aria-labelledby="alert-dialog-title"
               aria-describedby="alert-dialog-description"
             >
@@ -283,7 +313,7 @@ const Field = (props) => {
                 </Typography>
               </DialogContent>
               <DialogActions>
-                <Button onClick={ closeDeleteDialog } color="secondary">
+                <Button onClick={ openDeleteDialog } color="secondary">
                   Cancelar
                 </Button>
                 <Button color="primary" autoFocus onClick={ deleteFieldClick }>
@@ -306,7 +336,7 @@ const Field = (props) => {
           </Grid>
           <Dialog
             open={statusDialog}
-            onClose={closeStatusDialog}
+            onClose={openStatusDialog}
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
           >
@@ -315,7 +345,7 @@ const Field = (props) => {
               Realmente deseas { statusField() }
             </DialogContent>
             <DialogActions>
-              <Button onClick={ closeStatusDialog } color="secondary">
+              <Button onClick={ openStatusDialog } color="secondary">
                 Cancelar
               </Button>
               <Button

@@ -93,7 +93,7 @@ const CreateComments = (props) => {
 
   return(
     <>
-      <Grid container item direction="row" justifyContent="center" alignItems="center" style={{paddingLeft: "25px", paddingRight: "25px"}}>
+      <Grid container item direction="row" justifyContent="center" alignItems="center" style={{paddingLeft: "25px", paddingRight: "25px", marginBottom: "15px"}}>
         <Grid item xs={1} justifyContent="flex-start" alignItems="flex-start">
           <Grid item >
             {
@@ -132,7 +132,7 @@ const CreateComments = (props) => {
             />
           </FormControl>
         </Grid>
-        <Grid item xs={1} direction="row" justifyContent="center" alignItems="flex-start">
+        <Grid item xs={1} direction="row" justifyContent="center" alignItems="center">
           <IconButton 
             onClick={createNewComment}
             disabled={showSendButton}

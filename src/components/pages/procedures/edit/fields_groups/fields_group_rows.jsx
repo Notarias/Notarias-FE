@@ -35,7 +35,7 @@ const FieldsGroupsRows = (props) => {
   const [value, setValue] = useState(fieldGroupValue && fieldGroupValue.procedureFieldValue.value);
   const [fieldStatus, setFieldStatus] = useState(fieldGroupValue && !fieldGroupValue.procedureFieldValue.value ? false : true);
   const [saveButtonStatus, setSaveButtonStatus] = useState(true);
-  console.log(fieldGroupValue)
+  
   const openMenu = ( event ) => {
     setMenuState(true);
     setAnchorEl(event.currentTarget);
@@ -49,6 +49,7 @@ const FieldsGroupsRows = (props) => {
   const cancelEditField = () => {
     setValue(procedureFieldValue.value);
     setFieldStatus(true);
+    setSaveButtonStatus(true);
   }
 
   const enableEditField = () => {
@@ -57,7 +58,7 @@ const FieldsGroupsRows = (props) => {
   const fieldValueChange = ({ target }) => {
     let { value: targetValue } = target
     setValue(targetValue);
-    setSaveButtonStatus(false);    
+    setSaveButtonStatus(false);
   }
   
   const updateFieldValue = ( event ) => {
@@ -142,7 +143,7 @@ const FieldsGroupsRows = (props) => {
     <Grid container item style={{ minHeight: '70px' }} key={field.id + 'field-row'} justifyContent="center" >
       {
         <Grid container xs={12} item >
-          <Grid container item xs={9} xl={10} justifyContent="flex-start">
+          <Grid container item xs={10} justifyContent="flex-start">
             <Grid item xs={12}>
               <FormControl variant="outlined" fullWidth>
                 <InputLabel htmlFor={field.id}>{field.name}</InputLabel>
@@ -171,53 +172,53 @@ const FieldsGroupsRows = (props) => {
               </FormControl>
             </Grid>
           </Grid>
-          <Grid container item xs={3} xl={2} width="100%" justifyContent="flex-end">
-            <Grid item>
+          <Grid item xs={1} width="100%" justifyContent="center">
             <IconButton
-                disabled={saveButtonStatus}
-                style={{"padding": "10px"}}
-                onClick={updateFieldValue}
-              >
-                <SaveIcon/>
-              </IconButton>
-              <IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={openMenu}>
-                <MoreVertIcon/>
-              </IconButton>
-              <Menu
-                id="simple-menu"
-                anchorEl={anchorEl}
-                keepMounted
-                open={menuState}
-                onClose={closeMenu}
-              >
-                <MenuItem disabled={!fieldStatus}>
-                  <ListItemIcon onClick={enableEditField}>
-                    <EditIcon fontSize="small"/>
-                  </ListItemIcon>
-                  <Typography>
-                    Editar
-                  </Typography>
-                </MenuItem>
-                <MenuItem onClick={destroyFieldGroup} disabled={!duplicate}>
-                  <ListItemIcon>
-                    <DeleteForeverIcon fontSize="small" color="secondary"/>
-                  </ListItemIcon>
-                  <Typography>
-                    Eliminar
-                  </Typography>
-                </MenuItem>
-                <MenuItem>
-                  {fieldValueActive ? "Activo" : "Inactivo"}
-                  <Switch
-                    onChange={handleChange}
-                    color="primary"
-                    name="active"
-                    inputProps={{ 'aria-label': 'primary checkbox' }}
-                    checked={fieldValueActive}
-                  />
-                </MenuItem>
-              </Menu>
-            </Grid>
+              disabled={saveButtonStatus}
+              style={{"padding": "10px"}}
+              onClick={updateFieldValue}
+            >
+              <SaveIcon color={saveButtonStatus ? "" : "primary"}/>
+            </IconButton>
+          </Grid>
+          <Grid item xs={1} width="100%" justifyContent="flex-end">
+            <IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={openMenu}>
+              <MoreVertIcon/>
+            </IconButton>
+            <Menu
+              id="simple-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={menuState}
+              onClose={closeMenu}
+            >
+              <MenuItem disabled={!fieldStatus}>
+                <ListItemIcon onClick={enableEditField}>
+                  <EditIcon fontSize="small"/>
+                </ListItemIcon>
+                <Typography>
+                  Editar
+                </Typography>
+              </MenuItem>
+              <MenuItem onClick={destroyFieldGroup} disabled={!duplicate}>
+                <ListItemIcon>
+                  <DeleteForeverIcon fontSize="small" color="secondary"/>
+                </ListItemIcon>
+                <Typography>
+                  Eliminar
+                </Typography>
+              </MenuItem>
+              <MenuItem>
+                {fieldValueActive ? "Activo" : "Inactivo"}
+                <Switch
+                  onChange={handleChange}
+                  color="primary"
+                  name="active"
+                  inputProps={{ 'aria-label': 'primary checkbox' }}
+                  checked={fieldValueActive}
+                />
+              </MenuItem>
+            </Menu>
           </Grid>
         </Grid>
       }
