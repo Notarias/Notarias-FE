@@ -36,7 +36,7 @@ const renderSearchList = (searchList, classes, selectedIndex, handleListItemClic
           (item) => {
             let obj = item.item || item
             return(
-              <React.Fragment key={obj.id + "fragment"}>
+              <>
                 <ListItem 
                   key={obj.id} 
                   dense
@@ -53,7 +53,7 @@ const renderSearchList = (searchList, classes, selectedIndex, handleListItemClic
                     />
                 </ListItem>
                 <Divider/>
-              </React.Fragment>
+              </>
             )
           }
         )

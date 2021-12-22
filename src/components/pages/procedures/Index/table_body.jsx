@@ -4,7 +4,7 @@ import TableCell                          from '@material-ui/core/TableCell';
 import TableBody                          from '@material-ui/core/TableBody';
 import { useQuery }                       from '@apollo/client';
 import { GET_PROCEDURES }                 from '../queries_and_mutations/queries';
-import TemplateRow                        from './template_row';
+import TableRows                        from './table_rows';
 import LoadingProgress                    from '../../../ui/loading_progress';
 
 const ProceduresTableBody = (props) => {
@@ -53,7 +53,7 @@ const ProceduresTableBody = (props) => {
     return(
       params.procedures.map((procedure) => { 
         return(
-          <TemplateRow
+          <TableRows
             procedure={ procedure }
             key={ procedure.id + "-procedureRow" }
             classes={ classes }
