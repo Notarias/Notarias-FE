@@ -51,7 +51,6 @@ const Tabs = (props) => {
         setOpen(false)
         setPristine(true)
       },
-      fetchPolicy: "no-cache",
       refetchQueries: [{
         query: GET_PROCEDURES_TEMPLATE_TABS,
         variables: { "proceduresTemplateId": proceduresTemplateId },

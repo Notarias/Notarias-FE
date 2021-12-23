@@ -16,8 +16,7 @@ const FieldsGroups = (props) => {
   const { data } = useQuery(
     GET_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS,
     {
-      variables: { "id": currentTab && currentTab.id },
-      fetchPolicy: "no-cache"
+      variables: { "id": currentTab && currentTab.id }
     }
   );
 

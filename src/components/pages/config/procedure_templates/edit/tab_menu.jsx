@@ -83,8 +83,7 @@ const TabMenu = (props) => {
   const changeStatus = (event) => {
     updateProceduresTemplateTabMutation(
       { 
-        variables: { id: id , active: !active},
-        fetchPolicy: "no-cache"
+        variables: { id: id , active: !active}
       }
     )
   }

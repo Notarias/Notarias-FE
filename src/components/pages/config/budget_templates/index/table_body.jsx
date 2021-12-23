@@ -22,7 +22,7 @@ export default (props) => {
   }
 
   const { loading, data, refetch } = useQuery(
-    GET_BUDGETING_TEMPLATES, { variables: variables, fetchPolicy: "no-cache" }
+    GET_BUDGETING_TEMPLATES, { variables: variables }
   );
 
   let totalCount = data && data.budgetingTemplatesCount

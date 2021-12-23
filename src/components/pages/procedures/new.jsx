@@ -186,8 +186,7 @@ const NewProcedure = (params) => {
           id && setRedirect(
             <Redirect to={{ pathname: `/procedures/${id}/edit` }} />
           );
-        },
-        fetchPolicy: "no-cache",
+        }
       }
     )
   

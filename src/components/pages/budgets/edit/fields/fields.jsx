@@ -20,8 +20,7 @@ const Fields = (props) => {
   const { data } = useQuery(
     GET_BUDGETING_TEMPLATE_TAB_FIELDS,
     {
-      variables: { "id": currentTab && currentTab.id },
-      fetchPolicy: "no-cache"
+      variables: { "id": currentTab && currentTab.id }
     }
   );
 

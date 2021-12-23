@@ -15,6 +15,7 @@ import MoreVertIcon                             from '@material-ui/icons/MoreVer
 import { useQuery, useMutation }                from '@apollo/client';
 import { GET_PROCEDURE_FIELD_GROUP_VALUES }     from '../../queries_and_mutations/queries';
 import { CREATE_PROCEDURE_FIELD_GROUP_VALUE }   from '../../queries_and_mutations/queries';
+import { GET_PROCEDURES_AUDITLOG }              from '../../queries_and_mutations/queries';
 import { GLOBAL_MESSAGE }                       from '../../../../../resolvers/queries';
 import client                                   from '../../../../../../src/apollo';
 import FieldsGroupsRows                         from './fields_group_rows';
@@ -61,6 +62,10 @@ const GroupsRows = (props) => {
           {
             query: GET_PROCEDURE_FIELD_GROUP_VALUES,
             variables: { "fieldGroupId": group.id, "procedureId": procedure.id }
+          },
+          {
+            query: GET_PROCEDURES_AUDITLOG,  
+              variables: { "procedureId": procedure.id }
           }
         ],
         awaitRefetchQueries: true

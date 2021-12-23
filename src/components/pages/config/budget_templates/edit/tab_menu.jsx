@@ -94,8 +94,7 @@ const TabMenu = (props) => {
 
     updateBudgetingTemplateTabMutation(
       { 
-        variables: { id: id , active: !active},
-        fetchPolicy: "no-cache"
+        variables: { id: id , active: !active}
       }
     )
   }
@@ -115,8 +114,7 @@ const TabMenu = (props) => {
   const deleteTabClick = () => {
     destroyBudgetingTemplateTabMutation(
       {
-        variables: { id: id },
-        fetchPolicy: "no-cache"
+        variables: { id: id }
       },
       setCurrentTab(null)
     )

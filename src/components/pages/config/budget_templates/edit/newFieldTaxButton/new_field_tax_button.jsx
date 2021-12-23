@@ -68,7 +68,6 @@ const NewFliedTaxButton = (props) => {
         setOpen(false)
         setPristine(true)
       },
-      fetchPolicy: "no-cache",
       refetchQueries: [{
         query: GET_BUDGETING_TEMPLATE_TAB_FIELDS,
         variables: { "id": currentTab && currentTab.id },
@@ -102,8 +101,7 @@ const NewFliedTaxButton = (props) => {
             "taxedFieldsIds": taxedFieldsIds,
             "operator": operator,
             "taxableSelector": taxableSelector 
-          },
-          fetchPolicy: "no-cache",
+          }
       }
     )
   }

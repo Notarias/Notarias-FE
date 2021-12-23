@@ -11,7 +11,7 @@ const TabSeccion = (props) => {
   const { classes, budgetingTemplateId, budget } = props
   
   const { data: dataTabsTotals } = useQuery(
-    GET_BUDGET_TAB_TOTALS,{ variables: { id: budget.id }, fetchPolicy: "no-cache"}
+    GET_BUDGET_TAB_TOTALS,{ variables: { id: budget.id } }
   );
 
   useEffect(() => {

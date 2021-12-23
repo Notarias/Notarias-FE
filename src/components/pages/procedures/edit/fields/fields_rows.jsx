@@ -19,6 +19,7 @@ import { useMutation }                          from '@apollo/client';
 import { CREATE_PROCEDURE_FIELD_VALUE }         from '../../queries_and_mutations/queries';
 import { UPDATE_PROCEDURE_FIELD_VALUE }         from '../../queries_and_mutations/queries';
 import { GET_PROCEDURE_FIELD_VALUES }           from '../../queries_and_mutations/queries';
+import { GET_PROCEDURES_AUDITLOG }              from '../../queries_and_mutations/queries';
 
 const FieldsRows = (props) => {
 
@@ -38,8 +39,7 @@ const FieldsRows = (props) => {
   const {  loading, data, refetch } = useQuery(
     GET_PROCEDURE_FIELD_VALUES,
     {
-      variables: { "proceduresTemplateFieldId": field.id, "procedureId": procedure.id },
-      fetchPolicy: "no-cache"
+      variables: { "proceduresTemplateFieldId": field.id, "procedureId": procedure.id }
     }
   );
 
@@ -102,6 +102,10 @@ const FieldsRows = (props) => {
         {
           query: GET_PROCEDURE_FIELD_VALUES,
           variables: { "proceduresTemplateFieldId": field.id, "procedureId": procedure.id }
+        },
+        {
+          query: GET_PROCEDURES_AUDITLOG,  
+            variables: { "procedureId": procedure.id }
         }
       ],
       awaitRefetchQueries: true
@@ -131,6 +135,10 @@ const FieldsRows = (props) => {
           {
             query: GET_PROCEDURE_FIELD_VALUES,
             variables: { "proceduresTemplateFieldId": field.id, "procedureId": procedure.id }
+          },
+          {
+            query: GET_PROCEDURES_AUDITLOG,  
+              variables: { "procedureId": procedure.id }
           }
         ],
         awaitRefetchQueries: true
@@ -162,11 +170,10 @@ const FieldsRows = (props) => {
                   endAdornment={
                     <InputAdornment position="end">
                       <IconButton
-                        aria-label="cancel_edit"
-                        onClick={cancelEditField}
+                        onClick={fieldStatus ? enableEditField : cancelEditField}
                         edge="end"
                       >
-                        {fieldStatus ? "" : <ClearIcon/>}
+                        {fieldStatus ? <EditIcon fontSize="small"/> : <ClearIcon fontSize="small"/>}
                       </IconButton>
                     </InputAdornment>
                   }
@@ -183,7 +190,7 @@ const FieldsRows = (props) => {
               <SaveIcon/>
             </IconButton>
           </Grid>
-          <Grid item xs={1} width="100%" justifyContent="flex-end">
+          <Grid item xs={1} width="100%" justifyContent="center">
             <IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={openMenu}>
               <MoreVertIcon/>
             </IconButton>
@@ -194,14 +201,6 @@ const FieldsRows = (props) => {
               open={menuState}
               onClose={cancelMenu}
             >
-              <MenuItem disabled={!fieldStatus}>
-                <ListItemIcon onClick={enableEditField}>
-                  <EditIcon fontSize="small"/>
-                </ListItemIcon>
-                <Typography>
-                  Editar
-                </Typography>
-              </MenuItem>
               <MenuItem>
                 {fieldValueActive ? "Activo" : "Inactivo"}
                 <Switch

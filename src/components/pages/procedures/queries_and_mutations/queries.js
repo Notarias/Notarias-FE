@@ -359,10 +359,10 @@ export const DESTROY_COMMENT = gql`
 
 export const GET_PROCEDURES_AUDITLOG = gql`
 query procedureAuditLogs(
-    $peocedureId: ID!
+    $procedureId: ID!
   ){
     procedureAuditLogs(
-    peocedureId: $peocedureId
+    procedureId: $procedureId
     ){
     	auditableId
       auditableType

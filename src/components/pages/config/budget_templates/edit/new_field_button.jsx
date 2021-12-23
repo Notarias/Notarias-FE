@@ -49,7 +49,6 @@ const NewFieldButton = ({
           setError(false)
           setOpen(false);
         },
-        fetchPolicy: "no-cache",
         refetchQueries: [{
           query: GET_BUDGETING_TEMPLATE_TAB_FIELDS,
           variables: { "id": currentTab && currentTab.id },
@@ -75,8 +74,7 @@ const NewFieldButton = ({
     createBudgetingTemplateTabFieldMutation(
       { 
         variables: 
-          { "name": fieldName, "tabId": currentTab.id},
-          fetchPolicy: "no-cache",
+          { "name": fieldName, "tabId": currentTab.id}
       }
     )
   }

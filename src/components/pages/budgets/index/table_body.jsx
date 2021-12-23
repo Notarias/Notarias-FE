@@ -41,7 +41,7 @@ export default (props) => {
   }
 
   const { loading, data, refetch } = useQuery(
-    GET_BUDGETS, { variables: variables, fetchPolicy: "no-cache" }
+    GET_BUDGETS, { variables: variables }
   );
 
   let totalCount = data && data.budgetsCount

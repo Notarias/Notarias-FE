@@ -48,7 +48,6 @@ const ButtonsNewFieldNewFieldsGroup = ({
           setError(false)
           setOpen(false);
         },
-        fetchPolicy: "no-cache",
         refetchQueries: [{
           query: GET_PROCEDURE_TEMPLATE_TAB_FIELDS,
           variables: { "id": currentTab && currentTab.id },
@@ -74,8 +73,7 @@ const ButtonsNewFieldNewFieldsGroup = ({
     createProcedureTemplateTabFieldMutation(
       { 
         variables: 
-          { "name": fieldName, "tabId": currentTab.id, "style": style},
-          fetchPolicy: "no-cache",
+          { "name": fieldName, "tabId": currentTab.id, "style": style}
       }
     )
   }

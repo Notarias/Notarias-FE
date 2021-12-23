@@ -28,24 +28,26 @@ function createMarkup(obj) {
 const AuditLog = (props) => {
   const { budget, classes } = props
 
+  const [auditLog, setAuditlog] = useState();
+
   const { loading, data , refetch } = useQuery(
-    GET_BUDGETS_AUDITLOG, { variables: { "budgetId": budget.id }, fetchPolicy: "no-cache" }
+    GET_BUDGETS_AUDITLOG, { 
+      variables: { "budgetId": budget.id }
+    }
   );
-
-  const [auditLog, setAuditlog] = React.useState(data ? data.budgetAuditLogs : [])
-
+  
   useEffect(
     () => {
-      setAuditlog(data ? data.budgetAuditLogs : [])
+      data && setAuditlog(data ? data.budgetAuditLogs : []);
     },
-    [loading]
-  )
+    [data]
+  );
 
   return(
     <Grid container item style={{}}>
       <Grid container item justifyContent="flex-start" spacing={2}>
         {
-          auditLog.map((obj) => {
+          auditLog && auditLog.map((obj) => {
             return(
               <Grid container item key={obj.id + "-audit-log"} direction="row" alignItems="center">
                 <Grid container item xs={2} alignItems="center" justifyContent="center">

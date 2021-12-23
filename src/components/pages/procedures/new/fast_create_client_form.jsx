@@ -57,8 +57,7 @@ const FastCreateClientForm = (props) => {
         closeCreateClientForm();
         setErrorFormSpacing(2);
         handleNext();
-      },
-      fetchPolicy: "no-cache"
+      }
     }
   )
 

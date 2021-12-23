@@ -186,8 +186,7 @@ const NewBudget = (params) => {
           id && setRedirect(
             <Redirect to={{ pathname: `/budgets/${id}/edit` }} />
           );
-        },
-        fetchPolicy: "no-cache",
+        }
       }
     )
   

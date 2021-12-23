@@ -41,8 +41,7 @@ const BudgetSelectorList = (props) => {
   
   const { loading, data, refetch } = useQuery(
     BUDGETING_TEMPLATE_BY_PROCEDURE_ID, {
-      variables: {"proceduresTemplateId": selectedProcedure.id},
-      fetchPolicy: "no-cache"
+      variables: {"proceduresTemplateId": selectedProcedure.id}
     }
   );
 

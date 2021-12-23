@@ -55,7 +55,6 @@ const FieldsGroupMenu = (props) => {
         setOpenB(false);
         setAnchorEl(null)
       },
-      fetchPolicy: "no-cache",
       refetchQueries: [{
         query: GET_PROCEDURES_TEMPLATE_FIELDS_GROUPS_FIELDS,
         variables: { "id": groupId },
@@ -81,8 +80,7 @@ const FieldsGroupMenu = (props) => {
     createProcedureTemplateTabFieldMutation(
       { 
         variables: 
-          { "name": fieldName, "tabId": currentTab.id, "style": style, "fieldsGroupId": groupId },
-          fetchPolicy: "no-cache",
+          { "name": fieldName, "tabId": currentTab.id, "style": style, "fieldsGroupId": groupId }
       }
     )
   }

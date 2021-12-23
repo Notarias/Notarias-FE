@@ -43,7 +43,7 @@ const ProceduresTableBody = (props) => {
   }
 
   const { loading, data, refetch } = useQuery(
-    GET_PROCEDURES, { variables: variables, fetchPolicy: "no-cache" }
+    GET_PROCEDURES, { variables: variables }
   );
 
   let totalCount = data && data.proceduresCount;
