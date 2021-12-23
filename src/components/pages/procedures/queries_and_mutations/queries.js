@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 export const CREATE_PROCEDURE = gql`
-mutation CreateProcedure(
+mutation createProcedure(
   $clientId: ID!,
   $causantId: ID,
   $proceduresTemplateId: ID!,
