@@ -120,10 +120,7 @@ export const styles = theme => {
       fontWeight: "bold",
     },
     texPlainTittleName: {
-      width: "250px",
       textAlign: "left",
-      paddingTop: "20px",
-      height: "48px",
       paddingLeft: "10px",
       wordWrap: "break-word",
     },

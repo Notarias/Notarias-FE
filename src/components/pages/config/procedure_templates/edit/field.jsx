@@ -163,78 +163,63 @@ const Field = (props) => {
     return active ? "Desactivar" : "Activar"
   }
 
-  const renderTextField = () => {
-    return(
-      <>
-        <Grid item xs={1} alignItems="center" justifyContent="center">
-          <Button
-            onClick={ editField }
-          >
-            <CreateIcon/>
-          </Button>
-        </Grid>
-        <Grid item xs={4}>
-          <Typography className={ classes.texPlainTittleName }>
-            { name }
-          </Typography>
-        </Grid>
-        <Grid item xs={3}>
-        <Typography className={ classes.textTittleType }>
-            {  INPUT_TYPES[style] }
-          </Typography>
-        </Grid>
-      </>
-    )
-  }
-
-  const renderInputField = () => {
-    return(
-      <>
-        <Grid item xs={1} alignItems="center" justifyContent="center">
-          <Button
-            onClick={ updateField }
-          >
-            <SaveIcon />
-          </Button>
-        </Grid>
-        <Grid item xs={4}>
-          <InputBase 
-            id="standard-basic" 
-            label="Nombre del campo"
-            className={ classes.textInputTittleName }
-            value={ name }
-            onChange={ handleNameChange }
-            error={ !!error["name"] && true }
-            helperText={error["name"] || " "}
-            errorskey={ "name" }
-            name='name'
-            inputProps={{ 'aria-label': 'naked' }}
-          />
-        </Grid>
-        <Grid item xs={3}>
-          <FormControl variant="outlined" className={ classes.textFieldTittleType }>
-            <InputLabel id="label-field">Tipo de campo</InputLabel>
-            <Select
-              labelId="demo-simple-select-outlined-label"
-              name='style'
-              value={ style }
-              onChange={ handleStyleChange }
-            >
-              <MenuItem key='string' value={'string'}>Texto</MenuItem>
-              <MenuItem key='number' value={'number'}>Numerico</MenuItem>
-            </Select>
-          </FormControl>
-        </Grid>
-      </>
-    )
-  }
-
   return (
     <Grid container item alignItems="center" justifyContent="center" className={ classes.fielPaddingBottom }>
-      <Paper>
-        <Grid container className={ classes.fieldHeightRow }>
-          { editing ? renderTextField() : renderInputField() }
-          <Grid direction="column"  alignItems="center" justifyContent="center" item xs={1}>
+      <Paper variant="outlined">
+        <Grid container item xs={12} alignItems="center" justifyContent="center" className={ classes.fieldHeightRow }>
+          <Grid content item xs={1} justifyContent="flex-start">
+            <Grid item>
+              <Button onClick={ editing ? editField : updateField }>
+                { editing ? <CreateIcon/> : <SaveIcon /> }
+              </Button>
+            </Grid>
+          </Grid>
+          { editing ?
+            <>
+              <Grid item xs={3}>
+                <Typography className={ classes.texPlainTittleName }>
+                  { name }
+                </Typography>
+              </Grid>
+              <Grid item xs={4}>
+              <Typography className={ classes.textTittleType }>
+                  {  INPUT_TYPES[style] }
+                </Typography>
+              </Grid>
+            </>
+          :
+            <>
+              <Grid item xs={3}>
+                <InputBase 
+                  id="standard-basic" 
+                  label="Nombre del campo"
+                  className={ classes.textInputTittleName }
+                  value={ name }
+                  onChange={ handleNameChange }
+                  error={ !!error["name"] && true }
+                  helperText={error["name"] || " "}
+                  errorskey={ "name" }
+                  name='name'
+                  inputProps={{ 'aria-label': 'naked' }}
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <FormControl variant="outlined" className={ classes.textFieldTittleType }>
+                  <InputLabel id="label-field">Tipo de campo</InputLabel>
+                  <Select
+                    labelId="label-field"
+                    name='style'
+                    value={ style }
+                    onChange={ handleStyleChange }
+                  >
+                    <MenuItem key='string' value={'string'}>Texto</MenuItem>
+                    <MenuItem key='number' value={'number'}>Numerico</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+            </>
+          }
+          <Grid item xs={1}>
             <FormControlLabel
               control={<Checkbox 
                 icon={<StarBorderIcon />} 
@@ -271,7 +256,7 @@ const Field = (props) => {
           </Grid>
           <Grid item xs={1} >
             <Button onClick={ openPrintDialog }>
-            {printable ? <PrintIcon/> : <PrintDisabledIcon color="disabled"/>}
+              {printable ? <PrintIcon/> : <PrintDisabledIcon color="disabled"/>}
             </Button>
             <Dialog
               open={printDialog}
@@ -322,10 +307,10 @@ const Field = (props) => {
               </DialogActions>
             </Dialog>
           </Grid>
-          <Grid direction="column"  alignItems="center" justifyContent="center" item xs={1} onClick={ openStatusDialog }>
+          <Grid item xs={1}>
             {
             active ?
-              <Button>
+              <Button onClick={ openStatusDialog }>
                 <RadioButtonCheckedIcon className={classes.radioButtonActiveGreen}/>
               </Button>
             :
@@ -333,30 +318,30 @@ const Field = (props) => {
                 <RadioButtonUncheckedIcon color="secondary" className={ classes.defaultIcon }/>
               </Button>
             }
+              <Dialog
+              open={statusDialog}
+              onClose={openStatusDialog}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+              <DialogTitle id="alert-dialog-title"> Deseas {statusField()}</DialogTitle>
+              <DialogContent>
+                Realmente deseas { statusField() }
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={ openStatusDialog } color="secondary">
+                  Cancelar
+                </Button>
+                <Button
+                  color="primary"
+                  autoFocus
+                  onClick={ changeFieldStatus }
+                >
+                  { statusField() }
+                </Button>
+              </DialogActions>
+            </Dialog>
           </Grid>
-          <Dialog
-            open={statusDialog}
-            onClose={openStatusDialog}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-          >
-            <DialogTitle id="alert-dialog-title"> Deseas {statusField()}</DialogTitle>
-            <DialogContent>
-              Realmente deseas { statusField() }
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={ openStatusDialog } color="secondary">
-                Cancelar
-              </Button>
-              <Button
-                color="primary"
-                autoFocus
-                onClick={ changeFieldStatus }
-              >
-                { statusField() }
-              </Button>
-            </DialogActions>
-          </Dialog>
         </Grid>
       </Paper>
     </Grid>

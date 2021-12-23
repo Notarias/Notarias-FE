@@ -59,7 +59,7 @@ const Edit = (props) => {
           </Grid>
           <Divider/>
           <Grid container item xs={12} direction="row">
-            <Grid container item xs={9} justifyContent="center">
+            <Grid container item xs={10} justifyContent="center">
               <ButtonsNewFieldNewFieldsGroup
                 currentTab={ currentTab }
               />
