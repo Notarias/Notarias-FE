@@ -62,9 +62,9 @@ const CommentEdit = (props) => {
         {
           query: GET_COMMENTABLE_COMMENTS, variables: {"commentableType": "Procedure" , commentableId: procedure.id }
         },
-        /* {
+        {
           query: GET_PROCEDURES_AUDITLOG, variables: { "procedureId": procedure.id }
-        } */
+        }
       ],
       awaitRefetchQueries: true
     }
@@ -88,7 +88,7 @@ const CommentEdit = (props) => {
       DESTROY_COMMENT,
       {
         onError(apolloError) {
-          // setErrors(apolloError)
+          setErrors(apolloError)
           // setPristine(true)
         },
         onCompleted(cacheData) {
@@ -97,6 +97,10 @@ const CommentEdit = (props) => {
           {
             query: GET_COMMENTABLE_COMMENTS,
             variables: {"commentableType": "Procedure" , commentableId: procedure.id }
+          },
+          {
+            query: GET_PROCEDURES_AUDITLOG,  
+              variables: { "procedureId": procedure.id }
           }
         ],
         awaitRefetchQueries: true

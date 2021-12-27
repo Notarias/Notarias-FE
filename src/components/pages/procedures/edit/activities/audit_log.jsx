@@ -67,9 +67,9 @@ const AuditLog = (props) => {
                       <Typography variant="caption"> Fecha: {getCurrentDate(obj)}</Typography>
                     </Grid>
                   </Grid>
-                  <Grid container item xs={12} justifyContent="center">
+                  <Grid container item xs={12} justifyContent="flex-start">
                     <Grid item>
-                      <Typography variant="caption" dangerouslySetInnerHTML={createMarkup(obj)}/>
+                      <Typography variant="caption" display="block" align="left" dangerouslySetInnerHTML={createMarkup(obj)}/>
                     </Grid>
                   </Grid>
                 </Grid>
