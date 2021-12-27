@@ -44,24 +44,34 @@ const AuditLog = (props) => {
   );
 
   return(
-    <Grid container item style={{}}>
+    <Grid container item>
       <Grid container item justifyContent="flex-start" spacing={2}>
         {
           auditLog && auditLog.map((obj) => {
             return(
               <Grid container item key={obj.id + "-audit-log"} direction="row" alignItems="center">
-                <Grid container item xs={2} alignItems="center" justifyContent="center">
+                <Grid container item xs={2} alignItems="center" justifyContent="flex-start">
                   <Avatar 
                     src={obj.user.avatarThumbUrl ? obj.user.avatarThumbUrl : "/broken-image.jpg" }
                     size="small"
                   />
                 </Grid>
-                <Grid container item xs={10} direction="column" alignItems="flex-start" justifyContent="flex-start">
-                  <Typography variant="subtitle2">{obj.user.firstName} {obj.user.lastName}</Typography>
-                  <Typography variant="caption"> fecha: {getCurrentDate(obj)}</Typography>
-                  <Typography variant="caption" className={classes.messageToLeft} dangerouslySetInnerHTML={createMarkup(obj)} >
-                    
-                  </Typography>
+                <Grid container item xs={10} direction="row">
+                  <Grid container item xs={6} justifyContent="flex-start">
+                    <Grid item>
+                      <Typography variant="subtitle2">{obj.user.firstName} {obj.user.lastName}</Typography>
+                    </Grid>
+                  </Grid>
+                  <Grid container item xs={6} justifyContent="flex-end">
+                    <Grid item>
+                      <Typography variant="caption"> Fecha: {getCurrentDate(obj)}</Typography>
+                    </Grid>
+                  </Grid>
+                  <Grid container item xs={12} justifyContent="center">
+                    <Grid item>
+                      <Typography variant="caption" dangerouslySetInnerHTML={createMarkup(obj)}/>
+                    </Grid>
+                  </Grid>
                 </Grid>
               </Grid>
             )
