@@ -649,8 +649,7 @@ export const UPDATE_BUDGET = gql`
     $clientId: ID,
     $proceduresTemplateId: ID,
     $budgetingTemplateId: ID,
-    $asigneeId: ID,
-    $causantId: ID
+    $asigneeId: ID
   ){
     updateBudget(input :{
       id: $id
@@ -658,7 +657,6 @@ export const UPDATE_BUDGET = gql`
       budgetingTemplateId: $budgetingTemplateId
       proceduresTemplateId: $proceduresTemplateId
       asigneeId: $asigneeId
-      causantId: $causantId
       }
     ){
       budget{

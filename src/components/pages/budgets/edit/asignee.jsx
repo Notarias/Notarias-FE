@@ -64,24 +64,24 @@ const renderSearchList = (searchList, classes, selectedIndex, handleListItemClic
 
 const Asignee = (props) => {
   const { classes, asigneeData, budget }  = props
-  const [open, setOpen]                     = useState(false)
-  const [searchList, setSearchList]         = useState([])
-  const [fuzzySearcher, setFuzzySearcher]   = useState(new Fuse(users, { keys: ['firstName'] }))
-  const [initialized, setInitialized]       = useState()
-  const [assigneToMutation, setAssigneToMutation] = useState()
-
+  const [open, setOpen]                     = useState(false);
+  const [searchList, setSearchList]         = useState([]);
+  const [fuzzySearcher, setFuzzySearcher]   = useState(new Fuse(users, { keys: ['firstName'] }));
+  const [initialized, setInitialized]       = useState();
+  const [assigneToMutation, setAssigneToMutation] = useState();
+  const [errors, setErrors] = useState();
   const [selectedIndex, setSelectedIndex]   = useState(1);
-  const [asignee, setAsignee]               = useState()
-  const [sortField, setSortField]           = useState("first_name")
-  const [sortDirection, setSortDirection]   = useState("desc")
-  const [searchField]                       = useState("first_name_or_last_name_or_email_cont")
-  const [searchValue, setSearchValue]       = useState("")
-  const [timeout, setSetTimeout]            = useState(null)
-  const [page, setPage]                     = useState(1)
-  const [per, setPer]                       = useState(100)
-  const [total_records, setTotalRecords]    = useState(0)
-  const [pristine, setPristine]             = useState(true)
-  const [users, setUsers]                   = useState([])
+  const [asignee, setAsignee]               = useState();
+  const [sortField, setSortField]           = useState("first_name");
+  const [sortDirection, setSortDirection]   = useState("desc");
+  const [searchField]                       = useState("first_name_or_last_name_or_email_cont");
+  const [searchValue, setSearchValue]       = useState("");
+  const [timeout, setSetTimeout]            = useState(null);
+  const [page, setPage]                     = useState(1);
+  const [per, setPer]                       = useState(100);
+  const [total_records, setTotalRecords]    = useState(0);
+  const [pristine, setPristine]             = useState(true);
+  const [users, setUsers]                   = useState([]);
 
   let variables = {
     page: page,
@@ -134,17 +134,17 @@ const Asignee = (props) => {
     }
   }
 
-  const [updateBudgetMutation, {loading: updateBudgetLoading}] =
+  const [updateBudget, {loading: updateBudgetLoading}] =
   useMutation(
     UPDATE_BUDGET,
     {
       onError(apolloError) {
-        // setErrors(apolloError)
+        setErrors(apolloError);
 
       },
       onCompleted(cacheData) {
         setOpen(false);
-        setPristine(true)
+        setPristine(true);
       },
       refetchQueries: [
         {
@@ -153,7 +153,7 @@ const Asignee = (props) => {
         },
         {
           query: GET_BUDGETS_AUDITLOG,  
-            variables: { "budgetId": budget.id }
+          variables: { "budgetId": budget.id }
         }
       ],
       awaitRefetchQueries: true
@@ -161,7 +161,7 @@ const Asignee = (props) => {
   )
 
   const assingUser = (event) => {
-    updateBudgetMutation({
+    updateBudget({
        variables:{
         "id": budget.id ,
         "asigneeId": assigneToMutation.id ,
@@ -232,7 +232,7 @@ const Asignee = (props) => {
             Cancelar
           </Button>
           <Button 
-            onClick={() => {assingUser()}}
+            onClick={assingUser}
             disabled={pristine || updateBudgetLoading}
           >
             Aceptar
