@@ -12,10 +12,78 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import PlaceIcon from '@material-ui/icons/Place';
 import DialogActions from '@material-ui/core/DialogActions';
+import { useMutation }                    from '@apollo/client';
+import { GET_CURRENT_USER }                  from '../queries_and_mutations/queries';
+import { CREATE_APPOINTENTS } from '../queries_and_mutations/queries';
 
 const NewDialog = (props) => {
 
   const { classes, openNewDialog, handleCloseNewDialog } = props
+  const [errors, setErrors] = useState({})
+  const [pristine, setPristine] = useState(true);
+
+  const [createAppointmenMutation, {loading}] =
+  useMutation(
+    CREATE_APPOINTENTS,
+    {
+      onError(error) {
+        let errorsHash = {}
+        error.graphQLErrors.map((error) => {
+          errorsHash[error.extensions.attribute] = error.message
+        }) 
+        setErrors(errorsHash)
+        setPristine(true)
+      },
+      onCompleted(cacheData) {
+        
+      }
+    }
+  )
+
+  const iniDateChange = (event) => {
+    console.log(event.target.value)
+    setInitDate(event.target.value)
+  }
+
+  const endDateChange = (event) => {
+    console.log(event.target.value)
+    setEndDate(event.target.value)
+  }
+
+  const placeChange = (event) => {
+    console.log(event.target.value)
+    setPlace(event.target.value)
+  }
+
+  const extraDataChange = (event) => {
+    console.log(event.target.value)
+    setExtraData(event.target.value)
+  }
+
+  const onChange = (date) => {
+    // setDate(date)
+    console.log("data")
+  }
+
+  const [creatorId, setCreatorId] = useState("");
+  const [assignedId, setAssignedId] = useState("");
+  const [initDate, setInitDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [place, setPlace] = useState("");
+  const [extraData, setExtraData] = useState("");
+
+  const handeSave = () => {
+    createAppointmenMutation( {
+      variables: {
+        creatorId: creatorId,
+        assignedId: assignedId,
+        initDate: initDate,
+        endDate: endDate,
+        place: place,
+        extraData: extraData
+      }
+    })
+  }
 
   return(
     <Grid>
@@ -34,67 +102,45 @@ const NewDialog = (props) => {
               </Grid>
             </DialogTitle>
           <Grid container className={classes.marginTopStartAndEnd}>
-            <Grid item xs={2} className={classes.centerText}>
+            <Grid item xs={5} className={classes.centerText}>
               <Typography>
                 Inicio
               </Typography>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={7}>
               <TextField
-                id="date"
-                label="Fecha"
-                type="date"
+                id="datetime-local"
+                label="Next appointment"
+                type="datetime-local"
+                defaultValue="2017-05-24T10:30"
                 className={classes.textField}
                 InputLabelProps={{
                   shrink: true,
                 }}
+                onChange={iniDateChange}
+                value= {initDate}
               />
             </Grid>
-            <Grid item xs={4}>
-              <TextField
-              id="time"
-              label="Horario"
-              type="time"
-              className={classes.textField}
-              InputLabelProps={{
-                shrink: true,
-              }}
-              inputProps={{
-                step: 300, // 5 min
-              }}
-            />
-            </Grid>
           </Grid>
-          <Grid container spacing={2} className={classes.marginTopStartAndEnd}>
-            <Grid item xs={2} className={classes.centerText}>
+          <Grid container className={classes.marginTopStartAndEnd}>
+            <Grid item xs={5} className={classes.centerText}>
               <Typography>
                 Fin
               </Typography>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={7}>
               <TextField
-                id="date"
-                label="Fecha"
-                type="date"
+                id="datetime-local"
+                label="Next appointment"
+                type="datetime-local"
+                defaultValue="2017-05-24T10:30"
                 className={classes.textField}
                 InputLabelProps={{
                   shrink: true,
                 }}
+                onChange={endDateChange}
+                value= {endDate}
               />
-            </Grid>
-            <Grid item xs={4}>
-              <TextField
-              id="time"
-              label="Horario"
-              type="time"
-              className={classes.textField}
-              InputLabelProps={{
-                shrink: true,
-              }}
-              inputProps={{
-                step: 300, // 5 min
-              }}
-            />
             </Grid>
           </Grid>
           <Grid container className={classes.marginTopStartAndEnd}>
@@ -105,6 +151,8 @@ const NewDialog = (props) => {
                 variant="outlined"
                 size="small"
                 fullWidth
+                onChange={placeChange}
+                value= {place}
               />
             </Grid>
             <Grid item xs={2} container justifyContent="center">
@@ -119,6 +167,8 @@ const NewDialog = (props) => {
               rows={4}
               variant="outlined"
               fullWidth
+              onChange={extraDataChange}
+              value={extraData}
             />
           </Grid>
         </Paper>
@@ -126,7 +176,7 @@ const NewDialog = (props) => {
           <Button onClick={handleCloseNewDialog} color="primary">
             Cancelar
           </Button>
-          <Button color="primary" autoFocus>
+          <Button color="primary" onClick={handeSave} autoFocus>
             Guardar
           </Button>
         </DialogActions>
