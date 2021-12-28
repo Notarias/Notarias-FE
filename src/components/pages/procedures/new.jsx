@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Redirect } from 'react-router-dom';
 import Breadcrumbs from '../../ui/breadcrumbs';
 import { Divider, Paper } from '@material-ui/core';
@@ -186,8 +186,7 @@ const NewProcedure = (params) => {
           id && setRedirect(
             <Redirect to={{ pathname: `/procedures/${id}/edit` }} />
           );
-        },
-        fetchPolicy: "no-cache",
+        }
       }
     )
   

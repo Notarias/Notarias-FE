@@ -19,6 +19,7 @@ import { useMutation }                          from '@apollo/client';
 import { UPDATE_PROCEDURE_FIELD_VALUE }         from '../../queries_and_mutations/queries';
 import { GET_PROCEDURE_FIELD_GROUP_VALUES }     from '../../queries_and_mutations/queries';
 import { DESTROY_PROCEDURE_FIELD_GROUP_VALUES } from '../../queries_and_mutations/queries';
+import { GET_PROCEDURES_AUDITLOG }              from '../../queries_and_mutations/queries';
 import { GLOBAL_MESSAGE }                       from '../../../../../resolvers/queries';
 import client                                   from '../../../../../../src/apollo';
 
@@ -83,6 +84,10 @@ const FieldsGroupsRows = (props) => {
           {
             query: GET_PROCEDURE_FIELD_GROUP_VALUES,
             variables: { "fieldGroupId": group.id, "procedureId": procedure.id }
+          },
+          {
+            query: GET_PROCEDURES_AUDITLOG,  
+              variables: { "procedureId": procedure.id }
           }
         ],
         awaitRefetchQueries: true
@@ -128,6 +133,10 @@ const FieldsGroupsRows = (props) => {
           {
             query: GET_PROCEDURE_FIELD_GROUP_VALUES,
             variables: { "fieldGroupId": group.id, "procedureId": procedure.id }
+          },
+          {
+            query: GET_PROCEDURES_AUDITLOG,  
+              variables: { "procedureId": procedure.id }
           }
         ],
         awaitRefetchQueries: true
@@ -160,11 +169,10 @@ const FieldsGroupsRows = (props) => {
                   endAdornment={
                     <InputAdornment position="end">
                       <IconButton
-                        aria-label="cancel_edit"
-                        onClick={cancelEditField}
+                        onClick={fieldStatus ? enableEditField : cancelEditField}
                         edge="end"
                       >
-                        {fieldStatus ? "" : <ClearIcon/>}
+                        {fieldStatus ? <EditIcon fontSize="small"/> : <ClearIcon fontSize="small"/>}
                       </IconButton>
                     </InputAdornment>
                   }
@@ -192,14 +200,6 @@ const FieldsGroupsRows = (props) => {
               open={menuState}
               onClose={closeMenu}
             >
-              <MenuItem disabled={!fieldStatus}>
-                <ListItemIcon onClick={enableEditField}>
-                  <EditIcon fontSize="small"/>
-                </ListItemIcon>
-                <Typography>
-                  Editar
-                </Typography>
-              </MenuItem>
               <MenuItem onClick={destroyFieldGroup} disabled={!duplicate}>
                 <ListItemIcon>
                   <DeleteForeverIcon fontSize="small" color="secondary"/>

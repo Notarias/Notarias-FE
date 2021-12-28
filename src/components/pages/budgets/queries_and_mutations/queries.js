@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export const CREATE_BUDGET = gql`
- mutation createBudget (
+ mutation createBudget(
     $proceduresTemplateId: ID!,
   	$clientId: ID!,
     $budgetingTemplateId: ID!,
@@ -629,6 +629,17 @@ export const LOAD_USERS = gql`
       avatarThumbUrl
     }
     usersCount
+  }
+`
+
+export const USERS_QUICK_LIST = gql`
+  query usersQuickList{
+    usersQuickList{
+      id
+      firstName
+      lastName
+      avatarThumbUrl
+    }
   }
 `
 

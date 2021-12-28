@@ -53,7 +53,7 @@ export default (props) => {
   }
 
   const { loading, data, refetch } = useQuery(
-    LOAD_USERS, { vairables: variables, errorPolicy: 'all', fetchPolicy: "no-cache" }
+    LOAD_USERS, { vairables: variables, errorPolicy: 'all' }
   );
   
   useEffect(() => {

@@ -14,7 +14,7 @@ const ValuesFromFields = (props) => {
   const { data } = useQuery(
     GET_BUDGET_FIELD_VALUE,
     {
-      variables: { "budgetingTemplateFieldId": Number(field.id) , "budgetId": Number(budget.id) },fetchPolicy: "no-cache" 
+      variables: { "budgetingTemplateFieldId": Number(field.id) , "budgetId": Number(budget.id) } 
     }
   );
 

@@ -80,7 +80,7 @@ const ClientSearch = (props) => {
 
   const renderInputSearch = () => {
     return(
-      <Grid container  direction="row" spacing={3} justifyContent="flex-end">
+      <Grid container  direction="row" spacing={6} justifyContent="flex-end">
         <Grid item>
           <div className={classes.search}>
             <div className={classes.searchIcon}>

@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 export const CREATE_PROCEDURE = gql`
-mutation CreateProcedure(
+mutation createProcedure(
   $clientId: ID!,
   $causantId: ID,
   $proceduresTemplateId: ID!,
@@ -359,10 +359,10 @@ export const DESTROY_COMMENT = gql`
 
 export const GET_PROCEDURES_AUDITLOG = gql`
 query procedureAuditLogs(
-    $peocedureId: ID!
+    $procedureId: ID!
   ){
     procedureAuditLogs(
-    peocedureId: $peocedureId
+    procedureId: $procedureId
     ){
     	auditableId
       auditableType

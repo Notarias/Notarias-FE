@@ -12,7 +12,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import Fuse from 'fuse.js';
 import { useQuery } from '@apollo/client';
-import { BUDGETING_TEMPLATE_BY_PROCEDURE_ID } from '../queries_and_mutations/queries';
+import { GET_PROCEDURES_TEMPLATES_QUICK_LIST } from '../queries_and_mutations/queries';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,44 +30,44 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const BudgetSelectorList = (props) => {
+const ProcedureSelectorList = (props) => {
 
-  const { selectedProcedure, selectedBudget, setSelectedBudget } = props;
+  const { selectedProcedure, setSelectedProcedure, setSelectedBudget } = props;
 
-  const [budgetList, setBudgetList] = useState();
+  const [procedureList, setProcedureList] = useState();
   const [searchList, setSearchList] = useState();
 
   const classes = useStyles();
   
   const { loading, data, refetch } = useQuery(
-    BUDGETING_TEMPLATE_BY_PROCEDURE_ID, {
-      variables: {"proceduresTemplateId": selectedProcedure.id}
-    }
+    GET_PROCEDURES_TEMPLATES_QUICK_LIST,
+    { fetchPolicy: 'no-cache', }
   );
 
-  let fuzzySearch = new Fuse(budgetList, { keys: ['name'] });
+  let fuzzySearch = new Fuse(procedureList, { keys: ['name'] });
 
   useEffect( () => {
-    if(data && data.budgetingTemplatesByProcedureId){
-      setBudgetList(data.budgetingTemplatesByProcedureId);
-      setSearchList(data.budgetingTemplatesByProcedureId);
+    if(data && data.proceduresTemplatesQuickList){
+      setProcedureList(data.proceduresTemplatesQuickList);
+      setSearchList(data.proceduresTemplatesQuickList);
     }
   }, [data]);
 
-  const searchBudget = (event) => {
+  const searchProcedure = (event) => {
     let searchResult = fuzzySearch.search(event.target.value);
     if (event.target.value.length === 0) {
-      setSearchList(budgetList);
+      setSearchList(procedureList);
     } else {
       setSearchList(searchResult);
     }
   }
 
-  const selectItem = (event, index, data) => {
-    setSelectedBudget({id: index, name: data});
+  const selectItem = (event, index, name) => {
+    setSelectedProcedure({id: index, name: name});
+    setSelectedBudget(0);
   }
 
-  const budgetsRows = (searchList) => {
+  const proceduresRows = (searchList) => {
     return(
       searchList.map((item) => {
         item = item.item ? item.item : item
@@ -77,7 +77,7 @@ const BudgetSelectorList = (props) => {
               key={item.id}
               button
               dense={true}
-              selected={selectedBudget.id === item.id}
+              selected={selectedProcedure.id === item.id}
               onClick={(event) => selectItem(event, item.id, item.name)}
               >
               <ListItemText 
@@ -100,7 +100,7 @@ const BudgetSelectorList = (props) => {
       <TextField
         id="outlined-basic"
         label="Buscar Tramite"
-        onChange={searchBudget}
+        onChange={searchProcedure}
         variant="outlined"
         InputProps={{
           startAdornment: (
@@ -113,7 +113,7 @@ const BudgetSelectorList = (props) => {
       <Card className={classes.root} variant="outlined" style={{ overflowY: "scroll" }}>
         <CardContent>
           <List>
-            {searchList && budgetsRows(searchList)}
+            {searchList && proceduresRows(searchList)}
           </List>
         </CardContent>
       </Card>
@@ -121,4 +121,4 @@ const BudgetSelectorList = (props) => {
   );
 };
 
-export default BudgetSelectorList;
+export default ProcedureSelectorList;

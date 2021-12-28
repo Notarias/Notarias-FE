@@ -36,7 +36,7 @@ const TemplateRow = (props) => {
   const id = budgetingTemplate.id;
 
   const { data } = useQuery(GET_BUDGETING_TEMPLATE,
-    { variables: {"id": id }, fetchPolicy: "no-cache" } 
+    { variables: {"id": id } } 
   );
 
 

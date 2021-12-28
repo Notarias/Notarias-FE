@@ -1,32 +1,27 @@
-import React, { useState, useEffect }     from 'react';
-import Breadcrumbs                        from '../../ui/breadcrumbs';
-import { makeStyles }                     from '@material-ui/core/styles';
-import Stepper                            from '@material-ui/core/Stepper';
-import Step                               from '@material-ui/core/Step';
-import StepLabel                          from '@material-ui/core/StepLabel';
-import StepContent                        from '@material-ui/core/StepContent';
-import Button                             from '@material-ui/core/Button';
-import Paper                              from '@material-ui/core/Paper';
-import Typography                         from '@material-ui/core/Typography';
-import TextField                          from '@material-ui/core/TextField';
-import FormControlLabel                   from '@material-ui/core/FormControlLabel';
-import Checkbox                           from '@material-ui/core/Checkbox';
-import Grid                               from '@material-ui/core/Grid';
-import Divider                            from '@material-ui/core/Divider';
-import ProceduresSearch                   from './new/procedures_search';
-import BudgetSelector                     from './new/budget_selector'
-import ClientSearch                       from './new/client_search';
-import CausantSearch                      from './new/causant_search';  
-import { useMutation }                    from '@apollo/client';
-import { CREATE_CLIENT }                  from './queries_and_mutations/queries'
-import { CREATE_BUDGET }                  from './queries_and_mutations/queries'
-
-import Dialog                             from '@material-ui/core/Dialog';
-import DialogContent                      from '@material-ui/core/DialogContent';
-import DialogTitle                        from '@material-ui/core/DialogTitle';
-import DialogActions                      from '@material-ui/core/DialogActions';
-import { Redirect }                       from 'react-router-dom';
-import AddAsigneed                        from './new/add_asigneed';
+import React, { useState } from 'react'
+import { Redirect } from 'react-router-dom';
+import Breadcrumbs from '../../ui/breadcrumbs';
+import { Divider, Paper } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Stepper from '@material-ui/core/Stepper';
+import Step from '@material-ui/core/Step';
+import StepLabel from '@material-ui/core/StepLabel';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import List from '@material-ui/core/List';
+import Dialog from '@material-ui/core/Dialog';
+import ClientSearch from './new/client_search';
+import CausantSearch from './new/causant_search';
+import FastCreateClientForm from './new/fast_create_client_form';
+import ProcedureSelectorList from './new/procedure_selector_list';
+import BudgetSelectorList from './new/budget_selector_list';
+import Summary from './new/summary';
+import ConfirmDialog from './new/confirm_dialog';
+import { useMutation } from '@apollo/client';
+import { CREATE_BUDGET } from './queries_and_mutations/queries';
+import { GLOBAL_MESSAGE } from '../../../resolvers/queries';
+import client from '../../../apollo';
 
 
 const BREADCRUMBS = [
@@ -36,739 +31,332 @@ const BREADCRUMBS = [
 ]
 
 const useStyles = makeStyles((theme) => ({
-  paperNewbudget: {
-    width: '100%',
-    marginTop: '20px'
+  root: {
+    marginTop: theme.spacing(3),  
   },
-  button: {
-    marginTop: theme.spacing(1),
-    marginRight: theme.spacing(1),
-  },
-  actionsContainer: {
+  marginButtons: {
     marginBottom: theme.spacing(2),
   },
-  resetContainer: {
-    padding: theme.spacing(3),
+  buttonsMargin: {
+    marginTop: theme.spacing(1),
   },
-  stepperIconLabel: {
+  errorMesages: {
     width: '100%',
-    height: "100px"
+    '& > * + *': {
+      marginTop: theme.spacing(2),
+    },
   },
-  gridFather: {
-    height: "500px"
-  },
-  grid300: {
-    height: "400px"
-  },
-  grid100: {
-    height: "60px"
-  },
-  textClientInfo: {
-    height: "60px",
-    width: "200px",
-    textOverflow: "ellipsis",
-    whiteSpace: "nowrap"
-  },
-  textFieldNewClientInfo: {
-    height: "70px",
-    width: "300px",
-    margin: "5px"
-  },
-  procedureInfoText: {
-    marginTop: "10px",
-    width: "182px"
-  },
-  titleDataInfo: {
-    marginTop: "10px",
-  },
-  titleDataProcedureInfo: {
-    marginTop: "10px",
-    marginLeft: "70px",
-
-  },
-  asigneeGrid: {
-    marginTop:"20px",
-    marginLeft: "45px"
-  }
 }));
 
-const NewBudget = (props) => {
-  const classes = useStyles();
+function getSteps() {
+  return ['Agregar cliente', 'Agregar causante', 'Trámite y Presupuesto'];
+}
 
-  const defaultUser = {
-    avatarThumbUrl: "/broken-image.jpg",
-    firstName: "Agregue un",
-    lastName: "encargado",
-    id: null
+function getStepContent(stepIndex, listData) {
+  const {
+    setClientInfo, 
+    setCausantInfo, 
+    selectedProcedure, 
+    setSelectedProcedure, 
+    selectedBudget, 
+    setSelectedBudget, 
+    setActiveStep, 
+    handleNext, 
+    newClientForm, 
+    setNewClientForm
+   } = listData
+
+  switch (stepIndex) {
+    case 0:
+      return (
+        <Grid container justifyContent="center">
+          {
+            newClientForm ? 
+              <FastCreateClientForm
+              newClientForm={newClientForm}
+              setNewClientForm={setNewClientForm}
+                activeStep={stepIndex}
+                setActiveStep={setActiveStep}
+                setClientInfo={setClientInfo}
+                handleNext={handleNext}
+              /> : 
+              <ClientSearch
+                setNewClientForm={setNewClientForm}
+                setClientInfo={setClientInfo}
+              />
+          }
+        </Grid>
+      )
+    case 1:
+      return (
+        <Grid container justifyContent="center">
+          { 
+            newClientForm ? 
+              <FastCreateClientForm
+                newClientForm={newClientForm}
+                setNewClientForm={setNewClientForm}
+                activeStep={stepIndex}
+                setActiveStep={setActiveStep}
+                setCausantInfo={setCausantInfo}
+                handleNext={handleNext}
+              /> : 
+              <CausantSearch
+                setNewClientForm={setNewClientForm}
+                setCausantInfo={setCausantInfo}
+              />
+          }
+        </Grid>
+      )
+    case 2:
+      return (
+        <Grid  container direction="row" spacing={3} item alignItems="center" justifyContent="center" >
+          <Grid item xs={5}>
+            <List>
+              <ProcedureSelectorList 
+                selectedProcedure={selectedProcedure}
+                setSelectedProcedure={setSelectedProcedure}
+                setSelectedBudget={setSelectedBudget}
+              />
+            </List>
+          </Grid>
+          <Grid item xs={5}>
+            <BudgetSelectorList
+              selectedProcedure={selectedProcedure}
+              selectedBudget={selectedBudget}
+              setSelectedBudget={setSelectedBudget}
+            />
+          </Grid>
+        </Grid>
+      )
+    default:
+      return 'Unknown stepIndex';
   }
+};
 
-  const [activeStep, setActiveStep] = useState(0);
-  const steps = getSteps();
-  const [searchLoading, setSearchLoading] = useState(false);
-  const [searchValue, setSearchValue]     = useState("");
-  const [timeout, setSetTimeout]          = useState(null);
+const NewBudget = (params) => {
+
   const [clientInfo, setClientInfo] = useState("");
-  const [procedureInfo, setProcedureInfo] = useState("");
-  const [budgetInfo, setbudgetInfo] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [rfcClient, setRfcClient] = useState("");
-  const [curpClient, setCurpClient] = useState("");
-  const [moralClient, setMoralClient] = useState(false);
-  const [open, setOpen] = useState(false);
-  const [openSkip, setOpenSkip] = useState(false);
-  const [openNewBudget, setOpenNewBudget] = useState(false);
-  const [pristine, setPristine] = useState(true);
-  const [error, setError] = useState(false);
-  const inputsList = ["first_name", "last_name"];
-  const [redirect, setRedirect] = useState(false);
-  const [asignee, setAsignee] = useState(defaultUser);
-  const [disableNextButton, setDisableNextButton] = useState(true);
-  const [searchInitialView, setSearchInitialView] = useState(true);
-  const [selectCausantView, setSelectCausantView] = useState(true);
   const [causantInfo, setCausantInfo] = useState("");
+  const [selectedProcedure, setSelectedProcedure] = useState("");
+  const [selectedBudget, setSelectedBudget] = useState("");
+  const [asignee, setAsignee] = useState("");
+  const [activeStep, setActiveStep] = useState(0);
+  const [newClientForm, setNewClientForm] = useState(false);
+  const [redirect, setRedirect] = useState();
+  const [openConfirmation, setOpenConfirmation] = useState(false);
+  const [errors, setErrors] = useState();
+  const classes = useStyles();
+  const steps = getSteps();
 
-  let variables = {
-    firstName: firstName,
-    lastName: lastName,
-    rfc: rfcClient,
-    curp: curpClient,
-    moral: moralClient
+  const handleNext = () => {
+    if (activeStep < steps.length) {
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);}
+  };
+
+  const handleBack = () => {
+    if (activeStep > 0) {
+      setActiveStep((prevActiveStep) => prevActiveStep - 1);}
+  };
+
+  const clientAsCausant = () => {
+    setCausantInfo(clientInfo);
+    handleNext();
   }
 
-  let causantVariables = {
-    firstName: firstName,
-    lastName: lastName,
-    rfc: rfcClient,
-    curp: curpClient,
-    moral: moralClient,
-    causant: true
-  }
-
-  useEffect(() => {
-    setProcedureInfo(procedureInfo)
-  }, [procedureInfo])
-
-  const [createClientMutation, { loading: createClientLoading}] =
-  useMutation(
-    CREATE_CLIENT,
-    {
-      onError(apolloError) {
-        setErrors(apolloError)
-        setOpen(false);
-        setPristine(true)
-      },
-      onCompleted(cacheData) {
-        (activeStep === 0) ? setClientInfo(cacheData.createClient.client) : setCausantInfo(cacheData.createClient.client)
-        setActiveStep((prevActiveStep) => prevActiveStep + 1)
-      },
-      fetchPolicy: "no-cache"
-    }
-  )
-
-  const createNewClient = (event) => {
-    createClientMutation({ variables:(activeStep === 0) ? variables : causantVariables})
-  }
-
-  const [createBudgetMutation, {loading: createBudgetLoading}] =
-  useMutation(
-    CREATE_BUDGET,
-    {
-      onError(apolloError) {
-      },
-      onCompleted(cacheData) {
-        const id = cacheData.createBudget.budget.id
-        id && setRedirect(
-          <Redirect to={{ pathname: `/budgets/${id}/edit` }} />
-        )
-      },
-      fetchPolicy: "no-cache",
-    }
-  )
-
+  const [createBudgetMutation, { loading: createBudgetLoading }] =
+    useMutation(
+      CREATE_BUDGET,
+      {
+        onError(apolloError) {
+          setErrors(apolloError)
+          client.writeQuery({
+            query: GLOBAL_MESSAGE,
+            data: {
+              globalMessage: {
+                message: "Ocurrió un error",
+                type: "error",
+                __typename: "globalMessage"
+              }
+            }
+          })
+          setOpenConfirmation(false);
+        },
+        onCompleted(cacheData) {
+          const id = cacheData.createBudget.budget.id
+          id && setRedirect(
+            <Redirect to={{ pathname: `/budgets/${id}/edit` }} />
+          );
+        }
+      }
+    )
+  
   const createNewBudget = (event) => {
     createBudgetMutation(
       { 
         variables: { 
-          "proceduresTemplateId": procedureInfo.id, 
-          "clientId": clientInfo.id, 
-          "budgetingTemplateId": budgetInfo.id,
-          "asigneeId": asignee.id,
-          "causantId": causantInfo.id
+          "clientId": clientInfo.id,
+          "causantId": causantInfo.id,
+          "proceduresTemplateId": selectedProcedure.id,
+          "budgetingTemplateId": selectedBudget.id,
+          "asigneeId": asignee.id
         }
       }
     )
   }
 
-  const setErrors = (apolloError) => {
-    let errorsList = {}
-    let errorTemplateList = apolloError.graphQLErrors
-    
-    for ( let i = 0; i < errorTemplateList.length; i++) {
-      for( let n = 0; n < inputsList.length; n++) {
-        if(errorTemplateList[i].extensions.attribute === inputsList[n]){
-          errorsList[inputsList[n]] = errorTemplateList[i].message
-        }
-      }
-    }
-    setError(errorsList);
+  const openSaveConfirm = () => {
+    setOpenConfirmation(true);
   }
 
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
-
-  const handleOmitCausant = () => {
-    setCausantInfo(clientInfo)
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  const closeSaveConfirm = () => {
+    setOpenConfirmation(false);
   }
-
-  const changeInitialView = () => {
-    setSearchInitialView(!searchInitialView)
-    setClientInfo("")
-  };
-
-  const changeCausantView = () => {
-    setSelectCausantView(!selectCausantView)
-    setCausantInfo("")
-  }
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    setOpenSkip(false)
-  };
 
   const handleReset = () => {
+    setClientInfo("");
+    setCausantInfo("");
+    setSelectedProcedure("");
+    setSelectedBudget("");
+    setNewClientForm(false);
     setActiveStep(0);
   };
 
-  function getSteps() {
-    return ['Añadir un cliente', 'Crear un cliente', 'Añadir un Trámite'];
-  }
-
-  const handleFirstNameChange = (event) => {
-    setFirstName(event.target.value);
-  };
-
-  const handleLastNameChange = (event) => {
-    setLastName(event.target.value);
-    setPristine(false)
-  };
-
-  const handleRfcClientChange = (event) => {
-    setRfcClient(event.target.value.toUpperCase()); 
-  };
-
-  const handleCurpClientChange = (event) => {
-    setCurpClient(event.target.value.toUpperCase());
-  };
-
-  const moralChange = (event) => {
-    setMoralClient(event.target.checked);
-    moralClient ? setCurpClient("") : setCurpClient("")
-  };
-
-  const onChangeSearch = (event) => {
-    timeout && clearTimeout(timeout)
-    setSearchLoading(true)
-    let value = event.target.value
-
-    setSetTimeout(setTimeout(() => {
-      setSearchValue(value)
-      setSearchLoading(false)
-    }, 2000))
-  }
-
-  const handleClickOpen = (event) => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleSkipOpen = () => {
-    setOpenSkip(true)
-  }
-
-  const handleSkipClose = () => {
-    setOpenSkip(false)
-  }
-
-  const clickOpenNewBudget = (event) => {
-    setOpenNewBudget(true);
-  };
-
-  const closeNewBudget = () => {
-    setOpenNewBudget(false);
-  };
-
-  const renderInitialView = () => {
-    if(searchInitialView){
-      return(
-        <>
-          <Grid container item alignItems="center" justifyContent="center" className={classes.grid300}>
-            <ClientSearch
-              searchLoading={searchLoading}
-              onChangeSearch={onChangeSearch.bind(this)}
-              setClientInfo={ setClientInfo }
-            />
-          </Grid>
-          <Grid container item alignItems="flex-start" justifyContent="flex-end" className={classes.grid100}>
-            <Grid>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleNext}
-                disabled={!clientInfo}
-                className={classes.button}
-              >
-                Siguiente
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={changeInitialView}
-                className={classes.button}
-              >
-                Crear
-              </Button>
-            </Grid>
-          </Grid>
-        </>
-      )
-    } else {
-      return(
-        <Grid container item alignItems="center">
-          <Grid container item  direction="column" alignItems="center" justifyContent="center" className={classes.grid300}>
-            <TextField 
-              id="first-name-basic" 
-              label="Nombres"
-              className={classes.textFieldNewClientInfo}
-              onChange={handleFirstNameChange}
-              required
-              variant="outlined"
-              error={ !!error["first_name"] && true }
-              helperText={error["first_name"] || " "}
-              errorskey={ "first_name" }
-              name={ "first_name" }
-            />
-            <TextField 
-              id="last-name-basic" 
-              label="Apellidos" 
-              className={classes.textFieldNewClientInfo}
-              onChange={handleLastNameChange}
-              required
-              variant="outlined"
-              error={ !!error["last_name"] && true }
-              helperText={error["last_name"] || " "}
-              errorskey={ "last_name" }
-              name={ "last_name" }
-            />
-            <TextField 
-              id="rfc-basic" 
-              label="RFC" 
-              className={classes.textFieldNewClientInfo}
-              onChange={handleRfcClientChange}
-              variant="outlined"
-              value={rfcClient}
-              error={ !!error["rfc"] && true }
-              helperText={error["rfc"] || " "}
-              errorskey={ "rfc" }
-            />
-            <TextField 
-              id="curp-basic" 
-              label="CURP" 
-              className={classes.textFieldNewClientInfo}
-              onChange={handleCurpClientChange}
-              variant="outlined"
-              value={curpClient}
-              disabled={moralClient}
-              error={ !!error["curp"] && true }
-              helperText={error["curp"] || " "}
-              errorskey={ "curp" }
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  id="moral-client-basic"
-                  checked={moralClient}
-                  onChange={moralChange}
-                  name="moralClient"
-                  color="primary"
-                />
-              }
-              label="El Cliente es Persona Moral"
-            />
-          </Grid>
-          <Grid container item alignItems="flex-start" justifyContent="flex-end" className={classes.grid100}>
-            <Button
-              onClick={changeInitialView}
-              className={classes.button}
-            >
-              Atrás
-            </Button>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={ handleClickOpen }
-              className={classes.button}
-              disabled={pristine}
-            >
-              Guardar
-            </Button>
-          </Grid>
-          <Dialog open={open} onClose={ handleClose }>
-          <DialogTitle>
-            Desea crear un nuevo cliente
-          </DialogTitle>
-          <DialogContent>
-            Verifique que la información sea correcta antes de continuar.
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={ handleClose }>
-              Cancelar
-            </Button>
-            <Button onClick={ createNewClient } disabled={createClientLoading}>
-              Continuar
-            </Button>
-          </DialogActions>
-          </Dialog>
-        </Grid>
-      )
+  const stepperButtons = (stepIndex) => {
+    switch (stepIndex) {
+      case 0:
+        return (
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleNext}
+            disabled={clientInfo ? false : true}
+          >
+            Sigiente
+          </Button>
+        )
+      case 1:
+        return (
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={causantInfo ? handleNext : clientAsCausant}
+          >
+            {causantInfo ? 'Siguiente' : 'Omitir'}
+          </Button>
+        )
+      case 2:
+        return (
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={openSaveConfirm}
+          >
+            Guardar
+          </Button>
+        )
+      default:
+        return 'Unknown stepIndex';
     }
+  };
+
+  let listData = {
+    setClientInfo: setClientInfo,
+    setCausantInfo: setCausantInfo,
+    selectedProcedure: selectedProcedure,
+    setSelectedProcedure: setSelectedProcedure,
+    selectedBudget: selectedBudget,
+    setSelectedBudget: setSelectedBudget,
+    setActiveStep: setActiveStep,
+    handleNext: handleNext,
+    newClientForm: newClientForm,
+    setNewClientForm: setNewClientForm,
   }
 
-  const renderCausantView = () => {
-    if(selectCausantView){
-      return(
-        <>
-          <Grid container item alignItems="center" justifyContent="center" className={classes.grid300}>
-            <CausantSearch
-              searchLoading={searchLoading}
-              onChangeSearch={onChangeSearch.bind(this)}
-              setCausantInfo={setCausantInfo}
-            />
-          </Grid>
-          <Grid container item direction="row" className={classes.grid100}>
-            <Grid container item xs={2} alignItems="center" justifyContent="center">
-              <Button
-                onClick={handleBack}
-              >
-                Regresar
-              </Button>
-            </Grid>
-            <Grid container item xs={10} alignItems="flex-start" justifyContent="flex-end">
-              <Button
-                variant="contained"
-                color="inherit"
-                onClick={handleSkipOpen}
-                className={classes.button}
-              >
-                Omitir
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleNext}
-                disabled={!causantInfo}
-                className={classes.button}
-              >
-                Siguiente
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={changeCausantView}
-                className={classes.button}
-              >
-                Crear
-              </Button>
-            </Grid>
-          </Grid>
-          <Dialog open={openSkip} onClose={ handleSkipClose }>
-            <DialogTitle>
-              Omitir causante
-            </DialogTitle>
-            <DialogContent>
-              Se seleccionará al cliente como causante
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={ handleSkipClose }>
-                Cancelar
-              </Button>
-              <Button onClick={ handleOmitCausant }>
-                Continuar
-              </Button>
-            </DialogActions>
-          </Dialog>
-        </>
-      )
-    } else {
-      return(
-        <Grid container item alignItems="center">
-          <Grid container item  direction="column" alignItems="center" justifyContent="center" className={classes.grid300}>
-            <TextField 
-              id="first-name-basic" 
-              label="Nombres" 
-              className={classes.textFieldNewClientInfo}
-              onChange={handleFirstNameChange}
-              required
-              variant="outlined"
-              error={ !!error["first_name"] && true }
-              helperText={error["first_name"] || " "}
-              errorskey={ "first_name" }
-              name={ "first_name" }
-            />
-            <TextField 
-              id="last-name-basic" 
-              label="Apellidos" 
-              className={classes.textFieldNewClientInfo}
-              onChange={handleLastNameChange}
-              required
-              variant="outlined"
-              error={ !!error["last_name"] && true }
-              helperText={error["last_name"] || " "}
-              errorskey={ "last_name" }
-              name={ "last_name" }
-            />
-            <TextField 
-              id="rfc-basic" 
-              label="RFC" 
-              className={classes.textFieldNewClientInfo}
-              onChange={handleRfcClientChange}
-              variant="outlined"
-              value={rfcClient}
-            />
-            <TextField 
-              id="curp-basic" 
-              label="CURP" 
-              className={classes.textFieldNewClientInfo}
-              onChange={handleCurpClientChange}
-              variant="outlined"
-            />
-          </Grid>
-          <Grid container item alignItems="flex-start" justifyContent="flex-end" className={classes.grid100}>
-            <Button
-              onClick={changeCausantView}
-              className={classes.button}
-            >
-              Atrás
-            </Button>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleClickOpen}
-              className={classes.button}
-              disabled={pristine}
-            >
-              Guardar
-            </Button>
-          </Grid>
-          <Dialog open={open} onClose={ handleClose }>
-          <DialogTitle>
-            Desea crear un nuevo causante
-          </DialogTitle>
-          <DialogContent>
-            Verifique que la información sea correcta antes de continuar.
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={ handleClose }>
-              Cancelar
-            </Button>
-            <Button onClick={ createNewClient } disabled={createClientLoading}>
-              Continuar
-            </Button>
-          </DialogActions>
-          </Dialog>
-        </Grid>
-      )
-    }
-  }
-
-  return(
-    <>
-      <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
-      <Divider/>
-      <Grid container justifyContent="center" className={classes.gridFather}>
-        <Grid container item xs={7} direction="row" >
-          <Paper className={classes.paperNewbudget}>
-            <Grid container item xs={12} >
-              <Stepper activeStep={activeStep} alternativeLabel className={classes.stepperIconLabel}>
-                <Step key={ 0 + "step"}  >
-                  <StepLabel>{"Agregar cliente"}</StepLabel>
-                </Step>
-                <Step key={ 1 + "step"}>
-                  <StepLabel>{"Agregar causante"}</StepLabel>
-                </Step>
-                <Step key={ 2 + "step"}>
-                  <StepLabel>{"Trámite y Presupuesto"}</StepLabel>
-                </Step>
-              </Stepper>
-            </Grid>
-            <Grid container item xs={12} >
-              { (activeStep === 0) && (
-                renderInitialView()
-              )} 
-              { (activeStep === 1) && (
-                renderCausantView()
-              )}
-              { (activeStep === 2) && (
-                <Grid  container direction="row" item alignItems="center" justifyContent="center" >
-                  <Grid className={classes.grid300}>
-                    <Typography variant="body2" color="textSecondary" >
-                      Selecciona un trámite
+  return (
+    <Grid container direction="column" alignItems="stretch" justifyContent="flex-start" style={{minHeight: "100vh"}}>
+      <Grid item>
+        <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
+        <Divider/>
+      </Grid>
+      <Grid item container style={{ flex: "1 1 auto" }} justifyContent="center" className={classes.root}>
+        <Grid item xs={7}>
+          <Paper style={{ height: "75%" }}>
+            <Grid container direction="column" alignItems="stretch" justifyContent="flex-start" style={{height: "100%"}}>
+              <Grid item>
+                <Stepper activeStep={activeStep} alternativeLabel >
+                  {steps.map((label) => (
+                    <Step key={label}>
+                      <StepLabel>{label}</StepLabel>
+                    </Step>
+                  ))}
+                </Stepper>
+              </Grid>
+              <Grid container item direction="column" justifyContent="flex-start" style={{ height: "69%" }}>
+                {activeStep === steps.length ? (
+                  <>
+                    <Typography>
+                      All steps completed
                     </Typography>
-                    <ProceduresSearch
-                      setProcedureInfo={ setProcedureInfo }
-                    />
-                  </Grid>
-                  <Grid className={classes.grid300}>
-                    <Typography variant="body2" color="textSecondary" >
-                      Selecciona un presupuesto ligado al trámite
-                    </Typography>
-                    <BudgetSelector
-                      procedureId={ procedureInfo && Number(procedureInfo.id)}
-                      setbudgetInfo={ setbudgetInfo }
-                      setDisableNextButton={setDisableNextButton}
-                    />
-                  </Grid>
-                  <Grid container item direction="row" className={classes.grid100}>
-                    <Grid container item xs={2} alignItems="center" justifyContent="center">
+                  </>
+                ) : (
+                  <>
+                    {getStepContent(activeStep, listData)}
+                  </>
+                )}
+              </Grid>
+              <Grid container item direction="column" justifyContent="flex-end"  style={{ flex: "1 1 auto" }} className={classes.marginButtons}>
+                <Grid container item justifyContent="center">
+                  <Grid container item xs={6} justifyContent="flex-start">
+                    <Grid item>
                       <Button
-                        onClick={handleBack}
-                      >
+                        onClick={handleReset}
+                        color="secondary"
+                        hidden={activeStep ? true : false}>
+                        Cancelar
+                      </Button>
+                    </Grid>
+                  </Grid>
+                  <Grid container item xs={2} justifyContent="flex-end">
+                    <Grid item>
+                      <Button disabled={activeStep === 0} onClick={handleBack}>
                         Regresar
                       </Button>
                     </Grid>
-                    <Grid container item xs={10} alignItems="flex-start" justifyContent="flex-end">
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={ clickOpenNewBudget }
-                        className={classes.button}
-                        disabled={disableNextButton}
-                      >
-                        Siguiente
-                      </Button>
+                  </Grid>
+                  <Grid container item xs={2} justifyContent="flex-end">
+                    <Grid item>
+                      {stepperButtons(activeStep)}
                     </Grid>
-                    <Dialog open={openNewBudget} onClose={ closeNewBudget }>
-                      <DialogTitle>
-                        Se creará un nuevo presupuesto
-                      </DialogTitle>
-                      <DialogContent>
-                        Los datos confirmados se muestran en la columna de la derecha
-                        <AddAsigneed
-                          setAsignee={setAsignee}
-                          asignee={asignee}
-                          defaultUser={defaultUser}
-                        />
-                      </DialogContent>
-                      <DialogActions>
-                        <Button
-                          variant="contained"
-                          className={classes.button}
-                          onClick={closeNewBudget}
-                        >
-                          Cancelar
-                        </Button>
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          className={classes.button}
-                          onClick={createNewBudget}
-                          disabled={createBudgetLoading}
-                        >
-                          { redirect }
-                          Aceptar
-                        </Button>
-                      </DialogActions>
-                    </Dialog>
                   </Grid>
                 </Grid>
-              )}
-          </Grid>
-         </Paper>
-        </Grid>
-        <Grid container item xs={3} direction="row" justifyContent="flex-end" alignItems="stretch">
-          <Paper className={classes.paperNewbudget}>
-            <Grid container item xs={12} justifyContent="center" className={classes.titleDataInfo} >
-              Datos del cliente
-              <Grid>
-                <TextField 
-                  id="Nombres-toShow" 
-                  label={ clientInfo ? clientInfo.firstName : "Nombres"} 
-                  disabled
-                  helperText={ clientInfo ? "Nombres" : ""}
-                  className={classes.textClientInfo}
-                />
-                <TextField 
-                  id="Apellidos-toShow" 
-                  label={ clientInfo ? clientInfo.lastName : "Apellidos"}
-                  disabled
-                  helperText={ clientInfo ? "Apellidos" : ""}
-                  className={classes.textClientInfo}
-                />
-                <TextField 
-                  id="RFC-toShow" 
-                  label={ clientInfo ? clientInfo.rfc : "RFC"} 
-                  disabled
-                  helperText={ clientInfo ? "RFC" : ""}
-                  className={classes.textClientInfo}
-                />
-                <TextField 
-                  id="curp-toShow" 
-                  label={ clientInfo ? clientInfo.curp : "CURP"} 
-                  disabled
-                  helperText={ clientInfo ? "CURP" : ""}
-                  className={classes.textClientInfo}
-                />
-              </Grid>
-            </Grid>
-            <Grid container item xs={12} justifyContent="center" direction="column">
-              <Grid container item justifyContent="flex-start" className={classes.titleDataProcedureInfo}>
-                Causante asignado
-              </Grid>
-              <Grid container item justifyContent="flex-start" className={classes.titleDataProcedureInfo}>
-                <Typography variant="body2" color="textSecondary">
-                  { causantInfo ? causantInfo.firstName : "sin asignar"}
-                </Typography>
-              </Grid>
-            </Grid>
-            <Grid container item xs={12} justifyContent="center" direction="column">
-              <Grid container item justifyContent="flex-start" className={classes.titleDataProcedureInfo}>
-                Nombre del trámite
-              </Grid>
-              <Grid container item justifyContent="flex-start" className={classes.titleDataProcedureInfo}>
-                <Typography variant="body2" color="textSecondary">
-                  { procedureInfo ? procedureInfo.name : "....................................."}
-                </Typography>
-              </Grid>
-            </Grid>
-            <Grid container item xs={12} justifyContent="center" direction="column">
-              <Grid container item justifyContent="flex-start" className={classes.titleDataProcedureInfo}>
-                Presupuesto vinculado
-              </Grid>
-              <Grid container item justifyContent="flex-start" className={classes.titleDataProcedureInfo}>
-                <Typography variant="body2" color="textSecondary">
-                { budgetInfo ? budgetInfo.name : "....................................."}
-                </Typography>
-              </Grid>
-            </Grid>
-            <Grid container item xs={12} justifyContent="center" direction="column">
-              <Grid container item justifyContent="flex-start" className={classes.titleDataProcedureInfo}>
-                Encargado asignado
-              </Grid>
-              <Grid container item justifyContent="flex-start" className={classes.titleDataProcedureInfo}>
-                <Typography variant="body2" color="textSecondary">
-                { asignee ? `${asignee.firstName} ${asignee.lastName}` : "......................"}
-                </Typography>
               </Grid>
             </Grid>
           </Paper>
         </Grid>
+        <Grid item xs={3}>
+          <Paper style={{ height: "75%" }}>
+            <Grid container item xs={12} justifyContent="center">
+              <Summary
+                clientInfo={clientInfo}
+                causantInfo={causantInfo}
+                selectedProcedure={selectedProcedure}
+                selectedBudget={selectedBudget}
+                asignee={asignee}
+                setAsignee={setAsignee}
+              />
+            </Grid>
+          </Paper>
+        </Grid>
       </Grid>
-    </>
+      <Dialog open={openConfirmation} onClose={ closeSaveConfirm }>
+        <ConfirmDialog
+          createNewBudget={createNewBudget}
+          openConfisrmation={openConfirmation}
+          closeSaveConfirm={closeSaveConfirm}
+          redirect={redirect}
+        />
+      </Dialog>
+    </Grid>
   )
 }
 

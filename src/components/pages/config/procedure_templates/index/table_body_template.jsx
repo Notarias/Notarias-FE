@@ -22,7 +22,7 @@ const TableBodyTemplate = (props) => {
   }
 
   const { loading, data, refetch } = useQuery(
-    PROCEDURE_TEMPLATES, { variables: variables, fetchPolicy: "no-cache" }
+    PROCEDURE_TEMPLATES, { variables: variables }
   );
 
   let totalCount = data && data.proceduresTemplatesCount

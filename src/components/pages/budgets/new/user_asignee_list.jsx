@@ -11,8 +11,10 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import Fuse from 'fuse.js';
+import Chip from '@material-ui/core/Chip';
+import FaceIcon from '@material-ui/icons/Face';
 import { useQuery } from '@apollo/client';
-import { BUDGETING_TEMPLATE_BY_PROCEDURE_ID } from '../queries_and_mutations/queries';
+import { USERS_QUICK_LIST } from '../queries_and_mutations/queries';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,44 +32,43 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const BudgetSelectorList = (props) => {
+const UserAsigneeList = (props) => {
 
-  const { selectedProcedure, selectedBudget, setSelectedBudget } = props;
+  const { asignee, setAsignee } = props;
 
-  const [budgetList, setBudgetList] = useState();
+  const [userList, setUserList] = useState();
   const [searchList, setSearchList] = useState();
 
   const classes = useStyles();
   
   const { loading, data, refetch } = useQuery(
-    BUDGETING_TEMPLATE_BY_PROCEDURE_ID, {
-      variables: {"proceduresTemplateId": selectedProcedure.id}
-    }
+    USERS_QUICK_LIST,
+    { fetchPolicy: 'no-cache', }
   );
 
-  let fuzzySearch = new Fuse(budgetList, { keys: ['name'] });
+  let fuzzySearch = new Fuse(userList, { keys: ['firstName', 'lastName'] });
 
   useEffect( () => {
-    if(data && data.budgetingTemplatesByProcedureId){
-      setBudgetList(data.budgetingTemplatesByProcedureId);
-      setSearchList(data.budgetingTemplatesByProcedureId);
+    if(data && data.usersQuickList){
+      setUserList(data.usersQuickList);
+      setSearchList(data.usersQuickList);
     }
   }, [data]);
 
-  const searchBudget = (event) => {
+  const searchUser = (event) => {
     let searchResult = fuzzySearch.search(event.target.value);
     if (event.target.value.length === 0) {
-      setSearchList(budgetList);
+      setSearchList(userList);
     } else {
       setSearchList(searchResult);
     }
   }
 
-  const selectItem = (event, index, data) => {
-    setSelectedBudget({id: index, name: data});
+  const selectItem = (event, index, firstName, lastName) => {
+    setAsignee({id: index, fullName: `${firstName} ${lastName}`});
   }
 
-  const budgetsRows = (searchList) => {
+  const usersRows = (searchList) => {
     return(
       searchList.map((item) => {
         item = item.item ? item.item : item
@@ -77,13 +78,15 @@ const BudgetSelectorList = (props) => {
               key={item.id}
               button
               dense={true}
-              selected={selectedBudget.id === item.id}
-              onClick={(event) => selectItem(event, item.id, item.name)}
+              selected={asignee.id === item.id}
+              onClick={(event) => selectItem(event, item.id, item.firstName, item.lastName)}
               >
-              <ListItemText 
-                id={item.id} 
-                primary={item.name}
-              />
+              <ListItemText id={item.id}>
+                <Chip
+                  icon={<FaceIcon />}
+                  label={`${item.firstName} ${item.lastName}`}
+                />
+              </ListItemText>
             </ListItem>
             <Divider/>
           </>
@@ -94,13 +97,10 @@ const BudgetSelectorList = (props) => {
 
   return (
     <>
-      <Typography className={classes.title} color="textSecondary" gutterBottom>
-        Selecciona un trámite
-      </Typography>
       <TextField
         id="outlined-basic"
         label="Buscar Tramite"
-        onChange={searchBudget}
+        onChange={searchUser}
         variant="outlined"
         InputProps={{
           startAdornment: (
@@ -110,10 +110,10 @@ const BudgetSelectorList = (props) => {
           )
         }}
       />
-      <Card className={classes.root} variant="outlined" style={{ overflowY: "scroll" }}>
+      <Card variant="outlined" style={{ overflowY: "scroll" }}>
         <CardContent>
           <List>
-            {searchList && budgetsRows(searchList)}
+            {searchList && usersRows(searchList)}
           </List>
         </CardContent>
       </Card>
@@ -121,4 +121,4 @@ const BudgetSelectorList = (props) => {
   );
 };
 
-export default BudgetSelectorList;
+export default UserAsigneeList;
