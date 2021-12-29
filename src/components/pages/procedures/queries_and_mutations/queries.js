@@ -261,40 +261,37 @@ query procedure(
 `
 
 export const UPDATE_PROCEDURE = gql`
-mutation UpdateProcedure(
-  $id: ID!,
-  $clientId: ID!,
-  $causantId: ID,
-  $proceduresTemplateId: ID!,
-  $budgetingTemplateId: ID!,
-  $asigneeId: ID,
-  $reporterId: ID
-){
-  createProcedure (
-    input:{
-	    clientId: $clientId
-      causantId: $causantId
-      proceduresTemplateId: $proceduresTemplateId
-      budgetingTemplateId: $budgetingTemplateId
-      asigneeId: $asigneeId
-      reporterId: $reporterId
-    }
+  mutation updateProcedure(
+    $id: ID!,
+    $clientId: ID,
+    $proceduresTemplateId: ID,
+    $budgetingTemplateId: ID,
+    $asigneeId: ID
   ){
-    procedure {
-      id
-      serialNumber
-      client{ fullName }
-      causant{ fullName }
-      budgetingTemplate { name }
-      proceduresTemplate { name }
-      asignee { avatarThumbUrl }
-      reporter { avatarThumbUrl }
-      createdAt
-      updatedAt
-      completedAt
+    updateProcedure (
+      input:{
+        id: $id
+        clientId: $clientId
+        proceduresTemplateId: $proceduresTemplateId
+        budgetingTemplateId: $budgetingTemplateId
+        asigneeId: $asigneeId
+      }
+    ){
+      procedure {
+        id
+        serialNumber
+        client{ fullName }
+        causant{ fullName }
+        budgetingTemplate { name }
+        proceduresTemplate { name }
+        asignee { avatarThumbUrl }
+        reporter { avatarThumbUrl }
+        createdAt
+        updatedAt
+        completedAt
+      }
     }
   }
-}
 `
 
 export const GET_COMMENTABLE_COMMENTS = gql`

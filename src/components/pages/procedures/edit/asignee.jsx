@@ -21,7 +21,7 @@ import { useMutation }                from '@apollo/client';
 import { LOAD_USERS }                 from '../queries_and_mutations/queries'
 import { UPDATE_PROCEDURE }              from '../queries_and_mutations/queries'
 import { GET_PROCEDURE }                 from '../queries_and_mutations/queries'
-//import { GET_PROCEDURES_AUDITLOG }       from '../queries_and_mutations/queries';
+import { GET_PROCEDURES_AUDITLOG }       from '../queries_and_mutations/queries';
 
 
 const renderSearchList = (searchList, classes, selectedIndex, handleListItemClick, haveThumbUrl) => {
@@ -68,8 +68,8 @@ const Asignee = (props) => {
   const [searchList, setSearchList]         = useState([])
   const [fuzzySearcher, setFuzzySearcher]   = useState(new Fuse(users, { keys: ['firstName'] }))
   const [initialized, setInitialized]       = useState()
-  const [assigneToMutation, setAssigneToMutation] = useState()
-
+  const [asigneeToMutation, setAsigneeToMutation] = useState()
+  const [errors, setErrors] = useState()
   const [selectedIndex, setSelectedIndex]   = useState(1);
   const [asignee, setAsignee]               = useState()
   const [sortField, setSortField]           = useState("first_name")
@@ -115,6 +115,7 @@ const Asignee = (props) => {
   useEffect(() => {
     if (asigneeData) {
       setAsignee({
+        asigneeId: asigneeData.id,
         avatarThumbUrl: asigneeData.avatarThumbUrl,
         firstName: asigneeData.firstName,
         lastName: asigneeData.lastName
@@ -134,12 +135,12 @@ const Asignee = (props) => {
     }
   }
 
-  const [updateProcedureMutation, {loading: updateBudgetLoading}] =
+  const [updateProcedure, {loading: updateProcedureLoading}] =
   useMutation(
     UPDATE_PROCEDURE,
     {
       onError(apolloError) {
-        // setErrors(apolloError)
+        setErrors(apolloError)
 
       },
       onCompleted(cacheData) {
@@ -150,21 +151,21 @@ const Asignee = (props) => {
         {
           query: GET_PROCEDURE,
           variables: {"id": procedure.id }
-        }/* ,
+        },
         {
           query: GET_PROCEDURES_AUDITLOG,  
-            variables: { "procedureId": procedure.id }
-        } */
+          variables: { "procedureId": procedure.id }
+        }
       ],
       awaitRefetchQueries: true
     }
   )
 
   const assingUser = (event) => {
-    updateProcedureMutation({
+    updateProcedure({
        variables:{
         "id": procedure.id ,
-        "asigneeId": assigneToMutation.id ,
+        "asigneeId": asigneeToMutation.id ,
        }
     })
   }
@@ -182,7 +183,7 @@ const Asignee = (props) => {
   const handleListItemClick = (obj) => {
     setSelectedIndex(obj.id);
     setPristine(false)
-    setAssigneToMutation(obj);
+    setAsigneeToMutation(obj);
   };
 
   const haveThumbUrl = (obj) => {
@@ -232,8 +233,8 @@ const Asignee = (props) => {
             Cancelar
           </Button>
           <Button 
-            onClick={() => {assingUser()}}
-            disabled={pristine || updateBudgetLoading}
+            onClick={assingUser}
+            disabled={pristine || updateProcedureLoading}
           >
             Aceptar
           </Button>
