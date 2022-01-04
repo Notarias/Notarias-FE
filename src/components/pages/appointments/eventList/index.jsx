@@ -12,7 +12,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 const EventList = (props) => {
 
-  const { classes, eventDay } = props
+  const { classes, appointment } = props
 
   const [openEditDialog, setOpenEditDialog] = useState(false);
 
@@ -34,22 +34,22 @@ const EventList = (props) => {
             </Grid>
             <Grid item xs={2}>
               <Typography className={classes.centerText}>
-              {!eventDay ? <CircularProgress size={ "40px" }/> : eventDay.attorney}
+              {!appointment ? <CircularProgress size={ "40px" }/> : appointment.attorney}
               </Typography>
             </Grid>
             <Grid item xs={3}>
               <Typography className={classes.centerText}>
-              {!eventDay ? <CircularProgress size={ "40px" }/> : eventDay.ini_date}
+              {!appointment ? <CircularProgress size={ "40px" }/> : appointment.ini_date}
               </Typography>
             </Grid>
             <Grid item xs={3}>
               <Typography className={classes.centerText}>
-               {!eventDay ? <CircularProgress size={ "40px" }/> : eventDay.fin_date}
+               {!appointment ? <CircularProgress size={ "40px" }/> : appointment.fin_date}
               </Typography>
             </Grid>
             <Grid item xs={1}>
               <Typography className={classes.centerText}>
-               {!eventDay ? <CircularProgress size={ "40px" }/> : eventDay.place}
+               {!appointment ? <CircularProgress size={ "40px" }/> : appointment.place}
               </Typography>
             </Grid>
             <Grid item xs={2}>

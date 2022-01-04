@@ -1,26 +1,30 @@
-import React, { useState } from 'react';
-import { withStyles }       from '@material-ui/core/styles';
-import { styles }                   from './styles';
+import React, { useState, useEffect } from 'react';
+import { withStyles } from '@material-ui/core/styles';
+import { styles } from './styles';
+import Dialog from '@material-ui/core/Dialog';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import NewDialog from './newDialog/index';
+import NewAppointmentDialog from './new/new_appointment_dialog';
 import EventList from './eventList/index';
-import { useQuery }                   from '@apollo/client';
-import { GET_CURRENT_USER }           from '../users/queries_and_mutations/queries';
+import { useQuery } from '@apollo/client';
+import { GET_APPOINTMENTS } from './queries_and_mutations/queries';
 
 const AppointmentsIndex = (props) => {
   const { classes } = props
 
-  const [sortField, setSortField]         = useState("first_name")
-  const [sortDirection, setSortDirection] = useState("desc")
-  const [searchField]                     = useState("first_name_or_last_name_or_email_cont")
-  const [searchValue, setSearchValue]     = useState("")
-  const [page, setPage]                   = useState(1)
-  const [per, setPer]                     = useState(100)
+  const [sortField, setSortField]         = useState();
+  const [sortDirection, setSortDirection] = useState();
+  const [searchField]                     = useState();
+  const [searchValue, setSearchValue]     = useState("");
+  const [page, setPage]                   = useState(1);
+  const [per, setPer]                     = useState(100);
+  const [events, setEvents]               = useState();
+  const [fecha, setFecha]                 = useState();
+  const [appointmentList, getAppointmentsList]   = useState();
 
   let variables = {
     page: page,
@@ -29,25 +33,15 @@ const AppointmentsIndex = (props) => {
     searchValue: searchValue,
     sortDirection: sortDirection,
     sortField: sortField
-  }
+  };
 
   const { loading, data, refetch } = useQuery(
-    GET_CURRENT_USER, { variables: variables }
+    GET_APPOINTMENTS, { variables: variables }
   );
 
-  const [dataS] = useState(
-    [
-      { id: 1, attorney: 'abogado 1',  ini_date: new Date().toLocaleDateString(), fin_date: new Date().toLocaleDateString(), place: 'oficina 1' },
-      { id: 2, attorney: 'abogado 2',  ini_date: new Date().toLocaleDateString(), fin_date: new Date().toLocaleDateString(), place: 'oficina 2' },
-      { id: 3, attorney: 'abogado 3',  ini_date: new Date().toLocaleDateString(), fin_date: new Date().toLocaleDateString(), place: 'oficina 3' },
-      { id: 4, attorney: 'abogado 4',  ini_date: new Date().toLocaleDateString(), fin_date: new Date().toLocaleDateString(), place: 'oficina 4' },
-      { id: 5, attorney: 'abogado 5',  ini_date: new Date().toLocaleDateString(), fin_date: new Date().toLocaleDateString(), place: 'oficina 5' },
-      { id: 6, attorney: 'abogado 6',  ini_date: new Date().toLocaleDateString(), fin_date: new Date().toLocaleDateString(), place: 'oficina 6' },
-      { id: 7, attorney: 'abogado 7',  ini_date: new Date().toLocaleDateString(), fin_date: new Date().toLocaleDateString(), place: 'oficina 7' },
-    ]
-  )
-
-  console.log(data)
+  useEffect(() => {
+    getAppointmentsList(data && data.appointments);
+  }, [page, per, sortField]);
 
   const [date, setDate] = useState(new Date());
   const [openNewDialog, setOpenNewDialog] = useState(false);
@@ -58,6 +52,10 @@ const AppointmentsIndex = (props) => {
 
   const handleCloseNewDialog = (value) => {
     setOpenNewDialog(false);
+  };
+  
+  const selectDay = (event) => {
+    setFecha(event)
   };
 
   return(
@@ -75,10 +73,13 @@ const AppointmentsIndex = (props) => {
             <Typography variant="h4" component="h2">Calendar</Typography>
             <Grid container justifyContent="center" >
               <Calendar
+                onChange={selectDay}
                 value={date}
               />
             </Grid>
-            <NewDialog handleCloseNewDialog={handleCloseNewDialog} openNewDialog={openNewDialog}/>
+              <Dialog onClose={handleCloseNewDialog} aria-labelledby="simple-dialog-title" open={openNewDialog}>
+                <NewAppointmentDialog handleCloseNewDialog={handleCloseNewDialog}/>
+              </Dialog>
             <Grid className={classes.calendarNew}>
               <Grid container justifyContent="flex-end">
                 <Button variant="contained" color="primary" onClick={handleClickOpenNewDialog}>
@@ -91,8 +92,8 @@ const AppointmentsIndex = (props) => {
         <Grid item xs={8}>
           <Grid className={classes.windowScrollEventList}>
             {
-              dataS.map( eventDay  => {
-                return <EventList eventDay={eventDay} key={eventDay.id}/>
+              appointmentList && appointmentList.map( appointment  => {
+                return <EventList appointment={appointment} key={appointment.id}/>
               })
             }
           </Grid>

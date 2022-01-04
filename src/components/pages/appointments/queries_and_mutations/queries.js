@@ -2,8 +2,7 @@ import { gql } from '@apollo/client';
 
 export const CREATE_APPOINTMENT = gql`
   mutation createAppointment(
-    $creatorId: ID!,
-    $assignedId: ID!,
+    $assignedIds: [ID!]!,
     $initDate: ISO8601DateTime!,
     $endDate: ISO8601DateTime!,
     $place: String!,
@@ -11,16 +10,18 @@ export const CREATE_APPOINTMENT = gql`
   ) {
     createAppointment(
       input: {
-        creatorId: $creatorId,
-        assignedId: $assignedId,
+        assignedIds: $assignedIds,
         initDate: $initDate,
         endDate: $endDate,
         place: $place,
         extraData: $extraData}
     ) {
       appointment {
-        creatorId
-        assignedId
+        users {
+          id
+          fullName
+          avatarThumbUrl          
+        }
         initDate
         endDate
         place
@@ -52,8 +53,8 @@ export const GET_CURRENT_USER = gql`
   }
 `
 
-export const GET_APPOINTMENTS = gql `
-  query currentAppoitments (
+export const GET_APPOINTMENTS = gql`
+  query appoitments (
     $page: Int,
     $per: Int
     $sortDirection: String,
@@ -71,41 +72,26 @@ export const GET_APPOINTMENTS = gql `
     ){
       id
       creatorId
-      assignedId
       place
       extraData
       initDate
       endDate
+      users{
+        id
+        fullName
+        avatarThumbUrl
+      }
     }
   }
 `
-export const CREATE_APPOINTENTS = gql`
-  mutation createAppointment(
-    $creatorId: ID!,
-    $assignedId: ID!,
-    $initDate: ISO8601DateTime!,
-    $endDate: ISO8601DateTime!,
-    $place: String!,
-    $extraData: String!
-  ){
-    createAppointment(
-      input: {
-        creatorId: $creatorId,
-        assignedId: $assignedId,
-        initDate: $initDate,
-        endDate: $endDate,
-        place: $place,
-        extraData: $extraData
-      }
-    ) {
-      appointment {
-        creatorId
-        assignedId
-        initDate
-        endDate
-        place
-        extraData
-      }
+
+export const USERS_QUICK_LIST = gql`
+  query usersQuickList{
+    usersQuickList{
+      id
+      firstName
+      lastName
+      avatarThumbUrl
     }
   }
 `
