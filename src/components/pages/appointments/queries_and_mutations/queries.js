@@ -95,3 +95,15 @@ export const USERS_QUICK_LIST = gql`
     }
   }
 `
+
+export const GET_USER = gql`
+  query getuser($id: ID!){
+    user(id: $id) {
+      id
+      firstName
+      lastName
+      email
+      avatarThumbUrl
+    }
+  }
+`
