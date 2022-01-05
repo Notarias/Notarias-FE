@@ -41,6 +41,7 @@ const AppointmentsIndex = (props) => {
 
   useEffect(() => {
     getAppointmentsList(data && data.appointments);
+    refetch(variables)
   }, [page, per, sortField]);
 
   const [date, setDate] = useState(new Date());

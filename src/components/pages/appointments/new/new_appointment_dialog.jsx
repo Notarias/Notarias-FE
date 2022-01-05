@@ -18,7 +18,6 @@ import AssigneSelectorList from './assigne_selector_list';
 import EventNoteIcon from '@material-ui/icons/EventNote';
 import { useMutation } from '@apollo/client';
 import { useQuery } from '@apollo/client';
-import { GET_CURRENT_USER } from '../queries_and_mutations/queries';
 import { GET_APPOINTMENTS } from './../queries_and_mutations/queries';
 import { CREATE_APPOINTMENT } from './../queries_and_mutations/queries';
 
@@ -38,7 +37,7 @@ const getCurrentDate = (separator='/') => {
 
 const NewAppointmentDialog = (props) => {
 
-  const { classes, handleCloseNewDialog } = props
+  const { classes, handleCloseNewDialog, variables } = props
   const [errors, setErrors] = useState({})
   const [pristine, setPristine] = useState(true);
   const [initDate, setInitDate] = useState(new Date());
@@ -61,13 +60,14 @@ const NewAppointmentDialog = (props) => {
         setPristine(true)
       },
       onCompleted(cacheData) {
-        
+        handleCloseNewDialog();
       },
       refetchQueries: [
         {
           query: GET_APPOINTMENTS
         },
-      ]
+      ],
+      awaitRefetchQueries: true
     }
   )
 
@@ -87,8 +87,6 @@ const NewAppointmentDialog = (props) => {
         extraData: extraData
       }
     })
-
-    handleCloseNewDialog();
   }
 
   const iniDateChange = (event) => {
