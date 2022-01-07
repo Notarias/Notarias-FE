@@ -254,7 +254,7 @@ query budget(
         id
         name
       },
-      client{
+      client {
         firstName
         lastName
         rfc
@@ -281,6 +281,71 @@ query budget(
   }
 `
 
+export const GET_PRINT_BUDGET = gql`
+query budget(
+    $id: ID!
+  ){
+  budget(
+    id: $id
+    ){
+      id
+      total
+      totalCredit
+      totalPaid
+      totalDebt
+      serialNumber
+      createdAt
+      asignee {
+        fullName
+        avatarThumbUrl
+        id
+      }
+      procedure {
+        id
+        serialNumber
+      }
+      budgetingTemplate {
+        active
+        id
+        name
+      }
+      proceduresTemplate {
+        id
+        name
+        active
+      }
+      client {
+        fullName
+        rfc
+        curp
+        id
+      }
+      causant {
+        fullName
+        rfc
+        curp
+        id
+      }
+      tabs {
+        id
+        name
+      }
+    }
+  }
+`
+
+export const GET_BUDGET_PROCEDURE_PRINTABLE_FIELDS = gql`
+  query budgetProcedurePrintableFields($budgetId: ID!) {
+    budgetProcedurePrintableFields(budgetId: $budgetId) {
+      id
+      name
+      printable
+      style
+      active
+    }
+  }
+`
+
 export const GET_BUDGETING_TEMPLATES_TABS = gql`
   query budgetingTemplateTabs ($id: ID! ) {
     budgetingTemplateTabs (id: $id) {
@@ -288,6 +353,16 @@ export const GET_BUDGETING_TEMPLATES_TABS = gql`
       id
       name
       budgetingTemplateId
+    }
+  }
+`
+
+export const GET_BUDGETING_TAB_TOTALS = gql`
+  query budgetingTemplateTabTotals ($id: ID!, $budgetId: ID!) {
+    tabTotals (id: $id, budgetId: $budgetId) {
+      total
+      totalDebt
+      totalPaid
     }
   }
 `
@@ -311,6 +386,21 @@ export const GET_BUDGETING_TEMPLATE_TAB_FIELDS = gql`
       categories {
         id
         name
+      }
+    }
+  }
+`
+
+export const UPDATE_PROCEDURE_FIELD_VALUE = gql`
+  mutation updateProcedureFieldValue(
+    $id: ID!,
+    $value: String
+  ) {
+    updateProcedureFieldValue(input: { id: $id, value: $value }) {
+      procedureFieldValue {
+        value
+        id
+        active
       }
     }
   }
@@ -390,6 +480,24 @@ export const GET_BUDGET_FIELD_VALUE = gql`
       budgetingTemplateFieldId
       totalDebt
       totalPaid
+      active
+    }
+  }
+`
+
+export const GET_PROCEDURE_FIELD_VALUE = gql`
+  query procedureFieldValue(
+    $proceduresTemplateFieldId: ID!,
+    $procedureId: ID!
+  ){
+  procedureFieldValue(
+    proceduresTemplateFieldId: $proceduresTemplateFieldId,
+    procedureId: $procedureId
+  ) {
+      id
+      value
+      procedureId
+      proceduresTemplateFieldId
       active
     }
   }
