@@ -4,11 +4,14 @@ import Button                               from '@material-ui/core/Button';
 import List                                 from '@material-ui/core/List';
 import Divider                              from '@material-ui/core/Divider';
 import ListItem                             from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+import ListItemIcon                         from '@material-ui/core/ListItemIcon';
+import ListItemText                         from '@material-ui/core/ListItemText';
+import InboxIcon                            from '@material-ui/icons/MoveToInbox';
+import MailIcon                             from '@material-ui/icons/Mail';
+import AccountBalanceIcon                   from '@material-ui/icons/AccountBalance';
+import IconButton                           from '@material-ui/core/IconButton';
 import { withStyles }                       from '@material-ui/core/styles';
+import Tooltip                              from '@material-ui/core/Tooltip';
 import { styles }                           from '../styles';
 import TextField                            from '@material-ui/core/TextField';
 import NumberFormat                         from 'react-number-format';
@@ -143,7 +146,7 @@ const PaymentDrawer = (props) => {
 
   return (
     <>
-      <Button size="small" onClick={toggleDrawer('right', true)}>Saldo Pendiente</Button>
+      <Tooltip title="Balance"><IconButton onClick={toggleDrawer('right', true)}><AccountBalanceIcon/></IconButton></Tooltip>
       <Drawer anchor='right' open={state['right']} onClose={toggleDrawer('right', false)}>
         { list('right') }
       </Drawer>

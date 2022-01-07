@@ -17,6 +17,7 @@ import logo_notaria         from '../../../../../images/logo_notaria.JPG'
 import ProcedureFields      from './procedure_fields';
 import logo_notaria         from '../../../../../images/logo_notaria.JPG';
 import { Button }           from '@material-ui/core';
+import CloudDownloadIcon    from '@material-ui/icons/CloudDownload';
 import { BASE_URI }         from '../../../../../apollo'
 
 
@@ -87,8 +88,20 @@ const BudgetInvoice = (props) => {
     <>
     <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
     <Paper>
-      <Grid>
-        { budget && <a href={`http://${BASE_URI}/invoices/${budget.id}.pdf?auth=${localStorage.getItem('jwtToken')}`}>descargar</a> }
+      <Grid container direction="column" justifyContent="center" alignItems="flex-end">
+        <Grid item style={{ paddingLeft: '20px', paddingRight: '20px' }}>
+          { 
+            budget &&
+            <Button
+              href={`http://${BASE_URI}/invoices/${budget.id}.pdf?auth=${localStorage.getItem('jwtToken')}`}
+              variant="contained"
+              color="primary"
+              startIcon={<CloudDownloadIcon />}
+            >
+              Descargar
+            </Button>
+          }
+        </Grid>
       </Grid>
     </Paper>
     <Paper>
