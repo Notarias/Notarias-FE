@@ -1,19 +1,14 @@
 import React, {useEffect, useState}   from 'react';
-import Dialog               from '@material-ui/core/Dialog';
-import DialogActions        from '@material-ui/core/DialogActions';
-import DialogContent        from '@material-ui/core/DialogContent';
-import DialogTitle          from '@material-ui/core/DialogTitle';
+import { withStyles }       from '@material-ui/core/styles';
 import Grid                 from '@material-ui/core/Grid';
 import Paper                from '@material-ui/core/Paper';
 import Typography           from '@material-ui/core/Typography';
-import TextField            from '@material-ui/core/TextField';
-import Button               from '@material-ui/core/Button';
 import Skeleton             from '@material-ui/lab/Skeleton';
 import { useQuery }         from '@apollo/client';
+import { styles }           from '../../styles';
 import { GET_PRINT_BUDGET } from '../../queries_and_mutations/queries'
 import Breadcrumbs          from '../../../../ui/breadcrumbs';
 import Tab                  from './tab';
-import logo_notaria         from '../../../../../images/logo_notaria.JPG'
 import ProcedureFields      from './procedure_fields';
 import logo_notaria         from '../../../../../images/logo_notaria.JPG';
 import { Button }           from '@material-ui/core';

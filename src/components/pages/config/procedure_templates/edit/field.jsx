@@ -1,13 +1,11 @@
-import React, { useState }                            from 'react';
+import React                                          from 'react';
 import Grid                                           from '@material-ui/core/Grid';
-import InputBase                                      from '@material-ui/core/InputBase';
+import TextField                                      from '@material-ui/core/TextField';
 import StarsIcon                                      from '@material-ui/icons/Stars';
 import FormControlLabel                               from '@material-ui/core/FormControlLabel';
 import Checkbox                                       from '@material-ui/core/Checkbox';
 import StarBorderIcon                                 from '@material-ui/icons/StarBorder';
 import Button                                         from '@material-ui/core/Button';
-import PrintIcon                                      from '@material-ui/icons/Print';
-import PrintDisabledIcon                              from '@material-ui/icons/PrintDisabled';
 import DeleteForeverIcon                              from '@material-ui/icons/DeleteForever';
 import { withStyles }                                 from '@material-ui/core/styles';
 import { styles }                                     from '../styles';
@@ -41,21 +39,6 @@ const INPUT_TYPES = {
 
 const Field = (props) => {
 
-<<<<<<< HEAD
-  const { classes, id, groupId, currentTab, removeFromList } = props;
-  const [favDialog, setFavDialog] = useState(false);
-  const [printDialog, setPrintDialog] = useState(false);
-  const [deleteDialog, setDeleteDialog] = useState(false);
-  const [statusDialog, setStatusDialog] = useState(false);
-  const [editing, setEditing] = useState(true);
-  const [name, setName] = useState(props.name);
-  const [active, setActive] = useState(props.active);
-  const [favourite, setFavourite] = useState(props.favourite);
-  const [printable, setPrintable] = useState(props.printable);
-  const [style, setStyle] = useState(props.style);
-  const [error, setError] = useState(false);
-  const inputsList = ["name"];
-=======
   const { classes, id, groupId, currentTab, removeFromList } = props
   const [open, setOpen] = React.useState(false);
   const [openb, setOpenb] = React.useState(false);
@@ -68,7 +51,6 @@ const Field = (props) => {
   const [favourite, setFavourite] = React.useState(props.favourite)
   const [error, setError] = React.useState(false)
   const inputsList = ["name"]
->>>>>>> Add fields to budget printing
 
   const [updateProceduresTemplateTabFieldMutation] =
     useMutation(
@@ -78,11 +60,10 @@ const Field = (props) => {
           setErrors(apolloError)
         },
         update(store, cacheData) {
-          setFavourite(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.favourite);
-          setActive(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.active);
-          setPrintable(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.printable);
-          setError(false);
-          setEditing(true);
+          setFavourite(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.favourite)
+          setActive(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.active)
+          setError(false)
+          setEditing(true)
         }
       }
     )
@@ -101,9 +82,50 @@ const Field = (props) => {
     }
 
   const updateField = (event) => {
-    updateProceduresTemplateTabFieldMutation(
-      { variables: { id: id, name: name, printable: printable, active: active, style: style}}
-    )
+    updateProceduresTemplateTabFieldMutation({ variables: { id: id, name: name, style: style}})
+  }
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleClickOpenb = () => {
+    setOpenb(true);
+  }
+
+  const handleCloseb = () => {
+    setOpenb(false);
+  };
+
+  const handleClickOpenDialog = () => {
+    setOpenDialog(true);
+  }
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
+
+  const checkedStar = () => {
+    updateProceduresTemplateTabFieldMutation({ variables: { id: id, favourite: !favourite }})
+    setOpenb(false);
+  }
+
+  const changeFieldStatus = (event) => {
+    updateProceduresTemplateTabFieldMutation({ variables: { id: id, active: !active }})
+    setActive(!active)
+    setOpenDialog(false);
+  }
+
+  const colorButton = () => {
+    if (favourite === true) {
+      return 'secondary'
+    } else {
+      return "primary"
+    }
   }
 
   const [destroyProceduresTemplateTabFieldMutation  ] =
@@ -118,50 +140,9 @@ const Field = (props) => {
       }
     )
 
-
-  const openFavDialog = () => {
-    setFavDialog(!favDialog);
-  }
-
-  const openDeleteDialog = () => {
-    setDeleteDialog(!deleteDialog);
-  }
-
-  const openStatusDialog = () => {
-    setStatusDialog(!statusDialog);
-  }
-
-  const openPrintDialog = () => {
-    setPrintDialog(!printDialog);
-  }
-
-  const checkedStar = () => {
-    updateProceduresTemplateTabFieldMutation({ variables: { id: id, favourite: !favourite }});
-    setFavDialog(false);
-  }
-
-  const checkedPrintable = () => {
-    updateProceduresTemplateTabFieldMutation({ variables: { id: id, printable: !printable }});
-    setPrintDialog(false);
-  }
-
-  const changeFieldStatus = () => {
-    updateProceduresTemplateTabFieldMutation({ variables: { id: id, active: !active }})
-    setActive(!active)
-    setStatusDialog(false);
-  }
-
   const deleteFieldClick = () => {
     removeFromList(props.arrayIndex, destroyProceduresTemplateTabFieldMutation, { variables: { id: id } }, id )
-    setDeleteDialog(false);
-  }
-
-  const colorButton = () => {
-    if (favourite === true) {
-      return 'secondary'
-    } else {
-      return "primary"
-    }
+    setOpen(false);
   }
 
   const editField = () => {
