@@ -29,12 +29,12 @@ const Summary = (props) => {
   }
 
   return(
-    <Grid container item xs={8} direction="column" alignItems="stretch" style={{minHeight: "635px", marginTop: "10px"}}>
-      <Grid item style={{minHeight: "200px", marginTop: "10px"}}>
+    <Grid container item direction="column">
+      <Grid item style={{ marginTop: "10px" }}>
         <Typography variant="subtitle1">
           Datos del Cliente
         </Typography>
-        <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+        <List>
           <ListItem dense={true}>
             <ListItemText style={{margin: "0"}}
               primary={clientInfo ? `${clientInfo.firstName} ${clientInfo.lastName}` : "Nombre Completo" }
@@ -53,7 +53,7 @@ const Summary = (props) => {
         </List>
       </Grid>
       <Divider/>
-      <Grid item style={{minHeight: "230px", marginTop: "10px"}}>
+      <Grid item>
         <Typography variant="subtitle2">
           Causante Asignado
         </Typography>

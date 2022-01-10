@@ -91,6 +91,7 @@ const BudgetInvoice = (props) => {
               href={`http://${BASE_URI}/invoices/${budget.id}.pdf?auth=${localStorage.getItem('jwtToken')}`}
               variant="contained"
               color="primary"
+              target='_blank'
               startIcon={<CloudDownloadIcon />}
             >
               Descargar
