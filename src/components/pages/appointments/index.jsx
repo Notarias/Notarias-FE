@@ -45,14 +45,14 @@ const AppointmentsIndex = (props) => {
   }, [page, per, sortField]);
 
   const [date, setDate] = useState(new Date());
-  const [openNewDialog, setOpenNewDialog] = useState(false);
+  const [newDialog, setNewDialog] = useState(false);
 
-  const handleClickOpenNewDialog = () => {
-    setOpenNewDialog(true);
+  const openNewDialog = () => {
+    setNewDialog(true);
   };
 
-  const handleCloseNewDialog = (value) => {
-    setOpenNewDialog(false);
+  const closeNewDialog = (value) => {
+    setNewDialog(false);
   };
   
   const selectDay = (event) => {
@@ -78,16 +78,16 @@ const AppointmentsIndex = (props) => {
                 value={date}
               />
             </Grid>
-              <Dialog onClose={handleCloseNewDialog} aria-labelledby="simple-dialog-title" open={openNewDialog}>
-                <NewAppointmentDialog handleCloseNewDialog={handleCloseNewDialog}/>
-              </Dialog>
             <Grid className={classes.calendarNew}>
-              <Grid container justifyContent="flex-end">
-                <Button variant="contained" color="primary" onClick={handleClickOpenNewDialog}>
-                  New Event
+              <Grid >
+                <Button variant="contained" color="primary" onClick={openNewDialog}>
+                  Nuevo Evento
                 </Button>
               </Grid>
             </Grid>
+            <Dialog onClose={closeNewDialog} aria-labelledby="simple-dialog-title" open={newDialog}>
+              <NewAppointmentDialog closeNewDialog={closeNewDialog}/>
+            </Dialog>
           </Paper>
         </Grid>
         <Grid item xs={8}>

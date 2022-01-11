@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { makeStyles } from '@material-ui/core/styles';
-import { styles } from './../styles';
+import { styles } from '../styles';
 import Grid from '@material-ui/core/Grid';
 import 'react-calendar/dist/Calendar.css';
 import Button from '@material-ui/core/Button';
@@ -17,12 +16,11 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import AssigneSelectorList from './assigne_selector_list';
 import EventNoteIcon from '@material-ui/icons/EventNote';
 import { useMutation } from '@apollo/client';
-import { useQuery } from '@apollo/client';
-import { GET_APPOINTMENTS } from './../queries_and_mutations/queries';
-import { CREATE_APPOINTMENT } from './../queries_and_mutations/queries';
+import { GET_APPOINTMENTS } from '../queries_and_mutations/queries';
+import { UPDATE_APPOINTMENT } from '../queries_and_mutations/queries';
 
-const getCurrentDate = (separator='/') => {
-  let newDate = new Date()
+const buildDate = (value, separator='-') => {
+  let newDate = new Date(value)
   let date = newDate.getDate();
   let month = newDate.getMonth() + 1;
   let year = newDate.getFullYear();
@@ -30,26 +28,23 @@ const getCurrentDate = (separator='/') => {
   let minutes = newDate.getMinutes();
 
   return (
-    `${date}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${year}-
-      ${hours}:${minutes < 10 ? `0${minutes}` : `${minutes}`}`
+    `${year}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${date < 10 ? `0${date}` : `${date}`}T${hours < 10 ? `0${hours}` : `${hours}`}:${minutes < 10 ? `0${minutes}` : `${minutes}`}`
   )
 }
 
-const NewAppointmentDialog = (props) => {
-
-  const { classes, closeNewDialog, variables } = props
+const EditAppointmentDialog = (props) => {
+  const { classes, closeEditDialog, appointment, variables } = props
   const [errors, setErrors] = useState({})
   const [pristine, setPristine] = useState(true);
-  const [initDate, setInitDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
-  const [place, setPlace] = useState("");
-  const [extraData, setExtraData] = useState("");
-  const [selecteds, setSelecteds] = useState([]);
-  const [currentDate, setCurrentDate] = useState(getCurrentDate())
+  const [initDate, setInitDate] = useState(buildDate(appointment.initDate));
+  const [endDate, setEndDate] = useState(buildDate(appointment.endDate));
+  const [place, setPlace] = useState(appointment.place);
+  const [extraData, setExtraData] = useState(appointment.extraData);
+  const [selecteds, setSelecteds] = useState(appointment.users);
 
-  const [createAppointment, {loading: createAppointmentLoading}] =
+  const [updateAppointment, {loading: updateAppointmentLoading}] =
   useMutation(
-    CREATE_APPOINTMENT,
+    UPDATE_APPOINTMENT,
     {
       onError(error) {
         let errorsHash = {}
@@ -60,7 +55,8 @@ const NewAppointmentDialog = (props) => {
         setPristine(true)
       },
       onCompleted(cacheData) {
-        closeNewDialog();
+        console.log(cacheData)
+        closeEditDialog();
       },
       refetchQueries: [
         {
@@ -78,8 +74,9 @@ const NewAppointmentDialog = (props) => {
       return(array.push(user.id))
     })
 
-    createAppointment( {
+    updateAppointment( {
       variables: {
+        id: appointment.id,
         assignedIds: array,
         initDate: initDate,
         endDate: endDate,
@@ -91,18 +88,22 @@ const NewAppointmentDialog = (props) => {
 
   const iniDateChange = (event) => {
     setInitDate(event.target.value)
+    console.log(initDate)
   }
 
   const endDateChange = (event) => {
     setEndDate(event.target.value)
+    console.log(endDate)
   }
 
   const placeChange = (event) => {
     setPlace(event.target.value)
+    console.log(place)
   }
 
   const extraDataChange = (event) => {
     setExtraData(event.target.value)
+    console.log(extraData)
   }
 
   return(
@@ -115,8 +116,8 @@ const NewAppointmentDialog = (props) => {
                 <EventNoteIcon/>
               </Avatar>
             }
-            title="Nuevo Evento"
-            subheader={currentDate}
+            title="Editar Evento"
+            subheader={appointment.initDate}
           />
         </Grid>
       </Grid>
@@ -192,13 +193,13 @@ const NewAppointmentDialog = (props) => {
         <Grid container justifyContent='center'>
           <Grid container item xs={10} justifyContent='flex-end'>
             <Grid item>
-              <Button color="secondary" variant="outlined" onClick={closeNewDialog} style={{ margin: 5 }}>
+              <Button color="secondary" variant="outlined" onClick={closeEditDialog} style={{ margin: 5 }}>
                 Cancelar
               </Button>
             </Grid>
             <Grid item>
               <Button color="primary" variant="outlined" onClick={saveAppointment} style={{ margin: 5 }}>
-                Guardar
+                Actualizar
               </Button>
             </Grid>
           </Grid>
@@ -207,4 +208,4 @@ const NewAppointmentDialog = (props) => {
     </Card>
   )
 }
-export default withStyles(styles)(NewAppointmentDialog);
+export default withStyles(styles)(EditAppointmentDialog);

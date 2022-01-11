@@ -1,38 +1,124 @@
 import React, { useState, useEffect } from 'react';
-import { withStyles }       from '@material-ui/core/styles';
-import { styles }                   from './../styles';
+import { withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
+import { styles } from './../styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import 'react-calendar/dist/Calendar.css';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import Chip from '@material-ui/core/Chip';
 import Avatar from '@material-ui/core/Avatar';
-import EditDialog from '../editDialog/index';
+import AvatarGroup from '@material-ui/lab/AvatarGroup';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import Dialog from '@material-ui/core/Dialog';
 import EventNoteIcon from '@material-ui/icons/EventNote';
+import DeleteIcon from '@material-ui/icons/Delete';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import IconButton from '@material-ui/core/IconButton';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import EditAppointmentDialog from './../edit/edit_appointment_dialog';
 import { useQuery } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { GET_USER } from '../queries_and_mutations/queries';
+import { GET_APPOINTMENTS } from '../queries_and_mutations/queries';
+import { DESTROY_APPOINTMENT } from '../queries_and_mutations/queries'
+
+const buildDate = (value, separator='/') => {
+  let newDate = new Date(value)
+  let date = newDate.getDate();
+  let month = newDate.getMonth() + 1;
+  let year = newDate.getFullYear();
+  let hours = newDate.getHours();
+  let minutes = newDate.getMinutes();
+
+  return (
+    `${date < 10 ? `0${date}` : `${date}`}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${year} - ${hours < 10 ? `0${hours}` : `${hours}`}:${minutes < 10 ? `0${minutes}` : `${minutes}`}`
+  )
+}
 
 const EventList = (props) => {
 
   const { classes, appointment } = props
 
   const [creatorUser, setCreatorUser] = useState();
-  const [openEditDialog, setOpenEditDialog] = useState(false);
+  const [editDialog, setEditDialog] = useState(false);
+  const [assigneList, setAssigneList] = useState(false);
+  const [moreActions, setMoreActions] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [errors, setErrors] = useState();
+  const [pristine, setPristine] = useState();
 
   const { loading, error, data } = useQuery(GET_USER, { variables: { "id": appointment.creatorId }})
   useEffect(() => {
-    setCreatorUser(data.user);
+    setCreatorUser(data && data.user);
   }, [data]);
 
-  const handleClickOpenEditDialog = () => {
-    setOpenEditDialog(true);
+  const [destroyAppointment, {loading: destroyAppointmentLoading}] =
+  useMutation(
+    DESTROY_APPOINTMENT,
+    {
+      onError(error) {
+        let errorsHash = {}
+        error.graphQLErrors.map((error) => {
+          errorsHash[error.extensions.attribute] = error.message
+        }) 
+        setErrors(errorsHash)
+        setPristine(true)
+      },
+      onCompleted(cacheData) {
+        closeMoreActions();
+      },
+      refetchQueries: [
+        {
+          query: GET_APPOINTMENTS
+        },
+      ],
+      awaitRefetchQueries: true
+    }
+  )
+
+  const deleteAppointment = () => {
+    destroyAppointment( {
+      variables: {
+        id: appointment.id
+      }
+    })
+  }
+
+  const openEditDialog = () => {
+    setEditDialog(true);
+    setMoreActions(false);
+    setAnchorEl(null);
   };
 
-  const handleCloseEditDialog = (value) => {
-    setOpenEditDialog(false);
+  const closeEditDialog = (value) => {
+    setEditDialog(false);
   };
-  console.log(appointment)
+  
+  const openAssigneList = (event) => {
+    setAnchorEl(event.currentTarget);
+    setAssigneList(true);
+  };
+
+  const closeAssigneList = () => {
+    setAssigneList(false);
+    setAnchorEl(null);
+  };
+  
+  const openMoreActions = (event) => {
+    setAnchorEl(event.currentTarget);
+    setMoreActions(true);
+  };
+
+  const closeMoreActions = () => {
+    setMoreActions(false);
+    setAnchorEl(null);
+  };
+
   return(
     creatorUser ? 
     <Grid className={classes.paddingBottomEvent}>
@@ -62,7 +148,7 @@ const EventList = (props) => {
                 </Typography>
               </Grid>
               <Grid item>
-                <Typography variant='body2'>
+                <Typography variant='caption' variant='body2'>
                   {!appointment ? <CircularProgress size={ "40px" }/> : appointment.place}
                 </Typography>
               </Grid>
@@ -74,9 +160,9 @@ const EventList = (props) => {
                     Inicio:
                   </Typography>
                 </Grid>
-                <Grid item xs={8}>
+                <Grid container item xs={8} justifyContent='flex-start'>
                   <Typography variant='caption' className={classes.centerText}>
-                  {!appointment ? <CircularProgress size={ "40px" }/> : appointment.initDate}
+                    {!appointment ? <CircularProgress size={ "40px" }/> : buildDate(appointment.initDate)}
                   </Typography>
                 </Grid>
               </Grid>
@@ -86,23 +172,73 @@ const EventList = (props) => {
                     Final:
                   </Typography>
                 </Grid>
-                <Grid item xs={8}>
+                <Grid container item xs={8} justifyContent='flex-start'>
                   <Typography variant='caption' className={classes.centerText}>
-                  {!appointment ? <CircularProgress size={ "40px" }/> : appointment.endDate}
+                    {!appointment ? <CircularProgress size={ "40px" }/> : buildDate(appointment.endDate)}
                   </Typography>
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item xs={4}>
-              <Typography className={classes.centerText}>
-              {!appointment ? <CircularProgress size={ "40px" }/> : appointment.extraData}
+            <Grid item xs={2}>
+              <Typography variant='caption' className={classes.centerText}>
+                {!appointment ? <CircularProgress size={ "40px" }/> : `${appointment.extraData.substr(0,40)}...`}
               </Typography>
             </Grid>
-            <Grid item xs={1}>
-              <Button variant="contained" color="primary" onClick={handleClickOpenEditDialog}>
-                <EventNoteIcon/>
+            <Grid container item xs={2} justifyContent='flex-end'>
+              <Button aria-controls="assigned-list" aria-haspopup="true" onClick={openAssigneList}>
+                <AvatarGroup max={3}>
+                  {appointment.users.map((user) => {
+                    return(<Avatar alt={user.fullName} src={user.avatarThumbUrl} />)
+                  })}
+                </AvatarGroup>
               </Button>
-              <EditDialog handleCloseEditDialog={handleCloseEditDialog} openEditDialog={openEditDialog}/>
+              <Menu
+                id="assigned-list"
+                anchorEl={anchorEl}
+                keepMounted
+                open={assigneList}
+                onClose={closeAssigneList}
+              >
+                {appointment.users.map((user) => {
+                  return(
+                    <MenuItem>
+                      <Chip
+                        avatar={<Avatar alt={user.firstName} src={user.avatarThumbUrl} />}
+                        label={`${user.firstName} ${user.lastName}`}
+                        variant="outlined"
+                      />
+                    </MenuItem>
+                  )
+                })}
+              </Menu>
+            </Grid>
+            <Grid item xs={1}>
+              <IconButton aria-label="moreActions" aria-controls="more-actions" aria-haspopup="true" onClick={openMoreActions}>
+                <MoreVertIcon />
+              </IconButton>
+              <Menu
+                id="more-actions"
+                anchorEl={anchorEl}
+                keepMounted
+                open={moreActions}
+                onClose={closeMoreActions}
+              >
+                <MenuItem onClick={openEditDialog}>
+                  <ListItemIcon>
+                    <EventNoteIcon fontSize="small" color='primary'/>
+                  </ListItemIcon>
+                  <ListItemText primary="Editar" />
+                </MenuItem>
+                <MenuItem onClick={deleteAppointment}>
+                  <ListItemIcon>
+                    <DeleteIcon fontSize="small" color='secondary'/>
+                  </ListItemIcon>
+                  <ListItemText primary="Eliminar" />
+                </MenuItem>
+              </Menu>
+              <Dialog onClose={closeEditDialog} aria-labelledby="simple-dialog-title" open={editDialog}>
+                <EditAppointmentDialog closeEditDialog={closeEditDialog} appointment={appointment}/>
+              </Dialog>
             </Grid>
         </Grid>
       </Paper>

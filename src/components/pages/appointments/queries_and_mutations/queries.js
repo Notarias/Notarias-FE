@@ -19,7 +19,42 @@ export const CREATE_APPOINTMENT = gql`
       appointment {
         users {
           id
-          fullName
+          firstName
+          lastName
+          avatarThumbUrl          
+        }
+        initDate
+        endDate
+        place
+        extraData
+      }
+    }
+  }
+`
+
+export const UPDATE_APPOINTMENT = gql`
+  mutation updateAppointment(
+    $id: ID!,
+    $assignedIds: [ID!]!,
+    $initDate: ISO8601DateTime,
+    $endDate: ISO8601DateTime,
+    $place: String,
+    $extraData: String
+  ) {
+    updateAppointment(
+      input: {
+        id: $id
+        assignedIds: $assignedIds,
+        initDate: $initDate,
+        endDate: $endDate,
+        place: $place,
+        extraData: $extraData}
+    ) {
+      appointment {
+        users {
+          id
+          firstName
+          lastName
           avatarThumbUrl          
         }
         initDate
@@ -78,7 +113,8 @@ export const GET_APPOINTMENTS = gql`
       endDate
       users{
         id
-        fullName
+        firstName
+        lastName
         avatarThumbUrl
       }
     }
@@ -104,6 +140,14 @@ export const GET_USER = gql`
       lastName
       email
       avatarThumbUrl
+    }
+  }
+`
+
+export const DESTROY_APPOINTMENT = gql`
+  mutation destroyAppointment ($id: ID!){
+    destroyAppointment (input:{id: $id}){
+      clientMutationId
     }
   }
 `

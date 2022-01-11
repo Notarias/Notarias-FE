@@ -10,7 +10,6 @@ export const styles = theme => {
       padding: "15px"
     },
     calendarNew: {
-      marginRight: "10%",
       marginTop: "3%"
     },
     widthDialog: {
@@ -24,7 +23,7 @@ export const styles = theme => {
       marginTop: "3%"
     },
     paddingBottomEvent: {
-      paddingBottom: "3%"
+      paddingBottom: "10px"
     },
     windowScrollEventList: {
       height: '700px',

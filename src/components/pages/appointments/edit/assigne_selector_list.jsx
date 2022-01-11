@@ -9,13 +9,14 @@ import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { useQuery } from '@apollo/client';
-import { USERS_QUICK_LIST } from './../queries_and_mutations/queries';
+import { USERS_QUICK_LIST } from '../queries_and_mutations/queries';
 import { Grid } from '@material-ui/core';
 
 const AssigneSelectorList = (props) => {
   const { selecteds, setSelecteds } = props;
 
   const [userList, setUserList] = useState();
+  const [a, setA] = useState([]);
 
   const { loading, data, refetch } = useQuery(
     USERS_QUICK_LIST
@@ -42,10 +43,10 @@ const AssigneSelectorList = (props) => {
 
   const classes = useStyles();
 
-  const handleChange = (event) => {
-    setSelecteds(event.target.value);
+  const handleChange = (event, child) => {
+    setSelecteds(event.target.value)
   };
-
+  
   return(
     <Grid item xs={12}>
       <FormControl fullWidth>
