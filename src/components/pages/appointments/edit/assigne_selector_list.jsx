@@ -13,11 +13,11 @@ import { USERS_QUICK_LIST } from '../queries_and_mutations/queries';
 import { Grid } from '@material-ui/core';
 
 const AssigneSelectorList = (props) => {
-  const { selecteds, setSelecteds } = props;
-
+  const { selectedIds, setSelectedIds} = props;
+  
   const [userList, setUserList] = useState();
-  const [a, setA] = useState([]);
-
+  const [userListIds, setUserListIds] = useState();
+  
   const { loading, data, refetch } = useQuery(
     USERS_QUICK_LIST
   );
@@ -25,7 +25,10 @@ const AssigneSelectorList = (props) => {
   useEffect( () => {
     if(data && data.usersQuickList){
       setUserList(data.usersQuickList);
-    }
+      setUserListIds(data.usersQuickList.map((user) => {
+        return(user.id);
+      }));
+    };
   }, [data]);
 
   const useStyles = makeStyles((theme) => ({
@@ -41,11 +44,39 @@ const AssigneSelectorList = (props) => {
     },
   }));
 
+
   const classes = useStyles();
 
-  const handleChange = (event, child) => {
-    setSelecteds(event.target.value)
+  const handleChange = (event) => {
+    setSelectedIds(event.target.value)
   };
+
+  const printSelectedsNames = (id) => {
+    return(
+      userList && userList.map((user) => {
+        if(user.id == id) {
+          return(
+            `${user.firstName} ${user.lastName}`
+          )
+        }
+      })
+    )
+  }
+
+  const printUserList = (id) => {
+    return(
+      userList && userList.map((user) => {
+        if(user.id == id){
+          return(
+            <>
+              <Avatar className={classes.small}>{user.avatarThumbUrl}</Avatar>
+              <Typography variant="inherit" style={{ marginLeft: '10px' }}>{`${user.firstName} ${user.lastName}`}</Typography>
+            </>
+          )
+        }
+      })
+    )
+  }
   
   return(
     <Grid item xs={12}>
@@ -53,29 +84,29 @@ const AssigneSelectorList = (props) => {
         <InputLabel id="demo-mutiple-chip-label">Invitados</InputLabel>
         <Select
           multiline
-          id="assigneeIds"
+          labelId="demo-mutiple-chip-label"
+          id="demo-mutiple-chip"
           multiple
           fullWidth
-          value={selecteds}
+          value={selectedIds}
           onChange={handleChange}
           input={<Input id="select-multiple-chip" />}
           renderValue={(selected) => (
             <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-              {selected.map((value) => (
+              {selected.map((id) => (
                 <Chip 
-                  key={value.id}
+                  id={id} 
+                  key={id}
                   style={{ margin: 2 }}
-                  avatar={<Avatar>{value.avatarThumbUrl}</Avatar>}
-                  label={`${value.firstName} ${value.lastName}`}
+                  label={printSelectedsNames(id)}
                   variant="outlined"/>
               ))}
             </div>
           )}
         >
-          {userList && userList.map((user) => (
-            <MenuItem key={user.id} value={user}>
-              <Avatar className={classes.small}>{user.avatarThumbUrl}</Avatar>
-              <Typography variant="inherit" style={{ marginLeft: '10px' }}>{`${user.firstName} ${user.lastName}`}</Typography>
+          {userListIds && userListIds.map((id) => (
+            <MenuItem id={id} key={id} value={id}>
+              {printUserList(id)}
             </MenuItem>
           ))}
         </Select>

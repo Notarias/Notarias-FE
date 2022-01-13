@@ -42,6 +42,12 @@ const EditAppointmentDialog = (props) => {
   const [extraData, setExtraData] = useState(appointment.extraData);
   const [selecteds, setSelecteds] = useState(appointment.users);
 
+  const [selectedIds, setSelectedIds] = useState(
+    selecteds && selecteds.map((user) => {
+      return(user.id)
+    })
+  );
+
   const [updateAppointment, {loading: updateAppointmentLoading}] =
   useMutation(
     UPDATE_APPOINTMENT,
@@ -55,12 +61,12 @@ const EditAppointmentDialog = (props) => {
         setPristine(true)
       },
       onCompleted(cacheData) {
-        console.log(cacheData)
         closeEditDialog();
       },
       refetchQueries: [
         {
-          query: GET_APPOINTMENTS
+          query: GET_APPOINTMENTS,
+          variables: { variables } 
         },
       ],
       awaitRefetchQueries: true
@@ -68,16 +74,10 @@ const EditAppointmentDialog = (props) => {
   )
 
   const saveAppointment = () => {
-    let array = [];
-
-    selecteds.map((user) => {
-      return(array.push(user.id))
-    })
-
     updateAppointment( {
       variables: {
         id: appointment.id,
-        assignedIds: array,
+        assignedIds: selectedIds,
         initDate: initDate,
         endDate: endDate,
         place: place,
@@ -88,22 +88,18 @@ const EditAppointmentDialog = (props) => {
 
   const iniDateChange = (event) => {
     setInitDate(event.target.value)
-    console.log(initDate)
   }
 
   const endDateChange = (event) => {
     setEndDate(event.target.value)
-    console.log(endDate)
   }
 
   const placeChange = (event) => {
     setPlace(event.target.value)
-    console.log(place)
   }
 
   const extraDataChange = (event) => {
     setExtraData(event.target.value)
-    console.log(extraData)
   }
 
   return(
@@ -152,7 +148,7 @@ const EditAppointmentDialog = (props) => {
               />
             </Grid>
             <Grid container item xs={12} className={classes.marginTopStartAndEnd}>
-              <AssigneSelectorList selecteds={selecteds} setSelecteds={setSelecteds}/>
+              <AssigneSelectorList selectedIds={selectedIds} setSelectedIds={setSelectedIds}/>
             </Grid>
             <Grid item xs={12} className={classes.marginTopStartAndEnd}>
               <TextField

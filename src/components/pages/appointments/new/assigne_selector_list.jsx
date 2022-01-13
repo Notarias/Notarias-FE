@@ -60,19 +60,19 @@ const AssigneSelectorList = (props) => {
           input={<Input id="select-multiple-chip" />}
           renderValue={(selected) => (
             <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-              {selected.map((value) => (
+              {selected.map((user) => (
                 <Chip 
-                  key={value.id}
+                  id={user.id}
+                  key={user.id}
                   style={{ margin: 2 }}
-                  avatar={<Avatar>{value.avatarThumbUrl}</Avatar>}
-                  label={`${value.firstName} ${value.lastName}`}
+                  label={`${user.firstName} ${user.lastName}`}
                   variant="outlined"/>
               ))}
             </div>
           )}
         >
           {userList && userList.map((user) => (
-            <MenuItem key={user.id} value={user}>
+            <MenuItem id={user.id} key={user.id} value={user}>
               <Avatar className={classes.small}>{user.avatarThumbUrl}</Avatar>
               <Typography variant="inherit" style={{ marginLeft: '10px' }}>{`${user.firstName} ${user.lastName}`}</Typography>
             </MenuItem>
