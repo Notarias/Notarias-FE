@@ -80,7 +80,7 @@ const ClientSearch = (props) => {
 
   const renderInputSearch = () => {
     return(
-      <Grid container  direction="row" spacing={6} justifyContent="flex-end">
+      <Grid item container justifyContent="flex-end">
         <Grid item>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
@@ -120,7 +120,7 @@ const ClientSearch = (props) => {
     const { setClientInfo } = props
     
     return(
-      <TableBody className={classes.clientSearchTable}>
+      <TableBody>
         {
           data && data.clients.map((client, index ) => {
 
@@ -136,8 +136,8 @@ const ClientSearch = (props) => {
               selected={client.id === selectedIndex} 
               onClick={handleMenuItemClick}
             >
-              <TableCell align= "center" className={classes.tableRowMax}>{ client.firstName }</TableCell>
-              <TableCell align= "center" className={classes.tableRowMax}>{ client.lastName }</TableCell>
+              <TableCell align= "center">{ client.firstName }</TableCell>
+              <TableCell align= "center">{ client.lastName }</TableCell>
               <TableCell align= "center">{ client.rfc }</TableCell>
               <TableCell align= "center">{ client.curp }</TableCell>
             </TableRow>
@@ -150,56 +150,58 @@ const ClientSearch = (props) => {
   let sortHandler = sort.bind(this)
 
   return(
-    <Grid container item xs={10}>
+    <Grid container item direction="column" style={{ padding: "20px" }}>
       { renderInputSearch() }
-      <Table className={classes.clientSearchTable} >
-        <TableHead >
-          <TableRow >
-          <SortHeader
-              text="Nombre"
-              field_property="first_name"
-              current_field={sortField}
-              sort_direction={sortDirection}
-              callback={sortHandler}
-            />
-            <SortHeader
-              text="Apellido"
-              field_property="last_name"
-              current_field={sortField}
-              sort_direction={sortDirection}
-              callback={sortHandler}
-            />
-            <SortHeader
-              text="RFC"
-              field_property="rfc"
-              current_field={sortField}
-              sort_direction={sortDirection}
-              callback={sortHandler}
-            />
-            <SortHeader
-              text="CURP"
-              field_property="curp"
-              current_field={sortField}
-              sort_direction={sortDirection}
-              callback={sortHandler}
-            />
-          </TableRow>
-        </TableHead>
-        <RenderClientsTable setClientInfo={setClientInfo}/>
-        <TableFooter>
-          <TableRow>
-            <TablePagination
-              page={page}
-              rowsPerPage={per}
-              rowsPerPageOptions={[5]}
-              onPageChange={changePage}
-              onRowsPerPageChange={changeRowsPerPage}
-              count={total_records}
-              labelRowsPerPage="Filas por página:"
-            />
-          </TableRow>
-        </TableFooter>
-      </Table>
+      <Grid item style={{ marginTop: "20px" }}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <SortHeader
+                text="Nombre"
+                field_property="first_name"
+                current_field={sortField}
+                sort_direction={sortDirection}
+                callback={sortHandler}
+              />
+              <SortHeader
+                text="Apellido"
+                field_property="last_name"
+                current_field={sortField}
+                sort_direction={sortDirection}
+                callback={sortHandler}
+              />
+              <SortHeader
+                text="RFC"
+                field_property="rfc"
+                current_field={sortField}
+                sort_direction={sortDirection}
+                callback={sortHandler}
+              />
+              <SortHeader
+                text="CURP"
+                field_property="curp"
+                current_field={sortField}
+                sort_direction={sortDirection}
+                callback={sortHandler}
+              />
+            </TableRow>
+          </TableHead>
+          <RenderClientsTable setClientInfo={setClientInfo}/>
+          <TableFooter>
+            <TableRow>
+              <TablePagination
+                page={page}
+                rowsPerPage={per}
+                rowsPerPageOptions={[5]}
+                onPageChange={changePage}
+                onRowsPerPageChange={changeRowsPerPage}
+                count={total_records}
+                labelRowsPerPage="Filas por página:"
+              />
+            </TableRow>
+          </TableFooter>
+        </Table>
+      </Grid>
     </Grid>
   )
 }

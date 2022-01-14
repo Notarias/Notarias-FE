@@ -2,14 +2,6 @@ import { alpha } from '@material-ui/core/styles';
 
 export const styles = theme => {
   return ({
-    root: {
-      display: "flex",
-      overflow: 'auto',
-      flexDirection: "column",
-      flexWrap: "nowrap",
-      paddingTop: "23px",
-      paddingRight: "23px"
-    },
     tableWrapper: {
       display: "right",
       padding: theme.spacing(3),
@@ -86,11 +78,6 @@ export const styles = theme => {
     },
     labelLeft: {
       textAlign: "left",
-    },
-    ClientSearchTable: {
-      backgroundColor: 'inherit',
-      width: "100%",
-      maxHeight: "280px",
     },
     linkDefault: {
       textDecoration:"none",
@@ -243,11 +230,6 @@ export const styles = theme => {
     },
     honorariumGrid: {
       margin: "0px"
-    },
-    tableRowMax: {
-      wordWrap: "break-word",
-      height: "50px",
-      padding: "5px"
     },
     selectPayType: {
       marginTop: "35px"
