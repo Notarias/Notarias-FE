@@ -1,7 +1,6 @@
 import React, {useEffect}               from 'react'
 import { withStyles }                   from '@material-ui/core/styles';
 import { styles }                       from '../styles';
-import Typography                       from '@material-ui/core/Typography';
 import { useQuery }                     from '@apollo/client';
 import { GET_CLIENT_ATTRIBUTE }         from '../../clients_queries_and_mutations/queries';
 import List                             from '@material-ui/core/List';
@@ -14,7 +13,7 @@ const ClientsAttributesList = (props) => {
 
 
 
-  const  {loading: loadingAttribute, data: dataAttribute}  = useQuery(GET_CLIENT_ATTRIBUTE)
+  const  { data: dataAttribute}  = useQuery(GET_CLIENT_ATTRIBUTE)
 
   const [attributes, setAttributes] = React.useState(dataAttribute ? dataAttribute.clientAttributes : [] )
   

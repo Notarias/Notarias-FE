@@ -4,7 +4,6 @@ import { styles }                     from '../../../styles';
 import { useQuery }                   from '@apollo/client';
 import { GET_BUDGET_FIELD_VALUE }     from '../../../queries_and_mutations/queries'
 import GenericDropdownMenu            from '../../../../../ui/generic_dropdown_menu';
-import SaveButton                     from './save_button';
 import TotalValue                     from './total_value';
 import TaxedFields                    from './taxed_fields';
 import Payment                        from './payment';
@@ -25,9 +24,8 @@ import NumberFormat                   from 'react-number-format';
 
 
 const FieldValue = (props) => {
-  const { classes, budget, field } = props
+  const { budget, field } = props
 
-  const [pristine, setPristine] = useState(true)
   const [value, setValue] = useState(0)
   const [totalDebt, setTotalDebt] = useState(0)
   const [editing, setEditing] = useState(false)
@@ -48,7 +46,7 @@ const FieldValue = (props) => {
     if(budgetFieldValue) {
       return ((budgetFieldValue.value * 1.0) / 100).toFixed(2)
     } else if(templateField.defaultValue) {
-      if (templateField.operator == 'percentile') {
+      if (templateField.operator === 'percentile') {
         return (templateField.defaultValue * 1.0).toFixed(2)
       } else {
         return ((templateField.defaultValue * 1.0) / 100.0).toFixed(2)
@@ -103,10 +101,9 @@ const FieldValue = (props) => {
           </Typography>
         </Grid>
         <Grid item xs={3}>
-          { (value == 0 || value >= 0) && 
+          { (value === 0 || value >= 0) && 
               <TotalValue
                 pristine
-                setPristine={setPristine}
                 editing={editing}
                 setEditing={setEditing}
                 editingValue={editingValue}

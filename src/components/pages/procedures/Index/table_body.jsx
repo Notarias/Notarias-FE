@@ -1,6 +1,4 @@
 import React, { useEffect }               from 'react'
-import TableRow                           from '@material-ui/core/TableRow';
-import TableCell                          from '@material-ui/core/TableCell';
 import TableBody                          from '@material-ui/core/TableBody';
 import { useQuery }                       from '@apollo/client';
 import { GET_PROCEDURES }                 from '../queries_and_mutations/queries';
@@ -21,8 +19,6 @@ const ProceduresTableBody = (props) => {
     budgetingTemplateNameValue,
     proceduresTemplateNameValue,
     createdAtValue,
-    reporterAvatarThumbUrl,
-    templatesVariables,
     setTemplatesVariables,
     classes
   } = props
@@ -47,7 +43,6 @@ const ProceduresTableBody = (props) => {
   );
 
   let totalCount = data && data.proceduresCount;
-  let loadingComponent = null;
 
   const proceduresRows = (params) => {
     return(

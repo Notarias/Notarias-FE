@@ -1,9 +1,9 @@
-import React, { useState }           from 'react';
+import React, { useState }                      from 'react';
 import Grid                                     from '@material-ui/core/Grid';
-import FormControl from '@material-ui/core/FormControl';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import InputAdornment from '@material-ui/core/InputAdornment';
+import FormControl                              from '@material-ui/core/FormControl';
+import Input                                    from '@material-ui/core/Input';
+import InputLabel                               from '@material-ui/core/InputLabel';
+import InputAdornment                           from '@material-ui/core/InputAdornment';
 import Typography                               from '@material-ui/core/Typography';
 import IconButton                               from '@material-ui/core/IconButton';
 import Menu                                     from '@material-ui/core/Menu';
@@ -29,9 +29,9 @@ const FieldsGroupsRows = (props) => {
 
   const [menuState, setMenuState] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [duplicate, setDuplicate] = useState(fieldGroupValue && fieldGroupValue.duplicate);
-  const [field, setField] = useState(fieldGroupValue && fieldGroupValue.proceduresTemplateField);
-  const [procedureFieldValue, setProcedureFieldValue] = useState(fieldGroupValue && fieldGroupValue.procedureFieldValue);
+  const [duplicate] = useState(fieldGroupValue && fieldGroupValue.duplicate);
+  const [field] = useState(fieldGroupValue && fieldGroupValue.proceduresTemplateField);
+  const [procedureFieldValue] = useState(fieldGroupValue && fieldGroupValue.procedureFieldValue);
   const [fieldValueActive, setFieldValueActive] = useState(fieldGroupValue && fieldGroupValue.procedureFieldValue.active);
   const [value, setValue] = useState(fieldGroupValue && fieldGroupValue.procedureFieldValue.value);
   const [fieldStatus, setFieldStatus] = useState(fieldGroupValue && !fieldGroupValue.procedureFieldValue.value ? false : true);
@@ -70,7 +70,7 @@ const FieldsGroupsRows = (props) => {
     updateProcedureFieldValue ({ variables: {"id": procedureFieldValue.id, "active": checked} })
   }
   
-  const [updateProcedureFieldValue, { loading: updateProcedureFieldValueLoading }] =
+  const [updateProcedureFieldValue] =
     useMutation(
       UPDATE_PROCEDURE_FIELD_VALUE,
       {
@@ -98,7 +98,7 @@ const FieldsGroupsRows = (props) => {
     updateFieldValueActive(event.target.checked);
   };
 
-  const [destroyProcedureFieldGroupValues, { loading: destroyProcedureFieldGroupValuesLoading }] =
+  const [destroyProcedureFieldGroupValues] =
     useMutation(
       DESTROY_PROCEDURE_FIELD_GROUP_VALUES,
       { onCompleted(cacheData) {
@@ -117,6 +117,7 @@ const FieldsGroupsRows = (props) => {
           let errorsHash = {}
           errorData.graphQLErrors.map((error) => {
             errorsHash[error.extensions.attribute] = error.message
+            return(error.message)
           })
           client.writeQuery({
             query: GLOBAL_MESSAGE,

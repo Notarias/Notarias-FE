@@ -16,16 +16,14 @@ const BREADCRUMBS = [
 const ProceduresEdit = (props) => {
   const { match } = props;
   const [procedure, setProcedure] = useState();
-  const [procedureTemplate, setProcedureTemplate] = useState();
 
-  const { loading, data, refetch } = useQuery(
+  const { loading, data } = useQuery(
     GET_PROCEDURE, { variables: {"id": match.params.id } }
   );
 
   useEffect(() => {
     if(data && data.procedure) {
       setProcedure(data.procedure)
-      setProcedureTemplate(data.procedure.procedureTemplate)
     }
   }, [loading, data]);
 

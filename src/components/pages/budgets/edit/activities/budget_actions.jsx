@@ -198,10 +198,9 @@ export default (props) => {
                   onChange={handlePaymentValueChange}
                   label="Ingreso"
                   id="margin-normal"
-                  helperText="Cantidad"
                   margin="normal"
                   error={ !!errors["total"] && true }
-                  helperText={errors["total"] || " "}
+                  helperText={errors["total"] || "Cantidad"}
                   errorskey={ "total" }
                   required
                   InputProps={{

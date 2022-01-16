@@ -127,7 +127,6 @@ const attrList = (props)=> {
         update(store, cacheData) {
           setError(false)
           setPristine(true)
-          const clientAttrsData = store.readQuery({ query: GET_CLIENT_ATTRIBUTES });
           store.writeQuery(
             {
               query: GLOBAL_MESSAGE,

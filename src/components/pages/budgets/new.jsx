@@ -111,7 +111,7 @@ function getStepContent(stepIndex, listData) {
       )
     case 2:
       return (
-        <Grid  container item direction="row" spacing={3} item alignItems="center" justifyContent="center" >
+        <Grid  container item direction="row" spacing={3} alignItems="center" justifyContent="center" >
           <Grid item xs={5}>
             <List>
               <ProcedureSelectorList 
@@ -146,7 +146,6 @@ const NewBudget = (params) => {
   const [newClientForm, setNewClientForm] = useState(false);
   const [redirect, setRedirect] = useState();
   const [openConfirmation, setOpenConfirmation] = useState(false);
-  const [errors, setErrors] = useState();
   const classes = useStyles();
   const steps = getSteps();
 
@@ -165,12 +164,11 @@ const NewBudget = (params) => {
     handleNext();
   }
 
-  const [createBudgetMutation, { loading: createBudgetLoading }] =
+  const [createBudgetMutation] =
     useMutation(
       CREATE_BUDGET,
       {
         onError(apolloError) {
-          setErrors(apolloError)
           client.writeQuery({
             query: GLOBAL_MESSAGE,
             data: {

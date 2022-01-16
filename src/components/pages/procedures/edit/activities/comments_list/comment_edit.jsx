@@ -27,7 +27,6 @@ import ClearIcon from '@material-ui/icons/Clear';
 
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
 import { useMutation } from '@apollo/client';
 import { UPDATE_COMMENT } from '../../../queries_and_mutations/queries';
 import { GET_COMMENTABLE_COMMENTS } from '../../../queries_and_mutations/queries';
@@ -35,28 +34,20 @@ import { DESTROY_COMMENT } from '../../../queries_and_mutations/queries';
 import { GET_PROCEDURES_AUDITLOG } from '../../../queries_and_mutations/queries';
 
 const CommentEdit = (props) => {
-  const { classes, comment, procedure } = props
-  let body = comment.body
+  const { comment, procedure } = props
 
   const [commentValue, setCommentValue] = useState(comment.body);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [menuState, setMenuState] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [editStatus, setEditStatus] = useState(false);
-  const [error, setError] = useState(false);
 
-  const inputsList = ["body"]
-
-  const [updateCommentMutation, {loading: updateCommentLoading},refetch] =
+  const [updateCommentMutation] =
   useMutation(
     UPDATE_COMMENT,
     {
-      onError(apolloError) {
-        setErrors(apolloError)
-      },
-      onCompleted(cacheData) {
+      onCompleted() {
         setEditStatus(false);
-        setError(false)
       },
       refetchQueries: [
         {
@@ -70,29 +61,10 @@ const CommentEdit = (props) => {
     }
   )
 
-  const setErrors = (apolloError) => {
-    let errorsList = {}
-    let errorTemplateList = apolloError.graphQLErrors
-    for ( let i = 0; i < errorTemplateList.length; i++) {
-      for( let n = 0; n < inputsList.length; n++) {
-        if(errorTemplateList[i].extensions.attribute === inputsList[n]){
-          errorsList[inputsList[n]] = errorTemplateList[i].message
-        }
-      }
-    }
-    setError(errorsList)
-  }
-
-  const [destroyCommentMutation, {loading: destroyCommentloading}] =
+  const [destroyCommentMutation] =
     useMutation(
       DESTROY_COMMENT,
       {
-        onError(apolloError) {
-          setErrors(apolloError)
-          // setPristine(true)
-        },
-        onCompleted(cacheData) {
-        },
         refetchQueries: [
           {
             query: GET_COMMENTABLE_COMMENTS,

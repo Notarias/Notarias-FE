@@ -66,12 +66,6 @@ const FieldsGroup = (props) => {
     setEditing(!editing)
   }
 
-  const markStatus = () => {
-    if(!active) {
-      return  classes.statusTemplateRow 
-    }
-  }
-
   const renderTextGroupName = () => {
     return(
       <Grid container item xs={12} direction="row">

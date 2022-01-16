@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Divider } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -18,10 +18,6 @@ const Summary = (props) => {
 
   const openAsigneeDialog = () => {
     setOpenDialog(true);
-  }
-
-  const deleteAsignee = () => {
-    setAsignee("");
   }
 
   return(

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React                from 'react';
 import Grid                 from '@material-ui/core/Grid';
 import Typography           from '@material-ui/core/Typography';
 import Divider              from '@material-ui/core/Divider';
@@ -14,7 +14,6 @@ import BudgetActions        from './budget_actions';
 import BudgetFileUploader   from './budget_file_uploader';
 import PaymentDrawer        from '../payment_drawer';
 import { BASE_URI }         from '../../../../../apollo'
-import { useQuery }         from '@apollo/client';
 
 export default (props) => {
 
@@ -84,7 +83,7 @@ export default (props) => {
           />
         </Grid>
       </Grid>
-      <Grid container item xs={12} alignItems='center' alignItems='center'>
+      <Grid container item xs={12} alignItems='center'>
         <Grid item xs={3}>
           <Typography align='left'>Cliente:</Typography>
         </Grid>
@@ -94,7 +93,7 @@ export default (props) => {
           </Typography>
         </Grid>
       </Grid>
-      <Grid container item xs={12} alignItems='center' alignItems='center'>
+      <Grid container item xs={12} alignItems='center'>
         <Grid item xs={3}>
           <Typography align='left'>Presupuesto:</Typography>
         </Grid>
@@ -104,7 +103,7 @@ export default (props) => {
           </Typography>
         </Grid>
       </Grid>
-      <Grid container item xs={12} alignItems='center' alignItems='center'>
+      <Grid container item xs={12} alignItems='center'>
         <Grid item xs={3}>
           <Typography align='left'>Trámite:</Typography>
         </Grid>

@@ -23,7 +23,7 @@ export default (props) => {
                 variant="body2"
                 color="textPrimary"
               >
-                { client && client.fullName || 'N/A' }
+                { (client && client.fullName) || 'N/A' }
               </Typography>
             </React.Fragment>
           }
@@ -41,7 +41,7 @@ export default (props) => {
                 variant="body2"
                 color="textPrimary"
               >
-                { client && client.rfc || 'N/A' }
+                { (client && client.rfc) || 'N/A' }
               </Typography>
             </React.Fragment>
           }
@@ -59,7 +59,7 @@ export default (props) => {
                 variant="body2"
                 color="textPrimary"
               >
-                { client && client.curp || 'N/A' }
+                { (client && client.curp) || 'N/A' }
               </Typography>
             </React.Fragment>
           }

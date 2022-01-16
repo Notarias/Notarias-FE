@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
-import { useMutation } from '@apollo/client';
-import { CREATE_CLIENT } from '../queries_and_mutations/queries'
+import React, { useState } from 'react';
+import Card                from '@material-ui/core/Card';
+import CardContent         from '@material-ui/core/CardContent';
+import TextField           from '@material-ui/core/TextField';
+import FormControlLabel    from '@material-ui/core/FormControlLabel';
+import Checkbox            from '@material-ui/core/Checkbox';
+import Grid                from '@material-ui/core/Grid';
+import Button              from '@material-ui/core/Button';
+import { useMutation }     from '@apollo/client';
+import { CREATE_CLIENT }   from '../queries_and_mutations/queries'
 
 const FastCreateClientForm = (props) => {
 
@@ -15,7 +15,6 @@ const FastCreateClientForm = (props) => {
 
   const [errors, setErrors] = useState({});
   const [errorFormSpacing, setErrorFormSpacing] = useState(2);
-  const [pristine, setPristine] = useState(true);
   const [newClient, setNewClient] = useState({
                                       firstName: "",
                                       lastName: "",
@@ -32,14 +31,13 @@ const FastCreateClientForm = (props) => {
     } else {
       setNewClient({ ...newClient, [name]: value })
     } 
-    setPristine(false)
   }
 
   const closeCreateClientForm = () => {
     setNewClientForm(false);
   }
 
-  const [createClient, { loading: createClientLoading }] =
+  const [createClient] =
   useMutation(
     CREATE_CLIENT,
     {
@@ -47,10 +45,10 @@ const FastCreateClientForm = (props) => {
         let errorsHash = {}
         error.graphQLErrors.map((error) => {
           errorsHash[error.extensions.attribute] = error.message
+          return(error.message)
         })
         setErrorFormSpacing(0);
         setErrors(errorsHash)
-        setPristine(true)
       },
       onCompleted(cacheData) {
         (activeStep === 0) ? setClientInfo(cacheData.createClient.client) : setCausantInfo(cacheData.createClient.client);

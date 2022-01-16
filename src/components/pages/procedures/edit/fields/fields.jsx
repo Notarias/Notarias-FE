@@ -7,7 +7,7 @@ import { GET_PROCEDURES_TEMPLATE_TAB_FIELDS }   from '../../queries_and_mutation
 import FieldsRows                               from './fields_rows';
 
 const Fields = (props) => {
-  const { currentTab, procedure, classes } = props;
+  const { currentTab, procedure } = props;
 
   const [fields, setFields] = useState();
 

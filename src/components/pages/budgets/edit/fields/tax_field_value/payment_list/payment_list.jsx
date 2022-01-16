@@ -1,4 +1,4 @@
-import React, {useState, useEffect}         from 'react'
+import React, { useEffect }                 from 'react'
 import ListItemText                         from '@material-ui/core/ListItemText';
 import Dialog                               from '@material-ui/core/Dialog';
 import DialogActions                        from '@material-ui/core/DialogActions';
@@ -50,9 +50,9 @@ NumberFormatCustom.propTypes = {
 const PaymentList = (props) => {
   const {budgetFieldValue, field, totalDebt, value} = props
   const [open, setOpen] = React.useState(false)
-  const [payments, setpayments] = React.useState(data ? data.payments : [])
+  const [payments, setpayments] = React.useState([])
 
-  const { loading, data, refetch } = useQuery(
+  const { data } = useQuery(
     GET_PAYMENTS, { variables: { "fieldValueId": budgetFieldValue.id } }
   );
 

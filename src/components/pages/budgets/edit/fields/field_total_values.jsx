@@ -7,7 +7,6 @@ import { useQuery }                                 from '@apollo/client';
 import { GET_BUDGET_TOTALS }                        from '../../queries_and_mutations/queries'
 import NumberFormat                                 from 'react-number-format';
 import Box                                          from '@material-ui/core/Box';
-import Divider                                      from '@material-ui/core/Divider';
 
 
 const FieldTotalValues = (props) => {

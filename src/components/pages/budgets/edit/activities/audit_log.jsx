@@ -26,11 +26,11 @@ function createMarkup(obj) {
 }
 
 const AuditLog = (props) => {
-  const { budget, classes } = props
+  const { budget } = props
 
   const [auditLog, setAuditlog] = useState();
 
-  const { loading, data , refetch } = useQuery(
+  const { data } = useQuery(
     GET_BUDGETS_AUDITLOG, { 
       variables: { "budgetId": budget.id }
     }

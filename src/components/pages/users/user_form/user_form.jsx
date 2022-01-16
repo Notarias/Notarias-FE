@@ -40,17 +40,17 @@ const UserForm = (props) => {
   const { classes } = props
   const { user, roles } = props.data
 
-  const [id, setId] = useState(parseInt(user.id))
+  const [id] = useState(parseInt(user.id))
   const [pristine, setPristine] = useState(true)
   const [errors, setErrors] = useState({})
-  const [firstName, setFirstName] = useState(user.firstName)
-  const [lastName, setLastName] = useState(user.lastName)
-  const [email, setEmail] = useState(user.email)
-  const [address, setAddress] = useState(user.address)
-  const [phone, setPhone] = useState(user.phone)
-  const [rolePermanentLink, setRolePermanentLink] = useState(user.role && user.role.permanentLink)
-  const [password, setPassword] = useState("")
-  const [passwordConfirmation, setPasswordConfirmation] = useState("")
+  const [firstName] = useState(user.firstName)
+  const [lastName] = useState(user.lastName)
+  const [email] = useState(user.email)
+  const [address] = useState(user.address)
+  const [phone] = useState(user.phone)
+  const [rolePermanentLink] = useState(user.role && user.role.permanentLink)
+  const [password] = useState("")
+  const [passwordConfirmation] = useState("")
   const [redirect, setRedirect] = useState(false)
 
   const handleChange = ({ target }) => {
@@ -68,6 +68,7 @@ const UserForm = (props) => {
           let errorsHash = {}
           error.graphQLErrors.map((error) => {
             errorsHash[error.extensions.attribute] = error.message
+            return(error.message)
           }) 
           setErrors(errorsHash)
           setPristine(true)

@@ -74,7 +74,6 @@ const Clients = (props) => {
                 search={{}}
                 sortField={ sortField }
                 sortDirection={ sortDirection }
-                setTotalRecords={ setTotalRecords }
                 searchValue={ searchValue }
                 searchField={ searchField }
                 classes={ classes } />

@@ -62,8 +62,7 @@ export default (props) => {
   }
 
   const [
-    updateProcedureFieldValue,
-    { updateLoading }
+    updateProcedureFieldValue
   ] = useMutation(
     UPDATE_PROCEDURE_FIELD_VALUE,
     {

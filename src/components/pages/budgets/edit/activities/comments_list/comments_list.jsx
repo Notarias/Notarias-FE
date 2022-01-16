@@ -9,7 +9,7 @@ import CommentEdit                          from './comment_edit';
 const CommentsList = (props) => {
   const { budget } = props
 
-  const { loading, data, refetch } = useQuery(
+  const { data } = useQuery(
     GET_COMMENTABLE_COMMENTS, { variables: {"commentableType": "Budget", "commentableId": budget.id } }
   );
 

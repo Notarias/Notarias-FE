@@ -23,7 +23,7 @@ export default (props) => {
                 variant="body2"
                 color="textPrimary"
               >
-                { causant && causant.fullName || 'N/A'}
+                { (causant && causant.fullName) || 'N/A'}
               </Typography>
             </React.Fragment>
           }

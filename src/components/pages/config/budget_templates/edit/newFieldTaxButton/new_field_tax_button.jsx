@@ -28,8 +28,6 @@ const NewFliedTaxButton = (props) => {
   const [taxableSelector, setTaxableSelector] = React.useState("")
   const [pristine, setPristine] = React.useState(true)
   const [allOptionsMarked, setAllOptionsMarked] = React.useState(false)
-  const [error, setError] = React.useState(false)
-  const inputsList = ["name"]
 
   const handleClose = () => {
     setOpen(false)
@@ -51,7 +49,6 @@ const NewFliedTaxButton = (props) => {
     CREATE_TAX_FIELD,
     {
       onError(apolloError) {
-        setErrors(apolloError)
         client.writeQuery({
           query: GLOBAL_MESSAGE,
           data: {
@@ -64,7 +61,6 @@ const NewFliedTaxButton = (props) => {
         })
       },
       onCompleted(cacheData) {
-        setError(false)
         setOpen(false)
         setPristine(true)
       },
@@ -75,19 +71,6 @@ const NewFliedTaxButton = (props) => {
       awaitRefetchQueries: true
     }
   )
-
-  const setErrors = (apolloError) => {
-    let errorsList = {}
-    let errorTemplateList = apolloError.graphQLErrors
-    for ( let i = 0; i < errorTemplateList.length; i++) {
-      for( let n = 0; n < inputsList.length; n++) {
-        if(errorTemplateList[i].extensions.attribute === inputsList[n]){
-          errorsList[inputsList[n]] = errorTemplateList[i].message
-        }
-      }
-    }
-    setError(errorsList);
-  }
 
   const addNewTaxField = (event) => {
     setOpen(false)

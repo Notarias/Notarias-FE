@@ -34,7 +34,6 @@ const months = [
 
 const BudgetInvoice = (props) => {
   const { classes, match } = props
-  const [open, setOpen]                           = useState(false)
   const [budget, setBudget]                       = useState()
   const [budgetingTemplate, setBudgetingTemplate] = useState()
   const [causant, setCausant]                     = useState()
@@ -43,7 +42,7 @@ const BudgetInvoice = (props) => {
   const [createdAt, setCreatedAt]                 = useState()
   const [tabs, setTabs]                           = useState()
 
-  const { loading, data, refetch } = useQuery(
+  const { loading, data } = useQuery(
     GET_PRINT_BUDGET, { variables: { "id": match.params.id } }
   );
 
@@ -70,14 +69,6 @@ const BudgetInvoice = (props) => {
     { name: "Editar", path: `/budgets/${ match.params.id}/edit` },
     { name: "Vista Previa", path: null }
   ]
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   return(
     <>

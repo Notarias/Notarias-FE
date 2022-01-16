@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import TextField from '@material-ui/core/TextField';
@@ -15,7 +15,6 @@ const FastCreateClientForm = (props) => {
 
   const [errors, setErrors] = useState({});
   const [errorFormSpacing, setErrorFormSpacing] = useState(2);
-  const [pristine, setPristine] = useState(true);
   const [newClient, setNewClient] = useState({
                                       firstName: "",
                                       lastName: "",
@@ -31,15 +30,14 @@ const FastCreateClientForm = (props) => {
       setNewClient({ ...newClient, [name]: checked })
     } else {
       setNewClient({ ...newClient, [name]: value })
-    } 
-    setPristine(false)
+    }
   }
 
   const closeCreateClientForm = () => {
     setNewClientForm(false);
   }
 
-  const [createClient, { loading: createClientLoading }] =
+  const [createClient] =
   useMutation(
     CREATE_CLIENT,
     {
@@ -47,10 +45,10 @@ const FastCreateClientForm = (props) => {
         let errorsHash = {}
         error.graphQLErrors.map((error) => {
           errorsHash[error.extensions.attribute] = error.message
+          return(error.message)
         })
         setErrorFormSpacing(0);
         setErrors(errorsHash)
-        setPristine(true)
       },
       onCompleted(cacheData) {
         (activeStep === 0) ? setClientInfo(cacheData.createClient.client) : setCausantInfo(cacheData.createClient.client);

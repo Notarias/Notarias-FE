@@ -39,7 +39,7 @@ const BudgetSelectorList = (props) => {
 
   const classes = useStyles();
   
-  const { loading, data, refetch } = useQuery(
+  const { data } = useQuery(
     BUDGETING_TEMPLATE_BY_PROCEDURE_ID, {
       variables: {"proceduresTemplateId": selectedProcedure.id}
     }

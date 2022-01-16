@@ -1,8 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import SearchIcon from '@material-ui/icons/Search';
@@ -12,26 +8,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Divider from '@material-ui/core/Divider';
 import Fuse from 'fuse.js';
-import Chip from '@material-ui/core/Chip';
 import Avatar from '@material-ui/core/Avatar';
 import { useQuery } from '@apollo/client';
 import { USERS_QUICK_LIST } from '../queries_and_mutations/queries';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    marginTop: theme.spacing(1),
-    minWidth: 275,
-    minHeight: 350,
-    maxHeight: 350,
-  },
-  bullet: {
-    display: 'inline-block',
-    transform: 'scale(0.8)',
-  },
-  title: {
-    fontSize: 14,
-  }
-}));
 
 const UserAsigneeList = (props) => {
 
@@ -40,9 +19,7 @@ const UserAsigneeList = (props) => {
   const [userList, setUserList] = useState();
   const [searchList, setSearchList] = useState();
 
-  const classes = useStyles();
-  
-  const { loading, data, refetch } = useQuery(
+  const { data } = useQuery(
     USERS_QUICK_LIST,
     { fetchPolicy: 'no-cache', }
   );

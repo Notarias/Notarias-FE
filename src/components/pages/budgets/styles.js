@@ -158,9 +158,6 @@ export const styles = theme => {
       margin: "5px",
       width: "530px"
     },
-    paperAdvancedSearch: {
-      width: "800px"
-    },
     gridCommentsContainer: {
       maxHeight: "96px"
     },

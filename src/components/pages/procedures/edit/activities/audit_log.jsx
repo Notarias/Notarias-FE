@@ -26,11 +26,11 @@ function createMarkup(obj) {
 }
 
 const AuditLog = (props) => {
-  const { procedure, classes } = props
+  const { procedure } = props
 
   const [auditLog, setAuditLog] = useState();
 
-  const { loading, data , refetch } = useQuery(
+  const { data } = useQuery(
     GET_PROCEDURES_AUDITLOG, { 
       variables: { "procedureId": procedure.id }
     }

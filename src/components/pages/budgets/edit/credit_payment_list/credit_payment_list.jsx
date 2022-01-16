@@ -1,7 +1,6 @@
-import React, { useState, useEffect }       from 'react'
+import React, { useEffect }                 from 'react'
 import Button                               from '@material-ui/core/Button';
 import ListItemText                         from '@material-ui/core/ListItemText';
-import MenuItem                             from '@material-ui/core/MenuItem';
 import Dialog                               from '@material-ui/core/Dialog';
 import DialogActions                        from '@material-ui/core/DialogActions';
 import DialogContent                        from '@material-ui/core/DialogContent';
@@ -52,9 +51,9 @@ NumberFormatCustom.propTypes = {
 const PaymentList = (props) => {
   const { budget } = props
   const [open, setOpen] = React.useState(false)
-  const [creditPayments, setCreditPayments] = React.useState(data ? data.creditPayments : [])
+  const [creditPayments, setCreditPayments] = React.useState([])
 
-  const { loading, data, refetch } = useQuery(
+  const { data } = useQuery(
     GET_CREDIT_PAYMENTS, { variables: { "budgetId": budget.id } }
   );
 
@@ -93,19 +92,16 @@ const PaymentList = (props) => {
                         return(
                           "Efectivo"
                         )
-                        break;
                       case "deposit" :
                 
                         return(
                           "Deposito"
                         )
-                        break;
                       case "wire" :
                 
                         return(
                           "Transferencia"
                         )
-                        break
                       default :
                         return(
                           "NA"

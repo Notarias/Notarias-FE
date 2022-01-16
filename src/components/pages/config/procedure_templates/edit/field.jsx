@@ -44,7 +44,7 @@ const Field = (props) => {
   const [openb, setOpenb] = React.useState(false);
   const [openDialog, setOpenDialog] = React.useState(false);
   const [editing, setEditing] = React.useState(true);
-  const [printable, setPrintable] = React.useState(props.printable)
+  const [printable] = React.useState(props.printable)
   const [name, setName] = React.useState(props.name)
   const [style, setStyle] = React.useState(props.style)
   const [active, setActive] = React.useState(props.active)

@@ -21,19 +21,13 @@ const CreateComments = (props) => {
   const [commentValue, setCommentValue] = useState("");
   const [showCancel, setShowCancel] = useState(false);
   const [showSendButton, setShowSendButton] = useState(true);
-  const [error, setError] = useState(false);
 
-  const inputsList = ["body"]
-
-  const { loading, data, refetch } = useQuery(GET_CURRENT_USER);
-  const [createCommentMutation, {loading: createCommentLoading}] =
+  const { loading, data } = useQuery(GET_CURRENT_USER);
+  const [createCommentMutation] =
     useMutation(
       CREATE_COMMENT,
       {
-        onError(apolloError) {
-          setErrors(apolloError)
-        },
-        onCompleted(cacheData) {
+        onCompleted() {
           cancelComment()
           setCommentValue("")
         },
@@ -51,21 +45,7 @@ const CreateComments = (props) => {
       }
     )
 
-  const setErrors = (apolloError) => {
-    
-    let errorsList = {}
-    let errorTemplateList = apolloError.graphQLErrors
-    for ( let i = 0; i < errorTemplateList.length; i++) {
-      for( let n = 0; n < inputsList.length; n++) {
-        if(errorTemplateList[i].extensions.attribute === inputsList[n]){
-          errorsList[inputsList[n]] = errorTemplateList[i].message
-        }
-      }
-    }
-    setError(errorsList)
-  }
-
-  const createNewComment = (event) => {
+  const createNewComment = () => {
     createCommentMutation({
        variables:{
         "commentableId": procedure.id ,
@@ -87,10 +67,6 @@ const CreateComments = (props) => {
     setShowSendButton(true);
   }
 
-  const clearErrors = () => {
-    setError(false)
-  }
-
   return(
     <>
       <Grid container item direction="row" justifyContent="center" alignItems="center" style={{paddingLeft: "25px", paddingRight: "25px", marginBottom: "15px"}}>
@@ -101,7 +77,6 @@ const CreateComments = (props) => {
               <Avatar 
                 src={data.currentUser.avatarThumbUrl} 
                 className={classes.avatarInDialogToAddPayment}
-                className={classes.avatarWithoutTopMargin}
               />
             }
           </Grid>

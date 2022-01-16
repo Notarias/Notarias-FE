@@ -16,7 +16,6 @@ import MenuItem             from '@material-ui/core/MenuItem';
 import InputAdornment       from '@material-ui/core/InputAdornment';
 import Select               from '@material-ui/core/Select';
 import OutlinedInput        from '@material-ui/core/OutlinedInput';
-import InputLabel           from '@material-ui/core/InputLabel';
 import FormControl          from '@material-ui/core/FormControl';
 import ArrowBackIosIcon     from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon  from '@material-ui/icons/ArrowForwardIos';
@@ -27,10 +26,6 @@ function not(a, b) {
 
 function intersection(a, b) {
   return a.filter((value) => b.indexOf(value) !== -1);
-}
-
-function union(a, b) {
-  return [...a, ...not(b, a)];
 }
 
 const FieldSearch = (props) => {
@@ -48,13 +43,11 @@ const FieldSearch = (props) => {
   } = props
 
   const [searchList, setSearchList]       = useState(templateData)
-  const [initialList, setInitialList]     = useState(templateData)
-  const [fuzzySearcher, setFuzzySearcher] = useState(new Fuse(initialList, { keys: ['name'] }))
+  const [fuzzySearcher, setFuzzySearcher] = useState(new Fuse(templateData, { keys: ['name'] }))
 
   const [checked, setChecked]             = useState([]);
   const [left, setLeft]                   = useState( templateData );
   const [right, setRight]                 = useState([]);
-  const [anchorEl, setAnchorEl]           = useState(null);
 
   const leftChecked = intersection(checked, left);
   const rightChecked = intersection(checked, right);
@@ -115,9 +108,6 @@ const FieldSearch = (props) => {
     setDefaultValue(Number(event.target.value))
   }
 
-  const numberOfChecked = (items) => intersection(checked, items).length;
-
-
   const handleCheckedRight = () => {
     const leftValues = not(left, leftChecked)
     setRight(right.concat(leftChecked));
@@ -140,13 +130,12 @@ const FieldSearch = (props) => {
         {items.map((item) => {
           let value = item.item || item
           return (
-            <ListItem key={value.id} role="undefined" button onClick={handleToggle(value)}>
+            <ListItem key={value.id} button onClick={handleToggle(value)}>
               <ListItemIcon>
                 <Checkbox
                   checked={checked.indexOf(value) !== -1}
                   tabIndex={-1}
                   disableRipple
-                  inputProps={{ 'aria-labelledby': value.id }}
                 />
               </ListItemIcon>
               <ListItemText id={value.id} primary={value.name} />

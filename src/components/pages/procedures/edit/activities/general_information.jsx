@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import Grid                 from '@material-ui/core/Grid';
-import Typography           from '@material-ui/core/Typography';
-import Divider              from '@material-ui/core/Divider';
-import IconButton           from '@material-ui/core/IconButton';
-import Print                from '@material-ui/icons/Print';
-import { Link }             from 'react-router-dom';
-import Asignee              from '../asignee';
-import Reporter             from '../reporter';
-import ProcedureFileUploader   from './procedure_file_uploader';
-import ProcedureActions from './procedure_actions';
+import React                 from 'react';
+import Grid                  from '@material-ui/core/Grid';
+import Typography            from '@material-ui/core/Typography';
+import Divider               from '@material-ui/core/Divider';
+import IconButton            from '@material-ui/core/IconButton';
+import Print                 from '@material-ui/icons/Print';
+import { Link }              from 'react-router-dom';
+import Asignee               from '../asignee';
+import Reporter              from '../reporter';
+import ProcedureFileUploader from './procedure_file_uploader';
+import ProcedureActions      from './procedure_actions';
 
 export default (props) => {
 
@@ -61,7 +61,7 @@ export default (props) => {
           />
         </Grid>
       </Grid>
-      <Grid container item xs={12} alignItems='center' alignItems='center'>
+      <Grid container item xs={12} alignItems='center'>
         <Grid item xs={3}>
           <Typography align='left'>Cliente:</Typography>
         </Grid>
@@ -71,7 +71,7 @@ export default (props) => {
           </Typography>
         </Grid>
       </Grid>
-      <Grid container item xs={12} alignItems='center' alignItems='center'>
+      <Grid container item xs={12} alignItems='center'>
         <Grid item xs={3}>
           <Typography align='left'>Presupuesto:</Typography>
         </Grid>
@@ -81,7 +81,7 @@ export default (props) => {
           </Typography>
         </Grid>
       </Grid>
-      <Grid container item xs={12} alignItems='center' alignItems='center'>
+      <Grid container item xs={12} alignItems='center'>
         <Grid item xs={3}>
           <Typography align='left'>Trámite:</Typography>
         </Grid>

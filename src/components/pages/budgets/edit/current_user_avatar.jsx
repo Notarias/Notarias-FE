@@ -7,7 +7,7 @@ import { GET_CURRENT_USER } from '../../../../resolvers/queries';
 
 
 export default (props) => {
-  const { loading, error, data } = useQuery(GET_CURRENT_USER)
+  const { data } = useQuery(GET_CURRENT_USER)
 
   return(
     <Grid>

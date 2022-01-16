@@ -1,17 +1,17 @@
-import React, { useState, useEffect }               from 'react';
-import Button                                       from '@material-ui/core/Button';
-import SaveIcon                                     from '@material-ui/icons/Save';
-import { useMutation }                              from '@apollo/client';
-import { UPDATE_BUDGET_FIELD_VALUE }                from '../../../queries_and_mutations/queries'
-import { CREATE_BUDGET_FIELD_VALUE }                from '../../../queries_and_mutations/queries'
-import { GET_BUDGET_FIELD_VALUE }                   from '../../../queries_and_mutations/queries'
-import { GET_BUDGET }                               from '../../../queries_and_mutations/queries'
-import { GET_BUDGET_TOTALS }                        from '../../../queries_and_mutations/queries'
-import Dialog                                       from '@material-ui/core/Dialog';
-import DialogActions                                from '@material-ui/core/DialogActions';
-import DialogContent                                from '@material-ui/core/DialogContent';
-import DialogTitle                                  from '@material-ui/core/DialogTitle';
-import { GET_BUDGETS_AUDITLOG } from '../../../queries_and_mutations/queries';
+import React                         from 'react';
+import Button                        from '@material-ui/core/Button';
+import SaveIcon                      from '@material-ui/icons/Save';
+import { useMutation }               from '@apollo/client';
+import { UPDATE_BUDGET_FIELD_VALUE } from '../../../queries_and_mutations/queries'
+import { CREATE_BUDGET_FIELD_VALUE } from '../../../queries_and_mutations/queries'
+import { GET_BUDGET_FIELD_VALUE }    from '../../../queries_and_mutations/queries'
+import { GET_BUDGET }                from '../../../queries_and_mutations/queries'
+import { GET_BUDGET_TOTALS }         from '../../../queries_and_mutations/queries'
+import Dialog                        from '@material-ui/core/Dialog';
+import DialogActions                 from '@material-ui/core/DialogActions';
+import DialogContent                 from '@material-ui/core/DialogContent';
+import DialogTitle                   from '@material-ui/core/DialogTitle';
+import { GET_BUDGETS_AUDITLOG }      from '../../../queries_and_mutations/queries';
 
 export default (props) => {
   const {
@@ -22,7 +22,6 @@ export default (props) => {
     budgetFieldValue,
     setEditing,
     value,
-    setValue,
     editingValue
   } = props
   const [open, setOpen] = React.useState(false);
@@ -40,9 +39,7 @@ export default (props) => {
     useMutation(
       CREATE_BUDGET_FIELD_VALUE,
       {
-        onError(apolloError) {
-        },
-        onCompleted(cacheData) {
+        onCompleted() {
           setEditing(false)
           setPristine(false)
           // setEditingValue(cacheData)

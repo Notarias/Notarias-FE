@@ -1,4 +1,4 @@
-import React, { useState, createRef }     from 'react'
+import React, { createRef }               from 'react'
 import Grid                               from '@material-ui/core/Grid';
 import CircularProgress                   from '@material-ui/core/CircularProgress';
 import SearchIcon                         from '@material-ui/icons/Search';
@@ -13,37 +13,17 @@ import { Link }             from 'react-router-dom';
 const SearchInput = (props) => {
   const { 
     classes, 
-    searchLoading, 
-    changeAdvanceSearch, 
-    setChangeAdvanceSearch,
-    onChangeSearch, 
-    setSimpleSearchValue,
-    setClientNameValue,
-    setProcedureNameValue,
-    setSerialNumberValue,
-    setMoreThanValue,
-    setLessThanValue,
-    advancedButtonClick,
-    advanceSearchActived,
-    setAdvanceSearchActived
+    searchLoading,
+    onChangeSearch,
+    switchAdvancedSearchClick,
+    runAdvancedSearch
   } = props
   const [open, setOpen] = React.useState(false)
   const simpleSearchInputRef = createRef()
 
   const handleClickOpen = (event) => {
-    setOpen(true);
+    setOpen(!open);
   };
-
-  const handleChangeInputsStatus = () => {
-    setChangeAdvanceSearch(!changeAdvanceSearch)
-    setAdvanceSearchActived(!advanceSearchActived)
-    setSimpleSearchValue(null)
-    setClientNameValue(null)
-    setProcedureNameValue(null)
-    setSerialNumberValue(null)
-    setMoreThanValue(null)
-    setLessThanValue(null)
-  }
 
   return(
     <Grid container  direction="row"  justifyContent="flex-end"  alignItems="flex-end" >
@@ -56,8 +36,8 @@ const SearchInput = (props) => {
           }
         </div>
         <InputBase
-          disabled={advanceSearchActived}
-          placeholder={ advanceSearchActived ? "Buscar por:" : "Buscar…"}
+          disabled={open}
+          placeholder={ !runAdvancedSearch ? "Buscar por cliente" : "Buscando…"}
           onChange={onChangeSearch}
           inputRef={simpleSearchInputRef}
           classes={{
@@ -70,7 +50,7 @@ const SearchInput = (props) => {
         variant="contained" 
         color="primary" 
         className={classes.advancedSearchButton}
-        onClick={ advancedButtonClick(simpleSearchInputRef, handleChangeInputsStatus) }
+        onClick={ switchAdvancedSearchClick(simpleSearchInputRef, handleClickOpen) }
       >
         <PageviewIcon/>
       </Button>
@@ -78,8 +58,7 @@ const SearchInput = (props) => {
         variant="contained" 
         color="primary"
         className={classes.newBudgetButton}
-        onClick={ handleClickOpen }
-        component={Link} 
+        component={Link}
         to="/budgets/new"
       >
         <PostAddIcon/>

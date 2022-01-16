@@ -1,6 +1,5 @@
 import React            from 'react';
 import PropTypes        from 'prop-types';
-import { makeStyles }   from '@material-ui/core/styles';
 import Tabs             from '@material-ui/core/Tabs';
 import Tab              from '@material-ui/core/Tab';
 import Typography       from '@material-ui/core/Typography';
@@ -44,18 +43,6 @@ function a11yProps(index) {
   };
 }
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
-    display: 'flex',
-    height: 224,
-  },
-  tabs: {
-    borderRight: `1px solid ${theme.palette.divider}`,
-  },
-}));
-
 const Dashboard = (props) => {
   const {classes } = props
   const [value, setValue] = React.useState(1);
@@ -70,19 +57,14 @@ const Dashboard = (props) => {
         return(
           "mostrando contenido"
         )
-        break;
       case (1) :
-
         return(
           <DashboarBudgets/>
         )
-        break;
       case (2) :
-
         return(
           "Otro contenido"
         )
-        break
       default :
         return(
           "Sin vista para mostrar"

@@ -1,4 +1,4 @@
-import React, { Component }                            from 'react';
+import React                                           from 'react';
 import { withRouter }                                  from 'react-router-dom';
 import PermIdentityIcon                                from '@material-ui/icons/PermIdentity';
 import FormHelperText                                  from '@material-ui/core/FormHelperText';
@@ -8,15 +8,11 @@ import AssignmentIndIcon                               from '@material-ui/icons/
 import EmojiTransportationIcon                         from '@material-ui/icons/EmojiTransportation';
 import PersonIcon                                      from '@material-ui/icons/Person';
 import MailOutlineIcon                                 from '@material-ui/icons/MailOutline';
-import CircularProgress                                from '@material-ui/core/CircularProgress';
-import Button                                          from '@material-ui/core/Button';
 import Grid                                            from '@material-ui/core/Grid';
 import TextField                                       from '@material-ui/core/TextField';
 import FormControlLabel                                from '@material-ui/core/FormControlLabel';
 import Checkbox                                        from '@material-ui/core/Checkbox';
 import { GLOBAL_MESSAGE }                              from '../../../../resolvers/queries';
-import { LOAD_CLIENTS, CREATE_CLIENT_MUTATION }        from '../clients_queries_and_mutations/queries';
-
 class NewClientForm extends React.Component {
 
   constructor(props) {

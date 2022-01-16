@@ -29,11 +29,6 @@ const TaxedField = (props) => {
 
   const [taxedField] = useState(props.taxedField)
 
-  const onClickEdit = () => {
-    
-  }
-  
-
   return(
     <Grid container item className={classes.taxedField} direction="row" >
       <Grid item xs={1} className={classes.taxedFieldIcon}>

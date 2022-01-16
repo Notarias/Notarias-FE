@@ -1,14 +1,8 @@
-import React, { useState, useRef }  from 'react'
+import React, { useState }  from 'react'
 import { withStyles }       from '@material-ui/core/styles';
 import { styles }           from '../../styles';
-import Button               from '@material-ui/core/Button';
-import Menu                 from '@material-ui/core/Menu';
-import MenuItem             from '@material-ui/core/MenuItem';
 import Grid                 from '@material-ui/core/Grid';
 import Divider              from '@material-ui/core/Divider';
-import ArrowDropDownIcon    from '@material-ui/icons/ArrowDropDown';
-import Typography           from '@material-ui/core/Typography';
-import Paper                from '@material-ui/core/Paper';
 import CommentsList         from './comments_list/comments_list';
 import AuditLog             from './audit_log';
 import GeneralInformation   from './general_information';
@@ -28,6 +22,8 @@ const Activities = (props) => {
         return(<CommentsList procedure={procedure}/>)
       case 2 :
         return(<AuditLog procedure={procedure}/>)
+      default :
+        return(<></>)
     }
   }
 

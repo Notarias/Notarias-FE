@@ -9,21 +9,14 @@ import FormControlLabel               from '@material-ui/core/FormControlLabel';
 
 export default (props) => {
 
-  const { refetch: refetchFieldValue, budgetFieldValue, templateField, budget } = props
+  const { budgetFieldValue, templateField, budget } = props
 
   const [active, setActive] = useState(budgetFieldValue.active)
 
-  const [updateFieldValueMutation, { loading }] =
+  const [updateFieldValueMutation] =
     useMutation(
       UPDATE_BUDGET_FIELD_VALUE,
       {
-        onError(apolloError) {
-          // setErrors(apolloError)
-          // setOpen(false);
-          // setPristine(true)
-        },
-        onCompleted(cacheData) {
-        },
         refetchQueries: [
           {
             query: GET_BUDGET_FIELD_VALUE,

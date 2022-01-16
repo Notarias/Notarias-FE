@@ -1,7 +1,6 @@
 import React from 'react';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import Typography from '@material-ui/core/Typography';
 
 export default (props) => {
   const { budget } = props;
@@ -14,7 +13,7 @@ export default (props) => {
 
       <ListItem button key="budget-name">
         <ListItemText
-          primary={ budget && budget.name || 'N/A' }
+          primary={ (budget && budget.name) || 'N/A' }
           style={{ margin: '0px' }}/>
       </ListItem>
     </React.Fragment>

@@ -8,9 +8,7 @@ import GroupsRows                               from './groups_rows';
 
 const FieldsGroups = (props) => {
 
-  const { currentTab, procedure, classes } = props;
-  const [currentFieldId, setCurrentFieldId] =  useState(null);
-  const [scrollHeight, setScrollHeight] = useState();
+  const { currentTab, procedure } = props;
   const [groups, setGroups] = useState();
 
   const { data } = useQuery(

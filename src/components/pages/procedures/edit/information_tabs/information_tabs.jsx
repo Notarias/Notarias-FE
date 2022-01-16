@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import ProcedureTemplateTab from './procedure_template_tab';
@@ -13,7 +13,7 @@ import { useQuery } from '@apollo/client';
 import { GET_PROCEDURES_TEMPLATES_TABS } from '../../queries_and_mutations/queries';
 
 const InformationTabs = (props) => {
-  const { classes, procedure } = props
+  const { procedure } = props
 
   const [value, setValue] = useState(0);
   const [tabList, setTabList] = useState();
@@ -79,7 +79,7 @@ const InformationTabs = (props) => {
         />}
       </Grid>
       <Divider variant="middle"/>
-      <Grid container item justifyContent="flex-start" item style={{ paddingTop: "10px" }}>
+      <Grid container item justifyContent="flex-start" style={{ paddingTop: "10px" }}>
         <Grid container item direction="row" xs={10}>
           <CreateComments procedure={procedure}/>
         </Grid>

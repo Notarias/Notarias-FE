@@ -170,12 +170,8 @@ export const styles = theme => {
       overflow: "visible",
       marginTop: "20px"
     },
-    paperAdvancedSearch: {
-      width: "700px"
-    },
     advancedSearchImputs: {
-      margin: "5px",
-      margin: "dense"
+      margin: "5px"
     },
     advancedSearchContainer: {
       padding: "10px"

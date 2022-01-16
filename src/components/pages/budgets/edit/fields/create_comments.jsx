@@ -10,8 +10,6 @@ import { useMutation, useQuery }              from '@apollo/client'
 import { CREATE_COMMENT }           from '../../queries_and_mutations/queries';
 import { GET_COMMENTABLE_COMMENTS } from '../../queries_and_mutations/queries';
 import { GET_BUDGETS_AUDITLOG }     from '../../queries_and_mutations/queries';
-import { CodeSharp } from "@material-ui/icons";
-
 
 const CreateComments = (props) => {
   const { classes, budget } = props
@@ -142,7 +140,6 @@ const CreateComments = (props) => {
             !loading && data &&
             <Avatar 
               src={data.currentUser.avatarThumbUrl} 
-              className={classes.avatarInDialogToAddPayment}
               className={classes.avatarWithoutTopMargin}
             />
           }

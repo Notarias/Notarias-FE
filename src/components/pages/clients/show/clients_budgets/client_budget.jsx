@@ -7,7 +7,7 @@ import ImageIcon      from '@material-ui/icons/Image';
 import Typography     from '@material-ui/core/Typography';
 
 const ClientBudget = (props) => {
-  const { classes, match, budget }  = props
+  const { classes, budget }  = props
 
 
   const getCurrentDate = (separator='/') => {

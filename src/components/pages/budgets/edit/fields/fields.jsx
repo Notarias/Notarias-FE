@@ -1,4 +1,4 @@
-import React, { useState, useEffect }         from 'react';
+import React, { useEffect }                   from 'react';
 import { useQuery }                           from '@apollo/client';
 import { GET_BUDGETING_TEMPLATE_TAB_FIELDS }  from '../../queries_and_mutations/queries'
 import Grid                                   from '@material-ui/core/Grid';
@@ -14,8 +14,6 @@ import CreateComments                         from './create_comments';
 
 const Fields = (props) => {
   const { currentTab, budget, classes} = props;
-  const [currentFieldId, setCurrentFieldId] =  React.useState(null)
-  const [scrollHeight, setScrollHeight] = useState()
 
   const { data } = useQuery(
     GET_BUDGETING_TEMPLATE_TAB_FIELDS,
@@ -46,7 +44,7 @@ const Fields = (props) => {
               return(
                 <Grid container item style={{ minHeight: '70px' }} key={field.id + 'field-row'}>
                   {
-                    field.fieldType == "tax" ?
+                    field.fieldType === "tax" ?
                     <TaxFieldValue
                       budget={budget}
                       field={field}
