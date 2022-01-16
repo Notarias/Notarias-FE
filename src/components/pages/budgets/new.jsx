@@ -296,7 +296,7 @@ const NewBudget = (params) => {
                       </Stepper>
                     </Grid>
                     <Hidden lgUp>
-                      <Grid container item xs={2} lg={0} alignItems='center' justifyContent='center' style={{ paddingRight: "20px" }}>
+                      <Grid container item xs={2} lg={false} alignItems='center' justifyContent='center' style={{ paddingRight: "20px" }}>
                         <WizardSummmary
                           clientInfo={clientInfo}
                           causantInfo={causantInfo}

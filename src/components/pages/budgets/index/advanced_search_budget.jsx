@@ -16,7 +16,6 @@ const AdvancedSearchBudget = (props) => {
     serialNumberInputRef,
     moreThanInputRef,
     lessThanInputRef,
-    runAdvancedSearch,
     setSetTimeout,
     timeout,
     setRunAdvancedSearch,
