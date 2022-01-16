@@ -142,6 +142,7 @@ export const LOAD_CLIENTS = gql`
       id
       firstName
       lastName
+      fullName
       rfc
       curp
     }
@@ -169,6 +170,7 @@ export const LOAD_CAUSANTS = gql`
       id
       firstName
       lastName
+      fullName
       rfc
       curp
       causant

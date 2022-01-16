@@ -21,7 +21,7 @@ const ConfirmDialog = (props) => {
       <Divider/>
       <DialogContent>
         <DialogContentText>
-          Se esta creando un nuevo tramite. Verifique que los datos sin correctos y presione en Guardar si esta confirme.
+          Se esta creando un nuevo presupuesto. Verifique que los datos sin correctos y presione en Guardar si esta conforme.
         </DialogContentText>
       </DialogContent>
       <Divider/>

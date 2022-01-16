@@ -23,7 +23,7 @@ import { CREATE_BUDGET } from './queries_and_mutations/queries';
 import { GLOBAL_MESSAGE } from '../../../resolvers/queries';
 import client from '../../../apollo';
 import Hidden from '@material-ui/core/Hidden';
-import VisibilityIcon from '@material-ui/icons/Visibility';
+import WizardSummmary from './new/wizard_summary';
 
 
 const BREADCRUMBS = [
@@ -251,8 +251,7 @@ const NewBudget = (params) => {
           <Button
             variant="contained"
             color="primary"
-            onClick={openSaveConfirm}
-          >
+            onClick={openSaveConfirm}>
             Guardar
           </Button>
         )
@@ -286,73 +285,75 @@ const NewBudget = (params) => {
         <Grid item xs={12} md={10} lg={10}>
           <Paper>
             <Grid container>
-              <Grid item container xs={12} md={12} lg={8}>
-                  <Grid container direction="column" justifyContent="flex-start">
-                    <Grid container item>
-                      <Grid item xs={10} lg={12}>
-                        <Stepper activeStep={activeStep} alternativeLabel >
-                          {steps.map((label) => (
-                            <Step key={label}>
-                              <StepLabel>{label}</StepLabel>
-                            </Step>
-                          ))}
-                        </Stepper>
+              <Grid item container xs={12} md={12} lg={9}>
+                <Grid container direction="column" justifyContent="flex-start">
+                  <Grid container item>
+                    <Grid item xs={10} lg={12}>
+                      <Stepper activeStep={activeStep} alternativeLabel >
+                        {steps.map((label) => (
+                          <Step key={label}>
+                            <StepLabel>{label}</StepLabel>
+                          </Step>
+                        ))}
+                      </Stepper>
+                    </Grid>
+                    <Hidden lgUp>
+                      <Grid container item xs={2} lg={0} alignItems='center' justifyContent='center' style={{ paddingRight: "20px" }}>
+                        <WizardSummmary
+                          clientInfo={clientInfo}
+                          causantInfo={causantInfo}
+                          selectedProcedure={selectedProcedure}
+                          selectedBudget={selectedBudget}
+                          asignee={asignee}
+                          setAsignee={setAsignee}
+                          classes={classes}/>
                       </Grid>
-                      <Hidden lgUp>
-                        <Grid item xs={2} lg={0}>
+                    </Hidden>
+                  </Grid>
+                  <Grid container item direction="column" justifyContent="flex-start">
+                    {activeStep === steps.length ? (
+                      <>
+                        <Typography>
+                          All steps completed
+                        </Typography>
+                      </>
+                    ) : (
+                      <>
+                        {getStepContent(activeStep, listData)}
+                      </>
+                    )}
+                  </Grid>
+                  <Grid container item direction="column" justifyContent="flex-end"  style={{ flex: "1 1 auto" }} className={classes.marginButtons}>
+                    <Grid container item justifyContent="center">
+                      <Grid container item xs={6} justifyContent="flex-start">
+                        <Grid item>
                           <Button
-                            variant="contained"
+                            onClick={handleReset}
                             color="secondary"
-                            className={classes.button}
-                            startIcon={<VisibilityIcon />}
-                          >Resumen</Button>
+                            hidden={activeStep ? true : false}>
+                            Cancelar
+                          </Button>
                         </Grid>
-                      </Hidden>
-                    </Grid>
-                    <Grid container item direction="column" justifyContent="flex-start" style={{ height: "69%" }}>
-                      {activeStep === steps.length ? (
-                        <>
-                          <Typography>
-                            All steps completed
-                          </Typography>
-                        </>
-                      ) : (
-                        <>
-                          {getStepContent(activeStep, listData)}
-                        </>
-                      )}
-                    </Grid>
-                    <Grid container item direction="column" justifyContent="flex-end"  style={{ flex: "1 1 auto" }} className={classes.marginButtons}>
-                      <Grid container item justifyContent="center">
-                        <Grid container item xs={6} justifyContent="flex-start">
-                          <Grid item>
-                            <Button
-                              onClick={handleReset}
-                              color="secondary"
-                              hidden={activeStep ? true : false}>
-                              Cancelar
-                            </Button>
-                          </Grid>
+                      </Grid>
+                      <Grid container item xs={2} justifyContent="flex-end">
+                        <Grid item>
+                          <Button disabled={activeStep === 0} onClick={handleBack}>
+                            Regresar
+                          </Button>
                         </Grid>
-                        <Grid container item xs={2} justifyContent="flex-end">
-                          <Grid item>
-                            <Button disabled={activeStep === 0} onClick={handleBack}>
-                              Regresar
-                            </Button>
-                          </Grid>
-                        </Grid>
-                        <Grid container item xs={2} justifyContent="flex-end">
-                          <Grid item>
-                            {stepperButtons(activeStep)}
-                          </Grid>
+                      </Grid>
+                      <Grid container item xs={2} justifyContent="flex-end">
+                        <Grid item>
+                          {stepperButtons(activeStep)}
                         </Grid>
                       </Grid>
                     </Grid>
                   </Grid>
+                </Grid>
               </Grid>
                 
               <Hidden mdDown>
-                <Grid container item xs={4}>
+                <Grid container item xs={3}>
                   <Summary
                     clientInfo={clientInfo}
                     causantInfo={causantInfo}

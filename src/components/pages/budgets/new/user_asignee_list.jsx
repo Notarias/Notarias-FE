@@ -9,10 +9,11 @@ import SearchIcon from '@material-ui/icons/Search';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Divider from '@material-ui/core/Divider';
 import Fuse from 'fuse.js';
 import Chip from '@material-ui/core/Chip';
-import FaceIcon from '@material-ui/icons/Face';
+import Avatar from '@material-ui/core/Avatar';
 import { useQuery } from '@apollo/client';
 import { USERS_QUICK_LIST } from '../queries_and_mutations/queries';
 
@@ -64,8 +65,12 @@ const UserAsigneeList = (props) => {
     }
   }
 
-  const selectItem = (event, index, firstName, lastName) => {
-    setAsignee({id: index, fullName: `${firstName} ${lastName}`});
+  const selectItem = (event, item) => {
+    setAsignee({
+      id: item.id,
+      fullName: `${item.firstName} ${item.lastName}`,
+      avatarThumbUrl: item.avatarThumbUrl
+    });
   }
 
   const usersRows = (searchList) => {
@@ -79,14 +84,12 @@ const UserAsigneeList = (props) => {
               button
               dense={true}
               selected={asignee.id === item.id}
-              onClick={(event) => selectItem(event, item.id, item.firstName, item.lastName)}
+              onClick={(event) => selectItem(event, item)}
               >
-              <ListItemText id={item.id}>
-                <Chip
-                  icon={<FaceIcon />}
-                  label={`${item.firstName} ${item.lastName}`}
-                />
-              </ListItemText>
+              <ListItemAvatar>
+                <Avatar alt={item.firstName} src={item.avatarThumbUrl}/>
+              </ListItemAvatar>
+              <ListItemText id={item.id} primary={`${item.firstName} ${item.lastName}`}/>
             </ListItem>
             <Divider/>
           </>
@@ -99,7 +102,7 @@ const UserAsigneeList = (props) => {
     <>
       <TextField
         id="outlined-basic"
-        label="Buscar Tramite"
+        label="Buscar"
         onChange={searchUser}
         variant="outlined"
         InputProps={{
@@ -110,13 +113,9 @@ const UserAsigneeList = (props) => {
           )
         }}
       />
-      <Card variant="outlined" style={{ overflowY: "scroll" }}>
-        <CardContent>
-          <List>
-            {searchList && usersRows(searchList)}
-          </List>
-        </CardContent>
-      </Card>
+      <List>
+        {searchList && usersRows(searchList)}
+      </List>
     </>
   );
 };
