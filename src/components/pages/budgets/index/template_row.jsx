@@ -3,7 +3,6 @@ import Grid                           from '@material-ui/core/Grid';
 import TableRow                       from '@material-ui/core/TableRow';
 import TableCell                      from '@material-ui/core/TableCell';
 import GenericDropdownMenu            from '../../../ui/generic_dropdown_menu';
-import Button                         from '@material-ui/core/Button';
 import CreateIcon                     from '@material-ui/icons/Create';
 import MenuItem                       from '@material-ui/core/MenuItem';
 import ListItemIcon                   from '@material-ui/core/ListItemIcon';
@@ -20,7 +19,6 @@ import PrintIcon                      from '@material-ui/icons/Print';
 const TemplateRow = (props) => {
 
   const {budget, classes} = props
-  const [open, setOpen] = React.useState(false);
 
   return(
     <TableRow key={  "-row" }>

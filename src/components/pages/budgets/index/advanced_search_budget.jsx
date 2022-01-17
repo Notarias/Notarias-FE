@@ -1,4 +1,4 @@
-import React, {useState}                    from 'react'
+import React                                from 'react'
 import Grid                                 from '@material-ui/core/Grid';
 import TextField                            from '@material-ui/core/TextField';
 import { withStyles }                       from '@material-ui/core/styles';
@@ -7,123 +7,128 @@ import Paper                                from '@material-ui/core/Paper';
 import Button                               from '@material-ui/core/Button';
 
 const AdvancedSearchBudget = (props) => {
-  const { 
-    classes,
-    changeAdvanceSearch,
+  const {
     setClientNameValue,
-    setProcedureNameValue,
     setSerialNumberValue,
     setMoreThanValue,
     setLessThanValue,
     clientNameInputRef,
-    procedureInputRef,
     serialNumberInputRef,
     moreThanInputRef,
     lessThanInputRef,
+    setSetTimeout,
+    timeout,
+    setRunAdvancedSearch,
   } = props
-  const [changeClientName, setChangeClientName] = React.useState(null)
-  const [changeProcedureName, setChangeProcedureName]  = React.useState(null)
-  const [changeSerialNumber, setChangeSerialNumber] = React.useState(null)
-  const [changeMoreThan, setChangeMoreThan] = React.useState(null)
-  const [changeLessThan, setChangeLessThan] = React.useState(null)
 
   const onChangeClientName = (event) => {
-    setChangeClientName(event.target.value)
-  }
-
-  const onChangeProcedureName = (event) => {
-    setChangeProcedureName(event.target.value)
+    setClientNameValue(event.target.value)
   }
 
   const onChangeSerialNumber = (event) => {
     const onlyString = event.target.value.toString()
     const onlyNums = onlyString.replace(/[^0-9]/g, '');
     event.target.value = onlyNums
-    setChangeSerialNumber(Number(event.target.value))
+
+    timeout && clearTimeout(timeout)
+    let value = event.target.value
+
+    setSetTimeout(setTimeout(() => {
+      setSerialNumberValue(Number(value))
+      setRunAdvancedSearch(true)
+    }, 2000))
   }
 
   const onChangeMoreThan = (event) => {
-    const onlyString = event.target.value.toString()
     const onlyNums = event.target.value.replace(/[^0-9]/g, '');
     event.target.value = onlyNums
-    setChangeMoreThan(Number(event.target.value))
+    
+    timeout && clearTimeout(timeout)
+    let value = event.target.value
+
+    setSetTimeout(setTimeout(() => {
+      setMoreThanValue(Number(value) * 100)
+      setRunAdvancedSearch(true)
+    }, 2000))
   }
 
   const onChangeLessThan = (event) => {
-    const onlyString = event.target.value.toString()
     const onlyNums = event.target.value.replace(/[^0-9]/g, '');
     event.target.value = onlyNums
-    setChangeLessThan(Number(event.target.value))
+
+    timeout && clearTimeout(timeout)
+    let value = event.target.value
+
+    setSetTimeout(setTimeout(() => {
+      setLessThanValue(Number(value) * 100)
+      setRunAdvancedSearch(true)
+    }, 2000))
   }
 
   const startAdvanceSearch = () => {
-    setClientNameValue(changeClientName)
-    // setProcedureNameValue(changeProcedureName)
-    setSerialNumberValue(changeSerialNumber > 0 ? changeSerialNumber : null)
-    setMoreThanValue(changeMoreThan > 0 ? changeMoreThan * 100 : null)
-    setLessThanValue(changeLessThan > 0 ? changeLessThan * 100 : null)
+    setRunAdvancedSearch(true)
   }
 
-
+  
   return(
-    <Grid container justifyContent="flex-end"
-      className={changeAdvanceSearch ? classes.GridInputAdvancedSearchHide : classes.GridInputAdvancedSearch}>
+    <Grid container justifyContent="flex-end">
       <Grid container item xs={6} direction="row" justifyContent="flex-end">
-        <Paper className={classes.paperAdvancedSearch}>
-        <Grid container item justifyContent="flex-start">
-          <Grid item xs={10}>
-            <TextField
-              inputRef={clientNameInputRef}
-              onChange={onChangeClientName}
-              size="small" 
-              id="client_name" 
-              label="Nombre del cliente" 
-              variant="outlined" 
-              className={classes.inputClientNameInAdvancedSearch}
-            />
-          {/* </Grid> */}
-            {/* <TextField
-              inputRef={procedureInputRef}
-              onChange={onChangeProcedureName}
-              size="small"
-              id="budgeting"
-              label="Presupuesto"
-              variant="outlined"
-              className={classes.inputInAdvancedSearch}
-            /> */}
-            {/* <Grid item xs={10}> */}
-            <TextField
-              inputRef={serialNumberInputRef}
-              onChange={onChangeSerialNumber}
-              size="small"
-              id="serial_number"
-              label="No. serie"
-              variant="outlined"
-              className={classes.serialInAdvancedSearch}
-            />
-            <TextField
-              inputRef={moreThanInputRef}
-              onChange={onChangeMoreThan}
-              size="small"
-              id="more_than"
-              label="Monto mayor a:"
-              variant="outlined"
-              className={classes.inputInAdvancedSearch}
-            />
-            <TextField
-              inputRef={lessThanInputRef}
-              onChange={onChangeLessThan}
-              size="small"
-              id="less_than"
-              label="Monto menor a:"
-              variant="outlined"
-              className={classes.inputInAdvancedSearch}
-            />
+        <Paper style={{ padding: "20px" }}>
+          <Grid container>
+            <Grid container item xs={10}>
+              <Grid item xs={12}>
+                <TextField
+                  inputRef={clientNameInputRef}
+                  onChange={onChangeClientName}
+                  id="client_name"
+                  label="Nombre del cliente"
+                  fullWidth
+                />
+              </Grid>
+              {/* <TextField
+                inputRef={procedureInputRef}
+                onChange={onChangeProcedureName}
+                size="small"
+                id="budgeting"
+                label="Presupuesto"
+                variant="outlined"
+                className={classes.inputInAdvancedSearch}
+              /> */}
+              {/* <Grid item xs={10}> */}
+              <Grid container item xs={12} style={{ paddingTop: '10px' }}>
+                <Grid item xs={4} style={{ paddingRight: '10px' }}>
+                  <TextField
+                    inputRef={serialNumberInputRef}
+                    onChange={onChangeSerialNumber}
+                    id="serial_number"
+                    label="No. serie"
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item xs={4} style={{ paddingRight: '10px' }}>
+                  <TextField
+                    inputRef={moreThanInputRef}
+                    onChange={onChangeMoreThan}
+                    id="more_than"
+                    label="Total mayor a:"
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item xs={4}>
+                  <TextField
+                    inputRef={lessThanInputRef}
+                    onChange={onChangeLessThan}
+                    id="less_than"
+                    label="Total menor a:"
+                    fullWidth
+                  />
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid container item xs={2} alignItems="center" justifyContent="center">
+              <Button variant="outlined" onClick={startAdvanceSearch}>Buscar</Button>
+            </Grid>
           </Grid>
-          <Grid container item xs={2} alignItems="center" justifyContent="center">
-            <Button variant="outlined" onClick={startAdvanceSearch}>Buscar</Button>
-          </Grid>
-        </Grid>
         </Paper>
       </Grid>
     </Grid>

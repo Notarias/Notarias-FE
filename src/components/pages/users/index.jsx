@@ -10,11 +10,6 @@ import TablePagination      from '@material-ui/core/TablePagination';
 import UserRows            from './users_rows';
 import ControlsBar          from './controls_bar';
 
-const BREADCRUMBS = [
-  { name: "Inicio", path: "/" },
-  { name: "Usuarios", path: null }
-]
-
 const Users = (props) => {
   const [searchLoading, setSearchLoading] = useState(false);
   const [sortField, setSortField]         = useState("first_name")

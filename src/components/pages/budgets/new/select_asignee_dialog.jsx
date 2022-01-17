@@ -24,7 +24,7 @@ const SelectAsigneeDialog = (props) => {
         </Typography>
       </DialogTitle>
       <Divider/>
-      <DialogContent>
+      <DialogContent dividers>
         <UserAsigneeList 
           asignee={asignee}
           setAsignee={setAsignee}

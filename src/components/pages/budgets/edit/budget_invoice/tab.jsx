@@ -10,13 +10,12 @@ export default (props) => {
   const [tab]               = useState(props.tab)
   const [budget]            = useState(props.budget)
   const [fields, setFields] = useState()
-  const [totals, setTotals] = useState()
 
-  const { loading, data, refetch } = useQuery(
+  const { loading, data } = useQuery(
     GET_BUDGETING_TEMPLATE_TAB_FIELDS, { variables: { "id": tab.id } }
   );
 
-  const { loading: totalsLoading, data: totalsData } = useQuery(
+  const { data: totalsData } = useQuery(
     GET_BUDGETING_TAB_TOTALS, { variables: { id: tab.id, budgetId: budget.id } }
   )
 
@@ -25,12 +24,6 @@ export default (props) => {
       setFields(data.budgetingTemplateTabFields)
     }
   }, [loading, data])
-
-  useEffect(() => {
-    if(totalsData) {
-      setTotals(totalsData.budgetTotals)
-    }
-  }, [totalsLoading, totalsData])
 
   return(
     <Grid item container direction='column' spacing={1}>

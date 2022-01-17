@@ -9,14 +9,12 @@ import DialogActions                from '@material-ui/core/DialogActions';
 import DialogTitle                  from '@material-ui/core/DialogTitle';
 import Grid                         from '@material-ui/core/Grid';
 import Button                       from '@material-ui/core/Button';
+import Link                         from '@material-ui/core/Link';
 
 
 const CurrentUserActive = (props) => {
   const{ comment, classes, currentUserData, setCommentValue, setCommentShowed, commentShowed } = props
   const [open, setOpen] = React.useState(false)
-  const [error, setError] = React.useState(false)
-
-  const inputsList = ["body"]
 
   const changingInputComment = () => {
     setCommentShowed(!commentShowed)
@@ -27,11 +25,6 @@ const CurrentUserActive = (props) => {
   useMutation(
     DESTROY_COMMENT,
     {
-      onError(apolloError) {
-        setErrors(apolloError)
-      },
-      onCompleted(cacheData) {
-      },
       refetchQueries: [
         {
           query: LOAD_CLIENT_COMMENTS,
@@ -41,19 +34,6 @@ const CurrentUserActive = (props) => {
       awaitRefetchQueries: true
     }
   )
-
-  const setErrors = (apolloError) => {
-    let errorsList = {}
-    let errorTemplateList = apolloError.graphQLErrors
-    for ( let i = 0; i < errorTemplateList.length; i++) {
-      for( let n = 0; n < inputsList.length; n++) {
-        if(errorTemplateList[i].extensions.attribute === inputsList[n]){
-          errorsList[inputsList[n]] = errorTemplateList[i].message
-        }
-      }
-    }
-    setError(errorsList)
-  }
 
   const destroyComment = (event) => {
     destroyCommentMutation({
@@ -75,20 +55,18 @@ const CurrentUserActive = (props) => {
     if(currentUserData.id === comment.user.id) {
       return(
         <Grid container item>
-          <a
-            href="#"
+          <Link
             onClick={changingInputComment}
             className={classes.buttonTextComments}
           >
             Editar
-          </a>
-          <a
-            href="#"
+          </Link>
+          <Link
             className={classes.buttonTextComments}
             onClick={handleClickOpen}
           >
             Eliminar
-          </a>
+          </Link>
           <Dialog open={open} onClose={handleClose}>
             <DialogTitle>
               Se eliminará este comentario

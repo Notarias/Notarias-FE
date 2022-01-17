@@ -5,12 +5,10 @@ import MenuItem             from '@material-ui/core/MenuItem';
 import { useQuery }         from '@apollo/client';
 import { useMutation }      from '@apollo/client';
 import { UPDATE_USER }      from './queries_and_mutations/queries';
-import Button               from '@material-ui/core/Button';
 import { styles }           from './styles';
 import { withStyles }       from '@material-ui/core/styles';
 import { Link }             from 'react-router-dom';
 import { GET_CURRENT_USER } from './queries_and_mutations/queries'
-import { LOAD_USERS }         from './queries_and_mutations/queries'
 import GenericDropdownMenu  from '../../ui/generic_dropdown_menu';
 import CreateIcon                     from '@material-ui/icons/Create';
 import Grid                           from '@material-ui/core/Grid';
@@ -20,17 +18,15 @@ import LockOpenTwoToneIcon from '@material-ui/icons/LockOpenTwoTone';
 import LockTwoToneIcon from '@material-ui/icons/LockTwoTone';
 
 const  UserTableRows = (props) => {
-  const {classes, user, sortField,sortDirection, searchField, per, page } = props
+  const {classes, user } = props
   const [locked, setLocked] = React.useState(props.user.lockedAt)
 
-  const { loading, data, refetch } = useQuery(GET_CURRENT_USER);
+  const { data } = useQuery(GET_CURRENT_USER);
 
-  const [updateUserMutation, updateUserProcessInfo] =
+  const [updateUserMutation] =
   useMutation(
     UPDATE_USER,
     {
-      onError(apolloError) {
-      },
       onCompleted(cacheData) {
         setLocked(cacheData.updateUser.user.lockedAt)
       },

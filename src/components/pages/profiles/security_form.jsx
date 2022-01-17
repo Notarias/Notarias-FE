@@ -79,6 +79,7 @@ const SecurityForm = (props) => {
           let errorsHash = {}
           error.graphQLErrors.map((error) => {
             errorsHash[error.extensions.attribute] = error.message
+            return(error.message)
           }) 
           setErrors(errorsHash)
           setPristine(true)

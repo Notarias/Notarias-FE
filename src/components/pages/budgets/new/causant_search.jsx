@@ -40,7 +40,7 @@ const CausantSearch = (props) => {
     sortField: sortField
   }
 
-  const { loading, data, refetch } = useQuery(
+  const { data, refetch } = useQuery(
     LOAD_CAUSANTS, { vairables: variables, errorPolicy: 'all' }
   );
 
@@ -81,7 +81,7 @@ const CausantSearch = (props) => {
   const renderInputSearch = () => {
     return(
       <Grid container  direction="row" spacing={3} justifyContent="flex-end">
-        <Grid item justifyContent="flex-end">
+        <Grid item>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               { 
@@ -120,10 +120,9 @@ const CausantSearch = (props) => {
     const { setCausantInfo } = props
 
     return(
-      <TableBody className={classes.clientSearchTable}>
+      <TableBody>
         {
           data && data.causants.map((causant, index ) => {
-            
             const handleMenuItemClick = (event) => {
               setSelectedIndex(causant.id);
               setCausantInfo(causant);
@@ -150,9 +149,9 @@ const CausantSearch = (props) => {
   let sortHandler = sort.bind(this)
 
   return(
-    <Grid container item style={{ padding: "20px" }}>
-     { renderInputSearch() }
-      <Table className={classes.clientSearchTable} >
+    <Grid container item direction="column" style={{ padding: "20px" }}>
+      { renderInputSearch() }
+      <Table>
         <TableHead >
           <TableRow >
           <SortHeader

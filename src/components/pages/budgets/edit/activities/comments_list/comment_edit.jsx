@@ -9,7 +9,6 @@ import TextField                    from '@material-ui/core/TextField';
 import Link                         from '@material-ui/core/Link';
 import Dialog                       from '@material-ui/core/Dialog';
 import DialogActions                from '@material-ui/core/DialogActions';
-import DialogContent                from '@material-ui/core/DialogContent';
 import DialogTitle                  from '@material-ui/core/DialogTitle';
 import { useMutation }              from '@apollo/client';
 import { UPDATE_COMMENT }           from '../../../queries_and_mutations/queries';
@@ -20,7 +19,6 @@ import { GET_BUDGETS_AUDITLOG }     from '../../../queries_and_mutations/queries
 
 const CommentEdit = (props) => {
   const { classes, comment, budget } = props
-  let body = comment.body
 
   const [commentValue, setCommentValue] = React.useState(comment.body)
   const [commentShowed, setCommentShowed] = React.useState(true)
@@ -184,20 +182,18 @@ const CommentEdit = (props) => {
           </Typography>
         </Grid>
         <Grid container item>
-          <a
-            href="#"
+          <Link
             onClick={changingInputComment}
             className={classes.buttonTextComments}
           >
             Editar
-          </a>
-          <a
-            href="#"
+          </Link>
+          <Link
             className={classes.buttonTextComments}
             onClick={handleClickOpen}
           >
             Eliminar
-          </a>
+          </Link>
           <Dialog open={open} onClose={handleClose}>
             <DialogTitle>
               Se eliminará este comentario

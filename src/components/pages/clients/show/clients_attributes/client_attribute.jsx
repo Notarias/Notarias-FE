@@ -1,4 +1,4 @@
-import React, {useEffect, useState}                 from 'react';
+import React, {useEffect }                from 'react';
 import { withStyles }                     from '@material-ui/core/styles';
 import { styles }                         from '../styles';
 import ListItemText                       from '@material-ui/core/ListItemText';
@@ -18,10 +18,8 @@ const ClientAttribute = (props) => {
   const {classes , attr, match} = props
   const [attributeValue, setAttributeValue] = React.useState("")
   const [pristine, setPristine] = React.useState(true)
-  const [error, setError] = useState(false)
-  const inputsList = ["name"]
 
-  const {loading: loadingAttributeValue, data: dataAttributeValue} = 
+  const { data: dataAttributeValue} = 
   useQuery(GET_CLIENT_ATTRIBUTE_VALUE, { variables: { "attributeId": Number(attr.id),"clientId":
    match.params.id }})
 
@@ -35,9 +33,6 @@ const ClientAttribute = (props) => {
     useMutation(
       CREATE_CLIENT_ATTRIBUTE_VALUE,
       {
-        onError(apolloError) {
-          setErrors(apolloError)
-        },
         onCompleted(cacheData) {
           setPristine(true)
         },
@@ -67,9 +62,6 @@ const ClientAttribute = (props) => {
   useMutation(
     UPDATE_CLIENT_ATTRIBUTE_VALUE,
     {
-      onError(apolloError) {
-        setErrors(apolloError)
-      },
       onCompleted(cacheData) {
         setPristine(true)
       },
@@ -90,19 +82,6 @@ const ClientAttribute = (props) => {
         "value": String(attributeValue),
       }
     })
-  }
-
-  const setErrors = (apolloError) => {
-    let errorsList = {}
-    let errorTemplateList = apolloError.graphQLErrors
-    for ( let i = 0; i < errorTemplateList.length; i++) {
-      for( let n = 0; n < inputsList.length; n++) {
-        if(errorTemplateList[i].extensions.attribute === inputsList[n]){
-          errorsList[inputsList[n]] = errorTemplateList[i].message
-        }
-      }
-    }
-    setError(errorsList)
   }
 
   const renderInputNumber = () => {

@@ -40,7 +40,7 @@ const ClientSearch = (props) => {
     sortField: sortField
   }
 
-  const { loading, data, refetch } = useQuery(
+  const { data, refetch } = useQuery(
     LOAD_CLIENTS, { vairables: variables, errorPolicy: 'all' }
   );
 

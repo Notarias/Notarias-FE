@@ -52,7 +52,7 @@ NumberFormatCustom.propTypes = {
 };
 
 const Payment = (props) => {
-  const { initialFieldValue, totalDebt, budget, fieldValueId, fieldId } = props
+  const { totalDebt, budget, fieldValueId, fieldId } = props
   const [notePayment, setNotePayment] = React.useState("")
   const [valuePayment, setValuePayment] = React.useState(0)
   const [pristine, setPristine] = React.useState(true)

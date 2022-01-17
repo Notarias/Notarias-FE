@@ -142,6 +142,7 @@ export const LOAD_CLIENTS = gql`
       id
       firstName
       lastName
+      fullName
       rfc
       curp
     }
@@ -169,6 +170,7 @@ export const LOAD_CAUSANTS = gql`
       id
       firstName
       lastName
+      fullName
       rfc
       curp
       causant
@@ -242,6 +244,7 @@ query budget(
       totalCredit
       totalPaid
       totalDebt
+      serialNumber
       reporter{
         firstName
         lastName
@@ -266,6 +269,10 @@ query budget(
         name
         id
       },
+      procedure {
+        id
+        serialNumber
+      }
       fieldValues{
         id
         value

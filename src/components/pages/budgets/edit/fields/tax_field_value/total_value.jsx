@@ -1,16 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef }           from 'react';
 import Grid                                   from '@material-ui/core/Grid';
-import TextField                              from '@material-ui/core/TextField';
-import InputAdornment                         from '@material-ui/core/InputAdornment';
-import Button                                 from '@material-ui/core/Button';
 import Chip                                   from '@material-ui/core/Chip';
-import Avatar                                 from '@material-ui/core/Avatar';
-import BorderColorIcon                        from '@material-ui/icons/BorderColor';
 import AttachMoneyIcon                        from '@material-ui/icons/AttachMoney';
 import NumberFormat                           from 'react-number-format';
 import PropTypes                              from 'prop-types';
-import ClearIcon                              from '@material-ui/icons/Clear';
-
 function NumberFormatCustom(props) {
   const { inputRef, onChange, ...other } = props;
 
@@ -42,44 +35,44 @@ NumberFormatCustom.propTypes = {
 
 const TotalValue = (props) => {
   const {
-    setPristine,
+    // setPristine,
     editing,
-    setEditing,
-    value,
+    // setEditing,
+    // value,
     pristine,
-    setValue,
+    // setValue,
     budgetFieldValue,
     templateField,
-    editingValue,
-    setEditingValue
+    // editingValue,
+    // setEditingValue
   } = props
 
   const inputRef = useRef()
 
-  const handleChange = (event) => {
-    if(Number(event.target.value) && pristine) {
-      setPristine(false)
-    } else if(!event.target.value) {
-      setPristine(true)
-    } else if(event.target.value === '0.00'){
-      setPristine(false)
-    } else if(!pristine) {
-      setPristine(true)
-    }
-    setEditingValue(event.target.value);
-  }
+  // const handleChange = (event) => {
+  //   if(Number(event.target.value) && pristine) {
+  //     setPristine(false)
+  //   } else if(!event.target.value) {
+  //     setPristine(true)
+  //   } else if(event.target.value === '0.00'){
+  //     setPristine(false)
+  //   } else if(!pristine) {
+  //     setPristine(true)
+  //   }
+  //   setEditingValue(event.target.value);
+  // }
 
-  const cancelEditing = () => {
-    setEditing(false)
-    setPristine(true)
-    setEditingValue(value)
-  }
+  // const cancelEditing = () => {
+  //   setEditing(false)
+  //   setPristine(true)
+  //   setEditingValue(value)
+  // }
 
-  const enableEditing = () => {
-    setEditingValue(value ? value : '')
-    setPristine(true)
-    setEditing(true)
-  }
+  // const enableEditing = () => {
+  //   setEditingValue(value ? value : '')
+  //   setPristine(true)
+  //   setEditing(true)
+  // }
 
   useEffect(() => {
     if(editing && pristine) {
@@ -88,7 +81,7 @@ const TotalValue = (props) => {
   }, [editing, pristine])
 
   const inferOperatorAdornment = () => {
-    if(templateField.operator == 'percentile') {
+    if(templateField.operator === 'percentile') {
       return(`%${templateField.defaultValue || 0}`)
     }
   }

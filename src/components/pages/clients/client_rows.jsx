@@ -12,7 +12,6 @@ import TableCell                    from '@material-ui/core/TableCell';
 import TableBody                    from '@material-ui/core/TableBody';
 import { useQuery }                 from '@apollo/client';
 import Link                         from '@material-ui/core/Link';
-import EditOutlinedIcon             from '@material-ui/icons/EditOutlined';
 import Grid                         from '@material-ui/core/Grid';
 import Typography                   from '@material-ui/core/Typography';
 import { LOAD_CLIENTS }             from './clients_queries_and_mutations/queries';

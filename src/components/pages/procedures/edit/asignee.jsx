@@ -66,22 +66,19 @@ const Asignee = (props) => {
   const { classes, asigneeData, procedure }  = props
   const [open, setOpen]                     = useState(false)
   const [searchList, setSearchList]         = useState([])
-  const [fuzzySearcher, setFuzzySearcher]   = useState(new Fuse(users, { keys: ['firstName'] }))
   const [initialized, setInitialized]       = useState()
   const [asigneeToMutation, setAsigneeToMutation] = useState()
-  const [errors, setErrors] = useState()
   const [selectedIndex, setSelectedIndex]   = useState(1);
   const [asignee, setAsignee]               = useState()
-  const [sortField, setSortField]           = useState("first_name")
-  const [sortDirection, setSortDirection]   = useState("desc")
+  const [sortField]                         = useState("first_name")
+  const [sortDirection]                     = useState("desc")
   const [searchField]                       = useState("first_name_or_last_name_or_email_cont")
-  const [searchValue, setSearchValue]       = useState("")
-  const [timeout, setSetTimeout]            = useState(null)
-  const [page, setPage]                     = useState(1)
-  const [per, setPer]                       = useState(100)
-  const [total_records, setTotalRecords]    = useState(0)
+  const [searchValue]                       = useState("")
+  const [page]                              = useState(1)
+  const [per]                               = useState(100)
   const [pristine, setPristine]             = useState(true)
   const [users, setUsers]                   = useState([])
+  const [fuzzySearcher, setFuzzySearcher]   = useState(new Fuse(users, { keys: ['firstName'] }))
 
   let variables = {
     page: page,
@@ -98,7 +95,7 @@ const Asignee = (props) => {
     lastName: "encargado"
   }
 
-  const { loading, data, refetch } = useQuery(
+  const { data } = useQuery(
     LOAD_USERS, { variables: variables }
   );
 
@@ -108,7 +105,6 @@ const Asignee = (props) => {
       setFuzzySearcher(new Fuse(data.users, { keys: ['firstName'] }))
       setSearchList(data.users)
       setInitialized(true) 
-      setTotalRecords(data.usersCount)
     }
   }, [data]);
 
@@ -139,10 +135,6 @@ const Asignee = (props) => {
   useMutation(
     UPDATE_PROCEDURE,
     {
-      onError(apolloError) {
-        setErrors(apolloError)
-
-      },
       onCompleted(cacheData) {
         setOpen(false);
         setPristine(true)

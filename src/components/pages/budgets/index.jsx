@@ -1,4 +1,4 @@
-import React, { useState, useRef, createRef }  from 'react';
+import React, { useState, useRef }  from 'react';
 import { withStyles }                          from '@material-ui/core/styles';
 import { styles }                              from './styles';
 import Breadcrumbs                             from '../../ui/breadcrumbs'
@@ -26,36 +26,47 @@ const BudgetsIndex = (props) => {
   const [timeout, setSetTimeout]          = useState(null);
   const [page, setPage]                   = useState(0);
   const [per, setPer]                     = useState(5);
-  const [total_records, setTotalRecords]  = useState(0);
+  const [totalRecords, setTotalRecords]  = useState(0);
   const [getTemplatesVariables, setGetTemplatesVariables] = useState({});
-  const [changeAdvanceSearch, setChangeAdvanceSearch] = useState(true);
   const [simpleSearchValue, setSimpleSearchValue] = useState(null);
   const [clientNameValue, setClientNameValue] = useState(null);
   const [procedureNameValue, setProcedureNameValue] = useState(null);
   const [serialNumberValue, setSerialNumberValue] = useState(null);
   const [moreThanValue, setMoreThanValue] = useState(null);
   const [lessThanValue, setLessThanValue] = useState(null);
-  const [advanceSearchActived, setAdvanceSearchActived] = useState(false);
+  const [runAdvancedSearch, setRunAdvancedSearch] = useState(false);
+  const [openAdvancedSearch, setOpenAdvancedSearch] = useState(false)
 
   const clientNameInputRef = useRef();
   const procedureInputRef = useRef();
   const serialNumberInputRef = useRef();
-  const moreThanInputRef = createRef();
-  const lessThanInputRef = createRef();
+  const moreThanInputRef = useRef();
+  const lessThanInputRef = useRef();
 
-  const toEraseValue = () => {
-    clientNameInputRef && (clientNameInputRef.current.value = null)
+  const clearAdvancedSearchRefsValues = () => {
+    clientNameInputRef && clientNameInputRef.current && (clientNameInputRef.current.value = null)
     // procedureInputRef && (procedureInputRef.current.value = null)
-    serialNumberInputRef && (serialNumberInputRef.current.value = null)
-    moreThanInputRef && (moreThanInputRef.current.value = null)
-    lessThanInputRef && (lessThanInputRef.current.value =null)
+    serialNumberInputRef && serialNumberInputRef.current && (serialNumberInputRef.current.value = null)
+    moreThanInputRef && moreThanInputRef.current && (moreThanInputRef.current.value = null)
+    lessThanInputRef && lessThanInputRef.current && (lessThanInputRef.current.value = null)
   }
 
-  const advancedButtonClick = (simpleSearchRef, callback) => {
+  const clearAdvancedSearchValues = () => {
+    setClientNameValue(null)
+    setProcedureNameValue(null)
+    setSerialNumberValue(null)
+    setMoreThanValue(null)
+    setLessThanValue(null)
+  }
+
+  const switchAdvancedSearchClick = (simpleSearchRef, callback) => {
     return(() => {
       simpleSearchRef.current.value = null
       callback()
-      toEraseValue()
+      setSimpleSearchValue(null)
+      clearAdvancedSearchValues()
+      clearAdvancedSearchRefsValues()
+      setOpenAdvancedSearch(!openAdvancedSearch)
     })
   }
 
@@ -85,42 +96,40 @@ const BudgetsIndex = (props) => {
     setSetTimeout(setTimeout(() => {
       setSimpleSearchValue(value)
       setSearchLoading(false)
+      clearAdvancedSearchValues()
+      clearAdvancedSearchRefsValues()
     }, 2000))
   }
 
   return(
     <>
       <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
-      <div className={ classes.root }>
+      <div style={{ paddingTop: "20px", paddingRight: "20px" }}>
         <SearchInput
           classes={classes}
           searchLoading={searchLoading}
-          changeAdvanceSearch={changeAdvanceSearch}
-          setChangeAdvanceSearch={setChangeAdvanceSearch}
           onChangeSearch={onChangeSearch.bind(this)}
-          setSimpleSearchValue={setSimpleSearchValue}
-          setClientNameValue={setClientNameValue}
-          setProcedureNameValue={setProcedureNameValue}
-          setSerialNumberValue={setSerialNumberValue}
-          setMoreThanValue={setMoreThanValue}
-          setLessThanValue={setLessThanValue}
-          advancedButtonClick={advancedButtonClick}
-          advanceSearchActived={advanceSearchActived}
-          setAdvanceSearchActived={setAdvanceSearchActived}
+          switchAdvancedSearchClick={switchAdvancedSearchClick}
+          setRunAdvancedSearch={setRunAdvancedSearch}
         />
-        <AdvancedSearchBudget
-          changeAdvanceSearch={changeAdvanceSearch}
-          setClientNameValue={setClientNameValue}
-          setProcedureNameValue={setProcedureNameValue}
-          setSerialNumberValue={setSerialNumberValue}
-          setMoreThanValue={setMoreThanValue}
-          setLessThanValue={setLessThanValue}
-          clientNameInputRef={clientNameInputRef}
-          procedureInputRef={procedureInputRef}
-          serialNumberInputRef={serialNumberInputRef}
-          moreThanInputRef={moreThanInputRef}
-          lessThanInputRef={lessThanInputRef}
-        />
+        {
+          openAdvancedSearch && <AdvancedSearchBudget
+            setClientNameValue={setClientNameValue}
+            setProcedureNameValue={setProcedureNameValue}
+            setSerialNumberValue={setSerialNumberValue}
+            setMoreThanValue={setMoreThanValue}
+            setLessThanValue={setLessThanValue}
+            clientNameInputRef={clientNameInputRef}
+            procedureInputRef={procedureInputRef}
+            serialNumberInputRef={serialNumberInputRef}
+            moreThanInputRef={moreThanInputRef}
+            lessThanInputRef={lessThanInputRef}
+            timeout={timeout}
+            setSetTimeout={setSetTimeout}
+            runAdvancedSearch={runAdvancedSearch}
+            setRunAdvancedSearch={setRunAdvancedSearch}
+          />
+        }
       <div className={ classes.tableWrapper }>
         <Paper>
         <Table >
@@ -140,6 +149,8 @@ const BudgetsIndex = (props) => {
               serialNumberValue={serialNumberValue}
               moreThanValue={moreThanValue}
               lessThanValue={lessThanValue}
+              setRunAdvancedSearch={setRunAdvancedSearch}
+              runAdvancedSearch={runAdvancedSearch}
             />
             <TableFooter>
               <TableRow >
@@ -149,7 +160,7 @@ const BudgetsIndex = (props) => {
                   rowsPerPageOptions={ [5, 10, 15, 20] }
                   onPageChange={ changePage }
                   onRowsPerPageChange={ changeRowsPerPage }
-                  count={ total_records }
+                  count={ totalRecords }
                   labelRowsPerPage={ "Filas por página:" }
                 />
               </TableRow>

@@ -4,8 +4,6 @@ import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import Typography from '@material-ui/core/Typography';
 import IconButton                               from '@material-ui/core/IconButton';
 import Menu                                     from '@material-ui/core/Menu';
 import MenuItem                                 from '@material-ui/core/MenuItem';
@@ -16,7 +14,7 @@ import ClearIcon                                from '@material-ui/icons/Clear';
 import MoreVertIcon                             from '@material-ui/icons/MoreVert';
 import { useQuery }                             from '@apollo/client';
 import { useMutation }                          from '@apollo/client';
-import { CREATE_PROCEDURE_FIELD_VALUE }         from '../../queries_and_mutations/queries';
+// import { CREATE_PROCEDURE_FIELD_VALUE }         from '../../queries_and_mutations/queries';
 import { UPDATE_PROCEDURE_FIELD_VALUE }         from '../../queries_and_mutations/queries';
 import { GET_PROCEDURE_FIELD_VALUES }           from '../../queries_and_mutations/queries';
 import { GET_PROCEDURES_AUDITLOG }              from '../../queries_and_mutations/queries';
@@ -25,7 +23,6 @@ const FieldsRows = (props) => {
 
   const { procedure, field } = props
   
-  const [selected, setSelected] = useState(null);
   const [menuState, setMenuState] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [fieldValueId, setFieldValueId] = useState();
@@ -34,9 +31,8 @@ const FieldsRows = (props) => {
   const [initFieldValue, setInitFieldValue] = useState("");
   const [saveButtonStatus, setSaveButtonStatus] = useState(true);
   const [fieldStatus, setFieldStatus] = useState(false);
-  const [fieldPrintable, setFieldPrintable] = useState(field && field.printable);
   
-  const {  loading, data, refetch } = useQuery(
+  const {  loading, data } = useQuery(
     GET_PROCEDURE_FIELD_VALUES,
     {
       variables: { "proceduresTemplateFieldId": field.id, "procedureId": procedure.id }
@@ -58,13 +54,7 @@ const FieldsRows = (props) => {
     setAnchorEl(event.currentTarget);
   }
 
-  const closeMenu = () => {
-    setMenuState(false);
-    setAnchorEl(null);
-  }
-
   const cancelMenu = () => {
-    setSelected(null);
     setMenuState(false);
     setAnchorEl(null);
   }
@@ -83,34 +73,30 @@ const FieldsRows = (props) => {
     setSaveButtonStatus(false);    
   }
 
-  const saveNewFieldValue = ( event ) => {
-    createProcedureFieldValue ({ variables: {"proceduresTemplateFieldId": field.id, "procedureId": procedure.id, "value": fieldValue} })
-  }
-
-  const [createProcedureFieldValue, { loading: createProcedureFieldValueLoading }] =
-  useMutation(
-    CREATE_PROCEDURE_FIELD_VALUE,
-    {
-      onCompleted(cacheData) {
-        setInitFieldValue(cacheData && cacheData.createProcedureFieldValue.procedureFieldValue.value);
-        setFieldValueId(cacheData && cacheData.createProcedureFieldValue.procedureFieldValue.id);
-        setFieldValueActive(cacheData && cacheData.createProcedureFieldValue.procedureFieldValue.active);
-        setFieldStatus(true);
-        setSaveButtonStatus(true);
-      },
-      refetchQueries: [
-        {
-          query: GET_PROCEDURE_FIELD_VALUES,
-          variables: { "proceduresTemplateFieldId": field.id, "procedureId": procedure.id }
-        },
-        {
-          query: GET_PROCEDURES_AUDITLOG,  
-            variables: { "procedureId": procedure.id }
-        }
-      ],
-      awaitRefetchQueries: true
-    }
-  )
+  // const [createProcedureFieldValue, { loading: createProcedureFieldValueLoading }] =
+  // useMutation(
+  //   CREATE_PROCEDURE_FIELD_VALUE,
+  //   {
+  //     onCompleted(cacheData) {
+  //       setInitFieldValue(cacheData && cacheData.createProcedureFieldValue.procedureFieldValue.value);
+  //       setFieldValueId(cacheData && cacheData.createProcedureFieldValue.procedureFieldValue.id);
+  //       setFieldValueActive(cacheData && cacheData.createProcedureFieldValue.procedureFieldValue.active);
+  //       setFieldStatus(true);
+  //       setSaveButtonStatus(true);
+  //     },
+  //     refetchQueries: [
+  //       {
+  //         query: GET_PROCEDURE_FIELD_VALUES,
+  //         variables: { "proceduresTemplateFieldId": field.id, "procedureId": procedure.id }
+  //       },
+  //       {
+  //         query: GET_PROCEDURES_AUDITLOG,  
+  //           variables: { "procedureId": procedure.id }
+  //       }
+  //     ],
+  //     awaitRefetchQueries: true
+  //   }
+  // )
 
   const updateFieldValue = ( event ) => {
     updateProcedureFieldValue ({ variables: {"id": fieldValueId, "value": fieldValue} })
@@ -120,7 +106,7 @@ const FieldsRows = (props) => {
     updateProcedureFieldValue ({ variables: {"id": fieldValueId, "active": checked} })
   }
 
-  const [updateProcedureFieldValue, { loading: updateProcedureFieldValueLoading }] =
+  const [updateProcedureFieldValue] =
     useMutation(
       UPDATE_PROCEDURE_FIELD_VALUE,
       {

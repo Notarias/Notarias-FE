@@ -13,13 +13,24 @@ import { styles }                     from '../styles';
 import VisibilityIcon                 from '@material-ui/icons/Visibility';
 import PrintIcon                      from '@material-ui/icons/Print';
 import Chip                           from '@material-ui/core/Chip';
+import Avatar                         from '@material-ui/core/Avatar';
 
+const buildDate = (value, separator='/') => {
+  let newDate = new Date(value)
+  let date = newDate.getDate();
+  let month = newDate.getMonth() + 1;
+  let year = newDate.getFullYear();
+  let hours = newDate.getHours();
+  let minutes = newDate.getMinutes();
 
+  return (
+    `${date < 10 ? `0${date}` : `${date}`}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${year} - ${hours < 10 ? `0${hours}` : `${hours}`}:${minutes < 10 ? `0${minutes}` : `${minutes}`}`
+  )
+}
 
 const TableRows = (props) => {
 
   const {procedure, classes} = props;
-  const [open, setOpen] = React.useState(false);
 
   const estatus = (params) => {
     if (params.completedAt) {
@@ -35,8 +46,8 @@ const TableRows = (props) => {
       <TableCell align= "center" className={classes.tablecellWidth}>{ procedure.serialNumber }</TableCell>
       <TableCell align= "center" className={classes.tablecellWidth}>{ procedure.budgetingTemplate.name }</TableCell>
       <TableCell align= "center" className={classes.tablecellWidth}>{ procedure.proceduresTemplate.name }</TableCell>
-      <TableCell align= "center" className={classes.tablecellWidth}>{ procedure.reporter && procedure.reporter.avatarThumbUrl }</TableCell>
-      <TableCell align= "center" className={classes.tablecellWidth}>{ procedure.createdAt }</TableCell>
+      <TableCell align= "center" className={classes.tablecellWidth}>{ <Avatar src={procedure.reporter && procedure.reporter.avatarThumbUrl}/> }</TableCell>
+      <TableCell align= "center" className={classes.tablecellWidth}>{ buildDate(procedure.createdAt) }</TableCell>
       <TableCell align= "center" className={classes.tablecellWidth}>{ estatus(procedure) }</TableCell>
       <TableCell align= "center" className={classes.tablecellWidth}>
         <Grid>

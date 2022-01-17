@@ -10,27 +10,23 @@ import Payment                                      from './payment'
 import MenuItem                                     from '@material-ui/core/MenuItem';
 import AccountBalanceIcon                           from '@material-ui/icons/AccountBalance';
 import AccountBalanceWalletIcon                     from '@material-ui/icons/AccountBalanceWallet';
-import TextField                                    from '@material-ui/core/TextField';
-import InputAdornment                               from '@material-ui/core/InputAdornment';
-import Box                                          from '@material-ui/core/Box';
 import Typography                                   from '@material-ui/core/Typography';
 import Grid                                         from '@material-ui/core/Grid';
 import { green }                                    from '@material-ui/core/colors';
-import PropTypes                                    from 'prop-types';
 import NumberFormat                                 from 'react-number-format';
 import PaymentList                                  from './payment_list';
 
 
 const FieldValue = (props) => {
-  const { classes, budget, field: templateField } = props
+  const { budget, field: templateField } = props
+
   const [pristine, setPristine] = useState(false)
   const [initialFieldValue, setInitialFieldValue] = useState(0)
-  const [withValue, setWithValue] = useState(data && data.budgetFieldValue ? true : false )
+  const [withValue, setWithValue] = useState(false)
   const [changeInputStatus, setChangeInputStatus] = useState(false)
   const [changeFieldValue, setChangeFieldValue] = useState(initialFieldValue);
   const [totalDebt, setTotalDebt] = useState(0)
   const [field] = useState(templateField)
-
 
   const { data } = useQuery(
     GET_BUDGET_FIELD_VALUE,
@@ -60,7 +56,7 @@ const FieldValue = (props) => {
       style={{ minHeight: '70px' }}
     >
       <Grid item xs={1}>
-        { field.fieldType == "tax" ? <AccountBalanceIcon style={{ color: green[500] }}/> : <AccountBalanceWalletIcon color="action"/> }
+        { field.fieldType === "tax" ? <AccountBalanceIcon style={{ color: green[500] }}/> : <AccountBalanceWalletIcon color="action"/> }
       </Grid>
       <Grid item xs={3}>
         <Typography variant="subtitle2" gutterBottom align='left'>

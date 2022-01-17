@@ -7,14 +7,11 @@ import AssignmentIndIcon                                from '@material-ui/icons
 import EmojiTransportationIcon                          from '@material-ui/icons/EmojiTransportation';
 import PersonIcon                                       from '@material-ui/icons/Person';
 import MailOutlineIcon                                  from '@material-ui/icons/MailOutline';
-import CircularProgress                                 from '@material-ui/core/CircularProgress';
-import Button                                           from '@material-ui/core/Button';
 import Grid                                             from '@material-ui/core/Grid';
 import TextField                                        from '@material-ui/core/TextField';
 import withStyles                                       from '@material-ui/core/styles/withStyles';
 import { styles }                                       from './../styles';
 import { GLOBAL_MESSAGE }                               from '../../../../resolvers/queries';
-import { UPDATE_CLIENT_MUTATION, GET_CLIENT_ATTRIBUTE } from '../clients_queries_and_mutations/queries';
 import Paper                                            from '@material-ui/core/Paper';
 class EditClientForm extends Component {
 

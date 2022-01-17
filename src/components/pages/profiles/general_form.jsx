@@ -85,6 +85,7 @@ const GeneralForm = (props) => {
           let errorsHash = {}
           error.graphQLErrors.map((error) => {
             errorsHash[error.extensions.attribute] = error.message
+            return(error.message)
           }) 
           setErrors(errorsHash)
         }
@@ -160,7 +161,7 @@ const GeneralForm = (props) => {
             name='address'
             handleChange={handleChange}
             value={currentUser.address}
-            label="direccion" icon
+            label="direccion"
             icon={ <PersonPinCircleIcon className={classes.iconStyle}/>}
           />
           <InputText
@@ -178,7 +179,7 @@ const GeneralForm = (props) => {
             name='phone'
             handleChange={handleChange}
             value={currentUser.phone}
-            label="telefono" icon
+            label="telefono"
             icon={ <PhoneIcon className={classes.iconStyle}/>}
           />
           <Button

@@ -5,7 +5,6 @@ import DialogContent                                            from '@material-
 import DialogTitle                                              from '@material-ui/core/DialogTitle';
 import DialogActions                                            from '@material-ui/core/DialogActions';
 import Grid                                                     from '@material-ui/core/Grid';
-import Typography                                               from '@material-ui/core/Typography';
 import { styles }                                               from '../styles';
 import { withStyles }                                           from '@material-ui/core/styles';
 import { useMutation }                                          from '@apollo/client';

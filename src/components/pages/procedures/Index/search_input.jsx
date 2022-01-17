@@ -1,4 +1,4 @@
-import React, { useState, createRef }     from 'react'
+import React, { createRef }               from 'react'
 import Grid                               from '@material-ui/core/Grid';
 import CircularProgress                   from '@material-ui/core/CircularProgress';
 import SearchIcon                         from '@material-ui/icons/Search';
@@ -27,12 +27,8 @@ const SearchInput = (props) => {
     advanceSearchActived,
     setAdvanceSearchActived
   } = props
-  const [open, setOpen] = useState(false)
-  const simpleSearchInputRef = createRef()
 
-  const handleClickOpen = (event) => {
-    setOpen(true);
-  };
+  const simpleSearchInputRef = createRef()
 
   const handleChangeInputsStatus = () => {
     setChangeAdvanceSearch(!changeAdvanceSearch)
@@ -78,7 +74,6 @@ const SearchInput = (props) => {
         variant="contained" 
         color="primary"
         className={classes.newButton}
-        onClick={ handleClickOpen }
         component={Link} 
         to="/procedures/new"
       >

@@ -21,7 +21,7 @@ const ClientsBudgetsList = (props) => {
     },
   }
 
-  const { loading, data, refetch } = useQuery(
+  const { data } = useQuery(
     GET_BUDGETS, { variables: variables }
   );
 

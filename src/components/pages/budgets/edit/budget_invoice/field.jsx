@@ -10,7 +10,7 @@ export default (props) => {
   const [field] = useState(props.field)
   const [value, setValue] = useState()
 
-  const { loading, data, refetch } = useQuery(
+  const { loading, data } = useQuery(
     GET_BUDGET_FIELD_VALUE,
     { variables: { budgetingTemplateFieldId: field.id, budgetId: props.budget.id }}
   )

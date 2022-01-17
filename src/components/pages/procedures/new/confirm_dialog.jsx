@@ -1,5 +1,4 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
 import { Divider } from '@material-ui/core';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -21,7 +20,7 @@ const ConfirmDialog = (props) => {
       <Divider/>
       <DialogContent>
         <DialogContentText>
-          Se esta creando un nuevo tramite. Verifique que los datos sin correctos y presione en Guardar si esta confirme.
+          Se esta creando un nuevo tramite. Verifique que los datos sin correctos y presione en Guardar si esta conforme.
         </DialogContentText>
       </DialogContent>
       <Divider/>

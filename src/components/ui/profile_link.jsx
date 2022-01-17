@@ -34,7 +34,7 @@ const USER_CHANGE = gql`
 
 const ProfileLink = (props) => {
   const { classes } = props
-  const { loading, error, data, subscribeToMore } = useQuery(GET_CURRENT_USER);
+  const { data, subscribeToMore } = useQuery(GET_CURRENT_USER);
 
   subscribeToMore({
     document: USER_CHANGE,

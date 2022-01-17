@@ -1,17 +1,11 @@
 import React, { useState, useEffect }           from 'react';
 import Grid                                     from '@material-ui/core/Grid';
 import IconButton                               from '@material-ui/core/IconButton';
-
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-
-import Menu                                     from '@material-ui/core/Menu';
-import MenuItem                                 from '@material-ui/core/MenuItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import PostAddIcon from '@material-ui/icons/PostAdd';
-import MoreVertIcon                             from '@material-ui/icons/MoreVert';
 import { useQuery, useMutation }                from '@apollo/client';
 import { GET_PROCEDURE_FIELD_GROUP_VALUES }     from '../../queries_and_mutations/queries';
 import { CREATE_PROCEDURE_FIELD_GROUP_VALUE }   from '../../queries_and_mutations/queries';
@@ -19,14 +13,11 @@ import { GET_PROCEDURES_AUDITLOG }              from '../../queries_and_mutation
 import { GLOBAL_MESSAGE }                       from '../../../../../resolvers/queries';
 import client                                   from '../../../../../../src/apollo';
 import FieldsGroupsRows                         from './fields_group_rows';
-import { Divider } from '@material-ui/core';
 
 const GroupsRows = (props) => {
 
   const { procedure, group } = props
 
-  const [menuState, setMenuState] = useState(false);
-  const [anchorEl, setAnchorEl] = useState(null);
   const [fieldsGroupValues, setFieldsGroupValues] = useState();
 
   const { loading, data } = useQuery(
@@ -42,7 +33,7 @@ const GroupsRows = (props) => {
     }
   }, [loading, data]);
 
-  const [CreateProcedureFieldGroupValues, { loading: CreateProcedureFieldGroupValuesLoading }] =
+  const [CreateProcedureFieldGroupValues] =
     useMutation(
       CREATE_PROCEDURE_FIELD_GROUP_VALUE,
       {
@@ -72,19 +63,8 @@ const GroupsRows = (props) => {
       }
     )
 
-  const openMenu = ( event ) => {
-    setMenuState(true);
-    setAnchorEl(event.currentTarget);
-  }
-
-  const closeMenu = () => {
-    setMenuState(false);
-    setAnchorEl(null);
-  }
-
   const cloneFieldGroup = () => {
     CreateProcedureFieldGroupValues({ variables: { "proceduresTemplateFieldsGroupId": group.id, "procedureId": procedure.id } });
-    closeMenu();
   }
 
   return (
@@ -94,7 +74,6 @@ const GroupsRows = (props) => {
       direction='column'
       alignItems="stretch"
       justifyContent="flex-start"
-      style={{marginBottom: '15px', minHeight: '70px' }}
     >
       {
         <Card  variant="outlined" >

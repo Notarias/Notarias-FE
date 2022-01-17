@@ -1,13 +1,8 @@
 import React                                from 'react';
 import Drawer                               from '@material-ui/core/Drawer';
-import Button                               from '@material-ui/core/Button';
 import List                                 from '@material-ui/core/List';
 import Divider                              from '@material-ui/core/Divider';
 import ListItem                             from '@material-ui/core/ListItem';
-import ListItemIcon                         from '@material-ui/core/ListItemIcon';
-import ListItemText                         from '@material-ui/core/ListItemText';
-import InboxIcon                            from '@material-ui/icons/MoveToInbox';
-import MailIcon                             from '@material-ui/icons/Mail';
 import AccountBalanceIcon                   from '@material-ui/icons/AccountBalance';
 import IconButton                           from '@material-ui/core/IconButton';
 import { withStyles }                       from '@material-ui/core/styles';
@@ -58,7 +53,7 @@ const PaymentDrawer = (props) => {
     right: false,
   });
 
-  const { loading, data, refetch } = useQuery(
+  const { data } = useQuery(
     GET_BUDGET_TOTALS, { variables: {"id": budget.id} }
   );
 

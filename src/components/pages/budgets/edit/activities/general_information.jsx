@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React                from 'react';
 import Grid                 from '@material-ui/core/Grid';
 import Typography           from '@material-ui/core/Typography';
 import Divider              from '@material-ui/core/Divider';
@@ -7,21 +7,22 @@ import Button               from '@material-ui/core/Button';
 import Print                from '@material-ui/icons/Print';
 import VisibilityIcon       from '@material-ui/icons/Visibility';
 import Tooltip              from '@material-ui/core/Tooltip';
+import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import { Link }             from 'react-router-dom';
-import Asignee              from '../asignee';
+import AsigneesList         from '../asignees_list';
 import Reporter             from '../reporter';
 import BudgetActions        from './budget_actions';
 import BudgetFileUploader   from './budget_file_uploader';
 import PaymentDrawer        from '../payment_drawer';
 import { BASE_URI }         from '../../../../../apollo'
-import { useQuery }         from '@apollo/client';
+import MaterialLink from '@material-ui/core/Link';
 
 export default (props) => {
 
   const { budget } = props
 
   return(
-    <Grid container item alignItems="center" spacing={3}>
+    <Grid container item alignItems="center" spacing={1}>
       <Grid item container xs={12} style={{ padding: "0" }} justifyContent='flex-end' alignItems='center' spacing={2}>
         <Grid item>
           <Tooltip title="Imprimir">
@@ -67,7 +68,7 @@ export default (props) => {
           <Typography align='left'>Encargado:</Typography>
         </Grid>
         <Grid item xs={9}>
-          <Asignee
+          <AsigneesList
             asigneeData={budget && budget.asignee}
             budget={budget}
           />
@@ -84,7 +85,7 @@ export default (props) => {
           />
         </Grid>
       </Grid>
-      <Grid container item xs={12} alignItems='center' alignItems='center'>
+      <Grid container item xs={12} alignItems='center'>
         <Grid item xs={3}>
           <Typography align='left'>Cliente:</Typography>
         </Grid>
@@ -94,24 +95,64 @@ export default (props) => {
           </Typography>
         </Grid>
       </Grid>
-      <Grid container item xs={12} alignItems='center' alignItems='center'>
+      <Grid container item xs={12} alignItems='center'>
         <Grid item xs={3}>
           <Typography align='left'>Presupuesto:</Typography>
         </Grid>
         <Grid item xs={9}>
-          <Typography noWrap align='left' style={{ padding: '10px' }}>
+          <Typography noWrap align='left' style={{ padding: '10px', textTransform: 'uppercase' }}>
             <strong>{ budget && budget.budgetingTemplate.name }</strong>
           </Typography>
         </Grid>
       </Grid>
-      <Grid container item xs={12} alignItems='center' alignItems='center'>
+      <Grid container item xs={12} alignItems='center'>
+        <Grid item xs={3}>
+          <Typography align='left'>Presupuesto No.</Typography>
+        </Grid>
+        <Grid item xs={9}>
+          <Typography noWrap align='left' style={{ padding: '10px', textTransform: 'uppercase' }}>
+            <strong>{ budget && budget.serialNumber.toString().padStart(10, "0") }</strong>
+          </Typography>
+        </Grid>
+        </Grid>
+      <Grid container item xs={12} alignItems='center'>
         <Grid item xs={3}>
           <Typography align='left'>Trámite:</Typography>
         </Grid>
         <Grid item xs={9}>
-          <Typography noWrap align='left' style={{ padding: '10px' }}>
-            <strong>{ budget && budget.proceduresTemplate.name }</strong>
-          </Typography>
+          {
+            budget.procedure ?
+              (
+                <Button fullWidth style={{ padding: '10px' }} target='_blank' href={`/procedures/${budget.procedure.id}/edit`}>
+                  <Grid container alignItems="center" justifyContent='flex-start'>
+                    <Grid item>
+                      <Typography noWrap align='left' style={{ paddingRight: "10px", fontWeight: 600 }}>
+                        {
+                          budget && budget.proceduresTemplate.name
+                        }
+                      </Typography>
+                    </Grid>
+                    <Grid item>
+                      <OpenInNewIcon/>
+                    </Grid> 
+                  </Grid>
+                </Button>
+              ) : (
+                <Typography noWrap align='left' style={{ padding: '10px' }}>
+                  <strong>{ budget && budget.proceduresTemplate.name }</strong>
+                </Typography>
+              )
+          }
+        </Grid>
+        <Grid container item xs={12} alignItems='center'>
+          <Grid item xs={3}>
+            <Typography align='left'>Trámite No.</Typography>
+          </Grid>
+          <Grid item xs={9}>
+            <Typography noWrap align='left' style={{ padding: '10px', textTransform: 'uppercase' }}>
+              <strong>{ budget && budget.procedure.serialNumber.toString().padStart(10, "0") }</strong>
+            </Typography>
+          </Grid>
         </Grid>
       </Grid>
     </Grid>

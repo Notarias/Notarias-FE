@@ -144,7 +144,6 @@ const NewProcedure = (params) => {
   const [newClientForm, setNewClientForm] = useState(false);
   const [redirect, setRedirect] = useState();
   const [openConfirmation, setOpenConfirmation] = useState(false);
-  const [errors, setErrors] = useState();
   const classes = useStyles();
   const steps = getSteps();
 
@@ -163,12 +162,11 @@ const NewProcedure = (params) => {
     handleNext();
   }
 
-  const [createProcedureMutation, { loading: createProcedureLoading }] =
+  const [createProcedureMutation] =
     useMutation(
       CREATE_PROCEDURE,
       {
         onError(apolloError) {
-          setErrors(apolloError)
           client.writeQuery({
             query: GLOBAL_MESSAGE,
             data: {

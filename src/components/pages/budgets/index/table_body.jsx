@@ -6,10 +6,10 @@ import TableBody                          from '@material-ui/core/TableBody';
 import { useQuery }                       from '@apollo/client';
 import { GET_BUDGETS }                    from '../queries_and_mutations/queries';
 import TemplateRow                        from './template_row';
+import { Typography } from '@material-ui/core';
 
 
 export default (props) => {
-
   const { 
     page,
     per,
@@ -18,56 +18,61 @@ export default (props) => {
     simpleSearchValue,
     assingTotalRecords,
     classes,
-    setGetTemplatesVariables,
     clientNameValue,
     procedureNameValue,
     serialNumberValue,
     moreThanValue,
     lessThanValue,
+    setRunAdvancedSearch,
+    runAdvancedSearch
   } = props
-  let variables = {
-    page: page + 1,
-    per: per,
-    search: {
-      simpleSearch: simpleSearchValue,
-      clientName: clientNameValue,
-      templateName: procedureNameValue,
-      serialNumber: serialNumberValue,
-      totalMoreThanEq: moreThanValue,
-      totalLessThanEq: lessThanValue,
-    },
-    sortDirection: sortDirection,
-    sortField: sortField,
-  }
 
-  const { loading, data, refetch } = useQuery(
-    GET_BUDGETS, { variables: variables }
+  const { loading, data, refetch } = useQuery(GET_BUDGETS,
+    {
+      variables: {
+        page: page + 1,
+        per: per,
+        search: {
+          simpleSearch: simpleSearchValue,
+          clientName: clientNameValue,
+          templateName: procedureNameValue,
+          serialNumber: serialNumberValue,
+          totalMoreThanEq: moreThanValue,
+          totalLessThanEq: lessThanValue,
+        },
+        sortDirection: sortDirection,
+        sortField: sortField,
+      }
+    }
   );
 
-  let totalCount = data && data.budgetsCount
+  useEffect(() => {
+    assingTotalRecords((data && data.budgetsCount) || 0)
+  }, [loading]);
 
   useEffect(() => {
-    refetch(variables);
-    setGetTemplatesVariables(variables)
-    totalCount && assingTotalRecords(totalCount)
-  }, [page, per, simpleSearchValue, clientNameValue, procedureNameValue, sortField, sortDirection, totalCount,]);
+    if(!loading && runAdvancedSearch) {
+      setRunAdvancedSearch(false)
+    }
+  }, [loading])
 
+  useEffect(() => {
+    if (runAdvancedSearch) {
+      refetch()
+    }
+  }, [runAdvancedSearch])
 
-  if (loading || !data) {
-    return(
-      <TableBody>
-        <TableRow>
-          <TableCell align="center" colSpan={6} className={ classes.loadingTableCell }>
-            <CircularProgress className={ classes.searchLoadingIcon } size={ 100 }/>
-          </TableCell>
-        </TableRow>
-      </TableBody>
-    )
-  } else {
-    return(
-      <TableBody>
-        {
-          data.budgets.map(
+  return(
+    <TableBody>
+      {
+        loading || !data ? (
+          <TableRow>
+            <TableCell align="center" colSpan={7} className={ classes.loadingTableCell }>
+              <CircularProgress className={ classes.searchLoadingIcon } size={ 100 }/>
+            </TableCell>
+          </TableRow>
+        ) : (
+          data.budgets.length ? data.budgets.map(
             (budget) => {
               return(
                 <TemplateRow
@@ -77,9 +82,15 @@ export default (props) => {
                 />
               )
             }
+          ) : (
+            <TableRow>
+              <TableCell align="center" colSpan={7} className={ classes.loadingTableCell }>
+                <Typography variant='h5' align='center'>Sin Resultados</Typography>
+              </TableCell>
+            </TableRow>
           )
-        }
-      </TableBody>
-    )
-  }
+        )
+      }
+    </TableBody>
+  )
 };

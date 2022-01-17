@@ -33,7 +33,6 @@ const UserFormNew = (props) => {
   const { classes } = props
 
   const [errors, setErrors]     = useState({})
-  const [pristine, setPristine] = useState(true)
   const [redirect, setRedirect] = useState(false)
   const [user, setUser]         = useState({
                                     id: "",
@@ -50,7 +49,6 @@ const UserFormNew = (props) => {
   const handleChange = ({ target }) => {
     const {name, value} = target
     setUser({ ...user, [name]: value })
-    setPristine(false)
   }
 
   const onCompletedSave = (data) => {
@@ -69,9 +67,9 @@ const UserFormNew = (props) => {
           let errorsHash = {}
           error.graphQLErrors.map((error) => {
             errorsHash[error.extensions.attribute] = error.message
+            return(error.message)
           }) 
           setErrors(errorsHash)
-          setPristine(true)
         },
         onCompleted(cacheData) {
           onCompletedSave(cacheData)

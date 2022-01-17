@@ -10,10 +10,10 @@ import { useQuery }               from '@apollo/client';
 import { BUDGET_TAXED_FIELDS_FOR_FIELD } from '../../../queries_and_mutations/queries';
 
 export default (props) => {
-  const { setExpandTaxedFields, expandTaxedFields, templateField, budget } = props
+  const { expandTaxedFields, templateField, budget } = props
   const [taxedFields, setTaxedFields] = useState()
 
-  const { loading, data } = useQuery(
+  const { data } = useQuery(
     BUDGET_TAXED_FIELDS_FOR_FIELD,
     {
       variables: {

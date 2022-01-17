@@ -1,4 +1,4 @@
-import React, { useState, useRef, createRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { styles } from './styles';
 import Breadcrumbs from '../../ui/breadcrumbs'
@@ -29,18 +29,11 @@ const ProceduresIndex = (props) => {
   const [sortField, setSortField] = useState("serial_number");
   const [sortDirection, setSortDirection] = useState("desc");
   const [simpleSearchValue, setSimpleSearchValue] = useState(null);
-  const [clientFullNameValue, setClientFullNameValue] = useState(null);
   const [serialNumberValue, setSerialNumberValue] = useState(null);
-  const [budgetTemplateNameValue, setBudgetTemplateNameValue] = useState(null);
-  const [procedureTemplateNameValue, setProcedureTemplateNameValue] = useState(null);
-  const [createdAtValue, setCreatedAtValue] = useState(null);
   const [clientFullName, setClientFullName] = useState(null);
   const [budgetTemplateName, setBudgetTemplateName] = useState(null);
   const [proceduresTemplateName, setProceduresTemplateName] = useState(null);
-  const [reporterAvatarThumbUrl, setReporterAvatarThumbUrl] = useState(null);
   const [createdAt, setCreatedAt] = useState(null);
-  const [updatedAt, setUpdatedAt] = useState(null);
-  const [completedAt, setCompletedAt] = useState(null);
   const [templatesVariables, setTemplatesVariables] = useState(null);
   const [total_records, setTotalRecords]  = useState(0);
 
@@ -116,11 +109,7 @@ const ProceduresIndex = (props) => {
         <AdvancedSearchProcedure
           classes={classes}
           changeAdvanceSearch={changeAdvanceSearch}
-          setClientNameValue={setClientFullNameValue}
           setSerialNumberValue={setSerialNumberValue}
-          setBudgetTemplateNameValue={setBudgetTemplateNameValue}
-          setProcedureTemplateNameValue={setProcedureTemplateNameValue}
-          setCreatedAtValue={setCreatedAtValue}
           clientNameInputRef={clientNameInputRef}
           serialNumberInputRef={serialNumberInputRef}
           budgetTempalteInputRef={budgetTempalteInputRef}
@@ -145,10 +134,7 @@ const ProceduresIndex = (props) => {
                 clientFullName ={clientFullName}
                 budgetingTemplateName={budgetTemplateName}
                 proceduresTemplateName ={proceduresTemplateName}
-                reporterAvatarThumbUrl ={reporterAvatarThumbUrl}
                 createdAt={createdAt}
-                updatedAt={updatedAt}
-                completedAt={completedAt}
                 templatesVariables={templatesVariables}
                 setTemplatesVariables={setTemplatesVariables}
                 assingTotalRecords={assingTotalRecords}

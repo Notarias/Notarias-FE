@@ -1,4 +1,4 @@
-import React, { useState, useEffect }       from 'react'
+import React, { useEffect }                 from 'react'
 import { withStyles }                       from '@material-ui/core/styles';
 import { styles }                           from '../../styles';
 import Button                               from '@material-ui/core/Button';
@@ -10,7 +10,6 @@ import DialogContent                        from '@material-ui/core/DialogConten
 import DialogTitle                          from '@material-ui/core/DialogTitle';
 import { useMutation }                      from '@apollo/client'
 import { VOID_OR_INVOID }                   from '../../queries_and_mutations/queries'
-import { useQuery }                         from '@apollo/client';
 import { GET_CREDIT_PAYMENTS }              from '../../queries_and_mutations/queries'
 import { GET_BUDGET_TOTALS }                from '../../queries_and_mutations/queries'
 import { GET_BUDGETS_AUDITLOG }             from '../../queries_and_mutations/queries';
@@ -28,11 +27,7 @@ const VoidOrInvoid = (props) => {
   useMutation(
     VOID_OR_INVOID,
     {
-      onError(apolloError) {
-        // setErrors(apolloError)
-        // setPristine(false)
-      },
-      onCompleted(cacheData) {
+      onCompleted() {
         setOpen(false)
       },
       refetchQueries: [

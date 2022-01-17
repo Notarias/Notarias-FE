@@ -37,7 +37,6 @@ const FieldList = (props) => {
               return(
                 <Field
                   key={ field.id + "-field"}
-                  id={ field.id }
                   arrayIndex={ index }
                   currentTab={ currentTab }
                   removeFromList={ removeFromList }
@@ -47,7 +46,6 @@ const FieldList = (props) => {
                   favourite={ field.favourite || false }
                   id={ field.id || " " }
                   active={ field.active }
-                  printable={ field.printable }
                 />
               )
             }

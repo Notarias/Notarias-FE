@@ -7,7 +7,7 @@ export default (props) => {
   const { budget } = props
   const [fields, setFields] = useState()
 
-  const { loading, data, refetch } = useQuery(
+  const { loading, data } = useQuery(
     GET_BUDGET_PROCEDURE_PRINTABLE_FIELDS, { variables: { "budgetId": budget.id }, fetchPolicy: 'no-cache' }
   );
 

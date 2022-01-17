@@ -42,7 +42,6 @@ const ProcedureTemplateLinkButton = (props) => {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
   const disabledButton = proceduresTemplatesData && (Number(proceduresTemplatesData) === 0)
-  const [ unlink, setUnlink] = React.useState(false)
 
   useEffect(() => {
     setProceduresTemplates(proceduresTemplatesData)
@@ -94,7 +93,6 @@ const ProcedureTemplateLinkButton = (props) => {
 
   const updateUnlinkProcedureTemplate = (event) => {
     updateBudgetingTemplateMutation({ variables: {"id": id, "proceduresTemplatesIds": []}})
-    setUnlink(true)
   }
 
   const { data } = useQuery(

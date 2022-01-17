@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, { useEffect}          from 'react'
 import { withStyles }               from '@material-ui/core/styles';
 import { styles }                   from '../styles';
 import { Avatar, Grid }             from '@material-ui/core';
@@ -9,7 +9,6 @@ import Paper                        from '@material-ui/core/Paper';
 import TextField                    from '@material-ui/core/TextField';
 import { LOAD_CLIENT_COMMENTS}      from '../../clients_queries_and_mutations/queries';
 import { useQuery }                 from '@apollo/client';
-import ImageIcon                    from '@material-ui/icons/Image';
 import Button                       from '@material-ui/core/Button';
 import { useMutation }              from '@apollo/client'
 import { CREATE_COMMENT }           from '../../clients_queries_and_mutations/queries';
@@ -21,15 +20,12 @@ const ClientComments = (props) => {
   const [textFieldSelected, setTextFieldSelected] = React.useState(false)
   const [commentValue, setCommentValue] = React.useState("")
   const [pristine, setPristine] = React.useState(true)
-  const [error, setError] = useState(false)
 
-  const inputsList = ["body"]
+  const { data: clientCommentsData } = useQuery(LOAD_CLIENT_COMMENTS, { 
+                                         variables: { "clientId": Number(match.params.id), "page": 1, "per": 100 }
+                                       })
 
-  const { loading: loadClientComments, error: errorDataClients, data: clientCommentsData} = useQuery(LOAD_CLIENT_COMMENTS, { 
-                                    variables: { "clientId": Number(match.params.id), "page": 1, "per": 100 }
-                                  })
-
-  const { loading: currentUserLoading , data: currentUserData } = useQuery(
+  const { data: currentUserData } = useQuery(
     GET_CURRENT_USER
   );
 
@@ -44,8 +40,7 @@ const ClientComments = (props) => {
   useMutation(
     CREATE_COMMENT,
     {
-      onError(apolloError) {
-        setErrors(apolloError)
+      onError() {
         setPristine(true)
       },
       onCompleted(cacheData) {
@@ -60,19 +55,6 @@ const ClientComments = (props) => {
       awaitRefetchQueries: true
     }
   )
-
-  const setErrors = (apolloError) => {
-    let errorsList = {}
-    let errorTemplateList = apolloError.graphQLErrors
-    for ( let i = 0; i < errorTemplateList.length; i++) {
-      for( let n = 0; n < inputsList.length; n++) {
-        if(errorTemplateList[i].extensions.attribute === inputsList[n]){
-          errorsList[inputsList[n]] = errorTemplateList[i].message
-        }
-      }
-    }
-    setError(errorsList)
-  }
 
   const createNewClientComment = (event) => {
     createCommentMutation({

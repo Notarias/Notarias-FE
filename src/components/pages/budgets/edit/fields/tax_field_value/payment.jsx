@@ -30,7 +30,6 @@ function NumberFormatCustom(props) {
       onValueChange={(values) => {
         onChange({
           target: {
- 
             value: values.value,
           },
         });
@@ -52,7 +51,7 @@ NumberFormatCustom.propTypes = {
 };
 
 const Payment = (props) => {
-  const { value, totalDebt, budget, budgetFieldValue, field } = props
+  const { totalDebt, budget, budgetFieldValue, field } = props
   const [notePayment, setNotePayment] = React.useState("")
   const [valuePayment, setValuePayment] = React.useState(0.0)
   const [pristine, setPristine] = React.useState(true)

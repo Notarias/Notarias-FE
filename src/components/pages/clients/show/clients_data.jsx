@@ -35,7 +35,7 @@ const ClientsData = (props) => {
     setPristine(true)
   }
 
-  const { loading: loadingClient, error: errorClient, data: dataClient } = useQuery(GET_CLIENT, { variables: { "id": match.params.id }})
+  const { data: dataClient } = useQuery(GET_CLIENT, { variables: { "id": match.params.id }})
 
   const [client, setClient] = React.useState(dataClient ? dataClient.client : [])
 

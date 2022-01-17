@@ -1,16 +1,10 @@
 import React, { Component }                                     from 'react';
 import { withStyles }                                           from '@material-ui/core/styles';
 import TextField                                                from '@material-ui/core/TextField';
-import Button                                                   from '@material-ui/core/Button';
-import Avatar                                                   from '@material-ui/core/Avatar';
 import List                                                     from '@material-ui/core/List';
 import ListItem                                                 from '@material-ui/core/ListItem';
-import ListItemText                                             from '@material-ui/core/ListItemText';
-import ListItemAvatar                                           from '@material-ui/core/ListItemAvatar';
 import Grid                                                     from '@material-ui/core/Grid';
 import { styles }                                               from '../styles';
-import { CREATE_CLIENT_COMMENT_MUTATION, LOAD_CLIENT_COMMENTS } from '../clients_queries_and_mutations/queries';
-import CircularProgress                                         from '@material-ui/core/CircularProgress';
 
 class ClientCommentari extends Component {
 

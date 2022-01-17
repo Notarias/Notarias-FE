@@ -1,11 +1,8 @@
 import React, { useEffect, useRef, useState }                 from 'react';
-import PropTypes                            from 'prop-types';
-import { makeStyles }                       from '@material-ui/core/styles';
 import AppBar                               from '@material-ui/core/AppBar';
 import Tabs                                 from '@material-ui/core/Tabs';
 import BudgetTemplateTab                    from './budget_template_tab';
 import Typography                           from '@material-ui/core/Typography';
-import Box                                  from '@material-ui/core/Box';
 import { useQuery }                         from '@apollo/client';
 import { GET_BUDGETING_TEMPLATES_TABS }     from '../../queries_and_mutations/queries';
 import Fields                               from '../fields/fields';
@@ -15,10 +12,10 @@ import { withStyles }                       from '@material-ui/core/styles';
 import { styles }                           from '../../styles';
 
 const InformationTabs = (props) => {
-  const { classes, budget } = props
+  const { budget } = props
   const [value, setValue] = useState(0);
-  const [tabList, setTabList] = useState(data ? data.budgetingTemplateTabs: []);
-  const [currentTab, setCurrentTab] = useState( data ? data.budgetingTemplateTabs[0] : "");
+  const [tabList, setTabList] = useState([]);
+  const [currentTab, setCurrentTab] = useState("");
   const fieldListWrapperElement = useRef();
 
   const { data } = useQuery(
