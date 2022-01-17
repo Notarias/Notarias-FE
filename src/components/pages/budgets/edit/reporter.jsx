@@ -25,7 +25,7 @@ export default (props) => {
             />
           </Grid> 
           <Grid item xs={9} md={10} lg={11}>
-            <Typography noWrap align='left' style={{ paddingLeft: "10px", paddingRight: "10px" }}>
+            <Typography noWrap align='left' style={{ paddingLeft: "20px", paddingRight: "10px" }}>
               <strong>{reporter && reporter.firstName} {reporter && reporter.lastName}</strong>
             </Typography>
           </Grid>

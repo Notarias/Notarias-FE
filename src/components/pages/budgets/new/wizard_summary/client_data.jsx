@@ -48,7 +48,7 @@ export default (props) => {
         />
       </ListItem>
 
-      <ListItem button key="client-name">
+      <ListItem button key="client-curp">
         <ListItemText
           primary="CURP:"
           style={{ margin: '0px' }}

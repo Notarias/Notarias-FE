@@ -25,7 +25,7 @@ export default (props) => {
         <ListItemText primaryTypographyProps={{ variant: 'h6' }} primary="Responsable"/>
       </ListItem>
 
-      <ListItem button key="asignee-data" style={{ paddingBottom: '0px' }}>
+      <ListItem button key="asignee-avatar" style={{ paddingBottom: '0px' }}>
         <Chip
           onClick={clickOpenAsigneeDialog}
           color="primary"

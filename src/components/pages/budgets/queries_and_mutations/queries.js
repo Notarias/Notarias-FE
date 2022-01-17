@@ -244,6 +244,7 @@ query budget(
       totalCredit
       totalPaid
       totalDebt
+      serialNumber
       reporter{
         firstName
         lastName
@@ -268,6 +269,10 @@ query budget(
         name
         id
       },
+      procedure {
+        id
+        serialNumber
+      }
       fieldValues{
         id
         value
