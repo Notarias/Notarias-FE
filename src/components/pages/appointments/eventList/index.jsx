@@ -123,7 +123,7 @@ const EventList = (props) => {
     creatorUser ? 
     <Grid className={classes.paddingBottomEvent}>
       <Paper className={classes.marginRightCalendarPaper}>
-        <Grid container direction='row' xs={12}>
+        <Grid container direction='row'>
             <Grid container item direction='row' xs={2}>
               <Grid container item xs={5} justifyContent='center' alignContent='center'>
                 <Avatar alt={creatorUser.firstName} src={creatorUser.avatarThumbUrl} />
@@ -188,7 +188,7 @@ const EventList = (props) => {
               <Button aria-controls="assigned-list" aria-haspopup="true" onClick={openAssigneList}>
                 <AvatarGroup max={3}>
                   {appointment.users.map((user) => {
-                    return(<Avatar alt={user.fullName} src={user.avatarThumbUrl} />)
+                    return(<Avatar key={user.id} alt={user.fullName} src={user.avatarThumbUrl} />)
                   })}
                 </AvatarGroup>
               </Button>
@@ -201,8 +201,9 @@ const EventList = (props) => {
               >
                 {appointment.users.map((user) => {
                   return(
-                    <MenuItem>
+                    <MenuItem key={user.id}>
                       <Chip
+                        key={user.id}
                         avatar={<Avatar alt={user.firstName} src={user.avatarThumbUrl} />}
                         label={`${user.firstName} ${user.lastName}`}
                         variant="outlined"

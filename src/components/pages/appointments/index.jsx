@@ -94,7 +94,7 @@ const AppointmentsIndex = (props) => {
           <Grid className={classes.windowScrollEventList}>
             {
               appointmentList && appointmentList.map( appointment  => {
-                return <EventList appointment={appointment} key={appointment.id}/>
+                return(<EventList key={appointment.id} appointment={appointment}/>)
               })
             }
           </Grid>
