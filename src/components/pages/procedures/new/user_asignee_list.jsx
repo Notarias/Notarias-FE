@@ -10,7 +10,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import Fuse from 'fuse.js';
 import Chip from '@material-ui/core/Chip';
-import FaceIcon from '@material-ui/icons/Face';
+import Avatar from '@material-ui/core/Avatar';
 import { useQuery } from '@apollo/client';
 import { USERS_QUICK_LIST } from '../queries_and_mutations/queries';
 
@@ -63,7 +63,7 @@ const UserAsigneeList = (props) => {
               >
               <ListItemText id={item.id}>
                 <Chip
-                  icon={<FaceIcon />}
+                  avatar={<Avatar src={item.avatarThumbUrl} />}
                   label={`${item.firstName} ${item.lastName}`}
                 />
               </ListItemText>
