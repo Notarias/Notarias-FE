@@ -8,12 +8,14 @@ import MenuItem                       from '@material-ui/core/MenuItem';
 import ListItemIcon                   from '@material-ui/core/ListItemIcon';
 import ListItemText                   from '@material-ui/core/ListItemText';
 import { Link }                       from 'react-router-dom';
+import MaterialLink               from '@material-ui/core/Link';
 import NumberFormat                   from 'react-number-format';
 import { withStyles }                 from '@material-ui/core/styles';
 import { styles }                     from '../styles';
 import Typography                     from '@material-ui/core/Typography';
 import VisibilityIcon                 from '@material-ui/icons/Visibility';
 import PrintIcon                      from '@material-ui/icons/Print';
+import { BASE_URI }                   from '../../../../apollo'
 
 
 const TemplateRow = (props) => {
@@ -78,8 +80,9 @@ const TemplateRow = (props) => {
             </MenuItem>
             <MenuItem key={ budget.id + "-preview"}>
               <Link
-                to="#"
+                to={`/budgets/${ budget.id }/invoice`}
                 color="inherit"
+                target='_blank'
                 underline="none"
                 className={ classes.linkDefault }
               >
@@ -92,8 +95,9 @@ const TemplateRow = (props) => {
               </Link>
             </MenuItem>
             <MenuItem key={ budget.id + "-print"}>
-              <Link
-                to="#"
+              <MaterialLink
+                href={`http://${BASE_URI}/invoices/${budget.id}.pdf?auth=${localStorage.getItem('jwtToken')}`}
+                target='_blank'
                 color="inherit"
                 underline="none"
                 className={ classes.linkDefault }
@@ -104,7 +108,7 @@ const TemplateRow = (props) => {
                   </ListItemIcon>
                   <ListItemText primary="Imprimir"/>
                 </Grid>
-              </Link>
+              </MaterialLink>
             </MenuItem>
           </GenericDropdownMenu>
         </Grid>

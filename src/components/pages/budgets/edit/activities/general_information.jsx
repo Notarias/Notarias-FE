@@ -14,8 +14,9 @@ import Reporter             from '../reporter';
 import BudgetActions        from './budget_actions';
 import BudgetFileUploader   from './budget_file_uploader';
 import PaymentDrawer        from '../payment_drawer';
-import { BASE_URI }         from '../../../../../apollo'
-import MaterialLink from '@material-ui/core/Link';
+import { BASE_URI }         from '../../../../../apollo';
+import ProceedingNumber     from './proceeding_number';
+import WritingNumber        from './writing_number';
 
 export default (props) => {
 
@@ -114,7 +115,7 @@ export default (props) => {
             <strong>{ budget && budget.serialNumber.toString().padStart(10, "0") }</strong>
           </Typography>
         </Grid>
-        </Grid>
+      </Grid>
       <Grid container item xs={12} alignItems='center'>
         <Grid item xs={3}>
           <Typography align='left'>Trámite:</Typography>
@@ -144,17 +145,19 @@ export default (props) => {
               )
           }
         </Grid>
-        <Grid container item xs={12} alignItems='center'>
-          <Grid item xs={3}>
-            <Typography align='left'>Trámite No.</Typography>
-          </Grid>
-          <Grid item xs={9}>
-            <Typography noWrap align='left' style={{ padding: '10px', textTransform: 'uppercase' }}>
-              <strong>{ budget && budget.procedure.serialNumber.toString().padStart(10, "0") }</strong>
-            </Typography>
-          </Grid>
+      </Grid>
+      <Grid container item xs={12} alignItems='center'>
+        <Grid item xs={3}>
+          <Typography align='left'>Trámite No.</Typography>
+        </Grid>
+        <Grid item xs={9}>
+          <Typography noWrap align='left' style={{ padding: '10px', textTransform: 'uppercase' }}>
+            <strong>{ budget && budget.procedure.serialNumber.toString().padStart(10, "0") }</strong>
+          </Typography>
         </Grid>
       </Grid>
+      <ProceedingNumber budget={budget}/>
+      <WritingNumber budget={budget}/>
     </Grid>
   )
 }
