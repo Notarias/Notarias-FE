@@ -245,6 +245,8 @@ query budget(
       totalPaid
       totalDebt
       serialNumber
+      proceedingNumber
+      writingNumber
       reporter{
         firstName
         lastName
@@ -764,7 +766,9 @@ export const UPDATE_BUDGET = gql`
     $clientId: ID,
     $proceduresTemplateId: ID,
     $budgetingTemplateId: ID,
-    $asigneeId: ID
+    $asigneeId: ID,
+    $proceedingNumber: String,
+    $writingNumber: String
   ){
     updateBudget(input :{
       id: $id
@@ -772,6 +776,8 @@ export const UPDATE_BUDGET = gql`
       budgetingTemplateId: $budgetingTemplateId
       proceduresTemplateId: $proceduresTemplateId
       asigneeId: $asigneeId
+      proceedingNumber: $proceedingNumber
+      writingNumber: $writingNumber
       }
     ){
       budget{
@@ -781,6 +787,8 @@ export const UPDATE_BUDGET = gql`
         totalDebt
         totalPaid
         totalCredit
+        proceedingNumber
+        writingNumber
         asignee{
           firstName
           lastName
