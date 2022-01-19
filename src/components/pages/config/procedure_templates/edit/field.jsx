@@ -183,12 +183,12 @@ const Field = (props) => {
             <CreateIcon/>
           </Button>
         </Grid>
-        <Grid container item xs={5}>
+        <Grid container item xs={4} alignItems="center">
           <Typography className={ classes.texPlainTittleName }>
-            { name } { id } -{ groupId }
+            { name }
           </Typography>
         </Grid>
-        <Grid container item xs={3}>
+        <Grid container item xs={3} alignItems="center">
         <Typography className={ classes.textTittleType }>
             {  INPUT_TYPES[style] }
           </Typography>
@@ -207,7 +207,7 @@ const Field = (props) => {
             <SaveIcon />
           </Button>
         </Grid>
-        <Grid container item xs={5}>
+        <Grid container item xs={4} alignItems="center">
           <TextField 
             id="standard-basic" 
             label="Nombre del campo"
@@ -220,7 +220,7 @@ const Field = (props) => {
             name='name'
           />
         </Grid>
-        <Grid container item xs={3}>
+        <Grid container item xs={3} alignItems="center">
           <FormControl variant="outlined" className={ classes.textFieldTittleType }>
             <InputLabel id="label-field">Tipo de campo</InputLabel>
             <Select
@@ -239,11 +239,11 @@ const Field = (props) => {
   }
 
   return (
-    <Grid container item alignItems="flex-start" justifyContent="flex-start" className={ classes.fielPaddingBottom }>
+    <Grid container item alignItems="center" justifyContent="center" className={ classes.fielPaddingBottom }>
       <Paper>
         <Grid container item className={ classes.fieldHeightRow }>
           { editing ? renderTextField() : renderInputField() }
-          <Grid item xs={1}>
+          <Grid container item alignItems="center" justifyContent="center" xs={1}>
             <FormControlLabel
               control={<Checkbox 
                 icon={<StarBorderIcon />} 
@@ -278,12 +278,12 @@ const Field = (props) => {
               </DialogActions>
             </Dialog>
           </Grid>
-          <Grid item xs={1}>
+          <Grid container item xs={1} alignItems="center" justifyContent="center">
             <FormControlLabel
               control={<Checkbox 
                 icon={<PrintOutlinedIcon />} 
                 checkedIcon={<PrintIcon />} 
-                name="favourite"
+                name="printable"
                 checked={ printable }
               />}
               label=" "
@@ -313,7 +313,7 @@ const Field = (props) => {
               </DialogActions>
             </Dialog>
           </Grid>
-          <Grid container direction="column"  alignItems="center" justifyContent="center" item xs={1}>
+          <Grid container item  alignItems="center" justifyContent="center" item xs={1}>
             <Button onClick={ handleClickOpen }>
               <DeleteForeverIcon/>
             </Button>
@@ -340,7 +340,7 @@ const Field = (props) => {
               </DialogActions>
             </Dialog>
           </Grid>
-          <Grid container  direction="column"  alignItems="center" justifyContent="center" item xs={1} onClick={ handleClickOpenDialog }>
+          <Grid container item alignItems="center" justifyContent="center" item xs={1} onClick={ handleClickOpenDialog }>
             {
             active ?
               <Button>
