@@ -1,20 +1,32 @@
 import React, { useState } from 'react'
 import { Divider } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import Button from '@material-ui/core/Button';
 import Chip from '@material-ui/core/Chip';
+import Avatar from '@material-ui/core/Avatar';
 import FaceIcon from '@material-ui/icons/Face';
 import Dialog from '@material-ui/core/Dialog';
 import SelectAsigneeDialog from './select_asignee_dialog';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    marginTop: theme.spacing(3),  
+  },
+  marginChip: {
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+  },
+}));
 
 const Summary = (props) => {
 
   const { clientInfo, causantInfo, selectedProcedure, selectedBudget, asignee, setAsignee} = props
   const [openDialog, setOpenDialog] = useState(false);
+  const classes = useStyles();
 
   const closeAsigneeDialog = () => {
     setOpenDialog(false);
@@ -29,55 +41,54 @@ const Summary = (props) => {
   }
 
   return(
-    <Grid container item xs={8} direction="column" alignItems="stretch" style={{minHeight: "635px", marginTop: "10px"}}>
-      <Grid item style={{minHeight: "200px", marginTop: "10px"}}>
-        <Typography variant="subtitle1">
+    <Grid container item xs={10} direction="column" justifyContent="center" alignItems="stretch" style={{marginTop: "10px"}}>
+      <Grid item style={{marginTop: "10px"}}>
+        <Typography variant="body1" style={{ fontWeight: "600" }}>
           Datos del Cliente
         </Typography>
         <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
           <ListItem dense={true}>
-            <ListItemText style={{margin: "0"}}
-              primary={clientInfo ? `${clientInfo.firstName} ${clientInfo.lastName}` : "Nombre Completo" }
-              secondary={clientInfo ? "Nombre Completo" : ""} />
+            <ListItemText
+              primary={"Nombre Completo"}
+              secondary={clientInfo ? `${clientInfo.firstName} ${clientInfo.lastName}` : "N/A"} />
           </ListItem>
           <ListItem dense={true}>
-            <ListItemText style={{margin: "0"}}
-              primary={clientInfo ? clientInfo.rfc : "RFC" }
-              secondary={clientInfo ? "RFC" : ""} />
+            <ListItemText
+              primary={"RFC"}
+              secondary={clientInfo ? clientInfo.rfc : "N/A"} />
           </ListItem>
           <ListItem dense={true}>
-            <ListItemText style={{margin: "0"}}
-              primary={clientInfo ? clientInfo.curp : "CURP" }
-              secondary={clientInfo ? "CURP" : ""} />
+            <ListItemText
+              primary={"CURP"}
+              secondary={clientInfo ? clientInfo.curp : "N/A"} />
           </ListItem>
         </List>
       </Grid>
       <Divider/>
-      <Grid item style={{minHeight: "230px", marginTop: "10px"}}>
-        <Typography variant="subtitle2">
-          Causante Asignado
+      <Grid item style={{marginTop: "10px"}}>
+        <Typography ariant="body1" style={{ fontWeight: "600" }}>
+          Causante:
         </Typography>
         <List>
           <ListItem dense={true}>
-            <ListItemText style={{minHeight: "50px", margin: "0"}}
-              primary={causantInfo ? `${causantInfo.firstName} ${causantInfo.lastName}` : "Nombre Completo" }
-              secondary={causantInfo ? "Nombre Completo" : ""} />
+            <ListItemText
+              secondary={causantInfo ? `${causantInfo.firstName} ${causantInfo.lastName}` : "N/A"} />
           </ListItem>
           <Divider/>
-          <Typography variant="subtitle2" style={{marginTop: "10px"}}>
-            Tramite Seleccionado
+          <Typography variant="subtitle2" style={{ marginTop: "10px", fontWeight: "600" }}>
+            Tramite
           </Typography>
           <ListItem dense={true}>
             <ListItemText 
-              primary={selectedProcedure ? selectedProcedure.name : "Tramite" }/>
+              secondary={selectedProcedure ? selectedProcedure.name : "N/A" }/>
           </ListItem>
           <Divider/>
-          <Typography variant="subtitle2" style={{marginTop: "10px"}}>
-            Presupuesto Vinculado
+          <Typography variant="subtitle2" style={{ marginTop: "10px", fontWeight: "600" }}>
+            Presupuesto
           </Typography>
           <ListItem dense={true}>
             <ListItemText 
-              primary={selectedBudget ? selectedBudget.name : "Presupuesto" }/>
+              secondary={selectedBudget ? selectedBudget.name : "N/A" }/>
           </ListItem>
         </List>
       </Grid>
@@ -85,18 +96,17 @@ const Summary = (props) => {
       <Grid container item justifyContent="center" style={{marginTop: "10px"}}>
         <Grid item>
             <Typography variant="subtitle2">
-              {asignee ? "Responsable Asignado" : "Asignar Responsable" }
+              {asignee ? "Responsable Asignado" : "Responsable" }
             </Typography>
         </Grid>
-        <Grid container item justifyContent="center" style={{minHeight: "85px", marginTop: "10px"}}>
-          <Grid item style={{minHeight: "85px"}}>
-            {asignee ? <Chip icon={<FaceIcon />} label={asignee.fullName} onDelete={deleteAsigneed}/> : <Grid/> }
-          </Grid>
-        </Grid>
-        <Grid item>
-          <Button onClick={openAsigneeDialog}>
-            Asignar Responsable
-          </Button>
+        <Grid container item justifyContent="center" style={{marginTop: "40px"}} className={classes.marginChip}>
+          <Chip
+            onClick={openAsigneeDialog}
+            color="primary"
+            label={asignee ? asignee.fullName : 'Asignar Responsable'}
+            onDelete={deleteAsigneed}
+            avatar={<Avatar src={asignee.avatarThumbUrl} />}
+          />
         </Grid>
         <Dialog onClose={closeAsigneeDialog} aria-labelledby="simple-dialog-title" open={openDialog}>
           <SelectAsigneeDialog asignee={asignee} setAsignee={setAsignee} closeAsigneeDialog={closeAsigneeDialog}/>

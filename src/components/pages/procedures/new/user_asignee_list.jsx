@@ -7,6 +7,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Divider from '@material-ui/core/Divider';
 import Fuse from 'fuse.js';
 import Chip from '@material-ui/core/Chip';
@@ -44,8 +45,12 @@ const UserAsigneeList = (props) => {
     }
   }
 
-  const selectItem = (event, index, firstName, lastName) => {
-    setAsignee({id: index, fullName: `${firstName} ${lastName}`});
+  const selectItem = (event, item) => {
+    setAsignee({
+      id: item.id,
+      fullName: `${item.firstName} ${item.lastName}`,
+      avatarThumbUrl: item.avatarThumbUrl
+    });
   }
 
   const usersRows = (searchList) => {
@@ -59,14 +64,12 @@ const UserAsigneeList = (props) => {
               button
               dense={true}
               selected={asignee.id === item.id}
-              onClick={(event) => selectItem(event, item.id, item.firstName, item.lastName)}
+              onClick={(event) => selectItem(event, item)}
               >
-              <ListItemText id={item.id}>
-                <Chip
-                  avatar={<Avatar src={item.avatarThumbUrl} />}
-                  label={`${item.firstName} ${item.lastName}`}
-                />
-              </ListItemText>
+              <ListItemAvatar>
+                <Avatar alt={item.firstName} src={item.avatarThumbUrl}/>
+              </ListItemAvatar>
+              <ListItemText id={item.id} primary={`${item.firstName} ${item.lastName}`}/>
             </ListItem>
             <Divider/>
           </>

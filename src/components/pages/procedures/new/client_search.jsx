@@ -80,7 +80,7 @@ const ClientSearch = (props) => {
 
   const renderInputSearch = () => {
     return(
-      <Grid container  direction="row" spacing={6} justifyContent="flex-end">
+      <Grid item container justifyContent="flex-end">
         <Grid item>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
@@ -120,7 +120,7 @@ const ClientSearch = (props) => {
     const { setClientInfo } = props
     
     return(
-      <TableBody className={classes.clientSearchTable}>
+      <TableBody>
         {
           data && data.clients.map((client, index ) => {
 
@@ -136,8 +136,8 @@ const ClientSearch = (props) => {
               selected={client.id === selectedIndex} 
               onClick={handleMenuItemClick}
             >
-              <TableCell align= "center" className={classes.tableRowMax}>{ client.firstName }</TableCell>
-              <TableCell align= "center" className={classes.tableRowMax}>{ client.lastName }</TableCell>
+              <TableCell align= "center">{ client.firstName }</TableCell>
+              <TableCell align= "center">{ client.lastName }</TableCell>
               <TableCell align= "center">{ client.rfc }</TableCell>
               <TableCell align= "center">{ client.curp }</TableCell>
             </TableRow>
@@ -152,7 +152,7 @@ const ClientSearch = (props) => {
   return(
     <Grid container item xs={10}>
       { renderInputSearch() }
-      <Table className={classes.clientSearchTable} >
+      <Table>
         <TableHead >
           <TableRow >
           <SortHeader
