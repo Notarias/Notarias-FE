@@ -1,4 +1,4 @@
-import React                                          from 'react';
+import React, { useState }                            from 'react';
 import Grid                                           from '@material-ui/core/Grid';
 import TextField                                      from '@material-ui/core/TextField';
 import StarsIcon                                      from '@material-ui/icons/Stars';
@@ -7,11 +7,10 @@ import Checkbox                                       from '@material-ui/core/Ch
 import StarBorderIcon                                 from '@material-ui/icons/StarBorder';
 import Button                                         from '@material-ui/core/Button';
 import DeleteForeverIcon                              from '@material-ui/icons/DeleteForever';
-import { withStyles }                                 from '@material-ui/core/styles';
-import { styles }                                     from '../styles';
 import FormControl                                    from '@material-ui/core/FormControl';
 import Select                                         from '@material-ui/core/Select';
 import MenuItem                                       from '@material-ui/core/MenuItem';
+import InputBase                                      from '@material-ui/core/InputBase';
 import InputLabel                                     from '@material-ui/core/InputLabel';
 import Dialog                                         from '@material-ui/core/Dialog';
 import DialogActions                                  from '@material-ui/core/DialogActions';
@@ -23,6 +22,8 @@ import SaveIcon                                       from '@material-ui/icons/S
 import CreateIcon                                     from '@material-ui/icons/Create';
 import PrintOutlinedIcon                              from '@material-ui/icons/PrintOutlined';
 import PrintIcon                                      from '@material-ui/icons/Print';
+import { withStyles }                                 from '@material-ui/core/styles';
+import { styles }                                     from '../styles';
 import { useMutation }                                from '@apollo/client';
 import { UPDATE_PROCEDURES_TEMPLATE_TAB_FIELD }       from '../queries_and_mutations/queries'
 import { DESTROY_PROCEDURES_TEMPLATE_TAB_FIELD }      from '../queries_and_mutations/queries'
@@ -40,16 +41,17 @@ const INPUT_TYPES = {
 const Field = (props) => {
 
   const { classes, id, groupId, currentTab, removeFromList } = props
-  const [open, setOpen] = React.useState(false);
-  const [openb, setOpenb] = React.useState(false);
-  const [openDialog, setOpenDialog] = React.useState(false);
-  const [editing, setEditing] = React.useState(true);
-  const [printable] = React.useState(props.printable)
-  const [name, setName] = React.useState(props.name)
-  const [style, setStyle] = React.useState(props.style)
-  const [active, setActive] = React.useState(props.active)
-  const [favourite, setFavourite] = React.useState(props.favourite)
-  const [error, setError] = React.useState(false)
+  const [favoriteDialog, setFavoriteDialog] = useState(false);
+  const [printableDialog, setPrintableDialog] = useState(false);
+  const [deleteDialog, setDeleteDialog] = useState(false);
+  const [statusDialog, setStatusDialog] = useState(false);
+  const [editing, setEditing] = useState(true);
+  const [name, setName] = useState(props.name);
+  const [style, setStyle] = useState(props.style);
+  const [active, setActive] = useState(props.active);
+  const [favourite, setFavourite] = useState(props.favourite);
+  const [printable, setPrintable] = useState(props.printable);
+  const [error, setError] = useState(false)
   const inputsList = ["name"]
 
   const [updateProceduresTemplateTabFieldMutation] =
@@ -85,40 +87,55 @@ const Field = (props) => {
     updateProceduresTemplateTabFieldMutation({ variables: { id: id, name: name, style: style}})
   }
 
-  const handleClickOpen = () => {
-    setOpen(true);
+  const openFavoriteDialog = () => {
+    setFavoriteDialog(true);
   };
 
-  const handleClose = () => {
-    setOpen(false);
+  const closeFavoriteDialog = () => {
+    setFavoriteDialog(false);
   };
 
-  const handleClickOpenb = () => {
-    setOpenb(true);
+  const openPrintableDialog = () => {
+    setPrintableDialog(true);
+  };
+
+  const closePrintableDialog = () => {
+    setPrintableDialog(false);
+  };
+
+  const openDeleteDialog = () => {
+    setDeleteDialog(true);
+  };
+
+  const closeDeleteDialog = () => {
+    setDeleteDialog(false);
+  };
+
+  const openStatusDialog = () => {
+    setStatusDialog(true);
   }
 
-  const handleCloseb = () => {
-    setOpenb(false);
-  };
-
-  const handleClickOpenDialog = () => {
-    setOpenDialog(true);
+  const closeStatusDialog = () => {
+    setStatusDialog(false);
   }
 
-  const handleCloseDialog = () => {
-    setOpenDialog(false);
-  };
-
-  const checkedStar = () => {
+  const checkFavoriteField = () => {
     updateProceduresTemplateTabFieldMutation({ variables: { id: id, favourite: !favourite }})
-    setOpenb(false);
+    setFavourite(!favourite);
+    setFavoriteDialog(false);
+  };
+
+  const checkPrintableField = (event) => {
+    updateProceduresTemplateTabFieldMutation({ variables: { id: id, printable: !printable }})
+    setPrintable(!printable);
+    setPrintableDialog(false);
   }
 
   const changeFieldStatus = (event) => {
     updateProceduresTemplateTabFieldMutation({ variables: { id: id, active: !active }})
     setActive(!active)
-    setOpenDialog(false);
-  }
+    setStatusDialog(false);
+  };
 
   const colorButton = () => {
     if (favourite === true) {
@@ -142,7 +159,7 @@ const Field = (props) => {
 
   const deleteFieldClick = () => {
     removeFromList(props.arrayIndex, destroyProceduresTemplateTabFieldMutation, { variables: { id: id } }, id )
-    setOpen(false);
+    setDeleteDialog(false);
   }
 
   const editField = () => {
@@ -161,68 +178,56 @@ const Field = (props) => {
     return active ? "Desactivar" : "Activar"
   }
 
-  const handleClickOpenPrintDialog = (event) => {
-
-  }
-
-  const handleClosePrintDialog = (event) => {
-
-  }
-
-  const savePrintableField = (event) => {
-
-  }
+  
 
   const renderTextField = () => {
     return(
-      <>
-        <Grid container item xs={1} alignItems="center" justifyContent="center">
+      <Grid container item xs={8} spacing={2}>
+        <Grid container item xs={2} alignItems="center" justifyContent="center">
           <Button
             onClick={ editField }
           >
             <CreateIcon/>
           </Button>
         </Grid>
-        <Grid container item xs={4} alignItems="center">
-          <Typography className={ classes.texPlainTittleName }>
-            { name }
-          </Typography>
+        <Grid container item xs={5} alignItems="center">
+          <InputBase
+            value={ name }
+            readOnly={true}
+            inputProps={{ 'aria-label': 'naked' }}
+          />
         </Grid>
-        <Grid container item xs={3} alignItems="center">
+        <Grid container item xs={5}>
         <Typography className={ classes.textTittleType }>
             {  INPUT_TYPES[style] }
           </Typography>
         </Grid>
-      </>
+      </Grid>
     )
   }
 
   const renderInputField = () => {
     return(
-      <>
-        <Grid container item xs={1} alignItems="center" justifyContent="center">
+      <Grid container item xs={8} spacing={2}>
+        <Grid container item xs={2} alignItems="center" justifyContent="center">
           <Button
             onClick={ updateField }
           >
             <SaveIcon />
           </Button>
         </Grid>
-        <Grid container item xs={4} alignItems="center">
-          <TextField 
-            id="standard-basic" 
-            label="Nombre del campo"
-            className={ classes.textInputTittleName }
+        <Grid container item xs={5}>
+          <TextField
+            id="standard-basic"
             value={ name }
             onChange={ handleNameChange }
-            error={ !!error["name"] && true }
-            helperText={error["name"] || " "}
-            errorskey={ "name" }
-            name='name'
+            defaultValue="Small"
+            variant="outlined"
+            style={{'backgroundColor': 'rgb(200, 200, 200)'}}
           />
         </Grid>
-        <Grid container item xs={3} alignItems="center">
+        <Grid container item xs={5}>
           <FormControl variant="outlined" className={ classes.textFieldTittleType }>
-            <InputLabel id="label-field">Tipo de campo</InputLabel>
             <Select
               labelId="demo-simple-select-outlined-label"
               name='style'
@@ -234,31 +239,33 @@ const Field = (props) => {
             </Select>
           </FormControl>
         </Grid>
-      </>
+      </Grid>
     )
   }
 
   return (
-    <Grid container item alignItems="center" justifyContent="center" className={ classes.fielPaddingBottom }>
+    <Grid container item spacing={2} justifyContent="center" className={ classes.fielPaddingBottom }>
       <Paper>
         <Grid container item className={ classes.fieldHeightRow }>
           { editing ? renderTextField() : renderInputField() }
-          <Grid container item alignItems="center" justifyContent="center" xs={1}>
-            <FormControlLabel
-              control={<Checkbox 
-                icon={<StarBorderIcon />} 
-                checkedIcon={<StarsIcon />} 
-                name="favourite"
-                checked={ favourite }
-              />}
-              label=" "
-              color="primary"
-              className={ classes.formControlPadding }
-              onChange={ handleClickOpenb }
-            />
+          <Grid container item xs={1} alignItems="center" justifyContent="center">
+            <Grid item>
+              <FormControlLabel
+                control={<Checkbox 
+                  icon={<StarBorderIcon />} 
+                  checkedIcon={<StarsIcon />} 
+                  name="favourite"
+                  checked={ favourite }
+                />}
+                label=" "
+                color="primary"
+                className={ classes.formControlPadding }
+                onChange={ openFavoriteDialog }
+              />
+            </Grid>
             <Dialog
-              open={openb}
-              onClose={handleClose}
+              open={favoriteDialog}
+              onClose={closeFavoriteDialog}
               aria-labelledby="favorite-alert"
               aria-describedby="favorite-alert-dialog"
             >
@@ -269,57 +276,61 @@ const Field = (props) => {
               { favourite === true ? "Este campo dejará de ser importante": "Se marcará este campo como importante"}
               </DialogContent>
               <DialogActions>
-                <Button onClick={ handleCloseb } color="secondary">
+                <Button onClick={closeFavoriteDialog} color="secondary">
                   Cancelar
                 </Button>
-                <Button color={ colorButton() } autoFocus onClick={ checkedStar } variant="contained">
+                <Button color={ colorButton() } autoFocus onClick={ checkFavoriteField } variant="contained">
                   { favourite ? "Quitar": "Añadir"}
                 </Button>
               </DialogActions>
             </Dialog>
           </Grid>
           <Grid container item xs={1} alignItems="center" justifyContent="center">
-            <FormControlLabel
-              control={<Checkbox 
-                icon={<PrintOutlinedIcon />} 
-                checkedIcon={<PrintIcon />} 
-                name="printable"
-                checked={ printable }
-              />}
-              label=" "
-              color="primary"
-              className={ classes.formControlPadding }
-              onChange={ handleClickOpenPrintDialog }
-            />
+            <Grid item>
+              <FormControlLabel
+                control={<Checkbox 
+                  icon={<PrintOutlinedIcon />} 
+                  checkedIcon={<PrintIcon />} 
+                  name="printable"
+                  checked={ printable }
+                />}
+                label=" "
+                color="primary"
+                className={ classes.formControlPadding }
+                onChange={ openPrintableDialog }
+              />
+            </Grid>
             <Dialog
-              open={openb}
-              onClose={handleClosePrintDialog}
+              open={printableDialog}
+              onClose={closePrintableDialog}
               aria-labelledby="print-aletrt"
               aria-describedby="print-alert-dialog"
             >
               <DialogTitle id="favorite-alert">
-                { favourite === true ? "No imprimir" : "Agregar a formulario de impresión"}
+                { printable === true ? "No imprimir" : "Agregar a formulario de impresión"}
               </DialogTitle>
               <DialogContent>
-              { favourite === true ? "Este campo dejará de aparecer en el formato de impresión" : "Se marcará este campo para aparecer en el formulario de impresión"}
+                { printable === true ? "Este campo dejará de aparecer en el formato de impresión" : "Se marcará este campo para aparecer en el formulario de impresión"}
               </DialogContent>
               <DialogActions>
-                <Button onClick={ handleClosePrintDialog } color="secondary">
+                <Button onClick={ closePrintableDialog } color="secondary">
                   Cancelar
                 </Button>
-                <Button color={ colorButton() } autoFocus onClick={ savePrintableField } variant="contained">
-                  { favourite ? "Quitar" : "Añadir"}
+                <Button color={ colorButton() } autoFocus onClick={ checkPrintableField } variant="contained">
+                  { printable ? "Quitar" : "Añadir"}
                 </Button>
               </DialogActions>
             </Dialog>
           </Grid>
-          <Grid container item  alignItems="center" justifyContent="center" item xs={1}>
-            <Button onClick={ handleClickOpen }>
-              <DeleteForeverIcon/>
-            </Button>
+          <Grid container item xs={1} alignItems="center" justifyContent="center">
+            <Grid item>
+              <Button onClick={ openDeleteDialog }>
+                <DeleteForeverIcon/>
+              </Button>
+            </Grid>
             <Dialog
-              open={open}
-              onClose={handleClose}
+              open={deleteDialog}
+              onClose={closeDeleteDialog}
               aria-labelledby="alert-dialog-title"
               aria-describedby="alert-dialog-description"
             >
@@ -331,7 +342,7 @@ const Field = (props) => {
                 </Typography>
               </DialogContent>
               <DialogActions>
-                <Button onClick={ handleClose } color="secondary">
+                <Button onClick={ closeDeleteDialog } color="secondary">
                   Cancelar
                 </Button>
                 <Button color="primary" autoFocus onClick={ deleteFieldClick }>
@@ -340,21 +351,23 @@ const Field = (props) => {
               </DialogActions>
             </Dialog>
           </Grid>
-          <Grid container item alignItems="center" justifyContent="center" item xs={1} onClick={ handleClickOpenDialog }>
-            {
-            active ?
-              <Button>
-                <RadioButtonCheckedIcon className={classes.radioButtonActiveGreen}/>
-              </Button>
-            :
-              <Button>
-                <RadioButtonUncheckedIcon color="secondary" className={ classes.defaultIcon }/>
-              </Button>
-            }
+          <Grid container item xs={1} alignItems="center" justifyContent="center" onClick={ openStatusDialog }>
+            <Grid item>
+              {
+              active ?
+                <Button>
+                  <RadioButtonCheckedIcon className={classes.radioButtonActiveGreen}/>
+                </Button>
+              :
+                <Button>
+                  <RadioButtonUncheckedIcon color="secondary" className={ classes.defaultIcon }/>
+                </Button>
+              }
+            </Grid>
           </Grid>
           <Dialog
-            open={openDialog}
-            onClose={handleCloseDialog}
+            open={statusDialog}
+            onClose={closeStatusDialog}
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
           >
@@ -363,7 +376,7 @@ const Field = (props) => {
               Realmente deseas { statusField() }
             </DialogContent>
             <DialogActions>
-              <Button onClick={ handleCloseDialog } color="secondary">
+              <Button onClick={ closeStatusDialog } color="secondary">
                 Cancelar
               </Button>
               <Button

@@ -69,7 +69,7 @@ const FieldsGroup = (props) => {
   const renderTextGroupName = () => {
     return(
       <Grid container item xs={12} direction="row">
-        <Grid item xs={10} className={ classes.textPlainGoupName } onClick={ editFieldGroup } style={{ marginTop: "2px"}}>
+        <Grid item xs={11} className={ classes.textPlainGoupName } onClick={ editFieldGroup } style={{ marginTop: "2px"}}>
           <Typography>
             { groupName }
           </Typography>
@@ -86,7 +86,7 @@ const FieldsGroup = (props) => {
   const renderInputGroupName = () => {
     return(
       <>
-        <Grid item xs={10} className={ classes.textPlainGoupName }>
+        <Grid item xs={11} className={ classes.textPlainGoupName } style={{ marginTop: "2px"}}>
           <InputBase 
             id="filled-basic"
             label="Nombre del Grupo"
