@@ -109,7 +109,6 @@ export const styles = theme => {
       height: "30px",
     },
     textInputTittleName: {
-      width: "350px",
       fontWeight: "bold",
       wordWrap: "break-word",
       paddingLeft: "10px"
@@ -130,13 +129,10 @@ export const styles = theme => {
     },
     textPlainGoupName: {
       height: "48px",
-      maxWidth: "550px",
       textAlign: "left",
       display: "flex",
       alignItems: "center",
       cursor: "pointer",
-      marginRight: "10px",
-      marginLeft: "5px",
       backgroundColor: "#d7d7e6",
       paddingLeft: "8px",
       paddingRight: "8px"
@@ -176,7 +172,7 @@ export const styles = theme => {
     },
     fieldHeightRow: {
       padding: "10px",
-      width: "700px",
+      width: "850px",
     },
     fielPaddingBottom: {
       marginBottom: "2px"
