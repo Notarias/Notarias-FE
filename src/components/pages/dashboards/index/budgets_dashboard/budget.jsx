@@ -8,11 +8,11 @@ import CheckCircleIcon                from '@material-ui/icons/CheckCircle';
 import Box                            from '@material-ui/core/Box';
 import IconButton                     from '@material-ui/core/IconButton';
 import Divider                        from '@material-ui/core/Divider';
-import MoreVertIcon                   from '@material-ui/icons/MoreVert';
+import MessageIcon                    from '@material-ui/icons/Message';
 
-export default (props) => {
+const Budget = (props) => {
   const { budget } = props
-  
+  console.log(budget)
   const [asignee] = useState(budget.asignee)
 
   const formatValue = (value) => {
@@ -22,7 +22,7 @@ export default (props) => {
   return(
     <Grid item style={{ paddingBottom: "20px", paddingRight: "30px" }}>
       <Paper style={{ padding: "10px" }}>
-        <Grid container direction='column' alignItems="stretch" justifyContent="flex-start">
+        <Grid item container justifyContent="flex-start">
           <Grid item container>
             <Grid item container xs={8} justifyContent='flex-start' alignItems='center'>
               <Grid item>
@@ -39,33 +39,37 @@ export default (props) => {
                   </Grid>
               }
             </Grid>
-            <Grid item container xs={4} justifyContent='flex-end' alignItems='center'>
+            <Grid item container xs justifyContent='flex-end' alignItems='center' style={{ marginRight: "20px" }}>
+              {budget.comments.length > 0 ? 
+                <Grid item>
+                  <IconButton
+                    aria-label="more"
+                    aria-controls="long-menu"
+                    aria-haspopup="true"
+                  >
+                    <MessageIcon />
+                  </IconButton>
+                </Grid>
+              :
+                ""
+              }
               <Grid item>
                 <Typography variant='subtitle2' color="secondary">
                   No. {budget.serialNumber.toString().padStart(10, "0")}
                 </Typography>
               </Grid>
-              <Grid item>
-                <IconButton
-                  aria-label="more"
-                  aria-controls="long-menu"
-                  aria-haspopup="true"
-                >
-                  <MoreVertIcon />
-                </IconButton>
-              </Grid>
             </Grid>
           </Grid>
-          <Grid item container  style={{ paddingBottom: "10px", paddingTop: "10px" }}>
-            <Grid item container alignItems="center" xs={2}>
-              <Grid item>
+          <Grid item container style={{ paddingBottom: "10px", paddingTop: "10px" }}>
+            <Grid item container alignItems="center" xs stifyContent="center">
+              <Grid item xs>
                 <Typography color="primary">
                   <strong>Total:</strong> ${formatValue(budget.total)}
                 </Typography>
               </Grid>
             </Grid>
             <Divider orientation="vertical" flexItem/>
-            <Grid item container alignItems="center" xs={2} justifyContent="center">
+            <Grid item container alignItems="center" xs justifyContent="center">
               <Grid item>
                 <Typography color="secondary">
                   <strong>Saldo:</strong> ${formatValue(budget.totalDebt)}
@@ -73,7 +77,7 @@ export default (props) => {
               </Grid>
             </Grid>
             <Divider orientation="vertical" flexItem/>
-            <Grid item container alignItems="center" xs={2} justifyContent="center">
+            <Grid item container alignItems="center" xs justifyContent="center">
               <Grid item>
                 <Box color="success.main">
                   <Typography>
@@ -83,7 +87,7 @@ export default (props) => {
               </Grid>
             </Grid>
             <Divider orientation="vertical" flexItem/>
-            <Grid item container alignItems="center" xs={2} justifyContent="center">
+            <Grid item container alignItems="center" xs justifyContent="center">
               <Grid item>
                 <Typography>
                   <strong>Egresos:</strong> ${formatValue(budget.totalPaid)}
@@ -107,3 +111,5 @@ export default (props) => {
     </Grid>
   )
 }
+
+export default Budget;

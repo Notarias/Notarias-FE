@@ -36,7 +36,7 @@ const AppointmentsIndex = (props) => {
   };
 
   const { loading, data, refetch } = useQuery(
-    GET_APPOINTMENTS, { variables: variables }
+    GET_APPOINTMENTS, { variables: variables, fetchPolicy: "cache-and-network" }
   );
 
   useEffect(() => {

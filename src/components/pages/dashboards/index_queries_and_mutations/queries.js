@@ -54,6 +54,9 @@ export const GET_BUDGETS = gql`
         active
         serialNumber
       }
+      comments{
+        body
+      }
       id
       serialNumber
       total
@@ -70,5 +73,132 @@ export const GET_BUDGETS = gql`
       }
     }
     budgetsCount
+  }
+`
+
+export const GET_PROCEDURES = gql`
+  query Procedures(
+    $page: Int
+    $per: Int
+    $sortDirection: String
+    $sortField: String
+    $search: PROCEDURES_SEARCH_INPUT
+  ){
+    procedures(
+      page: $page
+      per: $per
+      sortDirection: $sortDirection
+      sortField: $sortField
+      search: $search
+    ){
+      id
+      serialNumber
+      client{ fullName }
+      budgetingTemplate { name }
+      proceduresTemplate { name }
+      asignee { 
+        avatarThumbUrl,
+        firstName,
+        lastName }
+      reporter { avatarThumbUrl,
+        firstName,
+        lastName }
+      comments{
+        body
+      }
+      createdAt
+      updatedAt
+      completedAt
+    }
+    proceduresCount
+  }
+`
+
+export const GET_CREDIT_PAYMENTS = gql`
+  query dashboardCreditPayments(
+    $page: Int
+    $per: Int
+    $sortDirection: String
+    $sortField: String
+  ){
+    dashboardCreditPayments(
+      page: $page,
+      per: $per,
+      sortDirection: $sortDirection,
+      sortField: $sortField
+    ){
+      budget{
+      	id,
+      	budgetingTemplate{
+          name
+        }
+        client{
+          fullName
+        }
+        asignee{
+          avatarThumbUrl,
+          firstName,
+          lastName
+        }
+      },
+      createdAt,
+      id,
+      note,
+      paymentType,
+      total,
+      updatedAt,
+      voidAt
+    }
+  }
+`
+
+export const GET_PAYMENTS = gql`
+  query dashboardPayments(
+    $page: Int
+    $per: Int
+    $sortDirection: String
+    $sortField: String
+  ){
+    dashboardPayments(
+      page: $page,
+      per: $per,
+      sortDirection: $sortDirection,
+      sortField: $sortField
+    ){
+      budget{
+        id,
+        budgetingTemplate{
+          name,
+        }
+        proceduresTemplate{
+          name
+        }
+        client{
+          fullName
+        }
+        asignee{
+          avatarThumbUrl,
+          firstName,
+          lastName
+        }
+      },
+      budgetFieldValue{
+        id,
+        active,
+        field{
+          name,
+          
+        },
+        totalDebt,
+        totalPaid
+        value
+      }
+      createdAt,
+      id,
+      note,
+      total,
+      updatedAt,
+      voidAt
+    }
   }
 `

@@ -47,7 +47,7 @@ const FieldValue = (props) => {
   // const handleNameChange = (event) => {
   //   setName(event.target.value);
   // };
-
+  console.log(data.budgetFieldValue)
   return(
     <Grid 
       container
