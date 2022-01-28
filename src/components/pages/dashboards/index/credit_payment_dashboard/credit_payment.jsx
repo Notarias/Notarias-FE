@@ -13,7 +13,7 @@ import MoreVertIcon                   from '@material-ui/icons/MoreVert';
 
 const CreditPayment = (props) => {
   const { creditPayment } = props
-  
+
   const formatValue = (value) => {
     return(((value * 1.0) / 100).toFixed(2))
   }
@@ -37,9 +37,9 @@ const CreditPayment = (props) => {
         <Grid item container justifyContent="flex-start">
           <Grid item container>
             <Grid item container xs={8} justifyContent='flex-start' alignItems='center'>
-              <Grid item>
+              <Grid item style={{marginLeft: "20px"}}>
                 <Typography variant='h6'>
-                  {creditPayment.note}
+                  {`Presupuesto: ${creditPayment.budget.budgetingTemplate.name} - ${creditPayment.note}`}
                 </Typography>
               </Grid>
               {!!creditPayment.voidAt ?
@@ -68,47 +68,49 @@ const CreditPayment = (props) => {
                 </Grid>
               }
             </Grid>
-            <Grid item container xs={4} justifyContent='flex-end' alignItems='center'>
+            <Grid item container xs justifyContent='flex-end' alignItems='center' style={{ marginRight: "20px" }}>
               <Grid item>
                 <Typography variant='subtitle2' color="secondary">
                   No. {creditPayment.id.toString().padStart(10, "0")}
                 </Typography>
               </Grid>
-              <Grid item>
-                <IconButton
-                  aria-label="more"
-                  aria-controls="long-menu"
-                  aria-haspopup="true"
-                >
-                  <MoreVertIcon />
-                </IconButton>
-              </Grid>
             </Grid>
           </Grid>
           <Grid item container style={{ paddingBottom: "10px", paddingTop: "10px" }}>
-            <Grid item container alignItems="center" xs={2}>
-              <Grid item xs={12}>
-                <Typography color="primary">
-                  <strong>Monto: </strong>  ${formatValue(creditPayment.total)}
-                </Typography>
-                <Typography color="primary">
-                  <strong>Tipo de Pago: </strong> {creditPayment.paymentType}
-                </Typography>
-              </Grid>
-            </Grid>
-            <Divider orientation="vertical" flexItem/>
-            <Grid item container alignItems="center" xs={2} justifyContent="center">
+          <Grid item container alignItems="center" xs justifyContent="center">
               <Grid item>
                 <Typography>
-                  <strong>Cliente: </strong>
+                  <strong>Tramite:</strong>
                 </Typography>
                 <Typography>
-                  {creditPayment.budget.client.fullName}
+                  {creditPayment.budget.proceduresTemplate.name}
                 </Typography>
               </Grid>
             </Grid>
             <Divider orientation="vertical" flexItem/>
-            <Grid item container alignItems="center" xs={2} justifyContent="center">
+            <Grid item container alignItems="center" xs justifyContent="center">
+              <Grid item xs>
+                <Typography color="primary">
+                  <strong>Monto: </strong>
+                </Typography>
+                <Typography color="primary">
+                ${formatValue(creditPayment.total)}
+                </Typography>
+              </Grid>
+            </Grid>
+            <Divider orientation="vertical" flexItem/>
+            <Grid item container alignItems="center" xs justifyContent="center">
+              <Grid item>
+                <Typography color="primary">
+                  <strong>Tipo de Pago: </strong>
+                </Typography>
+                <Typography color="primary">
+                  {creditPayment.paymentType}
+                </Typography>
+              </Grid>
+            </Grid>
+            <Divider orientation="vertical" flexItem/>
+            <Grid item container alignItems="center" xs justifyContent="center">
               <Grid item>
                 <Typography>
                   <strong>Fecha de Ingreso:</strong>
@@ -119,36 +121,34 @@ const CreditPayment = (props) => {
               </Grid>
             </Grid>
             <Divider orientation="vertical" flexItem/>
-            <Grid item container alignItems="center" xs={2} justifyContent="center">
+            <Grid item container alignItems="center" xs justifyContent="center">
               <Grid item>
-                <Box color="success.main">
                 <Typography>
-                  <strong>Ultima Modificacion:</strong>
+                  <strong>Cliente: </strong>
                 </Typography>
                 <Typography>
-                  {buildDate(creditPayment.updatedAt)}
+                  {creditPayment.budget.client.fullName}
                 </Typography>
-                </Box>
               </Grid>
             </Grid>
             <Divider orientation="vertical" flexItem/>
-            <Grid item container xs={3} alignItems='center' style={{ paddingLeft: "20px"}}>
+            <Grid item container xs alignItems='center' style={{ paddingLeft: "10px"}}>
               <Grid item container alignItems="center">
                 <Typography>
                   <strong>Encargado: </strong>
                 </Typography>
                 {creditPayment.budget.asignee ?
-                  <Grid item container direction="row" spacing={2} alignItems="center">
+                  <Grid item container direction="row" spacing={1} alignItems="center">
                     <Grid item>
                       <Avatar alt={creditPayment.budget.asignee.fullName} src={creditPayment.budget.asignee.avatarThumbUrl}/>
                     </Grid>
-                    <Grid item>
+                    <Grid item direction="column">
                       <Typography variant="body2" align="left">{creditPayment.budget.asignee.firstName}</Typography>
                       <Typography variant="body2" align="left">{creditPayment.budget.asignee.lastName}</Typography>
                     </Grid>
                   </Grid>
                   :
-                  "Sin Asignar"
+                  "Sin Encargado Asignado"
                 }
               </Grid>
             </Grid>

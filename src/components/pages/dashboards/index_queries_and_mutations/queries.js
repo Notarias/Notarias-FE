@@ -56,6 +56,18 @@ export const GET_BUDGETS = gql`
       }
       comments{
         body
+        commentableId
+        commentableType
+        id
+        createdAt
+        updatedAt
+        user{
+          avatarThumbUrl
+          avatarUrl
+          id
+          firstName
+          lastName
+        }
       }
       id
       serialNumber
@@ -68,7 +80,8 @@ export const GET_BUDGETS = gql`
       completedAt
       asignee {
         id
-        fullName
+        firstName
+        lastName
         avatarThumbUrl
       }
     }
@@ -105,6 +118,18 @@ export const GET_PROCEDURES = gql`
         lastName }
       comments{
         body
+        commentableId
+        commentableType
+        id
+        createdAt
+        updatedAt
+        user{
+          avatarThumbUrl
+          avatarUrl
+          id
+          firstName
+          lastName
+        }
       }
       createdAt
       updatedAt
@@ -139,6 +164,9 @@ export const GET_CREDIT_PAYMENTS = gql`
           avatarThumbUrl,
           firstName,
           lastName
+        }
+        proceduresTemplate{
+          name
         }
       },
       createdAt,

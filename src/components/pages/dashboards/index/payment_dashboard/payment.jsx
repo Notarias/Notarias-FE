@@ -37,7 +37,7 @@ const Payment = (props) => {
         <Grid item container justifyContent="flex-start">
           <Grid item container>
             <Grid item container xs={10} justifyContent='flex-start' alignItems='center'>
-              <Grid item style={{ marginLeft: "10px", marginRight: "10px"}}>
+              <Grid item style={{ marginLeft: "20px", marginRight: "10px"}}>
                 <Typography variant='h6'>
                   {`Presupuesto: ${payment.budget.budgetingTemplate.name}`}
                 </Typography>
@@ -76,15 +76,6 @@ const Payment = (props) => {
             </Grid>
             <Grid item container xs justifyContent='flex-end' alignItems='center' style={{ marginRight: "20px" }}>
               <Grid item>
-                <IconButton
-                  aria-label="more"
-                  aria-controls="long-menu"
-                  aria-haspopup="true"
-                >
-                  <MessageIcon />
-                </IconButton>
-              </Grid>
-              <Grid item>
                 <Typography variant='subtitle2' color="secondary">
                   No. {payment.id.toString().padStart(10, "0")}
                 </Typography>
@@ -93,7 +84,7 @@ const Payment = (props) => {
           </Grid>
           <Grid item container style={{ paddingBottom: "10px", paddingTop: "10px" }}>
           <Grid item container alignItems="center" xs justifyContent="center">
-              <Grid item xs>
+              <Grid item>
                 <Typography>
                   <strong>Tramite: </strong>
                 </Typography>
@@ -164,7 +155,7 @@ const Payment = (props) => {
                   <strong>Encargado: </strong>
                 </Typography>
                 {payment.budget.asignee ?
-                  <Grid item container direction="row" spacing={2} alignItems="center">
+                  <Grid item container direction="row" spacing={1} alignItems="center">
                     <Grid item>
                       <Avatar alt={payment.budget.asignee.fullName} src={payment.budget.asignee.avatarThumbUrl}/>
                     </Grid>
