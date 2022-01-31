@@ -4,7 +4,8 @@ import { useQuery }                   from '@apollo/client';
 import { GET_BUDGETS }                from '../index_queries_and_mutations/queries';
 import Budget                         from './budgets_dashboard/budget';
 
-const BudgetsDashboard = (props) => {
+
+export default (props) => {
   const [searchLoading] = useState(false);
   const [sortField]     = useState("serial_number")
   const [sortDirection] = useState("desc")
@@ -20,8 +21,8 @@ const BudgetsDashboard = (props) => {
     searchLoading: searchLoading
   }
 
-  const  { loading, data } = useQuery(
-    GET_BUDGETS, { variables: variables, fetchPolicy: "cache-and-network" }
+  const  { data } = useQuery(
+    GET_BUDGETS, { variables: variables, fetchPolicy: "cache-and-network"  }
   );
 
   useEffect( () =>{
@@ -38,5 +39,3 @@ const BudgetsDashboard = (props) => {
     </Grid>
   )
 }
-
-export default BudgetsDashboard;
