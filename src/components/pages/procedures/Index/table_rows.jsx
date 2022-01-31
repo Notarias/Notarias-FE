@@ -46,7 +46,7 @@ const TableRows = (props) => {
       <TableCell align= "center" className={classes.tablecellWidth}>{ procedure.serialNumber }</TableCell>
       <TableCell align= "center" className={classes.tablecellWidth}>{ procedure.budgetingTemplate.name }</TableCell>
       <TableCell align= "center" className={classes.tablecellWidth}>{ procedure.proceduresTemplate.name }</TableCell>
-      <TableCell align= "center" className={classes.tablecellWidth}>{ <Avatar src={procedure.reporter && procedure.reporter.avatarThumbUrl}/> }</TableCell>
+      <TableCell align= "center" className={classes.tablecellWidth}>{ <Avatar src={procedure.asignee && procedure.asignee.avatarThumbUrl}/> }</TableCell>
       <TableCell align= "center" className={classes.tablecellWidth}>{ buildDate(procedure.createdAt) }</TableCell>
       <TableCell align= "center" className={classes.tablecellWidth}>{ estatus(procedure) }</TableCell>
       <TableCell align= "center" className={classes.tablecellWidth}>
