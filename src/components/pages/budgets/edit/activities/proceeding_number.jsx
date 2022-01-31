@@ -38,7 +38,7 @@ export default (props) => {
         onError(error) {
           let errorsHash = {}
           error.graphQLErrors.map((error) => {
-            errorsHash[error.extensions.attribute] = error.message
+            return errorsHash[error.extensions.attribute] = error.message
           })
           setPristine(true)
         },

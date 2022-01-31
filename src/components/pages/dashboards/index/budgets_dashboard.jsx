@@ -8,7 +8,7 @@ const BudgetsDashboard = (props) => {
   const [searchLoading] = useState(false);
   const [sortField]     = useState("serial_number")
   const [sortDirection] = useState("desc")
-  const [page, setPage] = useState(1)
+  const [page]          = useState(1)
   const [per]           = useState(10)
   const [budgets, setBudgets] = useState([])
 

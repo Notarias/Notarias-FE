@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { makeStyles } from '@material-ui/core/styles';
 import { styles } from './../styles';
 import Grid from '@material-ui/core/Grid';
 import 'react-calendar/dist/Calendar.css';
@@ -17,7 +16,6 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import AssigneSelectorList from './assigne_selector_list';
 import EventNoteIcon from '@material-ui/icons/EventNote';
 import { useMutation } from '@apollo/client';
-import { useQuery } from '@apollo/client';
 import { GET_APPOINTMENTS } from './../queries_and_mutations/queries';
 import { CREATE_APPOINTMENT } from './../queries_and_mutations/queries';
 
@@ -32,6 +30,22 @@ const getCurrentDate = (separator='/') => {
   return (
     `${date}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${year}-
       ${hours}:${minutes < 10 ? `0${minutes}` : `${minutes}`}`
+  )
+}
+
+const formatDate = (dateObject) => {
+  let date = dateObject.getDate();
+  let month = dateObject.getMonth() + 1;
+  let year = dateObject.getFullYear();
+  let hours = dateObject.getHours();
+  let minutes = dateObject.getMinutes();
+
+  date = date < 10 ? `0${date}` : `${date}`
+  month = month < 10 ? `0${month}` : `${month}`
+  minutes = minutes < 10 ? `0${minutes}` : `${minutes}`
+
+  return (
+    `${year}-${month}-${date}T${hours}:${minutes}`
   )
 }
 
@@ -64,7 +78,8 @@ const NewAppointmentDialog = (props) => {
       },
       refetchQueries: [
         {
-          query: GET_APPOINTMENTS
+          query: GET_APPOINTMENTS,
+          variables: variables
         },
       ],
       awaitRefetchQueries: true
@@ -89,12 +104,12 @@ const NewAppointmentDialog = (props) => {
     })
   }
 
-  const iniDateChange = (event) => {
-    setInitDate(event.target.value)
+  const initDateChange = (event) => {
+    setInitDate(new Date(event.target.value))
   }
 
   const endDateChange = (event) => {
-    setEndDate(event.target.value)
+    setEndDate(new Date(event.target.value))
   }
 
   const placeChange = (event) => {
@@ -126,27 +141,28 @@ const NewAppointmentDialog = (props) => {
           <Grid container item xs={10}>
             <Grid item xs={12} className={classes.marginTopStartAndEnd}>
               <TextField
-                id="datetime-local"
+                id="datetime-local-start"
                 label="Inicio de la Cita"
                 type="datetime-local"
                 InputLabelProps={{
                   shrink: true,
                 }}
-                onChange={iniDateChange}
-                value= {initDate}
+                format="MM/dd/yyyy"
+                onChange={initDateChange}
+                value={formatDate(initDate)}
                 fullWidth
               />
             </Grid>
             <Grid item xs={12} className={classes.marginTopStartAndEnd}>
               <TextField
-                id="datetime-local"
+                id="datetime-local-end"
                 label="Termino de la Cita"
                 type="datetime-local"
                 InputLabelProps={{
                   shrink: true,
                 }}
                 onChange={endDateChange}
-                value= {endDate}
+                value={formatDate(endDate)}
                 fullWidth
               />
             </Grid>
