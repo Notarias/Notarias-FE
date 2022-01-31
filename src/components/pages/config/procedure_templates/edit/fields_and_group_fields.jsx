@@ -12,7 +12,7 @@ const FieldsAndGroupFields = (props) => {
   const renderFieldsAndGroups = () => {
 
     return(
-      <Grid container item xs={12} direction="row" alignItems="center">
+      <Grid container item xs={12} direction="row" justifyContent="center">
         <Grid container item xs={12} alignItems="center" justifyContent="center">
           <FieldList
             currentTab={ currentTab }
@@ -40,9 +40,9 @@ const FieldsAndGroupFields = (props) => {
   }
 
   return(
-    <Grid container item >
+    <>
       { currentTab ? renderFieldsAndGroups() : renderFieldsAndGroupsEmpty() }
-    </Grid>
+    </>
   )
 }
 

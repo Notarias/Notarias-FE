@@ -315,7 +315,6 @@ export const GET_COMMENTABLE_COMMENTS = gql`
         id
         firstName
         lastName
-        
       }
     }
   }

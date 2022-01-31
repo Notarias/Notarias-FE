@@ -678,13 +678,14 @@ export const GET_COMMENTABLE_COMMENTS = gql`
       commentableId
       commentableType
       id
+      createdAt
+      updatedAt
       user{
         avatarThumbUrl
         avatarUrl
         id
         firstName
         lastName
-        
       }
     }
   }
