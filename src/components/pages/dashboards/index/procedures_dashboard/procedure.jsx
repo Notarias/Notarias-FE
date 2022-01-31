@@ -10,18 +10,14 @@ import Divider                        from '@material-ui/core/Divider';
 import MessageIcon                    from '@material-ui/icons/Message';
 import CommentsDialog                 from './comments_dialog';
 
-const Budget = (props) => {
-  const { budget } = props
+const Procedure = (props) => {
+  const { procedure } = props
 
-  const [asignee] = useState(budget.asignee);
+  const [asignee] = useState(procedure.asignee);
   const [commentDialog, setCommentDialog] = useState(false);
 
   const statsCommentDialog = () => {
     setCommentDialog(!commentDialog);
-  }
-
-  const formatValue = (value) => {
-    return(((value * 1.0) / 100).toFixed(2))
   }
 
   const buildDate = (value, separator='/') => {
@@ -37,55 +33,59 @@ const Budget = (props) => {
     )
   }
 
+  const formatValue = (value) => {
+    return(((value * 1.0) / 100).toFixed(2))
+  }
+
   return(
     <Grid item style={{ paddingBottom: "20px", paddingRight: "30px" }}>
       <Paper style={{ padding: "10px" }}>
-        <Grid container justifyContent="flex-start">
+        <Grid item container justifyContent="flex-start">
           <Grid item container xs={8} justifyContent='flex-start' alignItems='center'>
             <Grid item style={{marginLeft: "20px"}}>
               <Typography variant='h6'>
-                {budget.budgetingTemplate.name}
+                {procedure.proceduresTemplate.name}
               </Typography>
             </Grid>
           </Grid>
           <Grid item container xs spacing={1} justifyContent='flex-end' alignItems='center' style={{ marginRight: "20px" }}>
-            {budget.comments.length > 0 ? 
+            {procedure.comments.length > 0 ? 
               <Grid item>
                 <IconButton
                   onClick={statsCommentDialog}
                 >
                   <MessageIcon />
                 </IconButton>
-                <CommentsDialog budget={budget} commentDialog={commentDialog} setCommentDialog={setCommentDialog} statsCommentDialog={statsCommentDialog} />
+                <CommentsDialog procedure={procedure} commentDialog={commentDialog} setCommentDialog={setCommentDialog} statsCommentDialog={statsCommentDialog} />
               </Grid>
             :
               ""
             }
             <Grid item>
               <Typography variant='subtitle2' color="secondary">
-                No. {budget.serialNumber.toString().padStart(10, "0")}
+                No. {procedure.serialNumber.toString().padStart(10, "0")}
               </Typography>
             </Grid>
           </Grid>
-          <Grid item container direction="row" alignItems="stretch" style={{ paddingBottom: "10px", paddingTop: "10px" }}>
+          <Grid item container style={{ paddingBottom: "10px", paddingTop: "10px" }}>
             <Grid item container alignItems="center" xs justifyContent="center">
               <Grid item>
                 <Typography color="primary">
-                  <strong>Total:</strong>
+                  <strong>Presupuesto Vinculado: </strong>
                 </Typography>
                 <Typography color="primary">
-                  ${formatValue(budget.total)}
+                  {procedure.budgetingTemplate.name}
                 </Typography>
               </Grid>
             </Grid>
             <Divider orientation="vertical" flexItem/>
             <Grid item container alignItems="center" xs justifyContent="center">
               <Grid item>
-                <Typography color="secondary">
-                  <strong>Saldo:</strong>
+                <Typography>
+                  <strong>Fecha de Inicio:</strong>
                 </Typography>
-                <Typography color="secondary">
-                  ${formatValue(budget.totalDebt)}
+                <Typography>
+                  {buildDate(procedure.createdAt)}
                 </Typography>
               </Grid>
             </Grid>
@@ -94,23 +94,12 @@ const Budget = (props) => {
               <Grid item>
                 <Box color="success.main">
                   <Typography>
-                    <strong>Ingresos:</strong>
+                    <strong>Ultimo Movimiento:</strong>
                   </Typography>
                   <Typography>
-                    ${formatValue(budget.totalCredit)}
+                    {buildDate(procedure.updatedAt)}
                   </Typography>
                 </Box>
-              </Grid>
-            </Grid>
-            <Divider orientation="vertical" flexItem/>
-            <Grid item container alignItems="center" xs justifyContent="center">
-              <Grid item>
-                <Typography>
-                  <strong>Egresos:</strong>
-                </Typography>
-                <Typography>
-                  ${formatValue(budget.totalPaid)}
-                </Typography>
               </Grid>
             </Grid>
             <Divider orientation="vertical" flexItem/>
@@ -120,7 +109,7 @@ const Budget = (props) => {
                   <strong>Estatus:</strong>
                 </Typography>
                 <Typography>
-                  {!!budget.completedAt ?
+                  {!!procedure.completedAt ?
                     <Box color="success.main">
                       <Chip label="Completado" color='primary' style={{backgroundColor:'MediumSeaGreen'}}/>
                     </Box>
@@ -134,33 +123,33 @@ const Budget = (props) => {
             <Grid item container alignItems="center" xs justifyContent="center">
               <Grid item>
                 <Typography>
-                  <strong>Fecha de Inicio:</strong>
+                  <strong>Cliente:</strong>
                 </Typography>
                 <Typography>
-                  {buildDate(budget.createdAt)}
+                  {procedure.client.fullName}
                 </Typography>
               </Grid>
             </Grid>
             <Divider orientation="vertical" flexItem/>
-            <Grid item container xs direction="column" alignItems='center' style={{ paddingLeft: "5px"}}>
-              <Grid item xs>
+            <Grid item container xs alignItems='center' style={{ paddingLeft: "10px"}}>
+              <Grid item container>
                 <Typography>
                   <strong>Encargado: </strong>
                 </Typography>
+                {asignee ?
+                  <Grid item container direction="row" spacing={1}>
+                    <Grid item>
+                      <Avatar alt={asignee.fullName} src={asignee && asignee.avatarThumbUrl}/>
+                    </Grid>
+                    <Grid item direction="column">
+                      <Typography variant="body2" align="left">{asignee.firstName}</Typography>
+                      <Typography variant="body2" align="left">{asignee.lastName}</Typography>
+                    </Grid>
+                  </Grid>
+                  :
+                  "Sin Usuario Asignado"
+                }
               </Grid>
-              {asignee ?
-                <Grid item container xs direction="row" spacing={1}>
-                  <Grid item>
-                    <Avatar src={asignee && asignee.avatarThumbUrl}/>
-                  </Grid>
-                  <Grid item xs>
-                    <Typography variant="body2" align="left">{asignee.firstName}</Typography>
-                    <Typography variant="body2" align="left">{asignee.lastName}</Typography>
-                  </Grid>
-                </Grid>
-                :
-                "Sin Usuario Asignado"
-              }
             </Grid>
           </Grid>
         </Grid>
@@ -169,4 +158,4 @@ const Budget = (props) => {
   )
 }
 
-export default Budget;
+export default Procedure;
