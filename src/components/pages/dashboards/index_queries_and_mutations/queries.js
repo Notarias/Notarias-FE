@@ -17,6 +17,47 @@ export const GET_LATEST_COMMENTS = gql`
   }
 `
 
+export const GET_APPOINTMENTS = gql`
+  query appoitments (
+    $page: Int,
+    $per: Int
+    $sortDirection: String,
+    $sortField: String
+  ){
+    appointments(
+      page: $page, 
+      per: $per,
+      sortDirection: $sortDirection,
+      sortField: $sortField
+    ){
+      id
+      creatorId
+      place
+      extraData
+      initDate
+      endDate
+      createdAt
+      users{
+        id
+        firstName
+        lastName
+        avatarThumbUrl
+      }
+    }
+  }
+`
+
+export const GET_USER = gql`
+  query getuser($id: ID!){
+    user(id: $id) {
+      id
+      firstName
+      lastName
+      avatarThumbUrl
+    }
+  }
+`
+
 export const GET_BUDGETS = gql`
   query budgets (
     $page: Int,

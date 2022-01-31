@@ -10,6 +10,7 @@ import { withStyles }               from '@material-ui/core/styles';
 import Breadcrumbs                  from '../../ui/breadcrumbs';
 import Tabs                         from '@material-ui/core/Tabs';
 import Tab                          from '@material-ui/core/Tab';
+import AppointmentDashboard         from './index/appointment_dashboard'
 import BudgetsDashboard             from './index/budgets_dashboard'
 import PaymentsDashboard            from './index/payments_dashboard'
 import CreditPaymentsDashboard      from './index/credit_payments_dashboard'
@@ -18,7 +19,6 @@ import ProceduresDashboard          from './index/procedures_dashboard'
 const BREADCRUMBS = [
   { name: "Inicio", path: "/" }
 ]
-
 
 const DashboardsIndex = (props) => {
   const { classes } = props;
@@ -32,15 +32,17 @@ const DashboardsIndex = (props) => {
   const renderTabContent = () => {
     switch(currentTab) {
       case 0:
-        return <BudgetsDashboard/>
+        return <AppointmentDashboard/>
       case 1:
-        return <PaymentsDashboard/>
+        return <BudgetsDashboard/>
       case 2:
-        return <CreditPaymentsDashboard/>
+        return <PaymentsDashboard/>
       case 3:
+        return <CreditPaymentsDashboard/>
+      case 4:
         return <ProceduresDashboard/>
       default:
-        return <BudgetsDashboard/>
+        return <AppointmentDashboard/>
     }
   }
 
@@ -59,10 +61,11 @@ const DashboardsIndex = (props) => {
               aria-label="Vertical tabs example"
               className={classes.tabs}
             >
-              <Tab label="Presupuestos" id={`vertical-tab-0`} ariaControls={`vertical-tabpanel-0`}/>
-              <Tab label="Pagos" id={`vertical-tab-1`} ariaControls={`vertical-tabpanel-1`}/>
-              <Tab label="Ingresos" id={`vertical-tab-2`} ariaControls={`vertical-tabpanel-2`}/>
-              <Tab label="Trámites" id={`vertical-tab-3`} ariaControls={`vertical-tabpanel-3`}/>
+              <Tab label="Reuniones" id={`vertical-tab-0`} ariaControls={`vertical-tabpanel-0`}/>
+              <Tab label="Presupuestos" id={`vertical-tab-1`} ariaControls={`vertical-tabpanel-1`}/>
+              <Tab label="Pagos" id={`vertical-tab-2`} ariaControls={`vertical-tabpanel-2`}/>
+              <Tab label="Ingresos" id={`vertical-tab-3`} ariaControls={`vertical-tabpanel-3`}/>
+              <Tab label="Trámites" id={`vertical-tab-4`} ariaControls={`vertical-tabpanel-4`}/>
             </Tabs>
           </Grid>
         </Grid>
