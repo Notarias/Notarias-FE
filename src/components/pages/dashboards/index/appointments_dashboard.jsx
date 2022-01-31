@@ -4,7 +4,7 @@ import { useQuery }                      from '@apollo/client';
 import { GET_APPOINTMENTS }              from '../index_queries_and_mutations/queries';
 import Appointment                       from './appointment_dashboard/appointment';
 
-const AppointmentDashboard = (props) => {
+const AppointmentsDashboard = (props) => {
   const [sortField]     = useState("created_at");
   const [sortDirection] = useState("desc");
   const [page, setPage] = useState(1);
@@ -37,4 +37,4 @@ const AppointmentDashboard = (props) => {
   )
 }
 
-export default AppointmentDashboard;
+export default AppointmentsDashboard;
