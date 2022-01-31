@@ -10,7 +10,7 @@ import { withStyles }               from '@material-ui/core/styles';
 import Breadcrumbs                  from '../../ui/breadcrumbs';
 import Tabs                         from '@material-ui/core/Tabs';
 import Tab                          from '@material-ui/core/Tab';
-import AppointmentDashboard         from './index/appointment_dashboard'
+import AppointmentsDashboard         from './index/appointments_dashboard'
 import BudgetsDashboard             from './index/budgets_dashboard'
 import PaymentsDashboard            from './index/payments_dashboard'
 import CreditPaymentsDashboard      from './index/credit_payments_dashboard'
@@ -32,7 +32,7 @@ const DashboardsIndex = (props) => {
   const renderTabContent = () => {
     switch(currentTab) {
       case 0:
-        return <AppointmentDashboard/>
+        return <AppointmentsDashboard/>
       case 1:
         return <BudgetsDashboard/>
       case 2:
@@ -42,7 +42,7 @@ const DashboardsIndex = (props) => {
       case 4:
         return <ProceduresDashboard/>
       default:
-        return <AppointmentDashboard/>
+        return <AppointmentsDashboard/>
     }
   }
 
