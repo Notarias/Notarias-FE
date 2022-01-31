@@ -263,17 +263,13 @@ query procedure(
 export const UPDATE_PROCEDURE = gql`
   mutation updateProcedure(
     $id: ID!,
-    $clientId: ID,
-    $proceduresTemplateId: ID,
-    $budgetingTemplateId: ID,
+    $clientId: ID
     $asigneeId: ID
   ){
     updateProcedure (
       input:{
         id: $id
         clientId: $clientId
-        proceduresTemplateId: $proceduresTemplateId
-        budgetingTemplateId: $budgetingTemplateId
         asigneeId: $asigneeId
       }
     ){
