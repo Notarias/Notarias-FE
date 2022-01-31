@@ -17,7 +17,7 @@ const AssigneSelectorList = (props) => {
 
   const [userList, setUserList] = useState();
 
-  const { loading, data, refetch } = useQuery(
+  const { data } = useQuery(
     USERS_QUICK_LIST
   );
 

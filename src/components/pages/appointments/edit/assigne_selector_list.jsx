@@ -13,12 +13,12 @@ import { USERS_QUICK_LIST } from '../queries_and_mutations/queries';
 import { Grid } from '@material-ui/core';
 
 const AssigneSelectorList = (props) => {
-  const { selectedIds, setSelectedIds} = props;
+  const { selectedIds, setSelectedIds, appointment } = props;
   
   const [userList, setUserList] = useState();
   const [userListIds, setUserListIds] = useState();
   
-  const { loading, data, refetch } = useQuery(
+  const { data } = useQuery(
     USERS_QUICK_LIST
   );
 
@@ -59,6 +59,7 @@ const AssigneSelectorList = (props) => {
             `${user.firstName} ${user.lastName}`
           )
         }
+        return('')
       })
     )
   }
@@ -68,10 +69,10 @@ const AssigneSelectorList = (props) => {
       userList && userList.map((user) => {
         if(user.id == id){
           return(
-            <>
+            <React.Fragment key={`appointment-${appointment.id}-avatar-${user.id}`}>
               <Avatar className={classes.small}>{user.avatarThumbUrl}</Avatar>
               <Typography variant="inherit" style={{ marginLeft: '10px' }}>{`${user.firstName} ${user.lastName}`}</Typography>
-            </>
+            </React.Fragment>
           )
         }
       })
@@ -105,7 +106,7 @@ const AssigneSelectorList = (props) => {
           )}
         >
           {userListIds && userListIds.map((id) => (
-            <MenuItem id={id} key={id} value={id}>
+            <MenuItem id={id} key={`edit-appointment-${appointment.id}-dialog-user-${id}`} value={id}>
               {printUserList(id)}
             </MenuItem>
           ))}

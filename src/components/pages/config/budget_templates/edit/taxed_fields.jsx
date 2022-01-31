@@ -19,7 +19,6 @@ const TaxedFields = (props) => {
     }
   }, [data && data.budgetingTemplateTaxedFields.length])
 
-  console.log(taxField.id, "--------------")
   const renderTaxedFields = () => {
     if(taxedFields) {
       return(

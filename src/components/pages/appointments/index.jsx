@@ -12,19 +12,20 @@ import NewAppointmentDialog from './new/new_appointment_dialog';
 import EventList from './eventList/index';
 import { useQuery } from '@apollo/client';
 import { GET_APPOINTMENTS } from './queries_and_mutations/queries';
+import Box from '@material-ui/core/Box';
 
 const AppointmentsIndex = (props) => {
   const { classes } = props
 
-  const [sortField, setSortField]         = useState();
-  const [sortDirection, setSortDirection] = useState();
-  const [searchField]                     = useState();
-  const [searchValue, setSearchValue]     = useState("");
-  const [page, setPage]                   = useState(1);
-  const [per, setPer]                     = useState(100);
-  const [events, setEvents]               = useState();
-  const [fecha, setFecha]                 = useState();
-  const [appointmentList, getAppointmentsList]   = useState();
+  const [sortField]         = useState();
+  const [sortDirection]     = useState();
+  const [searchField]       = useState();
+  const [searchValue  ]     = useState("");
+  const [page]              = useState(1);
+  const [per]               = useState(100);
+  const [date, setDate]                 = useState(new Date());
+  const [appointmentList, setAppointmentsList]   = useState();
+  const [newDialog, setNewDialog] = useState(false);
 
   let variables = {
     page: page,
@@ -40,12 +41,15 @@ const AppointmentsIndex = (props) => {
   );
 
   useEffect(() => {
-    getAppointmentsList(data && data.appointments);
+    setAppointmentsList(data && data.appointments);
     refetch(variables)
   }, [page, per, sortField]);
 
-  const [date, setDate] = useState(new Date());
-  const [newDialog, setNewDialog] = useState(false);
+  useEffect(() => {
+    if(data && data.appointments.length) {
+      setAppointmentsList(data && data.appointments)
+    }
+  }, [data && data.appointments.length])
 
   const openNewDialog = () => {
     setNewDialog(true);
@@ -56,16 +60,17 @@ const AppointmentsIndex = (props) => {
   };
   
   const selectDay = (event) => {
-    setFecha(event)
+    setDate(event)
   };
 
   return(
     <Grid>
-      <h1>Appointments</h1>
-      <Grid container spacing={3}>
+      <Grid container spacing={3} style={ { paddingTop: "30px", paddingBottom: "30px" } }>
         <Grid item xs={4}></Grid>
         <Grid item xs={8} container justifyContent="flex-start">
-          <Typography variant="h4" component="h2" >Fecha</Typography>
+          <Box color="primary.main">
+            <Typography variant="h4" component="h2" >{date.toLocaleDateString('es-ES', { month: 'long', day: 'numeric' })}</Typography>
+          </Box>
         </Grid>
       </Grid>
       <Grid container spacing={3} >
@@ -86,16 +91,20 @@ const AppointmentsIndex = (props) => {
               </Grid>
             </Grid>
             <Dialog onClose={closeNewDialog} aria-labelledby="simple-dialog-title" open={newDialog}>
-              <NewAppointmentDialog closeNewDialog={closeNewDialog}/>
+              <NewAppointmentDialog closeNewDialog={closeNewDialog} variables={variables}/>
             </Dialog>
           </Paper>
         </Grid>
         <Grid item xs={8}>
           <Grid className={classes.windowScrollEventList}>
             {
-              appointmentList && appointmentList.map( appointment  => {
-                return(<EventList key={appointment.id} appointment={appointment}/>)
-              })
+              data && data.appointments.length ?
+                data.appointments.map(appointment  => {
+                  return(<EventList key={`dashboard-appointment-${appointment.id}`} appointment={appointment}/>)
+                }) :
+                <Paper style={{ padding: "30px" }}>
+                  <Typography variant='h4'>Sin Eventos</Typography>
+                </Paper>
             }
           </Grid>
         </Grid>

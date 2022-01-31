@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Grid                           from '@material-ui/core/Grid';
 import Paper                          from '@material-ui/core/Paper';
 import Typography                     from '@material-ui/core/Typography';
 import Avatar                         from '@material-ui/core/Avatar';
-import Button                         from '@material-ui/core/Button';
 import CheckCircleIcon                from '@material-ui/icons/CheckCircle';
 import Box                            from '@material-ui/core/Box';
 import IconButton                     from '@material-ui/core/IconButton';

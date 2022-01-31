@@ -32,12 +32,27 @@ const buildDate = (value, separator='-') => {
   )
 }
 
+const formatDate = (dateObject) => {
+  let date = dateObject.getDate();
+  let month = dateObject.getMonth() + 1;
+  let year = dateObject.getFullYear();
+  let hours = dateObject.getHours();
+  let minutes = dateObject.getMinutes();
+
+  date = date < 10 ? `0${date}` : `${date}`
+  month = month < 10 ? `0${month}` : `${month}`
+  minutes = minutes < 10 ? `0${minutes}` : `${minutes}`
+
+  return (
+    `${year}-${month}-${date}T${hours}:${minutes}`
+  )
+}
+
+
 const EditAppointmentDialog = (props) => {
   const { classes, closeEditDialog, appointment, variables } = props
-  const [errors, setErrors] = useState({})
-  const [pristine, setPristine] = useState(true);
-  const [initDate, setInitDate] = useState(buildDate(appointment.initDate));
-  const [endDate, setEndDate] = useState(buildDate(appointment.endDate));
+  const [initDate, setInitDate] = useState(new Date(appointment.initDate));
+  const [endDate, setEndDate] = useState(new Date(appointment.endDate));
   const [place, setPlace] = useState(appointment.place);
   const [extraData, setExtraData] = useState(appointment.extraData);
   const [selecteds, setSelecteds] = useState(appointment.users);
@@ -48,25 +63,17 @@ const EditAppointmentDialog = (props) => {
     })
   );
 
-  const [updateAppointment, {loading: updateAppointmentLoading}] =
+  const [updateAppointment] =
   useMutation(
     UPDATE_APPOINTMENT,
     {
-      onError(error) {
-        let errorsHash = {}
-        error.graphQLErrors.map((error) => {
-          errorsHash[error.extensions.attribute] = error.message
-        }) 
-        setErrors(errorsHash)
-        setPristine(true)
-      },
       onCompleted(cacheData) {
         closeEditDialog();
       },
       refetchQueries: [
         {
           query: GET_APPOINTMENTS,
-          variables: { variables } 
+          variables: variables
         },
       ],
       awaitRefetchQueries: true
@@ -86,12 +93,12 @@ const EditAppointmentDialog = (props) => {
     })
   }
 
-  const iniDateChange = (event) => {
-    setInitDate(event.target.value)
+  const initDateChange = (event) => {
+    setInitDate(new Date(event.target.value))
   }
 
   const endDateChange = (event) => {
-    setEndDate(event.target.value)
+    setEndDate(new Date(event.target.value))
   }
 
   const placeChange = (event) => {
@@ -129,8 +136,8 @@ const EditAppointmentDialog = (props) => {
                 InputLabelProps={{
                   shrink: true,
                 }}
-                onChange={iniDateChange}
-                value= {initDate}
+                onChange={initDateChange}
+                value= {formatDate(initDate)}
                 fullWidth
               />
             </Grid>
@@ -143,12 +150,12 @@ const EditAppointmentDialog = (props) => {
                   shrink: true,
                 }}
                 onChange={endDateChange}
-                value= {endDate}
+                value= {formatDate(endDate)}
                 fullWidth
               />
             </Grid>
             <Grid container item xs={12} className={classes.marginTopStartAndEnd}>
-              <AssigneSelectorList selectedIds={selectedIds} setSelectedIds={setSelectedIds}/>
+              <AssigneSelectorList selectedIds={selectedIds} setSelectedIds={setSelectedIds} appointment={appointment}/>
             </Grid>
             <Grid item xs={12} className={classes.marginTopStartAndEnd}>
               <TextField

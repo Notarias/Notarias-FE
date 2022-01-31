@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { makeStyles } from '@material-ui/core/styles';
 import { styles } from './../styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -49,10 +48,8 @@ const EventList = (props) => {
   const [assigneList, setAssigneList] = useState(false);
   const [moreActions, setMoreActions] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [errors, setErrors] = useState();
-  const [pristine, setPristine] = useState();
 
-  const { loading, error, data } = useQuery(GET_USER, { variables: { "id": appointment.creatorId }})
+  const { data } = useQuery(GET_USER, { variables: { "id": appointment.creatorId }})
   useEffect(() => {
     setCreatorUser(data && data.user);
   }, [data]);
@@ -61,14 +58,6 @@ const EventList = (props) => {
   useMutation(
     DESTROY_APPOINTMENT,
     {
-      onError(error) {
-        let errorsHash = {}
-        error.graphQLErrors.map((error) => {
-          errorsHash[error.extensions.attribute] = error.message
-        }) 
-        setErrors(errorsHash)
-        setPristine(true)
-      },
       onCompleted(cacheData) {
         closeMoreActions();
       },
@@ -201,7 +190,7 @@ const EventList = (props) => {
               >
                 {appointment.users.map((user) => {
                   return(
-                    <MenuItem key={user.id}>
+                    <MenuItem key={`invitee-list-${appointment.id}-user-${user.id}`}>
                       <Chip
                         key={user.id}
                         avatar={<Avatar alt={user.firstName} src={user.avatarThumbUrl} />}
