@@ -16,7 +16,7 @@ import { GET_USER }                     from '../../index_queries_and_mutations/
 
 const Appointment = (props) => {
   const { appointment } = props
-console.log(appointment)
+  
   const [creator, setCreator] = useState();
   const [anchorEl, setAnchorEl] = useState();
   const [assigneList, setAssigneList] = useState();
