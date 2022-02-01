@@ -8,6 +8,7 @@ import IconButton                     from '@material-ui/core/IconButton';
 import Divider                        from '@material-ui/core/Divider';
 import LocalAtmIcon                   from '@material-ui/icons/LocalAtm';
 import AssignmentIcon                 from '@material-ui/icons/Assignment';
+import Box                            from '@material-ui/core/Box';
 import CommentsDialog                 from './comments_dialog';
 import { Link }                       from 'react-router-dom';
 import { useQuery }                   from '@apollo/client';
@@ -41,7 +42,7 @@ const Commentary = (props) => {
             setBudget(budget.budget.budgetingTemplate)
           }
         }, [budget]);
-        return(`Presupuesto - ${budget && budget.budget.budgetingTemplate.name}`);
+        return("Presupuesto");
 
       case "Procedure" :
         const { data: procedure } = useQuery(
@@ -53,7 +54,7 @@ const Commentary = (props) => {
             setProcedure(procedure.procedure.proceduresTemplate)
           }
         }, [procedure]);
-        return(`Tramite - ${procedure && procedure.procedure.proceduresTemplate.name}`);
+        return("Tramite");
 
       default :
         return("Otro")
@@ -120,6 +121,32 @@ const Commentary = (props) => {
               </Grid>
             </Grid>
             <Divider orientation="vertical" flexItem/>
+            <Grid item container alignItems="center" xs justifyContent="center">
+              <Grid item>
+                <Box color="success.main">
+                  {comment.commentableType == "Budget" ?
+                    <>
+                      <Typography>
+                        <strong>Presupuesto:</strong>
+                      </Typography>
+                      <Typography>
+                        {budget && budget.name}
+                      </Typography>
+                    </>
+                  :
+                    <>
+                      <Typography>
+                        <strong>Tramite:</strong>
+                      </Typography>
+                      <Typography>
+                        {procedure && procedure.name}
+                      </Typography>
+                    </>
+                  }
+                </Box>
+              </Grid>
+            </Grid>
+            <Divider orientation="vertical" flexItem/>
             <Grid item container alignItems="center" xs={1} justifyContent="center">
               <Grid item>
                 {(comment.createdAt === comment.updatedAt) ? 
@@ -136,22 +163,20 @@ const Commentary = (props) => {
             </Grid>
             <Divider orientation="vertical" flexItem/>
             <Grid item container alignItems="center" xs={5} justifyContent="center">
-              <Link href="#" onClick={statsCommentDialog} color="inherit" underline='none' >
-                <Grid item>
-                  <Typography>
-                    {`${comment.body.substr(0,150)}...`}
-                  </Typography>
-                  <CommentsDialog
-                    comment={comment}
-                    commentType={commentType}
-                    commentDialog={commentDialog}
-                    setCommentDialog={setCommentDialog}
-                    statsCommentDialog={statsCommentDialog}
-                    budget={budget}
-                    procedure={procedure}
-                  />
-                </Grid>
-              </Link>
+              <Grid item>
+                <Typography onClick={statsCommentDialog} style={{cursor:'pointer'}}>
+                  {`${comment.body.substr(0,150)}...`}
+                </Typography>
+                <CommentsDialog
+                  comment={comment}
+                  commentType={commentType}
+                  commentDialog={commentDialog}
+                  setCommentDialog={setCommentDialog}
+                  statsCommentDialog={statsCommentDialog}
+                  budget={budget}
+                  procedure={procedure}
+                />
+              </Grid>
             </Grid>
             <Divider orientation="vertical" flexItem/>
             <Grid item container xs direction="column" alignItems='center' style={{ paddingLeft: "5px"}}>
