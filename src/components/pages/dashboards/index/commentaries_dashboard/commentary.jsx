@@ -16,7 +16,7 @@ import { GET_PROCEDURE }              from '../../index_queries_and_mutations/qu
 
 const Commentary = (props) => {
   const { comment } = props
-  console.log(comment)
+  
   const [commentDialog, setCommentDialog] = useState(false);
   const [budget, setBudget] = useState();
   const [procedure, setProcedure] = useState();
@@ -59,8 +59,6 @@ const Commentary = (props) => {
         return("Otro")
     }
   }
-  console.log(budget)
-  console.log(procedure)
   
   const buildDate = (value, separator='/') => {
     let newDate = new Date(value)
