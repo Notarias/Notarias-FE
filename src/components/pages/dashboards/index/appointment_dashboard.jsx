@@ -23,7 +23,7 @@ const AppointmentDashboard = (props) => {
   );
 
   useEffect( () =>{
-    setAppointments(data.appointments)
+    setAppointments(data && data.appointments)
   }, [data])
 
   return(
