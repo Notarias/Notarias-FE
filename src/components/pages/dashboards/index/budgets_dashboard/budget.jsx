@@ -56,7 +56,12 @@ const Budget = (props) => {
                 >
                   <MessageIcon />
                 </IconButton>
-                <CommentsDialog budget={budget} commentDialog={commentDialog} setCommentDialog={setCommentDialog} statsCommentDialog={statsCommentDialog} />
+                <CommentsDialog 
+                  budget={budget}
+                  commentDialog={commentDialog}
+                  setCommentDialog={setCommentDialog}
+                  statsCommentDialog={statsCommentDialog}
+                />
               </Grid>
             :
               ""

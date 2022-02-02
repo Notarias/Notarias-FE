@@ -10,6 +10,7 @@ import Chip                           from '@material-ui/core/Chip';
 import IconButton                     from '@material-ui/core/IconButton';
 import Divider                        from '@material-ui/core/Divider';
 import CloseIcon                      from '@material-ui/icons/Close';
+import AccountCircleIcon              from '@material-ui/icons/AccountCircle';
 
 const CommentsDialog = (props) => {
   const { procedure, commentDialog, setCommentDialog, statsCommentDialog} = props
@@ -32,8 +33,10 @@ const CommentsDialog = (props) => {
       <Grid style={{width: "500px"}}>
         <Card>
           <CardHeader
-            avatar={
-              <Avatar aria-label="asignee" src={procedure.asignee.avatarThumbUrl}/>
+            avatar={procedure.asignee ?
+              <Avatar aria-label={procedure.asignee.firstName} src={procedure.asignee.avatarThumbUrl}/>
+            :
+              <Avatar src={AccountCircleIcon}/>
             }
             action={
               <IconButton aria-label="settings" color="secondary" onClick={statsCommentDialog}>
@@ -45,9 +48,13 @@ const CommentsDialog = (props) => {
                 {<strong>{`Presupuesto: ${procedure.proceduresTemplate.name}`}</strong>}
               </Typography>
             }
-            subheader={
+            subheader={procedure.asignee ?
               <Typography variant="body2">
                 {`Encargado: ${procedure.asignee.firstName} ${procedure.asignee.lastName}`}
+              </Typography>
+            :
+              <Typography variant="body2">
+                {"Sin usuario asignado"}
               </Typography>
             }
           />

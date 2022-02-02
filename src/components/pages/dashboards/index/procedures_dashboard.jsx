@@ -3,6 +3,8 @@ import Grid                           from '@material-ui/core/Grid';
 import { useQuery }                   from '@apollo/client';
 import { GET_PROCEDURES }             from '../index_queries_and_mutations/queries';
 import Procedure                      from './procedures_dashboard/procedure';
+import Typography                     from '@material-ui/core/Typography';
+import Paper                          from '@material-ui/core/Paper';
 
 const ProceduresDashboard = (props) => {
   const [searchLoading] = useState(false);
@@ -30,10 +32,16 @@ const ProceduresDashboard = (props) => {
 
   return(
     <Grid container item direction='column' alignItems="stretch"  justifyContent="flex-start" style={{ paddingTop: "30px" }}>
-      {
-        procedures.map((procedure) => {
+      {procedures.length > 0 ?
+        procedures && procedures.map((procedure) => {
           return <Procedure procedure={procedure}/>
         })
+      :
+        <Paper>
+          <Typography>
+            No hay tramites registrados por el momento
+          </Typography>
+        </Paper>
       }
     </Grid>
   )
