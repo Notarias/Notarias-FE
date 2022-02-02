@@ -24,7 +24,7 @@ const Appointment = (props) => {
   const { loading, error, data } = useQuery(GET_USER, { variables: { "id": appointment.creatorId }})
 
   useEffect( () =>{
-    setCreator(data.user)
+    setCreator(data && data.user)
   }, [data])
 
   const buildDate = (value, separator='/') => {

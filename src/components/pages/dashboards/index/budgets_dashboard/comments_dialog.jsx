@@ -10,6 +10,7 @@ import Chip                           from '@material-ui/core/Chip';
 import IconButton                     from '@material-ui/core/IconButton';
 import Divider                        from '@material-ui/core/Divider';
 import CloseIcon                      from '@material-ui/icons/Close';
+import AccountCircleIcon              from '@material-ui/icons/AccountCircle';
 
 const CommentsDialog = (props) => {
   const { budget, commentDialog, setCommentDialog, statsCommentDialog} = props
@@ -26,14 +27,16 @@ const CommentsDialog = (props) => {
       `${date < 10 ? `0${date}` : `${date}`}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${year} - ${hours < 10 ? `0${hours}` : `${hours}`}:${minutes < 10 ? `0${minutes}` : `${minutes}`}`
     )
   }
-
+  
   return (
     <Dialog onClose={statsCommentDialog} aria-labelledby="comments-title" open={commentDialog}>
       <Grid style={{width: "500px"}}>
         <Card>
           <CardHeader
-            avatar={
-              <Avatar aria-label="asignee" src={budget.asignee.avatarThumbUrl}/>
+            avatar={budget.asignee ?
+              <Avatar aria-label={budget.asignee.firstName} src={budget.asignee.avatarThumbUrl}/>
+            :
+              <Avatar src={AccountCircleIcon}/>
             }
             action={
               <IconButton aria-label="settings" color="secondary" onClick={statsCommentDialog}>
@@ -45,9 +48,13 @@ const CommentsDialog = (props) => {
                 {<strong>{`Presupuesto: ${budget.budgetingTemplate.name}`}</strong>}
               </Typography>
             }
-            subheader={
+            subheader={budget.asignee ?
               <Typography variant="body2">
                 {`Encargado: ${budget.asignee.firstName} ${budget.asignee.lastName}`}
+              </Typography>
+            :
+              <Typography variant="body2">
+                {"Sin usuario asignado"}
               </Typography>
             }
           />

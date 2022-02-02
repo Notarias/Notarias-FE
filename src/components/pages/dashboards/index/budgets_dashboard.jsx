@@ -3,6 +3,8 @@ import Grid                           from '@material-ui/core/Grid';
 import { useQuery }                   from '@apollo/client';
 import { GET_BUDGETS }                from '../index_queries_and_mutations/queries';
 import Budget                         from './budgets_dashboard/budget';
+import Typography                     from '@material-ui/core/Typography';
+import Paper                          from '@material-ui/core/Paper';
 
 const BudgetsDashboard = (props) => {
   const [searchLoading] = useState(false);
@@ -27,13 +29,19 @@ const BudgetsDashboard = (props) => {
   useEffect( () =>{
     data && budgets.length === 0 && setBudgets(data.budgets)
   }, [data])
-
+  
   return(
     <Grid container item direction='column' alignItems="stretch"  justifyContent="flex-start" style={{ paddingTop: "30px" }}>
-      {
-        budgets.map((budget) => {
+      {budgets.length > 0 ?
+        budgets && budgets.map((budget) => {
           return <Budget budget={budget}/>
         })
+      :
+        <Paper>
+          <Typography>
+            No hay presupuestos por el momento
+          </Typography>
+        </Paper>
       }
     </Grid>
   )
