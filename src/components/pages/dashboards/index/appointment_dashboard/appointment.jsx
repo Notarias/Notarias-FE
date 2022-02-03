@@ -69,27 +69,6 @@ const Appointment = (props) => {
             </Grid>
           </Grid>
           <Grid item container style={{ paddingBottom: "10px", paddingTop: "10px" }}>
-            <Grid item container xs alignItems='center' style={{ paddingLeft: "10px"}}>
-              <Grid item container>
-                <Typography>
-                  <strong>Creador: </strong>
-                </Typography>
-                {creator ?
-                  <Grid item container direction="row" spacing={1}>
-                    <Grid item>
-                      <Avatar alt={creator.fullName} src={creator.avatarThumbUrl}/>
-                    </Grid>
-                    <Grid item direction="column">
-                      <Typography variant="body2" align="left">{creator.firstName}</Typography>
-                      <Typography variant="body2" align="left">{creator.lastName}</Typography>
-                    </Grid>
-                  </Grid>
-                  :
-                  "Sin Usuario Asignado"
-                }
-              </Grid>
-            </Grid>
-            <Divider orientation="vertical" flexItem/>
             <Grid item container alignItems="center" xs justifyContent="center">
               <Grid item>
                 <Typography color="primary">
@@ -166,6 +145,27 @@ const Appointment = (props) => {
                     )
                   })}
                 </Menu>
+              </Grid>
+            </Grid>
+            <Divider orientation="vertical" flexItem/>
+            <Grid item container xs alignItems='center' style={{ paddingLeft: "10px"}}>
+              <Grid item container>
+                <Typography>
+                  <strong>Creador: </strong>
+                </Typography>
+                {creator ?
+                  <Grid item container direction="row" spacing={1}>
+                    <Grid item>
+                      <Avatar alt={creator.fullName} src={creator.avatarThumbUrl}/>
+                    </Grid>
+                    <Grid item direction="column">
+                      <Typography variant="body2" align="left">{creator.firstName}</Typography>
+                      <Typography variant="body2" align="left">{creator.lastName}</Typography>
+                    </Grid>
+                  </Grid>
+                  :
+                  "Sin Usuario Asignado"
+                }
               </Grid>
             </Grid>
           </Grid>

@@ -15,6 +15,7 @@ import BudgetsDashboard             from './index/budgets_dashboard'
 import PaymentsDashboard            from './index/payments_dashboard'
 import CreditPaymentsDashboard      from './index/credit_payments_dashboard'
 import ProceduresDashboard          from './index/procedures_dashboard'
+import CommentariesDashboard          from './index/commentaries_dashboard'
 
 const BREADCRUMBS = [
   { name: "Inicio", path: "/" }
@@ -41,6 +42,8 @@ const DashboardsIndex = (props) => {
         return <CreditPaymentsDashboard/>
       case 4:
         return <ProceduresDashboard/>
+      case 5:
+        return <CommentariesDashboard/>
       default:
         return <AppointmentsDashboard/>
     }
@@ -66,6 +69,7 @@ const DashboardsIndex = (props) => {
               <Tab label="Pagos" id={`vertical-tab-2`} ariaControls={`vertical-tabpanel-2`}/>
               <Tab label="Ingresos" id={`vertical-tab-3`} ariaControls={`vertical-tabpanel-3`}/>
               <Tab label="Trámites" id={`vertical-tab-4`} ariaControls={`vertical-tabpanel-4`}/>
+              <Tab label="Comentarios" id={`vertical-tab-5`} ariaControls={`vertical-tabpanel-5`}/>
             </Tabs>
           </Grid>
         </Grid>

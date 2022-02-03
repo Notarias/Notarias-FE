@@ -271,3 +271,66 @@ export const GET_PAYMENTS = gql`
     }
   }
 `
+
+export const GET_COMMENTS = gql`
+  query comments(
+    $page: Int,
+    $per: Int,
+    $sortDirection: String,
+    $sortField: String
+  ){
+    comments(
+      page: $page,
+      per: $per,
+      sortDirection: $sortDirection,
+      sortField: $sortField
+    ){
+      id,
+      createdAt,
+      updatedAt,
+      commentableType,
+      commentableId,
+      body,
+      user{
+        avatarThumbUrl,
+        firstName,
+        lastName,
+        fullName
+      }
+    }
+  }
+`
+
+export const GET_BUDGET = gql`
+query budget(
+    $id: ID!
+  ){
+  budget(
+    id: $id
+    ){
+      id
+      budgetingTemplate{
+        active
+        id
+        name
+      }
+    }
+  }
+`
+
+export const GET_PROCEDURE = gql`
+query procedure(
+    $id: ID!
+  ){
+  procedure(
+    id: $id
+    ){
+      id
+      proceduresTemplate{
+        active
+        name
+        id
+      }
+    }
+  }
+`

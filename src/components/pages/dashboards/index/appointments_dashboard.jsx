@@ -3,8 +3,8 @@ import Grid                              from '@material-ui/core/Grid';
 import { useQuery }                      from '@apollo/client';
 import { GET_APPOINTMENTS }              from '../index_queries_and_mutations/queries';
 import Appointment                       from './appointment_dashboard/appointment';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
+import Typography                        from '@material-ui/core/Typography';
+import Paper                             from '@material-ui/core/Paper';
 
 const AppointmentsDashboard = (props) => {
   const [sortField]     = useState("created_at");
@@ -36,8 +36,8 @@ const AppointmentsDashboard = (props) => {
         })
       :
         <Paper>
-          <Typography>
-            No hay reuniones por el momento
+          <Typography variant='h4' style={{padding: "20px"}}>
+            No hay reuniones registradas por el momento
           </Typography>
         </Paper>
       }
