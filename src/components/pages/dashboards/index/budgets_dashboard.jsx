@@ -38,8 +38,8 @@ const BudgetsDashboard = (props) => {
         })
       :
         <Paper>
-          <Typography>
-            No hay presupuestos por el momento
+          <Typography variant='h4' style={{padding: "20px"}}>
+            No hay presupuestos registrados por el momento
           </Typography>
         </Paper>
       }

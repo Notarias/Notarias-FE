@@ -36,7 +36,7 @@ const PaymentsDashboard = (props) => {
         })
       :
         <Paper>
-          <Typography>
+          <Typography variant='h4' style={{padding: "20px"}}>
             No hay pagos registrados por el momento
           </Typography>
         </Paper>

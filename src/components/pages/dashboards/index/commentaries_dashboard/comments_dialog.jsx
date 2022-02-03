@@ -47,7 +47,7 @@ const CommentsDialog = (props) => {
             }
             subheader={
               <Typography variant="body2">
-                {`Encargado: ${comment.user.firstName} ${comment.user.lastName}`}
+                {`Encargado: ${comment.user.fullName}`}
               </Typography>
             }
           />

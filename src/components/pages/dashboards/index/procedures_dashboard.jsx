@@ -38,7 +38,7 @@ const ProceduresDashboard = (props) => {
         })
       :
         <Paper>
-          <Typography>
+          <Typography variant='h4' style={{padding: "20px"}}>
             No hay tramites registrados por el momento
           </Typography>
         </Paper>

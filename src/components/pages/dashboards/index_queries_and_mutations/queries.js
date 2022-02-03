@@ -294,7 +294,8 @@ export const GET_COMMENTS = gql`
       user{
         avatarThumbUrl,
         firstName,
-        lastName
+        lastName,
+        fullName
       }
     }
   }

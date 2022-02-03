@@ -36,7 +36,7 @@ const CreditPaymentsDashboard = (props) => {
         })
       :
         <Paper>
-          <Typography>
+          <Typography variant='h4' style={{padding: "20px"}}>
             No hay ingresos registrados por el momento
           </Typography>
         </Paper>

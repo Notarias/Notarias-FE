@@ -3,6 +3,8 @@ import Grid                           from '@material-ui/core/Grid';
 import { useQuery }                   from '@apollo/client';
 import { GET_COMMENTS }               from '../index_queries_and_mutations/queries';
 import Commentary                     from './commentaries_dashboard/commentary';
+import Typography                     from '@material-ui/core/Typography';
+import Paper                          from '@material-ui/core/Paper';
 
 const CommentariesDashboard = (props) => {
   const [sortField]     = useState("created_at");
@@ -28,10 +30,16 @@ const CommentariesDashboard = (props) => {
 
   return(
     <Grid container item direction='column' alignItems="stretch"  justifyContent="flex-start" style={{ paddingTop: "30px" }}>
-      {
-        comments.map((comment) => {
+      {comments.length > 0 ?
+        comments && comments.map((comment) => {
           return <Commentary comment={comment}/>
         })
+      :
+        <Paper>
+          <Typography variant='h4' style={{padding: "20px"}}>
+            No hay comentarios por el momento
+          </Typography>
+        </Paper>
       }
     </Grid>
   )
