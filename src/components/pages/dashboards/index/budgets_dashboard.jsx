@@ -22,7 +22,7 @@ const BudgetsDashboard = (props) => {
     searchLoading: searchLoading
   }
 
-  const  { loading, data } = useQuery(
+  const  { data } = useQuery(
     GET_BUDGETS, { variables: variables, fetchPolicy: "cache-and-network" }
   );
 
@@ -34,7 +34,11 @@ const BudgetsDashboard = (props) => {
     <Grid container item direction='column' alignItems="stretch"  justifyContent="flex-start" style={{ paddingTop: "30px" }}>
       {budgets.length > 0 ?
         budgets && budgets.map((budget) => {
-          return <Budget budget={budget}/>
+          return(
+            <Grid item key={`${budget.__typename}-${budget.id}`} style={{ paddingBottom: "20px", paddingRight: "30px" }}>
+              <Budget budget={budget}/>
+            </Grid>
+          )
         })
       :
         <Paper>

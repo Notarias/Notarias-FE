@@ -9,7 +9,7 @@ import Paper                             from '@material-ui/core/Paper';
 const AppointmentsDashboard = (props) => {
   const [sortField]     = useState("created_at");
   const [sortDirection] = useState("desc");
-  const [page, setPage] = useState(1);
+  const [page] = useState(1);
   const [per]           = useState(10);
   const [appointments, setAppointments] = useState([]);
 
@@ -20,7 +20,7 @@ const AppointmentsDashboard = (props) => {
     sortField: sortField
   }
 
-  const  { loading, data } = useQuery(
+  const  { data } = useQuery(
     GET_APPOINTMENTS, { variables: variables, fetchPolicy: "cache-and-network" }
   );
 
@@ -32,7 +32,12 @@ const AppointmentsDashboard = (props) => {
     <Grid container item direction='column' alignItems="stretch"  justifyContent="flex-start" style={{ paddingTop: "30px" }}>
       {appointments.length > 0 ?
         appointments && appointments.map((appointment) => {
-          return <Appointment appointment={appointment}/>
+          return(
+            
+            <Grid item key={`${appointment.__typename}-${appointment.id}`} style={{ paddingBottom: "20px", paddingRight: "30px" }}>
+              <Appointment appointment={appointment}/>
+            </Grid>
+          )
         })
       :
         <Paper>

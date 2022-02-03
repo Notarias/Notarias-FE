@@ -13,7 +13,7 @@ import CloseIcon                      from '@material-ui/icons/Close';
 import AccountCircleIcon              from '@material-ui/icons/AccountCircle';
 
 const CommentsDialog = (props) => {
-  const { procedure, commentDialog, setCommentDialog, statsCommentDialog} = props
+  const { procedure, commentDialog, statsCommentDialog} = props
   
   const buildDate = (value, separator='/') => {
     let newDate = new Date(value)
@@ -64,7 +64,7 @@ const CommentsDialog = (props) => {
               procedure.comments.map((comment) => {
 
                 return(
-                  <Card variant="outlined">
+                  <Card variant="outlined" key={`${procedure.proceduresTemplate.name}-${procedure.id}`}>
                     <CardHeader
                       avatar={
                         <Avatar src={ comment.user.avatarThumbUrl} size="small"/>

@@ -9,7 +9,7 @@ import Paper                          from '@material-ui/core/Paper';
 const CommentariesDashboard = (props) => {
   const [sortField]     = useState("created_at");
   const [sortDirection] = useState("desc");
-  const [page, setPage] = useState(1);
+  const [page] = useState(1);
   const [per]           = useState(10);
   const [comments, setComments] = useState([]);
 
@@ -20,7 +20,7 @@ const CommentariesDashboard = (props) => {
     sortField: sortField
   }   
 
-  const  { loading, data } = useQuery(
+  const  { data } = useQuery(
     GET_COMMENTS, { variables: variables, fetchPolicy: "cache-and-network" }
   );
   
@@ -32,7 +32,11 @@ const CommentariesDashboard = (props) => {
     <Grid container item direction='column' alignItems="stretch"  justifyContent="flex-start" style={{ paddingTop: "30px" }}>
       {comments.length > 0 ?
         comments && comments.map((comment) => {
-          return <Commentary comment={comment}/>
+          return(
+            <Grid item key={`${comment.__typename}-${comment.id}`} style={{ paddingBottom: "20px", paddingRight: "30px" }}>
+              <Commentary comment={comment}/>
+            </Grid>
+          )
         })
       :
         <Paper>

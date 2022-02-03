@@ -75,130 +75,125 @@ const Commentary = (props) => {
   }
 
   return(
-    <Grid item style={{ paddingBottom: "20px", paddingRight: "30px" }}>
-      <Paper style={{ padding: "10px" }}>
-        <Grid container justifyContent="flex-start">
-          <Grid item container xs={8} justifyContent='flex-start' alignItems='center'>
-            <Grid item style={{marginLeft: "20px"}}>
-              <Typography variant='h6'>
-                {commentType(comment)}
-              </Typography>
+    <Paper style={{ padding: "10px" }}>
+      <Grid container justifyContent="flex-start">
+        <Grid item container xs={8} justifyContent='flex-start' alignItems='center'>
+          <Grid item style={{marginLeft: "20px"}}>
+            <Typography variant='h6'>
+              {commentType(comment)}
+            </Typography>
+          </Grid>
+        </Grid>
+        <Grid item container xs spacing={1} justifyContent='flex-end' alignItems='center' style={{ marginRight: "20px" }}>
+          <Grid item>
+            {comment.commentableType == "Budget" ?
+              <Link to={`/budgets/${comment.commentableId}/edit`}>
+                <IconButton>
+                  <LocalAtmIcon />
+                </IconButton>
+              </Link>
+            :
+              <Link to={`/procedures/${comment.commentableId}/edit`}>
+                <IconButton>
+                  <AssignmentIcon />
+                </IconButton>
+              </Link>
+            }
+          </Grid>
+          <Grid item>
+            <Typography variant='subtitle2' color="secondary">
+              No. {comment.id.toString().padStart(10, "0")}
+            </Typography>
+          </Grid>
+        </Grid>
+        <Grid item container direction="row" alignItems="stretch" style={{ paddingBottom: "10px", paddingTop: "10px" }}>
+          <Grid item container alignItems="center" xs justifyContent="center">
+            <Grid item container xs direction="column" justifyContent="center">
+              <Grid item>
+                <Typography color="primary">
+                  <strong>Fecha del Comentario:</strong>
+                </Typography>
+                <Typography color="primary">
+                  {buildDate(comment.createdAt)}
+                </Typography>
+              </Grid>
             </Grid>
           </Grid>
-          <Grid item container xs spacing={1} justifyContent='flex-end' alignItems='center' style={{ marginRight: "20px" }}>
+          <Divider orientation="vertical" flexItem/>
+          <Grid item container alignItems="center" xs justifyContent="center">
             <Grid item>
-              {comment.commentableType == "Budget" ?
-                <Link to={`/budgets/${comment.commentableId}/edit`}>
-                  <IconButton>
-                    <LocalAtmIcon />
-                  </IconButton>
-                </Link>
-              :
-                <Link to={`/procedures/${comment.commentableId}/edit`}>
-                  <IconButton>
-                    <AssignmentIcon />
-                  </IconButton>
-                </Link>
+              <Box color="success.main">
+                {comment.commentableType == "Budget" ?
+                  <>
+                    <Typography>
+                      <strong>Presupuesto:</strong>
+                    </Typography>
+                    <Typography>
+                      {budget && budget.name}
+                    </Typography>
+                  </>
+                :
+                  <>
+                    <Typography>
+                      <strong>Tramite:</strong>
+                    </Typography>
+                    <Typography>
+                      {procedure && procedure.name}
+                    </Typography>
+                  </>
+                }
+              </Box>
+            </Grid>
+          </Grid>
+          <Divider orientation="vertical" flexItem/>
+          <Grid item container alignItems="center" xs={1} justifyContent="center">
+            <Grid item>
+              {(comment.createdAt === comment.updatedAt) ? 
+                <></>
+                :
+                <Chip 
+                  label="Editado"
+                  variant="outlined"
+                  color="primary"
+                  style={{marginRight: '5px'}}
+                />
               }
             </Grid>
+          </Grid>
+          <Divider orientation="vertical" flexItem/>
+          <Grid item container alignItems="center" xs={5} justifyContent="center">
             <Grid item>
-              <Typography variant='subtitle2' color="secondary">
-                No. {comment.id.toString().padStart(10, "0")}
+              <Typography onClick={statsCommentDialog} style={{cursor:'pointer'}}>
+                {`${comment.body.substr(0,150)}...`}
               </Typography>
+              <CommentsDialog
+                comment={comment}
+                commentType={commentType}
+                commentDialog={commentDialog}
+                statsCommentDialog={statsCommentDialog}
+              />
             </Grid>
           </Grid>
-          <Grid item container direction="row" alignItems="stretch" style={{ paddingBottom: "10px", paddingTop: "10px" }}>
-            <Grid item container alignItems="center" xs justifyContent="center">
-              <Grid item container xs direction="column" justifyContent="center">
-                <Grid item>
-                  <Typography color="primary">
-                    <strong>Fecha del Comentario:</strong>
-                  </Typography>
-                  <Typography color="primary">
-                    {buildDate(comment.createdAt)}
-                  </Typography>
-                </Grid>
-              </Grid>
+          <Divider orientation="vertical" flexItem/>
+          <Grid item container xs direction="column" alignItems='center' style={{ paddingLeft: "5px"}}>
+            <Grid item xs>
+              <Typography>
+                <strong>Creador:</strong>
+              </Typography>
             </Grid>
-            <Divider orientation="vertical" flexItem/>
-            <Grid item container alignItems="center" xs justifyContent="center">
+            <Grid item container xs direction="row" spacing={1}>
               <Grid item>
-                <Box color="success.main">
-                  {comment.commentableType == "Budget" ?
-                    <>
-                      <Typography>
-                        <strong>Presupuesto:</strong>
-                      </Typography>
-                      <Typography>
-                        {budget && budget.name}
-                      </Typography>
-                    </>
-                  :
-                    <>
-                      <Typography>
-                        <strong>Tramite:</strong>
-                      </Typography>
-                      <Typography>
-                        {procedure && procedure.name}
-                      </Typography>
-                    </>
-                  }
-                </Box>
+                <Avatar src={comment && comment.user.avatarThumbUrl}/>
               </Grid>
-            </Grid>
-            <Divider orientation="vertical" flexItem/>
-            <Grid item container alignItems="center" xs={1} justifyContent="center">
-              <Grid item>
-                {(comment.createdAt === comment.updatedAt) ? 
-                  <></>
-                  :
-                  <Chip 
-                    label="Editado"
-                    variant="outlined"
-                    color="primary"
-                    style={{marginRight: '5px'}}
-                  />
-                }
-              </Grid>
-            </Grid>
-            <Divider orientation="vertical" flexItem/>
-            <Grid item container alignItems="center" xs={5} justifyContent="center">
-              <Grid item>
-                <Typography onClick={statsCommentDialog} style={{cursor:'pointer'}}>
-                  {`${comment.body.substr(0,150)}...`}
-                </Typography>
-                <CommentsDialog
-                  comment={comment}
-                  commentType={commentType}
-                  commentDialog={commentDialog}
-                  setCommentDialog={setCommentDialog}
-                  statsCommentDialog={statsCommentDialog}
-                  budget={budget}
-                  procedure={procedure}
-                />
-              </Grid>
-            </Grid>
-            <Divider orientation="vertical" flexItem/>
-            <Grid item container xs direction="column" alignItems='center' style={{ paddingLeft: "5px"}}>
               <Grid item xs>
-                <Typography>
-                  <strong>Creador:</strong>
-                </Typography>
-              </Grid>
-              <Grid item container xs direction="row" spacing={1}>
-                <Grid item>
-                  <Avatar src={comment && comment.user.avatarThumbUrl}/>
-                </Grid>
-                <Grid item xs>
-                  <Typography variant="body2" align="left">{comment.user.firstName}</Typography>
-                  <Typography variant="body2" align="left">{comment.user.lastName}</Typography>
-                </Grid>
+                <Typography variant="body2" align="left">{comment.user.firstName}</Typography>
+                <Typography variant="body2" align="left">{comment.user.lastName}</Typography>
               </Grid>
             </Grid>
           </Grid>
         </Grid>
-      </Paper>
-    </Grid>
+      </Grid>
+    </Paper>
   )
 }
 

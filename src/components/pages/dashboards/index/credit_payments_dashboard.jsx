@@ -9,7 +9,7 @@ import Paper                          from '@material-ui/core/Paper';
 const CreditPaymentsDashboard = (props) => {
   const [sortField]     = useState("created_at");
   const [sortDirection] = useState("desc");
-  const [page, setPage] = useState(1);
+  const [page] = useState(1);
   const [per]           = useState(10);
   const [creditPayments, setCreditPayments] = useState([]);
 
@@ -20,7 +20,7 @@ const CreditPaymentsDashboard = (props) => {
     sortField: sortField
   }
 
-  const  { loading, data } = useQuery(
+  const  { data } = useQuery(
     GET_CREDIT_PAYMENTS, { variables: variables, fetchPolicy: "cache-and-network" }
   );
   
@@ -32,7 +32,11 @@ const CreditPaymentsDashboard = (props) => {
     <Grid container item direction='column' alignItems="stretch" justifyContent="flex-start" style={{ paddingTop: "30px" }}>
       {creditPayments.length > 0 ?
         creditPayments && creditPayments.map((creditPayment) => {
-          return <CreditPayment creditPayment={creditPayment}/>
+          return(
+            <Grid item key={`${creditPayment.__typename}-${creditPayment.id}`} style={{ paddingBottom: "20px", paddingRight: "30px" }}>
+              <CreditPayment creditPayment={creditPayment}/>
+            </Grid>
+          )
         })
       :
         <Paper>

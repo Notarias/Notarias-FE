@@ -13,7 +13,7 @@ import CloseIcon                      from '@material-ui/icons/Close';
 import AccountCircleIcon              from '@material-ui/icons/AccountCircle';
 
 const CommentsDialog = (props) => {
-  const { budget, commentDialog, setCommentDialog, statsCommentDialog} = props
+  const { budget, commentDialog, statsCommentDialog} = props
   
   const buildDate = (value, separator='/') => {
     let newDate = new Date(value)
@@ -64,7 +64,7 @@ const CommentsDialog = (props) => {
               budget.comments.map((comment) => {
 
                 return(
-                  <Card variant="outlined">
+                  <Card variant="outlined" key={`${budget.budgetingTemplate.name}-${budget.id}`}>
                     <CardHeader
                       avatar={
                         <Avatar src={ comment.user.avatarThumbUrl} size="small"/>

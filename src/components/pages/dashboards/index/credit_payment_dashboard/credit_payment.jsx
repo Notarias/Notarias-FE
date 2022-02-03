@@ -32,130 +32,130 @@ const CreditPayment = (props) => {
   }
 
   return(
-    <Grid item style={{ paddingBottom: "20px", paddingRight: "30px" }}>
-      <Paper style={{ padding: "10px" }}>
-        <Grid item container justifyContent="flex-start">
-          <Grid item container>
-            <Grid item container xs={8} justifyContent='flex-start' alignItems='center'>
-              <Grid item style={{marginLeft: "20px"}}>
-                <Typography variant='h6'>
-                  {`Presupuesto: ${creditPayment.budget.budgetingTemplate.name} - ${creditPayment.note}`}
-                </Typography>
-              </Grid>
-              {!!creditPayment.voidAt ?
-                <>
-                  <Grid item style={{ paddingLeft: "10px", paddingRight: "10px" }}>
-                    <Box color="error.main">
-                      <CancelIcon/>
-                    </Box>
-                  </Grid>
-                  <Grid item style={{ paddingLeft: "10px", paddingRight: "10px" }}>
-                    <Typography variant='h6' color="secondary">
-                      <strong>Movimiento Cancelado </strong>
-                    </Typography>
-                  </Grid>
-                  <Grid item style={{ paddingLeft: "10px", paddingRight: "10px" }}>
-                    <Typography variant='h6' color="secondary">
-                      {buildDate(creditPayment.voidAt)}
-                    </Typography>
-                  </Grid>
-                </>
-              :
+    <Paper style={{ padding: "10px" }}>
+      <Grid item container justifyContent="flex-start">
+        <Grid item container>
+          <Grid item container xs={8} justifyContent='flex-start' alignItems='center'>
+            <Grid item style={{marginLeft: "20px"}}>
+              <Typography variant='h6'>
+                {`Presupuesto: ${creditPayment.budget.budgetingTemplate.name} - ${creditPayment.note}`}
+              </Typography>
+            </Grid>
+            {!!creditPayment.voidAt ?
+              <>
                 <Grid item style={{ paddingLeft: "10px", paddingRight: "10px" }}>
-                  <Box color="success.main">
-                    <CheckCircleIcon/>
+                  <Box color="error.main">
+                    <CancelIcon/>
                   </Box>
                 </Grid>
-              }
-            </Grid>
-            <Grid item container xs justifyContent='flex-end' alignItems='center' style={{ marginRight: "20px" }}>
-              <Grid item>
-                <Typography variant='subtitle2' color="secondary">
-                  No. {creditPayment.id.toString().padStart(10, "0")}
-                </Typography>
+                <Grid item style={{ paddingLeft: "10px", paddingRight: "10px" }}>
+                  <Typography variant='h6' color="secondary">
+                    <strong>Movimiento Cancelado </strong>
+                  </Typography>
+                </Grid>
+                <Grid item style={{ paddingLeft: "10px", paddingRight: "10px" }}>
+                  <Typography variant='h6' color="secondary">
+                    {buildDate(creditPayment.voidAt)}
+                  </Typography>
+                </Grid>
+              </>
+            :
+              <Grid item style={{ paddingLeft: "10px", paddingRight: "10px" }}>
+                <Box color="success.main">
+                  <CheckCircleIcon/>
+                </Box>
               </Grid>
-            </Grid>
+            }
           </Grid>
-          <Grid item container style={{ paddingBottom: "10px", paddingTop: "10px" }}>
-          <Grid item container alignItems="center" xs justifyContent="center">
-              <Grid item>
-                <Typography>
-                  <strong>Tramite:</strong>
-                </Typography>
-                <Typography>
-                  {creditPayment.budget.proceduresTemplate.name}
-                </Typography>
-              </Grid>
-            </Grid>
-            <Divider orientation="vertical" flexItem/>
-            <Grid item container alignItems="center" xs justifyContent="center">
-              <Grid item xs>
-                <Typography color="primary">
-                  <strong>Monto: </strong>
-                </Typography>
-                <Typography color="primary">
-                ${formatValue(creditPayment.total)}
-                </Typography>
-              </Grid>
-            </Grid>
-            <Divider orientation="vertical" flexItem/>
-            <Grid item container alignItems="center" xs justifyContent="center">
-              <Grid item>
-                <Typography color="primary">
-                  <strong>Tipo de Pago: </strong>
-                </Typography>
-                <Typography color="primary">
-                  {creditPayment.paymentType}
-                </Typography>
-              </Grid>
-            </Grid>
-            <Divider orientation="vertical" flexItem/>
-            <Grid item container alignItems="center" xs justifyContent="center">
-              <Grid item>
-                <Typography>
-                  <strong>Fecha de Ingreso:</strong>
-                </Typography>
-                <Typography>
-                  {buildDate(creditPayment.createdAt)}
-                </Typography>
-              </Grid>
-            </Grid>
-            <Divider orientation="vertical" flexItem/>
-            <Grid item container alignItems="center" xs justifyContent="center">
-              <Grid item>
-                <Typography>
-                  <strong>Cliente: </strong>
-                </Typography>
-                <Typography>
-                  {creditPayment.budget.client.fullName}
-                </Typography>
-              </Grid>
-            </Grid>
-            <Divider orientation="vertical" flexItem/>
-            <Grid item container xs alignItems='center' style={{ paddingLeft: "10px"}}>
-              <Grid item container alignItems="center">
-                <Typography>
-                  <strong>Encargado: </strong>
-                </Typography>
-                {creditPayment.budget.asignee ?
-                  <Grid item container direction="row" spacing={1} alignItems="center">
-                    <Grid item>
-                      <Avatar alt={creditPayment.budget.asignee.fullName} src={creditPayment.budget.asignee.avatarThumbUrl}/>
-                    </Grid>
-                    <Grid item direction="column">
-                      <Typography variant="body2" align="left">{creditPayment.budget.asignee.firstName}</Typography>
-                      <Typography variant="body2" align="left">{creditPayment.budget.asignee.lastName}</Typography>
-                    </Grid>
-                  </Grid>
-                  :
-                  "Sin Encargado Asignado"
-                }
-              </Grid>
+          <Grid item container xs justifyContent='flex-end' alignItems='center' style={{ marginRight: "20px" }}>
+            <Grid item>
+              <Typography variant='subtitle2' color="secondary">
+                No. {creditPayment.id.toString().padStart(10, "0")}
+              </Typography>
             </Grid>
           </Grid>
         </Grid>
-      </Paper>
-    </Grid>
+        <Grid item container style={{ paddingBottom: "10px", paddingTop: "10px" }}>
+        <Grid item container alignItems="center" xs justifyContent="center">
+            <Grid item>
+              <Typography>
+                <strong>Tramite:</strong>
+              </Typography>
+              <Typography>
+                {creditPayment.budget.proceduresTemplate.name}
+              </Typography>
+            </Grid>
+          </Grid>
+          <Divider orientation="vertical" flexItem/>
+          <Grid item container alignItems="center" xs justifyContent="center">
+            <Grid item xs>
+              <Typography color="primary">
+                <strong>Monto: </strong>
+              </Typography>
+              <Typography color="primary">
+                {`$${formatValue(creditPayment.total)}`}
+              </Typography>
+            </Grid>
+          </Grid>
+          <Divider orientation="vertical" flexItem/>
+          <Grid item container alignItems="center" xs justifyContent="center">
+            <Grid item>
+              <Typography color="primary">
+                <strong>Tipo de Pago: </strong>
+              </Typography>
+              <Typography color="primary">
+                {creditPayment.paymentType}
+              </Typography>
+            </Grid>
+          </Grid>
+          <Divider orientation="vertical" flexItem/>
+          <Grid item container alignItems="center" xs justifyContent="center">
+            <Grid item>
+              <Typography>
+                <strong>Fecha de Ingreso:</strong>
+              </Typography>
+              <Typography>
+                {buildDate(creditPayment.createdAt)}
+              </Typography>
+            </Grid>
+          </Grid>
+          <Divider orientation="vertical" flexItem/>
+          <Grid item container alignItems="center" xs justifyContent="center">
+            <Grid item>
+              <Typography>
+                <strong>Cliente: </strong>
+              </Typography>
+              <Typography>
+                {creditPayment.budget.client.fullName}
+              </Typography>
+            </Grid>
+          </Grid>
+          <Divider orientation="vertical" flexItem/>
+          <Grid item container xs alignItems='center' style={{ paddingLeft: "10px"}}>
+            <Grid item container alignItems="center">
+              <Typography>
+                <strong>Encargado: </strong>
+              </Typography>
+              {creditPayment.budget.asignee ?
+                <Grid item container direction="row" spacing={1} alignItems="center">
+                  <Grid item>
+                    <Avatar alt={creditPayment.budget.asignee.fullName} src={creditPayment.budget.asignee.avatarThumbUrl}/>
+                  </Grid>
+                  <Grid item>
+                    <Typography variant="body2" align="left">{creditPayment.budget.asignee.firstName}</Typography>
+                    <Typography variant="body2" align="left">{creditPayment.budget.asignee.lastName}</Typography>
+                  </Grid>
+                </Grid>
+              :
+                <Typography>
+                  Sin Encargado Asignado
+                </Typography>
+              }
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+    </Paper>
   )
 }
 

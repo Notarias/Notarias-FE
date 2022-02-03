@@ -19,7 +19,7 @@ const Appointment = (props) => {
   
   const [creator, setCreator] = useState();
   const [anchorEl, setAnchorEl] = useState();
-  const [assigneList, setAssigneList] = useState();
+  const [assigneList, setAssigneList] = useState(false);
 
   const { loading, error, data } = useQuery(GET_USER, { variables: { "id": appointment.creatorId }})
 
@@ -51,127 +51,127 @@ const Appointment = (props) => {
   };
 
   return(
-    <Grid item style={{ paddingBottom: "20px", paddingRight: "30px" }}>
-      <Paper style={{ padding: "10px" }}>
-        <Grid item container justifyContent="flex-start">
-          <Grid item container xs={8} justifyContent='flex-start' alignItems='center'>
-            <Grid item style={{marginLeft: "20px"}}>
-              <Typography variant='h6'>
-                {`Fecha de Creacion: ${buildDate(appointment.createdAt)}`}
-              </Typography>
-            </Grid>
+    <Paper style={{ padding: "10px" }}>
+      <Grid item container justifyContent="flex-start">
+        <Grid item container xs={8} justifyContent='flex-start' alignItems='center'>
+          <Grid item style={{marginLeft: "20px"}}>
+            <Typography variant='h6'>
+              {`Fecha de Creacion: ${buildDate(appointment.createdAt)}`}
+            </Typography>
           </Grid>
-          <Grid item container xs spacing={1} justifyContent='flex-end' alignItems='center' style={{ marginRight: "20px" }}>
+        </Grid>
+        <Grid item container xs spacing={1} justifyContent='flex-end' alignItems='center' style={{ marginRight: "20px" }}>
+          <Grid item>
+            <Typography variant='subtitle2' color="secondary">
+              No. {appointment.id.toString().padStart(10, "0")}
+            </Typography>
+          </Grid>
+        </Grid>
+        <Grid item container style={{ paddingBottom: "10px", paddingTop: "10px" }}>
+          <Grid item container alignItems="center" xs justifyContent="center">
             <Grid item>
-              <Typography variant='subtitle2' color="secondary">
-                No. {appointment.id.toString().padStart(10, "0")}
+              <Typography color="primary">
+                <strong>Fecha Inicial:</strong>
+              </Typography>
+              <Typography color="primary">
+                {buildDate(appointment.initDate)}
               </Typography>
             </Grid>
           </Grid>
-          <Grid item container style={{ paddingBottom: "10px", paddingTop: "10px" }}>
-            <Grid item container alignItems="center" xs justifyContent="center">
-              <Grid item>
-                <Typography color="primary">
-                  <strong>Fecha Inicial:</strong>
-                </Typography>
-                <Typography color="primary">
-                  {buildDate(appointment.initDate)}
-                </Typography>
-              </Grid>
+          <Divider orientation="vertical" flexItem/>
+          <Grid item container alignItems="center" xs justifyContent="center">
+            <Grid item>
+              <Typography>
+                <strong>Fecha de Termino:</strong>
+              </Typography>
+              <Typography>
+                {buildDate(appointment.endDate)}
+              </Typography>
             </Grid>
-            <Divider orientation="vertical" flexItem/>
-            <Grid item container alignItems="center" xs justifyContent="center">
-              <Grid item>
+          </Grid>
+          <Divider orientation="vertical" flexItem/>
+          <Grid item container alignItems="center" xs justifyContent="center">
+            <Grid item>
+              <Box color="success.main">
                 <Typography>
-                  <strong>Fecha de Termino:</strong>
+                  <strong>Ubicacion:</strong>
                 </Typography>
                 <Typography>
-                  {buildDate(appointment.endDate)}
+                  {appointment.place}
                 </Typography>
-              </Grid>
+              </Box>
             </Grid>
-            <Divider orientation="vertical" flexItem/>
-            <Grid item container alignItems="center" xs justifyContent="center">
-              <Grid item>
-                <Box color="success.main">
-                  <Typography>
-                    <strong>Ubicacion:</strong>
-                  </Typography>
-                  <Typography>
-                    {appointment.place}
-                  </Typography>
-                </Box>
-              </Grid>
+          </Grid>
+          <Divider orientation="vertical" flexItem/>
+          <Grid item container alignItems="center" xs justifyContent="center">
+            <Grid item>
+              <Typography>
+                <strong>Datos del Evento:</strong>
+              </Typography>
+              <Typography>
+                {`${appointment.extraData.substr(0,30)}...`}
+              </Typography>
             </Grid>
-            <Divider orientation="vertical" flexItem/>
-            <Grid item container alignItems="center" xs justifyContent="center">
-              <Grid item>
-                <Typography>
-                  <strong>Datos del Evento:</strong>
-                </Typography>
-                <Typography>
-                  {`${appointment.extraData.substr(0,30)}...`}
-                </Typography>
-              </Grid>
-            </Grid>
-            <Divider orientation="vertical" flexItem/>
-            <Grid item container alignItems="center" xs justifyContent="center">
-              <Grid item>
-                <Typography>
-                  <strong>Invitados:</strong>
-                </Typography>
-                <Button aria-controls="assigned-list" aria-haspopup="true" onClick={openAssigneList}>
-                  <AvatarGroup max={3}>
-                    {appointment.users.map((user) => {
-                      return(<Avatar key={user.id} alt={user.fullName} src={user.avatarThumbUrl} />)
-                    })}
-                  </AvatarGroup>
-                </Button>
-                <Menu
-                  id="assigned-list"
-                  anchorEl={anchorEl}
-                  keepMounted
-                  open={assigneList}
-                  onClose={closeAssigneList}
-                >
+          </Grid>
+          <Divider orientation="vertical" flexItem/>
+          <Grid item container alignItems="center" xs justifyContent="center">
+            <Grid item>
+              <Typography>
+                <strong>Invitados:</strong>
+              </Typography>
+              <Button aria-controls="assigned-list" aria-haspopup="true" onClick={openAssigneList}>
+                <AvatarGroup max={3}>
                   {appointment.users.map((user) => {
-                    return(
-                      <MenuItem key={user.id}>
-                        <ListItemIcon>
-                          <Avatar alt={user.firstName} src={user.avatarThumbUrl} />
-                        </ListItemIcon>
-                        <ListItemText primary={`${user.firstName} ${user.lastName}`} />
-                      </MenuItem>
-                    )
+                    return(<Avatar key={user.id} alt={user.fullName} src={user.avatarThumbUrl} />)
                   })}
-                </Menu>
-              </Grid>
+                </AvatarGroup>
+              </Button>
+              <Menu
+                id="assigned-list"
+                anchorEl={anchorEl}
+                keepMounted
+                open={assigneList}
+                onClose={closeAssigneList}
+              >
+                {appointment.users.map((user) => {
+                  return(
+                    <MenuItem key={user.id}>
+                      <ListItemIcon>
+                        <Avatar alt={user.firstName} src={user.avatarThumbUrl} />
+                      </ListItemIcon>
+                      <ListItemText primary={`${user.firstName} ${user.lastName}`} />
+                    </MenuItem>
+                  )
+                })}
+              </Menu>
             </Grid>
-            <Divider orientation="vertical" flexItem/>
-            <Grid item container xs alignItems='center' style={{ paddingLeft: "10px"}}>
-              <Grid item container>
-                <Typography>
-                  <strong>Creador: </strong>
-                </Typography>
-                {creator ?
-                  <Grid item container direction="row" spacing={1}>
-                    <Grid item>
-                      <Avatar alt={creator.fullName} src={creator.avatarThumbUrl}/>
-                    </Grid>
-                    <Grid item direction="column">
-                      <Typography variant="body2" align="left">{creator.firstName}</Typography>
-                      <Typography variant="body2" align="left">{creator.lastName}</Typography>
-                    </Grid>
+          </Grid>
+          <Divider orientation="vertical" flexItem/>
+          <Grid item container xs alignItems='center' style={{ paddingLeft: "10px"}}>
+            <Grid item container>
+              <Typography>
+                <strong>Creador: </strong>
+              </Typography>
+              {creator ?
+                <Grid item container direction="row" spacing={1}>
+                  <Grid item>
+                    <Avatar alt={creator.fullName} src={creator.avatarThumbUrl}/>
                   </Grid>
-                  :
-                  "Sin Usuario Asignado"
-                }
-              </Grid>
+                  <Grid item>
+                    <Typography variant="body2" align="left">{creator.firstName}</Typography>
+                    <Typography variant="body2" align="left">{creator.lastName}</Typography>
+                  </Grid>
+                </Grid>
+              :
+                <Typography>
+                  Sin Usuario Asignado
+                </Typography>
+              }
             </Grid>
           </Grid>
         </Grid>
-      </Paper>
-    </Grid>
+      </Grid>
+    </Paper>
   )
 }
 

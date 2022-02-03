@@ -12,7 +12,7 @@ import Divider                        from '@material-ui/core/Divider';
 import CloseIcon                      from '@material-ui/icons/Close';
 
 const CommentsDialog = (props) => {
-  const { comment, commentType, commentDialog, setCommentDialog, statsCommentDialog, budget, procedure  } = props
+  const { comment, commentType, commentDialog, statsCommentDialog } = props
   
   const buildDate = (value, separator='/') => {
     let newDate = new Date(value)

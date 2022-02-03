@@ -10,7 +10,7 @@ const ProceduresDashboard = (props) => {
   const [searchLoading] = useState(false);
   const [sortField]     = useState("serial_number");
   const [sortDirection] = useState("desc");
-  const [page, setPage] = useState(1);
+  const [page] = useState(1);
   const [per]           = useState(10);
   const [procedures, setProcedures] = useState([]);
 
@@ -22,7 +22,7 @@ const ProceduresDashboard = (props) => {
     searchLoading: searchLoading
   }   
 
-  const  { loading, data } = useQuery(
+  const  { data } = useQuery(
     GET_PROCEDURES, { variables: variables, fetchPolicy: "cache-and-network" }
   );
   
@@ -34,7 +34,11 @@ const ProceduresDashboard = (props) => {
     <Grid container item direction='column' alignItems="stretch"  justifyContent="flex-start" style={{ paddingTop: "30px" }}>
       {procedures.length > 0 ?
         procedures && procedures.map((procedure) => {
-          return <Procedure procedure={procedure}/>
+          return(
+            <Grid item key={`${procedure.__typename}-${procedure.id}`} style={{ paddingBottom: "20px", paddingRight: "30px" }}>
+              <Procedure procedure={procedure}/>
+            </Grid>
+          )
         })
       :
         <Paper>
