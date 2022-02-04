@@ -28,20 +28,18 @@ const CommentEdit = (props) => {
   const [commentValue, setCommentValue] = useState(comment.body);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [editStatus, setEditStatus] = useState(false);
-  const [error, setError] = useState(false);
+  //const [error, setError] = useState(false);
 
-  const inputsList = ["body"]
-
-  const [updateCommentMutation, {loading: updateCommentLoading}] =
+  const [updateCommentMutation] =
   useMutation(
     UPDATE_COMMENT,
     {
-      onError(apolloError) {
+      /* onError(apolloError) {
         setErrors(apolloError);
-      },
+      }, */
       onCompleted(cacheData) {
         setEditStatus(false);
-        setError(false);
+        //setError(false);
       },
       refetchQueries: [
         {
@@ -55,7 +53,7 @@ const CommentEdit = (props) => {
     }
   )
 
-  const setErrors = (apolloError) => {
+  /* const setErrors = (apolloError) => {
     let errorsList = {}
     let errorTemplateList = apolloError.graphQLErrors
     for ( let i = 0; i < errorTemplateList.length; i++) {
@@ -66,7 +64,7 @@ const CommentEdit = (props) => {
       }
     }
     setError(errorsList)
-  }
+  } */
 
   const [destroyCommentMutation] =
   useMutation(

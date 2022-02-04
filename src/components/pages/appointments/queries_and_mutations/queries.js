@@ -127,6 +127,7 @@ export const USERS_QUICK_LIST = gql`
       id
       firstName
       lastName
+      fullName
       avatarThumbUrl
     }
   }

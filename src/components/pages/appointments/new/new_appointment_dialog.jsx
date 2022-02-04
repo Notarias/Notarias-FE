@@ -33,46 +33,44 @@ const getCurrentDate = (separator='/') => {
   )
 }
 
-const formatDate = (dateObject) => {
-  let date = dateObject.getDate();
-  let month = dateObject.getMonth() + 1;
-  let year = dateObject.getFullYear();
-  let hours = dateObject.getHours();
-  let minutes = dateObject.getMinutes();
-
-  date = date < 10 ? `0${date}` : `${date}`
-  month = month < 10 ? `0${month}` : `${month}`
-  minutes = minutes < 10 ? `0${minutes}` : `${minutes}`
+const buildDate = (value, separator='/') => {
+  let newDate = new Date(value)
+  let date = newDate.getDate();
+  let month = newDate.getMonth() + 1;
+  let year = newDate.getFullYear();
+  let hours = newDate.getHours();
+  let minutes = newDate.getMinutes();
 
   return (
-    `${year}-${month}-${date}T${hours}:${minutes}`
+    `${date < 10 ? `0${date}` : `${date}`}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${year} -
+     ${hours < 10 ? `0${hours}` : `${hours}`}:${minutes < 10 ? `0${minutes}` : `${minutes}`}`
   )
 }
 
 const NewAppointmentDialog = (props) => {
 
   const { classes, closeNewDialog, variables } = props
-  const [errors, setErrors] = useState({})
-  const [pristine, setPristine] = useState(true);
+  //const [errors, setErrors] = useState();
+  //const [pristine, setPristine] = useState(true);
   const [initDate, setInitDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [place, setPlace] = useState("");
   const [extraData, setExtraData] = useState("");
   const [selecteds, setSelecteds] = useState([]);
-  const [currentDate, setCurrentDate] = useState(getCurrentDate())
+  const [currentDate] = useState(getCurrentDate())
 
-  const [createAppointment, {loading: createAppointmentLoading}] =
+  const [createAppointment] =
   useMutation(
     CREATE_APPOINTMENT,
     {
-      onError(error) {
+      /* onError(error) {
         let errorsHash = {}
         error.graphQLErrors.map((error) => {
           errorsHash[error.extensions.attribute] = error.message
         }) 
         setErrors(errorsHash)
         setPristine(true)
-      },
+      }, */
       onCompleted(cacheData) {
         closeNewDialog();
       },
@@ -90,7 +88,7 @@ const NewAppointmentDialog = (props) => {
     let array = [];
 
     selecteds.map((user) => {
-      return(array.push(user.id))
+      return(array.push(user))
     })
 
     createAppointment( {
@@ -131,7 +129,7 @@ const NewAppointmentDialog = (props) => {
               </Avatar>
             }
             title="Nuevo Evento"
-            subheader={currentDate}
+            subheader={buildDate(currentDate)}
           />
         </Grid>
       </Grid>
@@ -149,7 +147,7 @@ const NewAppointmentDialog = (props) => {
                 }}
                 format="MM/dd/yyyy"
                 onChange={initDateChange}
-                value={formatDate(initDate)}
+                value={buildDate(initDate)}
                 fullWidth
               />
             </Grid>
@@ -162,7 +160,7 @@ const NewAppointmentDialog = (props) => {
                   shrink: true,
                 }}
                 onChange={endDateChange}
-                value={formatDate(endDate)}
+                value={buildDate(endDate)}
                 fullWidth
               />
             </Grid>
@@ -175,7 +173,6 @@ const NewAppointmentDialog = (props) => {
                 id="outlined-size-small"
                 variant="outlined"
                 size="small"
-                fullWidth
                 onChange={placeChange}
                 value= {place}
                 fullWidth

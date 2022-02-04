@@ -21,7 +21,7 @@ const Appointment = (props) => {
   const [anchorEl, setAnchorEl] = useState();
   const [assigneList, setAssigneList] = useState(false);
 
-  const { loading, error, data } = useQuery(GET_USER, { variables: { "id": appointment.creatorId }})
+  const { data } = useQuery(GET_USER, { variables: { "id": appointment.creatorId }})
 
   useEffect( () =>{
     setCreator(data && data.user)

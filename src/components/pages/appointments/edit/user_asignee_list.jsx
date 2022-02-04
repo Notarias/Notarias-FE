@@ -84,7 +84,7 @@ const UserAsigneeList = (props) => {
               <ListItemText id={item.id}>
                 <Chip
                   avatar={<Avatar alt={user.fullName} src={user.avatarThumbUrl} />}
-                  label={`${item.firstName} ${item.lastName}`}
+                  label={item.fullName}
                   variant="outlined"
                 />
               </ListItemText>

@@ -42,8 +42,7 @@ const UserAsigneeList = (props) => {
   const classes = useStyles();
   
   const { loading, data, refetch } = useQuery(
-    USERS_QUICK_LIST,
-    { fetchPolicy: 'no-cache', }
+    USERS_QUICK_LIST
   );
 
   let fuzzySearch = new Fuse(userList, { keys: ['firstName', 'lastName'] });

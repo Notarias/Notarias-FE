@@ -26,10 +26,6 @@ const Commentary = (props) => {
     setCommentDialog(!commentDialog);
   }
 
-  const formatValue = (value) => {
-    return(((value * 1.0) / 100).toFixed(2))
-  }
-
   const commentType = (comment) => {
     switch (comment.commentableType) {
       case "Budget" :
@@ -86,7 +82,7 @@ const Commentary = (props) => {
         </Grid>
         <Grid item container xs spacing={1} justifyContent='flex-end' alignItems='center' style={{ marginRight: "20px" }}>
           <Grid item>
-            {comment.commentableType == "Budget" ?
+            {comment.commentableType === "Budget" ?
               <Link to={`/budgets/${comment.commentableId}/edit`}>
                 <IconButton>
                   <LocalAtmIcon />
@@ -123,7 +119,7 @@ const Commentary = (props) => {
           <Grid item container alignItems="center" xs justifyContent="center">
             <Grid item>
               <Box color="success.main">
-                {comment.commentableType == "Budget" ?
+                {comment.commentableType === "Budget" ?
                   <>
                     <Typography>
                       <strong>Presupuesto:</strong>

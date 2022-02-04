@@ -8,7 +8,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Chip from '@material-ui/core/Chip';
 import Avatar from '@material-ui/core/Avatar';
-import FaceIcon from '@material-ui/icons/Face';
 import Dialog from '@material-ui/core/Dialog';
 import SelectAsigneeDialog from './select_asignee_dialog';
 

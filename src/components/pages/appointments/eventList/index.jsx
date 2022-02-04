@@ -35,7 +35,8 @@ const buildDate = (value, separator='/') => {
   let minutes = newDate.getMinutes();
 
   return (
-    `${date < 10 ? `0${date}` : `${date}`}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${year} - ${hours < 10 ? `0${hours}` : `${hours}`}:${minutes < 10 ? `0${minutes}` : `${minutes}`}`
+    `${date < 10 ? `0${date}` : `${date}`}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${year} -
+     ${hours < 10 ? `0${hours}` : `${hours}`}:${minutes < 10 ? `0${minutes}` : `${minutes}`}`
   )
 }
 
@@ -54,7 +55,7 @@ const EventList = (props) => {
     setCreatorUser(data && data.user);
   }, [data]);
 
-  const [destroyAppointment, {loading: destroyAppointmentLoading}] =
+  const [destroyAppointment] =
   useMutation(
     DESTROY_APPOINTMENT,
     {
@@ -113,11 +114,11 @@ const EventList = (props) => {
     <Grid className={classes.paddingBottomEvent}>
       <Paper className={classes.marginRightCalendarPaper}>
         <Grid container direction='row'>
-            <Grid container item direction='row' xs={2}>
-              <Grid container item xs={5} justifyContent='center' alignContent='center'>
+            <Grid container item direction='row' xs>
+              <Grid container item xs={4} justifyContent='center' alignContent='center'>
                 <Avatar alt={creatorUser.firstName} src={creatorUser.avatarThumbUrl} />
               </Grid>
-              <Grid container item xs={7} direction='column' justifyContent='center' alignContent='center'>
+              <Grid container item xs direction='column' justifyContent='center' alignContent='center'>
                 <Grid container item alignContent='flex-start'>
                   <Typography variant='subtitle2'>
                     {creatorUser.firstName}
@@ -130,21 +131,21 @@ const EventList = (props) => {
                 </Grid>
               </Grid>
             </Grid>            
-            <Grid container item xs={2} direction='column'>
+            <Grid container item xs direction='column'>
               <Grid item>
                 <Typography variant='subtitle2'>
                   Ubicacion
                 </Typography>
               </Grid>
               <Grid item>
-                <Typography variant='caption' variant='body2'>
+                <Typography variant='body2'>
                   {!appointment ? <CircularProgress size={ "40px" }/> : appointment.place}
                 </Typography>
               </Grid>
             </Grid>
-            <Grid container item xs={3} direction='column'>
+            <Grid container item xs direction='column'>
               <Grid container item direction='row'>
-                <Grid item xs={4}>
+                <Grid item xs>
                   <Typography variant='subtitle2'>
                     Inicio:
                   </Typography>
@@ -155,8 +156,8 @@ const EventList = (props) => {
                   </Typography>
                 </Grid>
               </Grid>
-              <Grid container item direction='row'>
-                <Grid item xs={4}>
+              <Grid container xs item direction='row'>
+                <Grid item xs>
                   <Typography variant='subtitle2'>
                     Final:
                   </Typography>
@@ -168,7 +169,7 @@ const EventList = (props) => {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item xs={2}>
+            <Grid item xs>
               <Typography variant='caption' className={classes.centerText}>
                 {!appointment ? <CircularProgress size={ "40px" }/> : `${appointment.extraData.substr(0,40)}...`}
               </Typography>

@@ -33,10 +33,6 @@ const Procedure = (props) => {
     )
   }
 
-  const formatValue = (value) => {
-    return(((value * 1.0) / 100).toFixed(2))
-  }
-
   return(
     <Paper style={{ padding: "10px" }}>
       <Grid item container justifyContent="flex-start">

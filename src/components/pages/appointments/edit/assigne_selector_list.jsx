@@ -6,8 +6,8 @@ import Input from '@material-ui/core/Input';
 import Chip from '@material-ui/core/Chip';
 import MenuItem from '@material-ui/core/MenuItem';
 import Avatar from '@material-ui/core/Avatar';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
 import { useQuery } from '@apollo/client';
 import { USERS_QUICK_LIST } from '../queries_and_mutations/queries';
 import { Grid } from '@material-ui/core';
@@ -16,7 +16,6 @@ const AssigneSelectorList = (props) => {
   const { selectedIds, setSelectedIds, appointment } = props;
   
   const [userList, setUserList] = useState();
-  const [userListIds, setUserListIds] = useState();
   
   const { data } = useQuery(
     USERS_QUICK_LIST
@@ -25,27 +24,7 @@ const AssigneSelectorList = (props) => {
   useEffect( () => {
     if(data && data.usersQuickList){
       setUserList(data.usersQuickList);
-      setUserListIds(data.usersQuickList.map((user) => {
-        return(user.id);
-      }));
-    };
-  }, [data]);
-
-  const useStyles = makeStyles((theme) => ({
-    root: {
-      display: 'flex',
-      '& > *': {
-        margin: theme.spacing(1),
-      },
-    },
-    small: {
-      width: theme.spacing(3),
-      height: theme.spacing(3),
-    },
-  }));
-
-
-  const classes = useStyles();
+  }}, [data]);
 
   const handleChange = (event) => {
     setSelectedIds(event.target.value)
@@ -54,27 +33,12 @@ const AssigneSelectorList = (props) => {
   const printSelectedsNames = (id) => {
     return(
       userList && userList.map((user) => {
-        if(user.id == id) {
+        if(user.id === id) {
           return(
             `${user.firstName} ${user.lastName}`
           )
         }
         return('')
-      })
-    )
-  }
-
-  const printUserList = (id) => {
-    return(
-      userList && userList.map((user) => {
-        if(user.id == id){
-          return(
-            <React.Fragment key={`appointment-${appointment.id}-avatar-${user.id}`}>
-              <Avatar className={classes.small}>{user.avatarThumbUrl}</Avatar>
-              <Typography variant="inherit" style={{ marginLeft: '10px' }}>{`${user.firstName} ${user.lastName}`}</Typography>
-            </React.Fragment>
-          )
-        }
       })
     )
   }
@@ -105,9 +69,14 @@ const AssigneSelectorList = (props) => {
             </div>
           )}
         >
-          {userListIds && userListIds.map((id) => (
-            <MenuItem id={id} key={`edit-appointment-${appointment.id}-dialog-user-${id}`} value={id}>
-              {printUserList(id)}
+          {userList && userList.map((user) => (
+            <MenuItem id={user.id} key={`edit-appointment-${appointment.id}-dialog-user-${user.id}`} value={user.id}>
+              <React.Fragment key={`select-user-${appointment.id}`}>
+                <ListItemIcon >
+                  <Avatar alt={user.firstName} src={user.avatarThumbUrl} />
+                </ListItemIcon>
+                <ListItemText primary={`${user.firstName} ${user.lastName}`} />
+              </React.Fragment>
             </MenuItem>
           ))}
         </Select>

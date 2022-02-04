@@ -19,7 +19,7 @@ import { useMutation } from '@apollo/client';
 import { GET_APPOINTMENTS } from '../queries_and_mutations/queries';
 import { UPDATE_APPOINTMENT } from '../queries_and_mutations/queries';
 
-const buildDate = (value, separator='-') => {
+const buildDate = (value, separator='/') => {
   let newDate = new Date(value)
   let date = newDate.getDate();
   let month = newDate.getMonth() + 1;
@@ -28,26 +28,10 @@ const buildDate = (value, separator='-') => {
   let minutes = newDate.getMinutes();
 
   return (
-    `${year}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${date < 10 ? `0${date}` : `${date}`}T${hours < 10 ? `0${hours}` : `${hours}`}:${minutes < 10 ? `0${minutes}` : `${minutes}`}`
+    `${date < 10 ? `0${date}` : `${date}`}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${year} -
+     ${hours < 10 ? `0${hours}` : `${hours}`}:${minutes < 10 ? `0${minutes}` : `${minutes}`}`
   )
 }
-
-const formatDate = (dateObject) => {
-  let date = dateObject.getDate();
-  let month = dateObject.getMonth() + 1;
-  let year = dateObject.getFullYear();
-  let hours = dateObject.getHours();
-  let minutes = dateObject.getMinutes();
-
-  date = date < 10 ? `0${date}` : `${date}`
-  month = month < 10 ? `0${month}` : `${month}`
-  minutes = minutes < 10 ? `0${minutes}` : `${minutes}`
-
-  return (
-    `${year}-${month}-${date}T${hours}:${minutes}`
-  )
-}
-
 
 const EditAppointmentDialog = (props) => {
   const { classes, closeEditDialog, appointment, variables } = props
@@ -55,7 +39,7 @@ const EditAppointmentDialog = (props) => {
   const [endDate, setEndDate] = useState(new Date(appointment.endDate));
   const [place, setPlace] = useState(appointment.place);
   const [extraData, setExtraData] = useState(appointment.extraData);
-  const [selecteds, setSelecteds] = useState(appointment.users);
+  const [selecteds] = useState(appointment.users);
 
   const [selectedIds, setSelectedIds] = useState(
     selecteds && selecteds.map((user) => {
@@ -120,7 +104,7 @@ const EditAppointmentDialog = (props) => {
               </Avatar>
             }
             title="Editar Evento"
-            subheader={appointment.initDate}
+            subheader={buildDate(appointment.initDate)}
           />
         </Grid>
       </Grid>
@@ -137,7 +121,7 @@ const EditAppointmentDialog = (props) => {
                   shrink: true,
                 }}
                 onChange={initDateChange}
-                value= {formatDate(initDate)}
+                value= {buildDate(initDate)}
                 fullWidth
               />
             </Grid>
@@ -150,12 +134,12 @@ const EditAppointmentDialog = (props) => {
                   shrink: true,
                 }}
                 onChange={endDateChange}
-                value= {formatDate(endDate)}
+                value= {buildDate(endDate)}
                 fullWidth
               />
             </Grid>
             <Grid container item xs={12} className={classes.marginTopStartAndEnd}>
-              <AssigneSelectorList selectedIds={selectedIds} setSelectedIds={setSelectedIds} appointment={appointment}/>
+              <AssigneSelectorList selectedIds={selectedIds} setSelectedIds={setSelectedIds} appointment={appointment} selecteds={selecteds}/>
             </Grid>
             <Grid item xs={12} className={classes.marginTopStartAndEnd}>
               <TextField
@@ -163,7 +147,6 @@ const EditAppointmentDialog = (props) => {
                 id="outlined-size-small"
                 variant="outlined"
                 size="small"
-                fullWidth
                 onChange={placeChange}
                 value= {place}
                 fullWidth
@@ -192,7 +175,7 @@ const EditAppointmentDialog = (props) => {
         </Grid>
       </CardContent>
       <Divider/>
-      <CardActions disableSpacing>
+      <CardActions>
         <Grid container justifyContent='center'>
           <Grid container item xs={10} justifyContent='flex-end'>
             <Grid item>
