@@ -11,6 +11,7 @@ import ListItemText             from '@material-ui/core/ListItemText';
 import ExpandLess               from '@material-ui/icons/ExpandLess';
 import ExpandMore               from '@material-ui/icons/ExpandMore';
 import ContactsSharpIcon        from '@material-ui/icons/ContactsSharp';
+import TimelineIcon             from '@material-ui/icons/Timeline';
 import HomeIcon                 from '@material-ui/icons/Home';
 import classNames               from 'classnames';
 import { styles }               from './navigation_menu_styles';
@@ -61,6 +62,7 @@ class NavigationMenu extends Component {
           <MenuLink iconComponent={BudgetsIcon} linkPath="/budgets" menuText="Presupuestos" />
           <MenuLink iconComponent={FormsIcon} linkPath="/procedures" menuText="Trámites" />
           <MenuLink iconComponent={AppointmentsIcon} linkPath="/appointments" menuText="Calendario" />
+          <MenuLink rawIcon iconComponent={TimelineIcon} linkPath="/statistics" menuText="Estadísticas" />
         </List>
         <Divider />
         <ListItem button onClick={this.handleConfigMenuSwitch.bind(this)}>
@@ -76,7 +78,7 @@ class NavigationMenu extends Component {
             <MenuLink nested={true} iconComponent={BudgetsBuilderIcon} linkPath="/config/budget_templates" menuText="Presupuestos" />
             <MenuLink nested={true} iconComponent={FormsBuilderIcon} linkPath="/config/procedure_templates" menuText="Trámites" />
             <MenuLink nested={true} iconComponent={ReportsIcon} linkPath="/reports" menuText="Reportes" />
-            <MenuLink nested={true} rawIcon={true} iconComponent={ContactsSharpIcon} linkPath="/config/clients" menuText="Clientes" />
+            <MenuLink nested={true} rawIcon iconComponent={ContactsSharpIcon} linkPath="/config/clients" menuText="Clientes" />
           </List>
         </Collapse>
 
