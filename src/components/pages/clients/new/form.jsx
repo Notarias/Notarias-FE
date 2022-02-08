@@ -28,7 +28,7 @@ class NewClientForm extends React.Component {
       address: "",
       email: "",
       rfc: "",
-      curp: null,
+      curp: "",
       moral: false
     }
   }

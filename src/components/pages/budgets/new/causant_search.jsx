@@ -100,7 +100,7 @@ const CausantSearch = (props) => {
             />
           </div>
         </Grid>
-        <Grid item justifyContent="flex-end">
+        <Grid item>
           <Button
             onClick={openCreateClienteForm}
             variant="contained"
@@ -129,7 +129,7 @@ const CausantSearch = (props) => {
             };
             return(
             <TableRow
-              index={causant.id}
+              index={`RenderClientsTable-${causant.id}`}
               key={causant.id}
               hover 
               selected={causant.id === selectedIndex} 

@@ -19,21 +19,7 @@ import { useMutation } from '@apollo/client';
 import { GET_APPOINTMENTS } from './../queries_and_mutations/queries';
 import { CREATE_APPOINTMENT } from './../queries_and_mutations/queries';
 
-const getCurrentDate = (separator='/') => {
-  let newDate = new Date()
-  let date = newDate.getDate();
-  let month = newDate.getMonth() + 1;
-  let year = newDate.getFullYear();
-  let hours = newDate.getHours();
-  let minutes = newDate.getMinutes();
-
-  return (
-    `${date}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${year}-
-      ${hours}:${minutes < 10 ? `0${minutes}` : `${minutes}`}`
-  )
-}
-
-const buildDate = (value, separator='/') => {
+const getCurrentDate = (value, separator='/') => {
   let newDate = new Date(value)
   let date = newDate.getDate();
   let month = newDate.getMonth() + 1;
@@ -47,17 +33,37 @@ const buildDate = (value, separator='/') => {
   )
 }
 
+const formatDate = (value, separator='-') => {
+  let newDate = new Date(value)
+  let date = newDate.getDate();
+  let month = newDate.getMonth() + 1;
+  let year = newDate.getFullYear();
+
+  return (
+    `${year}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${date < 10 ? `0${date}` : `${date}`}`)
+}
+
+const formatTime = (value, separator='-') => {
+  let newDate = new Date(value)
+  let hours = newDate.getHours();
+  let minutes = newDate.getMinutes();
+
+  return (`${hours < 10 ? `0${hours}` : `${hours}`}:${minutes < 10 ? `0${minutes}` : `${minutes}`}`)
+}
+
 const NewAppointmentDialog = (props) => {
 
   const { classes, closeNewDialog, variables } = props
   //const [errors, setErrors] = useState();
   //const [pristine, setPristine] = useState(true);
   const [initDate, setInitDate] = useState(new Date());
+  const [initTime, setInitTime] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
+  const [endTime, setEndTime] = useState(new Date());
   const [place, setPlace] = useState("");
   const [extraData, setExtraData] = useState("");
   const [selecteds, setSelecteds] = useState([]);
-  const [currentDate] = useState(getCurrentDate())
+  const [currentDate] = useState(getCurrentDate(new Date()))
 
   const [createAppointment] =
   useMutation(
@@ -106,8 +112,16 @@ const NewAppointmentDialog = (props) => {
     setInitDate(new Date(event.target.value))
   }
 
+  const initTimeChange = (event) => {
+    setInitTime(new Date(event.target.value))
+  }
+
   const endDateChange = (event) => {
     setEndDate(new Date(event.target.value))
+  }
+
+  const endTimeChange = (event) => {
+    setEndTime(new Date(event.target.value))
   }
 
   const placeChange = (event) => {
@@ -129,40 +143,73 @@ const NewAppointmentDialog = (props) => {
               </Avatar>
             }
             title="Nuevo Evento"
-            subheader={buildDate(currentDate)}
+            subheader={currentDate}
           />
         </Grid>
       </Grid>
       <Divider/>
       <CardContent>
         <Grid container item justifyContent='center'>
-          <Grid container item xs={10}>
-            <Grid item xs={12} className={classes.marginTopStartAndEnd}>
-              <TextField
-                id="datetime-local-start"
-                label="Inicio de la Cita"
-                type="datetime-local"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                format="MM/dd/yyyy"
-                onChange={initDateChange}
-                value={buildDate(initDate)}
-                fullWidth
-              />
+          <Grid container item direction="columns" xs={10}>
+            <Grid item container xs={12} justifyContent="space-between">
+              <Grid item xs={7}>
+                <TextField
+                  id="date-start"
+                  label="Inicio de la Cita"
+                  type="date"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  format="MM/dd/yyyy"
+                  onChange={initDateChange}
+                  value={formatDate(initDate)}
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <TextField
+                  id="time-start"
+                  label="Hora de la Cita"
+                  type="time"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  format="HH:MM"
+                  onChange={initTimeChange}
+                  value={formatTime(initTime)}
+                  fullWidth
+                />
+              </Grid>
             </Grid>
-            <Grid item xs={12} className={classes.marginTopStartAndEnd}>
-              <TextField
-                id="datetime-local-end"
-                label="Termino de la Cita"
-                type="datetime-local"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                onChange={endDateChange}
-                value={buildDate(endDate)}
-                fullWidth
-              />
+            <Grid item container xs={12} justifyContent="space-between">
+              <Grid item xs={7}>
+                <TextField
+                  id="date-end"
+                  label="Termino de la Cita"
+                  type="date"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  format="MM/dd/yyyy"
+                  onChange={endDateChange}
+                  value={formatDate(endDate)}
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <TextField
+                  id="time-end"
+                  label="Hora de la Cita"
+                  type="time"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  format="HH:MM"
+                  onChange={endTimeChange}
+                  value={formatTime(endTime)}
+                  fullWidth
+                />
+              </Grid>
             </Grid>
             <Grid container item xs={12} className={classes.marginTopStartAndEnd}>
               <AssigneSelectorList selecteds={selecteds} setSelecteds={setSelecteds}/>

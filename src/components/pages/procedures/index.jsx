@@ -140,8 +140,6 @@ const ProceduresIndex = (props) => {
                 assingTotalRecords={assingTotalRecords}
                 classes={classes}
               />
-            </Table>
-            <Table>
               <TableFooter>
                 <TableRow>
                   <TablePagination
@@ -152,7 +150,6 @@ const ProceduresIndex = (props) => {
                     onRowsPerPageChange={ changeRowsPerPage }
                     count={ total_records }
                     labelRowsPerPage={ "Filas por página:" }
-                    classes={classes}
                   />
                 </TableRow>
               </TableFooter>

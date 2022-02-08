@@ -25,11 +25,11 @@ const Fields = (props) => {
   const renderFields = () => {
     return(
       <Grid item container style={{ flex: '1 1 auto' }} direction='column' alignItems="stretch" justifyContent="flex-start">
-        <Grid item container justifyContent="flex-start" style={{"padding-left": "25px", "padding-right": "25px", "padding-top": "20px"}}>
+        <Grid item container justifyContent="flex-start" style={{"paddingLeft": "25px", "paddingRight": "25px", "paddingTop": "20px"}}>
           {
             fields && fields.map((field) => {
               return(
-                <FieldsRows key={field.id} field={field} procedure={procedure}/>
+                <FieldsRows key={`fieldsRows-${field.id}`} field={field} procedure={procedure}/>
               )
             })
           }

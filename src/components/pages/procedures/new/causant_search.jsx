@@ -80,8 +80,8 @@ const CausantSearch = (props) => {
 
   const renderInputSearch = () => {
     return(
-      <Grid container  direction="row" spacing={3} justifyContent="flex-end">
-        <Grid item justifyContent="flex-end">
+      <Grid container direction="row" spacing={3} justifyContent="flex-end">
+        <Grid item>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               { 
@@ -100,7 +100,7 @@ const CausantSearch = (props) => {
             />
           </div>
         </Grid>
-        <Grid item justifyContent="flex-end">
+        <Grid item>
           <Button
             onClick={openCreateClienteForm}
             variant="contained"

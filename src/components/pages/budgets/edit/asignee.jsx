@@ -5,7 +5,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Divider      from '@material-ui/core/Divider';
 import Avatar       from '@material-ui/core/Avatar';
 
-export default (props) => {
+const Asignee = (props) => {
 
   const { selectedIndex, asignee, handleListItemClick } = props;
 
@@ -22,7 +22,7 @@ export default (props) => {
   }
 
   return(
-    <React.Fragment key={asignee.id + "fragment"}>
+    <React.Fragment key={`budget-Asignee-${asignee.id}`}>
       <ListItem 
         key={asignee.id} 
         dense
@@ -42,3 +42,5 @@ export default (props) => {
     </React.Fragment>
   )
 }
+
+export default Asignee;

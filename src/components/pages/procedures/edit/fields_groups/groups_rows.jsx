@@ -94,9 +94,7 @@ const GroupsRows = (props) => {
             {
               fieldsGroupValues && fieldsGroupValues.map((fieldGroupValue) => {
                 return(
-                  <>
-                    <FieldsGroupsRows key={fieldGroupValue.id} fieldGroupValue={fieldGroupValue} procedure={procedure} group={group}/>
-                  </>
+                  <FieldsGroupsRows key={`procedure-${procedure}-fieldsGroupsRows-${fieldGroupValue.id}`} fieldGroupValue={fieldGroupValue} procedure={procedure} group={group}/>
                 )
               })
             }

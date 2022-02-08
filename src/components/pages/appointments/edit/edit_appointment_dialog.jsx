@@ -19,7 +19,7 @@ import { useMutation } from '@apollo/client';
 import { GET_APPOINTMENTS } from '../queries_and_mutations/queries';
 import { UPDATE_APPOINTMENT } from '../queries_and_mutations/queries';
 
-const buildDate = (value, separator='/') => {
+/* const buildDate = (value, separator='/') => {
   let newDate = new Date(value)
   let date = newDate.getDate();
   let month = newDate.getMonth() + 1;
@@ -30,6 +30,19 @@ const buildDate = (value, separator='/') => {
   return (
     `${date < 10 ? `0${date}` : `${date}`}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${year} -
      ${hours < 10 ? `0${hours}` : `${hours}`}:${minutes < 10 ? `0${minutes}` : `${minutes}`}`
+  )
+} */
+
+const buildDate = (value, separator='-') => {
+  let newDate = new Date(value)
+  let date = newDate.getDate();
+  let month = newDate.getMonth() + 1;
+  let year = newDate.getFullYear();
+  let hours = newDate.getHours();
+  let minutes = newDate.getMinutes();
+
+  return (
+    `${year}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${date < 10 ? `0${date}` : `${date}`}T${hours < 10 ? `0${hours}` : `${hours}`}:${minutes < 10 ? `0${minutes}` : `${minutes}`}`
   )
 }
 

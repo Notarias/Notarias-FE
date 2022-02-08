@@ -72,7 +72,7 @@ const BudgetSelectorList = (props) => {
       searchList.map((item) => {
         item = item.item ? item.item : item
         return(
-          <>
+          <React.Fragment key={`budgets-budgetSelectorList-${item.id}`}>
             <ListItem
               key={item.id}
               button
@@ -86,7 +86,7 @@ const BudgetSelectorList = (props) => {
               />
             </ListItem>
             <Divider/>
-          </>
+          </React.Fragment>
         );
       })
     );

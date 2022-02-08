@@ -64,7 +64,7 @@ const CommentsDialog = (props) => {
               procedure.comments.map((comment) => {
 
                 return(
-                  <Card variant="outlined" key={`${procedure.proceduresTemplate.name}-${procedure.id}`}>
+                  <Card variant="outlined" key={`${procedure.proceduresTemplate.name}-${procedure.id}-comment${comment.id}`}>
                     <CardHeader
                       avatar={
                         <Avatar src={ comment.user.avatarThumbUrl} size="small"/>

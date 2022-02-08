@@ -57,7 +57,7 @@ const UserAsigneeList = (props) => {
       searchList.map((item) => {
         item = item.item ? item.item : item
         return(
-          <>
+          <React.Fragment key={`procedures-userAsigneeList-${item.id}`}>
             <ListItem
               key={item.id}
               button
@@ -71,7 +71,7 @@ const UserAsigneeList = (props) => {
               <ListItemText id={item.id} primary={`${item.firstName} ${item.lastName}`}/>
             </ListItem>
             <Divider/>
-          </>
+          </React.Fragment>
         );
       })
     );

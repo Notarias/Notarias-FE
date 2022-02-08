@@ -61,7 +61,7 @@ const AssigneSelectorList = (props) => {
               {selected.map((id) => (
                 <Chip 
                   id={id} 
-                  key={id}
+                  key={`selected-edit-${id}`}
                   style={{ margin: 2 }}
                   label={printSelectedsNames(id)}
                   variant="outlined"/>
