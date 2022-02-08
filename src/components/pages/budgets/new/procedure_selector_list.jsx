@@ -72,9 +72,8 @@ const ProcedureSelectorList = (props) => {
       searchList.map((item) => {
         item = item.item ? item.item : item
         return(
-          <>
+          <React.Fragment key={`budgets-procedureSelectorList-${item.id}`}>
             <ListItem
-              key={item.id}
               button
               dense={true}
               selected={selectedProcedure.id === item.id}
@@ -86,7 +85,7 @@ const ProcedureSelectorList = (props) => {
               />
             </ListItem>
             <Divider/>
-          </>
+          </React.Fragment>
         );
       })
     );

@@ -10,7 +10,7 @@ import Reporter              from '../reporter';
 import ProcedureFileUploader from './procedure_file_uploader';
 import ProcedureActions      from './procedure_actions';
 
-export default (props) => {
+ const GeneralInformation = (props) => {
 
   const { procedure } = props
 
@@ -94,3 +94,5 @@ export default (props) => {
     </Grid>
   )
 }
+
+export default GeneralInformation;

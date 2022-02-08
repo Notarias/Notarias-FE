@@ -10,57 +10,14 @@ import DialogContent                  from '@material-ui/core/DialogContent';
 import DialogTitle                    from '@material-ui/core/DialogTitle';
 import Button                         from '@material-ui/core/Button';
 import TextField                      from '@material-ui/core/TextField';
-import List                           from '@material-ui/core/List';
-import ListItem                       from '@material-ui/core/ListItem';
-import ListItemIcon                   from '@material-ui/core/ListItemIcon';
-import ListItemText                   from '@material-ui/core/ListItemText';
-import Divider                        from '@material-ui/core/Divider';
 import Fuse                           from 'fuse.js';
+import RenderSearchList               from './render_search_list';
 import { useQuery }                   from '@apollo/client';
 import { useMutation }                from '@apollo/client';
 import { LOAD_USERS }                 from '../queries_and_mutations/queries'
-import { UPDATE_PROCEDURE }              from '../queries_and_mutations/queries'
-import { GET_PROCEDURE }                 from '../queries_and_mutations/queries'
-import { GET_PROCEDURES_AUDITLOG }       from '../queries_and_mutations/queries';
-
-
-const renderSearchList = (searchList, classes, selectedIndex, handleListItemClick, haveThumbUrl) => {
-  return(
-    <List 
-      component="nav" 
-      aria-label="contacts" 
-      disablePadding={true}
-    >
-      { 
-        searchList.map(
-          (item) => {
-            let obj = item.item || item
-            return(
-              <>
-                <ListItem 
-                  key={obj.id} 
-                  dense
-                  button
-                  selected={selectedIndex === obj.id}
-                  onClick={() => {handleListItemClick(obj)}}
-                >
-                  <ListItemIcon>
-                      <Avatar src={haveThumbUrl(obj)}/>
-                  </ListItemIcon>
-                    <ListItemText 
-                    id={obj.id} 
-                    primary={` ${ obj.firstName }  ${ obj.lastName }`} 
-                    />
-                </ListItem>
-                <Divider/>
-              </>
-            )
-          }
-        )
-      }
-    </List>
-  )
-}
+import { UPDATE_PROCEDURE }           from '../queries_and_mutations/queries'
+import { GET_PROCEDURE }              from '../queries_and_mutations/queries'
+import { GET_PROCEDURES_AUDITLOG }    from '../queries_and_mutations/queries';
 
 const Asignee = (props) => {
   const { classes, asigneeData, procedure }  = props
@@ -162,7 +119,6 @@ const Asignee = (props) => {
     })
   }
 
-
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -189,7 +145,7 @@ const Asignee = (props) => {
   return (
     <Grid container direction="row" alignItems="flex-start">
       <Button fullWidth style={{ padding: '10px' }}>
-        <Grid container alignItems="center" justifyContent='flex-start' onClick={handleClickOpen}>
+      <Grid container alignItems="center" justifyContent='flex-start' onClick={handleClickOpen}>
           <Grid item xs={3} md={2} lg={1}>
             <Avatar
               src={asignee ? asignee.avatarThumbUrl : "/broken-image.jpg" }
@@ -197,8 +153,12 @@ const Asignee = (props) => {
             />
           </Grid> 
           <Grid item xs={9} md={10} lg={11}>
-            <Typography noWrap align='left' style={{ paddingLeft: "10px", paddingRight: "10px" }}>
-              <strong>{asignee && asignee.firstName} {asignee && asignee.lastName}</strong>
+            <Typography noWrap align='left' style={{ paddingLeft: "20px", paddingRight: "10px" }}>
+              {
+                asignee ?
+                  <strong>{asignee && asignee.firstName} {asignee && asignee.lastName}</strong> :
+                  "Asignar encargado"
+              }
             </Typography>
           </Grid>
         </Grid>
@@ -216,8 +176,16 @@ const Asignee = (props) => {
             fullWidth
             className={classes.searchAsigneeInput}
           />
-          {
-            renderSearchList(searchList, classes,  selectedIndex, handleListItemClick, haveThumbUrl)
+          {searchList.length ?
+            <RenderSearchList
+              searchList={searchList}
+              classes={classes} 
+              selectedIndex={selectedIndex}
+              handleListItemClick={handleListItemClick}
+              haveThumbUrl={haveThumbUrl}
+            />
+          :
+            ""
           }
         </DialogContent>
         <DialogActions>

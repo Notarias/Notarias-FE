@@ -167,7 +167,7 @@ const FieldsRows = (props) => {
               </FormControl>
             </Grid>
           </Grid>
-          <Grid item xs={1} width="100%" justifyContent="center">
+          <Grid item xs={1} width="100%">
             <IconButton
               disabled={saveButtonStatus}
               style={{"padding": "10px"}}
@@ -176,7 +176,7 @@ const FieldsRows = (props) => {
               <SaveIcon/>
             </IconButton>
           </Grid>
-          <Grid item xs={1} width="100%" justifyContent="center">
+          <Grid item xs={1} width="100%">
             <IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={openMenu}>
               <MoreVertIcon/>
             </IconButton>

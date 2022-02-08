@@ -64,12 +64,12 @@ const DashboardsIndex = (props) => {
               aria-label="Vertical tabs example"
               className={classes.tabs}
             >
-              <Tab label="Reuniones" id={`vertical-tab-0`} ariaControls={`vertical-tabpanel-0`}/>
-              <Tab label="Presupuestos" id={`vertical-tab-1`} ariaControls={`vertical-tabpanel-1`}/>
-              <Tab label="Pagos" id={`vertical-tab-2`} ariaControls={`vertical-tabpanel-2`}/>
-              <Tab label="Ingresos" id={`vertical-tab-3`} ariaControls={`vertical-tabpanel-3`}/>
-              <Tab label="Trámites" id={`vertical-tab-4`} ariaControls={`vertical-tabpanel-4`}/>
-              <Tab label="Comentarios" id={`vertical-tab-5`} ariaControls={`vertical-tabpanel-5`}/>
+              <Tab label="Reuniones" id={`vertical-tab-0`} aria-controls={`vertical-tabpanel-0`}/>
+              <Tab label="Presupuestos" id={`vertical-tab-1`} aria-controls={`vertical-tabpanel-1`}/>
+              <Tab label="Pagos" id={`vertical-tab-2`} aria-controls={`vertical-tabpanel-2`}/>
+              <Tab label="Ingresos" id={`vertical-tab-3`} aria-controls={`vertical-tabpanel-3`}/>
+              <Tab label="Trámites" id={`vertical-tab-4`} aria-controls={`vertical-tabpanel-4`}/>
+              <Tab label="Comentarios" id={`vertical-tab-5`} aria-controls={`vertical-tabpanel-5`}/>
             </Tabs>
           </Grid>
         </Grid>

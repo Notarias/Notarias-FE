@@ -181,16 +181,16 @@ const FieldsGroupsRows = (props) => {
               </FormControl>
             </Grid>
           </Grid>
-          <Grid item xs={1} width="100%" justifyContent="center">
+          <Grid item xs={1} width="100%">
             <IconButton
               disabled={saveButtonStatus}
               style={{"padding": "10px"}}
               onClick={updateFieldValue}
             >
-              <SaveIcon color={saveButtonStatus ? "" : "primary"}/>
+              <SaveIcon color={saveButtonStatus ? "disabled" : "primary"}/>
             </IconButton>
           </Grid>
-          <Grid item xs={1} width="100%" justifyContent="flex-end">
+          <Grid item xs={1} width="100%">
             <IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={openMenu}>
               <MoreVertIcon/>
             </IconButton>

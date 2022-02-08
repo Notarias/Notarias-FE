@@ -10,7 +10,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Divider from '@material-ui/core/Divider';
 import Fuse from 'fuse.js';
-import Chip from '@material-ui/core/Chip';
 import Avatar from '@material-ui/core/Avatar';
 import { useQuery } from '@apollo/client';
 import { USERS_QUICK_LIST } from '../queries_and_mutations/queries';
@@ -58,7 +57,7 @@ const UserAsigneeList = (props) => {
       searchList.map((item) => {
         item = item.item ? item.item : item
         return(
-          <>
+          <React.Fragment key={`procedures-userAsigneeList-${item.id}`}>
             <ListItem
               key={item.id}
               button
@@ -72,7 +71,7 @@ const UserAsigneeList = (props) => {
               <ListItemText id={item.id} primary={`${item.firstName} ${item.lastName}`}/>
             </ListItem>
             <Divider/>
-          </>
+          </React.Fragment>
         );
       })
     );

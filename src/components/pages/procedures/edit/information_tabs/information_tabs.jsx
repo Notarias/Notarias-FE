@@ -54,7 +54,7 @@ const InformationTabs = (props) => {
 
   return (
     <Grid container item xs={12} direction="column"  justifyContent="flex-start">
-      <Grid item justifyContent="flex-start">
+      <Grid item>
         <AppBar position="static">
           <Tabs 
             centered 

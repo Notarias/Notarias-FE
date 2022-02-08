@@ -6,8 +6,8 @@ import Input from '@material-ui/core/Input';
 import Chip from '@material-ui/core/Chip';
 import MenuItem from '@material-ui/core/MenuItem';
 import Avatar from '@material-ui/core/Avatar';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
 import { useQuery } from '@apollo/client';
 import { USERS_QUICK_LIST } from './../queries_and_mutations/queries';
 import { Grid } from '@material-ui/core';
@@ -26,21 +26,6 @@ const AssigneSelectorList = (props) => {
       setUserList(data.usersQuickList);
     }
   }, [data]);
-
-  const useStyles = makeStyles((theme) => ({
-    root: {
-      display: 'flex',
-      '& > *': {
-        margin: theme.spacing(1),
-      },
-    },
-    small: {
-      width: theme.spacing(3),
-      height: theme.spacing(3),
-    },
-  }));
-
-  const classes = useStyles();
 
   const handleChange = (event) => {
     setSelecteds(event.target.value);
@@ -65,16 +50,18 @@ const AssigneSelectorList = (props) => {
                   id={user.id}
                   key={user.id}
                   style={{ margin: 2 }}
-                  label={`${user.firstName} ${user.lastName}`}
+                  label={user.fullName}
                   variant="outlined"/>
               ))}
             </div>
           )}
         >
           {userList && userList.map((user) => (
-            <MenuItem id={user.id} key={user.id} value={user}>
-              <Avatar className={classes.small}>{user.avatarThumbUrl}</Avatar>
-              <Typography variant="inherit" style={{ marginLeft: '10px' }}>{`${user.firstName} ${user.lastName}`}</Typography>
+            <MenuItem id={user.id} key={`appointment-user.id-${user.id}`} value={user}>
+              <ListItemIcon>
+                <Avatar alt={user.firstName} src={user.avatarThumbUrl} />
+              </ListItemIcon>
+              <ListItemText primary={`${user.firstName} ${user.lastName}`} />
             </MenuItem>
           ))}
         </Select>

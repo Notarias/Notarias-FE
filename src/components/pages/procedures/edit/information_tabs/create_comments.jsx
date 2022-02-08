@@ -1,10 +1,10 @@
 import React, {useState}            from "react"
 import Grid                         from '@material-ui/core/Grid';
 import Avatar                       from '@material-ui/core/Avatar';
-import FormControl from '@material-ui/core/FormControl';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import IconButton from '@material-ui/core/IconButton';
+import FormControl                  from '@material-ui/core/FormControl';
+import OutlinedInput                from '@material-ui/core/OutlinedInput';
+import InputAdornment               from '@material-ui/core/InputAdornment';
+import IconButton                   from '@material-ui/core/IconButton';
 import SendIcon                     from '@material-ui/icons/Send';
 import ClearIcon                    from '@material-ui/icons/Clear';
 import { withStyles }               from '@material-ui/core/styles';
@@ -70,7 +70,7 @@ const CreateComments = (props) => {
   return(
     <>
       <Grid container item direction="row" justifyContent="center" alignItems="center" style={{paddingLeft: "25px", paddingRight: "25px", marginBottom: "15px"}}>
-        <Grid item xs={1} justifyContent="flex-start" alignItems="flex-start">
+        <Grid item xs={1} >
           <Grid item >
             {
               !loading && data &&
@@ -81,7 +81,7 @@ const CreateComments = (props) => {
             }
           </Grid>
         </Grid>
-        <Grid item xs={10} justifyContent="flex-start" alignItems="flex-start">
+        <Grid item xs={10} >
           <FormControl variant="outlined" fullWidth>
             <OutlinedInput
               id="comment_field"
@@ -107,7 +107,7 @@ const CreateComments = (props) => {
             />
           </FormControl>
         </Grid>
-        <Grid item xs={1} direction="row" justifyContent="center" alignItems="center">
+        <Grid item xs={1} >
           <IconButton 
             onClick={createNewComment}
             disabled={showSendButton}

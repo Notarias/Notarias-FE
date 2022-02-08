@@ -17,14 +17,14 @@ import Box from '@material-ui/core/Box';
 const AppointmentsIndex = (props) => {
   const { classes } = props
 
-  const [sortField]         = useState();
-  const [sortDirection]     = useState();
+  const [sortField]         = useState("created_at");
+  const [sortDirection]     = useState("desc");
   const [searchField]       = useState();
   const [searchValue  ]     = useState("");
   const [page]              = useState(1);
-  const [per]               = useState(100);
+  const [per]               = useState(50);
   const [date, setDate]                 = useState(new Date());
-  const [appointmentList, setAppointmentsList]   = useState();
+  const [appointmentsList, setAppointmentsList]   = useState([]);
   const [newDialog, setNewDialog] = useState(false);
 
   let variables = {
@@ -36,20 +36,14 @@ const AppointmentsIndex = (props) => {
     sortField: sortField
   };
 
-  const { loading, data, refetch } = useQuery(
+  const { data, refetch } = useQuery(
     GET_APPOINTMENTS, { variables: variables, fetchPolicy: "cache-and-network" }
   );
 
   useEffect(() => {
     setAppointmentsList(data && data.appointments);
     refetch(variables)
-  }, [page, per, sortField]);
-
-  useEffect(() => {
-    if(data && data.appointments.length) {
-      setAppointmentsList(data && data.appointments)
-    }
-  }, [data && data.appointments.length])
+  }, [page, per, sortField, data]);
 
   const openNewDialog = () => {
     setNewDialog(true);
@@ -95,16 +89,17 @@ const AppointmentsIndex = (props) => {
             </Dialog>
           </Paper>
         </Grid>
+
         <Grid item xs={8}>
           <Grid className={classes.windowScrollEventList}>
-            {
-              data && data.appointments.length ?
-                data.appointments.map(appointment  => {
-                  return(<EventList key={`dashboard-appointment-${appointment.id}`} appointment={appointment}/>)
-                }) :
-                <Paper style={{ padding: "30px" }}>
-                  <Typography variant='h4'>Sin Eventos</Typography>
-                </Paper>
+            {appointmentsList && appointmentsList.length > 0 ?
+              appointmentsList.map(appointment  => {
+                return(<EventList key={`dashboard-appointment-${appointment.id}`} appointment={appointment}/>)
+              })
+            :
+              <Paper style={{ padding: "30px" }}>
+                <Typography variant='h4'>Sin Eventos</Typography>
+              </Paper>
             }
           </Grid>
         </Grid>

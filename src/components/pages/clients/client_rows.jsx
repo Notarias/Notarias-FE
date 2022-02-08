@@ -2,8 +2,8 @@ import React, { useEffect }         from 'react';
 import MenuItem                     from '@material-ui/core/MenuItem';
 import VisibilityOutlinedIcon       from '@material-ui/icons/VisibilityOutlined';
 import BudgetsIcon                  from './../../../icons/presupuestos.svg';
-import AppointmentsIcon             from './../../../icons/calendario.svg';
-import ReportsIcon                  from './../../../icons/reportes.svg';
+//import AppointmentsIcon             from './../../../icons/calendario.svg';
+//import ReportsIcon                  from './../../../icons/reportes.svg';
 import FormsIcon                    from './../../../icons/tramites.svg';
 import GenericDropdownMenu          from '../../ui/generic_dropdown_menu';
 import CircularProgress             from '@material-ui/core/CircularProgress';
@@ -56,7 +56,7 @@ export default (props) => {
       <TableBody>
         {
           data.clients.map(client => (
-            <TableRow key={client.id}>
+            <TableRow key={`clientList-${client.id}`}>
               <TableCell align= "center" colSpan={1}>
                 <Grid>
                 <ClientPreviewDrawer id={client.id}/>
@@ -74,8 +74,9 @@ export default (props) => {
                       color="inherit"
                       underline="none"
                       className={ classes.linkWidthAndHeigth }
+                      key={`${client.id}-details`}
                     >
-                      <MenuItem key={ client.id + "-details" }>
+                      <MenuItem>
                         <Grid container>
                           <VisibilityOutlinedIcon/>
                           <Typography className={ classes.genericPaddingLeft } >
@@ -84,30 +85,62 @@ export default (props) => {
                         </Grid>
                       </MenuItem>
                     </Link>
-                    <MenuItem key={client.id + "-budgets"}>
-                      <img alt={"presupuestos"} src={BudgetsIcon} className={ classes.imgIconGeneric }/>
-                      <span className={ classes.genericPaddingLeft }>
-                        Presupuestos
-                      </span>
-                    </MenuItem>
-                    <MenuItem key={client.id + "-agenda"}>
-                      <img alt={"Agenda"} src={AppointmentsIcon} className={ classes.imgIconGeneric }/>
-                      <span className={ classes.genericPaddingLeft }>
-                        Agenda
-                      </span>
-                    </MenuItem>
-                    <MenuItem key={client.id + "-report"}>
-                      <img alt={"Reporte"} src={ReportsIcon} className={ classes.imgIconGeneric }/>
-                      <span className={ classes.genericPaddingLeft }>
-                        Reporte
-                      </span>
-                    </MenuItem>
-                    <MenuItem key={client.id + "-procedures"}>
-                      <img alt={"Trámites"} src={FormsIcon} className={ classes.imgIconGeneric }/>
-                      <span className={ classes.genericPaddingLeft }>
-                      Trámites
-                      </span>
-                    </MenuItem>
+                    <Link 
+                      href={ `/clients/${client.id}` }
+                      color="inherit"
+                      underline="none"
+                      className={ classes.linkWidthAndHeigth }
+                      key={`${client.id}-budgets`}
+                    >
+                      <MenuItem>
+                        <img alt={"presupuestos"} src={BudgetsIcon} className={ classes.imgIconGeneric }/>
+                        <span className={ classes.genericPaddingLeft }>
+                          Presupuestos
+                        </span>
+                      </MenuItem>
+                    </Link>
+                    <Link 
+                      href={ `/clients/${client.id}` }
+                      color="inherit"
+                      underline="none"
+                      className={ classes.linkWidthAndHeigth }
+                      key={`${client.id}-procedures`}
+                    >
+                      <MenuItem>
+                        <img alt={"Trámites"} src={FormsIcon} className={ classes.imgIconGeneric }/>
+                        <span className={ classes.genericPaddingLeft }>
+                        Trámites
+                        </span>
+                      </MenuItem>
+                    </Link>
+                    {/* <Link 
+                      href={ `/clients/${client.id}` }
+                      color="inherit"
+                      underline="none"
+                      className={ classes.linkWidthAndHeigth }
+                      key={`${client.id}-agenda`}
+                    >
+                      <MenuItem>
+                        <img alt={"Agenda"} src={AppointmentsIcon} className={ classes.imgIconGeneric }/>
+                        <span className={ classes.genericPaddingLeft }>
+                          Agenda
+                        </span>
+                      </MenuItem>
+                    </Link>
+                    <Link 
+                      href={ `/clients/${client.id}` }
+                      color="inherit"
+                      underline="none"
+                      className={ classes.linkWidthAndHeigth }
+                      key={`${client.id}-report`}
+                    >
+                      <MenuItem>
+                        <img alt={"Reporte"} src={ReportsIcon} className={ classes.imgIconGeneric }/>
+                        <span className={ classes.genericPaddingLeft }>
+                          Reporte
+                        </span>
+                      </MenuItem>
+                    </Link> */}
                   </GenericDropdownMenu>
                 </Grid>
               </TableCell>

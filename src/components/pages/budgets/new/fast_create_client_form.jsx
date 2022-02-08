@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Card                from '@material-ui/core/Card';
 import CardContent         from '@material-ui/core/CardContent';
 import TextField           from '@material-ui/core/TextField';
@@ -23,6 +23,10 @@ const FastCreateClientForm = (props) => {
                                       moral: false,
                                       causant: false,
                                     });
+
+  useEffect(() => {
+    setNewClient({ ...newClient, causant: activeStep === 1 ? true : false })
+  }, [activeStep]) 
 
   const setFormValue = ({ target }) => {
     const {name, value, checked} = target
@@ -73,10 +77,10 @@ const FastCreateClientForm = (props) => {
   }
 
   return (
-    <Grid container item xs={6} alignItems="center" fullWidth={true}>
+    <Grid container item xs={6} alignItems="center">
       <Card style={{ minWidth: "100%" }}>
         <CardContent>
-          <Grid container item direction="column" spacing={errorFormSpacing} alignItems="center" justifyContent="center">
+          <Grid container direction="column" spacing={errorFormSpacing} alignItems="center" justifyContent="center">
             <Grid item xs={12}>
               <TextField 
                 id="first-name-basic" 
@@ -148,7 +152,6 @@ const FastCreateClientForm = (props) => {
                 margin="dense"
               />
             </Grid>
-            { (activeStep === 1) ? newClient.causant = true : newClient.causant = false }
             <Grid container item xs={12} direction="row" justifyContent="center">
               <Grid item xs={5}>
                 <Button

@@ -11,7 +11,6 @@ import FormControl                                    from '@material-ui/core/Fo
 import Select                                         from '@material-ui/core/Select';
 import MenuItem                                       from '@material-ui/core/MenuItem';
 import InputBase                                      from '@material-ui/core/InputBase';
-import InputLabel                                     from '@material-ui/core/InputLabel';
 import Dialog                                         from '@material-ui/core/Dialog';
 import DialogActions                                  from '@material-ui/core/DialogActions';
 import DialogContent                                  from '@material-ui/core/DialogContent';
@@ -40,7 +39,7 @@ const INPUT_TYPES = {
 
 const Field = (props) => {
 
-  const { classes, id, groupId, currentTab, removeFromList } = props
+  const { classes, id, currentTab, removeFromList } = props
   const [favoriteDialog, setFavoriteDialog] = useState(false);
   const [printableDialog, setPrintableDialog] = useState(false);
   const [deleteDialog, setDeleteDialog] = useState(false);
@@ -51,26 +50,25 @@ const Field = (props) => {
   const [active, setActive] = useState(props.active);
   const [favourite, setFavourite] = useState(props.favourite);
   const [printable, setPrintable] = useState(props.printable);
-  const [error, setError] = useState(false)
-  const inputsList = ["name"]
+  //const [error, setError] = useState(false);
 
   const [updateProceduresTemplateTabFieldMutation] =
     useMutation(
       UPDATE_PROCEDURES_TEMPLATE_TAB_FIELD,
       {
-        onError(apolloError) {
+        /* onError(apolloError) {
           setErrors(apolloError)
-        },
+        }, */
         update(store, cacheData) {
           setFavourite(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.favourite)
           setActive(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.active)
-          setError(false)
+          //setError(false)
           setEditing(true)
         }
       }
     )
 
-    const setErrors = (apolloError) => {
+    /* const setErrors = (apolloError) => {
       let errorsList = {}
       let errorTemplateList = apolloError.graphQLErrors
       for ( let i = 0; i < errorTemplateList.length; i++) {
@@ -81,7 +79,7 @@ const Field = (props) => {
         }
       }
       setError(errorsList) 
-    }
+    } */
 
   const updateField = (event) => {
     updateProceduresTemplateTabFieldMutation({ variables: { id: id, name: name, style: style}})

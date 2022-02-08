@@ -6,26 +6,12 @@ import CardHeader                     from '@material-ui/core/CardHeader';
 import CardContent                    from '@material-ui/core/CardContent';
 import Typography                     from '@material-ui/core/Typography';
 import Avatar                         from '@material-ui/core/Avatar';
-import Chip                           from '@material-ui/core/Chip';
 import IconButton                     from '@material-ui/core/IconButton';
 import Divider                        from '@material-ui/core/Divider';
 import CloseIcon                      from '@material-ui/icons/Close';
 
 const CommentsDialog = (props) => {
-  const { comment, commentType, commentDialog, setCommentDialog, statsCommentDialog, budget, procedure  } = props
-  
-  const buildDate = (value, separator='/') => {
-    let newDate = new Date(value)
-    let date = newDate.getDate();
-    let month = newDate.getMonth() + 1;
-    let year = newDate.getFullYear();
-    let hours = newDate.getHours();
-    let minutes = newDate.getMinutes();
-  
-    return (
-      `${date < 10 ? `0${date}` : `${date}`}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${year} - ${hours < 10 ? `0${hours}` : `${hours}`}:${minutes < 10 ? `0${minutes}` : `${minutes}`}`
-    )
-  }
+  const { comment, commentType, commentDialog, statsCommentDialog } = props
 
   return (
     <Dialog onClose={statsCommentDialog} aria-labelledby="comments-title" open={commentDialog}>

@@ -21,25 +21,19 @@ const FieldsGroups = (props) => {
   useEffect(() => {
     data && setGroups(data.proceduresTemplateTabFieldsGroups);;
   }, [data])
-  
-  const renderGroups = () => {
-    return(
-      <Grid item container style={{ flex: '1 1 auto' }} direction='column' alignItems="stretch" justifyContent="flex-start">
-        <Grid item container style={{"padding-left": "25px", "padding-right": "25px" }}>
-          {
-            groups && groups.map((group) => {
-              return(
-                <GroupsRows key={groups.id} group={group} procedure={procedure}/>
-              )
-            })
-          }
-        </Grid>
-      </Grid>
-    )
-  }
 
   return(
-    renderGroups()
+    <Grid item container style={{ flex: '1 1 auto' }} direction='column' alignItems="stretch" justifyContent="flex-start">
+      <Grid item container style={{"paddingLeft": "25px", "paddingRight": "25px" }}>
+        {
+          groups && groups.map((group) => {
+            return(
+              <GroupsRows key={`procedure-${procedure.id}-groupsRows-${group.id}`} group={group} procedure={procedure}/>
+            )
+          })
+        }
+      </Grid>
+    </Grid>
   )
 }
 

@@ -9,7 +9,7 @@ import Paper                          from '@material-ui/core/Paper';
 const PaymentsDashboard = (props) => {
   const [sortField]     = useState("created_at");
   const [sortDirection] = useState("desc");
-  const [page, setPage] = useState(1);
+  const [page] = useState(1);
   const [per]           = useState(10);
   const [payments, setPayments] = useState([]);
 
@@ -20,7 +20,7 @@ const PaymentsDashboard = (props) => {
     sortField: sortField
   }
 
-  const  { loading, data } = useQuery(
+  const  { data } = useQuery(
     GET_PAYMENTS, { variables: variables, fetchPolicy: "cache-and-network" }
   );
   
@@ -32,7 +32,11 @@ const PaymentsDashboard = (props) => {
     <Grid container item direction='column' alignItems="stretch" justifyContent="flex-start" style={{ paddingTop: "30px" }}>
       {payments.length > 0 ?
         payments && payments.map((payment) => {
-          return <Payment payment={payment}/>
+          return(
+            <Grid item key={`${payment.__typename}-${payment.id}`} style={{ paddingBottom: "20px", paddingRight: "30px" }}>
+              <Payment payment={payment}/>
+            </Grid>
+          )
         })
       :
         <Paper>
