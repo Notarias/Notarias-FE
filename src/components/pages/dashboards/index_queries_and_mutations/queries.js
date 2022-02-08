@@ -17,6 +17,47 @@ export const GET_LATEST_COMMENTS = gql`
   }
 `
 
+export const GET_APPOINTMENTS = gql`
+  query appoitments (
+    $page: Int,
+    $per: Int
+    $sortDirection: String,
+    $sortField: String
+  ){
+    appointments(
+      page: $page, 
+      per: $per,
+      sortDirection: $sortDirection,
+      sortField: $sortField
+    ){
+      id
+      creatorId
+      place
+      extraData
+      initDate
+      endDate
+      createdAt
+      users{
+        id
+        firstName
+        lastName
+        avatarThumbUrl
+      }
+    }
+  }
+`
+
+export const GET_USER = gql`
+  query getuser($id: ID!){
+    user(id: $id) {
+      id
+      firstName
+      lastName
+      avatarThumbUrl
+    }
+  }
+`
+
 export const GET_BUDGETS = gql`
   query budgets (
     $page: Int,
@@ -54,6 +95,21 @@ export const GET_BUDGETS = gql`
         active
         serialNumber
       }
+      comments{
+        body
+        commentableId
+        commentableType
+        id
+        createdAt
+        updatedAt
+        user{
+          avatarThumbUrl
+          avatarUrl
+          id
+          firstName
+          lastName
+        }
+      }
       id
       serialNumber
       total
@@ -65,10 +121,216 @@ export const GET_BUDGETS = gql`
       completedAt
       asignee {
         id
-        fullName
+        firstName
+        lastName
         avatarThumbUrl
       }
     }
     budgetsCount
+  }
+`
+
+export const GET_PROCEDURES = gql`
+  query Procedures(
+    $page: Int
+    $per: Int
+    $sortDirection: String
+    $sortField: String
+    $search: PROCEDURES_SEARCH_INPUT
+  ){
+    procedures(
+      page: $page
+      per: $per
+      sortDirection: $sortDirection
+      sortField: $sortField
+      search: $search
+    ){
+      id
+      serialNumber
+      client{ fullName }
+      budgetingTemplate { name }
+      proceduresTemplate { name }
+      asignee { 
+        avatarThumbUrl,
+        firstName,
+        lastName }
+      reporter { avatarThumbUrl,
+        firstName,
+        lastName }
+      comments{
+        body
+        commentableId
+        commentableType
+        id
+        createdAt
+        updatedAt
+        user{
+          avatarThumbUrl
+          avatarUrl
+          id
+          firstName
+          lastName
+        }
+      }
+      createdAt
+      updatedAt
+      completedAt
+    }
+    proceduresCount
+  }
+`
+
+export const GET_CREDIT_PAYMENTS = gql`
+  query dashboardCreditPayments(
+    $page: Int
+    $per: Int
+    $sortDirection: String
+    $sortField: String
+  ){
+    dashboardCreditPayments(
+      page: $page,
+      per: $per,
+      sortDirection: $sortDirection,
+      sortField: $sortField
+    ){
+      budget{
+      	id,
+      	budgetingTemplate{
+          name
+        }
+        client{
+          fullName
+        }
+        asignee{
+          avatarThumbUrl,
+          firstName,
+          lastName
+        }
+        proceduresTemplate{
+          name
+        }
+      },
+      createdAt,
+      id,
+      note,
+      paymentType,
+      total,
+      updatedAt,
+      voidAt
+    }
+  }
+`
+
+export const GET_PAYMENTS = gql`
+  query dashboardPayments(
+    $page: Int
+    $per: Int
+    $sortDirection: String
+    $sortField: String
+  ){
+    dashboardPayments(
+      page: $page,
+      per: $per,
+      sortDirection: $sortDirection,
+      sortField: $sortField
+    ){
+      budget{
+        id,
+        budgetingTemplate{
+          name,
+        }
+        proceduresTemplate{
+          name
+        }
+        client{
+          fullName
+        }
+        asignee{
+          avatarThumbUrl,
+          firstName,
+          lastName
+        }
+      },
+      budgetFieldValue{
+        id,
+        active,
+        field{
+          name,
+          
+        },
+        totalDebt,
+        totalPaid
+        value
+      }
+      createdAt,
+      id,
+      note,
+      total,
+      updatedAt,
+      voidAt
+    }
+  }
+`
+
+export const GET_COMMENTS = gql`
+  query comments(
+    $page: Int,
+    $per: Int,
+    $sortDirection: String,
+    $sortField: String
+  ){
+    comments(
+      page: $page,
+      per: $per,
+      sortDirection: $sortDirection,
+      sortField: $sortField
+    ){
+      id,
+      createdAt,
+      updatedAt,
+      commentableType,
+      commentableId,
+      body,
+      user{
+        avatarThumbUrl,
+        firstName,
+        lastName,
+        fullName
+      }
+    }
+  }
+`
+
+export const GET_BUDGET = gql`
+query budget(
+    $id: ID!
+  ){
+  budget(
+    id: $id
+    ){
+      id
+      budgetingTemplate{
+        active
+        id
+        name
+      }
+    }
+  }
+`
+
+export const GET_PROCEDURE = gql`
+query procedure(
+    $id: ID!
+  ){
+  procedure(
+    id: $id
+    ){
+      id
+      proceduresTemplate{
+        active
+        name
+        id
+      }
+    }
   }
 `

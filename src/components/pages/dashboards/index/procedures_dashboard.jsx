@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import Grid                           from '@material-ui/core/Grid';
 import { useQuery }                   from '@apollo/client';
-import { GET_BUDGETS }                from '../index_queries_and_mutations/queries';
-import Budget                         from './budgets_dashboard/budget';
+import { GET_PROCEDURES }             from '../index_queries_and_mutations/queries';
+import Procedure                      from './procedures_dashboard/procedure';
 import Typography                     from '@material-ui/core/Typography';
 import Paper                          from '@material-ui/core/Paper';
 
-const BudgetsDashboard = (props) => {
+const ProceduresDashboard = (props) => {
   const [searchLoading] = useState(false);
-  const [sortField]     = useState("serial_number")
-  const [sortDirection] = useState("desc")
-  const [page]          = useState(1)
-  const [per]           = useState(10)
-  const [budgets, setBudgets] = useState([])
+  const [sortField]     = useState("serial_number");
+  const [sortDirection] = useState("desc");
+  const [page, setPage] = useState(1);
+  const [per]           = useState(10);
+  const [procedures, setProcedures] = useState([]);
 
   let variables = {
     page: page,
@@ -20,26 +20,26 @@ const BudgetsDashboard = (props) => {
     sortDirection: sortDirection,
     sortField: sortField,
     searchLoading: searchLoading
-  }
+  }   
 
   const  { loading, data } = useQuery(
-    GET_BUDGETS, { variables: variables, fetchPolicy: "cache-and-network" }
+    GET_PROCEDURES, { variables: variables, fetchPolicy: "cache-and-network" }
   );
-
-  useEffect( () =>{
-    data && budgets.length === 0 && setBudgets(data.budgets)
-  }, [data])
   
+  useEffect( () =>{
+    data && procedures.length === 0 && setProcedures(data.procedures)
+  }, [data])
+
   return(
     <Grid container item direction='column' alignItems="stretch"  justifyContent="flex-start" style={{ paddingTop: "30px" }}>
-      {budgets.length > 0 ?
-        budgets && budgets.map((budget) => {
-          return <Budget budget={budget}/>
+      {procedures.length > 0 ?
+        procedures && procedures.map((procedure) => {
+          return <Procedure procedure={procedure}/>
         })
       :
         <Paper>
           <Typography variant='h4' style={{padding: "20px"}}>
-            No hay presupuestos registrados por el momento
+            No hay tramites registrados por el momento
           </Typography>
         </Paper>
       }
@@ -47,4 +47,4 @@ const BudgetsDashboard = (props) => {
   )
 }
 
-export default BudgetsDashboard;
+export default ProceduresDashboard;

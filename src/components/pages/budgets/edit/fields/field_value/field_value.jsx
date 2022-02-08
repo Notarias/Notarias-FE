@@ -44,10 +44,6 @@ const FieldValue = (props) => {
     setTotalDebt(debt)
   }, [data])
 
-  // const handleNameChange = (event) => {
-  //   setName(event.target.value);
-  // };
-
   return(
     <Grid 
       container
