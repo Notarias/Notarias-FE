@@ -129,8 +129,8 @@ const CausantSearch = (props) => {
             };
             return(
             <TableRow
-              index={`RenderClientsTable-${causant.id}`}
-              key={causant.id}
+              index={causant.id}
+              key={`RenderClientsTable-${causant.id}`}
               hover 
               selected={causant.id === selectedIndex} 
               onClick={handleMenuItemClick}

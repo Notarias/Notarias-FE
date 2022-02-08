@@ -71,12 +71,10 @@ const AssigneSelectorList = (props) => {
         >
           {userList && userList.map((user) => (
             <MenuItem id={user.id} key={`edit-appointment-${appointment.id}-dialog-user-${user.id}`} value={user.id}>
-              <React.Fragment key={`select-user-${appointment.id}`}>
-                <ListItemIcon >
-                  <Avatar alt={user.firstName} src={user.avatarThumbUrl} />
-                </ListItemIcon>
-                <ListItemText primary={`${user.firstName} ${user.lastName}`} />
-              </React.Fragment>
+              <ListItemIcon >
+                <Avatar alt={user.firstName} src={user.avatarThumbUrl} />
+              </ListItemIcon>
+              <ListItemText primary={`${user.firstName} ${user.lastName}`} />
             </MenuItem>
           ))}
         </Select>
