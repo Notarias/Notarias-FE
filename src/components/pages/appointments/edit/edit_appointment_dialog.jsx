@@ -19,37 +19,37 @@ import { useMutation } from '@apollo/client';
 import { GET_APPOINTMENTS } from '../queries_and_mutations/queries';
 import { UPDATE_APPOINTMENT } from '../queries_and_mutations/queries';
 
-/* const buildDate = (value, separator='/') => {
-  let newDate = new Date(value)
+const fixDate = (dateObject, separator='-') => {
+  let newDate = new Date(dateObject);
   let date = newDate.getDate();
   let month = newDate.getMonth() + 1;
   let year = newDate.getFullYear();
-  let hours = newDate.getHours();
-  let minutes = newDate.getMinutes();
-
-  return (
-    `${date < 10 ? `0${date}` : `${date}`}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${year} -
-     ${hours < 10 ? `0${hours}` : `${hours}`}:${minutes < 10 ? `0${minutes}` : `${minutes}`}`
-  )
-} */
-
-const buildDate = (value, separator='-') => {
-  let newDate = new Date(value)
-  let date = newDate.getDate();
-  let month = newDate.getMonth() + 1;
-  let year = newDate.getFullYear();
-  let hours = newDate.getHours();
-  let minutes = newDate.getMinutes();
-
-  return (
-    `${year}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${date < 10 ? `0${date}` : `${date}`}T${hours < 10 ? `0${hours}` : `${hours}`}:${minutes < 10 ? `0${minutes}` : `${minutes}`}`
-  )
+  return (`${year}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${date < 10 ? `0${date}` : `${date}`}`)
 }
+
+const formatDate = (dateObject, separator='/') => {
+  let newDate = new Date(dateObject);
+  let date = newDate.getDate();
+  let month = newDate.getMonth();
+  let year = newDate.getFullYear();
+
+  return (`${date < 10 ? `0${date}` : `${date}`}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${year}`)
+}
+
+const formatTime = (timeObject, separator=':') => {
+  let newDate = new Date(timeObject);
+  let hours = newDate.getHours();
+  let minutes = newDate.getMinutes();
+
+  return (`${hours < 10 ? `0${hours}` : `${hours}`}${separator}${minutes < 10 ? `0${minutes}` : `${minutes}`}`)
+}   
 
 const EditAppointmentDialog = (props) => {
   const { classes, closeEditDialog, appointment, variables } = props
-  const [initDate, setInitDate] = useState(new Date(appointment.initDate));
-  const [endDate, setEndDate] = useState(new Date(appointment.endDate));
+  const [initDate, setInitDate] = useState(fixDate(appointment.initDate));
+  const [initTime, setInitTime] = useState(formatTime(appointment.initDate));
+  const [endDate, setEndDate] = useState(fixDate(appointment.endDate));
+  const [endTime, setEndTime] = useState(formatTime(appointment.endDate));
   const [place, setPlace] = useState(appointment.place);
   const [extraData, setExtraData] = useState(appointment.extraData);
   const [selecteds] = useState(appointment.users);
@@ -82,8 +82,8 @@ const EditAppointmentDialog = (props) => {
       variables: {
         id: appointment.id,
         assignedIds: selectedIds,
-        initDate: initDate,
-        endDate: endDate,
+        initDate: `${initDate}T${initTime}:00`,
+        endDate: `${endDate}T${endTime}:00`,
         place: place,
         extraData: extraData
       }
@@ -91,12 +91,20 @@ const EditAppointmentDialog = (props) => {
   }
 
   const initDateChange = (event) => {
-    setInitDate(new Date(event.target.value))
+    setInitDate(event.target.value)
   }
 
+  const initTimeChange = (event) => {
+    setInitTime(event.target.value)
+  }                                 
+
   const endDateChange = (event) => {
-    setEndDate(new Date(event.target.value))
+    setEndDate(event.target.value)
   }
+
+  const endTimeChange = (event) => {
+    setEndTime(event.target.value)
+  }                                 
 
   const placeChange = (event) => {
     setPlace(event.target.value)
@@ -105,7 +113,7 @@ const EditAppointmentDialog = (props) => {
   const extraDataChange = (event) => {
     setExtraData(event.target.value)
   }
-
+  
   return(
     <Card>
       <Grid container item justifyContent='center'>
@@ -117,39 +125,69 @@ const EditAppointmentDialog = (props) => {
               </Avatar>
             }
             title="Editar Evento"
-            subheader={buildDate(appointment.initDate)}
+            subheader={`${formatDate(appointment.createdAt)} - ${formatTime(appointment.createdAt)}`}
           />
         </Grid>
       </Grid>
       <Divider/>
       <CardContent>
         <Grid container item justifyContent='center'>
-          <Grid container item xs={10}>
-            <Grid item xs={12} className={classes.marginTopStartAndEnd}>
-              <TextField
-                id="datetime-local"
-                label="Inicio de la Cita"
-                type="datetime-local"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                onChange={initDateChange}
-                value= {buildDate(initDate)}
-                fullWidth
-              />
+        <Grid container item xs={10}>
+            <Grid item container xs={12} justifyContent="space-between">
+              <Grid item xs={7}>
+                <TextField
+                  id="date-start"
+                  label="Inicio de la Cita"
+                  type="date"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}    
+                  onChange={initDateChange}
+                  value={initDate}
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <TextField
+                  id="time-start"
+                  label="Hora de la Cita"
+                  type="time"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  onChange={initTimeChange}
+                  value={initTime}
+                  fullWidth
+                />
+              </Grid>
             </Grid>
-            <Grid item xs={12} className={classes.marginTopStartAndEnd}>
-              <TextField
-                id="datetime-local"
-                label="Termino de la Cita"
-                type="datetime-local"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                onChange={endDateChange}
-                value= {buildDate(endDate)}
-                fullWidth
-              />
+            <Grid item container xs={12} justifyContent="space-between">
+              <Grid item xs={7}>
+                <TextField
+                  id="date-end"
+                  label="Termino de la Cita"
+                  type="date"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  onChange={endDateChange}
+                  value={endDate}
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <TextField
+                  id="time-end"
+                  label="Hora de la Cita"
+                  type="time"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  onChange={endTimeChange}
+                  value={endTime}
+                  fullWidth
+                />
+              </Grid>
             </Grid>
             <Grid container item xs={12} className={classes.marginTopStartAndEnd}>
               <AssigneSelectorList selectedIds={selectedIds} setSelectedIds={setSelectedIds} appointment={appointment} selecteds={selecteds}/>

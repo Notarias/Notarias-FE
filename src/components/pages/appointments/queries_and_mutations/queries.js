@@ -106,6 +106,7 @@ export const GET_APPOINTMENTS = gql`
       searchValue: $searchValue
     ){
       id
+      createdAt
       creatorId
       place
       extraData
