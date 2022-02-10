@@ -1,10 +1,12 @@
-import React, { Component }     from 'react';
+import React, { useState, Component }     from 'react';
+import { Redirect }             from 'react-router-dom';
 import Drawer                   from '@material-ui/core/Drawer';
 import Divider                  from '@material-ui/core/Divider';
 import List                     from '@material-ui/core/List';
 import withStyles               from '@material-ui/core/styles/withStyles';
 import Collapse                 from '@material-ui/core/Collapse';
 import SettingsApplicationsIcon from '@material-ui/icons/SettingsApplications';
+import ExitToAppIcon            from '@material-ui/icons/ExitToApp';
 import ListItem                 from '@material-ui/core/ListItem';
 import ListItemIcon             from '@material-ui/core/ListItemIcon';
 import ListItemText             from '@material-ui/core/ListItemText';
@@ -42,8 +44,10 @@ class NavigationMenu extends Component {
     })
   }
 
+  
   render() {
-    const { classes, setOpenMenu, setCloseMenu } = this.props;
+    const { classes, setOpenMenu, setCloseMenu, setLogOut } = this.props;
+console.log(this.state.redirecting)
     return(
       <Drawer
         variant="permanent"
@@ -81,7 +85,14 @@ class NavigationMenu extends Component {
             <MenuLink nested={true} rawIcon iconComponent={ContactsSharpIcon} linkPath="/config/clients" menuText="Clientes" />
           </List>
         </Collapse>
-
+        <Divider />
+        <ListItem button onClick={setLogOut}>
+          <ListItemIcon>
+            <ExitToAppIcon color='secondary' />
+          </ListItemIcon>
+          <ListItemText primary="Salir" />
+        </ListItem>
+        <Redirect to={{ pathname: "/sign_in" }} />
       </Drawer>
     )
   }
