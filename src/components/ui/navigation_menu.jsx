@@ -47,7 +47,7 @@ class NavigationMenu extends Component {
   
   render() {
     const { classes, setOpenMenu, setCloseMenu, setLogOut } = this.props;
-console.log(this.state.redirecting)
+
     return(
       <Drawer
         variant="permanent"
