@@ -1,6 +1,8 @@
 import React                          from 'react'
 import Grid                           from '@material-ui/core/Grid';
 import Dialog                         from '@material-ui/core/Dialog';
+import DialogTitle                    from '@material-ui/core/DialogTitle';
+import DialogContent                  from '@material-ui/core/DialogContent';
 import Card                           from '@material-ui/core/Card';
 import CardHeader                     from '@material-ui/core/CardHeader';
 import CardContent                    from '@material-ui/core/CardContent';
@@ -30,73 +32,79 @@ const CommentsDialog = (props) => {
 
   return (
     <Dialog onClose={statsCommentDialog} aria-labelledby="comments-title" open={commentDialog}>
-      <Grid style={{width: "500px"}}>
-        <Card>
-          <CardHeader
-            avatar={procedure.asignee ?
+      <DialogTitle style={{ padding: '16px'}}>
+        <Grid container xs={12} justifyContent='flex-start' alignItems='center'>
+          <Grid item xs={1}>
+            {procedure.asignee ?
               <Avatar aria-label={procedure.asignee.firstName} src={procedure.asignee.avatarThumbUrl}/>
             :
               <Avatar src={AccountCircleIcon}/>
             }
-            action={
+          </Grid>
+          <Grid container item xs direction='row' justifyContent='center' alignItems='stretch' style={{paddingLeft: '15px'}}>
+            <Grid item xs={12}>
+              <Typography>
+                <strong>{`Presupuesto: ${procedure.proceduresTemplate.name}`}</strong>
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              {procedure.asignee ?
+                <Typography variant="body2">
+                  {`Encargado: ${procedure.asignee.firstName} ${procedure.asignee.lastName}`}
+                </Typography>
+              :
+                <Typography variant="body2">
+                  {"Sin usuario asignado"}
+                </Typography>
+              }
+            </Grid>
+          </Grid>
+          <Grid container item xs={1} justifyContent='center'>
+            <Grid item>
               <IconButton aria-label="settings" color="secondary" onClick={statsCommentDialog}>
                 <CloseIcon />
               </IconButton>
-            }
-            title={
-              <Typography>
-                {<strong>{`Presupuesto: ${procedure.proceduresTemplate.name}`}</strong>}
-              </Typography>
-            }
-            subheader={procedure.asignee ?
-              <Typography variant="body2">
-                {`Encargado: ${procedure.asignee.firstName} ${procedure.asignee.lastName}`}
-              </Typography>
-            :
-              <Typography variant="body2">
-                {"Sin usuario asignado"}
-              </Typography>
-            }
-          />
-          <Divider variant="middle"/>
-          <CardContent>
-            {
-              procedure.comments.map((comment) => {
+            </Grid>
+          </Grid>
+        </Grid>
+      </DialogTitle>
+      <Divider variant="middle"/>
+      <DialogContent>
+        {
+          procedure.comments.map((comment) => {
 
-                return(
-                  <Card variant="outlined" key={`${procedure.proceduresTemplate.name}-${procedure.id}-comment${comment.id}`}>
-                    <CardHeader
-                      avatar={
-                        <Avatar src={ comment.user.avatarThumbUrl} size="small"/>
-                      }
-                      title={`${comment.user.firstName}  ${comment.user.lastName}`}
-                      subheader={`Creado: ${buildDate(comment.createdAt)}`}
-                      action={
-                        comment.createdAt === comment.updatedAt ? 
-                          <></>
-                        :
-                          <Chip 
-                            label="Editado"
-                            variant="outlined"
-                            color="primary"
-                            size="small"
-                            style={{marginTop: "10px", marginRight: "7px"}}
-                          />
-                      }
-                    />
-                    <Divider variant="middle"/>
-                    <CardContent>
-                      <Typography variant="body1" color="textSecondary" align="left">
-                        {comment.body}
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                )
-              })
-            }
-          </CardContent>
-        </Card>
-      </Grid>
+            return(
+              <Card variant="outlined" key={`${procedure.proceduresTemplate.name}-${procedure.id}-comment${comment.id}`}>
+                <CardHeader
+                  avatar={
+                    <Avatar src={ comment.user.avatarThumbUrl} size="small"/>
+                  }
+                  title={`${comment.user.firstName}  ${comment.user.lastName}`}
+                  subheader={`Creado: ${buildDate(comment.createdAt)}`}
+                  action={
+                    comment.createdAt === comment.updatedAt ? 
+                      <></>
+                    :
+                      <Chip 
+                        label="Editado"
+                        variant="outlined"
+                        color="primary"
+                        size="small"
+                        style={{marginTop: "10px", marginRight: "7px"}}
+                      />
+                  }
+                />
+                <Divider variant="middle"/>
+                <CardContent>
+                  <Typography variant="body1" color="textSecondary" align="left">
+                    {comment.body}
+                  </Typography>
+                </CardContent>
+              </Card>
+            )
+          })
+        }
+      </DialogContent>
     </Dialog>
   )
 }
