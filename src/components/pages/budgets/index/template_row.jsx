@@ -32,7 +32,7 @@ const TemplateRow = (props) => {
           value={ budget.total / 100}
           displayType={'text'} 
           thousandSeparator={true} 
-          prefix={'$ '}
+          prefix={'$'}
           decimalScale={2}
         />
       </TableCell>
@@ -42,7 +42,7 @@ const TemplateRow = (props) => {
             value={ budget.totalDebt / 100 }
             displayType={'text'} 
             thousandSeparator={true} 
-            prefix={'$ '}
+            prefix={'$'}
             decimalScale={2}
             className={budget.totalDebt ? classes.totalDebtInRed : ""}
           />
@@ -54,7 +54,7 @@ const TemplateRow = (props) => {
             value={ budget.totalPaid / 100 }
             displayType={'text'} 
             thousandSeparator={true} 
-            prefix={'$ '}
+            prefix={'$'}
             decimalScale={2}
             className={classes.totalPaidInGreen}
           />
