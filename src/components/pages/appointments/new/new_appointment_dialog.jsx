@@ -19,36 +19,29 @@ import { useMutation } from '@apollo/client';
 import { GET_APPOINTMENTS } from './../queries_and_mutations/queries';
 import { CREATE_APPOINTMENT } from './../queries_and_mutations/queries';
 
-const getCurrentDate = (value, separator='/') => {
-  let newDate = new Date(value)
+const fixDate = (dateObject, separator='-') => {
+  let newDate = new Date(dateObject);
   let date = newDate.getDate();
   let month = newDate.getMonth() + 1;
   let year = newDate.getFullYear();
-  let hours = newDate.getHours();
-  let minutes = newDate.getMinutes();
-
-  return (
-    `${date < 10 ? `0${date}` : `${date}`}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${year} -
-     ${hours < 10 ? `0${hours}` : `${hours}`}:${minutes < 10 ? `0${minutes}` : `${minutes}`}`
-  )
+  return (`${year}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${date < 10 ? `0${date}` : `${date}`}`)
 }
 
-const formatDate = (value, separator='-') => {
-  let newDate = new Date(value)
+const formatDate = (dateObject, separator='/') => {
+  let newDate = new Date(dateObject);
   let date = newDate.getDate();
-  let month = newDate.getMonth() + 1;
+  let month = newDate.getMonth();
   let year = newDate.getFullYear();
 
-  return (
-    `${year}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${date < 10 ? `0${date}` : `${date}`}`)
+  return (`${date < 10 ? `0${date}` : `${date}`}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${year}`)
 }
 
-const formatTime = (value, separator='-') => {
-  let newDate = new Date(value)
+const formatTime = (timeObject, separator=':') => {
+  let newDate = new Date(timeObject);
   let hours = newDate.getHours();
   let minutes = newDate.getMinutes();
 
-  return (`${hours < 10 ? `0${hours}` : `${hours}`}:${minutes < 10 ? `0${minutes}` : `${minutes}`}`)
+  return (`${hours < 10 ? `0${hours}` : `${hours}`}${separator}${minutes < 10 ? `0${minutes}` : `${minutes}`}`)
 }
 
 const NewAppointmentDialog = (props) => {
@@ -56,14 +49,14 @@ const NewAppointmentDialog = (props) => {
   const { classes, closeNewDialog, variables } = props
   //const [errors, setErrors] = useState();
   //const [pristine, setPristine] = useState(true);
-  const [initDate, setInitDate] = useState(new Date());
-  const [initTime, setInitTime] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
-  const [endTime, setEndTime] = useState(new Date());
+  const [initDate, setInitDate] = useState(fixDate(new Date()));
+  const [initTime, setInitTime] = useState(formatTime(new Date()));
+  const [endDate, setEndDate] = useState(fixDate(new Date()));
+  const [endTime, setEndTime] = useState(formatTime(new Date()));
   const [place, setPlace] = useState("");
   const [extraData, setExtraData] = useState("");
   const [selecteds, setSelecteds] = useState([]);
-  const [currentDate] = useState(getCurrentDate(new Date()))
+  const [currentDate] = useState(new Date())
 
   const [createAppointment] =
   useMutation(
@@ -94,14 +87,14 @@ const NewAppointmentDialog = (props) => {
     let array = [];
 
     selecteds.map((user) => {
-      return(array.push(user))
+      return(array.push(user.id))
     })
 
     createAppointment( {
       variables: {
         assignedIds: array,
-        initDate: initDate,
-        endDate: endDate,
+        initDate: `${initDate}T${initTime}:00`,
+        endDate: `${endDate}T${endTime}:00`,
         place: place,
         extraData: extraData
       }
@@ -109,19 +102,19 @@ const NewAppointmentDialog = (props) => {
   }
 
   const initDateChange = (event) => {
-    setInitDate(new Date(event.target.value))
+    setInitDate(event.target.value)
   }
 
   const initTimeChange = (event) => {
-    setInitTime(new Date(event.target.value))
+    setInitTime(event.target.value)
   }
 
   const endDateChange = (event) => {
-    setEndDate(new Date(event.target.value))
+    setEndDate(event.target.value) 
   }
 
   const endTimeChange = (event) => {
-    setEndTime(new Date(event.target.value))
+    setEndTime(event.target.value)
   }
 
   const placeChange = (event) => {
@@ -143,14 +136,14 @@ const NewAppointmentDialog = (props) => {
               </Avatar>
             }
             title="Nuevo Evento"
-            subheader={currentDate}
+            subheader={`${formatDate(currentDate)} - ${formatTime(currentDate)}`}
           />
         </Grid>
       </Grid>
       <Divider/>
       <CardContent>
         <Grid container item justifyContent='center'>
-          <Grid container item direction="columns" xs={10}>
+          <Grid container item xs={10}>
             <Grid item container xs={12} justifyContent="space-between">
               <Grid item xs={7}>
                 <TextField
@@ -159,10 +152,9 @@ const NewAppointmentDialog = (props) => {
                   type="date"
                   InputLabelProps={{
                     shrink: true,
-                  }}
-                  format="MM/dd/yyyy"
+                  }}    
                   onChange={initDateChange}
-                  value={formatDate(initDate)}
+                  value={initDate}
                   fullWidth
                 />
               </Grid>
@@ -174,9 +166,8 @@ const NewAppointmentDialog = (props) => {
                   InputLabelProps={{
                     shrink: true,
                   }}
-                  format="HH:MM"
                   onChange={initTimeChange}
-                  value={formatTime(initTime)}
+                  value={initTime}
                   fullWidth
                 />
               </Grid>
@@ -190,9 +181,8 @@ const NewAppointmentDialog = (props) => {
                   InputLabelProps={{
                     shrink: true,
                   }}
-                  format="MM/dd/yyyy"
                   onChange={endDateChange}
-                  value={formatDate(endDate)}
+                  value={endDate}
                   fullWidth
                 />
               </Grid>
@@ -204,9 +194,8 @@ const NewAppointmentDialog = (props) => {
                   InputLabelProps={{
                     shrink: true,
                   }}
-                  format="HH:MM"
                   onChange={endTimeChange}
-                  value={formatTime(endTime)}
+                  value={endTime}
                   fullWidth
                 />
               </Grid>
