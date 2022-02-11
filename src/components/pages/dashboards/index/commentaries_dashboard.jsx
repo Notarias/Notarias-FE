@@ -21,7 +21,7 @@ const CommentariesDashboard = (props) => {
   }   
 
   const  { data } = useQuery(
-    GET_COMMENTS, { variables: variables, fetchPolicy: "cache-and-network" }
+    GET_COMMENTS, { variables: variables, fetchPolicy: "no-cache" }
   );
   
   useEffect( () =>{

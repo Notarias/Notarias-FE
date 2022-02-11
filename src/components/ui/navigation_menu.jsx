@@ -92,7 +92,11 @@ class NavigationMenu extends Component {
           </ListItemIcon>
           <ListItemText primary="Salir" />
         </ListItem>
-        <Redirect to={{ pathname: "/sign_in" }} />
+        {this.redirecting ?
+          <Redirect to={{ pathname: "/sign_in" }} />
+        :
+          ""
+        }
       </Drawer>
     )
   }

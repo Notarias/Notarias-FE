@@ -4,13 +4,15 @@ import Typography            from '@material-ui/core/Typography';
 import Divider               from '@material-ui/core/Divider';
 import IconButton            from '@material-ui/core/IconButton';
 import Print                 from '@material-ui/icons/Print';
+import Button                from '@material-ui/core/Button';
+import OpenInNewIcon         from '@material-ui/icons/OpenInNew';
 import { Link }              from 'react-router-dom';
 import Asignee               from '../asignee';
 import Reporter              from '../reporter';
 import ProcedureFileUploader from './procedure_file_uploader';
 import ProcedureActions      from './procedure_actions';
-import ProceedingNumber     from './proceeding_number';
-import WritingNumber        from './writing_number';
+import ProceedingNumber      from './proceeding_number';
+import WritingNumber         from './writing_number';
 
  const GeneralInformation = (props) => {
 
@@ -68,7 +70,7 @@ import WritingNumber        from './writing_number';
           <Typography align='left'>Cliente:</Typography>
         </Grid>
         <Grid item xs={9}>
-          <Typography noWrap align='left' style={{ padding: '10px' }}>
+          <Typography noWrap align='left' style={{ padding: '10px', textTransform: 'uppercase' }}>
             <strong>{ procedure && procedure.client.firstName } { procedure && procedure.client.lastName }</strong>
           </Typography>
         </Grid>
@@ -78,9 +80,29 @@ import WritingNumber        from './writing_number';
           <Typography align='left'>Presupuesto:</Typography>
         </Grid>
         <Grid item xs={9}>
-          <Typography noWrap align='left' style={{ padding: '10px' }}>
-            <strong>{ procedure && procedure.budgetingTemplate.name }</strong>
-          </Typography>
+          {
+            procedure.budget ?
+              (
+                <Button fullWidth style={{ padding: '10px' }} target='_blank' href={`/budgets/${procedure.budget.id}/edit`}>
+                  <Grid container alignItems="center" justifyContent='flex-start'>
+                    <Grid item>
+                      <Typography noWrap align='left' style={{ paddingRight: "10px", fontWeight: 600 }}>
+                        {
+                          procedure && procedure.budgetingTemplate.name
+                        }
+                      </Typography>
+                    </Grid>
+                    <Grid item>
+                      <OpenInNewIcon/>
+                    </Grid> 
+                  </Grid>
+                </Button>
+              ) : (
+                <Typography noWrap align='left' style={{ padding: '10px', textTransform: 'uppercase' }}>
+                  <strong>{ procedure && procedure.budgetingTemplate.name }</strong>
+                </Typography>
+              )
+          }
         </Grid>
       </Grid>
       <Grid container item xs={12} alignItems='center'>
@@ -88,7 +110,7 @@ import WritingNumber        from './writing_number';
           <Typography align='left'>Trámite:</Typography>
         </Grid>
         <Grid item xs={9}>
-          <Typography noWrap align='left' style={{ padding: '10px' }}>
+          <Typography noWrap align='left' style={{ padding: '10px', textTransform: 'uppercase' }}>
             <strong>{ procedure && procedure.proceduresTemplate.name }</strong>
           </Typography>
         </Grid>
