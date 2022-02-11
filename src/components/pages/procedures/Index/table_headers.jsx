@@ -10,50 +10,50 @@ const TableHeaders = (props) => {
     <TableHead>
       <TableRow>
         <SortHeader
-          text={ "No. de serie" }
-          field_property={ "serial_number" }
+          text="No. de serie"
+          field_property="serial_number"
           current_field={ field }
           sort_direction={ direction }
           callback={ sortHandler }
         />
         <SortHeader
-          text={ "Tramite" }
-          field_property={ "procedures_template_name" }
+          text="Tramite"
+          field_property="procedures_template_name"
           current_field={ field }
           sort_direction={ direction }
           callback={ sortHandler }
         />
         <SortHeader
-          text={ "Presupuesto" }
-          field_property={ "budgeting_template_name" }
+          text="Presupuesto"
+          field_property="budgeting_template_name"
           current_field={ field }
           sort_direction={ direction }
           callback={ sortHandler }
         />
         <SortHeader
-          text={ "Cliente" }
-          field_property={ "client_name" }
+          text="Cliente"
+          field_property="client_name"
           current_field={ field }
           sort_direction={ direction }
           callback={ sortHandler }
         />
         <SortHeader
-          text={ "Responsable" }
-          field_property={ "reporter_avatarThumbUrl" }
+          text="Responsable"
+          field_property="reporter_avatarThumbUrl"
           current_field={ field }
           sort_direction={ direction }
           callback={ sortHandler }
         />
         <SortHeader
-          text={ "Fecha Inicial" }
-          field_property={ "status" }
+          text="Fecha Inicial"
+          field_property="status"
           current_field={ field }
           sort_direction={ direction }
           callback={ sortHandler }
         />
         <SortHeader
-          text={ "Estatus" }
-          field_property={ "status" }
+          text="Estatus"
+          field_property="status"
           current_field={ field }
           sort_direction={ direction }
           callback={ sortHandler }

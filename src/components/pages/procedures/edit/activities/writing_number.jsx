@@ -18,8 +18,6 @@ export default (props) => {
   const [pristine, setPristine] = useState(true)
   const [writingNumber, setWritingNumber] = useState(procedure.budget.writingNumber)
 
-console.log(procedure.budget.id)
-console.log(writingNumber)
   const handleClose = () => {
     setOpen(false)
   }
