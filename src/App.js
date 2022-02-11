@@ -15,7 +15,6 @@ class App extends Component {
     super()
     this.state = {
       open: false,
-      redirecting: false,
     }
   }
 
@@ -37,7 +36,7 @@ class App extends Component {
 
   setLogOut() {
     localStorage.clear();
-    this.setState({redirecting: true})
+    this.forceUpdate()
   }
 
   render() {
@@ -51,7 +50,6 @@ class App extends Component {
             setOpenMenu={ this.setOpenMenu.bind(this) }
             setCloseMenu={ this.setCloseMenu.bind(this) }
             setLogOut={ this.setLogOut.bind(this)}
-            redirecting={ this.state.redirecting }
           /> }
         <CssBaseline />
         <main className={classes.content}>
