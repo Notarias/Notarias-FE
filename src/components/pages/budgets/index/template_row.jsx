@@ -24,9 +24,10 @@ const TemplateRow = (props) => {
 
   return(
     <TableRow key={  "-row" }>
-      <TableCell align= "center" className={classes.tablecellWidth}>{ budget.client.fullName }</TableCell>
-      <TableCell align= "center" className={classes.tablecellWidth}>{ budget.proceduresTemplate.name }</TableCell>
       <TableCell align= "center" className={classes.tablecellWidth}>{ budget.serialNumber }</TableCell>
+      <TableCell align= "center" className={classes.tablecellWidth}>{ budget.budgetingTemplate.name }</TableCell>
+      <TableCell align= "center" className={classes.tablecellWidth}>{ budget.proceduresTemplate.name }</TableCell>
+      <TableCell align= "center" className={classes.tablecellWidth}>{ budget.client.fullName }</TableCell>
       <TableCell align= "center" className={classes.tablecellWidth}>
         <NumberFormat 
           value={ budget.total / 100}

@@ -10,13 +10,6 @@ const TableHeaders = (props) => {
     <TableHead>
       <TableRow>
         <SortHeader
-          text={ "Cliente" }
-          field_property={ "client_name" }
-          current_field={ field }
-          sort_direction={ direction }
-          callback={ sortHandler }
-        />
-        <SortHeader
           text={ "No. de serie" }
           field_property={ "serial_number" }
           current_field={ field }
@@ -24,15 +17,22 @@ const TableHeaders = (props) => {
           callback={ sortHandler }
         />
         <SortHeader
-          text={ "Presupuestos" }
+          text={ "Tramite" }
+          field_property={ "procedures_template_name" }
+          current_field={ field }
+          sort_direction={ direction }
+          callback={ sortHandler }
+        />
+        <SortHeader
+          text={ "Presupuesto" }
           field_property={ "budgeting_template_name" }
           current_field={ field }
           sort_direction={ direction }
           callback={ sortHandler }
         />
         <SortHeader
-          text={ "Tramites" }
-          field_property={ "procedures_template_name" }
+          text={ "Cliente" }
+          field_property={ "client_name" }
           current_field={ field }
           sort_direction={ direction }
           callback={ sortHandler }

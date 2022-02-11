@@ -9,6 +9,8 @@ import Asignee               from '../asignee';
 import Reporter              from '../reporter';
 import ProcedureFileUploader from './procedure_file_uploader';
 import ProcedureActions      from './procedure_actions';
+import ProceedingNumber     from './proceeding_number';
+import WritingNumber        from './writing_number';
 
  const GeneralInformation = (props) => {
 
@@ -91,6 +93,8 @@ import ProcedureActions      from './procedure_actions';
           </Typography>
         </Grid>
       </Grid>
+      <ProceedingNumber procedure={procedure}/>
+      <WritingNumber procedure={procedure}/>
     </Grid>
   )
 }

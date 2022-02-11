@@ -42,10 +42,10 @@ const TableRows = (props) => {
 
   return(
     <TableRow key={  "-row" }>
-      <TableCell align= "center" className={classes.tablecellWidth}>{ procedure.client.fullName }</TableCell>
       <TableCell align= "center" className={classes.tablecellWidth}>{ procedure.serialNumber }</TableCell>
-      <TableCell align= "center" className={classes.tablecellWidth}>{ procedure.budgetingTemplate.name }</TableCell>
       <TableCell align= "center" className={classes.tablecellWidth}>{ procedure.proceduresTemplate.name }</TableCell>
+      <TableCell align= "center" className={classes.tablecellWidth}>{ procedure.budgetingTemplate.name }</TableCell>
+      <TableCell align= "center" className={classes.tablecellWidth}>{ procedure.client.fullName }</TableCell>
       <TableCell align= "center" className={classes.tablecellWidth}>{ <Avatar src={procedure.asignee && procedure.asignee.avatarThumbUrl}/> }</TableCell>
       <TableCell align= "center" className={classes.tablecellWidth}>{ buildDate(procedure.createdAt) }</TableCell>
       <TableCell align= "center" className={classes.tablecellWidth}>{ estatus(procedure) }</TableCell>

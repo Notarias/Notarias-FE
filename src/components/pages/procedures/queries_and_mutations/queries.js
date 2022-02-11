@@ -246,6 +246,11 @@ query procedure(
         avatarThumbUrl
         id
       }
+      budget{
+        id
+        proceedingNumber
+        writingNumber
+      }
       proceduresTemplate{
         active
         name
@@ -285,6 +290,76 @@ export const UPDATE_PROCEDURE = gql`
         createdAt
         updatedAt
         completedAt
+      }
+    }
+  }
+`
+
+export const UPDATE_BUDGET = gql`
+  mutation updateBudget(
+    $id: ID!,
+    $clientId: ID,
+    $proceduresTemplateId: ID,
+    $budgetingTemplateId: ID,
+    $asigneeId: ID,
+    $proceedingNumber: String,
+    $writingNumber: String
+  ){
+    updateBudget(input :{
+      id: $id
+      clientId: $clientId
+      budgetingTemplateId: $budgetingTemplateId
+      proceduresTemplateId: $proceduresTemplateId
+      asigneeId: $asigneeId
+      proceedingNumber: $proceedingNumber
+      writingNumber: $writingNumber
+      }
+    ){
+      budget{
+        id
+        serialNumber
+        total
+        totalDebt
+        totalPaid
+        totalCredit
+        proceedingNumber
+        writingNumber
+        asignee{
+          firstName
+          lastName
+          id
+          avatarThumbUrl
+        }
+        asigneeId
+        reporter{
+          firstName
+          lastName
+          id
+          avatarThumbUrl
+        }
+        reporterId
+        proceduresTemplate{
+          active
+          name
+          id
+          serialNumber
+        }
+        budgetingTemplate{
+          active
+          id
+          name
+          serialNumber
+        }
+        client{
+          firstName
+          lastName
+          id
+        }
+        fieldValues{
+          id
+          budgetId
+          value
+        }
       }
     }
   }
