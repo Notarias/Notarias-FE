@@ -21,7 +21,7 @@ const CreditPaymentsDashboard = (props) => {
   }
 
   const  { data } = useQuery(
-    GET_CREDIT_PAYMENTS, { variables: variables, fetchPolicy: "cache-and-network" }
+    GET_CREDIT_PAYMENTS, { variables: variables, fetchPolicy: "no-cache" }
   );
   
   useEffect( () =>{

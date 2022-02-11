@@ -15,7 +15,6 @@ class App extends Component {
     super()
     this.state = {
       open: false,
-      redirecting: false,
     }
   }
 
@@ -37,7 +36,7 @@ class App extends Component {
 
   setLogOut() {
     localStorage.clear();
-    this.setState({redirecting: true})
+    this.forceUpdate()
   }
 
   render() {

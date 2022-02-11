@@ -21,7 +21,7 @@ const AppointmentsDashboard = (props) => {
   }
 
   const  { data } = useQuery(
-    GET_APPOINTMENTS, { variables: variables, fetchPolicy: "cache-and-network" }
+    GET_APPOINTMENTS, { variables: variables, fetchPolicy: "no-cache" }
   );
 
   useEffect( () =>{

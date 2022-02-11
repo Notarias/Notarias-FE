@@ -17,22 +17,22 @@ import VisibilityIcon                 from '@material-ui/icons/Visibility';
 import PrintIcon                      from '@material-ui/icons/Print';
 import { BASE_URI }                   from '../../../../apollo'
 
-
 const TemplateRow = (props) => {
 
   const {budget, classes} = props
 
   return(
-    <TableRow key={  "-row" }>
-      <TableCell align= "center" className={classes.tablecellWidth}>{ budget.client.fullName }</TableCell>
-      <TableCell align= "center" className={classes.tablecellWidth}>{ budget.proceduresTemplate.name }</TableCell>
-      <TableCell align= "center" className={classes.tablecellWidth}>{ budget.serialNumber }</TableCell>
-      <TableCell align= "center" className={classes.tablecellWidth}>
+    <TableRow>
+      <TableCell align="center" className={classes.tablecellWidth}>{ budget.serialNumber }</TableCell>
+      <TableCell align="center" className={classes.tablecellWidth}>{ budget.budgetingTemplate.name }</TableCell>
+      <TableCell align="center" className={classes.tablecellWidth}>{ budget.proceduresTemplate.name }</TableCell>
+      <TableCell align="center" className={classes.tablecellWidth}>{ budget.client.fullName }</TableCell>
+      <TableCell align="center" className={classes.tablecellWidth}>
         <NumberFormat 
           value={ budget.total / 100}
-          displayType={'text'} 
+          displayType='text'
           thousandSeparator={true} 
-          prefix={'$'}
+          prefix='$'
           decimalScale={2}
         />
       </TableCell>
@@ -40,9 +40,9 @@ const TemplateRow = (props) => {
         <Typography variant="subtitle2">
           <NumberFormat 
             value={ budget.totalDebt / 100 }
-            displayType={'text'} 
+            displayType='text' 
             thousandSeparator={true} 
-            prefix={'$'}
+            prefix='$'
             decimalScale={2}
             className={budget.totalDebt ? classes.totalDebtInRed : ""}
           />
@@ -52,9 +52,9 @@ const TemplateRow = (props) => {
         <Typography variant="subtitle2">
           <NumberFormat 
             value={ budget.totalPaid / 100 }
-            displayType={'text'} 
+            displayType='text' 
             thousandSeparator={true} 
-            prefix={'$'}
+            prefix='$'
             decimalScale={2}
             className={classes.totalPaidInGreen}
           />

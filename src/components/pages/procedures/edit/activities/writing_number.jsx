@@ -9,14 +9,14 @@ import DialogContent       from '@material-ui/core/DialogContent';
 import DialogContentText   from '@material-ui/core/DialogContentText';
 import DialogTitle         from '@material-ui/core/DialogTitle';
 import { useMutation }     from '@apollo/client';
-import { UPDATE_BUDGET, GET_BUDGET } from '../../queries_and_mutations/queries';
+import { UPDATE_BUDGET, GET_PROCEDURE } from '../../queries_and_mutations/queries';
 
 export default (props) => {
-  const { budget } = props
+  const { procedure } = props
 
   const [open, setOpen]         = useState(false)
   const [pristine, setPristine] = useState(true)
-  const [proceedingNumber, setProceedingNumber] = useState(budget.proceedingNumber)
+  const [writingNumber, setWritingNumber] = useState(procedure.budget.writingNumber)
 
   const handleClose = () => {
     setOpen(false)
@@ -26,8 +26,8 @@ export default (props) => {
     setOpen(true)
   }
 
-  const handleProceedingNumberChange = (e) => {
-    setProceedingNumber(e.target.value)
+  const handleWritingNumberChange = (e) => {
+    setWritingNumber(e.target.value)
     setPristine(false)
   }
 
@@ -48,57 +48,56 @@ export default (props) => {
         },
         refetchQueries: [
           {
-            query: GET_BUDGET,
-            variables: { id: budget.id } 
+            query: GET_PROCEDURE,
+            variables: { id: procedure.id } 
           },
         ],
         awaitRefetchQueries: true
       }
     )
-
   const handleSave = () => {
     updateBudget({
       variables: {
-        id: budget.id,
-        proceedingNumber: proceedingNumber
+        id: procedure.budget.id,
+        writingNumber: writingNumber
       }
     })
   }
 
   useEffect(() => {
-    setProceedingNumber(budget.proceedingNumber)
-  }, [budget.proceedingNumber])
+    setWritingNumber(procedure.budget.writingNumber)
+  }, [procedure.budget.writingNumber])
 
   return(
     <Grid container item xs={12} alignItems='center'>
       <Grid item xs={3}>
-        <Typography align='left'>Expediente:</Typography>
+        <Typography align='left'>Escritura:</Typography>
       </Grid>
       <Grid item xs={9}>
         <Button fullWidth style={{ padding: '10px' }} onClick={handleOpen}>
-          <Grid container alignItems="center" justifyContent='flex-start' >
+          <Grid container alignItems="center" justifyContent='flex-start'>
             <Typography noWrap align='left' style={{ paddingRight: "10px", fontWeight: 600 }}>
               {
-                (budget && budget.proceedingNumber) || 'Agregar No. de Expediente'
+                (procedure && procedure.budget.writingNumber) || 'Agregar No. de Escritura'
               }
             </Typography>
           </Grid>
         </Button>
       </Grid>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">No. de Expediente</DialogTitle>
+        <DialogTitle id="form-dialog-title">No. de Escritura</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Escriba el numero de expediente del trámite
+            Escriba el numero de escritura del trámite
           </DialogContentText>
           <TextField
             autoFocus
             margin="dense"
-            id="proceeding"
-            label="No. de Expediente"
+            id="writing"
+            label="No. de Escritura"
             type="text"
-            onChange={handleProceedingNumberChange}
-            value={proceedingNumber}
+            onChange={handleWritingNumberChange}
+            value={writingNumber}
             fullWidth
           />
         </DialogContent>

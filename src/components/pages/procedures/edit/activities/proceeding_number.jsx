@@ -9,14 +9,14 @@ import DialogContent       from '@material-ui/core/DialogContent';
 import DialogContentText   from '@material-ui/core/DialogContentText';
 import DialogTitle         from '@material-ui/core/DialogTitle';
 import { useMutation }     from '@apollo/client';
-import { UPDATE_BUDGET, GET_BUDGET } from '../../queries_and_mutations/queries';
+import { UPDATE_BUDGET, GET_PROCEDURE } from '../../queries_and_mutations/queries';
 
 export default (props) => {
-  const { budget } = props
+  const { procedure } = props
 
   const [open, setOpen]         = useState(false)
   const [pristine, setPristine] = useState(true)
-  const [proceedingNumber, setProceedingNumber] = useState(budget.proceedingNumber)
+  const [proceedingNumber, setProceedingNumber] = useState(procedure.proceedingNumber)
 
   const handleClose = () => {
     setOpen(false)
@@ -48,8 +48,8 @@ export default (props) => {
         },
         refetchQueries: [
           {
-            query: GET_BUDGET,
-            variables: { id: budget.id } 
+            query: GET_PROCEDURE,
+            variables: { id: procedure.id } 
           },
         ],
         awaitRefetchQueries: true
@@ -59,15 +59,15 @@ export default (props) => {
   const handleSave = () => {
     updateBudget({
       variables: {
-        id: budget.id,
+        id: procedure.budget.id,
         proceedingNumber: proceedingNumber
       }
     })
   }
 
   useEffect(() => {
-    setProceedingNumber(budget.proceedingNumber)
-  }, [budget.proceedingNumber])
+    setProceedingNumber(procedure.budget.proceedingNumber)
+  }, [procedure.budget.proceedingNumber])
 
   return(
     <Grid container item xs={12} alignItems='center'>
@@ -79,7 +79,7 @@ export default (props) => {
           <Grid container alignItems="center" justifyContent='flex-start' >
             <Typography noWrap align='left' style={{ paddingRight: "10px", fontWeight: 600 }}>
               {
-                (budget && budget.proceedingNumber) || 'Agregar No. de Expediente'
+                (procedure && procedure.budget.proceedingNumber) || 'Agregar No. de Expediente'
               }
             </Typography>
           </Grid>

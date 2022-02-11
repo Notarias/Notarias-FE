@@ -95,7 +95,7 @@ const BudgetSelectorList = (props) => {
   return (
     <>
       <Typography className={classes.title} color="textSecondary" gutterBottom>
-        Selecciona un trámite
+        Selecciona un Presupuesto
       </Typography>
       <TextField
         id="outlined-basic"

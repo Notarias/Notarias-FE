@@ -21,7 +21,7 @@ const PaymentsDashboard = (props) => {
   }
 
   const  { data } = useQuery(
-    GET_PAYMENTS, { variables: variables, fetchPolicy: "cache-and-network" }
+    GET_PAYMENTS, { variables: variables, fetchPolicy: "no-cache" }
   );
   
   useEffect( () =>{

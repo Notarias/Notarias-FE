@@ -64,7 +64,6 @@ const ProcedureSelectorList = (props) => {
 
   const selectItem = (event, index, name) => {
     setSelectedProcedure({id: index, name: name});
-    setSelectedBudget(0);
   }
 
   const proceduresRows = (searchList) => {

@@ -23,7 +23,7 @@ const BudgetsDashboard = (props) => {
   }
 
   const  { data } = useQuery(
-    GET_BUDGETS, { variables: variables, fetchPolicy: "cache-and-network" }
+    GET_BUDGETS, { variables: variables, fetchPolicy: "no-cache" }
   );
 
   useEffect( () =>{

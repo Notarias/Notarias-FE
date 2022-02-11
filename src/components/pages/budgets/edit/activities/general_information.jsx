@@ -7,7 +7,7 @@ import Button               from '@material-ui/core/Button';
 import Print                from '@material-ui/icons/Print';
 import VisibilityIcon       from '@material-ui/icons/Visibility';
 import Tooltip              from '@material-ui/core/Tooltip';
-import OpenInNewIcon from '@material-ui/icons/OpenInNew';
+import OpenInNewIcon        from '@material-ui/icons/OpenInNew';
 import { Link }             from 'react-router-dom';
 import AsigneesList         from '../asignees_list';
 import Reporter             from '../reporter';
@@ -91,7 +91,7 @@ export default (props) => {
           <Typography align='left'>Cliente:</Typography>
         </Grid>
         <Grid item xs={9}>
-          <Typography noWrap align='left' style={{ padding: '10px' }}>
+          <Typography noWrap align='left' style={{ padding: '10px', textTransform: 'uppercase' }}>
             <strong>{ budget && budget.client.firstName } { budget && budget.client.lastName }</strong>
           </Typography>
         </Grid>
@@ -139,7 +139,7 @@ export default (props) => {
                   </Grid>
                 </Button>
               ) : (
-                <Typography noWrap align='left' style={{ padding: '10px' }}>
+                <Typography noWrap align='left' style={{ padding: '10px', textTransform: 'uppercase' }}>
                   <strong>{ budget && budget.proceduresTemplate.name }</strong>
                 </Typography>
               )

@@ -23,7 +23,7 @@ const ProceduresDashboard = (props) => {
   }   
 
   const  { data } = useQuery(
-    GET_PROCEDURES, { variables: variables, fetchPolicy: "cache-and-network" }
+    GET_PROCEDURES, { variables: variables, fetchPolicy: "no-cache" }
   );
   
   useEffect( () =>{
