@@ -66,7 +66,7 @@ export default (props) => {
         <DeleteForeverIcon/>
       </IconButton>
       <Dialog open={dialogOpen}>
-        <DialogTitle id="confirmation-dialog-title">Phone Ringtone</DialogTitle>
+        <DialogTitle id="confirmation-dialog-title">Confirmación</DialogTitle>
         <DialogContent>
           <DialogContentText>
             ¿Está seguro que desea borrar este campo de la lista de afectados por el impuesto?
