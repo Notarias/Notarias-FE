@@ -1,4 +1,4 @@
-import React                                          from 'react';
+import React, { useState, useEffect }                 from 'react';
 import Grid                                           from '@material-ui/core/Grid';
 import TextField                                      from '@material-ui/core/TextField';
 import Button                                         from '@material-ui/core/Button';
@@ -29,16 +29,16 @@ import client                                         from '../../../../../apoll
 const Field = (props) => {
 
   const { classes, id, currentTab, removeFromList } = props
-  const [open, setOpen] = React.useState(false);
-  const [openB, setOpenB] = React.useState(false);
-  const [openDialog, setOpenDialog] = React.useState(false);
-  const [editing, setEditing] = React.useState(true);
-  const [name, setName] = React.useState(props.name)
-  const [categories, setCategories] = React.useState(props.categories);
-  const [active, setActive] = React.useState(props.active || false);
-  const [error, setError] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [openB, setOpenB] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [editing, setEditing] = useState(true);
+  const [name, setName] = useState(props.name)
+  const [categories, setCategories] = useState(props.categories);
+  const [active, setActive] = useState(props.active || false);
+  const [error, setError] = useState(false);
   const inputsList = ["name"]
-  const [categoriesToSave, setCategoriesToSave] = React.useState(props.categories || [])
+  const [categoriesToSave, setCategoriesToSave] = useState(props.categories || [])
 
 
   const [updateBudgetingTemplateTabFieldMutation] =
@@ -90,7 +90,7 @@ const Field = (props) => {
     setError(errorsList) 
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     setCategories(props.categories)
   }, [props.categories])
 
@@ -145,7 +145,7 @@ const Field = (props) => {
     )
 
   const deleteFieldClick = () => {
-    removeFromList(props.arrayIndex, destroyBudgetingTemplateTabFieldMutation, { variables: { id: id } }, id )
+    destroyBudgetingTemplateTabFieldMutation({ variables: { id: id }})
     setOpen(false);
   }
 

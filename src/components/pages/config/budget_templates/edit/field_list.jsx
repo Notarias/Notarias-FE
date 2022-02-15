@@ -13,9 +13,6 @@ const FieldList = (props) => {
     GET_BUDGETING_TEMPLATE_TAB_FIELDS,
     {
       variables: { "id": currentTab.id }
-    },
-    {
-      fetchPolicy: 'cache-and-network'
     }
   );
 

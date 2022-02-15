@@ -152,7 +152,7 @@ const TaxField = (props) => {
     )
 
   const deleteFieldClick = () => {
-    removeFromList(props.arrayIndex, destroyBudgetingTemplateTabFieldMutation, { variables: { id: field.id } }, field.id )
+    destroyBudgetingTemplateTabFieldMutation({ variables: { id: field.id } })
     setOpen(false);
   }
 

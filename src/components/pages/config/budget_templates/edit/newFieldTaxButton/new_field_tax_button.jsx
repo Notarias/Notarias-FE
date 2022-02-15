@@ -17,7 +17,7 @@ import { GLOBAL_MESSAGE }                     from '../../../../../../resolvers/
 import { GET_BUDGETING_TEMPLATE_TAB_FIELDS }  from '../../queries_and_mutations/queries'
 import client                                 from '../../../../../../apollo';
 
-const NewFliedTaxButton = (props) => {
+const NewFieldTaxButton = (props) => {
   const { classes, templateData, currentTab } = props
 
   const [open, setOpen] = React.useState(false);
@@ -97,8 +97,8 @@ const NewFliedTaxButton = (props) => {
     }
   },[operator.length, taxableSelector.length, (fieldName && fieldName.length), (defaultValue && defaultValue.length), taxedFieldsIds.length])
 
-  return(
-    <Grid container item justifyContent="flex-start" alignItems="center" className={ classes.addTaxFieldButton } xs={6}>
+  const renderNewFieldTaxButton = () => {
+    return(
       <Button
         variant="contained"
         size="small"
@@ -107,58 +107,68 @@ const NewFliedTaxButton = (props) => {
       >
         Impuestos  <AddIcon className={ classes.addIconMargin }/>
       </Button>
-      <Dialog open={open} onClose={ handleClose }>
-        <DialogTitle 
-          id="simple-dialog-title"
-          className={ classes.tittleDialogWidth }
-        >
-          Rellena los campos para continuar
-        </DialogTitle >
-        <Divider/>
-        <DialogContent>
-          <Grid container item xs={12} justifyContent="center" alignItems="center">
-            <TextField
-              onChange={ changeFieldName }
-              size="small"
-              id="tax-field-name"
-              label="Nombre del campo"
-              className={classes.taxFieldName}
-              fullWidth
-              required
-              variant="outlined"
+    )
+  }
+
+  return(
+    <>
+      <Grid container item justifyContent="flex-start" alignItems="center" className={ classes.addFieldButton } xs={6} >
+        { currentTab && renderNewFieldTaxButton() }
+      </Grid>
+      <Grid container item justifyContent="flex-start" alignItems="center" className={ classes.addTaxFieldButton } xs={6}>
+        <Dialog open={open} onClose={ handleClose }>
+          <DialogTitle 
+            id="simple-dialog-title"
+            className={ classes.tittleDialogWidth }
+          >
+            Rellena los campos para continuar
+          </DialogTitle >
+          <Divider/>
+          <DialogContent>
+            <Grid container item xs={12} justifyContent="center" alignItems="center">
+              <TextField
+                onChange={ changeFieldName }
+                size="small"
+                id="tax-field-name"
+                label="Nombre del campo"
+                className={classes.taxFieldName}
+                fullWidth
+                required
+                variant="outlined"
+              />
+            </Grid>
+            <FieldSearch
+              templateData={templateData}
+              defaultValue={defaultValue}
+              setDefaultValue={setDefaultValue}
+              setTaxedFieldsIds={setTaxedFieldsIds}
+              setOperator={setOperator}
+              operator={operator}
+              taxableSelector={taxableSelector}
+              setTaxableSelector={setTaxableSelector}
+              setPristine={setPristine}
             />
-          </Grid>
-          <FieldSearch
-            templateData={templateData}
-            defaultValue={defaultValue}
-            setDefaultValue={setDefaultValue}
-            setTaxedFieldsIds={setTaxedFieldsIds}
-            setOperator={setOperator}
-            operator={operator}
-            taxableSelector={taxableSelector}
-            setTaxableSelector={setTaxableSelector}
-            setPristine={setPristine}
-          />
-         </DialogContent>
-        <Divider/>
-        <DialogActions>
-          <Grid container direction="row" justifyContent="flex-end">
-            <Button onClick={ handleClose }>
-              Cancelar
-            </Button>
-            <Button 
-              color="primary"
-              variant="contained"
-              onClick={addNewTaxField}
-              disabled={!allOptionsMarked || pristine || createBudgetingTemplateTabTaxFieldLoading}
-            >
-              Crear campo
-            </Button>
-          </Grid>
-        </DialogActions>
-      </Dialog>
-    </Grid>
+          </DialogContent>
+          <Divider/>
+          <DialogActions>
+            <Grid container direction="row" justifyContent="flex-end">
+              <Button onClick={ handleClose }>
+                Cancelar
+              </Button>
+              <Button 
+                color="primary"
+                variant="contained"
+                onClick={addNewTaxField}
+                disabled={!allOptionsMarked || pristine || createBudgetingTemplateTabTaxFieldLoading}
+              >
+                Crear campo
+              </Button>
+            </Grid>
+          </DialogActions>
+        </Dialog>
+      </Grid>
+    </>
   )
 }
 
-export default withStyles(styles)(NewFliedTaxButton);
+export default withStyles(styles)(NewFieldTaxButton);

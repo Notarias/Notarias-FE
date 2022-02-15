@@ -6,15 +6,15 @@ import Grid                                 from '@material-ui/core/Grid';
 import { styles }                           from './styles';
 import { withStyles }                       from '@material-ui/core/styles';
 import CircularProgress                     from '@material-ui/core/CircularProgress';
-import TemplateTitle                       from './edit/template_title';
+import TemplateTitle                        from './edit/template_title';
 import { useQuery }                         from '@apollo/client';
 import { GET_BUDGETING_TEMPLATE }           from './queries_and_mutations/queries'
 import ActiveTemplateButton                 from './edit/active_template_button';
-import ProcedureTemplateLinkButton           from './edit/procedure_template_link_button';
+import ProcedureTemplateLinkButton          from './edit/procedure_template_link_button';
 import Tabs                                 from './edit/tabs';
 import NewFieldButton                       from './edit/new_field_button';
 import RenderFields                         from './edit/render_fields';
-import NewFliedTaxButton    from './edit/newFieldTaxButton/new_field_tax_button'
+import NewFieldTaxButton                    from './edit/newFieldTaxButton/new_field_tax_button'
 
 
 const BREADCRUMBS = [
@@ -64,9 +64,10 @@ const Edit = (props) => {
           <Divider/>
           <Grid container direction="row">
             <NewFieldButton
+              templateData={data ? data.budgetingTemplate.fields : [] }
               currentTab={ currentTab }
             />
-            <NewFliedTaxButton
+            <NewFieldTaxButton
               templateData={data ? data.budgetingTemplate.fields : [] }
               currentTab={ currentTab }
             />
