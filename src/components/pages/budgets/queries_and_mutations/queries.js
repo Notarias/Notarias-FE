@@ -447,6 +447,32 @@ export const UPDATE_BUDGET_FIELD_VALUE = gql`
   }
 `
 
+export const UPDATE_BUDGET_FIELD_VALUE_ACTIVE = gql`
+  mutation updateBudgetFieldValue(
+    $id: ID!,
+    $active: Boolean
+  ){
+    updateBudgetFieldValue(input:{
+      id: $id,
+      active: $active
+      }
+    ){
+      budgetFieldValue{
+        budgetId
+        budgetingTemplateFieldId
+        field{
+          name
+          id
+          budgetingTemplateTabId
+        }
+        id
+        value
+        active
+      }
+    }
+  }
+`
+
 export const CREATE_BUDGET_FIELD_VALUE = gql`
   mutation createBudgetFieldValue(
     $budgetingTemplateFieldId: ID,
