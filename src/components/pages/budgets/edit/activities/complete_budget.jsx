@@ -24,23 +24,6 @@ const CompleteBudget = (props) => {
   const [completedDate] = useState(new Date());
   const [errors, setErrorsList] = useState();
 
-  /* const formatDate = (dateObject, separator='/') => {
-    let newDate = new Date(dateObject);
-    let date = newDate.getDate();
-    let month = newDate.getMonth();
-    let year = newDate.getFullYear();
-  
-    return (`${date < 10 ? `0${date}` : `${date}`}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${year}`)
-  }
-  
-  const formatTime = (timeObject, separator=':') => {
-    let newDate = new Date(timeObject);
-    let hours = newDate.getHours();
-    let minutes = newDate.getMinutes();
-  
-    return (`${hours < 10 ? `0${hours}` : `${hours}`}${separator}${minutes < 10 ? `0${minutes}` : `${minutes}`}`)
-  } */
-
   const [updateBudget, {loading: updateBudgetLoading}] =
   useMutation(
     UPDATE_BUDGET,
