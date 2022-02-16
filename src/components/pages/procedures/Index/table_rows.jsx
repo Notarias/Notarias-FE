@@ -7,6 +7,7 @@ import CreateIcon                     from '@material-ui/icons/Create';
 import MenuItem                       from '@material-ui/core/MenuItem';
 import ListItemIcon                   from '@material-ui/core/ListItemIcon';
 import ListItemText                   from '@material-ui/core/ListItemText';
+import Typography                     from '@material-ui/core/Typography';
 import { Link }                       from 'react-router-dom';
 import { withStyles }                 from '@material-ui/core/styles';
 import { styles }                     from '../styles';
@@ -46,7 +47,24 @@ const TableRows = (props) => {
       <TableCell align="center" className={classes.tablecellWidth}>{ procedure.proceduresTemplate.name }</TableCell>
       <TableCell align="center" className={classes.tablecellWidth}>{ procedure.budgetingTemplate.name }</TableCell>
       <TableCell align="center" className={classes.tablecellWidth}>{ procedure.client.fullName }</TableCell>
-      <TableCell align="center" className={classes.tablecellWidth}>{ <Avatar src={procedure.asignee && procedure.asignee.avatarThumbUrl}/> }</TableCell>
+      <TableCell align="left" className={classes.tablecellWidth}>
+        {
+          procedure.asignee ?
+          <Grid item container xs direction="row" spacing={2}>
+            <Grid item>
+              <Avatar src={procedure.asignee && procedure.asignee.avatarThumbUrl}/>
+            </Grid>
+            <Grid item xs>
+              <Typography variant="body2" >{procedure.asignee.firstName}</Typography>
+              <Typography variant="body2" >{procedure.asignee.lastName}</Typography>
+            </Grid>
+          </Grid>
+        :
+          <Typography>
+            Sin Usuario Asignado
+          </Typography>
+        }
+      </TableCell>
       <TableCell align="center" className={classes.tablecellWidth}>{ buildDate(procedure.createdAt) }</TableCell>
       <TableCell align="center" className={classes.tablecellWidth}>{ estatus(procedure) }</TableCell>
       <TableCell align="center" className={classes.tablecellWidth}>

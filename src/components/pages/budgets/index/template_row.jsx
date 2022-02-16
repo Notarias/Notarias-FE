@@ -7,8 +7,9 @@ import CreateIcon                     from '@material-ui/icons/Create';
 import MenuItem                       from '@material-ui/core/MenuItem';
 import ListItemIcon                   from '@material-ui/core/ListItemIcon';
 import ListItemText                   from '@material-ui/core/ListItemText';
+import Chip                           from '@material-ui/core/Chip';
 import { Link }                       from 'react-router-dom';
-import MaterialLink               from '@material-ui/core/Link';
+import MaterialLink                   from '@material-ui/core/Link';
 import NumberFormat                   from 'react-number-format';
 import { withStyles }                 from '@material-ui/core/styles';
 import { styles }                     from '../styles';
@@ -20,6 +21,14 @@ import { BASE_URI }                   from '../../../../apollo'
 const TemplateRow = (props) => {
 
   const {budget, classes} = props
+
+  const estatus = (budget) => {
+    if (budget.completedAt) {
+      return <Chip color="primary" label="Completado" />
+    } else {
+      return <Chip color="secondary" label="En Proceso" />
+    }
+  }
 
   return(
     <TableRow>
@@ -60,6 +69,7 @@ const TemplateRow = (props) => {
           />
         </Typography>
       </TableCell>
+      <TableCell align="center" className={classes.tablecellWidth}>{ estatus(budget) }</TableCell>
       <TableCell align= "center" className={classes.tablecellWidth}>
         <Grid>
           <GenericDropdownMenu>
