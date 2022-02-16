@@ -58,6 +58,13 @@ export default (props) => {
           sort_direction={ direction }
           callback={ sortHandler }
         />
+        <SortHeader
+          text={ "Estatus" }
+          field_property={ "total_paid" }
+          current_field={ field }
+          sort_direction={ direction }
+          callback={ sortHandler }
+        />
         <TableCell align="center">Opciones</TableCell>
       </TableRow>
     </TableHead>

@@ -13,6 +13,7 @@ import ProcedureFileUploader from './procedure_file_uploader';
 import ProcedureActions      from './procedure_actions';
 import ProceedingNumber      from './proceeding_number';
 import WritingNumber         from './writing_number';
+import CompleteProcedure     from './complete_procedure';
 
  const GeneralInformation = (props) => {
 
@@ -35,6 +36,9 @@ import WritingNumber         from './writing_number';
         </Grid>
         <Grid item>
           <ProcedureFileUploader procedure={procedure}/>
+        </Grid>
+        <Grid item>
+          <CompleteProcedure procedure={procedure}/>
         </Grid>
         <Grid item>
           <ProcedureActions procedure={procedure}/>

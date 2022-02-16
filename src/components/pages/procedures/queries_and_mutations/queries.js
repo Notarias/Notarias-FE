@@ -53,7 +53,11 @@ query Procedures(
     client{ fullName }
     budgetingTemplate { name }
     proceduresTemplate { name }
-    asignee { avatarThumbUrl }
+    asignee { 
+      firstName
+      lastName
+      avatarThumbUrl
+    }
     reporter { avatarThumbUrl }
     createdAt
     updatedAt
@@ -220,6 +224,7 @@ query procedure(
     ){
       id
       serialNumber
+      completedAt
       client{
         firstName
         lastName
@@ -268,14 +273,16 @@ query procedure(
 export const UPDATE_PROCEDURE = gql`
   mutation updateProcedure(
     $id: ID!,
-    $clientId: ID
-    $asigneeId: ID
+    $clientId: ID,
+    $asigneeId: ID,
+    $completedAt: ISO8601DateTime,
   ){
     updateProcedure (
       input:{
         id: $id
         clientId: $clientId
         asigneeId: $asigneeId
+        completedAt: $completedAt
       }
     ){
       procedure {

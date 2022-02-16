@@ -17,6 +17,7 @@ import PaymentDrawer        from '../payment_drawer';
 import { BASE_URI }         from '../../../../../apollo';
 import ProceedingNumber     from './proceeding_number';
 import WritingNumber        from './writing_number';
+import CompleteBudget       from './complete_budget';
 
 export default (props) => {
 
@@ -56,6 +57,9 @@ export default (props) => {
         </Grid>
         <Grid item>
           <PaymentDrawer budget={budget}/>
+        </Grid>
+        <Grid item>
+          <CompleteBudget budget={budget}/>
         </Grid>
         <Grid item>
           <BudgetActions budget={budget}/>

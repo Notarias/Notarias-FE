@@ -13,7 +13,7 @@ import Tab                  from '@material-ui/core/Tab';
 const Activities = (props) => {
   const { procedure } = props
   const [activity, setActivity] = useState(0)
-
+  
   const  renderActivitiesMenu = () => {
     switch (activity) {
       case 0 :
