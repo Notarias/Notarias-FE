@@ -93,8 +93,8 @@ const NewAppointmentDialog = (props) => {
     createAppointment( {
       variables: {
         assignedIds: array,
-        initDate: `${initDate}T${initTime}:00`,
-        endDate: `${endDate}T${endTime}:00`,
+        initDate: `${initDate}T${initTime}:00-0500`,
+        endDate: `${endDate}T${endTime}:00-0500`,
         place: place,
         extraData: extraData
       }
