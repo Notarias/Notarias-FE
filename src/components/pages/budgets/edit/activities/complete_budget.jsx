@@ -61,7 +61,10 @@ const CompleteBudget = (props) => {
   }
 
   const terminateBudget = () => {
-    updateBudget({ variables: { id: budget.id, completedAt: completedDate}})
+    budget.completedAt ?
+      updateBudget({ variables: { id: budget.id, completedAt: null }})
+    :
+      updateBudget({ variables: { id: budget.id, completedAt: completedDate }})
   }
   console.log(budget)
   return(
@@ -75,13 +78,13 @@ const CompleteBudget = (props) => {
             Cornfirmacion Completado
           </Typography>
         </DialogTitle>
-        <Divider/>
+        <Divider variant="middle" />
         <DialogContent>
           <DialogContentText>
-            Seguro que desa marcar como completado este presupuesto.
+            { `Seguro que desea ${budget.completedAt ? "desmarcar" : "marcar"} como completado este presupuesto.` }
           </DialogContentText>
         </DialogContent>
-        <Divider/>
+        <Divider variant="middle" />
         <DialogActions>
           <Button
             variant="contained"

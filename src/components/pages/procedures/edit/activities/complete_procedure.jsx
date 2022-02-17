@@ -46,7 +46,10 @@ const CompleteProcedure = (props) => {
   }
 
   const terminateProcedure = () => {
-    updateProcedure({ variables: { id: procedure.id, completedAt: completedDate}})
+    procedure.completedAt ?
+      updateProcedure({ variables: { id: procedure.id, completedAt: null }})
+    :
+      updateProcedure({ variables: { id: procedure.id, completedAt: completedDate }})
   }
   
   return(
@@ -60,13 +63,13 @@ const CompleteProcedure = (props) => {
             Cornfirmacion Completado
           </Typography>
         </DialogTitle>
-        <Divider/>
+        <Divider variant="middle" />
         <DialogContent>
           <DialogContentText>
-            Seguro que desa marcar como completado este tramite.
+            { `Seguro que desea ${procedure.completedAt ? "desmarcar" : "marcar"} como completado este tramite.` }
           </DialogContentText>
         </DialogContent>
-        <Divider/>
+        <Divider variant="middle" />
         <DialogActions>
           <Button
             variant="contained"
