@@ -23,8 +23,8 @@ const AppointmentsIndex = (props) => {
   const [searchValue  ]     = useState("");
   const [page]              = useState(1);
   const [per]               = useState(50);
-  const [date, setDate]                 = useState(new Date());
-  const [appointmentsList, setAppointmentsList]   = useState([]);
+  const [date, setDate]     = useState(new Date());
+  const [appointmentsList, setAppointmentsList] = useState([]);
   const [newDialog, setNewDialog] = useState(false);
 
   let variables = {
@@ -37,7 +37,7 @@ const AppointmentsIndex = (props) => {
   };
 
   const { data, refetch } = useQuery(
-    GET_APPOINTMENTS, { variables: variables, fetchPolicy: "cache-and-network" }
+    GET_APPOINTMENTS, { variables: variables }
   );
 
   useEffect(() => {
@@ -85,7 +85,7 @@ const AppointmentsIndex = (props) => {
               </Grid>
             </Grid>
             <Dialog onClose={closeNewDialog} aria-labelledby="simple-dialog-title" open={newDialog}>
-              <NewAppointmentDialog closeNewDialog={closeNewDialog} variables={variables}/>
+              <NewAppointmentDialog closeNewDialog={closeNewDialog} getAppointmensVariables={variables}/>
             </Dialog>
           </Paper>
         </Grid>
@@ -94,7 +94,7 @@ const AppointmentsIndex = (props) => {
           <Grid className={classes.windowScrollEventList}>
             {appointmentsList && appointmentsList.length > 0 ?
               appointmentsList.map(appointment  => {
-                return(<EventList key={`dashboard-appointment-${appointment.id}`} appointment={appointment}/>)
+                return(<EventList key={`dashboard-appointment-${appointment.id}`} appointment={appointment} getAppointmensVariables={variables} />)
               })
             :
               <Paper style={{ padding: "30px" }}>
