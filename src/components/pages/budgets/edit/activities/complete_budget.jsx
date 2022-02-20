@@ -76,18 +76,11 @@ const CompleteBudget = (props) => {
         </IconButton>
       </Tooltip>
       <Dialog open={dialog} onClose={openDialog}>
-        <DialogTitle>
-          <Typography>
-            Cornfirmacion Completado
-          </Typography>
-        </DialogTitle>
-        <Divider variant="middle" />
         <DialogContent>
           <DialogContentText>
-            { `Seguro que desea ${budget.completedAt ? "desmarcar" : "marcar"} como completado este presupuesto.` }
+            { `De click en ACEPTAR para ${budget.completedAt ? "desmarcar" : "marcar"} este presupuesto como completado.` }
           </DialogContentText>
         </DialogContent>
-        <Divider variant="middle" />
         <DialogActions>
           <Button
             variant="contained"
