@@ -58,15 +58,9 @@ const CompleteProcedure = (props) => {
         <DoneAllIcon/>
       </IconButton>
       <Dialog open={dialog} onClose={openDialog}>
-        <DialogTitle>
-          <Typography>
-            Cornfirmacion Completado
-          </Typography>
-        </DialogTitle>
-        <Divider variant="middle" />
         <DialogContent>
           <DialogContentText>
-            { `Seguro que desea ${procedure.completedAt ? "desmarcar" : "marcar"} como completado este tramite.` }
+            { `De click en ACEPTAR para ${procedure.completedAt ? "desmarcar" : "marcar"} este presupuesto como completado.` }
           </DialogContentText>
         </DialogContent>
         <Divider variant="middle" />
