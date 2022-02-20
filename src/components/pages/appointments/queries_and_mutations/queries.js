@@ -3,8 +3,8 @@ import { gql } from '@apollo/client';
 export const CREATE_APPOINTMENT = gql`
   mutation createAppointment(
     $assignedIds: [ID!]!,
-    $initDate: ISO8601DateTime!,
-    $endDate: ISO8601DateTime!,
+    $initDate: String!,
+    $endDate: String!,
     $place: String!,
     $extraData: String!
   ) {
@@ -36,8 +36,8 @@ export const UPDATE_APPOINTMENT = gql`
   mutation updateAppointment(
     $id: ID!,
     $assignedIds: [ID!]!,
-    $initDate: ISO8601DateTime,
-    $endDate: ISO8601DateTime,
+    $initDate: String!,
+    $endDate: String!,
     $place: String,
     $extraData: String
   ) {

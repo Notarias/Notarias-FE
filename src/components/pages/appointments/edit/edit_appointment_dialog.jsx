@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { styles } from '../styles';
 import Grid from '@material-ui/core/Grid';
-import 'react-calendar/dist/Calendar.css';
 import Button from '@material-ui/core/Button';
 import Avatar from '@material-ui/core/Avatar';
 import TextField from '@material-ui/core/TextField';
@@ -18,6 +17,7 @@ import EventNoteIcon from '@material-ui/icons/EventNote';
 import { useMutation } from '@apollo/client';
 import { GET_APPOINTMENTS } from '../queries_and_mutations/queries';
 import { UPDATE_APPOINTMENT } from '../queries_and_mutations/queries';
+import 'react-calendar/dist/Calendar.css';
 
 const fixDate = (dateObject, separator='-') => {
   let newDate = new Date(dateObject);
@@ -42,10 +42,19 @@ const formatTime = (timeObject, separator=':') => {
   let minutes = newDate.getMinutes();
 
   return (`${hours < 10 ? `0${hours}` : `${hours}`}${separator}${minutes < 10 ? `0${minutes}` : `${minutes}`}`)
-}   
+}
+
+const formatDateTime = (dateObject, timeObject) => {
+  let newDate = new Date(dateObject);
+  let date = newDate.getDate() + 1;
+  let month = newDate.getMonth() + 1;
+  let year = newDate.getFullYear();
+
+  return (`${month < 10 ? `0${month}` : `${month}`} ${date < 10 ? `0${date}` : `${date}`} ${year} ${timeObject}:00`)
+}
 
 const EditAppointmentDialog = (props) => {
-  const { classes, closeEditDialog, appointment, variables } = props
+  const { classes, closeEditDialog, appointment, getAppointmensVariables } = props
   const [initDate, setInitDate] = useState(fixDate(appointment.initDate));
   const [initTime, setInitTime] = useState(formatTime(appointment.initDate));
   const [endDate, setEndDate] = useState(fixDate(appointment.endDate));
@@ -70,7 +79,7 @@ const EditAppointmentDialog = (props) => {
       refetchQueries: [
         {
           query: GET_APPOINTMENTS,
-          variables: variables
+          variables: getAppointmensVariables
         },
       ],
       awaitRefetchQueries: true
@@ -82,8 +91,8 @@ const EditAppointmentDialog = (props) => {
       variables: {
         id: appointment.id,
         assignedIds: selectedIds,
-        initDate: `${initDate}T${initTime}:00`,
-        endDate: `${endDate}T${endTime}:00`,
+        initDate: (new Date(formatDateTime(initDate, initTime))).toUTCString(),
+        endDate: (new Date(formatDateTime(endDate, endTime))).toUTCString(),
         place: place,
         extraData: extraData
       }
@@ -96,7 +105,7 @@ const EditAppointmentDialog = (props) => {
 
   const initTimeChange = (event) => {
     setInitTime(event.target.value)
-  }                                 
+  }
 
   const endDateChange = (event) => {
     setEndDate(event.target.value)
@@ -104,7 +113,7 @@ const EditAppointmentDialog = (props) => {
 
   const endTimeChange = (event) => {
     setEndTime(event.target.value)
-  }                                 
+  }
 
   const placeChange = (event) => {
     setPlace(event.target.value)

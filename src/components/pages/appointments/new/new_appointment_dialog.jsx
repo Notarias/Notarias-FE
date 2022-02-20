@@ -44,9 +44,18 @@ const formatTime = (timeObject, separator=':') => {
   return (`${hours < 10 ? `0${hours}` : `${hours}`}${separator}${minutes < 10 ? `0${minutes}` : `${minutes}`}`)
 }
 
+const formatDateTime = (dateObject, timeObject) => {
+  let newDate = new Date(dateObject);
+  let date = newDate.getDate() + 1;
+  let month = newDate.getMonth() + 1;
+  let year = newDate.getFullYear();
+
+  return (`${month < 10 ? `0${month}` : `${month}`} ${date < 10 ? `0${date}` : `${date}`} ${year} ${timeObject}:00`)
+}
+
 const NewAppointmentDialog = (props) => {
 
-  const { classes, closeNewDialog, variables } = props
+  const { classes, closeNewDialog, getAppointmensVariables } = props
   //const [errors, setErrors] = useState();
   //const [pristine, setPristine] = useState(true);
   const [initDate, setInitDate] = useState(fixDate(new Date()));
@@ -62,21 +71,14 @@ const NewAppointmentDialog = (props) => {
   useMutation(
     CREATE_APPOINTMENT,
     {
-      /* onError(error) {
-        let errorsHash = {}
-        error.graphQLErrors.map((error) => {
-          errorsHash[error.extensions.attribute] = error.message
-        }) 
-        setErrors(errorsHash)
-        setPristine(true)
-      }, */
+      
       onCompleted(cacheData) {
         closeNewDialog();
       },
       refetchQueries: [
         {
           query: GET_APPOINTMENTS,
-          variables: variables
+          variables: getAppointmensVariables
         },
       ],
       awaitRefetchQueries: true
@@ -89,12 +91,12 @@ const NewAppointmentDialog = (props) => {
     selecteds.map((user) => {
       return(array.push(user.id))
     })
-
+  
     createAppointment( {
       variables: {
         assignedIds: array,
-        initDate: `${initDate}T${initTime}:00`,
-        endDate: `${endDate}T${endTime}:00`,
+        initDate: (new Date(formatDateTime(initDate, initTime))).toUTCString(),
+        endDate: (new Date(formatDateTime(endDate, endTime))).toUTCString(),
         place: place,
         extraData: extraData
       }
