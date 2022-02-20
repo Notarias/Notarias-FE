@@ -42,7 +42,8 @@ export default (props) => {
         },
         sortDirection: sortDirection,
         sortField: sortField,
-      }
+      },
+      fetchPolicy: 'no-cache'
     }
   );
 

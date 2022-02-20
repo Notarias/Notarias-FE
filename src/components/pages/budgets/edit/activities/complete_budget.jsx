@@ -9,6 +9,7 @@ import DialogActions             from '@material-ui/core/DialogActions';
 import Divider                   from '@material-ui/core/Divider';
 import Button                    from '@material-ui/core/Button';
 import Typography                from '@material-ui/core/Typography';
+import Tooltip                   from '@material-ui/core/Tooltip';
 import { useMutation }           from '@apollo/client';
 import { UPDATE_BUDGET }         from '../../queries_and_mutations/queries';
 import { GET_BUDGET }            from '../../queries_and_mutations/queries';
@@ -69,9 +70,11 @@ const CompleteBudget = (props) => {
   console.log(budget)
   return(
     <>
-      <IconButton onClick={openDialog} style={budget.completedAt ? { color: green[500] } : {  }} >
-        <DoneAllIcon/>
-      </IconButton>
+      <Tooltip title={budget.completedAt ? "Desmarcar Completado" : "Marcar Completado"}>
+        <IconButton onClick={openDialog} style={budget.completedAt ? { color: green[500] } : {  }} >
+          <DoneAllIcon/>
+        </IconButton>
+      </Tooltip>
       <Dialog open={dialog} onClose={openDialog}>
         <DialogTitle>
           <Typography>
