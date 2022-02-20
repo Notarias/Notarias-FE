@@ -23,7 +23,7 @@
     "graphql-ruby-client": "^1.7.9",
     "graphql-tag": "^2.12.6",
     "prop-types": "^15.7.2",
-    "react": "^16.8.6",
+    "react": "16.13",
     "react-addons-update": "^15.6.3",
     "react-calendar": "^3.5.0",
     "react-dom": "^16.8.6",

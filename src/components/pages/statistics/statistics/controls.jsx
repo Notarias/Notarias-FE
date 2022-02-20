@@ -5,9 +5,9 @@ import Typography                   from '@material-ui/core/Typography';
 import Divider                      from '@material-ui/core/Divider';
 
 const formatDate = (dateObject) => {
-  let date = dateObject.getDate();
-  let month = dateObject.getMonth() + 1;
-  let year = dateObject.getFullYear();
+  let date = dateObject.getUTCDate();
+  let month = dateObject.getUTCMonth() + 1;
+  let year = dateObject.getUTCFullYear();
 
   date = date < 10 ? `0${date}` : `${date}`
   month = month < 10 ? `0${month}` : `${month}`
@@ -18,16 +18,18 @@ const formatDate = (dateObject) => {
 }
 
 export default (props) => {
-  const { initDate, endDate, setInitDate, setEndDate } = props
+  const { initDate, endDate, changeStartDate, changeEndDate } = props
+
+  console.log(initDate, "----", formatDate(initDate))
 
   return(
     <>
       <Grid item container direction='column'>
         <Grid item xs style={{ paddingTop: '30px' }}>
-          <TextField type='date' fullWidth label="Fecha Inicial" value={formatDate(initDate)}/>
+          <TextField type='date' fullWidth label="Fecha Inicial" onChange={changeStartDate} value={formatDate(initDate)}/>
         </Grid>
         <Grid item xs style={{ paddingTop: '30px' }}>
-          <TextField type='date' fullWidth label="Fecha Final" value={formatDate(endDate)}/>
+          <TextField type='date' fullWidth label="Fecha Final" onChange={changeEndDate} value={formatDate(endDate)}/>
         </Grid>
       </Grid>
     </>
