@@ -1,4 +1,4 @@
-import React, { useState, Component }     from 'react';
+import React, { Component }     from 'react';
 import { Redirect }             from 'react-router-dom';
 import Drawer                   from '@material-ui/core/Drawer';
 import Divider                  from '@material-ui/core/Divider';
@@ -6,7 +6,6 @@ import List                     from '@material-ui/core/List';
 import withStyles               from '@material-ui/core/styles/withStyles';
 import Collapse                 from '@material-ui/core/Collapse';
 import SettingsApplicationsIcon from '@material-ui/icons/SettingsApplications';
-import ExitToAppIcon            from '@material-ui/icons/ExitToApp';
 import ListItem                 from '@material-ui/core/ListItem';
 import ListItemIcon             from '@material-ui/core/ListItemIcon';
 import ListItemText             from '@material-ui/core/ListItemText';
@@ -19,6 +18,7 @@ import classNames               from 'classnames';
 import { styles }               from './navigation_menu_styles';
 import MenuLink                 from './menu_link'
 import ProfileLink              from './profile_link'
+import SessionsDestroy          from './../pages/sessions/destroy';
 
 import ReportsIcon              from './../../icons/reportes.svg';
 import ClientsIcon              from './../../icons/CLIENTES.svg';
@@ -86,12 +86,7 @@ class NavigationMenu extends Component {
           </List>
         </Collapse>
         <Divider />
-        <ListItem button onClick={setLogOut}>
-          <ListItemIcon>
-            <ExitToAppIcon color='secondary' />
-          </ListItemIcon>
-          <ListItemText primary="Salir" />
-        </ListItem>
+        <SessionsDestroy setLogOut={setLogOut}/>
       </Drawer>
     )
   }

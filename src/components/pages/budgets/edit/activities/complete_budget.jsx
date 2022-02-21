@@ -20,7 +20,7 @@ import { green }                 from '@material-ui/core/colors';
 
 const CompleteBudget = (props) => {
 
-  const { budget } = props
+  const { budget } = props;
   const [dialog, setDialog] = useState(false);
   const [completedDate] = useState(new Date());
   const [errors, setErrorsList] = useState();
@@ -67,7 +67,7 @@ const CompleteBudget = (props) => {
     :
       updateBudget({ variables: { id: budget.id, completedAt: completedDate }})
   }
-  console.log(budget)
+
   return(
     <>
       <Tooltip title={budget.completedAt ? "Desmarcar Completado" : "Marcar Completado"}>
