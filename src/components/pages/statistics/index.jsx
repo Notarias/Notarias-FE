@@ -3,9 +3,12 @@ import Grid                         from '@material-ui/core/Grid';
 import Paper                        from '@material-ui/core/Paper';
 import Typography                   from '@material-ui/core/Typography';
 import Divider                      from '@material-ui/core/Divider';
+import CircularProgress             from '@material-ui/core/CircularProgress';
 import Breadcrumbs                  from '../../ui/breadcrumbs';
-import Graphs                       from './statistics/graphs';
-import Controls                     from './statistics/controls';
+import Graphs                       from './index/graphs';
+import Controls                     from './index/controls';
+import { useQuery }                 from '@apollo/client';
+import { STATISTICS_QUERY }         from './queries/queries';
 
 
 const BREADCRUMBS = [
@@ -33,17 +36,64 @@ const formatDate = (dateObject) => {
   month = month < 10 ? `0${month}` : `${month}`
 
   return (
-    `${date}/${getMonth(dateObject, month)}/${year}`
+    `${year}-${month}-${date}`
   )
 }
 
 
 export default (props) => {
 
-  const [initDate, setInitDate] = useState(new Date())
-  const [endDate, setEndDate] = useState(new Date())
+  const [initDate, setInitDate] = useState(formatDate(new Date()))
+  const [endDate, setEndDate] = useState(formatDate(new Date()))
+  const [timeFrame, setTimeFrame] = useState('day')
+  const [switchIncome, setSwitchIncome] = useState(true)
+  const [switchTotal, setSwitchTotal] = useState(true)
+  const [switchPaid, setSwitchPaid] = useState(true)
+  const [switchDebt, setSwitchDebt] = useState(true)
 
+  const { data, loading, refetch } = useQuery(
+    STATISTICS_QUERY,
+    {
+      variables: {
+        startDate: initDate,
+        endDate: endDate,
+        timeFrame: timeFrame
+      },
+      fetchPolicy: 'cache-and-network'
+    }
+  )
 
+  const changeInitDate = (e) => {
+    setInitDate(e.target.value)
+  }
+
+  const changeEndDate = (e) => {
+    setEndDate(e.target.value)
+  }
+
+  const changeTimeFrame = (e) => {
+    setTimeFrame(e.event.target)
+  }
+
+  const triggerFiltering = (e) => {
+    refetch()
+  }
+
+  const changeSwitchIncome = (event) => {
+    setSwitchIncome(!!event.target.checked)
+  }
+
+  const changeSwitchTotal = (event) => {
+    setSwitchTotal(!!event.target.checked)
+  }
+
+  const changeSwitchPaid = (event) => {
+    setSwitchPaid(!!event.target.checked)
+  }
+
+  const changeSwitchDebt = (event) => {
+    setSwitchDebt(!!event.target.checked)
+  }
 
   return(
     <Grid container direction='column' alignItems="stretch" justifyContent="flex-start">
@@ -63,8 +113,17 @@ export default (props) => {
                   <Controls
                     initDate={initDate}
                     endDate={endDate}
-                    setInitDate={setInitDate}
-                    setEndDate={setEndDate}/>
+                    changeInitDate={changeInitDate}
+                    changeEndDate={changeEndDate}
+                    triggerFiltering={triggerFiltering}
+                    switchIncome={switchIncome}
+                    switchTotal={switchTotal}
+                    switchPaid={switchPaid}
+                    switchDebt={switchDebt}
+                    changeSwitchIncome={changeSwitchIncome}
+                    changeSwitchTotal={changeSwitchTotal}
+                    changeSwitchPaid={changeSwitchPaid}
+                    changeSwitchDebt={changeSwitchDebt}/>
                 </Grid>
               </Grid>
             </Paper>
@@ -79,7 +138,19 @@ export default (props) => {
                 </Grid>
                 <Divider/>
                 <Grid item xs style={{ paddingTop: "30px", paddingBottom: "30px", minHeight: '700px' }}>
-                  <Graphs/>
+                  { loading && <CircularProgress/> }
+                  { !loading && !data && <Typography>Sin datos</Typography> }
+                  {
+                    !loading &&
+                    data &&
+                    data.statistics &&
+                    <Graphs
+                      data={data.statistics}
+                      switchIncome={switchIncome}
+                      switchTotal={switchTotal}
+                      switchPaid={switchPaid}
+                      switchDebt={switchDebt}/>
+                  }
                 </Grid>
               </Grid>
             </Paper>
