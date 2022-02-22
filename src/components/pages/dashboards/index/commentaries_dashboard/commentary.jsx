@@ -6,8 +6,8 @@ import Avatar                         from '@material-ui/core/Avatar';
 import Chip                           from '@material-ui/core/Chip';
 import IconButton                     from '@material-ui/core/IconButton';
 import Divider                        from '@material-ui/core/Divider';
-import LocalAtmIcon                   from '@material-ui/icons/LocalAtm';
-import AssignmentIcon                 from '@material-ui/icons/Assignment';
+import Tooltip                        from '@material-ui/core/Tooltip';
+import VisibilityIcon                 from '@material-ui/icons/Visibility';
 import Box                            from '@material-ui/core/Box';
 import CommentsDialog                 from './comments_dialog';
 import { Link }                       from 'react-router-dom';
@@ -82,19 +82,23 @@ const Commentary = (props) => {
         </Grid>
         <Grid item container xs spacing={1} justifyContent='flex-end' alignItems='center' style={{ marginRight: "20px" }}>
           <Grid item>
-            {comment.commentableType === "Budget" ?
-              <Link to={`/budgets/${comment.commentableId}/edit`}>
+            <Link to={
+              comment.commentableType === "Budget" ?
+                `/budgets/${comment.commentableId}/edit`
+              :
+                `/procedures/${comment.commentableId}/edit`}
+            >
+              <Tooltip title={
+                comment.commentableType === "Budget" ?
+                  'Ver Presupuesto'
+                :
+                  'Ver Tramite'
+              }>
                 <IconButton>
-                  <LocalAtmIcon />
+                  <VisibilityIcon />
                 </IconButton>
-              </Link>
-            :
-              <Link to={`/procedures/${comment.commentableId}/edit`}>
-                <IconButton>
-                  <AssignmentIcon />
-                </IconButton>
-              </Link>
-            }
+              </Tooltip>
+            </Link>
           </Grid>
           <Grid item>
             <Typography variant='subtitle2' color="secondary">
