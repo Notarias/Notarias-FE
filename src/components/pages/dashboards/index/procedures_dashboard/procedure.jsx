@@ -7,7 +7,10 @@ import Chip                           from '@material-ui/core/Chip';
 import Box                            from '@material-ui/core/Box';
 import IconButton                     from '@material-ui/core/IconButton';
 import Divider                        from '@material-ui/core/Divider';
+import Tooltip                        from '@material-ui/core/Tooltip';
+import VisibilityIcon                 from '@material-ui/icons/Visibility';
 import MessageIcon                    from '@material-ui/icons/Message';
+import { Link }                       from 'react-router-dom';
 import CommentsDialog                 from './comments_dialog';
 
 const Procedure = (props) => {
@@ -44,22 +47,29 @@ const Procedure = (props) => {
           </Grid>
         </Grid>
         <Grid item container xs spacing={1} justifyContent='flex-end' alignItems='center' style={{ marginRight: "20px" }}>
-          {procedure.comments.length > 0 ? 
+          {procedure.comments.length > 0 &&
             <Grid item>
-              <IconButton
-                onClick={statsCommentDialog}
-              >
-                <MessageIcon />
-              </IconButton>
+              <Tooltip title='Ver Comentarios'>
+                <IconButton onClick={statsCommentDialog}>
+                  <MessageIcon />
+                </IconButton>
+              </Tooltip>
               <CommentsDialog
                 procedure={procedure}
                 commentDialog={commentDialog}
                 statsCommentDialog={statsCommentDialog}
               />
             </Grid>
-          :
-            ""
           }
+          <Grid item>
+            <Link to={`/procedures/${procedure.id}/edit`}>
+              <Tooltip title='Ver Tramite'>
+                <IconButton>
+                  <VisibilityIcon />
+                </IconButton>
+              </Tooltip>
+            </Link>
+          </Grid>
           <Grid item>
             <Typography variant='subtitle2' color="secondary">
               No. {procedure.serialNumber.toString().padStart(10, "0")}
