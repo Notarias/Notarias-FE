@@ -17,7 +17,7 @@ const TableHeaders = (props) => {
           callback={ sortHandler }
         />
         <SortHeader
-          text="Tramite"
+          text="Trámite"
           field_property="procedures_template_name"
           current_field={ field }
           sort_direction={ direction }

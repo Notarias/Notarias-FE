@@ -9,7 +9,7 @@ import Activities from './edit/activities/activities';
 
 const BREADCRUMBS = [
   { name: "Inicio", path: "/" },
-  { name: "Tramites", path: '/procedures' },
+  { name: "Trámites", path: '/procedures' },
   { name: "Editar", path: null }
 ]
 

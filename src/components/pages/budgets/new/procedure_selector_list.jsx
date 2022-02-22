@@ -98,7 +98,7 @@ const ProcedureSelectorList = (props) => {
       </Typography>
       <TextField
         id="outlined-basic"
-        label="Buscar Tramite"
+        label="Buscar Trámite"
         onChange={searchProcedure}
         variant="outlined"
         InputProps={{

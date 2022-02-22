@@ -14,7 +14,7 @@ import AdvancedSearchProcedure from './Index/advanced_search_procedure';
 
 const BREADCRUMBS = [
   { name: "Inicio", path: "/" },
-  { name: "Tramites", path: null }
+  { name: "Trámites", path: null }
 ]
 
 const ProceduresIndex = (props) => {

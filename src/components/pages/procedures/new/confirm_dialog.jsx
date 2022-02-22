@@ -14,13 +14,13 @@ const ConfirmDialog = (props) => {
     <>
       <DialogTitle>
         <Typography>
-          Confirmar Nuevo Tramite
+          Confirmar Nuevo Trámite
         </Typography>
       </DialogTitle>
       <Divider/>
       <DialogContent>
         <DialogContentText>
-          Se esta creando un nuevo tramite. Verifique que los datos sean correctos. Presione en ACEPTAR si esta conforme.
+          Se esta creando un nuevo trámite. Verifique que los datos sean correctos. Presione en ACEPTAR si esta conforme.
         </DialogContentText>
       </DialogContent>
       <Divider/>

@@ -20,7 +20,7 @@ const SelectAsigneeDialog = (props) => {
     <>
       <DialogTitle>
         <Typography>
-          Seleccionar Responsable del Tramite
+          Seleccionar Responsable del Trámite
         </Typography>
       </DialogTitle>
       <Divider/>

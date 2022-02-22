@@ -107,7 +107,7 @@ const AdvancedSearchProcedure = (props) => {
               onChange={onChangeProcedureTemplateName}
               size="small"
               id="procedure_template_name"
-              label="Tramite"
+              label="Trámite"
               variant="outlined"
               fullWidth
               className={classes.advancedSearchImputs}

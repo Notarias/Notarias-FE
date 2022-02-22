@@ -82,7 +82,7 @@ const Payment = (props) => {
         <Grid item container alignItems="center" xs justifyContent="center">
             <Grid item>
               <Typography>
-                <strong>Tramite: </strong>
+                <strong>Trámite: </strong>
               </Typography>
               <Typography>
                 {payment.budget.proceduresTemplate.name}
