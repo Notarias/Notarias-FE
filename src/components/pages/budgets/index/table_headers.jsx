@@ -10,57 +10,57 @@ export default (props) => {
     <TableHead>
       <TableRow>
         <SortHeader
-          text={ "No. de serie" }
-          field_property={ "serial_number" }
+          text="No. de serie"
+          field_property="serial_number"
           current_field={ field }
           sort_direction={ direction }
           callback={ sortHandler }
         />
         <SortHeader
-          text={ "Presupuesto" }
-          field_property={ "budgeting_template_name" }
+          text="Presupuesto"
+          field_property="budgeting_template_name"
           current_field={ field }
           sort_direction={ direction }
           callback={ sortHandler }
         />
         <SortHeader
-          text={ "Trámite" }
-          field_property={ "procedure_template_name" }
+          text="Trámite"
+          field_property="procedure_template_name"
           current_field={ field }
           sort_direction={ direction }
           callback={ sortHandler }
         />
         <SortHeader
-          text={ "Cliente" }
-          field_property={ "client_name" }
+          text="Cliente"
+          field_property="client_name"
           current_field={ field }
           sort_direction={ direction }
           callback={ sortHandler }
         />
         <SortHeader
-          text={ "Total" }
-          field_property={ "total" }
+          text="Total"
+          field_property="total"
           current_field={ field }
           sort_direction={ direction }
           callback={ sortHandler }
         />
         <SortHeader
-          text={ "Adeudo" }
-          field_property={ "total_debt" }
+          text="Adeudo"
+          field_property="total_debt"
           current_field={ field }
           sort_direction={ direction }
           callback={ sortHandler }
         />
         <SortHeader
-          text={ "Capital" }
-          field_property={ "total_paid" }
+          text="Capital"
+          field_property="total_paid"
           current_field={ field }
           sort_direction={ direction }
           callback={ sortHandler }
         />
         <SortHeader
-          text={ "Estatus" }
-          field_property={ "total_paid" }
+          text="Estatus"
+          field_property="total_paid"
           current_field={ field }
           sort_direction={ direction }
           callback={ sortHandler }
