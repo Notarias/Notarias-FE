@@ -99,11 +99,25 @@ const FieldsRows = (props) => {
   // )
 
   const updateFieldValue = ( event ) => {
-    updateProcedureFieldValue ({ variables: {"id": fieldValueId, "value": fieldValue} })
+    updateProcedureFieldValue (
+      { variables: {
+        "id": fieldValueId && fieldValueId,
+        "value": fieldValue,
+        "proceduresTemplateFieldId": field.id,
+        "procedureId": procedure.id
+      }}
+    )
   }
 
   const updateFieldValueActive = ( checked ) => {
-    updateProcedureFieldValue ({ variables: {"id": fieldValueId, "active": checked} })
+    updateProcedureFieldValue (
+      { variables: {
+        "id": fieldValueId && fieldValueId,
+        "active": checked,
+        "proceduresTemplateFieldId": field.id,
+        "procedureId": procedure.id
+      }}
+    )
   }
 
   const [updateProcedureFieldValue] =
