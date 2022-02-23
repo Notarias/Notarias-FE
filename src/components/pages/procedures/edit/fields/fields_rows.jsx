@@ -25,7 +25,7 @@ const FieldsRows = (props) => {
   
   const [menuState, setMenuState] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [fieldValueId, setFieldValueId] = useState(null);
+  const [fieldValueId, setFieldValueId] = useState();
   const [fieldValue, setFieldValue] = useState("");
   const [fieldValueActive, setFieldValueActive] = useState(true);
   const [initFieldValue, setInitFieldValue] = useState("");

@@ -65,7 +65,7 @@ const FieldsGroupsRows = (props) => {
   const updateFieldValue = ( event ) => {
     updateProcedureFieldValue (
       { variables: {
-        id: procedureFieldValue.id && procedureFieldValue.id,
+        id: procedureFieldValue && procedureFieldValue.id,
         procedureId: procedure.id,
         proceduresTemplateFieldId: group.fields.proceduresTemplateFieldsGroupId,
         value: value

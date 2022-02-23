@@ -36,8 +36,8 @@ export default (props) => {
 
   useEffect(() => {
     if(data && data.procedureFieldValue) {
-      setFieldValue(data.procedureFieldValue && data.procedureFieldValue)
-      data.procedureFieldValue && setValue(data.procedureFieldValue.value)
+      setFieldValue(data && data.procedureFieldValue)
+      setValue(data && data.procedureFieldValue.value)
     }
   }, [loading, data])
 
