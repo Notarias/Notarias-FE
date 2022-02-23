@@ -50,7 +50,7 @@ const Commentary = (props) => {
             setProcedure(procedure.procedure.proceduresTemplate)
           }
         }, [procedure]);
-        return("Tramite");
+        return("Trámite");
 
       default :
         return("Otro")
@@ -135,7 +135,7 @@ const Commentary = (props) => {
                 :
                   <>
                     <Typography>
-                      <strong>Tramite:</strong>
+                      <strong>Trámite:</strong>
                     </Typography>
                     <Typography>
                       {procedure && procedure.name}

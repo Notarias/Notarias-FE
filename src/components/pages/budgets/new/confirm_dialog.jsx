@@ -14,7 +14,7 @@ const ConfirmDialog = (props) => {
     <>
       <DialogTitle>
         <Typography>
-          Confirmar Nuevo Tramite
+          Confirmar Nuevo Trámite
         </Typography>
       </DialogTitle>
       <Divider/>

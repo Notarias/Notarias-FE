@@ -137,7 +137,7 @@ const EventList = (props) => {
           <Grid container item xs direction='column'>
             <Grid item>
               <Typography variant='subtitle2'>
-                Ubicacion
+                Ubicación
               </Typography>
             </Grid>
             <Grid item>

@@ -60,7 +60,7 @@ const CompleteProcedure = (props) => {
       <Dialog open={dialog} onClose={openDialog}>
         <DialogContent>
           <DialogContentText>
-            { `De click en ACEPTAR para ${procedure.completedAt ? "desmarcar" : "marcar"} este tramite como completado.` }
+            { `Dé click en ACEPTAR para ${procedure.completedAt ? "desmarcar" : "marcar"} este trámite como completado.` }
           </DialogContentText>
         </DialogContent>
         <Divider variant="middle" />

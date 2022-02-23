@@ -89,7 +89,7 @@ const CreditPayment = (props) => {
         <Grid item container alignItems="center" xs justifyContent="center">
             <Grid item>
               <Typography>
-                <strong>Tramite:</strong>
+                <strong>Trámite:</strong>
               </Typography>
               <Typography>
                 {creditPayment.budget.proceduresTemplate.name}

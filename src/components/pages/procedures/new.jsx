@@ -28,7 +28,7 @@ import WizardSummmary from './new/wizard_summary';
 
 const BREADCRUMBS = [
   { name: "Inicio", path: "/" },
-  { name: "Tramites", path: '/procedures' },
+  { name: "Trámites", path: '/procedures' },
   { name: "Crear", path: null }
 ]
 
