@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Link from '@material-ui/core/Link';
 import { Redirect } from 'react-router-dom';
 import Breadcrumbs from '../../ui/breadcrumbs';
 import { Divider, Paper } from '@material-ui/core';
@@ -326,12 +327,17 @@ const NewBudget = (params) => {
                     <Grid container item justifyContent="center">
                       <Grid container item xs={6} justifyContent="flex-start">
                         <Grid item>
-                          <Button
-                            onClick={handleReset}
-                            color="secondary"
-                            hidden={activeStep ? true : false}>
-                            Cancelar
-                          </Button>
+                          { activeStep > 0 ?
+                            <Button onClick={handleReset} color="secondary">
+                              Cancelar
+                            </Button>
+                          :
+                            <Link href={'/budgets/'} underline="none">
+                              <Button  color="secondary">
+                                Salir
+                              </Button>
+                            </Link>
+                          }
                         </Grid>
                       </Grid>
                       <Grid container item xs={2} justifyContent="flex-end">
