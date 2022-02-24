@@ -332,7 +332,7 @@ const NewBudget = (params) => {
                               Cancelar
                             </Button>
                           :
-                            <Link href={'/budgets/'}>
+                            <Link href={'/budgets/'} underline="none">
                               <Button  color="secondary">
                                 Salir
                               </Button>

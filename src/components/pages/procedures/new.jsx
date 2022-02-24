@@ -333,7 +333,7 @@ const NewProcedure = (params) => {
                               Cancelar
                             </Button>
                           :
-                            <Link href={'/procedures/'}>
+                            <Link href={'/procedures/'} underline="none">
                               <Button  color="secondary">
                                 Salir
                               </Button>
