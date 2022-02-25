@@ -75,7 +75,7 @@ const Summary = (props) => {
           </ListItem>
           <Divider/>
           <Typography variant="subtitle2" style={{ marginTop: "10px", fontWeight: "600" }}>
-            Tramite
+            Trámite
           </Typography>
           <ListItem dense={true}>
             <ListItemText 

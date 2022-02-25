@@ -213,9 +213,9 @@ const ProcedureTemplateLinkButton = (props) => {
                     >
                       { 
                         (proceduresTemplates && proceduresTemplates.length > 0) ? 
-                          "Cambiar tramite" 
+                          "Cambiar trámite" 
                         :
-                          "Añadir tramite" 
+                          "Añadir trámite" 
                       }
                     </MenuItem>
                     <Divider/>

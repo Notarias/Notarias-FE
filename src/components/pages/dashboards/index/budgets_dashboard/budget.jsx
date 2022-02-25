@@ -7,7 +7,10 @@ import Chip                           from '@material-ui/core/Chip';
 import Box                            from '@material-ui/core/Box';
 import IconButton                     from '@material-ui/core/IconButton';
 import Divider                        from '@material-ui/core/Divider';
+import Tooltip                        from '@material-ui/core/Tooltip';
+import VisibilityIcon                 from '@material-ui/icons/Visibility';
 import MessageIcon                    from '@material-ui/icons/Message';
+import { Link }                       from 'react-router-dom';
 import CommentsDialog                 from './comments_dialog';
 
 const Budget = (props) => {
@@ -49,22 +52,29 @@ const Budget = (props) => {
           </Grid>
         </Grid>
         <Grid item container xs spacing={1} justifyContent='flex-end' alignItems='center' style={{ marginRight: "20px" }}>
-          {budget.comments.length > 0 ? 
+          {budget.comments.length > 0 &&
             <Grid item>
-              <IconButton
-                onClick={statsCommentDialog}
-              >
-                <MessageIcon />
-              </IconButton>
+              <Tooltip title='Ver Comentarios'>
+                <IconButton onClick={statsCommentDialog}>
+                  <MessageIcon />
+                </IconButton>
+              </Tooltip>
               <CommentsDialog 
                 budget={budget}
                 commentDialog={commentDialog}
                 statsCommentDialog={statsCommentDialog}
               />
             </Grid>
-          :
-            ""
           }
+          <Grid item>
+            <Link to={`/budgets/${budget.id}/edit`}>
+              <Tooltip title='Ver Presupuesto'>
+                <IconButton>
+                  <VisibilityIcon />
+                </IconButton>
+              </Tooltip>
+            </Link>
+          </Grid>
           <Grid item>
             <Typography variant='subtitle2' color="secondary">
               No. {budget.serialNumber.toString().padStart(10, "0")}

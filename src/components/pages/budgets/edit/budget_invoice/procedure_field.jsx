@@ -17,7 +17,7 @@ export default (props) => {
 
   const [open, setOpen]   = useState(false)
   const [value, setValue] = useState("")
-  const [fieldValue, setFieldValue] = useState()
+  const [fieldValue, setFieldValue] = useState(null)
   const [pristine, setPristine] = useState(true)
   const [valueDefaulted, setValueDefaulted] = useState(true)
 
@@ -30,15 +30,14 @@ export default (props) => {
     GET_PROCEDURE_FIELD_VALUE,
     {
       variables: { "proceduresTemplateFieldId": field.id, "procedureId": budget.procedure.id },
-      fetchPolicy: 'network-only',
-      nextFetchPolicy: 'cache-and-network'
+      fetchPolicy: 'no-cache'
     }
   );
 
   useEffect(() => {
     if(data && data.procedureFieldValue) {
-      setFieldValue(data.procedureFieldValue)
-      data.procedureFieldValue && setValue(data.procedureFieldValue.value)
+      setFieldValue(data && data.procedureFieldValue)
+      setValue(data && data.procedureFieldValue.value)
     }
   }, [loading, data])
 
@@ -60,9 +59,7 @@ export default (props) => {
     }
   }
 
-  const [
-    updateProcedureFieldValue
-  ] = useMutation(
+  const [updateProcedureFieldValue] = useMutation(
     UPDATE_PROCEDURE_FIELD_VALUE,
     {
       onError(apolloError) {
@@ -77,7 +74,14 @@ export default (props) => {
   )
 
   const handleSaveNewValue = (event) => {
-    updateProcedureFieldValue({ variables: { id: fieldValue.id, value: value }})
+    updateProcedureFieldValue(
+      { variables: { 
+        id: fieldValue && fieldValue.id,
+        proceduresTemplateFieldId: field.id,
+        procedureId: budget.procedure.id,
+        value: value 
+      }}
+    )
   }
 
   const sameValue = (newValue) => {

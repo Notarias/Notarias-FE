@@ -50,7 +50,7 @@ let SessionForm = props => {
   
   const completeSignIn = (data) => {
     if (data.signIn.error) {
-      props.setError(data.signIn.error.user_authentication[0])
+      props.setError(data.signIn.error.user_authentication)
     } else {
       localStorage.setItem("jwtToken", data.signIn.authToken)
       setSignedIn(true)
@@ -82,7 +82,8 @@ let SessionForm = props => {
           autoComplete="email"
           value={email}
           onChange={ (e)=> { setEmail(e.target.value); setPristine(false) } }
-          label="Correo Electrónico"/>
+          label="Correo Electrónico"
+          variant='outlined'/>
         <TextField 
           name="password"
           type="password"
@@ -92,7 +93,8 @@ let SessionForm = props => {
           autoComplete="current-password"
           value={password}
           onChange={ (e)=> { setPassword(e.target.value); setPristine(false) } }
-          label="Contraseña"/>
+          label="Contraseña"
+          variant='outlined'/>
           <Button
             type="submit"
             fullWidth

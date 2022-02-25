@@ -404,13 +404,23 @@ export const GET_BUDGETING_TEMPLATE_TAB_FIELDS = gql`
 
 export const UPDATE_PROCEDURE_FIELD_VALUE = gql`
   mutation updateProcedureFieldValue(
-    $id: ID!,
-    $value: String
-  ) {
-    updateProcedureFieldValue(input: { id: $id, value: $value }) {
-      procedureFieldValue {
-        value
+    $id: ID,
+    $proceduresTemplateFieldId: ID,
+    $procedureId: ID,
+    $value: String,
+    $active: Boolean,
+  ){
+    updateProcedureFieldValue(input:{
+      id: $id,
+      proceduresTemplateFieldId: $proceduresTemplateFieldId,
+      procedureId: $procedureId,
+      value: $value,
+      active: $active,
+      }
+    ){
+      procedureFieldValue{
         id
+        value
         active
       }
     }

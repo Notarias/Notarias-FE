@@ -81,7 +81,7 @@ const UserAsigneeList = (props) => {
     <>
       <TextField
         id="outlined-basic"
-        label="Buscar Tramite"
+        label="Buscar Trámite"
         onChange={searchUser}
         variant="outlined"
         InputProps={{

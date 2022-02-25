@@ -94,7 +94,7 @@ const Appointment = (props) => {
             <Grid item>
               <Box color="success.main">
                 <Typography>
-                  <strong>Ubicacion:</strong>
+                  <strong>Ubicación:</strong>
                 </Typography>
                 <Typography>
                   {appointment.place}

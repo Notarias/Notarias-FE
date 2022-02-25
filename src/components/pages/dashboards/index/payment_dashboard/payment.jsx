@@ -7,6 +7,10 @@ import CheckCircleIcon                from '@material-ui/icons/CheckCircle';
 import CancelIcon                     from '@material-ui/icons/Cancel';
 import Box                            from '@material-ui/core/Box';
 import Divider                        from '@material-ui/core/Divider';
+import Tooltip                        from '@material-ui/core/Tooltip';
+import VisibilityIcon                 from '@material-ui/icons/Visibility';
+import IconButton                     from '@material-ui/core/IconButton';
+import { Link }                       from 'react-router-dom';
 
 const Payment = (props) => {
   const { payment } = props
@@ -72,6 +76,15 @@ const Payment = (props) => {
           </Grid>
           <Grid item container xs justifyContent='flex-end' alignItems='center' style={{ marginRight: "20px" }}>
             <Grid item>
+              <Link to={`/budgets/${payment.budget.id}/edit`}>
+                <Tooltip title='Ver Presupuesto'>
+                  <IconButton>
+                    <VisibilityIcon />
+                  </IconButton>
+                </Tooltip>
+              </Link>
+            </Grid>
+            <Grid item>
               <Typography variant='subtitle2' color="secondary">
                 No. {payment.id.toString().padStart(10, "0")}
               </Typography>
@@ -82,7 +95,7 @@ const Payment = (props) => {
         <Grid item container alignItems="center" xs justifyContent="center">
             <Grid item>
               <Typography>
-                <strong>Tramite: </strong>
+                <strong>Trámite: </strong>
               </Typography>
               <Typography>
                 {payment.budget.proceduresTemplate.name}

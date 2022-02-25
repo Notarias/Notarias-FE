@@ -26,7 +26,7 @@ import client                                   from '../../../../../../src/apol
 const FieldsGroupsRows = (props) => {
 
   const { procedure, group, fieldGroupValue } = props
-
+  
   const [menuState, setMenuState] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [duplicate] = useState(fieldGroupValue && fieldGroupValue.duplicate);
@@ -63,7 +63,14 @@ const FieldsGroupsRows = (props) => {
   }
   
   const updateFieldValue = ( event ) => {
-    updateProcedureFieldValue ({ variables: {"id": procedureFieldValue.id, "value": value} })
+    updateProcedureFieldValue (
+      { variables: {
+        id: procedureFieldValue && procedureFieldValue.id,
+        procedureId: procedure.id,
+        proceduresTemplateFieldId: group.fields.proceduresTemplateFieldsGroupId,
+        value: value
+      }}
+    )
   }
 
   const updateFieldValueActive = ( checked ) => {

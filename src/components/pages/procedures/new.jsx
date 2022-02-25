@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Link from '@material-ui/core/Link';
 import { Redirect } from 'react-router-dom';
 import Breadcrumbs from '../../ui/breadcrumbs';
 import { Divider, Paper } from '@material-ui/core';
@@ -28,7 +29,7 @@ import WizardSummmary from './new/wizard_summary';
 
 const BREADCRUMBS = [
   { name: "Inicio", path: "/" },
-  { name: "Tramites", path: '/procedures' },
+  { name: "Trámites", path: '/procedures' },
   { name: "Crear", path: null }
 ]
 
@@ -160,10 +161,27 @@ const NewProcedure = (params) => {
       setActiveStep((prevActiveStep) => prevActiveStep - 1);}
   };
 
+  const handleReset = () => {
+    setClientInfo("");
+    setCausantInfo("");
+    setSelectedProcedure("");
+    setSelectedBudget("");
+    setNewClientForm(false);
+    setActiveStep(0);
+  };
+
   const clientAsCausant = () => {
     setCausantInfo(clientInfo);
     handleNext();
-  }
+  };
+
+  const openSaveConfirm = () => {
+    setOpenConfirmation(true);
+  };
+
+  const closeSaveConfirm = () => {
+    setOpenConfirmation(false);
+  };
 
   const [createProcedureMutation] =
     useMutation(
@@ -204,23 +222,6 @@ const NewProcedure = (params) => {
       }
     )
   }
-
-  const openSaveConfirm = () => {
-    setOpenConfirmation(true);
-  }
-
-  const closeSaveConfirm = () => {
-    setOpenConfirmation(false);
-  }
-
-  const handleReset = () => {
-    setClientInfo("");
-    setCausantInfo("");
-    setSelectedProcedure("");
-    setSelectedBudget("");
-    setNewClientForm(false);
-    setActiveStep(0);
-  };
 
   const stepperButtons = (stepIndex) => {
     switch (stepIndex) {
@@ -327,12 +328,17 @@ const NewProcedure = (params) => {
                     <Grid container item justifyContent="center">
                       <Grid container item xs={6} justifyContent="flex-start">
                         <Grid item>
-                          <Button
-                            onClick={handleReset}
-                            color="secondary"
-                            hidden={activeStep ? true : false}>
-                            Cancelar
-                          </Button>
+                          { activeStep > 0 ?
+                            <Button onClick={handleReset} color="secondary">
+                              Cancelar
+                            </Button>
+                          :
+                            <Link href={'/procedures/'} underline="none">
+                              <Button  color="secondary">
+                                Salir
+                              </Button>
+                            </Link>
+                          }
                         </Grid>
                       </Grid>
                       <Grid container item xs={2} justifyContent="flex-end">
