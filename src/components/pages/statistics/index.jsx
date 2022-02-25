@@ -57,7 +57,8 @@ export default (props) => {
       variables: {
         startDate: initDate,
         endDate: endDate,
-        timeFrame: timeFrame
+        timeFrame: timeFrame,
+        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
       },
       fetchPolicy: 'cache-and-network'
     }
@@ -95,6 +96,7 @@ export default (props) => {
     setSwitchDebt(!!event.target.checked)
   }
 
+  console.log(data)
   return(
     <Grid container direction='column' alignItems="stretch" justifyContent="flex-start">
       <Grid item>
