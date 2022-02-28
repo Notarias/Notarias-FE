@@ -52,9 +52,9 @@ NumberFormatCustom.propTypes = {
 
 const Payment = (props) => {
   const { totalDebt, budget, budgetFieldValue, field } = props
-  const [notePayment, setNotePayment] = React.useState("")
-  const [valuePayment, setValuePayment] = React.useState(0.0)
-  const [pristine, setPristine] = React.useState(true)
+  const [notePayment, setNotePayment] = useState("")
+  const [valuePayment, setValuePayment] = useState(0.0)
+  const [pristine, setPristine] = useState(true)
   const [error, setError] = useState(false)
 
   const inputsList = ["total"]
@@ -117,7 +117,7 @@ const Payment = (props) => {
     })
   }
 
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = useState(false)
 
   const handleClickOpen = () => {
     setOpen(true);

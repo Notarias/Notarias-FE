@@ -23,6 +23,7 @@ const FieldValue = (props) => {
   const [pristine, setPristine] = useState(false)
   const [initialFieldValue, setInitialFieldValue] = useState(0)
   const [withValue, setWithValue] = useState(false)
+  const [statusChange, setStatusChange] = useState(true)
   const [changeInputStatus, setChangeInputStatus] = useState(false)
   const [changeFieldValue, setChangeFieldValue] = useState(initialFieldValue);
   const [totalDebt, setTotalDebt] = useState(0)
@@ -62,7 +63,8 @@ const FieldValue = (props) => {
       <Grid item xs={3}>
         <TotalValue
           setPristine={setPristine}
-          withValue={withValue}
+          statusChange={statusChange}
+          setStatusChange={setStatusChange}
           initialFieldValue={initialFieldValue}
           changeInputStatus={changeInputStatus}
           setChangeInputStatus={setChangeInputStatus}
@@ -87,6 +89,7 @@ const FieldValue = (props) => {
             budget={budget}
             fieldId={field.id}
             withValue={withValue}
+            setStatusChange={setStatusChange}
             setWithValue={setWithValue}
             pristine={pristine}
             setPristine={setPristine}

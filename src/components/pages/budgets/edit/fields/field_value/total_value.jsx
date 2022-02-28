@@ -40,19 +40,15 @@ NumberFormatCustom.propTypes = {
 const TotalValue = (props) => {
   const {
     setPristine,
-    withValue, 
+    //withValue, 
     initialFieldValue, 
     changeInputStatus, 
     setChangeInputStatus,
     setChangeFieldValue,
     changeFieldValue,
+    statusChange,
+    setStatusChange
   } = props
-
-  const [statusChange, setStatusChange] = React.useState(withValue)
-
-  useEffect(() => {
-    setStatusChange(withValue);
-  }, [withValue])
 
   useEffect(() => {
     changeInputStatus && setStatusChange(true)
@@ -84,14 +80,9 @@ const TotalValue = (props) => {
           />
         </Grid>
         <Grid  container item xs={4} alignItems="flex-end" justifyContent="center">
-          {
-            withValue ?
-            <Button onClick={changeValueTypeToTrue} >
-              <ReplayIcon/>
-            </Button>
-            :
-            ""
-          }
+          <Button onClick={changeValueTypeToTrue} >
+            <ReplayIcon/>
+          </Button>
         </Grid>
       </Grid>
     )

@@ -528,6 +528,9 @@ export const GET_BUDGET_FIELD_VALUE = gql`
       totalDebt
       totalPaid
       active
+      taxFieldValues {
+        id
+      }
     }
   }
 `

@@ -32,7 +32,6 @@ const FieldValue = (props) => {
   const [editingValue, setEditingValue] = useState()
   const [budgetFieldValue, setBudgetFieldValue] = useState()
   const [expandTaxedFields, setExpandTaxedFields] = useState(false)
-  // const [withValue, setWithValue] = useState(false)
   const [templateField] = useState(field)
 
   const { loading, data, refetch } = useQuery(
@@ -41,7 +40,7 @@ const FieldValue = (props) => {
       variables: { "budgetingTemplateFieldId": templateField.id , "budgetId": budget.id }
     }
   );
-
+  
   const fieldValueCalculation = (budgetFieldValue) => {
     if(budgetFieldValue) {
       return ((budgetFieldValue.value * 1.0) / 100).toFixed(2)
