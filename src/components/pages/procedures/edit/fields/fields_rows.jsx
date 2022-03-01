@@ -30,7 +30,7 @@ const FieldsRows = (props) => {
   const [fieldValueActive, setFieldValueActive] = useState(true);
   const [initFieldValue, setInitFieldValue] = useState("");
   const [saveButtonStatus, setSaveButtonStatus] = useState(true);
-  const [fieldStatus, setFieldStatus] = useState(false);
+  const [fieldStatus, setFieldStatus] = useState(true);
   
   const {  loading, data } = useQuery(
     GET_PROCEDURE_FIELD_VALUES,
@@ -45,7 +45,7 @@ const FieldsRows = (props) => {
       setInitFieldValue(data.procedureFieldValue.value);
       setFieldValue(data.procedureFieldValue.value);
       setFieldValueActive(data.procedureFieldValue.active)
-      setFieldStatus(!data.procedureFieldValue.value ? false : true);
+      setFieldStatus(true);
     }
   }, [loading, data]);
 
@@ -70,7 +70,7 @@ const FieldsRows = (props) => {
   const fieldValueChange = ({ target }) => {
     let { value } = target
     setFieldValue(value);
-    setSaveButtonStatus(false);    
+    setSaveButtonStatus(false);
   }
 
   // const [createProcedureFieldValue, { loading: createProcedureFieldValueLoading }] =
