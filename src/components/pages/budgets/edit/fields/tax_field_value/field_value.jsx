@@ -40,7 +40,7 @@ const FieldValue = (props) => {
       variables: { "budgetingTemplateFieldId": templateField.id , "budgetId": budget.id }
     }
   );
-  
+  console.log(data)
   const fieldValueCalculation = (budgetFieldValue) => {
     if(budgetFieldValue) {
       return ((budgetFieldValue.value * 1.0) / 100).toFixed(2)
@@ -56,7 +56,13 @@ const FieldValue = (props) => {
   }
 
   const totalDebtCalculation = (budgetFieldValue) => {
-    return((budgetFieldValue ? (budgetFieldValue.totalDebt * 1.0) / 100 : 0.0).toFixed(2))
+    if (budgetFieldValue.totalDebt) {
+      return((budgetFieldValue ? (budgetFieldValue.totalDebt * 1.0) / 100 : 0.0).toFixed(2))
+    } else {
+      let result
+      result = budgetFieldValue.value - budgetFieldValue.totalPaid
+      return((result ? (result * 1.0) / 100 : 0.0).toFixed(2))
+    }
   }
 
   const totalsCalculation = () => {
