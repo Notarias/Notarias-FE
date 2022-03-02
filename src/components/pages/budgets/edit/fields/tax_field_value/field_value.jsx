@@ -40,7 +40,7 @@ const FieldValue = (props) => {
       variables: { "budgetingTemplateFieldId": templateField.id , "budgetId": budget.id }
     }
   );
-  console.log(data)
+  
   const fieldValueCalculation = (budgetFieldValue) => {
     if(budgetFieldValue) {
       return ((budgetFieldValue.value * 1.0) / 100).toFixed(2)

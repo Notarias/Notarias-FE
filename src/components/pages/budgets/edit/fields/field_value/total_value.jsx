@@ -40,7 +40,6 @@ NumberFormatCustom.propTypes = {
 const TotalValue = (props) => {
   const {
     setPristine,
-    //withValue, 
     initialFieldValue, 
     changeInputStatus, 
     setChangeInputStatus,
