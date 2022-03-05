@@ -13,6 +13,17 @@ import DialogContent                 from '@material-ui/core/DialogContent';
 import DialogTitle                   from '@material-ui/core/DialogTitle';
 import { GET_BUDGETS_AUDITLOG }      from '../../../queries_and_mutations/queries';
 
+const buildRefetchQueries = (field, budget) => {
+  return(
+    field.taxes.map((tax) => {
+      return({
+        query: GET_BUDGET_FIELD_VALUE,
+        variables: { "budgetingTemplateFieldId": tax.id , "budgetId": budget.id }
+      })
+    })
+  )
+}
+
 const AddFieldValue = (props) => {
   const {
     budget, 
@@ -36,8 +47,7 @@ const AddFieldValue = (props) => {
     setOpen(false);
   };
 
-
-  const [createFieldValueMutation, {loading: createFieldValueLoading}] =
+  const [createFieldValueMutation, { loading: createFieldValueLoading }] =
   useMutation(
     CREATE_BUDGET_FIELD_VALUE,
     {
@@ -50,7 +60,7 @@ const AddFieldValue = (props) => {
       refetchQueries: [
         {
           query: GET_BUDGET_FIELD_VALUE,
-          variables: { "budgetingTemplateFieldId": fieldId , "budgetId": budget.id }
+          variables: { "budgetingTemplateFieldId": fieldId, "budgetId": budget.id }
         },
         {
           query: GET_BUDGETS_AUDITLOG,
@@ -59,7 +69,8 @@ const AddFieldValue = (props) => {
         {
           query: GET_BUDGET_TOTALS,
             variables: { "id": budget.id }
-        }
+        },
+        ...buildRefetchQueries(currentId, budget)
       ],
       awaitRefetchQueries: true
     }
@@ -104,7 +115,8 @@ const AddFieldValue = (props) => {
         {
           query: GET_BUDGET_TOTALS,
             variables: {"id": budget.id }
-        }
+        },
+        ...buildRefetchQueries(currentId, budget)
       ],
       awaitRefetchQueries: true
     }
