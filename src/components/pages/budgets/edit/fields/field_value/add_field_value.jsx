@@ -12,6 +12,7 @@ import DialogActions                 from '@material-ui/core/DialogActions';
 import DialogContent                 from '@material-ui/core/DialogContent';
 import DialogTitle                   from '@material-ui/core/DialogTitle';
 import { GET_BUDGETS_AUDITLOG }      from '../../../queries_and_mutations/queries';
+import { BUDGET_TAXED_FIELDS_FOR_FIELD } from '../../../queries_and_mutations/queries';
 
 const buildRefetchQueries = (field, budget) => {
   return(
@@ -19,6 +20,20 @@ const buildRefetchQueries = (field, budget) => {
       return({
         query: GET_BUDGET_FIELD_VALUE,
         variables: { "budgetingTemplateFieldId": tax.id , "budgetId": budget.id }
+      })
+    })
+  )
+}
+
+const buildRefetchTaxedFieldsQueries = (field, budget) => {
+  return(
+    field.taxes.map((taxedField) => {
+      return({
+        query: BUDGET_TAXED_FIELDS_FOR_FIELD,
+        variables: {
+          "fieldId": taxedField.id,
+          "budgetId": budget.id
+        }
       })
     })
   )
@@ -70,7 +85,8 @@ const AddFieldValue = (props) => {
           query: GET_BUDGET_TOTALS,
             variables: { "id": budget.id }
         },
-        ...buildRefetchQueries(currentId, budget)
+        ...buildRefetchQueries(currentId, budget),
+        ...buildRefetchTaxedFieldsQueries(currentId, budget)
       ],
       awaitRefetchQueries: true
     }
@@ -116,7 +132,8 @@ const AddFieldValue = (props) => {
           query: GET_BUDGET_TOTALS,
             variables: {"id": budget.id }
         },
-        ...buildRefetchQueries(currentId, budget)
+        ...buildRefetchQueries(currentId, budget),
+        ...buildRefetchTaxedFieldsQueries(currentId, budget)
       ],
       awaitRefetchQueries: true
     }
