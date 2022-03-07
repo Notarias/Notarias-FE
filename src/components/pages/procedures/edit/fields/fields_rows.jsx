@@ -107,11 +107,11 @@ const FieldsRows = (props) => {
         refetchQueries: [
           {
             query: GET_PROCEDURE_FIELD_VALUES,
-              variables: { "proceduresTemplateFieldId": field.id, "procedureId": procedure.id }
+            variables: { "proceduresTemplateFieldId": field.id, "procedureId": procedure.id }
           },
           {
             query: GET_PROCEDURES_AUDITLOG,  
-              variables: { "procedureId": procedure.id }
+            variables: { "procedureId": procedure.id }
           }
         ],
         awaitRefetchQueries: true
