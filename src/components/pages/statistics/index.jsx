@@ -3,12 +3,10 @@ import Grid                         from '@material-ui/core/Grid';
 import Paper                        from '@material-ui/core/Paper';
 import Typography                   from '@material-ui/core/Typography';
 import Divider                      from '@material-ui/core/Divider';
-import CircularProgress             from '@material-ui/core/CircularProgress';
 import Breadcrumbs                  from '../../ui/breadcrumbs';
-import Graphs                       from './index/graphs';
+import GeneralGraph                 from './index/general_graph';
+import TabGraph                     from './index/tab_graph';
 import Controls                     from './index/controls';
-import { useQuery }                 from '@apollo/client';
-import { STATISTICS_QUERY }         from './queries/queries';
 
 
 const BREADCRUMBS = [
@@ -50,18 +48,9 @@ export default (props) => {
   const [switchTotal, setSwitchTotal] = useState(true)
   const [switchPaid, setSwitchPaid] = useState(true)
   const [switchDebt, setSwitchDebt] = useState(true)
-
-  const { data, loading, refetch } = useQuery(
-    STATISTICS_QUERY,
-    {
-      variables: {
-        startDate: initDate,
-        endDate: endDate,
-        timeFrame: timeFrame
-      },
-      fetchPolicy: 'cache-and-network'
-    }
-  )
+  const [templateId, setTemplateId] = useState('')
+  const [templateTabsIds, setTemplateTabsIds] = useState([])
+  const [graphStatus, setGraphStatus] = useState('all_budgets')
 
   const changeInitDate = (e) => {
     setInitDate(e.target.value)
@@ -76,7 +65,7 @@ export default (props) => {
   }
 
   const triggerFiltering = (e) => {
-    refetch()
+    //refetch()
   }
 
   const changeSwitchIncome = (event) => {
@@ -93,6 +82,18 @@ export default (props) => {
 
   const changeSwitchDebt = (event) => {
     setSwitchDebt(!!event.target.checked)
+  }
+
+  const changeTemplateId = (event) => {
+    setTemplateId(event.target.value)
+  }
+
+  const changeTemplateTabsIds = (tabsIds) => {
+    setTemplateTabsIds(tabsIds)
+  }
+
+  const changeGraphStatus = (event) => {
+    setGraphStatus(event.target.value)
   }
 
   return(
@@ -123,7 +124,13 @@ export default (props) => {
                     changeSwitchIncome={changeSwitchIncome}
                     changeSwitchTotal={changeSwitchTotal}
                     changeSwitchPaid={changeSwitchPaid}
-                    changeSwitchDebt={changeSwitchDebt}/>
+                    changeSwitchDebt={changeSwitchDebt}
+                    templateId={templateId}
+                    templateTabsIds={templateTabsIds}
+                    changeTemplateId={changeTemplateId}
+                    changeTemplateTabsIds={changeTemplateTabsIds}
+                    graphStatus={graphStatus}
+                    changeGraphStatus={changeGraphStatus}/>
                 </Grid>
               </Grid>
             </Paper>
@@ -138,18 +145,29 @@ export default (props) => {
                 </Grid>
                 <Divider/>
                 <Grid item xs style={{ paddingTop: "30px", paddingBottom: "30px", minHeight: '700px' }}>
-                  { loading && <CircularProgress/> }
-                  { !loading && !data && <Typography>Sin datos</Typography> }
                   {
-                    !loading &&
-                    data &&
-                    data.statistics &&
-                    <Graphs
-                      data={data.statistics}
-                      switchIncome={switchIncome}
-                      switchTotal={switchTotal}
-                      switchPaid={switchPaid}
-                      switchDebt={switchDebt}/>
+                    !!templateId && templateTabsIds.length ?
+                      <TabGraph
+                        switchIncome={switchIncome}
+                        switchTotal={switchTotal}
+                        switchPaid={switchPaid}
+                        switchDebt={switchDebt}
+                        initDate={initDate}
+                        endDate={endDate}
+                        timeFrame={timeFrame}
+                        templateId={templateId}
+                        templateTabsIds={templateTabsIds}
+                        graphStatus={graphStatus}
+                        /> :
+                      <GeneralGraph
+                        switchIncome={switchIncome}
+                        switchTotal={switchTotal}
+                        switchPaid={switchPaid}
+                        switchDebt={switchDebt}
+                        initDate={initDate}
+                        endDate={endDate}
+                        timeFrame={timeFrame}
+                        graphStatus={graphStatus}/>
                   }
                 </Grid>
               </Grid>

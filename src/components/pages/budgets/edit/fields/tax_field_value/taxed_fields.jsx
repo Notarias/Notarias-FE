@@ -11,7 +11,6 @@ import { BUDGET_TAXED_FIELDS_FOR_FIELD } from '../../../queries_and_mutations/qu
 
 export default (props) => {
   const { expandTaxedFields, templateField, budget } = props
-  const [taxedFields, setTaxedFields] = useState()
 
   const { data } = useQuery(
     BUDGET_TAXED_FIELDS_FOR_FIELD,
@@ -19,14 +18,9 @@ export default (props) => {
       variables: {
         "fieldId": templateField.id,
         "budgetId": budget.id
-      },
-      fetchPolicy: 'no-cache'
+      }
     }
   );
-
-  useEffect(() => {
-    data && setTaxedFields(data.budgetTaxedFieldsForField)
-  }, [!!data])
 
   //boxShadow: '0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%)'
 
@@ -42,7 +36,7 @@ export default (props) => {
       <Grid item container direction='column' style={{ backgroundColor: grey[100]}}>
         <Divider/>
         {
-          taxedFields && taxedFields.map((taxedField) => {
+          data && data.budgetTaxedFieldsForField.map((taxedField) => {
             return(
               <React.Fragment key={ `${taxedField.id}-taxed-field-${templateField.id}` }>
                 <Grid container item style={{ padding: '10px' }}>

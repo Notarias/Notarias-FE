@@ -1,17 +1,43 @@
-import React                                     from 'react';
-import Button                                    from '@material-ui/core/Button';
-import SaveIcon                                  from '@material-ui/icons/Save';
-import { useMutation }                           from '@apollo/client';
-import { UPDATE_BUDGET_FIELD_VALUE }             from '../../../queries_and_mutations/queries'
-import { CREATE_BUDGET_FIELD_VALUE }             from '../../../queries_and_mutations/queries'
-import { GET_BUDGET_FIELD_VALUE }                from '../../../queries_and_mutations/queries'
-import { GET_BUDGET }                            from '../../../queries_and_mutations/queries'
-import { GET_BUDGET_TOTALS }                     from '../../../queries_and_mutations/queries'
-import Dialog                                    from '@material-ui/core/Dialog';
-import DialogActions                             from '@material-ui/core/DialogActions';
-import DialogContent                             from '@material-ui/core/DialogContent';
-import DialogTitle                               from '@material-ui/core/DialogTitle';
-import { GET_BUDGETS_AUDITLOG }                  from '../../../queries_and_mutations/queries';
+import React                         from 'react';
+import Button                        from '@material-ui/core/Button';
+import SaveIcon                      from '@material-ui/icons/Save';
+import { useMutation }               from '@apollo/client';
+import { UPDATE_BUDGET_FIELD_VALUE } from '../../../queries_and_mutations/queries'
+import { CREATE_BUDGET_FIELD_VALUE } from '../../../queries_and_mutations/queries'
+import { GET_BUDGET_FIELD_VALUE }    from '../../../queries_and_mutations/queries'
+import { GET_BUDGET }                from '../../../queries_and_mutations/queries'
+import { GET_BUDGET_TOTALS }         from '../../../queries_and_mutations/queries'
+import Dialog                        from '@material-ui/core/Dialog';
+import DialogActions                 from '@material-ui/core/DialogActions';
+import DialogContent                 from '@material-ui/core/DialogContent';
+import DialogTitle                   from '@material-ui/core/DialogTitle';
+import { GET_BUDGETS_AUDITLOG }      from '../../../queries_and_mutations/queries';
+import { BUDGET_TAXED_FIELDS_FOR_FIELD } from '../../../queries_and_mutations/queries';
+
+const buildRefetchQueries = (field, budget) => {
+  return(
+    field.taxes.map((tax) => {
+      return({
+        query: GET_BUDGET_FIELD_VALUE,
+        variables: { "budgetingTemplateFieldId": tax.id , "budgetId": budget.id }
+      })
+    })
+  )
+}
+
+const buildRefetchTaxedFieldsQueries = (field, budget) => {
+  return(
+    field.taxes.map((taxedField) => {
+      return({
+        query: BUDGET_TAXED_FIELDS_FOR_FIELD,
+        variables: {
+          "fieldId": taxedField.id,
+          "budgetId": budget.id
+        }
+      })
+    })
+  )
+}
 
 const AddFieldValue = (props) => {
   const {
@@ -37,8 +63,7 @@ const AddFieldValue = (props) => {
     setOpen(false);
   };
 
-
-  const [createFieldValueMutation, {loading: createFieldValueLoading}] =
+  const [createFieldValueMutation, { loading: createFieldValueLoading }] =
   useMutation(
     CREATE_BUDGET_FIELD_VALUE,
     {
@@ -52,7 +77,7 @@ const AddFieldValue = (props) => {
       refetchQueries: [
         {
           query: GET_BUDGET_FIELD_VALUE,
-          variables: { "budgetingTemplateFieldId": fieldId , "budgetId": budget.id }
+          variables: { "budgetingTemplateFieldId": fieldId, "budgetId": budget.id }
         },
         {
           query: GET_BUDGETS_AUDITLOG,
@@ -61,7 +86,9 @@ const AddFieldValue = (props) => {
         {
           query: GET_BUDGET_TOTALS,
             variables: { "id": budget.id }
-        }
+        },
+        ...buildRefetchQueries(currentId, budget),
+        ...buildRefetchTaxedFieldsQueries(currentId, budget)
       ],
       awaitRefetchQueries: true
     }
@@ -106,7 +133,9 @@ const AddFieldValue = (props) => {
         {
           query: GET_BUDGET_TOTALS,
             variables: {"id": budget.id }
-        }
+        },
+        ...buildRefetchQueries(currentId, budget),
+        ...buildRefetchTaxedFieldsQueries(currentId, budget)
       ],
       awaitRefetchQueries: true
     }
