@@ -34,7 +34,7 @@ const FieldsGroupsRows = (props) => {
   const [procedureFieldValue] = useState(fieldGroupValue && fieldGroupValue.procedureFieldValue);
   const [fieldValueActive, setFieldValueActive] = useState(fieldGroupValue && fieldGroupValue.procedureFieldValue.active);
   const [value, setValue] = useState(fieldGroupValue && fieldGroupValue.procedureFieldValue.value);
-  const [fieldStatus, setFieldStatus] = useState(fieldGroupValue && !fieldGroupValue.procedureFieldValue.value ? false : true);
+  const [fieldStatus, setFieldStatus] = useState(true);
   const [saveButtonStatus, setSaveButtonStatus] = useState(true);
   
   const openMenu = ( event ) => {
