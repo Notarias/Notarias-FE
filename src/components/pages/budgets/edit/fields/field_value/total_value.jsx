@@ -62,7 +62,7 @@ const TotalValue = (props) => {
     setChangeInputStatus(false)
   }
 
-  const enabledEdit = () => {
+  const enableEdit = () => {
     setStatusChange(false)
     setChangeFieldValue(initialFieldValue)
   }
@@ -113,7 +113,7 @@ const TotalValue = (props) => {
         />
       </Grid>
       <Grid  container item xs={4} alignItems="flex-end" justifyContent="center">
-        <Button onClick={enabledEdit} >
+        <Button onClick={enableEdit} >
           <BorderColorIcon/>
         </Button>
       </Grid>
