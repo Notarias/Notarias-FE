@@ -43,8 +43,8 @@ const AddFieldValue = (props) => {
   const {
     budget, 
     fieldId,
-    withValue, 
-    setWithValue, 
+    statusChange,
+    setStatusChange,
     pristine, 
     changeFieldValue,
     setPristine, 
@@ -69,7 +69,7 @@ const AddFieldValue = (props) => {
       onError(apolloError) {
       },
       onCompleted(cacheData) {
-        setWithValue(true)
+        setStatusChange(true)
         setPristine(false)
       },
       refetchQueries: [
@@ -146,7 +146,7 @@ const AddFieldValue = (props) => {
   const renderAddFieldValueButton = () => {
     return(
       
-      withValue ? 
+      statusChange ? 
         <Button
           disabled={!pristine}
           color="primary"

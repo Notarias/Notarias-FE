@@ -1,12 +1,12 @@
-import React, { useEffect }           from 'react';
-import Grid                           from '@material-ui/core/Grid';
-import TextField                      from '@material-ui/core/TextField';
-import InputAdornment                 from '@material-ui/core/InputAdornment';
-import Button                         from '@material-ui/core/Button';
-import BorderColorIcon                from '@material-ui/icons/BorderColor';
-import NumberFormat                   from 'react-number-format';
-import PropTypes                      from 'prop-types';
-import ReplayIcon                     from '@material-ui/icons/Replay';
+import React, { useState, useEffect }           from 'react';
+import Grid                                     from '@material-ui/core/Grid';
+import TextField                                from '@material-ui/core/TextField';
+import InputAdornment                           from '@material-ui/core/InputAdornment';
+import Button                                   from '@material-ui/core/Button';
+import BorderColorIcon                          from '@material-ui/icons/BorderColor';
+import NumberFormat                             from 'react-number-format';
+import PropTypes                                from 'prop-types';
+import ReplayIcon                               from '@material-ui/icons/Replay';
 
 function NumberFormatCustom(props) {
   const { inputRef, onChange, ...other } = props;
@@ -40,19 +40,14 @@ NumberFormatCustom.propTypes = {
 const TotalValue = (props) => {
   const {
     setPristine,
-    withValue, 
+    statusChange,
+    setStatusChange,
     initialFieldValue, 
     changeInputStatus, 
     setChangeInputStatus,
     setChangeFieldValue,
     changeFieldValue,
   } = props
-
-  const [statusChange, setStatusChange] = React.useState(withValue)
-
-  useEffect(() => {
-    setStatusChange(withValue);
-  }, [withValue])
 
   useEffect(() => {
     changeInputStatus && setStatusChange(true)
@@ -65,6 +60,16 @@ const TotalValue = (props) => {
 
   const onFocusPue = () => {
     setChangeInputStatus(false)
+  }
+
+  const activeEdition = () => {
+    setStatusChange(false)
+    setChangeFieldValue(initialFieldValue)
+  }
+
+  const cancelEdition = () => {
+    setStatusChange(true)
+    setPristine(false)
   }
 
   const totalInput = () => {
@@ -84,29 +89,13 @@ const TotalValue = (props) => {
           />
         </Grid>
         <Grid  container item xs={4} alignItems="flex-end" justifyContent="center">
-          {
-            withValue ?
-            <Button onClick={changeValueTypeToTrue} >
-              <ReplayIcon/>
-            </Button>
-            :
-            ""
-          }
+          <Button onClick={cancelEdition} >
+            <ReplayIcon/>
+          </Button>
         </Grid>
       </Grid>
     )
   }
-
-  const changeValueType = () => {
-    setStatusChange(false)
-    setChangeFieldValue(initialFieldValue)
-  }
-
-  const changeValueTypeToTrue = () => {
-    setStatusChange(true)
-    setPristine(false)
-  }
-
 
   const totalFlat = () => {
     return(
@@ -124,7 +113,7 @@ const TotalValue = (props) => {
         />
       </Grid>
       <Grid  container item xs={4} alignItems="flex-end" justifyContent="center">
-        <Button onClick={changeValueType} >
+        <Button onClick={activeEdition} >
           <BorderColorIcon/>
         </Button>
       </Grid>

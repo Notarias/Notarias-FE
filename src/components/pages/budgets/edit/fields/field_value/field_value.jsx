@@ -20,13 +20,13 @@ import PaymentList                                  from './payment_list';
 const FieldValue = (props) => {
   const { budget, field: templateField } = props
 
-  const [pristine, setPristine] = useState(false)
-  const [initialFieldValue, setInitialFieldValue] = useState(0)
-  const [withValue, setWithValue] = useState(false)
-  const [changeInputStatus, setChangeInputStatus] = useState(false)
+  const [pristine, setPristine] = useState(false);
+  const [initialFieldValue, setInitialFieldValue] = useState(0);
+  const [statusChange, setStatusChange] = useState(true);
+  const [changeInputStatus, setChangeInputStatus] = useState(false);
   const [changeFieldValue, setChangeFieldValue] = useState(initialFieldValue);
-  const [totalDebt, setTotalDebt] = useState(0)
-  const [field] = useState(templateField)
+  const [totalDebt, setTotalDebt] = useState(0);
+  const [field] = useState(templateField);
 
   const { data } = useQuery(
     GET_BUDGET_FIELD_VALUE,
@@ -36,12 +36,8 @@ const FieldValue = (props) => {
   );
 
   useEffect(() => {
-    let value = data && data.budgetFieldValue ? ((data.budgetFieldValue.value * 1.0) / 100).toFixed(2) : 0.0
-    let withId = data && data.budgetFieldValue ? true : false
-    let debt = data && data.budgetFieldValue ? ((data.budgetFieldValue.totalDebt * 1.0) / 100).toFixed(2) : 0.0
-    setInitialFieldValue(value);
-    setWithValue(withId)
-    setTotalDebt(debt)
+    setInitialFieldValue(data && data.budgetFieldValue ? ((data.budgetFieldValue.value * 1.0) / 100).toFixed(2) : 0.0);
+    setTotalDebt(data && data.budgetFieldValue ? ((data.budgetFieldValue.totalDebt * 1.0) / 100).toFixed(2) : 0.0);
   }, [data])
 
   return(
@@ -62,7 +58,8 @@ const FieldValue = (props) => {
       <Grid item xs={3}>
         <TotalValue
           setPristine={setPristine}
-          withValue={withValue}
+          statusChange={statusChange}
+          setStatusChange={setStatusChange}
           initialFieldValue={initialFieldValue}
           changeInputStatus={changeInputStatus}
           setChangeInputStatus={setChangeInputStatus}
@@ -86,8 +83,8 @@ const FieldValue = (props) => {
           <AddFieldValue
             budget={budget}
             fieldId={field.id}
-            withValue={withValue}
-            setWithValue={setWithValue}
+            statusChange={statusChange}
+            setStatusChange={setStatusChange}
             pristine={pristine}
             setPristine={setPristine}
             initialFieldValue={initialFieldValue}
