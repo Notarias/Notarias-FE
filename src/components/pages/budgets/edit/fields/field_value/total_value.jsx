@@ -62,12 +62,12 @@ const TotalValue = (props) => {
     setChangeInputStatus(false)
   }
 
-  const activeEdition = () => {
+  const activateEdit = () => {
     setStatusChange(false)
     setChangeFieldValue(initialFieldValue)
   }
 
-  const cancelEdition = () => {
+  const disableEdit = () => {
     setStatusChange(true)
     setPristine(false)
   }
@@ -89,7 +89,7 @@ const TotalValue = (props) => {
           />
         </Grid>
         <Grid  container item xs={4} alignItems="flex-end" justifyContent="center">
-          <Button onClick={cancelEdition} >
+          <Button onClick={disableEdit} >
             <ReplayIcon/>
           </Button>
         </Grid>
@@ -113,7 +113,7 @@ const TotalValue = (props) => {
         />
       </Grid>
       <Grid  container item xs={4} alignItems="flex-end" justifyContent="center">
-        <Button onClick={activeEdition} >
+        <Button onClick={activateEdit} >
           <BorderColorIcon/>
         </Button>
       </Grid>

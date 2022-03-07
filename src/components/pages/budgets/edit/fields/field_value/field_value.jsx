@@ -23,6 +23,7 @@ const FieldValue = (props) => {
   const [pristine, setPristine] = useState(false);
   const [initialFieldValue, setInitialFieldValue] = useState(0);
   const [statusChange, setStatusChange] = useState(true);
+  const [withValue, setWithValue] = useState(false);
   const [changeInputStatus, setChangeInputStatus] = useState(false);
   const [changeFieldValue, setChangeFieldValue] = useState(initialFieldValue);
   const [totalDebt, setTotalDebt] = useState(0);
@@ -38,6 +39,7 @@ const FieldValue = (props) => {
   useEffect(() => {
     setInitialFieldValue(data && data.budgetFieldValue ? ((data.budgetFieldValue.value * 1.0) / 100).toFixed(2) : 0.0);
     setTotalDebt(data && data.budgetFieldValue ? ((data.budgetFieldValue.totalDebt * 1.0) / 100).toFixed(2) : 0.0);
+    setWithValue(data && data.budgetFieldValue ? true : false);
   }, [data])
 
   return(
@@ -83,6 +85,7 @@ const FieldValue = (props) => {
           <AddFieldValue
             budget={budget}
             fieldId={field.id}
+            withValue={withValue}
             statusChange={statusChange}
             setStatusChange={setStatusChange}
             pristine={pristine}

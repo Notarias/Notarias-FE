@@ -43,7 +43,7 @@ const AddFieldValue = (props) => {
   const {
     budget, 
     fieldId,
-    statusChange,
+    withValue,
     setStatusChange,
     pristine, 
     changeFieldValue,
@@ -146,7 +146,7 @@ const AddFieldValue = (props) => {
   const renderAddFieldValueButton = () => {
     return(
       
-      statusChange ? 
+      withValue ? 
         <Button
           disabled={!pristine}
           color="primary"
