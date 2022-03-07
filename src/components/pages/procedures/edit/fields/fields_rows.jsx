@@ -31,7 +31,7 @@ const FieldsRows = (props) => {
   const [saveButtonStatus, setSaveButtonStatus] = useState(true);
   const [fieldStatus, setFieldStatus] = useState(true);
   
-  const {  loading, data, refetch } = useQuery(
+  const {  loading, data } = useQuery(
     GET_PROCEDURE_FIELD_VALUES,
     {
       variables: { "proceduresTemplateFieldId": field.id, "procedureId": procedure.id }
