@@ -14,7 +14,6 @@ import ClearIcon                                from '@material-ui/icons/Clear';
 import MoreVertIcon                             from '@material-ui/icons/MoreVert';
 import { useQuery }                             from '@apollo/client';
 import { useMutation }                          from '@apollo/client';
-import { CREATE_PROCEDURE_FIELD_VALUE }         from '../../queries_and_mutations/queries';
 import { UPDATE_PROCEDURE_FIELD_VALUE }         from '../../queries_and_mutations/queries';
 import { GET_PROCEDURE_FIELD_VALUES }           from '../../queries_and_mutations/queries';
 import { GET_PROCEDURES_AUDITLOG }              from '../../queries_and_mutations/queries';
@@ -32,7 +31,7 @@ const FieldsRows = (props) => {
   const [saveButtonStatus, setSaveButtonStatus] = useState(true);
   const [fieldStatus, setFieldStatus] = useState(true);
   
-  const {  loading, data } = useQuery(
+  const {  loading, data, refetch } = useQuery(
     GET_PROCEDURE_FIELD_VALUES,
     {
       variables: { "proceduresTemplateFieldId": field.id, "procedureId": procedure.id }
@@ -72,41 +71,6 @@ const FieldsRows = (props) => {
     setSaveButtonStatus(false);    
   }
 
-  const [createProcedureFieldValue, { loading: createProcedureFieldValueLoading }] =
-  useMutation(
-    CREATE_PROCEDURE_FIELD_VALUE,
-    {
-      onCompleted(cacheData) {
-        setInitFieldValue(cacheData && cacheData.createProcedureFieldValue.procedureFieldValue.value);
-        setFieldValueId(cacheData && cacheData.createProcedureFieldValue.procedureFieldValue.id);
-        setFieldValueActive(cacheData && cacheData.createProcedureFieldValue.procedureFieldValue.active);
-        setFieldStatus(true);
-        setSaveButtonStatus(true);
-      },
-      refetchQueries: [
-        {
-          query: GET_PROCEDURE_FIELD_VALUES,
-          variables: { "proceduresTemplateFieldId": field.id, "procedureId": procedure.id }
-        },
-        {
-          query: GET_PROCEDURES_AUDITLOG,  
-            variables: { "procedureId": procedure.id }
-        }
-      ],
-      awaitRefetchQueries: true
-    }
-  )
-
-  const createFieldValue = ( event ) => {
-    createProcedureFieldValue (
-      { variables: {
-        "proceduresTemplateFieldId": field.id,
-        "procedureId": procedure.id,
-        "value": fieldValue,
-      }}
-    )
-  }
-
   const updateFieldValue = ( event ) => {
     updateProcedureFieldValue (
       { variables: {
@@ -143,7 +107,7 @@ const FieldsRows = (props) => {
         refetchQueries: [
           {
             query: GET_PROCEDURE_FIELD_VALUES,
-            variables: { "proceduresTemplateFieldId": field.id, "procedureId": procedure.id }
+              variables: { "proceduresTemplateFieldId": field.id, "procedureId": procedure.id }
           },
           {
             query: GET_PROCEDURES_AUDITLOG,  
@@ -194,7 +158,7 @@ const FieldsRows = (props) => {
             <IconButton
               disabled={saveButtonStatus}
               style={{"padding": "10px"}}
-              onClick={fieldValue ? updateFieldValue : createFieldValue}
+              onClick={updateFieldValue}
             >
               <SaveIcon/>
             </IconButton>
