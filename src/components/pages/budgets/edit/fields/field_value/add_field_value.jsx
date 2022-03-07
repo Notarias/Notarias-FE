@@ -1,4 +1,4 @@
-import React                         from 'react';
+import React, { useState }           from 'react';
 import Button                        from '@material-ui/core/Button';
 import SaveIcon                      from '@material-ui/icons/Save';
 import { useMutation }               from '@apollo/client';
@@ -16,18 +16,18 @@ import { BUDGET_TAXED_FIELDS_FOR_FIELD } from '../../../queries_and_mutations/qu
 
 const buildRefetchQueries = (field, budget) => {
   return(
-    field.taxes.map((tax) => {
+    field ? field.taxes.map((tax) => {
       return({
         query: GET_BUDGET_FIELD_VALUE,
         variables: { "budgetingTemplateFieldId": tax.id , "budgetId": budget.id }
       })
-    })
+    }) : []
   )
 }
 
 const buildRefetchTaxedFieldsQueries = (field, budget) => {
   return(
-    field.taxes.map((taxedField) => {
+    field ? field.taxes.map((taxedField) => {
       return({
         query: BUDGET_TAXED_FIELDS_FOR_FIELD,
         variables: {
@@ -35,7 +35,7 @@ const buildRefetchTaxedFieldsQueries = (field, budget) => {
           "budgetId": budget.id
         }
       })
-    })
+    }) : []
   )
 }
 
@@ -52,8 +52,8 @@ const AddFieldValue = (props) => {
     setChangeInputStatus,
     initialFieldValue
   } = props
-  const [open, setOpen] = React.useState(false);
-
+  const [open, setOpen] = useState(false);
+  
   const handleClickOpen = () => {
     setOpen(true);
   };
