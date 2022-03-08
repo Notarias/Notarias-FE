@@ -16,7 +16,8 @@ const SearchInput = (props) => {
     searchLoading,
     onChangeSearch,
     switchAdvancedSearchClick,
-    runAdvancedSearch
+    runAdvancedSearch,
+    openAdvancedSearch
   } = props
   const [open, setOpen] = React.useState(false)
   const simpleSearchInputRef = createRef()
@@ -37,7 +38,7 @@ const SearchInput = (props) => {
         </div>
         <InputBase
           disabled={open}
-          placeholder={ !runAdvancedSearch ? "Buscar por cliente" : "Buscando…"}
+          placeholder={ openAdvancedSearch ? "Buscar por:" : "Buscar…"}
           onChange={onChangeSearch}
           inputRef={simpleSearchInputRef}
           classes={{

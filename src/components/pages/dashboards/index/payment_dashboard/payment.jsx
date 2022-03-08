@@ -45,7 +45,7 @@ const Payment = (props) => {
             <Divider orientation="vertical" flexItem/>
             <Grid item style={{ marginLeft: "10px", marginRight: "10px"}}>
               <Typography variant='h6'>
-                {`Consepto: ${payment.budgetFieldValue.field.name}`}
+                {`Concepto: ${payment.budgetFieldValue.field.name}`}
               </Typography>
             </Grid>
             {!!payment.voidAt ?

@@ -233,7 +233,7 @@ const NewBudget = (params) => {
             onClick={handleNext}
             disabled={clientInfo ? false : true}
           >
-            Sigiente
+            Siguiente
           </Button>
         )
       case 1:

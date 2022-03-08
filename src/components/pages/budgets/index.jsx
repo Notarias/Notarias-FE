@@ -35,7 +35,7 @@ const BudgetsIndex = (props) => {
   const [moreThanValue, setMoreThanValue] = useState(null);
   const [lessThanValue, setLessThanValue] = useState(null);
   const [runAdvancedSearch, setRunAdvancedSearch] = useState(false);
-  const [openAdvancedSearch, setOpenAdvancedSearch] = useState(false)
+  const [openAdvancedSearch, setOpenAdvancedSearch] = useState(false);
 
   const clientNameInputRef = useRef();
   const procedureInputRef = useRef();
@@ -111,6 +111,7 @@ const BudgetsIndex = (props) => {
           onChangeSearch={onChangeSearch.bind(this)}
           switchAdvancedSearchClick={switchAdvancedSearchClick}
           setRunAdvancedSearch={setRunAdvancedSearch}
+          openAdvancedSearch={openAdvancedSearch}
         />
         {
           openAdvancedSearch && <AdvancedSearchBudget

@@ -233,7 +233,7 @@ const NewProcedure = (params) => {
             onClick={handleNext}
             disabled={clientInfo ? false : true}
           >
-            Sigiente
+            Siguiente
           </Button>
         )
       case 1:
