@@ -72,62 +72,56 @@ const AdvancedSearchBudget = (props) => {
   
   return(
     <Grid container justifyContent="flex-end">
-      <Grid container item xs={6} direction="row" justifyContent="flex-end">
+      <Grid container item xs={6} direction="row" justifyContent="flex-end" style={{marginTop: "20px"}}>
         <Paper style={{ padding: "20px" }}>
-          <Grid container>
-            <Grid container item xs={10}>
-              <Grid item xs={12}>
-                <TextField
-                  inputRef={clientNameInputRef}
-                  onChange={onChangeClientName}
-                  id="client_name"
-                  label="Nombre del cliente"
-                  fullWidth
-                />
-              </Grid>
-              {/* <TextField
-                inputRef={procedureInputRef}
-                onChange={onChangeProcedureName}
-                size="small"
-                id="budgeting"
-                label="Presupuesto"
+          <Grid item xs={12}>
+            <TextField
+              inputRef={clientNameInputRef}
+              onChange={onChangeClientName}
+              id="client_name"
+              label="Nombre del cliente"
+              variant="outlined"
+              size="small"
+              fullWidth
+            />
+          </Grid>
+          <Grid container item xs={12} style={{ paddingTop: '15px' }}>
+            <Grid item xs={4} style={{ paddingRight: '15px' }}>
+              <TextField
+                inputRef={serialNumberInputRef}
+                onChange={onChangeSerialNumber}
+                id="serial_number"
+                label="No. serie"
                 variant="outlined"
-                className={classes.inputInAdvancedSearch}
-              /> */}
-              {/* <Grid item xs={10}> */}
-              <Grid container item xs={12} style={{ paddingTop: '10px' }}>
-                <Grid item xs={4} style={{ paddingRight: '10px' }}>
-                  <TextField
-                    inputRef={serialNumberInputRef}
-                    onChange={onChangeSerialNumber}
-                    id="serial_number"
-                    label="No. serie"
-                    fullWidth
-                  />
-                </Grid>
-                <Grid item xs={4} style={{ paddingRight: '10px' }}>
-                  <TextField
-                    inputRef={moreThanInputRef}
-                    onChange={onChangeMoreThan}
-                    id="more_than"
-                    label="Total mayor a:"
-                    fullWidth
-                  />
-                </Grid>
-                <Grid item xs={4}>
-                  <TextField
-                    inputRef={lessThanInputRef}
-                    onChange={onChangeLessThan}
-                    id="less_than"
-                    label="Total menor a:"
-                    fullWidth
-                  />
-                </Grid>
-              </Grid>
+                size="small"
+                fullWidth
+              />
             </Grid>
-            <Grid container item xs={2} alignItems="center" justifyContent="center">
-              <Button variant="outlined" onClick={startAdvanceSearch}>Buscar</Button>
+            <Grid item xs={4} style={{ paddingRight: '15px' }}>
+              <TextField
+                inputRef={moreThanInputRef}
+                onChange={onChangeMoreThan}
+                id="more_than"
+                label="Total mayor a:"
+                variant="outlined"
+                size="small"
+                fullWidth
+              />
             </Grid>
+            <Grid item xs={4}>
+              <TextField
+                inputRef={lessThanInputRef}
+                onChange={onChangeLessThan}
+                id="less_than"
+                label="Total menor a:"
+                variant="outlined"
+                size="small"
+                fullWidth
+              />
+            </Grid>
+          </Grid>
+          <Grid container item xs alignItems="center" justifyContent="flex-end" style={{ paddingTop: '15px' }}>
+            <Button variant="outlined" color="primary" onClick={startAdvanceSearch}>Buscar</Button>
           </Grid>
         </Paper>
       </Grid>

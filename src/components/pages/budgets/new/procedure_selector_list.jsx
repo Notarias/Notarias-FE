@@ -94,7 +94,7 @@ const ProcedureSelectorList = (props) => {
   return (
     <>
       <Typography className={classes.title} color="textSecondary" gutterBottom>
-        Selecciona un trámite
+        Selecciona un Trámite
       </Typography>
       <TextField
         id="outlined-basic"

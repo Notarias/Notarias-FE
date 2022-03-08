@@ -29,7 +29,7 @@ const SessionsDestroy = (props) => {
       <Dialog open={dialog} onClose={openDialog}>
         <DialogContent>
           <DialogContentText>
-            { 'Presione ACEPTAR para cerrar su sesion' }
+            { 'Presione ACEPTAR para cerrar su sesión' }
           </DialogContentText>
         </DialogContent>
         <DialogActions>

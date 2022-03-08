@@ -173,7 +173,7 @@ const AddFieldValue = (props) => {
         Cambiar el total 
       </DialogTitle>
       <DialogContent>
-        ¿Estás seguro que deseas cambiar el total {initialFieldValue} del cargo a {changeFieldValue}?
+        ¿Desea cambiar el total {initialFieldValue} del cargo a {changeFieldValue}?
       </DialogContent>
       <DialogActions>
         <Button onClick={ handleClose }>

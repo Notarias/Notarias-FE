@@ -70,7 +70,7 @@ const AppointmentsIndex = (props) => {
       <Grid container spacing={3} >
         <Grid item xs={4}>
           <Paper className={classes.marginLeftCalendarPaper} >
-            <Typography variant="h4" component="h2">Calendar</Typography>
+            <Typography variant="h4" component="h2">Calendario</Typography>
             <Grid container justifyContent="center" >
               <Calendar
                 onChange={selectDay}
