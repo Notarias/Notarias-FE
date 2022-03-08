@@ -99,7 +99,7 @@ const BudgetSelectorList = (props) => {
       </Typography>
       <TextField
         id="outlined-basic"
-        label="Buscar Trámite"
+        label="Buscar Presupuesto"
         onChange={searchBudget}
         variant="outlined"
         InputProps={{
