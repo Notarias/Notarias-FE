@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Grid                           from '@material-ui/core/Grid';
+import Fade                           from '@material-ui/core/Fade';
 import { useQuery }                   from '@apollo/client';
 import { GET_PAYMENTS }               from '../index_queries_and_mutations/queries';
 import Payment                        from './payments_dashboard/payment';
@@ -44,9 +45,11 @@ const PaymentsDashboard = (props) => {
         payments && payments ?
           payments.map((payment) => {
             return(
-              <Grid item key={`${payment.__typename}-${payment.id}`} style={{ paddingBottom: "20px", paddingRight: "30px" }}>
-                <Payment payment={payment}/>
-              </Grid>
+              <Fade in={!!payments}>
+                <Grid item key={`${payment.__typename}-${payment.id}`} style={{ paddingBottom: "20px", paddingRight: "30px" }}>
+                  <Payment payment={payment}/>
+                </Grid>
+              </Fade>
             )
           })
         :

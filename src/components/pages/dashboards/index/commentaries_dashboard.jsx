@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Grid                           from '@material-ui/core/Grid';
+import Fade                               from '@material-ui/core/Fade';
 import { useQuery }                   from '@apollo/client';
 import { GET_COMMENTS }               from '../index_queries_and_mutations/queries';
 import Commentary                     from './commentaries_dashboard/commentary';
@@ -44,9 +45,11 @@ const CommentariesDashboard = (props) => {
         comments && comments ?
           comments.map((comment) => {
             return(
-              <Grid item key={`${comment.__typename}-${comment.id}`} style={{ paddingBottom: "20px", paddingRight: "30px" }}>
-                <Commentary comment={comment}/>
-              </Grid>
+              <Fade in={!!comment}>
+                <Grid item key={`${comment.__typename}-${comment.id}`} style={{ paddingBottom: "20px", paddingRight: "30px" }}>
+                  <Commentary comment={comment}/>
+                </Grid>
+              </Fade>
             )
           })
         :

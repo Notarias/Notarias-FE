@@ -1,5 +1,6 @@
 import React, { useEffect, useState }    from 'react'
 import Grid                              from '@material-ui/core/Grid';
+import Fade                               from '@material-ui/core/Fade';
 import { useQuery }                      from '@apollo/client';
 import { GET_APPOINTMENTS }              from '../index_queries_and_mutations/queries';
 import Appointment                       from './appointments_dashboard/appointment';
@@ -44,9 +45,11 @@ const AppointmentsDashboard = (props) => {
         appointments && appointments ?
           appointments.map((appointment) => {
             return(
-              <Grid item key={`${appointment.__typename}-${appointment.id}`} style={{ paddingBottom: "20px", paddingRight: "30px" }}>
-                <Appointment appointment={appointment}/>
-              </Grid>
+              <Fade in={!!appointment}>
+                <Grid item key={`${appointment.__typename}-${appointment.id}`} style={{ paddingBottom: "20px", paddingRight: "30px" }}>
+                  <Appointment appointment={appointment}/>
+                </Grid>
+              </Fade>
             )
           })
         :

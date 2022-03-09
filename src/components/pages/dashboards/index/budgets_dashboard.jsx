@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react'
-import Grid                           from '@material-ui/core/Grid';
-import { useQuery }                   from '@apollo/client';
-import { GET_BUDGETS }                from '../index_queries_and_mutations/queries';
-import Budget                        from './budgets_dashboard/budget';
-import LoadingBudgets                 from './budgets_dashboard/loading_budgets';
-import Typography                     from '@material-ui/core/Typography';
-import Paper                          from '@material-ui/core/Paper';
+import React, { useEffect, useState }     from 'react'
+import Grid                               from '@material-ui/core/Grid';
+import Fade                               from '@material-ui/core/Fade';
+import { useQuery }                       from '@apollo/client';
+import { GET_BUDGETS }                    from '../index_queries_and_mutations/queries';
+import Budget                             from './budgets_dashboard/budget';
+import LoadingBudgets                     from './budgets_dashboard/loading_budgets';
+import Typography                         from '@material-ui/core/Typography';
+import Paper                              from '@material-ui/core/Paper';
 
 const BudgetsDashboard = (props) => {
   const [searchLoading] = useState(false);
@@ -46,9 +47,11 @@ const BudgetsDashboard = (props) => {
         budgets && budgets ?
           budgets.map((budget) => {
             return(
-              <Grid item key={`${budget.__typename}-${budget.id}`} style={{ paddingBottom: "20px", paddingRight: "30px" }}>
-                <Budget budget={budget}/>
-              </Grid>
+              <Fade in={!!budget}>
+                <Grid item key={`${budget.__typename}-${budget.id}`} style={{ paddingBottom: "20px", paddingRight: "30px" }}>
+                  <Budget budget={budget}/>
+                </Grid>
+              </Fade>
             )
           })
         :

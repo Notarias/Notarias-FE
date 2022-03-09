@@ -1,8 +1,9 @@
 import React, { useEffect, useState }     from 'react'
 import Grid                               from '@material-ui/core/Grid';
+import Fade                               from '@material-ui/core/Fade';
 import { useQuery }                       from '@apollo/client';
 import { GET_CREDIT_PAYMENTS }            from '../index_queries_and_mutations/queries';
-import CreditPayment                     from './credit_payments_dashboard/credit_payment';
+import CreditPayment                      from './credit_payments_dashboard/credit_payment';
 import LoadingCreditPayments              from './credit_payments_dashboard/loading_credit_payments';
 import Typography                         from '@material-ui/core/Typography';
 import Paper                              from '@material-ui/core/Paper';
@@ -44,9 +45,11 @@ const CreditPaymentsDashboard = (props) => {
         creditPayments && creditPayments ?
           creditPayments.map((creditPayment) => {
             return(
-              <Grid item key={`${creditPayment.__typename}-${creditPayment.id}`} style={{ paddingBottom: "20px", paddingRight: "30px" }}>
-                <CreditPayment creditPayment={creditPayment}/>
-              </Grid>
+              <Fade in={!!creditPayment}>
+                <Grid item key={`${creditPayment.__typename}-${creditPayment.id}`} style={{ paddingBottom: "20px", paddingRight: "30px" }}>
+                  <CreditPayment creditPayment={creditPayment}/>
+                </Grid>
+              </Fade>
             )
           })
         :

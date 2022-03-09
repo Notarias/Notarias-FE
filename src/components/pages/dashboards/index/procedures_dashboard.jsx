@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Grid                           from '@material-ui/core/Grid';
+import Fade                               from '@material-ui/core/Fade';
 import { useQuery }                   from '@apollo/client';
 import { GET_PROCEDURES }             from '../index_queries_and_mutations/queries';
 import Procedure                      from './procedures_dashboard/procedure';
@@ -46,9 +47,11 @@ const ProceduresDashboard = (props) => {
         procedures && procedures ?
           procedures.map((procedure) => {
             return(
-              <Grid item key={`${procedure.__typename}-${procedure.id}`} style={{ paddingBottom: "20px", paddingRight: "30px" }}>
-                <Procedure procedure={procedure}/>
-              </Grid>
+              <Fade in={!!procedure}>
+                <Grid item key={`${procedure.__typename}-${procedure.id}`} style={{ paddingBottom: "20px", paddingRight: "30px" }}>
+                  <Procedure procedure={procedure}/>
+                </Grid>
+              </Fade>
             )
           })
         :
