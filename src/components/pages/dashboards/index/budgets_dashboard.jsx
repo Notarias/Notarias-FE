@@ -2,17 +2,19 @@ import React, { useEffect, useState } from 'react'
 import Grid                           from '@material-ui/core/Grid';
 import { useQuery }                   from '@apollo/client';
 import { GET_BUDGETS }                from '../index_queries_and_mutations/queries';
-import Budget                         from './budgets_dashboard/budget';
+import Budget                        from './budgets_dashboard/budget';
+import LoadingBudgets                 from './budgets_dashboard/loading_budgets';
 import Typography                     from '@material-ui/core/Typography';
 import Paper                          from '@material-ui/core/Paper';
 
 const BudgetsDashboard = (props) => {
   const [searchLoading] = useState(false);
-  const [sortField]     = useState("serial_number")
-  const [sortDirection] = useState("desc")
-  const [page]          = useState(1)
-  const [per]           = useState(10)
-  const [budgets, setBudgets] = useState([])
+  const [sortField]     = useState("serial_number");
+  const [sortDirection] = useState("desc");
+  const [page]          = useState(1);
+  const [per]           = useState(10);
+  const [array] = useState([1,2,3,4,5,6,7,8,9]);
+  const [budgets, setBudgets] = useState([]);
 
   let variables = {
     page: page,
@@ -22,30 +24,39 @@ const BudgetsDashboard = (props) => {
     searchLoading: searchLoading
   }
 
-  const  { data } = useQuery(
+  const  { loading, data } = useQuery(
     GET_BUDGETS, { variables: variables, fetchPolicy: "no-cache" }
   );
 
   useEffect( () =>{
     data && budgets.length === 0 && setBudgets(data.budgets)
-  }, [data])
+  }, [loading, data])
   
   return(
     <Grid container item direction='column' alignItems="stretch"  justifyContent="flex-start" style={{ paddingTop: "30px" }}>
-      {budgets.length > 0 ?
-        budgets && budgets.map((budget) => {
+      { loading || !data ?
+        array.map((index) => {
           return(
-            <Grid item key={`${budget.__typename}-${budget.id}`} style={{ paddingBottom: "20px", paddingRight: "30px" }}>
-              <Budget budget={budget}/>
+            <Grid item key={`budgetLoading-${index}`} style={{ paddingBottom: "20px", paddingRight: "30px" }}>
+              <LoadingBudgets/>
             </Grid>
           )
         })
       :
-        <Paper>
-          <Typography variant='h4' style={{padding: "20px"}}>
-            No hay presupuestos registrados por el momento
-          </Typography>
-        </Paper>
+        budgets.length > 0 ?
+          budgets && budgets.map((budget) => {
+            return(
+              <Grid item key={`${budget.__typename}-${budget.id}`} style={{ paddingBottom: "20px", paddingRight: "30px" }}>
+                <Budget budget={budget}/>
+              </Grid>
+            )
+          })
+        :
+          <Paper>
+            <Typography variant='h4' style={{padding: "20px"}}>
+              No hay presupuestos registrados por el momento
+            </Typography>
+          </Paper>
       }
     </Grid>
   )

@@ -160,9 +160,6 @@ const Payment = (props) => {
           <Divider orientation="vertical" flexItem/>
           <Grid item container alignItems='center' xs style={{ paddingLeft: "20px"}}>
             <Grid item container alignItems="center">
-              <Typography>
-                <strong>Encargado: </strong>
-              </Typography>
               {payment.budget.asignee ?
                 <Grid item container direction="row" spacing={1} alignItems="center">
                   <Grid item>

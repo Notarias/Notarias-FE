@@ -156,12 +156,7 @@ const Budget = (props) => {
             </Grid>
           </Grid>
           <Divider orientation="vertical" flexItem/>
-          <Grid item container xs direction="column" alignItems='center' style={{ paddingLeft: "5px"}}>
-            <Grid item xs>
-              <Typography>
-                <strong>Encargado: </strong>
-              </Typography>
-            </Grid>
+          <Grid item container xs direction="column" justifyContent='center' alignContent='flex-start' style={{ paddingLeft: "5px"}}>
             {asignee ?
               <Grid item container xs direction="row" spacing={1}>
                 <Grid item>
@@ -173,9 +168,11 @@ const Budget = (props) => {
                 </Grid>
               </Grid>
             :
-              <Typography>
-                Sin Usuario Asignado
-              </Typography>
+              <Grid item>
+                <Typography>
+                  Sin Usuario Asignado
+                </Typography>
+              </Grid>
             }
           </Grid>
         </Grid>
