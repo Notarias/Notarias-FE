@@ -149,9 +149,6 @@ const Appointment = (props) => {
           <Divider orientation="vertical" flexItem/>
           <Grid item container xs alignItems='center' style={{ paddingLeft: "10px"}}>
             <Grid item container>
-              <Typography>
-                <strong>Creador: </strong>
-              </Typography>
               {creator ?
                 <Grid item container direction="row" spacing={1}>
                   <Grid item>

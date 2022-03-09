@@ -142,9 +142,6 @@ const Procedure = (props) => {
           <Divider orientation="vertical" flexItem/>
           <Grid item container xs alignItems='center' style={{ paddingLeft: "10px"}}>
             <Grid item container>
-              <Typography>
-                <strong>Encargado: </strong>
-              </Typography>
               {asignee ?
                 <Grid item container direction="row" spacing={1}>
                   <Grid item>

@@ -11,7 +11,7 @@ import Divider                        from '@material-ui/core/Divider';
 import CloseIcon                      from '@material-ui/icons/Close';
 
 const CommentsDialog = (props) => {
-  const { comment, commentType, commentDialog, statsCommentDialog } = props
+  const { comment, commentDialog, statsCommentDialog } = props
 
   return (
     <Dialog onClose={statsCommentDialog} aria-labelledby="comments-title" open={commentDialog}>
@@ -28,7 +28,7 @@ const CommentsDialog = (props) => {
             }
             title={
               <Typography variant='h6'>
-                {commentType(comment)}
+                {comment.commentableType}
               </Typography>
             }
             subheader={
