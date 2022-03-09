@@ -41,8 +41,8 @@ const CommentariesDashboard = (props) => {
           )
         })
       :
-        comments.length > 0 ?
-          comments && comments.map((comment) => {
+        comments && comments ?
+          comments.map((comment) => {
             return(
               <Grid item key={`${comment.__typename}-${comment.id}`} style={{ paddingBottom: "20px", paddingRight: "30px" }}>
                 <Commentary comment={comment}/>

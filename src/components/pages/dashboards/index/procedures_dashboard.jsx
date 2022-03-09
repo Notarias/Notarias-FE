@@ -43,8 +43,8 @@ const ProceduresDashboard = (props) => {
           )
         })
       :
-        procedures.length > 0 ?
-          procedures && procedures.map((procedure) => {
+        procedures && procedures ?
+          procedures.map((procedure) => {
             return(
               <Grid item key={`${procedure.__typename}-${procedure.id}`} style={{ paddingBottom: "20px", paddingRight: "30px" }}>
                 <Procedure procedure={procedure}/>

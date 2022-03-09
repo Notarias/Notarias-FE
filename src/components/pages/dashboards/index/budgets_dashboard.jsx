@@ -43,8 +43,8 @@ const BudgetsDashboard = (props) => {
           )
         })
       :
-        budgets.length > 0 ?
-          budgets && budgets.map((budget) => {
+        budgets && budgets ?
+          budgets.map((budget) => {
             return(
               <Grid item key={`${budget.__typename}-${budget.id}`} style={{ paddingBottom: "20px", paddingRight: "30px" }}>
                 <Budget budget={budget}/>

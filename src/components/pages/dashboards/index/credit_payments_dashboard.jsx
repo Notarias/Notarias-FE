@@ -41,8 +41,8 @@ const CreditPaymentsDashboard = (props) => {
           )
         })
       :
-        creditPayments.length > 0 ?
-          creditPayments && creditPayments.map((creditPayment) => {
+        creditPayments && creditPayments ?
+          creditPayments.map((creditPayment) => {
             return(
               <Grid item key={`${creditPayment.__typename}-${creditPayment.id}`} style={{ paddingBottom: "20px", paddingRight: "30px" }}>
                 <CreditPayment creditPayment={creditPayment}/>

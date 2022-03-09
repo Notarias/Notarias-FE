@@ -41,8 +41,8 @@ const AppointmentsDashboard = (props) => {
           )
         })
       :
-        appointments.length > 0 ?
-          appointments && appointments.map((appointment) => {
+        appointments && appointments ?
+          appointments.map((appointment) => {
             return(
               <Grid item key={`${appointment.__typename}-${appointment.id}`} style={{ paddingBottom: "20px", paddingRight: "30px" }}>
                 <Appointment appointment={appointment}/>

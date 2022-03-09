@@ -41,8 +41,8 @@ const PaymentsDashboard = (props) => {
           )
         })
       :
-        payments.length > 0 ?
-          payments && payments.map((payment) => {
+        payments && payments ?
+          payments.map((payment) => {
             return(
               <Grid item key={`${payment.__typename}-${payment.id}`} style={{ paddingBottom: "20px", paddingRight: "30px" }}>
                 <Payment payment={payment}/>
