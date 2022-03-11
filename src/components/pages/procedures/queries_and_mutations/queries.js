@@ -34,37 +34,37 @@ mutation createProcedure(
 `
 
 export const GET_PROCEDURES = gql`
-query Procedures(
-  $page: Int
-  $per: Int
-  $sortDirection: String
-  $sortField: String
-  $search: PROCEDURES_SEARCH_INPUT
-){
-  procedures(
-    page: $page
-    per: $per
-    sortDirection: $sortDirection
-    sortField: $sortField
-    search: $search)
-  {
-    id
-    serialNumber
-    client{ fullName }
-    budgetingTemplate { name }
-    proceduresTemplate { name }
-    asignee { 
-      firstName
-      lastName
-      avatarThumbUrl
+  query procedures(
+    $page: Int
+    $per: Int
+    $sortDirection: String
+    $sortField: String
+    $search: PROCEDURES_SEARCH_INPUT
+  ){
+    procedures(
+      page: $page
+      per: $per
+      sortDirection: $sortDirection
+      sortField: $sortField
+      search: $search)
+    {
+      id
+      serialNumber
+      client{ fullName }
+      budgetingTemplate { name }
+      proceduresTemplate { name }
+      asignee { 
+        firstName
+        lastName
+        avatarThumbUrl
+      }
+      reporter { avatarThumbUrl }
+      createdAt
+      updatedAt
+      completedAt
     }
-    reporter { avatarThumbUrl }
-    createdAt
-    updatedAt
-    completedAt
+    proceduresCount
   }
-  proceduresCount
-}  
 `
 
 export const LOAD_USERS = gql`
