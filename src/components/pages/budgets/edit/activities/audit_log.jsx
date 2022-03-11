@@ -40,7 +40,7 @@ const AuditLog = (props) => {
   
   useEffect(
     () => {
-      data && setAuditlog(data ? data.budgetAuditLogs : []);
+      data && setAuditlog(data.budgetAuditLogs || []);
     },
     [loading, data]
   );
