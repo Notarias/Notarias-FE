@@ -47,7 +47,7 @@ const BudgetsEdit = (props) => {
         </Grid>
         <Grid item xs={4}>
           <Paper elevation={0} style={{ minHeight: "100%" }}>
-            { budget && <Activities budget={budget}/> }
+            { budget && <Activities budget={budget} loadingBudget={loading}/> }
           </Paper>
         </Grid>
       </Grid>

@@ -139,29 +139,38 @@ const CommentEdit = (props) => {
 
   return(
     <>
-      <Grid container direction="row" spacing={2}>
-        <Grid container item xs={1}  justifyContent="center" alignItems="flex-start">
-          <Avatar src={ comment.user.avatarThumbUrl} size="small"/>
-        </Grid>
-
-        <Grid container item xs={9} justifyContent="flex-start" alignItems="flex-start">
+      <Grid container direction="row" justifyContent='center'>
+        <Grid container item xs={11} justifyContent="flex-start" alignItems="flex-start">
           <Grid container item direction="row" spacing={2} justifyContent="flex-start">
-            <Grid container item xs={4} justifyContent="flex-start">
+            <Grid item xs={2}>
+              <Avatar src={ comment.user.avatarThumbUrl} size="small"/>
+            </Grid>
+            <Grid container item xs={6} direction='column' >
               <Grid item>
-                <Typography variant="subtitle2">
+                <Typography variant="subtitle2" align='left'>
                   {comment.user.firstName}  {comment.user.lastName}
                 </Typography>
               </Grid>
-            </Grid>
-            <Grid container item xs={8} justifyContent="flex-start">
               <Grid item>
                 <Typography color="primary" variant="body2" align="left">
                     {`Creado: ${getCurrentDate(comment)}`}
                 </Typography>
               </Grid>
             </Grid>
+            <Grid container item xs justifyContent='flex-end'>
+              {(comment.createdAt === comment.updatedAt) ? 
+                <></>
+                :
+                <Chip 
+                  label="Editado"
+                  variant="outlined"
+                  color="primary"
+                  style={{marginRight: '5px'}}
+                />
+              }
+            </Grid>
           </Grid>
-          <Grid container item xs={12} justifyContent="flex-start">
+          <Grid container item xs={12} justifyContent="flex-start" style={{marginTop: '5px'}}>
             { editStatus ?
               <>
                 <Grid container item xs={12} justifyContent="flex-start">
@@ -210,20 +219,6 @@ const CommentEdit = (props) => {
                   </Grid>
               </Grid>
             </>
-            }
-          </Grid>
-        </Grid>
-        <Grid container item xs={2} justifyContent="flex-end">
-          <Grid item>
-            {(comment.createdAt === comment.updatedAt) ? 
-              <></>
-              :
-              <Chip 
-                label="Editado"
-                variant="outlined"
-                color="primary"
-                style={{marginRight: '5px'}}
-              />
             }
           </Grid>
         </Grid>
