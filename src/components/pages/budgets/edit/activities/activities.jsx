@@ -11,13 +11,13 @@ import Tab                  from '@material-ui/core/Tab';
 
 
 const Activities = (props) => {
-  const { budget } = props
+  const { budget, loadingBudget } = props
   const [activity, setActivity] = useState(0)
 
   const  renderActivitiesMenu = () => {
     switch (activity) {
       case 0 :
-        return(<GeneralInformation budget={budget}/>)
+        return(<GeneralInformation budget={budget} loadingBudget={loadingBudget}/>)
       case 1 :
         return(<CommentsList budget={budget}/>)
       case 2 :
