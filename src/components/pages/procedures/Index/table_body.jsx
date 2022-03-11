@@ -1,9 +1,12 @@
-import React, { useEffect }               from 'react'
-import TableBody                          from '@material-ui/core/TableBody';
-import { useQuery }                       from '@apollo/client';
-import { GET_PROCEDURES }                 from '../queries_and_mutations/queries';
-import TableRows                        from './table_rows';
-import LoadingProgress                    from '../../../ui/loading_progress';
+import React, { useState, useEffect }           from 'react'
+import TableRow                                 from '@material-ui/core/TableRow';
+import TableBody                                from '@material-ui/core/TableBody';
+import TableCell                                from '@material-ui/core/TableCell';
+import Skeleton                                 from '@material-ui/lab/Skeleton';
+import { useQuery }                             from '@apollo/client';
+import { GET_PROCEDURES }                       from '../queries_and_mutations/queries';
+import TableRows                                from './table_rows';
+import { Typography }                           from '@material-ui/core';
 
 const ProceduresTableBody = (props) => {
 
@@ -26,48 +29,58 @@ const ProceduresTableBody = (props) => {
   let variables = {
     page: page + 1,
     per: per,
+    sortDirection: sortDirection,
+    sortField: sortField,
     search: {
       simpleSearch: simpleSearchValue,
-      serialNumber: serialNumberValue,
       clientFullName: clientFullNameValue,
+      serialNumber: serialNumberValue,
       budgetingTemplateName: budgetingTemplateNameValue,
       proceduresTemplateName: proceduresTemplateNameValue,
       createdAt: createdAtValue,
-    },
-    sortDirection: sortDirection,
-    sortField: sortField
+    }
   }
+  
+  const [array] = useState([1,2,3,4,5]);
 
   const { loading, data, refetch } = useQuery(
     GET_PROCEDURES, { variables: variables }
   );
 
-  let totalCount = data && data.proceduresCount;
-
-  const proceduresRows = (params) => {
-    return(
-      params.procedures.map((procedure) => { 
-        return(
-          <TableRows
-            procedure={ procedure }
-            key={ procedure.id + "-procedureRow" }
-            classes={ classes }
-          />
-        )
-      })
-    )
-  }
-  
-  useEffect(() => {
-    refetch(variables);
-    setTemplatesVariables(variables)
-    totalCount && assingTotalRecords(totalCount)
-  }, [page, per, simpleSearchValue, serialNumberValue, clientFullNameValue, budgetingTemplateNameValue,
-    proceduresTemplateNameValue, createdAtValue, sortField, sortDirection, totalCount ]);
-
   return(
     <TableBody>
-      { loading || !data ? <LoadingProgress classes={ classes }/> : proceduresRows(data) }
+      {
+        loading || !data ? array.map(
+          (index) => {
+            return (
+              <TableRow key={`proceduresLoading-${index}`}>
+                <TableCell align="center" colSpan={12} className={ classes.loadingTableCell }>
+                  <Skeleton variant="rect" width="100%" heigth={50}/>
+                  <Skeleton variant="rect" width="100%" heigth={50}/>
+                </TableCell>
+              </TableRow>
+            )
+          }
+        ) : (
+          data.procedures.length ? data.procedures.map(
+            (procedure) => { 
+              return(
+                <TableRows
+                  procedure={ procedure }
+                  key={ procedure.id + "-procedureRow" }
+                  classes={ classes }
+                />
+              ) 
+            } 
+          ) : (
+            <TableRow>
+              <TableCell align="center" colSpan={7} className={ classes.loadingTableCell }>
+                <Typography variant='h5' align='center'>Sin Resultados</Typography>
+              </TableCell>
+            </TableRow>
+          )
+        )
+      }
     </TableBody>
   )
 }

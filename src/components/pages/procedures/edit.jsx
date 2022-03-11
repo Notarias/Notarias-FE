@@ -46,7 +46,7 @@ const ProceduresEdit = (props) => {
         </Grid>
         <Grid item xs={4}>
           <Paper elevation={0} style={{ minHeight: "100%" }}>
-            { procedure && <Activities procedure={procedure}/> }
+            { procedure && <Activities procedure={procedure} loadingProcedure={loading}/> }
           </Paper>
         </Grid>
       </Grid>

@@ -11,13 +11,13 @@ import Tab                  from '@material-ui/core/Tab';
 
 
 const Activities = (props) => {
-  const { procedure } = props
+  const { procedure, loadingProcedure } = props
   const [activity, setActivity] = useState(0)
   
   const  renderActivitiesMenu = () => {
     switch (activity) {
       case 0 :
-        return(<GeneralInformation procedure={procedure}/>)
+        return(<GeneralInformation procedure={procedure} loadingProcedure={loadingProcedure}/>)
       case 1 :
         return(<CommentsList procedure={procedure}/>)
       case 2 :

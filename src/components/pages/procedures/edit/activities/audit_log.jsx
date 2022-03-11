@@ -1,11 +1,12 @@
 import React, {useState, useEffect}        from 'react';
-import Typography               from '@material-ui/core/Typography';
-import Grid                     from '@material-ui/core/Grid';
-import { withStyles }           from '@material-ui/core/styles';
-import { styles }               from '../../styles';
-import Avatar                   from '@material-ui/core/Avatar';
-import { useQuery }             from '@apollo/client';
-import { GET_PROCEDURES_AUDITLOG } from '../../queries_and_mutations/queries';
+import Typography                          from '@material-ui/core/Typography';
+import Grid                                from '@material-ui/core/Grid';
+import Skeleton                            from '@material-ui/lab/Skeleton';
+import { withStyles }                      from '@material-ui/core/styles';
+import { styles }                          from '../../styles';
+import Avatar                              from '@material-ui/core/Avatar';
+import { useQuery }                        from '@apollo/client';
+import { GET_PROCEDURES_AUDITLOG }         from '../../queries_and_mutations/queries';
 
 const getCurrentDate = (obj, separator='/') => {
   let newDate = new Date(Date.parse(obj.createdAt))
@@ -29,8 +30,9 @@ const AuditLog = (props) => {
   const { procedure } = props
 
   const [auditLog, setAuditLog] = useState();
+  const [array] = useState([1,2,3,4,5,6,7,8,9]);
 
-  const { data } = useQuery(
+  const { loading, data } = useQuery(
     GET_PROCEDURES_AUDITLOG, { 
       variables: { "procedureId": procedure.id }
     }
@@ -38,16 +40,30 @@ const AuditLog = (props) => {
   
   useEffect(
     () => {
-      data && setAuditLog(data ? data.procedureAuditLogs : []);
+      data && setAuditLog(data.procedureAuditLogs || []);
     },
-    [data]
+    [loading, data]
   );
 
   return(
     <Grid container item>
       <Grid container item justifyContent="flex-start" spacing={2}>
-        {
-          auditLog && auditLog.map((obj) => {
+        { loading || !auditLog ? array.map(
+            (index) => {
+              return(
+                <Grid container item key={index + "-audit-log"} direction="row" alignItems="center">
+                  <Grid item xs={1}>
+                    <Skeleton variant="circle" width={40} height={40} />
+                  </Grid>
+                  <Grid item xs>
+                    <Skeleton variant="rect" width="100%"/>
+                    <Skeleton variant="rect" width="100%"/>
+                  </Grid>
+                </Grid>
+              )
+            }
+        ) : (
+          auditLog.map((obj) => {
             return(
               <Grid container item key={obj.id + "-audit-log"} direction="row" alignItems="center">
                 <Grid container item xs={2} alignItems="center" justifyContent="flex-start">
@@ -76,7 +92,7 @@ const AuditLog = (props) => {
               </Grid>
             )
           })
-        }
+        )}
       </Grid>
     </Grid>
   )
