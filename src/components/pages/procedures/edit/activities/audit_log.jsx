@@ -40,7 +40,7 @@ const AuditLog = (props) => {
   
   useEffect(
     () => {
-      data && setAuditLog(data ? data.procedureAuditLogs : []);
+      data && setAuditLog(data.procedureAuditLogs || []);
     },
     [loading, data]
   );
