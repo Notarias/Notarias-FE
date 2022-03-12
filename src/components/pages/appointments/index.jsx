@@ -13,6 +13,7 @@ import EventList from './eventList/index';
 import { useQuery } from '@apollo/client';
 import { GET_APPOINTMENTS } from './queries_and_mutations/queries';
 import Box from '@material-ui/core/Box';
+import LoadingAppointments from './loading_appointments';
 
 const AppointmentsIndex = (props) => {
   const { classes } = props
@@ -36,14 +37,13 @@ const AppointmentsIndex = (props) => {
     sortField: sortField
   };
 
-  const { data, refetch } = useQuery(
+  const { loading, data, refetch } = useQuery(
     GET_APPOINTMENTS, { variables: variables }
   );
 
   useEffect(() => {
-    setAppointmentsList(data && data.appointments);
-    refetch(variables)
-  }, [page, per, sortField, data]);
+    refetch(variables);
+  }, [page, per, sortField, loading, data]);
 
   const openNewDialog = () => {
     setNewDialog(true);
@@ -58,53 +58,60 @@ const AppointmentsIndex = (props) => {
   };
 
   return(
-    <Grid>
-      <Grid container spacing={3} style={ { paddingTop: "30px", paddingBottom: "30px" } }>
-        <Grid item xs={4}></Grid>
-        <Grid item xs={8} container justifyContent="flex-start">
-          <Box color="primary.main">
-            <Typography variant="h4" component="h2" >{date.toLocaleDateString('es-ES', { month: 'long', day: 'numeric' })}</Typography>
-          </Box>
-        </Grid>
-      </Grid>
-      <Grid container spacing={3} >
-        <Grid item xs={4}>
-          <Paper className={classes.marginLeftCalendarPaper} >
-            <Typography variant="h4" component="h2">Calendario</Typography>
-            <Grid container justifyContent="center" >
-              <Calendar
-                onChange={selectDay}
-                value={date}
-              />
+    <>
+    { 
+      loading || !data  ?
+        <LoadingAppointments/>
+      :
+        <>
+          <Grid container spacing={3} style={ { paddingTop: "30px", paddingBottom: "30px" } }>
+            <Grid item xs={4}></Grid>
+            <Grid item xs={8} container justifyContent="flex-start">
+              <Box color="primary.main">
+                <Typography variant="h4" component="h2" >{(date.toLocaleDateString('es-ES', { month: 'long', day: 'numeric', year: 'numeric' })).toUpperCase()}</Typography>
+              </Box>
             </Grid>
-            <Grid className={classes.calendarNew}>
-              <Grid >
-                <Button variant="contained" color="primary" onClick={openNewDialog}>
-                  Nuevo Evento
-                </Button>
+          </Grid>
+          <Grid container spacing={3} >
+            <Grid item xs={4}>
+              <Paper className={classes.marginLeftCalendarPaper} >
+                <Typography variant="h4" component="h2">Calendario</Typography>
+                <Grid container justifyContent="center" >
+                  <Calendar
+                    onChange={selectDay}
+                    value={date}
+                  />
+                </Grid>
+                <Grid className={classes.calendarNew}>
+                  <Grid >
+                    <Button variant="contained" color="primary" onClick={openNewDialog}>
+                      Nuevo Evento
+                    </Button>
+                  </Grid>
+                </Grid>
+                <Dialog onClose={closeNewDialog} aria-labelledby="simple-dialog-title" open={newDialog}>
+                  <NewAppointmentDialog closeNewDialog={closeNewDialog} getAppointmensVariables={variables}/>
+                </Dialog>
+              </Paper>
+            </Grid>
+
+            <Grid item xs={8}>
+              <Grid>
+                {data.appointments.length > 0 ?
+                  data.appointments.map(appointment  => {
+                    return(<EventList key={`dashboard-appointment-${appointment.id}`} appointment={appointment} getAppointmensVariables={variables} />)
+                  })
+                :
+                  <Paper style={{ padding: "30px" }}>
+                    <Typography variant='h4'>Sin Eventos</Typography>
+                  </Paper>
+                }
               </Grid>
             </Grid>
-            <Dialog onClose={closeNewDialog} aria-labelledby="simple-dialog-title" open={newDialog}>
-              <NewAppointmentDialog closeNewDialog={closeNewDialog} getAppointmensVariables={variables}/>
-            </Dialog>
-          </Paper>
-        </Grid>
-
-        <Grid item xs={8}>
-          <Grid className={classes.windowScrollEventList}>
-            {appointmentsList && appointmentsList.length > 0 ?
-              appointmentsList.map(appointment  => {
-                return(<EventList key={`dashboard-appointment-${appointment.id}`} appointment={appointment} getAppointmensVariables={variables} />)
-              })
-            :
-              <Paper style={{ padding: "30px" }}>
-                <Typography variant='h4'>Sin Eventos</Typography>
-              </Paper>
-            }
           </Grid>
-        </Grid>
-      </Grid>
-    </Grid>
+        </>
+    }
+    </>
   )
 }
 export default withStyles(styles)(AppointmentsIndex);

@@ -18,7 +18,7 @@ import EventNoteIcon from '@material-ui/icons/EventNote';
 import DeleteIcon from '@material-ui/icons/Delete';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import IconButton from '@material-ui/core/IconButton';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import LoadingAppointmentsList from './loading_appointments_list';
 import EditAppointmentDialog from './../edit/edit_appointment_dialog';
 import { useQuery } from '@apollo/client';
 import { useMutation } from '@apollo/client';
@@ -142,7 +142,7 @@ const EventList = (props) => {
             </Grid>
             <Grid item>
               <Typography variant='body2'>
-                {!appointment ? <CircularProgress size={ "40px" }/> : appointment.place}
+                {appointment && appointment.place}
               </Typography>
             </Grid>
           </Grid>
@@ -155,7 +155,7 @@ const EventList = (props) => {
               </Grid>
               <Grid container item xs={8} justifyContent='flex-start'>
                 <Typography variant='caption' className={classes.centerText}>
-                  {!appointment ? <CircularProgress size={ "40px" }/> : formatDate(initDate)}
+                  {appointment && formatDate(initDate)}
                 </Typography>
               </Grid>
             </Grid>
@@ -167,14 +167,14 @@ const EventList = (props) => {
               </Grid>
               <Grid container item xs={8} justifyContent='flex-start'>
                 <Typography variant='caption' className={classes.centerText}>
-                  {!appointment ? <CircularProgress size={ "40px" }/> : formatDate(endDate)}
+                  {appointment && formatDate(endDate)}
                 </Typography>
               </Grid>
             </Grid>
           </Grid>
           <Grid item xs>
             <Typography variant='caption' className={classes.centerText}>
-              {!appointment ? <CircularProgress size={ "40px" }/> : `${appointment.extraData.substr(0,40)}...`}
+              {appointment && `${appointment.extraData.substr(0,40)}...`}
             </Typography>
           </Grid>
           <Grid container item xs={2} justifyContent='flex-end'>
@@ -238,7 +238,7 @@ const EventList = (props) => {
       </Paper>
     </Grid>
     :
-    <CircularProgress size={ "40px" }/>
+    <LoadingAppointmentsList/>
   )
 }
 export default withStyles(styles)(EventList);
