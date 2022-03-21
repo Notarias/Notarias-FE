@@ -261,6 +261,7 @@ export const GET_BUDGETS = gql`
       total
       totalCredit
       totalDebt
+      totalPayable
       totalPaid
       createdAt
       asigneeId

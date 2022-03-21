@@ -58,6 +58,7 @@ export const CREATE_BUDGET = gql`
         totalDebt
         totalCredit
         totalPaid
+        totalPayable
       }
       clientMutationId
     }
@@ -107,6 +108,7 @@ export const GET_BUDGETS = gql`
       totalCredit
       totalDebt
       totalPaid
+      totalPayable
       completedAt
     }
     budgetsCount
@@ -245,6 +247,7 @@ query budget(
       totalCredit
       totalPaid
       totalDebt
+      totalPayable
       serialNumber
       proceedingNumber
       writingNumber
@@ -304,6 +307,7 @@ query budget(
       totalCredit
       totalPaid
       totalDebt
+      totalPayable
       serialNumber
       createdAt
       asignee {
@@ -372,7 +376,7 @@ export const GET_BUDGETING_TAB_TOTALS = gql`
   query budgetingTemplateTabTotals ($id: ID!, $budgetId: ID!) {
     tabTotals (id: $id, budgetId: $budgetId) {
       total
-      totalDebt
+      totalPayable
       totalPaid
     }
   }
@@ -525,7 +529,7 @@ export const GET_BUDGET_FIELD_VALUE = gql`
       value
       budgetId
       budgetingTemplateFieldId
-      totalDebt
+      totalPayable
       totalPaid
       active
       taxes {
@@ -589,6 +593,7 @@ export const GET_BUDGET_TOTALS = gql`
       totalCredit
       totalPaid
       totalDebt
+      totalPayable
     }
   }
 `
@@ -831,6 +836,7 @@ export const UPDATE_BUDGET = gql`
         totalDebt
         totalPaid
         totalCredit
+        totalPayable
         proceedingNumber
         writingNumber
         asignee{

@@ -27,7 +27,7 @@ const FieldValue = (props) => {
   const { budget, field } = props
 
   const [value, setValue] = useState(0)
-  const [totalDebt, setTotalDebt] = useState(0)
+  const [totalPayable, setTotalPayable] = useState(0)
   const [editing, setEditing] = useState(false)
   const [editingValue, setEditingValue] = useState()
   const [budgetFieldValue, setBudgetFieldValue] = useState()
@@ -56,24 +56,24 @@ const FieldValue = (props) => {
     }
   }
 
-  const totalDebtCalculation = (budgetFieldValue) => {
-    return((budgetFieldValue ? (budgetFieldValue.totalDebt * 1.0) / 100 : 0.0).toFixed(2))
+  const totalPayableCalculation = (budgetFieldValue) => {
+    return((budgetFieldValue ? (budgetFieldValue.totalPayable * 1.0) / 100 : 0.0).toFixed(2))
   }
 
   const totalsCalculation = () => {
     let value = fieldValueCalculation(data.budgetFieldValue);
-    let debt = totalDebtCalculation(data.budgetFieldValue);
+    let debt = totalPayableCalculation(data.budgetFieldValue);
     setBudgetFieldValue(data.budgetFieldValue);
     setValue(value);
     setEditingValue(value)
-    setTotalDebt(debt);
+    setTotalPayable(debt);
   }
 
   useEffect(() => {
     if (data && data.budgetFieldValue) {
       totalsCalculation()
     }
-  }, [loading, data && data.budgetFieldValue, data && data.budgetFieldValue && data.budgetFieldValue.totalDebt])
+  }, [loading, data && data.budgetFieldValue, data && data.budgetFieldValue && data.budgetFieldValue.totalPayable])
 
   // const handleNameChange = (event) => {
   //   setName(event.target.value);
@@ -118,7 +118,7 @@ const FieldValue = (props) => {
         <Grid item xs={3}>
           <Typography gutterBottom align='center'>
             <NumberFormat
-              value={totalDebt}
+              value={totalPayable}
               displayType={'text'}
               thousandSeparator={true}
               prefix={'$ '}
@@ -147,7 +147,7 @@ const FieldValue = (props) => {
                 budgetFieldValue &&
                   <Payment
                     value={value}
-                    totalDebt={totalDebt}
+                    totalPayable={totalPayable}
                     budget={budget}
                     budgetFieldValue={budgetFieldValue}
                     field={templateField}
@@ -158,7 +158,7 @@ const FieldValue = (props) => {
               {
                 budgetFieldValue &&
                   <PaymentList
-                    totalDebt={totalDebt}
+                    totalPayable={totalPayable}
                     value={value}
                     budgetFieldValue={budgetFieldValue}
                     field={templateField}
