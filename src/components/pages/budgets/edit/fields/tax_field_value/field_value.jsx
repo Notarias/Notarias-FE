@@ -9,7 +9,6 @@ import TaxedFields                    from './taxed_fields';
 import Payment                        from './payment';
 import PaymentList                    from './payment_list';
 import ActiveSwitch                   from './active_switch';
-// import Payment                        from './payment'
 import MenuItem                       from '@material-ui/core/MenuItem';
 import AccountBalanceIcon             from '@material-ui/icons/AccountBalance';
 import Typography                     from '@material-ui/core/Typography';
@@ -19,8 +18,6 @@ import ExpandMoreIcon                 from '@material-ui/icons/ExpandMore';
 import IconButton                     from '@material-ui/core/IconButton';
 import { grey }                       from '@material-ui/core/colors';
 import NumberFormat                   from 'react-number-format';
-
-// import PaymentList                                  from './payment_list/payment_list';
 
 
 const FieldValue = (props) => {
@@ -32,7 +29,6 @@ const FieldValue = (props) => {
   const [editingValue, setEditingValue] = useState()
   const [budgetFieldValue, setBudgetFieldValue] = useState()
   const [expandTaxedFields, setExpandTaxedFields] = useState(false)
-  // const [withValue, setWithValue] = useState(false)
   const [templateField] = useState(field)
 
   const { loading, data, refetch } = useQuery(
@@ -158,6 +154,7 @@ const FieldValue = (props) => {
               {
                 budgetFieldValue &&
                   <PaymentList
+                    budget={budget}
                     totalDebt={totalDebt}
                     value={value}
                     budgetFieldValue={budgetFieldValue}

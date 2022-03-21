@@ -5,15 +5,19 @@ import DialogActions                        from '@material-ui/core/DialogAction
 import DialogContent                        from '@material-ui/core/DialogContent';
 import DialogTitle                          from '@material-ui/core/DialogTitle';
 import Button                               from '@material-ui/core/Button';
+import IconButton                           from '@material-ui/core/IconButton';
+import DescriptionIcon                      from '@material-ui/icons/Description';
 import Grid                                 from '@material-ui/core/Grid';
+import Tooltip                              from '@material-ui/core/Tooltip';
 import { useQuery }                         from '@apollo/client';
-import { GET_PAYMENTS }                     from '../../../../queries_and_mutations/queries'
-import PrintIcon                            from '@material-ui/icons/Print';
-import TextField                            from '@material-ui/core/TextField'
+import { GET_PAYMENTS }                     from '../../../../queries_and_mutations/queries';
+import PublishIcon                          from '@material-ui/icons/Publish';
+import CachedIcon                           from '@material-ui/icons/Cached';
+import TextField                            from '@material-ui/core/TextField';
 import NumberFormat                         from 'react-number-format';
 import PropTypes                            from 'prop-types';
 import InputAdornment                       from '@material-ui/core/InputAdornment';
-import VoidOrInvoidPayment                  from './void_unvoid_payment'
+import VoidOrInvoidPayment                  from './void_unvoid_payment';
 import Typography                           from '@material-ui/core/Typography';
 
 function NumberFormatCustom(props) {
@@ -57,7 +61,8 @@ const PaymentList = (props) => {
   );
 
   useEffect(() => {
-    data && setpayments(data.payments);;
+    data && setpayments(data.payments);
+    console.log(data)
   }, [data])
 
   const handleClickOpen = () => {
@@ -104,22 +109,26 @@ const PaymentList = (props) => {
     return(
       <>
         <ListItemText primary="Lista de pagos" onClick={handleClickOpen}/>
-        <Dialog open={open} onClose={handleClose} fullWidth>
+        <Dialog open={open} onClose={handleClose} fullWidth maxWidth='md'>
           <DialogTitle>
-            <Grid container direction="column">
+            <Grid container direction="column" alignItems='center'>
               <Grid item>
                 Lista de pagos
               </Grid>
               <Grid container item>
-                <Grid item xs={6}>
-                  <Typography variant="button" display="block" gutterBottom>
-                    Monto inicial {initialDebtAmount()}
-                  </Typography>
+                <Grid container item xs={6} justifyContent='center'>
+                  <Grid item>
+                    <Typography variant="button" display="block" gutterBottom>
+                      Monto inicial {initialDebtAmount()}
+                    </Typography>
+                  </Grid>
                 </Grid>
-                <Grid item xs={6}>
-                  <Typography variant="button" display="block" gutterBottom>
-                    A pagar {totalDebtAmount()}
-                  </Typography>
+                <Grid container item xs={6} justifyContent='center'>
+                  <Grid item>
+                    <Typography variant="button" display="block" gutterBottom>
+                      A pagar {totalDebtAmount()}
+                    </Typography>
+                  </Grid>
                 </Grid>
               </Grid>
             </Grid>
@@ -134,19 +143,19 @@ const PaymentList = (props) => {
                     let month = newDate.getMonth() + 1;
                     let year = newDate.getFullYear();
                 
-                    return (`${year}${separator}${month<10?`0${month}`:`${month}`}${separator}${date}`)
+                    return (`${date}${separator}${month<10?`0${month}`:`${month}`}${separator}${year}`)
                     }
                   return(
                     <React.Fragment key={payment.id + "fragment"}>
-                      <Grid container item xs={3} direction="column" alignItems="center" justifyContent="center">
+                      <Grid container item xs={2} direction="column" alignItems="center" justifyContent="center">
                         <Grid>
-                          Numero de Folio
+                          Folio
                         </Grid>
                         <Grid>
                           0000{payment.id}
                         </Grid>
                       </Grid>
-                      <Grid item xs={5}>
+                      <Grid item xs={3}>
                         <TextField
                           key={payment.id + "creditPayment"}
                           label="Abono"
@@ -172,10 +181,33 @@ const PaymentList = (props) => {
                           field={field}
                         />
                       </Grid>
-                      <Grid container item xs={1} alignItems="center" justifyContent="center">
-                        <Button>
-                          <PrintIcon/>
-                        </Button>
+                      <Grid container item xs={1} alignItems="center" justifyContent="flex-start">
+                        <Tooltip title={ payment.lastBudgetUpload ? "Remplazar Recbo" : "Cargar Recibo" }>
+                          <IconButton color='primary' >
+                          { payment.lastBudgetUpload ?  
+                            <CachedIcon/>
+                          :
+                            <PublishIcon/> 
+                          }
+                          </IconButton>
+                        </Tooltip>
+                      </Grid>
+                      <Grid container item xs={3} alignItems="center" justifyContent="flex-start">
+                          { !!payment.lastBudgetUpload ?
+                            <>
+                              <DescriptionIcon/>
+                              <Typography>
+                                { payment.lastBudgetUpload.fileName }
+                              </Typography>
+                            </>
+                            :
+                            <>
+                              <DescriptionIcon color='disabled'/>
+                              <Typography>
+                                Sin Recibo
+                              </Typography>
+                            </>
+                          }
                       </Grid>
                     </React.Fragment>
                   )
@@ -191,7 +223,7 @@ const PaymentList = (props) => {
         </Dialog>
       </>
     )
-  }
+  } 
 }
 
 export default PaymentList;

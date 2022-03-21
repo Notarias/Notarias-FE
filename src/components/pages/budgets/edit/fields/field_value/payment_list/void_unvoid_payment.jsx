@@ -2,12 +2,14 @@ import React, { useEffect }       from 'react'
 import { withStyles }                       from '@material-ui/core/styles';
 import { styles }                           from '../../../../styles';
 import Button                               from '@material-ui/core/Button';
+import IconButton                           from '@material-ui/core/IconButton';
 import NoSimIcon                            from '@material-ui/icons/NoSim';
 import RestorePageIcon                      from '@material-ui/icons/RestorePage';
 import Dialog                               from '@material-ui/core/Dialog';
 import DialogActions                        from '@material-ui/core/DialogActions';
 import DialogContent                        from '@material-ui/core/DialogContent';
 import DialogTitle                          from '@material-ui/core/DialogTitle';
+import Tooltip                              from '@material-ui/core/Tooltip';
 import { useMutation }                      from '@apollo/client';
 import { VOID_OR_UNVOID_PAYMENT }           from '../../../../queries_and_mutations/queries';
 import { GET_PAYMENTS }                     from '../../../../queries_and_mutations/queries';
@@ -74,13 +76,17 @@ const VoidOrInvoidPayment = (props) => {
   const showVoidOrInvoid = () => {
     return(
       statusVoid ? 
-      <Button onClick={handleClickOpen}>
-        <RestorePageIcon color="primary"/> 
-      </Button>
-      : 
-        <Button onClick={handleClickOpen}>
-          <NoSimIcon color="secondary"/> 
-        </Button>
+      <Tooltip title="Reactivar">
+        <IconButton color='primary' onClick={handleClickOpen}>
+          <RestorePageIcon /> 
+        </IconButton>
+      </Tooltip>
+    : 
+      <Tooltip title="Cancelar">
+        <IconButton color='secondary' onClick={handleClickOpen}>
+          <NoSimIcon /> 
+        </IconButton>
+      </Tooltip>
     )
   }
 

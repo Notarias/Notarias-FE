@@ -49,7 +49,7 @@ const CreateComments = (props) => {
     createCommentMutation({
        variables:{
         "commentableId": procedure.id ,
-        "commentableType": "procedure" , 
+        "commentableType": "Procedure" , 
         "body": commentValue
        }
     })

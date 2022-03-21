@@ -1,20 +1,25 @@
-import React, { useEffect }                 from 'react'
+import React, { useState, useEffect }       from 'react'
 import ListItemText                         from '@material-ui/core/ListItemText';
 import Dialog                               from '@material-ui/core/Dialog';
 import DialogActions                        from '@material-ui/core/DialogActions';
 import DialogContent                        from '@material-ui/core/DialogContent';
 import DialogTitle                          from '@material-ui/core/DialogTitle';
 import Button                               from '@material-ui/core/Button';
+import IconButton                           from '@material-ui/core/IconButton';
 import Grid                                 from '@material-ui/core/Grid';
-import { useQuery }                         from '@apollo/client';
-import { GET_PAYMENTS }                     from '../../../../queries_and_mutations/queries'
-import PrintIcon                            from '@material-ui/icons/Print';
-import TextField                            from '@material-ui/core/TextField'
+import Tooltip                              from '@material-ui/core/Tooltip';
+import DescriptionIcon                      from '@material-ui/icons/Description';
+import PublishIcon                          from '@material-ui/icons/Publish';
+import CachedIcon                           from '@material-ui/icons/Cached';
+import InputAdornment                       from '@material-ui/core/InputAdornment';
+import TextField                            from '@material-ui/core/TextField';
+import Typography                           from '@material-ui/core/Typography';
 import NumberFormat                         from 'react-number-format';
 import PropTypes                            from 'prop-types';
-import InputAdornment                       from '@material-ui/core/InputAdornment';
-import VoidOrInvoidPayment                  from './void_unvoid_payment'
-import Typography                           from '@material-ui/core/Typography';
+import VoidOrInvoidPayment                  from './void_unvoid_payment';
+import { useQuery, useMutation }            from '@apollo/client';
+import { GET_PAYMENTS }                     from '../../../../queries_and_mutations/queries';
+import { BUDGET_UPLOAD_FILE }               from '../../../../queries_and_mutations/queries';
 
 function NumberFormatCustom(props) {
   const { inputRef, onChange, ...other } = props;
@@ -48,9 +53,10 @@ NumberFormatCustom.propTypes = {
 };
 
 const PaymentList = (props) => {
-  const {fieldValueId, budgetingTemplateFieldId, totalDebt, initialDebt} = props
-  const [open, setOpen] = React.useState(false)
-  const [payments, setpayments] = React.useState([])
+  const {budget, fieldValueId, budgetingTemplateFieldId, totalDebt, initialDebt} = props
+  const [open, setOpen] = useState(false);
+  const [payments, setpayments] = useState([]);
+  const [file, setFile] = useState("");
 
   const { data } = useQuery(
     GET_PAYMENTS, { variables: { "fieldValueId": fieldValueId } }
@@ -59,6 +65,30 @@ const PaymentList = (props) => {
   useEffect(() => {
     data && setpayments(data.payments);;
   }, [data])
+
+  const [uploadPaymentFile, { loading: uploadPaymentFileLoading}] =
+  useMutation(
+    BUDGET_UPLOAD_FILE,
+      {
+        context: { hasUpload: true },
+        onCompleted(cacheData) {
+          setFile(cacheData.budgetUpload.budgetUpload)
+        },
+      }
+    )
+
+  const uploadFile = (files, payment) => {
+    uploadPaymentFile(
+      {
+        variables: {
+          budgetId: budget.id,
+          transactionable_id: payment.id,
+          transactionable_type: payment._type,
+          file: files[0]
+        }
+      }
+    )
+  }
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -104,22 +134,26 @@ const PaymentList = (props) => {
     return(
       <>
         <ListItemText primary="Lista de pagos" onClick={handleClickOpen}/>
-        <Dialog open={open} onClose={handleClose} fullWidth>
-          <DialogTitle>
-            <Grid container direction="column">
+        <Dialog open={open} onClose={handleClose} fullWidth maxWidth='md'>
+        <DialogTitle>
+            <Grid container direction="column" alignItems='center'>
               <Grid item>
                 Lista de pagos
               </Grid>
               <Grid container item>
-                <Grid item xs={6}>
-                  <Typography variant="button" display="block" gutterBottom>
-                    Monto inicial {initialDebtAmount()}
-                  </Typography>
+                <Grid container item xs={6} justifyContent='center'>
+                  <Grid item>
+                    <Typography variant="button" display="block" gutterBottom>
+                      Monto inicial {initialDebtAmount()}
+                    </Typography>
+                  </Grid>
                 </Grid>
-                <Grid item xs={6}>
-                  <Typography variant="button" display="block" gutterBottom>
-                    A pagar {totalDebtAmount()}
-                  </Typography>
+                <Grid container item xs={6} justifyContent='center'>
+                  <Grid item>
+                    <Typography variant="button" display="block" gutterBottom>
+                      A pagar {totalDebtAmount()}
+                    </Typography>
+                  </Grid>
                 </Grid>
               </Grid>
             </Grid>
@@ -138,15 +172,15 @@ const PaymentList = (props) => {
                     }
                   return(
                     <React.Fragment key={payment.id + "fragment"}>
-                      <Grid container item xs={3} direction="column" alignItems="center" justifyContent="center">
+                      <Grid container item xs={2} direction="column" alignItems="center" justifyContent="center">
                         <Grid>
-                          Numero de Folio
+                          Folio
                         </Grid>
                         <Grid>
                           0000{payment.id}
                         </Grid>
                       </Grid>
-                      <Grid item xs={5}>
+                      <Grid item xs={3}>
                         <TextField
                           key={payment.id + "creditPayment"}
                           label="Abono"
@@ -173,9 +207,32 @@ const PaymentList = (props) => {
                         />
                       </Grid>
                       <Grid container item xs={1} alignItems="center" justifyContent="center">
-                        <Button>
-                          <PrintIcon/>
-                        </Button>
+                        <Tooltip title={ payment.lastBudgetUpload ? "Remplazar Recbo" : "Cargar Recibo" }>
+                          <IconButton color='primary' onClick={uploadFile(file, payment)}>
+                          { payment.lastBudgetUpload ?  
+                            <CachedIcon/>
+                          :
+                            <PublishIcon/> 
+                          }
+                          </IconButton>
+                        </Tooltip>
+                      </Grid>
+                      <Grid container item xs={3} alignItems="center" justifyContent="flex-start">
+                          { !!payment.lastBudgetUpload ?
+                            <>
+                              <DescriptionIcon/>
+                              <Typography>
+                                { payment.lastBudgetUpload.fileName }
+                              </Typography>
+                            </>
+                            :
+                            <>
+                              <DescriptionIcon color='disabled'/>
+                              <Typography>
+                                Sin Recibo
+                              </Typography>
+                            </>
+                          }
                       </Grid>
                     </React.Fragment>
                   )

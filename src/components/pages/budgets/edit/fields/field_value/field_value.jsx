@@ -110,6 +110,7 @@ const FieldValue = (props) => {
             </MenuItem>
             <MenuItem key="2-pago">
               <PaymentList
+                budget={budget}
                 totalDebt={totalDebt}
                 initialDebt={initialFieldValue}
                 fieldValueId={data && data.budgetFieldValue ? data.budgetFieldValue.id : ""}
