@@ -635,13 +635,15 @@ export const CREATE_PAYMENT = gql`
     $budgetId: ID!,
     $budgetFieldValueId: ID!,
     $total: Int!,
-    $note: String
+    $note: String,
+    $budgetUploadId: ID
   ){
     createPayment(input:{
       budgetId: $budgetId,
       budgetFieldValueId: $budgetFieldValueId,
       total: $total,
       note: $note
+      budgetUploadId: $budgetUploadId
     }
     ){
       payment{
@@ -651,6 +653,15 @@ export const CREATE_PAYMENT = gql`
         note
         total
         voidAt
+        lastBudgetUpload {
+          id
+          file
+          fileName
+          transactionableId
+          transactionableType
+          userId
+          budgetId
+        }
       }
     }
   }
@@ -670,6 +681,12 @@ query payments(
     total
     voidAt
     createdAt
+    lastBudgetUpload{
+      id
+      file
+      fileName
+      fileUrl
+    }
   }
 }
 `
@@ -938,6 +955,55 @@ export const BUDGET_TAXED_FIELDS_FOR_FIELD = gql`
       fieldValue {
         id
         value
+      }
+    }
+  }
+`
+
+export const GET_CURRENT_USER = gql`
+  query currentUser {
+    currentUser @client {
+      firstName
+      lastName
+      id
+      address
+      email
+      lockedAt
+      phone
+      avatarThumbUrl
+      avatarMidUrl
+      avatarUrl
+      updatedAt
+      role {
+        name
+        permanentLink
+      }
+    }
+  }
+`
+
+export const BUDGET_UPLOAD_FILE = gql`
+  mutation budgetUpload(
+    $budgetId: ID!,
+    $file: Upload!,
+    $transactionableId: ID,
+    $transactionableType: String,
+  ){ 
+    budgetUpload(
+      input:{
+        budgetId: $budgetId
+        file: $file
+        transactionableId: $transactionableId
+        transactionableType: $transactionableType
+      }
+    ){
+      budgetUpload{
+        id,
+        file,
+        fileName,
+        fileUrl,
+        transactionableId,
+        transactionableType
       }
     }
   }

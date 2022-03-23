@@ -101,7 +101,7 @@ const FieldValue = (props) => {
           <GenericDropdownMenu>
             <MenuItem key="1-pago">
               <Payment
-                initialFieldValue={initialFieldValue}
+                initialPayable={initialFieldValue}
                 totalPayable={totalPayable}
                 budget={budget}
                 fieldValueId={ data && data.budgetFieldValue ? data.budgetFieldValue.id : ""}
@@ -110,8 +110,9 @@ const FieldValue = (props) => {
             </MenuItem>
             <MenuItem key="2-pago">
               <PaymentList
+                budget={budget}
                 totalPayable={totalPayable}
-                initialDebt={initialFieldValue}
+                initialPayable={initialFieldValue}
                 fieldValueId={data && data.budgetFieldValue ? data.budgetFieldValue.id : ""}
                 budgetingTemplateFieldId={data && data.budgetFieldValue ? data.budgetFieldValue.budgetingTemplateFieldId : ""}
               />

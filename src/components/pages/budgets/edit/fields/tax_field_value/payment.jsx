@@ -9,16 +9,19 @@ import PropTypes                            from 'prop-types';
 import InputAdornment                       from '@material-ui/core/InputAdornment';
 import Grid                                 from '@material-ui/core/Grid';
 import TextField                            from '@material-ui/core/TextField';
+import Dropzone                             from 'react-dropzone';
+import DescriptionIcon                      from '@material-ui/icons/Description';
 import Button                               from '@material-ui/core/Button';
 import Avatar                               from './current_user_avatar';
+import Paper                                from '@material-ui/core/Paper';
 import Typography                           from '@material-ui/core/Typography';
-import { useMutation }                      from '@apollo/client'
-import { CREATE_PAYMENT }                   from '../../../queries_and_mutations/queries'
-import { GET_BUDGET_FIELD_VALUE }           from '../../../queries_and_mutations/queries'
-import { GET_BUDGET_TOTALS }                from '../../../queries_and_mutations/queries'
-import { GET_PAYMENTS }                     from '../../../queries_and_mutations/queries'
+import { useMutation }                      from '@apollo/client';
+import { BUDGET_UPLOAD_FILE }               from '../../../queries_and_mutations/queries';
+import { CREATE_PAYMENT }                   from '../../../queries_and_mutations/queries';
+import { GET_BUDGET_FIELD_VALUE }           from '../../../queries_and_mutations/queries';
+import { GET_BUDGET_TOTALS }                from '../../../queries_and_mutations/queries';
+import { GET_PAYMENTS }                     from '../../../queries_and_mutations/queries';
 import { GET_BUDGETS_AUDITLOG }             from '../../../queries_and_mutations/queries';
-
 
 function NumberFormatCustom(props) {
   const { inputRef, onChange, ...other } = props;
@@ -52,10 +55,12 @@ NumberFormatCustom.propTypes = {
 
 const Payment = (props) => {
   const { totalPayable, budget, budgetFieldValue, field } = props
-  const [notePayment, setNotePayment] = React.useState("")
-  const [valuePayment, setValuePayment] = React.useState(0.0)
-  const [pristine, setPristine] = React.useState(true)
-  const [error, setError] = useState(false)
+  const [notePayment, setNotePayment] = useState("");
+  const [valuePayment, setValuePayment] = useState(0.0);
+  const [pristine, setPristine] = useState(true);
+  const [error, setError] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [file, setFile] = useState("");
 
   const inputsList = ["total"]
 
@@ -69,7 +74,8 @@ const Payment = (props) => {
       },
       onCompleted(cacheData) {
         setOpen(false);
-        setError(false)
+        setError(false);
+        setFile();
       },
       refetchQueries: [
         {
@@ -93,6 +99,28 @@ const Payment = (props) => {
     }
   )
 
+  const [uploadPaymentFile, { loading: uploadPaymentFileLoading}] =
+  useMutation(
+    BUDGET_UPLOAD_FILE,
+      {
+        context: { hasUpload: true },
+        onCompleted(cacheData) {
+          setFile(cacheData.budgetUpload.budgetUpload)
+        },
+      }
+    )
+  
+  const onDrop = (files) => {
+    uploadPaymentFile(
+      {
+        variables: {
+          budgetId: budget.id,
+          file: files[0]
+        }
+      }
+    )
+  }
+
   const setErrors = (apolloError) => {
     let errorsList = {}
     let errorTemplateList = apolloError.graphQLErrors
@@ -112,21 +140,20 @@ const Payment = (props) => {
         "note": notePayment,
         "budgetId": budget.id,
         "budgetFieldValueId": budgetFieldValue.id,
-        "total": (valuePayment * 100)
+        "total": (valuePayment * 100),
+        "budgetUploadId": file.id
        }
     })
   }
 
-  const [open, setOpen] = React.useState(false)
-
   const handleClickOpen = () => {
     setOpen(true);
-    setPristine(true)
+    setPristine(true);
   };
 
   const handleClose = () => {
     setOpen(false);
-    setError(false)
+    setError(false);
   };
 
   const handleNotePaymentChange = (event) => {
@@ -135,8 +162,8 @@ const Payment = (props) => {
 
   const handleValuePaymentChange = (event) => {
     setValuePayment(event.target.value);
-    setPristine(false)
-    setError(false)
+    setPristine(false);
+    setError(false);
   }
 
   const totalPayableAmount = () => {
@@ -153,7 +180,6 @@ const Payment = (props) => {
     )
   }
 
-
   return(
     <>
       <ListItemText primary="Pagar" onClick={handleClickOpen}/>
@@ -162,41 +188,72 @@ const Payment = (props) => {
           Agregar Egreso
         </DialogTitle>
         <DialogContent>
-          <Grid container >
-            <Grid container direction="row" item xs={6} alignItems="center" justifyContent="center">
+          <Grid container direction="row">
+            <Grid container item xs={3} alignItems="center" justifyContent="center">
               <Typography variant="button" display="block" gutterBottom>
                 Total {totalPayableAmount()}
               </Typography>
             </Grid>
-              <Grid  container item xs={6} alignItems="center" justifyContent="center">
-                <TextField
-                  key={"payment"}
-                  onChange={handleValuePaymentChange}
-                  label="Egreso"
-                  autoFocus
-                  error={ !!error["total"] && true }
-                  helperText={ error["total"] || "Cantidad"}
-                  errorskey={ "total" }
-                  required
-                  id="margin-normal"
-                  margin="normal"
-                  InputProps={{
-                    inputComponent: NumberFormatCustom,
-                    startAdornment: <InputAdornment position="start">$</InputAdornment>
-                  }}
-                />
-              </Grid>
+            <Grid  container item xs={4} alignItems="center" justifyContent="center">
+              <TextField
+                key={"payment"}
+                onChange={handleValuePaymentChange}
+                label="Egreso"
+                autoFocus
+                error={ !!error["total"] && true }
+                helperText={ error["total"] || "Cantidad"}
+                errorskey={ "total" }
+                required
+                id="margin-normal"
+                margin="normal"
+                InputProps={{
+                  inputComponent: NumberFormatCustom,
+                  startAdornment: <InputAdornment position="start">$</InputAdornment>
+                }}
+              />
             </Grid>
-            <Avatar/>
-          <Grid>
-            <TextField
-              fullWidth
-              onChange={handleNotePaymentChange}
-              id="outlined-textarea"
-              placeholder="Comentarios"
-              multiline
-              variant="outlined"
-            />
+            <Grid item xs style={{padding: '25px'}}>
+              <Paper variant='outlined' style={{padding: '20px',borderWidth: 10, borderColor: "#CFCFCF"}}>
+                { file && file ?
+                  <Grid container direction='column'>
+                    <Grid item>
+                      <DescriptionIcon/>
+                    </Grid>
+                    <Grid item>
+                      <Typography>
+                        { file.fileName }
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                :
+                  <Dropzone accept="image/*" multiple={false} onDrop={onDrop}>
+                    {({getRootProps, getInputProps}) => (
+                      <section>
+                        <div {...getRootProps()}>
+                          <input {...getInputProps()} />
+                          <p>Arrastre su archivo aqui o Haga clic para seleccioanrlo</p>
+                        </div>
+                      </section>
+                    )}
+                  </Dropzone>
+                }
+              </Paper>
+            </Grid>
+          </Grid>
+          <Grid container direction='row'>
+            <Grid item xs>
+              <Avatar/>
+            </Grid>
+            <Grid item xs={10}>
+              <TextField
+                fullWidth
+                onChange={handleNotePaymentChange}
+                id="outlined-textarea"
+                placeholder="Comentarios"
+                multiline
+                variant="outlined"
+              />
+            </Grid>
           </Grid>
         </DialogContent>
         <DialogActions>
