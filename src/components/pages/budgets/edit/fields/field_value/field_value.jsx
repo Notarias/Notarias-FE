@@ -26,7 +26,7 @@ const FieldValue = (props) => {
   const [withValue, setWithValue] = useState(false);
   const [changeInputStatus, setChangeInputStatus] = useState(false);
   const [changeFieldValue, setChangeFieldValue] = useState(initialFieldValue);
-  const [totalDebt, setTotalDebt] = useState(0);
+  const [totalPayable, setTotalPayable] = useState(0);
   const [field] = useState(templateField);
 
   const { data } = useQuery(
@@ -38,7 +38,7 @@ const FieldValue = (props) => {
 
   useEffect(() => {
     setInitialFieldValue(data && data.budgetFieldValue ? ((data.budgetFieldValue.value * 1.0) / 100).toFixed(2) : 0.0);
-    setTotalDebt(data && data.budgetFieldValue ? ((data.budgetFieldValue.totalDebt * 1.0) / 100).toFixed(2) : 0.0);
+    setTotalPayable(data && data.budgetFieldValue ? ((data.budgetFieldValue.totalPayable * 1.0) / 100).toFixed(2) : 0.0);
     setWithValue(data && data.budgetFieldValue ? true : false);
   }, [data])
 
@@ -72,7 +72,7 @@ const FieldValue = (props) => {
       <Grid item xs={3}>
         <Typography gutterBottom align='center'>
           <NumberFormat 
-            value={totalDebt} 
+            value={totalPayable} 
             displayType={'text'} 
             thousandSeparator={true} 
             prefix={'$ '}
@@ -102,7 +102,7 @@ const FieldValue = (props) => {
             <MenuItem key="1-pago">
               <Payment
                 initialFieldValue={initialFieldValue}
-                totalDebt={totalDebt}
+                totalPayable={totalPayable}
                 budget={budget}
                 fieldValueId={ data && data.budgetFieldValue ? data.budgetFieldValue.id : ""}
                 fieldId={field.id}
@@ -111,7 +111,7 @@ const FieldValue = (props) => {
             <MenuItem key="2-pago">
               <PaymentList
                 budget={budget}
-                totalDebt={totalDebt}
+                totalPayable={totalPayable}
                 initialDebt={initialFieldValue}
                 fieldValueId={data && data.budgetFieldValue ? data.budgetFieldValue.id : ""}
                 budgetingTemplateFieldId={data && data.budgetFieldValue ? data.budgetFieldValue.budgetingTemplateFieldId : ""}

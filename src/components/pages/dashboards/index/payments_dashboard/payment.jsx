@@ -131,7 +131,7 @@ const Payment = (props) => {
                 <strong>Saldo:</strong>
               </Typography>
               <Typography>
-                {`$${formatValue(payment.budgetFieldValue.totalDebt)}`}
+                {`$${formatValue(payment.budgetFieldValue.totalPayable)}`}
               </Typography>
             </Grid>
           </Grid>

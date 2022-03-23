@@ -55,7 +55,7 @@ NumberFormatCustom.propTypes = {
 };
 
 const Payment = (props) => {
-  const { totalDebt, budget, fieldValueId, fieldId } = props
+  const { totalPayable, budget, fieldValueId, fieldId } = props
   const [notePayment, setNotePayment] = useState("");
   const [valuePayment, setValuePayment] = useState(0);
   const [pristine, setPristine] = useState(true);
@@ -168,11 +168,11 @@ const Payment = (props) => {
     setError(false)
   }
 
-  const totalDebtAmount = () => {
+  const totalPayableAmount = () => {
     return(
       <Typography variant="h6" gutterBottom>
         <NumberFormat 
-          value={totalDebt} 
+          value={totalPayable} 
           displayType={'text'} 
           thousandSeparator={true} 
           prefix={'$ '}
@@ -193,7 +193,7 @@ const Payment = (props) => {
           <Grid container direction="row">
             <Grid container item xs={3} alignItems="center" justifyContent="center">
               <Typography variant="button" display="block" gutterBottom>
-                Total {totalDebtAmount()}
+                Total {totalPayableAmount()}
               </Typography>
             </Grid>
             <Grid  container item xs={4} alignItems="center" justifyContent="center">

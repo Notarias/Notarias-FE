@@ -45,7 +45,7 @@ NumberFormatCustom.propTypes = {
 };
 
 const PaymentList = (props) => {
-  const {budget, fieldValueId, budgetingTemplateFieldId, totalDebt, initialDebt} = props
+  const {budget, fieldValueId, budgetingTemplateFieldId, totalPayable, initialPayable} = props
   const [open, setOpen] = useState(false);
   const [payments, setpayments] = useState([]);
 
@@ -65,11 +65,11 @@ const PaymentList = (props) => {
     setOpen(false);
   };
 
-  const totalDebtAmount = () => {
+  const totalPayableAmount = () => {
     return(
       <Typography variant="h6" gutterBottom>
         <NumberFormat 
-          value={totalDebt} 
+          value={totalPayable} 
           displayType={'text'} 
           thousandSeparator={true} 
           prefix={'$ '}
@@ -79,11 +79,11 @@ const PaymentList = (props) => {
     )
   }
 
-  const initialDebtAmount = () => {
+  const initialPayableAmount = () => {
     return(
       <Typography variant="h6" gutterBottom>
         <NumberFormat 
-          value={initialDebt} 
+          value={initialPayable} 
           displayType={'text'} 
           thousandSeparator={true} 
           prefix={'$ '}
@@ -111,14 +111,14 @@ const PaymentList = (props) => {
                 <Grid container item xs={6} justifyContent='center'>
                   <Grid item>
                     <Typography variant="button" display="block" gutterBottom>
-                      Monto inicial {initialDebtAmount()}
+                      Monto inicial {initialPayableAmount()}
                     </Typography>
                   </Grid>
                 </Grid>
                 <Grid container item xs={6} justifyContent='center'>
                   <Grid item>
                     <Typography variant="button" display="block" gutterBottom>
-                      A pagar {totalDebtAmount()}
+                      A pagar {totalPayableAmount()}
                     </Typography>
                   </Grid>
                 </Grid>

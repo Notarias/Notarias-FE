@@ -258,7 +258,7 @@ export const GET_PAYMENTS = gql`
           name,
           
         },
-        totalDebt,
+        totalPayable,
         totalPaid
         value
       }

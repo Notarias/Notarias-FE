@@ -329,6 +329,7 @@ export const UPDATE_BUDGET = gql`
         totalDebt
         totalPaid
         totalCredit
+        totalPayable
         proceedingNumber
         writingNumber
         asignee{
