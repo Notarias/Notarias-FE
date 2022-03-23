@@ -61,7 +61,7 @@ const Payment = (props) => {
   const [pristine, setPristine] = useState(true);
   const [error, setError] = useState(false);
   const [open, setOpen] = useState(false);
-  const [file, setFile] = useState("");
+  const [file, setFile] = useState();
 
   const inputsList = ["total"]
 
@@ -154,7 +154,8 @@ const Payment = (props) => {
 
   const handleClose = () => {
     setOpen(false);
-    setError(false)
+    setError(false);
+    setFile();
   };
 
   const handleNotePaymentChange = (event) => {
@@ -214,31 +215,31 @@ const Payment = (props) => {
               />
             </Grid>
             <Grid item xs style={{padding: '25px'}}>
-              <Paper variant='outlined' style={{padding: '20px',borderWidth: 10, borderColor: "#CFCFCF"}}>
-                { file && file ?
-                  <Grid container direction='column'>
-                    <Grid item>
-                      <DescriptionIcon/>
-                    </Grid>
-                    <Grid item>
-                      <Typography>
-                        { file.fileName }
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                :
-                  <Dropzone accept="image/*" multiple={false} onDrop={onDrop}>
-                    {({getRootProps, getInputProps}) => (
-                      <section>
-                        <div {...getRootProps()}>
-                          <input {...getInputProps()} />
+              <Dropzone accept="image/*" multiple={false} onDrop={onDrop}>
+                {({getRootProps, getInputProps}) => (
+                  <section>
+                    <div {...getRootProps()}>
+                      <input {...getInputProps()} />
+                      <Paper variant='outlined' style={{padding: '20px',borderWidth: 10, borderColor: "#CFCFCF"}}>
+                        { file && file ?
+                          <Grid container direction='column'>
+                            <Grid item>
+                              <DescriptionIcon/>
+                            </Grid>
+                            <Grid item>
+                              <Typography>
+                                { file.fileName }
+                              </Typography>
+                            </Grid>
+                          </Grid>
+                        :
                           <p>Arrastre su archivo aqui o Haga clic para seleccioanrlo</p>
-                        </div>
-                      </section>
-                    )}
-                  </Dropzone>
-                }
-              </Paper>
+                        }
+                      </Paper>
+                    </div>
+                  </section>
+                )}
+              </Dropzone>
             </Grid>
           </Grid>
           <Grid container direction='row'>

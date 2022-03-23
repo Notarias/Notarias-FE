@@ -680,6 +680,7 @@ query payments(
       id
       file
       fileName
+      fileUrl
     }
   }
 }
@@ -978,18 +979,25 @@ export const GET_CURRENT_USER = gql`
 export const BUDGET_UPLOAD_FILE = gql`
   mutation budgetUpload(
     $budgetId: ID!,
-    $file: Upload!
+    $file: Upload!,
+    $transactionableId: ID,
+    $transactionableType: String,
   ){ 
     budgetUpload(
       input:{
         budgetId: $budgetId
         file: $file
+        transactionableId: $transactionableId
+        transactionableType: $transactionableType
       }
     ){
       budgetUpload{
         id,
         file,
-        fileName
+        fileName,
+        fileUrl,
+        transactionableId,
+        transactionableType
       }
     }
   }

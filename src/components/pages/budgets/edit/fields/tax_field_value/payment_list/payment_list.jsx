@@ -19,6 +19,7 @@ import PropTypes                            from 'prop-types';
 import InputAdornment                       from '@material-ui/core/InputAdornment';
 import VoidOrInvoidPayment                  from './void_unvoid_payment';
 import Typography                           from '@material-ui/core/Typography';
+import PaymentRow                           from './payment_row';
 
 function NumberFormatCustom(props) {
   const { inputRef, onChange, ...other } = props;
@@ -52,18 +53,17 @@ NumberFormatCustom.propTypes = {
 };
 
 const PaymentList = (props) => {
-  const {budgetFieldValue, field, totalDebt, value} = props
+  const {budget, budgetFieldValue, field, budgetingTemplateFieldId , totalDebt, value} = props
   const [open, setOpen] = React.useState(false)
   const [payments, setpayments] = React.useState([])
 
   const { data } = useQuery(
     GET_PAYMENTS, { variables: { "fieldValueId": budgetFieldValue.id } }
-  );
+  );  
 
   useEffect(() => {
     data && setpayments(data.payments);
-    console.log(data)
-  }, [data])
+  }, [data]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -137,78 +137,16 @@ const PaymentList = (props) => {
             <Grid container direction="row">
               {
                 payments.map((payment) => {
-                  const getCurrentDate = (separator='/') => {
-                    let newDate = new Date(Date.parse(payment.createdAt))
-                    let date = newDate.getDate();
-                    let month = newDate.getMonth() + 1;
-                    let year = newDate.getFullYear();
-                
-                    return (`${date}${separator}${month<10?`0${month}`:`${month}`}${separator}${year}`)
-                    }
                   return(
-                    <React.Fragment key={payment.id + "fragment"}>
-                      <Grid container item xs={2} direction="column" alignItems="center" justifyContent="center">
-                        <Grid>
-                          Folio
-                        </Grid>
-                        <Grid>
-                          0000{payment.id}
-                        </Grid>
-                      </Grid>
-                      <Grid item xs={3}>
-                        <TextField
-                          key={payment.id + "creditPayment"}
-                          label="Abono"
-                          id="margin-normal"
-                          helperText="Cantidad"
-                          margin="normal"
-                          disabled
-                          value={payment.total / 100}
-                          InputProps={{
-                            inputComponent: NumberFormatCustom,
-                            startAdornment: <InputAdornment position="start">$</InputAdornment>
-                          }}
-                        />
-                      </Grid>
-                      <Grid container item xs={2} alignItems="center" justifyContent="center">
-                        {getCurrentDate()} 
-                      </Grid>
-                      <Grid container item xs={1} alignItems="center" justifyContent="center">
-                        <VoidOrInvoidPayment
-                          voidAt={payment.voidAt}
-                          payment={payment}
-                          budgetFieldValue={budgetFieldValue}
-                          field={field}
-                        />
-                      </Grid>
-                      <Grid container item xs={1} alignItems="center" justifyContent="flex-start">
-                        <Tooltip title={ payment.lastBudgetUpload ? "Remplazar Recbo" : "Cargar Recibo" }>
-                          <IconButton color='primary' >
-                          { payment.lastBudgetUpload ?  
-                            <CachedIcon/>
-                          :
-                            <PublishIcon/> 
-                          }
-                          </IconButton>
-                        </Tooltip>
-                      </Grid>
-                      <Grid container item xs={3} alignItems="center" justifyContent="flex-start">
-                          { !!payment.lastBudgetUpload ?
-                            <>
-                              <DescriptionIcon/>
-                              <Typography>
-                                { payment.lastBudgetUpload.fileName }
-                              </Typography>
-                            </>
-                            :
-                            <>
-                              <DescriptionIcon color='disabled'/>
-                              <Typography>
-                                Sin Recibo
-                              </Typography>
-                            </>
-                          }
-                      </Grid>
+                    <React.Fragment key={`${payment.id}-payment`}>
+                      <PaymentRow 
+                        payment={payment}
+                        budget={budget}
+                        budgetingTemplateFieldId={budgetingTemplateFieldId}
+                        totalDebt={totalDebt}
+                        budgetFieldValue={budgetFieldValue}
+                        field={field}
+                      />
                     </React.Fragment>
                   )
                 })
