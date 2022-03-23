@@ -136,7 +136,7 @@ const PaymentList = (props) => {
                         budget={budget}
                         fieldValueId={fieldValueId}
                         budgetingTemplateFieldId={budgetingTemplateFieldId}
-                        totalDebt={totalDebt}
+                        totalPayableAmount={totalPayableAmount}
                       />
                     </React.Fragment>
                   )

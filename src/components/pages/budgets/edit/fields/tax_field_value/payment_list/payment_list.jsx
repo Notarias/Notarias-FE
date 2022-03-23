@@ -116,31 +116,19 @@ const PaymentList = (props) => {
                 Lista de pagos
               </Grid>
               <Grid container item>
-<<<<<<< HEAD
                 <Grid container item xs={6} justifyContent='center'>
                   <Grid item>
                     <Typography variant="button" display="block" gutterBottom>
-                      Monto inicial {initialDebtAmount()}
+                      Monto inicial {initialPayableAmount()}
                     </Typography>
                   </Grid>
                 </Grid>
                 <Grid container item xs={6} justifyContent='center'>
                   <Grid item>
                     <Typography variant="button" display="block" gutterBottom>
-                      A pagar {totalDebtAmount()}
+                      A pagar {totalPayableAmount()}
                     </Typography>
                   </Grid>
-=======
-                <Grid item xs={6}>
-                  <Typography variant="button" display="block" gutterBottom>
-                    Monto inicial {initialPayableAmount()}
-                  </Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography variant="button" display="block" gutterBottom>
-                    A pagar {totalPayableAmount()}
-                  </Typography>
->>>>>>> master
                 </Grid>
               </Grid>
             </Grid>
@@ -155,7 +143,7 @@ const PaymentList = (props) => {
                         payment={payment}
                         budget={budget}
                         budgetingTemplateFieldId={budgetingTemplateFieldId}
-                        totalDebt={totalDebt}
+                        totalPayableAmount={totalPayableAmount}
                         budgetFieldValue={budgetFieldValue}
                         field={field}
                       />
