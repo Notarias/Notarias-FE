@@ -111,7 +111,7 @@ const PaymentList = (props) => {
         <ListItemText primary="Lista de pagos" onClick={handleClickOpen}/>
         <Dialog open={open} onClose={handleClose} fullWidth maxWidth='md'>
           <DialogTitle>
-            <Grid container direction="column" alignItems='center'>
+            <Grid container direction='column' alignItems='center'>
               <Grid item>
                 Lista de pagos
               </Grid>
@@ -125,7 +125,7 @@ const PaymentList = (props) => {
                 </Grid>
                 <Grid container item xs={6} justifyContent='center'>
                   <Grid item>
-                    <Typography variant="button" display="block" gutterBottom>
+                    <Typography variant='button' display='block' gutterBottom>
                       A pagar {totalPayableAmount()}
                     </Typography>
                   </Grid>
@@ -134,7 +134,7 @@ const PaymentList = (props) => {
             </Grid>
           </DialogTitle>
           <DialogContent>
-            <Grid container direction="row">
+            <Grid container direction='row'>
               {
                 payments.map((payment) => {
                   return(
