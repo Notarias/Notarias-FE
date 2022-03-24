@@ -8,10 +8,12 @@ import CachedIcon                           from '@material-ui/icons/Cached';
 import InputAdornment                       from '@material-ui/core/InputAdornment';
 import TextField                            from '@material-ui/core/TextField';
 import Typography                           from '@material-ui/core/Typography';
+import CircularProgress                     from '@material-ui/core/CircularProgress';
 import Dropzone                             from 'react-dropzone';
 import NumberFormat                         from 'react-number-format';
 import PropTypes                            from 'prop-types';
 import VoidOrInvoid                         from './void_or_invoid';
+import { makeStyles }                       from '@material-ui/core/styles';
 import { Link }                             from '@material-ui/core';
 import { useMutation }                      from '@apollo/client';
 import { BUDGET_UPLOAD_FILE }               from '../../queries_and_mutations/queries';
@@ -48,11 +50,20 @@ NumberFormatCustom.propTypes = {
   onChange: PropTypes.func.isRequired,
 };
 
-  
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    '& > * + *': {
+      marginLeft: theme.spacing(2),
+    },
+  },
+}));
 
 const CreditPaymentRow = (props) => {
   const {creditPayment, budget} = props
   const [file, setFile] = useState("");
+
+  const classes = useStyles();
 
   const [uploadPaymentFile, { loading: uploadPaymentFileLoading}] =
   useMutation(
@@ -186,25 +197,41 @@ const CreditPaymentRow = (props) => {
       <Grid container item xs={3} alignItems='center' justifyContent='flex-start'>
           { !!creditPayment.lastBudgetUpload ?
             <>
-              <DescriptionIcon/>
-              <Tooltip title='Ver Comprobante'>
-                <Link href={creditPayment.lastBudgetUpload.fileUrl} 
-                  target='_blank' 
-                  color='inherit' 
-                  underline='none'
-                >
-                  <Typography>
-                    { creditPayment.lastBudgetUpload.fileName.substr(0,20) }
-                  </Typography>
-                </Link>
-              </Tooltip>
+              { uploadPaymentFileLoading ?
+                <div className={classes.root}>
+                  <CircularProgress />
+                </div>
+              :
+                <>
+                  <DescriptionIcon/>
+                  <Tooltip title='Ver Comprobante'>
+                    <Link href={creditPayment.lastBudgetUpload.fileUrl} 
+                      target='_blank' 
+                      color='inherit' 
+                      underline='none'
+                    >
+                      <Typography>
+                        { creditPayment.lastBudgetUpload.fileName.substr(0,20) }
+                      </Typography>
+                    </Link>
+                  </Tooltip>
+                </>
+              }
             </>
             :
             <>
-              <DescriptionIcon color='disabled'/>
-              <Typography>
-                Sin Recibo
-              </Typography>
+              { uploadPaymentFileLoading ?
+                <div className={classes.root}>
+                  <CircularProgress />
+                </div>
+              :
+                <>
+                  <DescriptionIcon color='disabled'/>
+                  <Typography>
+                    Sin Recibo
+                  </Typography>
+                </>
+              }
             </>
           }
       </Grid>

@@ -16,6 +16,8 @@ import InputAdornment             from '@material-ui/core/InputAdornment';
 import Button                     from '@material-ui/core/Button';
 import Typography                 from '@material-ui/core/Typography';
 import DescriptionIcon            from '@material-ui/icons/Description';
+import CircularProgress           from '@material-ui/core/CircularProgress';
+import { makeStyles }             from '@material-ui/core/styles';
 import { useMutation }            from '@apollo/client'
 import Dropzone                   from 'react-dropzone';
 import PropTypes                  from 'prop-types';
@@ -62,6 +64,15 @@ NumberFormatCustom.propTypes = {
   onChange: PropTypes.func.isRequired,
 };
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    '& > * + *': {
+      marginLeft: theme.spacing(2),
+    },
+  },
+}));
+
 export default (props) => {
   const { budget } = props;
 
@@ -73,6 +84,7 @@ export default (props) => {
   const [errors, setErrors]             = useState(false);
   const [file, setFile]                 = useState();
 
+  const classes = useStyles();
   const inputsList = ["total"]
 
   const handleClickOpen = () => {
@@ -81,7 +93,8 @@ export default (props) => {
 
   const handleClose = () => {
     setOpen(false);
-    setPristine(false)
+    setPristine(false);
+    setFile();
   }
 
   const [createCreditPaymentMutation, {loading: createCreditPaymentLoading}] =
@@ -254,17 +267,33 @@ export default (props) => {
                       <Paper variant='outlined' style={{paddingLeft: '20px', paddingRight: '20px', borderWidth: 10, borderColor: "#CFCFCF"}}>
                         { file && file ?
                           <Grid container item direction='row'>
-                            <Grid item>
-                              <DescriptionIcon/>
-                            </Grid>
-                            <Grid item>
-                              <Typography>
-                                { file.fileName.substr(0,20) }
-                              </Typography>
-                            </Grid>
+                            { uploadPaymentFileLoading ?
+                              <div className={classes.root}>
+                                <CircularProgress />
+                              </div>
+                            :
+                              <>
+                                <Grid item>
+                                  <DescriptionIcon/>
+                                </Grid>
+                                <Grid item>
+                                  <Typography>
+                                    { file.fileName.substr(0,20) }
+                                  </Typography>
+                                </Grid>
+                              </>
+                            }
                           </Grid>
                         :
-                          <p>Arrastre su archivo aqui o Haga clic para seleccioanrlo</p>
+                          <>
+                            { uploadPaymentFileLoading ?
+                              <div className={classes.root}>
+                                <CircularProgress />
+                              </div>
+                            :
+                              <p>Arrastre su archivo aqui o Haga clic para seleccioanrlo</p>
+                            }
+                          </>
                         }
                       </Paper>
                     </div>
