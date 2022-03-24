@@ -11,9 +11,13 @@ export default (props) => {
 
   return(
     <Grid>
-      <Grid container direction="row" alignItems="center">
-        <Avatar src={data && data.currentUser && data.currentUser.avatarThumbUrl} />
-        <Typography variant="caption">{data.currentUser.firstName}</Typography>
+      <Grid container direction="column" alignItems="center">
+        <Grid item>
+          <Avatar src={data && data.currentUser && data.currentUser.avatarThumbUrl} />
+        </Grid>
+        <Grid item>
+          <Typography variant="caption">{data.currentUser.firstName}</Typography>
+        </Grid>
       </Grid>
     </Grid>
   )

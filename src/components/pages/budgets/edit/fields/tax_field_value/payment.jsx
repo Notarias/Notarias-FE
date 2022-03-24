@@ -188,7 +188,7 @@ const Payment = (props) => {
           Agregar Egreso
         </DialogTitle>
         <DialogContent>
-          <Grid container direction="row">
+          <Grid container direction="row" style={{paddingBottom: '20px'}}>
             <Grid container item xs={3} alignItems="center" justifyContent="center">
               <Typography variant="button" display="block" gutterBottom>
                 Total {totalPayableAmount()}
@@ -212,36 +212,36 @@ const Payment = (props) => {
                 }}
               />
             </Grid>
-            <Grid item xs style={{padding: '25px'}}>
-              <Paper variant='outlined' style={{padding: '20px',borderWidth: 10, borderColor: "#CFCFCF"}}>
-                { file && file ?
-                  <Grid container direction='column'>
-                    <Grid item>
-                      <DescriptionIcon/>
-                    </Grid>
-                    <Grid item>
-                      <Typography>
-                        { file.fileName }
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                :
-                  <Dropzone accept="image/*" multiple={false} onDrop={onDrop}>
-                    {({getRootProps, getInputProps}) => (
-                      <section>
-                        <div {...getRootProps()}>
-                          <input {...getInputProps()} />
+            <Grid container item xs={5} justifyContent="flex-end" alignItems="center" style={{paddingLeft: '20px'}}>
+              <Dropzone accept="image/*" multiple={false} onDrop={onDrop}>
+                {({getRootProps, getInputProps}) => (
+                  <section>
+                    <div {...getRootProps()}>
+                      <input {...getInputProps()} />
+                      <Paper variant='outlined' style={{paddingLeft: '20px', paddingRight: '20px', borderWidth: 10, borderColor: "#CFCFCF"}}>
+                        { file && file ?
+                          <Grid container item direction='row'>
+                            <Grid item>
+                              <DescriptionIcon/>
+                            </Grid>
+                            <Grid item>
+                              <Typography>
+                                { file.fileName.substr(0,20) }
+                              </Typography>
+                            </Grid>
+                          </Grid>
+                        :
                           <p>Arrastre su archivo aqui o Haga clic para seleccioanrlo</p>
-                        </div>
-                      </section>
-                    )}
-                  </Dropzone>
-                }
-              </Paper>
+                        }
+                      </Paper>
+                    </div>
+                  </section>
+                )}
+              </Dropzone>
             </Grid>
           </Grid>
           <Grid container direction='row'>
-            <Grid item xs>
+            <Grid container item xs justifyContent='flex-start'>
               <Avatar/>
             </Grid>
             <Grid item xs={10}>

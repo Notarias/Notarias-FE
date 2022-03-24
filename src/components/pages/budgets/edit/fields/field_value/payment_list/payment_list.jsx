@@ -47,14 +47,14 @@ NumberFormatCustom.propTypes = {
 const PaymentList = (props) => {
   const {budget, fieldValueId, budgetingTemplateFieldId, totalPayable, initialPayable} = props
   const [open, setOpen] = useState(false);
-  const [payments, setpayments] = useState([]);
+  const [payments, setPayments] = useState([]);
 
   const { data } = useQuery(
     GET_PAYMENTS, { variables: { "fieldValueId": fieldValueId } }
   );
 
   useEffect(() => {
-    data && setpayments(data.payments);;
+    data && setPayments(data.payments);;
   }, [data]);
 
   const handleClickOpen = () => {
@@ -102,7 +102,7 @@ const PaymentList = (props) => {
       <>
         <ListItemText primary="Lista de pagos" onClick={handleClickOpen}/>
         <Dialog open={open} onClose={handleClose} fullWidth maxWidth='md'>
-        <DialogTitle>
+          <DialogTitle>
             <Grid container direction="column" alignItems='center'>
               <Grid item>
                 Lista de pagos

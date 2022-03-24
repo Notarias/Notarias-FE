@@ -11,12 +11,11 @@ import Typography                           from '@material-ui/core/Typography';
 import Dropzone                             from 'react-dropzone';
 import NumberFormat                         from 'react-number-format';
 import PropTypes                            from 'prop-types';
-import VoidOrInvoidPayment                  from './void_unvoid_payment';
+import VoidOrInvoid                         from './void_or_invoid';
 import { Link }                             from '@material-ui/core';
-import { BASE_URI }                         from '../../../../../../../apollo';
 import { useMutation }                      from '@apollo/client';
-import { BUDGET_UPLOAD_FILE }               from '../../../../queries_and_mutations/queries';
-import { GET_PAYMENTS }                     from '../../../../queries_and_mutations/queries';
+import { BUDGET_UPLOAD_FILE }               from '../../queries_and_mutations/queries';
+import { GET_CREDIT_PAYMENTS }              from '../../queries_and_mutations/queries';
 
 function NumberFormatCustom(props) {
   const { inputRef, onChange, ...other } = props;
@@ -41,7 +40,7 @@ function NumberFormatCustom(props) {
 
     />
   );
-};
+}
 
 NumberFormatCustom.propTypes = {
   inputRef: PropTypes.func.isRequired,
@@ -49,8 +48,10 @@ NumberFormatCustom.propTypes = {
   onChange: PropTypes.func.isRequired,
 };
 
-const PaymentRow = (props) => {
-  const { payment, budget, fieldValueId, budgetingTemplateFieldId } = props
+  
+
+const CreditPaymentRow = (props) => {
+  const {creditPayment, budget} = props
   const [file, setFile] = useState("");
 
   const [uploadPaymentFile, { loading: uploadPaymentFileLoading}] =
@@ -63,24 +64,49 @@ const PaymentRow = (props) => {
         },
         refetchQueries: [
           {
-            query: GET_PAYMENTS,
-            variables: { "fieldValueId": fieldValueId }
+            query: GET_CREDIT_PAYMENTS,
+            variables: { "budgetId": budget.id }
           },
         ],
         awaitRefetchQueries: true
       }
     )
 
-  const onDrop = (files) => {
-    uploadFile(files, payment)
+  const  renderpaymentType = () => {
+    switch (creditPayment.paymentType) {
+      case "cash" :
+
+        return(
+          "Efectivo"
+        )
+      case "deposit" :
+
+        return(
+          "Deposito"
+        )
+      case "wire" :
+
+        return(
+          "Transferencia"
+        )
+      default :
+        return(
+          "NA"
+        )
+    }
   }
-  const uploadFile = (files, payment) => {
+
+  const onDrop = (files) => {
+    uploadFile(files, creditPayment)
+  }
+
+  const uploadFile = (files, creditPayment) => {
     uploadPaymentFile(
       {
         variables: {
           budgetId: budget.id,
-          transactionableId: payment.id,
-          transactionableType: "Payment",
+          transactionableId: creditPayment.id,
+          transactionableType: "CreditPayment",
           file: files[0]
         }
       }
@@ -88,7 +114,7 @@ const PaymentRow = (props) => {
   }
 
   const getCurrentDate = (separator='/') => {
-    let newDate = new Date(Date.parse(payment.createdAt))
+    let newDate = new Date(Date.parse(creditPayment.createdAt))
     let date = newDate.getDate();
     let month = newDate.getMonth() + 1;
     let year = newDate.getFullYear();
@@ -96,25 +122,31 @@ const PaymentRow = (props) => {
     return (`${date}${separator}${month<10?`0${month}`:`${month}`}${separator}${year}`)
   }
 
-  return(
+  return (
     <>
-      <Grid container item xs={2} direction="column" alignItems="center" justifyContent="center">
+      <Grid container item xs={1} direction="column" alignItems="center" justifyContent="center">
         <Grid>
-          Folio
+          # Folio
         </Grid>
         <Grid>
-          0000{payment.id}
+          0000{creditPayment.id}
         </Grid>
       </Grid>
-      <Grid item xs={3}>
+      <Grid container item xs={2} direction="column" alignItems="center" justifyContent="center">
+        {renderpaymentType()}
+      </Grid>
+      <Grid item xs={2}>
         <TextField
-          key={payment.id + "creditPayment"}
-          label="Abono"
+          key={creditPayment.id + "creditPayment"}
+          label="Ingreso"
           id="margin-normal"
           helperText="Cantidad"
           margin="normal"
           disabled
-          value={payment.total / 100}
+          value={creditPayment.total / 100}
+          // error={ !!error["total"] && true }
+          // helperText={error["total"] || " "}
+          // errorskey={ "total" }
           InputProps={{
             inputComponent: NumberFormatCustom,
             startAdornment: <InputAdornment position="start">$</InputAdornment>
@@ -122,14 +154,13 @@ const PaymentRow = (props) => {
         />
       </Grid>
       <Grid container item xs={2} alignItems="center" justifyContent="center">
-        {getCurrentDate()} 
+        {getCurrentDate()}
       </Grid>
       <Grid container item xs={1} alignItems="center" justifyContent="center">
-        <VoidOrInvoidPayment
-          voidAt={payment.voidAt}
-          payment={payment}
-          fieldValueId={fieldValueId}
-          budgetingTemplateFieldId={budgetingTemplateFieldId}
+        <VoidOrInvoid
+          voidAt={creditPayment.voidAt}
+          paymentId={creditPayment.id}
+          budget={budget}
         />
       </Grid>
       <Grid container item xs={1} alignItems="center" justifyContent="center">
@@ -138,9 +169,9 @@ const PaymentRow = (props) => {
             <section>
               <div {...getRootProps()}>
                 <input {...getInputProps()} />
-                <Tooltip title={payment.lastBudgetUpload ? "Cambiar Comprobante" : "Subir Comprobante"}>
+                <Tooltip title={creditPayment.lastBudgetUpload ? "Cambiar Comprobante" : "Subir Comprobante"}>
                   <IconButton color='primary' >
-                    { payment.lastBudgetUpload ?
+                    { creditPayment.lastBudgetUpload ?
                       <CachedIcon/>
                     :
                       <PublishIcon/>
@@ -153,17 +184,17 @@ const PaymentRow = (props) => {
         </Dropzone>
       </Grid>
       <Grid container item xs={3} alignItems='center' justifyContent='flex-start'>
-          { !!payment.lastBudgetUpload ?
+          { !!creditPayment.lastBudgetUpload ?
             <>
               <DescriptionIcon/>
               <Tooltip title='Ver Comprobante'>
-                <Link href={payment.lastBudgetUpload.fileUrl} 
+                <Link href={creditPayment.lastBudgetUpload.fileUrl} 
                   target='_blank' 
                   color='inherit' 
                   underline='none'
                 >
                   <Typography>
-                    { payment.lastBudgetUpload.fileName.substr(0,20) }
+                    { creditPayment.lastBudgetUpload.fileName.substr(0,20) }
                   </Typography>
                 </Link>
               </Tooltip>
@@ -180,5 +211,4 @@ const PaymentRow = (props) => {
     </>
   )
 }
-
-export default PaymentRow;
+export default CreditPaymentRow;
