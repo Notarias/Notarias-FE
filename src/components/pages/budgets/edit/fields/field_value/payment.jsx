@@ -4,24 +4,26 @@ import Dialog                               from '@material-ui/core/Dialog';
 import DialogActions                        from '@material-ui/core/DialogActions';
 import DialogContent                        from '@material-ui/core/DialogContent';
 import DialogTitle                          from '@material-ui/core/DialogTitle';
-import Dropzone                             from 'react-dropzone';
 import DescriptionIcon                      from '@material-ui/icons/Description';
-import NumberFormat                         from 'react-number-format';
-import PropTypes                            from 'prop-types';
 import InputAdornment                       from '@material-ui/core/InputAdornment';
 import Grid                                 from '@material-ui/core/Grid';
 import Paper                                from '@material-ui/core/Paper';
 import TextField                            from '@material-ui/core/TextField';
 import Button                               from '@material-ui/core/Button';
-import Avatar                               from './current_user_avatar';
 import Typography                           from '@material-ui/core/Typography';
-import { useMutation }                      from '@apollo/client'
+import CircularProgress                     from '@material-ui/core/CircularProgress';
+import Dropzone                             from 'react-dropzone';
+import NumberFormat                         from 'react-number-format';
+import PropTypes                            from 'prop-types';
+import { makeStyles }                       from '@material-ui/core/styles';
+import { useMutation }                      from '@apollo/client';
 import { BUDGET_UPLOAD_FILE }               from '../../../queries_and_mutations/queries';
-import { CREATE_PAYMENT }                   from '../../../queries_and_mutations/queries'
-import { GET_BUDGET_FIELD_VALUE }           from '../../../queries_and_mutations/queries'
-import { GET_BUDGET_TOTALS }                from '../../../queries_and_mutations/queries'
-import { GET_PAYMENTS }                     from '../../../queries_and_mutations/queries'
+import { CREATE_PAYMENT }                   from '../../../queries_and_mutations/queries';
+import { GET_BUDGET_FIELD_VALUE }           from '../../../queries_and_mutations/queries';
+import { GET_BUDGET_TOTALS }                from '../../../queries_and_mutations/queries';
+import { GET_PAYMENTS }                     from '../../../queries_and_mutations/queries';
 import { GET_BUDGETS_AUDITLOG }             from '../../../queries_and_mutations/queries';
+import Avatar                               from './current_user_avatar';
 
 function NumberFormatCustom(props) {
   const { inputRef, onChange, ...other } = props;
@@ -54,6 +56,15 @@ NumberFormatCustom.propTypes = {
   onChange: PropTypes.func.isRequired,
 };
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    '& > * + *': {
+      marginLeft: theme.spacing(2),
+    },
+  },
+}));
+
 const Payment = (props) => {
   const { totalPayable, budget, fieldValueId, fieldId } = props
   const [notePayment, setNotePayment] = useState("");
@@ -63,6 +74,7 @@ const Payment = (props) => {
   const [open, setOpen] = useState(false);
   const [file, setFile] = useState();
 
+  const classes = useStyles();
   const inputsList = ["total"]
 
   const [createPaymentMutation, {loading: createPaymentLoading}] =
@@ -190,9 +202,9 @@ const Payment = (props) => {
           Agregar Egreso
         </DialogTitle>
         <DialogContent>
-          <Grid container direction="row">
-            <Grid container item xs={3} alignItems="center" justifyContent="center">
-              <Typography variant="button" display="block" gutterBottom>
+          <Grid container direction='row' style={{paddingBottom: '20px'}}>
+            <Grid container item xs={3} alignItems='center' justifyContent='flex-start'>
+              <Typography variant='button' display='block' gutterBottom>
                 Total {totalPayableAmount()}
               </Typography>
             </Grid>
@@ -214,26 +226,42 @@ const Payment = (props) => {
                 }}
               />
             </Grid>
-            <Grid item xs style={{padding: '25px'}}>
+            <Grid container item xs={5} justifyContent="flex-end" alignItems="center" style={{paddingLeft: '20px'}}>
               <Dropzone accept="image/*" multiple={false} onDrop={onDrop}>
                 {({getRootProps, getInputProps}) => (
                   <section>
                     <div {...getRootProps()}>
                       <input {...getInputProps()} />
-                      <Paper variant='outlined' style={{padding: '20px',borderWidth: 10, borderColor: "#CFCFCF"}}>
+                      <Paper variant='outlined' style={{paddingLeft: '20px', paddingRight: '20px', borderWidth: 10, borderColor: "#CFCFCF"}}>
                         { file && file ?
-                          <Grid container direction='column'>
-                            <Grid item>
-                              <DescriptionIcon/>
-                            </Grid>
-                            <Grid item>
-                              <Typography>
-                                { file.fileName }
-                              </Typography>
-                            </Grid>
+                          <Grid container item direction='row'>
+                            { uploadPaymentFileLoading ?
+                              <div className={classes.root}>
+                                <CircularProgress />
+                              </div>
+                            :
+                            <>
+                              <Grid item>
+                                <DescriptionIcon/>
+                              </Grid>
+                              <Grid item>
+                                <Typography>
+                                  { file.fileName.substr(0,20) }
+                                </Typography>
+                              </Grid>
+                            </>
+                            }
                           </Grid>
                         :
-                          <p>Arrastre su archivo aqui o Haga clic para seleccioanrlo</p>
+                          <>
+                            { uploadPaymentFileLoading ?
+                              <div className={classes.root}>
+                                <CircularProgress />
+                              </div>
+                            :
+                              <p>Arrastre su archivo aqui o Haga clic para seleccioanrlo</p>
+                            }
+                          </>
                         }
                       </Paper>
                     </div>
@@ -243,7 +271,7 @@ const Payment = (props) => {
             </Grid>
           </Grid>
           <Grid container direction='row'>
-            <Grid item xs>
+            <Grid container item xs justifyContent='flex-start'>
               <Avatar/>
             </Grid>
             <Grid item xs={10}>

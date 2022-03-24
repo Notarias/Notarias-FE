@@ -1,20 +1,16 @@
-import React, { useEffect }                 from 'react'
+import React, { useState, useEffect }       from 'react'
 import Button                               from '@material-ui/core/Button';
 import ListItemText                         from '@material-ui/core/ListItemText';
 import Dialog                               from '@material-ui/core/Dialog';
 import DialogActions                        from '@material-ui/core/DialogActions';
 import DialogContent                        from '@material-ui/core/DialogContent';
 import DialogTitle                          from '@material-ui/core/DialogTitle';
-import { useQuery }                         from '@apollo/client';
-import { GET_CREDIT_PAYMENTS }              from '../../queries_and_mutations/queries'
 import Grid                                 from '@material-ui/core/Grid';
-import TextField                            from '@material-ui/core/TextField';
 import NumberFormat                         from 'react-number-format';
 import PropTypes                            from 'prop-types';
-import InputAdornment                       from '@material-ui/core/InputAdornment';
-import VoidOrInvoid                         from './void_or_invoid'
-import PrintIcon                            from '@material-ui/icons/Print';
-
+import CreditPaymentRow                     from './credit_payment_row';
+import { useQuery }                         from '@apollo/client';
+import { GET_CREDIT_PAYMENTS }              from '../../queries_and_mutations/queries'
 
 function NumberFormatCustom(props) {
   const { inputRef, onChange, ...other } = props;
@@ -48,10 +44,10 @@ NumberFormatCustom.propTypes = {
 };
 
 
-const PaymentList = (props) => {
+const CreditPaymentList = (props) => {
   const { budget } = props
-  const [open, setOpen] = React.useState(false)
-  const [creditPayments, setCreditPayments] = React.useState([])
+  const [open, setOpen] = useState(false)
+  const [creditPayments, setCreditPayments] = useState([])
 
   const { data } = useQuery(
     GET_CREDIT_PAYMENTS, { variables: { "budgetId": budget.id } }
@@ -59,7 +55,7 @@ const PaymentList = (props) => {
 
   useEffect(() => {
     data && setCreditPayments(data.creditPayments);;
-  }, [data])
+  }, [data]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -77,92 +73,23 @@ const PaymentList = (props) => {
     return(
       <>
         <ListItemText primary="Lista de Ingresos" onClick={handleClickOpen}/>
-        <Dialog open={open} onClose={handleClose} fullWidth>
+        <Dialog open={open} onClose={handleClose} fullWidth maxWidth='md'>
           <DialogTitle>
-            Lista de Ingresos
+            <Grid container direction="row" justifyContent='center'>
+              Lista de Ingresos
+            </Grid>
           </DialogTitle>
           <DialogContent>
             <Grid container direction="row">
               {
                 creditPayments.map((creditPayment) => {
-                  const  renderpaymentType = () => {
-                    switch (creditPayment.paymentType) {
-                      case "cash" :
-                
-                        return(
-                          "Efectivo"
-                        )
-                      case "deposit" :
-                
-                        return(
-                          "Deposito"
-                        )
-                      case "wire" :
-                
-                        return(
-                          "Transferencia"
-                        )
-                      default :
-                        return(
-                          "NA"
-                        )
-                    }
-                  }
-                  const getCurrentDate = (separator='/') => {
-                    
-                    let newDate = new Date(Date.parse(creditPayment.createdAt))
-                    let date = newDate.getDate();
-                    let month = newDate.getMonth() + 1;
-                    let year = newDate.getFullYear();
-                
-                    return (`${year}${separator}${month<10?`0${month}`:`${month}`}${separator}${date}`)
-                    }
                   return(
-                    <React.Fragment key={creditPayment.id + "fragment"}>
-                      <Grid container item xs={1} direction="column" alignItems="center" justifyContent="center">
-                        <Grid>
-                          # Folio
-                        </Grid>
-                        <Grid>
-                          0000{creditPayment.id}
-                        </Grid>
-                      </Grid>
-                      <Grid container item xs={3} direction="column" alignItems="center" justifyContent="center">
-                        {renderpaymentType()}
-                      </Grid>
-                      <Grid item xs={4}>
-                        <TextField
-                          key={creditPayment.id + "creditPayment"}
-                          label="Ingreso"
-                          id="margin-normal"
-                          helperText="Cantidad"
-                          margin="normal"
-                          disabled
-                          value={creditPayment.total / 100}
-                          // error={ !!error["total"] && true }
-                          // helperText={error["total"] || " "}
-                          // errorskey={ "total" }
-                          InputProps={{
-                            inputComponent: NumberFormatCustom,
-                            startAdornment: <InputAdornment position="start">$</InputAdornment>
-                          }}
-                        />
-                      </Grid>
-                      <Grid container item xs={2} alignItems="center" justifyContent="center">
-                        {getCurrentDate()}
-                      </Grid>
-                      <Grid container item xs={1} alignItems="center" justifyContent="center">
-                        <VoidOrInvoid
-                          voidAt={creditPayment.voidAt}
-                          paymentId={creditPayment.id}
-                          budget={budget}
-                        />
-                      </Grid>
-                      <Grid container item xs={1} alignItems="center" justifyContent="center">
-                        <Button>
-                          <PrintIcon/>
-                        </Button>
-                      </Grid>
+                    <React.Fragment key={`${creditPayment.id}-creditPayment`}>
+                      <CreditPaymentRow
+                        creditPayment={creditPayment}
+                        budget={budget}
+                      />
+                      {console.log(creditPayment)}
                     </React.Fragment>
                   )
                 })
@@ -180,4 +107,4 @@ const PaymentList = (props) => {
   }
 }
 
-export default PaymentList
+export default CreditPaymentList

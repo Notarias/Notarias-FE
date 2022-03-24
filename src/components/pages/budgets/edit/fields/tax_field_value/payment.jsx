@@ -15,6 +15,8 @@ import Button                               from '@material-ui/core/Button';
 import Avatar                               from './current_user_avatar';
 import Paper                                from '@material-ui/core/Paper';
 import Typography                           from '@material-ui/core/Typography';
+import CircularProgress                     from '@material-ui/core/CircularProgress';
+import { makeStyles }                       from '@material-ui/core/styles';
 import { useMutation }                      from '@apollo/client';
 import { BUDGET_UPLOAD_FILE }               from '../../../queries_and_mutations/queries';
 import { CREATE_PAYMENT }                   from '../../../queries_and_mutations/queries';
@@ -53,6 +55,15 @@ NumberFormatCustom.propTypes = {
   onChange: PropTypes.func.isRequired,
 };
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    '& > * + *': {
+      marginLeft: theme.spacing(2),
+    },
+  },
+}));
+
 const Payment = (props) => {
   const { totalPayable, budget, budgetFieldValue, field } = props
   const [notePayment, setNotePayment] = useState("");
@@ -62,6 +73,7 @@ const Payment = (props) => {
   const [open, setOpen] = useState(false);
   const [file, setFile] = useState("");
 
+  const classes = useStyles();
   const inputsList = ["total"]
 
   const [createPaymentMutation, {loading: createPaymentLoading}] =
@@ -188,7 +200,7 @@ const Payment = (props) => {
           Agregar Egreso
         </DialogTitle>
         <DialogContent>
-          <Grid container direction="row">
+          <Grid container direction="row" style={{paddingBottom: '20px'}}>
             <Grid container item xs={3} alignItems="center" justifyContent="center">
               <Typography variant="button" display="block" gutterBottom>
                 Total {totalPayableAmount()}
@@ -212,36 +224,52 @@ const Payment = (props) => {
                 }}
               />
             </Grid>
-            <Grid item xs style={{padding: '25px'}}>
-              <Paper variant='outlined' style={{padding: '20px',borderWidth: 10, borderColor: "#CFCFCF"}}>
-                { file && file ?
-                  <Grid container direction='column'>
-                    <Grid item>
-                      <DescriptionIcon/>
-                    </Grid>
-                    <Grid item>
-                      <Typography>
-                        { file.fileName }
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                :
-                  <Dropzone accept="image/*" multiple={false} onDrop={onDrop}>
-                    {({getRootProps, getInputProps}) => (
-                      <section>
-                        <div {...getRootProps()}>
-                          <input {...getInputProps()} />
-                          <p>Arrastre su archivo aqui o Haga clic para seleccioanrlo</p>
-                        </div>
-                      </section>
-                    )}
-                  </Dropzone>
-                }
-              </Paper>
+            <Grid container item xs={5} justifyContent="flex-end" alignItems="center" style={{paddingLeft: '20px'}}>
+              <Dropzone accept="image/*" multiple={false} onDrop={onDrop}>
+                {({getRootProps, getInputProps}) => (
+                  <section>
+                    <div {...getRootProps()}>
+                      <input {...getInputProps()} />
+                      <Paper variant='outlined' style={{paddingLeft: '20px', paddingRight: '20px', borderWidth: 10, borderColor: "#CFCFCF"}}>
+                        { file && file ?
+                          <Grid container item direction='row'>
+                            { uploadPaymentFileLoading ?
+                              <div className={classes.root}>
+                                <CircularProgress />
+                              </div>
+                            :
+                              <>
+                                <Grid item>
+                                  <DescriptionIcon/>
+                                </Grid>
+                                <Grid item>
+                                  <Typography>
+                                    { file.fileName.substr(0,20) }
+                                  </Typography>
+                                </Grid>
+                              </>
+                            }
+                          </Grid>
+                        :
+                          <>
+                            { uploadPaymentFileLoading ?
+                              <div className={classes.root}>
+                                <CircularProgress />
+                              </div>
+                            :
+                              <p>Arrastre su archivo aqui o Haga clic para seleccioanrlo</p>
+                            }
+                          </>
+                        }
+                      </Paper>
+                    </div>
+                  </section>
+                )}
+              </Dropzone>
             </Grid>
           </Grid>
           <Grid container direction='row'>
-            <Grid item xs>
+            <Grid container item xs justifyContent='flex-start'>
               <Avatar/>
             </Grid>
             <Grid item xs={10}>
