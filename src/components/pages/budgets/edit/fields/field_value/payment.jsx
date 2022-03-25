@@ -124,7 +124,6 @@ const Payment = (props) => {
     )
 
   const onDrop = (files) => {
-    console.log(files)
     uploadPaymentFile(
       {
         variables: {
