@@ -89,7 +89,6 @@ const CreditPaymentList = (props) => {
                         creditPayment={creditPayment}
                         budget={budget}
                       />
-                      {console.log(creditPayment)}
                     </React.Fragment>
                   )
                 })

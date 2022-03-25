@@ -146,7 +146,7 @@ const PaymentRow = (props) => {
         />
       </Grid>
       <Grid container item xs={1} alignItems="center" justifyContent="flex-start">
-        <Dropzone accept="image/*" multiple={false} onDrop={onDrop}>
+        <Dropzone accept='file_extension/.jpg, .jpeg, .png, .pdf' multiple={false} onDrop={onDrop}>
           {({getRootProps, getInputProps}) => (
             <section>
               <div {...getRootProps()}>

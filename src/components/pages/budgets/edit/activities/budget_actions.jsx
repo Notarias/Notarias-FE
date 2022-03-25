@@ -259,7 +259,7 @@ export default (props) => {
               />
             </Grid>
             <Grid container item xs={5} justifyContent="flex-end" alignItems="center" style={{paddingLeft: '20px'}}>
-              <Dropzone accept="image/*" multiple={false} onDrop={onDrop}>
+              <Dropzone accept='file_extension/.jpg, .jpeg, .png, .pdf' multiple={false} onDrop={onDrop}>
                 {({getRootProps, getInputProps}) => (
                   <section>
                     <div {...getRootProps()}>
