@@ -75,7 +75,7 @@ const Fields = (props) => {
         </Grid>
         <Divider variant="middle"/>
         <Grid container  justifyContent="flex-end" item style={{ paddingTop: "20px", paddingBottom: "20px" }}>
-          <Grid container item direction="row" xs={8}>
+          <Grid container item direction="row" xs={4} md={4} lg={6}>
             { loading || !data ? 
               <Grid container item xs={12} justifyContent="center" alignContent='flex-start'>
                 <Grid container item xs={2} justifyContent="center">
@@ -89,7 +89,7 @@ const Fields = (props) => {
               <CreateComments budget={budget}/>
             }
           </Grid>
-          <Grid container item xs={4} alignItems="center" className={classes.totalValuesGridContainer}>
+          <Grid container item xs={8} md={8} lg={6} alignItems="center" className={classes.totalValuesGridContainer}>
             { loading || !data ? 
               <Grid container item direction="row" justifyContent='center'>
                 <Grid item xs={7}>

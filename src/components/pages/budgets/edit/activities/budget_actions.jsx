@@ -182,7 +182,7 @@ export default (props) => {
         "budgetId": budget.id, 
         "total": (paymentValue * 100),
         "paymentType": paymentType,
-        "budgetUploadId": file.id
+        "budgetUploadId": file && file.id
        }
     })
   }

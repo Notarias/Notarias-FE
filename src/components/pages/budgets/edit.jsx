@@ -33,7 +33,7 @@ const BudgetsEdit = (props) => {
         <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
       </Grid>
       <Grid container item style={{ flex: '1 1 auto' }}>
-        <Grid item xs={8}>
+        <Grid item xs={8} lg={8}>
           <Paper elevation={5} style={{ height: "100%" }} variant='outlined'>
             <Grid container item direction="column"  justifyContent="flex-start" alignItems="stretch" style={{ height: "100%" }}>
               <Grid container item style={{ flex: "1 1 auto" }}  alignItems="stretch">
@@ -45,7 +45,7 @@ const BudgetsEdit = (props) => {
             </Grid>
           </Paper>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={4} lg={4}>
           <Paper elevation={0} style={{ minHeight: "100%" }}>
             { budget && <Activities budget={budget} loadingBudget={loading}/> }
           </Paper>
