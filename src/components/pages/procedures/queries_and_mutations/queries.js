@@ -489,6 +489,7 @@ export const GET_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS = gql`
       fields{
         id
         name
+        style
         printable
         proceduresTemplateFieldsGroupId
       }
@@ -510,12 +511,16 @@ export const GET_PROCEDURE_FIELD_GROUP_VALUES = gql`
       proceduresTemplateField{
         id
         name
+        style
         printable
       }
       procedureFieldValue{
         id
         value
         active
+        file
+        fileName
+        fileUrl
         proceduresTemplateFieldId
       }
     }
@@ -527,11 +532,13 @@ export const CREATE_PROCEDURE_FIELD_VALUE = gql`
     $proceduresTemplateFieldId: ID,
     $procedureId: ID,
     $value: String!,
+    $file: Upload
   ){
     createProcedureFieldValue(input:{
       proceduresTemplateFieldId: $proceduresTemplateFieldId,
       procedureId: $procedureId,
       value: $value,
+      file: $file
       }
     ){
       procedureFieldValue{
@@ -540,6 +547,9 @@ export const CREATE_PROCEDURE_FIELD_VALUE = gql`
         id
         value
         active
+        file
+        fileName
+        fileUrl
       }
     }
   }
@@ -552,6 +562,7 @@ export const UPDATE_PROCEDURE_FIELD_VALUE = gql`
     $procedureId: ID,
     $value: String,
     $active: Boolean,
+    $file: Upload
   ){
     updateProcedureFieldValue(input:{
       id: $id,
@@ -559,12 +570,16 @@ export const UPDATE_PROCEDURE_FIELD_VALUE = gql`
       procedureId: $procedureId,
       value: $value,
       active: $active,
+      file: $file
       }
     ){
       procedureFieldValue{
         id
         value
         active
+        file
+        fileName
+        fileUrl
       }
     }
   }
@@ -584,6 +599,9 @@ export const GET_PROCEDURE_FIELD_VALUES = gql`
       procedureId
       proceduresTemplateFieldId
       active
+      file
+      fileName
+      fileUrl
     }
   }
 `

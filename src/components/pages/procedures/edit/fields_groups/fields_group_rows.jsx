@@ -22,6 +22,10 @@ import { DESTROY_PROCEDURE_FIELD_GROUP_VALUES } from '../../queries_and_mutation
 import { GET_PROCEDURES_AUDITLOG }              from '../../queries_and_mutations/queries';
 import { GLOBAL_MESSAGE }                       from '../../../../../resolvers/queries';
 import client                                   from '../../../../../../src/apollo';
+import TextField                                from './text_field';
+import NumberField                              from './number_field';
+import FileField                                from './file_field';
+import { useEffect } from 'react';
 
 const FieldsGroupsRows = (props) => {
 
@@ -34,9 +38,11 @@ const FieldsGroupsRows = (props) => {
   const [procedureFieldValue] = useState(fieldGroupValue && fieldGroupValue.procedureFieldValue);
   const [fieldValueActive, setFieldValueActive] = useState(fieldGroupValue && fieldGroupValue.procedureFieldValue.active);
   const [value, setValue] = useState(fieldGroupValue && fieldGroupValue.procedureFieldValue.value);
+  const [fileName, setFileName] = useState(fieldGroupValue && fieldGroupValue.procedureFieldValue.fileName)
+  const [fileUrl, setFileUrl] = useState(fieldGroupValue && fieldGroupValue.procedureFieldValue.fileUrl)
   const [fieldStatus, setFieldStatus] = useState(true);
   const [saveButtonStatus, setSaveButtonStatus] = useState(true);
-  
+  console.log()
   const openMenu = ( event ) => {
     setMenuState(true);
     setAnchorEl(event.currentTarget);
@@ -46,21 +52,6 @@ const FieldsGroupsRows = (props) => {
     setMenuState(false);
     setAnchorEl(null);
   }
-
-  const cancelEditField = () => {
-    setValue(procedureFieldValue.value);
-    setFieldStatus(true);
-    setSaveButtonStatus(true);
-  }
-
-  const enableEditField = () => {
-    setFieldStatus(false);
-  }
-  const fieldValueChange = ({ target }) => {
-    let { value: targetValue } = target
-    setValue(targetValue);
-    setSaveButtonStatus(false);
-  }
   
   const updateFieldValue = ( event ) => {
     updateProcedureFieldValue (
@@ -69,6 +60,18 @@ const FieldsGroupsRows = (props) => {
         procedureId: procedure.id,
         proceduresTemplateFieldId: group.fields.proceduresTemplateFieldsGroupId,
         value: value
+      }}
+    )
+  }
+
+  const updateFieldValueFile = ( files, event ) => {
+    updateProcedureFieldValueFile (
+      { variables: {
+        id: procedureFieldValue && procedureFieldValue.id,
+        procedureId: procedure.id,
+        proceduresTemplateFieldId: group.fields.proceduresTemplateFieldsGroupId,
+        value: "",
+        file: files[0]
       }}
     )
   }
@@ -86,6 +89,34 @@ const FieldsGroupsRows = (props) => {
           setFieldValueActive(cacheData && cacheData.updateProcedureFieldValue.procedureFieldValue.active);
           setFieldStatus(true);
           setSaveButtonStatus(true);
+        },
+        refetchQueries: [
+          {
+            query: GET_PROCEDURE_FIELD_GROUP_VALUES,
+            variables: { "fieldGroupId": group.id, "procedureId": procedure.id }
+          },
+          {
+            query: GET_PROCEDURES_AUDITLOG,  
+              variables: { "procedureId": procedure.id }
+          }
+        ],
+        awaitRefetchQueries: true
+      }
+    )
+
+    const [updateProcedureFieldValueFile, { loading: updateProcedureFieldValueFileLoading }] =
+    useMutation(
+      UPDATE_PROCEDURE_FIELD_VALUE,
+      {
+        context: { hasUpload: true },
+        onCompleted(cacheData) {
+          setValue(cacheData && cacheData.updateProcedureFieldValue.procedureFieldValue.value);
+          setFieldValueActive(cacheData && cacheData.updateProcedureFieldValue.procedureFieldValue.active);
+          setFileName(cacheData && cacheData.updateProcedureFieldValue.procedureFieldValue.fileName);
+          setFileUrl(cacheData && cacheData.updateProcedureFieldValue.procedureFieldValue.fileUrl);
+          setFieldStatus(true);
+          setSaveButtonStatus(true);
+          console.log( )
         },
         refetchQueries: [
           {
@@ -155,48 +186,57 @@ const FieldsGroupsRows = (props) => {
     destroyProcedureFieldGroupValues({ variables: {"id": fieldGroupValue.id} });
     closeMenu();
   }
-  
+
+  const renderFieldType = (fieldType) => {
+    switch (fieldType.style) {
+      case "string":
+        return (
+          <TextField
+            field={field}
+            procedureFieldValue={procedureFieldValue}
+            value={value}
+            setValue={setValue}
+            fieldStatus={fieldStatus}
+            setFieldStatus={setFieldStatus}
+            saveButtonStatus={saveButtonStatus}
+            setSaveButtonStatus={setSaveButtonStatus}
+            updateFieldValue={updateFieldValue}
+          />
+        )
+      case "number":
+        return (
+          <NumberField
+            field={field}
+            initFieldValue={procedureFieldValue}
+            value={value}
+            setValue={setValue}
+            fieldStatus={fieldStatus}
+            setFieldStatus={setFieldStatus}
+            saveButtonStatus={saveButtonStatus}
+            setSaveButtonStatus={setSaveButtonStatus}
+            updateFieldValue={updateFieldValue}
+          />
+        )
+      case "file":
+        return (
+          <FileField
+            field={field}
+            fileName={fileName && fileName}
+            fileUrl={fileUrl && fileUrl}
+            updateFieldValueFile={updateFieldValueFile}
+            updateProcedureFieldValueFileLoading={updateProcedureFieldValueFileLoading}
+          />
+        )
+    }
+  }
+
   return (
     <Grid container item style={{ minHeight: '70px' }} key={field.id + 'field-row'} justifyContent="center" >
       {
         <Grid container xs={12} item >
-          <Grid container item xs={10} justifyContent="flex-start">
-            <Grid item xs={12}>
-              <FormControl variant="outlined" fullWidth>
-                <InputLabel htmlFor={field.id}>{field.name}</InputLabel>
-                <Input
-                  id={field.id}
-                  key={field.name}
-                  label={field.name}
-                  value={value}
-                  onChange={fieldValueChange}
-                  disabled={fieldStatus}
-                  size="small"
-                  variant="outlined"
-                  fullWidth
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        onClick={fieldStatus ? enableEditField : cancelEditField}
-                        edge="end"
-                      >
-                        {fieldStatus ? <EditIcon fontSize="small"/> : <ClearIcon fontSize="small"/>}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                />
-              </FormControl>
-            </Grid>
-          </Grid>
-          <Grid item xs={1} width="100%">
-            <IconButton
-              disabled={saveButtonStatus}
-              style={{"padding": "10px"}}
-              onClick={updateFieldValue}
-            >
-              <SaveIcon color={saveButtonStatus ? "disabled" : "primary"}/>
-            </IconButton>
-          </Grid>
+          {
+            renderFieldType(field)
+          }
           <Grid item xs={1} width="100%">
             <IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={openMenu}>
               <MoreVertIcon/>
