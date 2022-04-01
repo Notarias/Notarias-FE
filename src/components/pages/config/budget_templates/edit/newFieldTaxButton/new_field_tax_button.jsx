@@ -1,4 +1,4 @@
-import React, { useEffect }                                  from 'react';
+import React, { useState, useEffect }         from 'react';
 import Button                                 from '@material-ui/core/Button';
 import Grid                                   from '@material-ui/core/Grid';
 import { styles }                             from '../../styles';
@@ -20,14 +20,14 @@ import client                                 from '../../../../../../apollo';
 const NewFieldTaxButton = (props) => {
   const { classes, templateData, currentTab } = props
 
-  const [open, setOpen] = React.useState(false);
-  const [fieldName, setFieldName] = React.useState("")
-  const [defaultValue, setDefaultValue] = React.useState(3)
-  const [taxedFieldsIds, setTaxedFieldsIds] = React.useState([])
-  const [operator, setOperator] = React.useState("")
-  const [taxableSelector, setTaxableSelector] = React.useState("")
-  const [pristine, setPristine] = React.useState(true)
-  const [allOptionsMarked, setAllOptionsMarked] = React.useState(false)
+  const [open, setOpen] = useState(false);
+  const [fieldName, setFieldName] = useState("")
+  const [defaultValue, setDefaultValue] = useState(3)
+  const [taxedFieldsIds, setTaxedFieldsIds] = useState([])
+  const [operator, setOperator] = useState("")
+  const [taxableSelector, setTaxableSelector] = useState("")
+  const [pristine, setPristine] = useState(true)
+  const [allOptionsMarked, setAllOptionsMarked] = useState(false)
 
   const handleClose = () => {
     setOpen(false)
@@ -138,6 +138,7 @@ const NewFieldTaxButton = (props) => {
               />
             </Grid>
             <FieldSearch
+              currentTab={currentTab}
               templateData={templateData}
               defaultValue={defaultValue}
               setDefaultValue={setDefaultValue}

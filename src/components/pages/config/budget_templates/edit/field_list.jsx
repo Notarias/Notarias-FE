@@ -1,13 +1,13 @@
-import React, { useEffect }                         from 'react';
+import React, { useState, useEffect }               from 'react';
 import Field                                        from './field';
 import TaxField                                     from './tax_field';
 import { useQuery }                                 from '@apollo/client';
-import { GET_BUDGETING_TEMPLATE_TAB_FIELDS }        from '../queries_and_mutations/queries'
+import { GET_BUDGETING_TEMPLATE_TAB_FIELDS }        from '../queries_and_mutations/queries';
 import { styles }                                   from '../styles';
 import { withStyles }                               from '@material-ui/core/styles';
 
 const FieldList = (props) => {
-  const { currentTab} = props
+  const { currentTab } = props
 
   const { data } = useQuery(
     GET_BUDGETING_TEMPLATE_TAB_FIELDS,
@@ -16,7 +16,7 @@ const FieldList = (props) => {
     }
   );
 
-  const [fields, setFields] = React.useState(data ? data.budgetingTemplateTabFields : [])
+  const [fields, setFields] = useState(data ? data.budgetingTemplateTabFields : [])
 
   useEffect(() => {
     data && setFields(data.budgetingTemplateTabFields);;

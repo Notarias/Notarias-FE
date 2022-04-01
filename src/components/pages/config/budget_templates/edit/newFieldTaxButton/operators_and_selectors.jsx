@@ -19,6 +19,8 @@ import OutlinedInput        from '@material-ui/core/OutlinedInput';
 import FormControl          from '@material-ui/core/FormControl';
 import ArrowBackIosIcon     from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon  from '@material-ui/icons/ArrowForwardIos';
+import { useQuery }         from '@apollo/client';
+import { GET_BUDGETING_TEMPLATE_TAB_FIELDS }        from './../../queries_and_mutations/queries';
 
 function not(a, b) {
   return a.filter((value) => b.indexOf(value) === -1);
@@ -31,6 +33,7 @@ function intersection(a, b) {
 const FieldSearch = (props) => {
   const {
     classes,
+    currentTab,
     templateData,
     setTaxedFieldsIds,
     setDefaultValue,
@@ -42,15 +45,27 @@ const FieldSearch = (props) => {
     taxableSelector
   } = props
 
-  const [searchList, setSearchList]       = useState(templateData)
+  const [searchList, setSearchList]       = useState([]);
   const [fuzzySearcher, setFuzzySearcher] = useState(new Fuse(templateData, { keys: ['name'] }))
 
   const [checked, setChecked]             = useState([]);
-  const [left, setLeft]                   = useState( templateData );
+  const [left, setLeft]                   = useState([]);
   const [right, setRight]                 = useState([]);
 
   const leftChecked = intersection(checked, left);
   const rightChecked = intersection(checked, right);
+
+  const { data } = useQuery(
+    GET_BUDGETING_TEMPLATE_TAB_FIELDS,
+    {
+      variables: { "id": currentTab.id }
+    }
+  );
+
+  useEffect(() => {
+    setLeft(data && data.budgetingTemplateTabFields);
+    setSearchList(data && data.budgetingTemplateTabFields);
+  }, [data])
 
   useEffect(() => {
     if(right.length > 0){

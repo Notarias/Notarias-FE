@@ -43,8 +43,8 @@ const ProceduresTableBody = (props) => {
   
   const [array] = useState([1,2,3,4,5]);
 
-  const { loading, data, refetch } = useQuery(
-    GET_PROCEDURES, { variables: variables }
+  const { loading, data } = useQuery(
+    GET_PROCEDURES, { variables: variables, fetchPolicy: "cache-and-network" }
   );
 
   return(
