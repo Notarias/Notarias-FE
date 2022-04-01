@@ -1,18 +1,11 @@
 import React, { useState }                      from 'react';
 import Grid                                     from '@material-ui/core/Grid';
-import FormControl                              from '@material-ui/core/FormControl';
-import Input                                    from '@material-ui/core/Input';
-import InputLabel                               from '@material-ui/core/InputLabel';
-import InputAdornment                           from '@material-ui/core/InputAdornment';
 import Typography                               from '@material-ui/core/Typography';
 import IconButton                               from '@material-ui/core/IconButton';
 import Menu                                     from '@material-ui/core/Menu';
 import MenuItem                                 from '@material-ui/core/MenuItem';
 import ListItemIcon                             from '@material-ui/core/ListItemIcon';
 import Switch                                   from '@material-ui/core/Switch';
-import SaveIcon                                 from '@material-ui/icons/Save';
-import EditIcon                                 from '@material-ui/icons/Edit';
-import ClearIcon                                from '@material-ui/icons/Clear';
 import DeleteForeverIcon                        from '@material-ui/icons/DeleteForever';
 import MoreVertIcon                             from '@material-ui/icons/MoreVert';
 import { useMutation }                          from '@apollo/client';
@@ -25,7 +18,6 @@ import client                                   from '../../../../../../src/apol
 import TextField                                from './text_field';
 import NumberField                              from './number_field';
 import FileField                                from './file_field';
-import { useEffect } from 'react';
 
 const FieldsGroupsRows = (props) => {
 
@@ -34,7 +26,7 @@ const FieldsGroupsRows = (props) => {
   const [menuState, setMenuState] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [duplicate] = useState(fieldGroupValue && fieldGroupValue.duplicate);
-  const [field] = useState(fieldGroupValue && fieldGroupValue.proceduresTemplateField);
+  const [templateField] = useState(fieldGroupValue && fieldGroupValue.proceduresTemplateField);
   const [procedureFieldValue] = useState(fieldGroupValue && fieldGroupValue.procedureFieldValue);
   const [fieldValueActive, setFieldValueActive] = useState(fieldGroupValue && fieldGroupValue.procedureFieldValue.active);
   const [value, setValue] = useState(fieldGroupValue && fieldGroupValue.procedureFieldValue.value);
@@ -42,7 +34,7 @@ const FieldsGroupsRows = (props) => {
   const [fileUrl, setFileUrl] = useState(fieldGroupValue && fieldGroupValue.procedureFieldValue.fileUrl)
   const [fieldStatus, setFieldStatus] = useState(true);
   const [saveButtonStatus, setSaveButtonStatus] = useState(true);
-  console.log()
+
   const openMenu = ( event ) => {
     setMenuState(true);
     setAnchorEl(event.currentTarget);
@@ -55,24 +47,28 @@ const FieldsGroupsRows = (props) => {
   
   const updateFieldValue = ( event ) => {
     updateProcedureFieldValue (
-      { variables: {
-        id: procedureFieldValue && procedureFieldValue.id,
-        procedureId: procedure.id,
-        proceduresTemplateFieldId: group.fields.proceduresTemplateFieldsGroupId,
-        value: value
-      }}
+      {
+        variables: {
+          id: procedureFieldValue && procedureFieldValue.id,
+          procedureId: procedure.id,
+          proceduresTemplateFieldId: group.fields.proceduresTemplateFieldsGroupId,
+          value: value
+        }
+      }
     )
   }
 
   const updateFieldValueFile = ( files, event ) => {
     updateProcedureFieldValueFile (
-      { variables: {
-        id: procedureFieldValue && procedureFieldValue.id,
-        procedureId: procedure.id,
-        proceduresTemplateFieldId: group.fields.proceduresTemplateFieldsGroupId,
-        value: "",
-        file: files[0]
-      }}
+      {
+        variables: {
+          id: procedureFieldValue && procedureFieldValue.id,
+          procedureId: procedure.id,
+          proceduresTemplateFieldId: group.fields.proceduresTemplateFieldsGroupId,
+          value: "",
+          file: files[0]
+        }
+      }
     )
   }
 
@@ -116,7 +112,6 @@ const FieldsGroupsRows = (props) => {
           setFileUrl(cacheData && cacheData.updateProcedureFieldValue.procedureFieldValue.fileUrl);
           setFieldStatus(true);
           setSaveButtonStatus(true);
-          console.log( )
         },
         refetchQueries: [
           {
@@ -192,7 +187,7 @@ const FieldsGroupsRows = (props) => {
       case "string":
         return (
           <TextField
-            field={field}
+            templateField={templateField}
             procedureFieldValue={procedureFieldValue}
             value={value}
             setValue={setValue}
@@ -206,7 +201,7 @@ const FieldsGroupsRows = (props) => {
       case "number":
         return (
           <NumberField
-            field={field}
+            templateField={templateField}
             initFieldValue={procedureFieldValue}
             value={value}
             setValue={setValue}
@@ -220,7 +215,7 @@ const FieldsGroupsRows = (props) => {
       case "file":
         return (
           <FileField
-            field={field}
+            templateField={templateField}
             fileName={fileName && fileName}
             fileUrl={fileUrl && fileUrl}
             updateFieldValueFile={updateFieldValueFile}
@@ -231,11 +226,11 @@ const FieldsGroupsRows = (props) => {
   }
 
   return (
-    <Grid container item style={{ minHeight: '70px' }} key={field.id + 'field-row'} justifyContent="center" >
+    <Grid container item style={{ minHeight: '70px' }} key={templateField.id + 'field-row'} justifyContent="center" >
       {
         <Grid container xs={12} item >
           {
-            renderFieldType(field)
+            renderFieldType(templateField)
           }
           <Grid item xs={1} width="100%">
             <IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={openMenu}>

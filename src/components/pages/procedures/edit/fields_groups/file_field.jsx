@@ -15,7 +15,7 @@ import CloudDownloadIcon            from '@material-ui/icons/CloudDownload';
 import FileFieldLoading             from './file_field_loading';
 
 const FileField = (props) => {
-  const { field, fileName, fileUrl, updateFieldValueFile, updateProcedureFieldValueFileLoading } = props
+  const { templateField, fileName, fileUrl, updateFieldValueFile, updateProcedureFieldValueFileLoading } = props
   
   return(
     <>
@@ -44,12 +44,12 @@ const FileField = (props) => {
       :
         <Grid item xs={9}>
           <FormControl variant={fileUrl ? 'outlined' : 'filled'} fullWidth>
-            <InputLabel htmlFor={field.id}>{field.name}</InputLabel>
+            <InputLabel htmlFor={templateField.id}>{templateField.name}</InputLabel>
             {!!fileName  ?
               <OutlinedInput
-                id={field.id}
-                key={field.name}
-                label={field.name}
+                id={templateField.id}
+                key={templateField.name}
+                label={templateField.name}
                 value={fileName}
                 disabled={true}
                 size='small'
@@ -58,9 +58,9 @@ const FileField = (props) => {
               />
             :
               <FilledInput
-                id={field.id}
-                key={field.name}
-                label={field.name}
+                id={templateField.id}
+                key={templateField.name}
+                label={templateField.name}
                 value={"Haga click en el icono para subir archivo"}
                 disabled={true}
                 size='small'

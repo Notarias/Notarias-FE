@@ -26,7 +26,6 @@ const FieldsRows = (props) => {
   const [initFieldValue, setInitFieldValue] = useState("");
   const [saveButtonStatus, setSaveButtonStatus] = useState(true);
   const [fieldStatus, setFieldStatus] = useState(true);
-  const [file, setFile] = useState([]);
   const [fileName, setFileName] = useState("");
   const [fileUrl, setFileUrl] = useState("");
   
@@ -60,35 +59,41 @@ const FieldsRows = (props) => {
 
   const updateFieldValue = ( event ) => {
     updateProcedureFieldValue (
-      { variables: {
-        "id": fieldValueId && fieldValueId,
-        "value": fieldValue,
-        "proceduresTemplateFieldId": field.id,
-        "procedureId": procedure.id
-      }}
+      {
+        variables: {
+          "id": fieldValueId && fieldValueId,
+          "value": fieldValue,
+          "proceduresTemplateFieldId": field.id,
+          "procedureId": procedure.id
+        }
+      }
     )
   }
 
   const updateFieldValueFile = ( files, event ) => {
     updateProcedureFieldValueFile (
-      { variables: {
-        "id": fieldValueId && fieldValueId,
-        "value": "",
-        "file": files[0],
-        "proceduresTemplateFieldId": field.id,
-        "procedureId": procedure.id
-      }}
+      {
+        variables: {
+          "id": fieldValueId && fieldValueId,
+          "value": "",
+          "file": files[0],
+          "proceduresTemplateFieldId": field.id,
+          "procedureId": procedure.id
+        }
+      }
     )
   }
 
   const updateFieldValueActive = ( checked ) => {
     updateProcedureFieldValue (
-      { variables: {
-        "id": fieldValueId && fieldValueId,
-        "active": checked,
-        "proceduresTemplateFieldId": field.id,
-        "procedureId": procedure.id
-      }}
+      {
+        variables: {
+          "id": fieldValueId && fieldValueId,
+          "active": checked,
+          "proceduresTemplateFieldId": field.id,
+          "procedureId": procedure.id
+        }
+      }
     )
   }
 

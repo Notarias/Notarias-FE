@@ -11,7 +11,7 @@ import ClearIcon                                from '@material-ui/icons/Clear';
 
 const TextField = (props) => {
   const { 
-    field,
+    templateField,
     procedureFieldValue,
     value,
     setValue,
@@ -42,11 +42,11 @@ const TextField = (props) => {
       <Grid container item xs={10} justifyContent="flex-start">
         <Grid item xs={12}>
           <FormControl variant="outlined" fullWidth>
-            <InputLabel htmlFor={field.id}>{field.name}</InputLabel>
+            <InputLabel htmlFor={templateField.id}>{templateField.name}</InputLabel>
             <Input
-              id={field.id}
-              key={field.name}
-              label={field.name}
+              id={templateField.id}
+              key={templateField.name}
+              label={templateField.name}
               value={value}
               onChange={fieldValueChange}
               disabled={fieldStatus}
