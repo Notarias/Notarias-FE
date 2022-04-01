@@ -27,7 +27,7 @@ const LoadingFieldGroups = () => {
             {
               array.map((index) => {
                 return(
-                  <Grid container direction='row' justifyContent='center' style={{marginTop: '10px'}}>
+                  <Grid key={`${index}-loadindFieldGroup`} container direction='row' justifyContent='center' style={{marginTop: '10px'}}>
                     <Grid container item xs={10} justifyContent='flex-start' alignItems='center'>
                       <Grid item xs>
                         <Skeleton variant='rect' width='100%' height={40}/>

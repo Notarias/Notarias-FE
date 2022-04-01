@@ -30,7 +30,7 @@ const Fields = (props) => {
         <Grid item container justifyContent="flex-start" style={{"paddingLeft": "25px", "paddingRight": "25px", "paddingTop": "20px"}}>
           { loading || !fields ? array.map((index) => {
             return(
-              <LoadingFields/>
+              <LoadingFields key={`loadingFields-${index}`}/>
             )}
           ) : (
              fields.map((field) => {

@@ -227,6 +227,7 @@ const ButtonsNewFieldNewFieldsGroup = ({
                         >
                           <MenuItem key='string' value={'string'}>Texto</MenuItem>
                           <MenuItem key='number' value={'number'}>Numerico</MenuItem>
+                          <MenuItem key='file' value={'file'}>Archivo</MenuItem>
                         </Select>
                       </FormControl>
                     </Grid>
