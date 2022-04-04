@@ -19,7 +19,7 @@ import Button from '@material-ui/core/Button';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
 const ClientSearch = (props) => {
-  const { classes, setClientInfo, setNewClientForm} = props;
+  const { classes, clientInfo, setClientInfo, setNewClientForm} = props;
   const [searchLoading, setSearchLoading] = useState(false);
   const [sortField, setSortField] = useState("first_name");
   const [sortDirection, setSortDirection] = useState("desc");
@@ -117,23 +117,23 @@ const ClientSearch = (props) => {
 
   const RenderClientsTable = (props) => {
 
-    const { setClientInfo } = props
+    const { clientInfo, setClientInfo } = props
     
     return(
       <TableBody>
         {
           data && data.clients.map((client, index ) => {
-
             const handleMenuItemClick = (event) => {
               setSelectedIndex(client.id);
               setClientInfo(client);
             };
+
             return(
             <TableRow
               index={client.id}
               key={client.id}
               hover 
-              selected={client.id === selectedIndex} 
+              selected={clientInfo ? client.id === clientInfo.id : client.id === selectedIndex} 
               onClick={handleMenuItemClick}
             >
               <TableCell align= "center">{ client.firstName }</TableCell>
@@ -185,7 +185,7 @@ const ClientSearch = (props) => {
             />
           </TableRow>
         </TableHead>
-        <RenderClientsTable setClientInfo={setClientInfo}/>
+        <RenderClientsTable clientInfo={clientInfo} setClientInfo={setClientInfo}/>
         <TableFooter>
           <TableRow>
             <TablePagination

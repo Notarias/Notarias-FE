@@ -58,7 +58,9 @@ function getSteps() {
 
 function getStepContent(stepIndex, listData) {
   const {
+    clientInfo,
     setClientInfo, 
+    causantInfo,
     setCausantInfo, 
     selectedProcedure, 
     setSelectedProcedure, 
@@ -86,6 +88,7 @@ function getStepContent(stepIndex, listData) {
               /> : 
               <ClientSearch
                 setNewClientForm={setNewClientForm}
+                clientInfo={clientInfo}
                 setClientInfo={setClientInfo}
               />
           }
@@ -106,6 +109,7 @@ function getStepContent(stepIndex, listData) {
               /> : 
               <CausantSearch
                 setNewClientForm={setNewClientForm}
+                causantInfo={causantInfo}
                 setCausantInfo={setCausantInfo}
               />
           }
@@ -159,6 +163,10 @@ const NewBudget = (params) => {
   const handleBack = () => {
     if (activeStep > 0) {
       setActiveStep((prevActiveStep) => prevActiveStep - 1);}
+    if (activeStep == 2) {
+      setSelectedProcedure("")
+      setSelectedBudget("")
+    }
   };
 
   const clientAsCausant = () => {
@@ -249,6 +257,7 @@ const NewBudget = (params) => {
       case 2:
         return (
           <Button
+            disabled={!selectedBudget}
             variant="contained"
             color="primary"
             onClick={openSaveConfirm}>
@@ -261,7 +270,9 @@ const NewBudget = (params) => {
   };
 
   let listData = {
+    clientInfo: clientInfo,
     setClientInfo: setClientInfo,
+    causantInfo: causantInfo,
     setCausantInfo: setCausantInfo,
     selectedProcedure: selectedProcedure,
     setSelectedProcedure: setSelectedProcedure,
