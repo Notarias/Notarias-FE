@@ -103,7 +103,7 @@ const BudgetInvoice = (props) => {
                   <Typography style={{ fontWeight: 600 }} align='left'>Causante:</Typography>
                 </Grid>
                 <Grid item xs={10}>
-                  { causant ? <Typography align='left'> { causant.fullName }</Typography> : <Skeleton variant="text" width="90%"/> }
+                  { !loading ? <Typography align='left'> { causant ? causant.fullName : "" }</Typography> : <Skeleton variant="text" width="90%"/> }
                 </Grid>
               </Grid>
               <Grid container item>
@@ -111,7 +111,7 @@ const BudgetInvoice = (props) => {
                   <Typography style={{ fontWeight: 600 }} align='left'>Interesado:</Typography>
                 </Grid>
                 <Grid item xs={10}>
-                  { client ? <Typography align='left'>{ client.fullName }</Typography> : <Skeleton variant="text" width="90%"/> }
+                  { !loading ? <Typography align='left'>{ client ? client.fullName : "" }</Typography> : <Skeleton variant="text" width="90%"/> }
                 </Grid>
               </Grid>
               <Grid container item>
@@ -119,7 +119,7 @@ const BudgetInvoice = (props) => {
                   <Typography style={{ fontWeight: 600 }} align='left'>Operación:</Typography>
                 </Grid>
                 <Grid item xs={10}>
-                  { budgetingTemplate ? <Typography align='left'>{ budgetingTemplate.name }</Typography> : <Skeleton variant="text" width="90%"/> }
+                  { !loading ? <Typography align='left'>{ budgetingTemplate ? budgetingTemplate.name : "" }</Typography> : <Skeleton variant="text" width="90%"/> }
                 </Grid>
               </Grid>
               <Grid container item>
@@ -127,7 +127,7 @@ const BudgetInvoice = (props) => {
                   <Typography style={{ fontWeight: 600 }} align='left'>Encargado:</Typography>
                 </Grid>
                 <Grid item xs={10}>
-                  { asignee ? <Typography align='left'>{ asignee.fullName }</Typography> : <Skeleton variant="text" width="90%"/> }
+                  { !loading ? <Typography align='left'>{ asignee ? asignee.fullName : "" }</Typography> : <Skeleton variant="text" width="90%"/> }
                 </Grid>
               </Grid>
             </Grid>
