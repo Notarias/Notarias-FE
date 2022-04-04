@@ -41,7 +41,7 @@ export default (props) => {
   };
 
   const { loading, data, refetch } = useQuery(
-    GET_BUDGETS, { variables: variables }
+    GET_BUDGETS, { variables: variables, fetchPolicy: "cache-and-network" }
   );
 
   const [array] = useState([1,2,3,4,5]);
