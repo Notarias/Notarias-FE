@@ -19,7 +19,7 @@ import Button from '@material-ui/core/Button';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
 const CausantSearch = (props) => {
-  const { classes, setCausantInfo, setNewClientForm } = props
+  const { classes, causantInfo, setCausantInfo, setNewClientForm } = props
   const [searchLoading, setSearchLoading] = useState(false);
   const [sortField, setSortField] = useState("first_name");
   const [sortDirection, setSortDirection] = useState("desc");
@@ -117,7 +117,7 @@ const CausantSearch = (props) => {
 
   const RenderClientsTable = (props) => {
 
-    const { setCausantInfo } = props
+    const { causantInfo, setCausantInfo } = props
 
     return(
       <TableBody>
@@ -132,7 +132,7 @@ const CausantSearch = (props) => {
               index={causant.id}
               key={`RenderClientsTable-${causant.id}`}
               hover 
-              selected={causant.id === selectedIndex} 
+              selected={causantInfo ? causant.id === causantInfo.id : causant.id === selectedIndex} 
               onClick={handleMenuItemClick}
             >
               <TableCell align= "center" className={classes.tableRowMax}>{ causant.firstName }</TableCell>
@@ -184,7 +184,7 @@ const CausantSearch = (props) => {
             />
           </TableRow>
         </TableHead>
-        <RenderClientsTable setCausantInfo={setCausantInfo} />
+        <RenderClientsTable causantInfo={causantInfo} setCausantInfo={setCausantInfo} />
         <TableFooter>
           <TableRow>
             <TablePagination
