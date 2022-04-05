@@ -46,6 +46,10 @@ const ProceduresTableBody = (props) => {
   const { loading, data } = useQuery(
     GET_PROCEDURES, { variables: variables, fetchPolicy: "cache-and-network" }
   );
+  
+  useEffect(() => {
+    assingTotalRecords((data && data.proceduresCount) || 0)
+  }, [loading]);
 
   return(
     <TableBody>

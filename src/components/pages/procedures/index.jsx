@@ -35,7 +35,7 @@ const ProceduresIndex = (props) => {
   const [proceduresTemplateName, setProceduresTemplateName] = useState(null);
   const [createdAt, setCreatedAt] = useState(null);
   const [templatesVariables, setTemplatesVariables] = useState(null);
-  const [total_records, setTotalRecords]  = useState(0);
+  const [totalRecords, setTotalRecords]  = useState(0);
 
   const clientNameInputRef = useRef();
   const serialNumberInputRef = useRef();
@@ -148,7 +148,7 @@ const ProceduresIndex = (props) => {
                     rowsPerPageOptions={ [5, 10, 15, 20] }
                     onPageChange={ changePage }
                     onRowsPerPageChange={ changeRowsPerPage }
-                    count={ total_records }
+                    count={ totalRecords }
                     labelRowsPerPage={ "Filas por página:" }
                   />
                 </TableRow>
