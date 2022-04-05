@@ -49,7 +49,7 @@ const ProceduresTableBody = (props) => {
   
   useEffect(() => {
     assingTotalRecords((data && data.proceduresCount) || 0)
-  }, [loading]);
+  }, [data && data.proceduresCount]);
 
   return(
     <TableBody>
