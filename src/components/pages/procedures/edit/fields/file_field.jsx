@@ -43,7 +43,6 @@ const FileField = (props) => {
         >
           {({getRootProps, getInputProps}) => (
             <section>
-              {console.log(getInputProps())}
               <div {...getRootProps()}>
                 <input {...getInputProps()} />
                 <Tooltip title={fileUrl ? "Cambiar Archivo" : "Subir Archivo"}>

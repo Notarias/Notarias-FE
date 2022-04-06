@@ -75,7 +75,6 @@ const Payment = (props) => {
   const [error, setError] = useState(false);
   const [open, setOpen] = useState(false);
   const [file, setFile] = useState();
-  const [dialogStatus, setDialogStatus] = useState(false);
 
   const classes = useStyles();
   const inputsList = ["total"]
