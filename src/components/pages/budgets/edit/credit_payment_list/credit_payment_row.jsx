@@ -18,6 +18,8 @@ import { Link }                             from '@material-ui/core';
 import { useMutation }                      from '@apollo/client';
 import { BUDGET_UPLOAD_FILE }               from '../../queries_and_mutations/queries';
 import { GET_CREDIT_PAYMENTS }              from '../../queries_and_mutations/queries';
+import { GLOBAL_MESSAGE }                   from '../../../../../resolvers/queries';
+import client                               from '../../../../../apollo';
 
 function NumberFormatCustom(props) {
   const { inputRef, onChange, ...other } = props;
@@ -111,6 +113,19 @@ const CreditPaymentRow = (props) => {
     uploadFile(files, creditPayment)
   }
 
+  const rejectedFile = () => {
+    client.writeQuery({
+      query: GLOBAL_MESSAGE,
+      data: {
+        globalMessage: {
+          message: "Formato de archivo, no valido, permitidos: .JPG, .JPEG, PNG Y PDF, verifique su archivo e intente de nuevo.",
+          type: "error",
+          __typename: "globalMessage"
+        }
+      }
+    })
+  }
+
   const uploadFile = (files, creditPayment) => {
     uploadPaymentFile(
       {
@@ -175,7 +190,12 @@ const CreditPaymentRow = (props) => {
         />
       </Grid>
       <Grid container item xs={1} alignItems="center" justifyContent="center">
-        <Dropzone accept='file_extension/.jpg, .jpeg, .png, .pdf' multiple={false} onDrop={onDrop}>
+        <Dropzone
+          accept='file_extension/.jpg, .jpeg, .png, .pdf'
+          onDrop={onDrop}
+          onDropRejected={rejectedFile}
+          multiple={false}
+        >
           {({getRootProps, getInputProps}) => (
             <section>
               <div {...getRootProps()}>

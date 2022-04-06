@@ -7,9 +7,9 @@ import PublishIcon                          from '@material-ui/icons/Publish';
 import CachedIcon                           from '@material-ui/icons/Cached';
 import InputAdornment                       from '@material-ui/core/InputAdornment';
 import TextField                            from '@material-ui/core/TextField';
-import Typography                           from '@material-ui/core/Typography';
 import Link                                 from '@material-ui/core/Link';
 import CircularProgress                     from '@material-ui/core/CircularProgress';
+import Typography                           from '@material-ui/core/Typography';
 import Dropzone                             from 'react-dropzone';
 import NumberFormat                         from 'react-number-format';
 import PropTypes                            from 'prop-types';
@@ -18,6 +18,8 @@ import { useMutation }                      from '@apollo/client';
 import { makeStyles }                       from '@material-ui/core/styles';
 import { BUDGET_UPLOAD_FILE }               from '../../../../queries_and_mutations/queries';
 import { GET_PAYMENTS }                     from '../../../../queries_and_mutations/queries';
+import { GLOBAL_MESSAGE }                   from '../../../../../../../resolvers/queries';
+import client                               from '../../../../../../../apollo';
 
 function NumberFormatCustom(props) {
   const { inputRef, onChange, ...other } = props;
@@ -86,6 +88,19 @@ const PaymentRow = (props) => {
   const onDrop = (files) => {
     uploadFile(files, payment)
   }
+
+  const rejectedFile = () => {
+    client.writeQuery({
+      query: GLOBAL_MESSAGE,
+      data: {
+        globalMessage: {
+          message: "Formato de archivo, no valido, permitidos: .JPG, .JPEG, PNG Y PDF, verifique su archivo e intente de nuevo.",
+          type: "error",
+          __typename: "globalMessage"
+        }
+      }
+    })
+  }
   
   const uploadFile = (files, payment) => {
     uploadPaymentFile(
@@ -146,7 +161,12 @@ const PaymentRow = (props) => {
         />
       </Grid>
       <Grid container item xs={1} alignItems="center" justifyContent="flex-start">
-        <Dropzone accept='file_extension/.jpg, .jpeg, .png, .pdf' multiple={false} onDrop={onDrop}>
+        <Dropzone
+          accept='file_extension/.jpg, .jpeg, .png, .pdf'
+          onDrop={onDrop}
+          onDropRejected={rejectedFile}
+          multiple={false}
+        >
           {({getRootProps, getInputProps}) => (
             <section>
               <div {...getRootProps()}>

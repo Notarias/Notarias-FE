@@ -4,6 +4,8 @@ import Dialog                               from '@material-ui/core/Dialog';
 import DialogActions                        from '@material-ui/core/DialogActions';
 import DialogContent                        from '@material-ui/core/DialogContent';
 import DialogTitle                          from '@material-ui/core/DialogTitle';
+import Button                               from '@material-ui/core/Button';
+import Typography                           from '@material-ui/core/Typography';
 import NumberFormat                         from 'react-number-format';
 import PropTypes                            from 'prop-types';
 import InputAdornment                       from '@material-ui/core/InputAdornment';
@@ -11,10 +13,8 @@ import Grid                                 from '@material-ui/core/Grid';
 import TextField                            from '@material-ui/core/TextField';
 import Dropzone                             from 'react-dropzone';
 import DescriptionIcon                      from '@material-ui/icons/Description';
-import Button                               from '@material-ui/core/Button';
 import Avatar                               from './current_user_avatar';
 import Paper                                from '@material-ui/core/Paper';
-import Typography                           from '@material-ui/core/Typography';
 import CircularProgress                     from '@material-ui/core/CircularProgress';
 import { makeStyles }                       from '@material-ui/core/styles';
 import { useMutation }                      from '@apollo/client';
@@ -24,6 +24,8 @@ import { GET_BUDGET_FIELD_VALUE }           from '../../../queries_and_mutations
 import { GET_BUDGET_TOTALS }                from '../../../queries_and_mutations/queries';
 import { GET_PAYMENTS }                     from '../../../queries_and_mutations/queries';
 import { GET_BUDGETS_AUDITLOG }             from '../../../queries_and_mutations/queries';
+import { GLOBAL_MESSAGE }                   from '../../../../../../resolvers/queries';
+import client                               from '../../../../../../apollo';
 
 function NumberFormatCustom(props) {
   const { inputRef, onChange, ...other } = props;
@@ -178,6 +180,19 @@ const Payment = (props) => {
     setError(false);
   }
 
+  const rejectedFile = () => {
+    client.writeQuery({
+      query: GLOBAL_MESSAGE,
+      data: {
+        globalMessage: {
+          message: "Formato de archivo, no valido, permitidos: .JPG, .JPEG, PNG Y PDF, verifique su archivo e intente de nuevo.",
+          type: "error",
+          __typename: "globalMessage"
+        }
+      }
+    })
+  }
+
   const totalPayableAmount = () => {
     return(
       <Typography variant="h6" gutterBottom>
@@ -225,7 +240,12 @@ const Payment = (props) => {
               />
             </Grid>
             <Grid container item xs={5} justifyContent="flex-end" alignItems="center" style={{paddingLeft: '20px'}}>
-              <Dropzone accept='file_extension/.jpg, .jpeg, .png, .pdf' multiple={false} onDrop={onDrop}>
+              <Dropzone
+                accept='file_extension/.jpg, .jpeg, .png, .pdf'
+                onDrop={onDrop}
+                onDropRejected={rejectedFile}
+                multiple={false}
+              >
                 {({getRootProps, getInputProps}) => (
                   <section>
                     <div {...getRootProps()}>
