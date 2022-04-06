@@ -1,4 +1,4 @@
-import React, { useState }          from 'react';
+import React                        from 'react';
 import Dropzone                     from 'react-dropzone';
 import Grid                         from '@material-ui/core/Grid';
 import Tooltip                      from '@material-ui/core/Tooltip';
@@ -24,7 +24,7 @@ const FileField = (props) => {
       query: GLOBAL_MESSAGE,
       data: {
         globalMessage: {
-          message: "Formato de archivo, no valido, permitidos: .JPG, .JPEG, PNG Y PDF, verifique su archivo e intente de nuevo.",
+          message: "Formato de archivo, no valido, permitidos: JPG, JPEG, PNG Y PDF",
           type: "error",
           __typename: "globalMessage"
         }

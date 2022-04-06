@@ -1,23 +1,22 @@
 import React, { useState }                  from 'react'
 import ListItemText                         from '@material-ui/core/ListItemText';
+import Dialog                               from '@material-ui/core/Dialog';
+import DialogActions                        from '@material-ui/core/DialogActions';
+import DialogContent                        from '@material-ui/core/DialogContent';
+import DialogTitle                          from '@material-ui/core/DialogTitle';
 import DescriptionIcon                      from '@material-ui/icons/Description';
 import InputAdornment                       from '@material-ui/core/InputAdornment';
 import Grid                                 from '@material-ui/core/Grid';
 import Paper                                from '@material-ui/core/Paper';
 import TextField                            from '@material-ui/core/TextField';
-import CircularProgress                     from '@material-ui/core/CircularProgress';
-import Dialog                               from '@material-ui/core/Dialog';
-import DialogActions                        from '@material-ui/core/DialogActions';
-import DialogContent                        from '@material-ui/core/DialogContent';
-import DialogTitle                          from '@material-ui/core/DialogTitle';
 import Button                               from '@material-ui/core/Button';
 import Typography                           from '@material-ui/core/Typography';
+import CircularProgress                     from '@material-ui/core/CircularProgress';
 import Dropzone                             from 'react-dropzone';
 import NumberFormat                         from 'react-number-format';
 import PropTypes                            from 'prop-types';
 import { makeStyles }                       from '@material-ui/core/styles';
 import { useMutation }                      from '@apollo/client';
-import Avatar                               from './current_user_avatar';
 import { BUDGET_UPLOAD_FILE }               from '../../../queries_and_mutations/queries';
 import { CREATE_PAYMENT }                   from '../../../queries_and_mutations/queries';
 import { GET_BUDGET_FIELD_VALUE }           from '../../../queries_and_mutations/queries';
@@ -26,6 +25,7 @@ import { GET_PAYMENTS }                     from '../../../queries_and_mutations
 import { GET_BUDGETS_AUDITLOG }             from '../../../queries_and_mutations/queries';
 import { GLOBAL_MESSAGE }                   from '../../../../../../resolvers/queries';
 import client                               from '../../../../../../apollo';
+import Avatar                               from './current_user_avatar';
 
 function NumberFormatCustom(props) {
   const { inputRef, onChange, ...other } = props;
@@ -187,7 +187,7 @@ const Payment = (props) => {
       query: GLOBAL_MESSAGE,
       data: {
         globalMessage: {
-          message: "Formato de archivo, no valido, permitidos: .JPG, .JPEG, PNG Y PDF, verifique su archivo e intente de nuevo.",
+          message: "Formato de archivo, no valido, permitidos: JPG, JPEG, PNG Y PDF",
           type: "error",
           __typename: "globalMessage"
         }

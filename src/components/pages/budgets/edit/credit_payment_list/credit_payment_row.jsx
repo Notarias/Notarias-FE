@@ -118,7 +118,7 @@ const CreditPaymentRow = (props) => {
       query: GLOBAL_MESSAGE,
       data: {
         globalMessage: {
-          message: "Formato de archivo, no valido, permitidos: .JPG, .JPEG, PNG Y PDF, verifique su archivo e intente de nuevo.",
+          message: "Formato de archivo, no valido, permitidos: JPG, JPEG, PNG Y PDF",
           type: "error",
           __typename: "globalMessage"
         }

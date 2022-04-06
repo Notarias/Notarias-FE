@@ -4,8 +4,6 @@ import Dialog                               from '@material-ui/core/Dialog';
 import DialogActions                        from '@material-ui/core/DialogActions';
 import DialogContent                        from '@material-ui/core/DialogContent';
 import DialogTitle                          from '@material-ui/core/DialogTitle';
-import Button                               from '@material-ui/core/Button';
-import Typography                           from '@material-ui/core/Typography';
 import NumberFormat                         from 'react-number-format';
 import PropTypes                            from 'prop-types';
 import InputAdornment                       from '@material-ui/core/InputAdornment';
@@ -13,8 +11,10 @@ import Grid                                 from '@material-ui/core/Grid';
 import TextField                            from '@material-ui/core/TextField';
 import Dropzone                             from 'react-dropzone';
 import DescriptionIcon                      from '@material-ui/icons/Description';
+import Button                               from '@material-ui/core/Button';
 import Avatar                               from './current_user_avatar';
 import Paper                                from '@material-ui/core/Paper';
+import Typography                           from '@material-ui/core/Typography';
 import CircularProgress                     from '@material-ui/core/CircularProgress';
 import { makeStyles }                       from '@material-ui/core/styles';
 import { useMutation }                      from '@apollo/client';
@@ -185,7 +185,7 @@ const Payment = (props) => {
       query: GLOBAL_MESSAGE,
       data: {
         globalMessage: {
-          message: "Formato de archivo, no valido, permitidos: .JPG, .JPEG, PNG Y PDF, verifique su archivo e intente de nuevo.",
+          message: "Formato de archivo, no valido, permitidos: JPG, JPEG, PNG Y PDF",
           type: "error",
           __typename: "globalMessage"
         }

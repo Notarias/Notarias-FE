@@ -7,9 +7,9 @@ import PublishIcon                          from '@material-ui/icons/Publish';
 import CachedIcon                           from '@material-ui/icons/Cached';
 import InputAdornment                       from '@material-ui/core/InputAdornment';
 import TextField                            from '@material-ui/core/TextField';
+import Typography                           from '@material-ui/core/Typography';
 import Link                                 from '@material-ui/core/Link';
 import CircularProgress                     from '@material-ui/core/CircularProgress';
-import Typography                           from '@material-ui/core/Typography';
 import Dropzone                             from 'react-dropzone';
 import NumberFormat                         from 'react-number-format';
 import PropTypes                            from 'prop-types';
@@ -94,7 +94,7 @@ const PaymentRow = (props) => {
       query: GLOBAL_MESSAGE,
       data: {
         globalMessage: {
-          message: "Formato de archivo, no valido, permitidos: .JPG, .JPEG, PNG Y PDF, verifique su archivo e intente de nuevo.",
+          message: "Formato de archivo, no valido, permitidos: JPG, JPEG, PNG Y PDF",
           type: "error",
           __typename: "globalMessage"
         }
