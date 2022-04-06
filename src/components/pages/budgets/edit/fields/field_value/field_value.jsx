@@ -12,10 +12,20 @@ import AccountBalanceIcon                           from '@material-ui/icons/Acc
 import AccountBalanceWalletIcon                     from '@material-ui/icons/AccountBalanceWallet';
 import Typography                                   from '@material-ui/core/Typography';
 import Grid                                         from '@material-ui/core/Grid';
+import Tooltip                                      from '@material-ui/core/Tooltip';
 import { green }                                    from '@material-ui/core/colors';
 import NumberFormat                                 from 'react-number-format';
 import PaymentList                                  from './payment_list';
 
+const payableTooltipText = (totalPayable) => {
+  if(totalPayable === '0.00' || totalPayable === 0) {
+    return('Sin adeudo')
+  } else if(totalPayable < 0) {
+    return('Saldo a favor')
+  } else if(totalPayable > 0) {
+    return('Monto por pagar')
+  }
+}
 
 const FieldValue = (props) => {
   const { budget, field: templateField } = props
@@ -70,15 +80,17 @@ const FieldValue = (props) => {
         />
       </Grid>
       <Grid item xs={3}>
-        <Typography gutterBottom align='center'>
-          <NumberFormat 
-            value={totalPayable} 
-            displayType={'text'} 
-            thousandSeparator={true} 
-            prefix={'$ '}
-            decimalScale={2}
-          />
-        </Typography>
+        <Tooltip title={payableTooltipText(totalPayable)}>
+          <Typography gutterBottom align='center' style={{ color: totalPayable < 0 ? green[500] : 'primary' }}>
+            <NumberFormat
+              value={Math.abs(totalPayable)}
+              displayType={'text'} 
+              thousandSeparator={true} 
+              prefix={'$ '}
+              decimalScale={2}
+            />
+          </Typography>
+        </Tooltip>
       </Grid>
       <Grid container item xs={2} direction='row' justifyContent="flex-start" alignItems="center">
         <Grid item xs={3}>
