@@ -42,13 +42,9 @@ const AppointmentsIndex = (props) => {
     sortField: sortField
   };
 
-  const { loading, data, refetch } = useQuery(
+  const { loading, data } = useQuery(
     GET_APPOINTMENTS, { variables: variables }
   );
-
-  useEffect(() => {
-    refetch(variables);
-  }, [page, per, sortField, loading, data]);
 
   const openNewDialog = () => {
     setNewDialog(true);
@@ -66,7 +62,7 @@ const AppointmentsIndex = (props) => {
     <>
       <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
         { 
-          loading || !data  ?
+          loading ?
             <LoadingAppointments/>
           :
             <>

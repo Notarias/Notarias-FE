@@ -13,14 +13,34 @@ import DescriptionIcon              from '@material-ui/icons/Description';
 import CloudUploadIcon              from '@material-ui/icons/CloudUpload';
 import CloudDownloadIcon            from '@material-ui/icons/CloudDownload';
 import FileFieldLoading             from './file_field_loading';
+import { GLOBAL_MESSAGE }           from '../../../../../resolvers/queries';
+import client                       from '../../../../../apollo';
 
 const FileField = (props) => {
   const { templateField, fileName, fileUrl, updateFieldValueFile, updateProcedureFieldValueFileLoading } = props
+
+  const rejectedFile = () => {
+    client.writeQuery({
+      query: GLOBAL_MESSAGE,
+      data: {
+        globalMessage: {
+          message: "Formato de archivo, no valido, permitidos: JPG, JPEG, PNG Y PDF",
+          type: "error",
+          __typename: "globalMessage"
+        }
+      }
+    })
+  }
   
   return(
     <>
       <Grid item xs={1}>
-        <Dropzone accept='file_extension/.jpg, .jpeg, .png, .pdf' multiple={false} onDrop={updateFieldValueFile}>
+        <Dropzone
+          accept='file_extension/.jpg, .jpeg, .png, .pdf'
+          onDrop={updateFieldValueFile}
+          onDropRejected={rejectedFile}
+          multiple={false}
+        >
           {({getRootProps, getInputProps}) => (
             <section>
               <div {...getRootProps()}>

@@ -25,6 +25,8 @@ import NumberFormat               from 'react-number-format';
 import GenericDropdownMenu        from '../../../../ui/generic_dropdown_menu';
 import CurrentUserAvatar          from '../../edit/current_user_avatar';
 import CreditPaymentList          from '../../edit/credit_payment_list/credit_payment_list';
+import { GLOBAL_MESSAGE }         from '../../../../../resolvers/queries';
+import client                     from '../../../../../apollo';
 import {
   BUDGET_UPLOAD_FILE,
   GET_CREDIT_PAYMENTS,
@@ -152,6 +154,19 @@ export default (props) => {
     )
   }
 
+  const rejectedFile = () => {
+    client.writeQuery({
+      query: GLOBAL_MESSAGE,
+      data: {
+        globalMessage: {
+          message: "Formato de archivo no valido. Los formatos permitidos son: JPG, JPEG, PNG Y PDF",
+          type: "error",
+          __typename: "globalMessage"
+        }
+      }
+    })
+  }
+
   const getCurrentDate = (separator='/') => {
     let newDate = new Date()
     let date = newDate.getDate();
@@ -259,7 +274,12 @@ export default (props) => {
               />
             </Grid>
             <Grid container item xs={5} justifyContent="flex-end" alignItems="center" style={{paddingLeft: '20px'}}>
-              <Dropzone accept='file_extension/.jpg, .jpeg, .png, .pdf' multiple={false} onDrop={onDrop}>
+              <Dropzone
+                accept='file_extension/.jpg, .jpeg, .png, .pdf'
+                onDrop={onDrop}
+                onDropRejected={rejectedFile}
+                multiple={false}
+              >
                 {({getRootProps, getInputProps}) => (
                   <section>
                     <div {...getRootProps()}>
