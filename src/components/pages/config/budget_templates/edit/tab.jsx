@@ -9,7 +9,7 @@ import TabMenu                      from './tab_menu';
 
 const Tab = (props) => {
 
-  const { selected, tab, setCurrentTab, budgetingTemplateId, } = props;
+  const { selected, tab, setCurrentTab, budgetingTemplateId } = props;
   const { classes } = props;
 
   const selectTab = (event) => {
@@ -23,6 +23,7 @@ const Tab = (props) => {
           name={ tab.name }
           id={ tab.id }
           active={ tab.active }
+          calculable={ tab.calculable }
           budgetingTemplateId={ budgetingTemplateId }
           selected={ selected }
           setCurrentTab={ setCurrentTab }

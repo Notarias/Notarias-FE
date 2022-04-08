@@ -26,7 +26,8 @@ const Tabs = (props) => {
     GET_BUDGETING_TEMPLATES_TABS, { variables: {"id": budgetingTemplateId }}
   );
 
-  const [tabList, setTabList] = React.useState(data ? data.budgetingTemplateTabs: []);
+  let tabList = data.budgetingTemplateTabs
+
   const [tabName, setTabName] = React.useState(currentTab ? currentTab.name : "");
   const [open, setOpen] = React.useState(false);
   const [pristine, setPristine] = React.useState(true)
@@ -35,7 +36,6 @@ const Tabs = (props) => {
 
   useEffect(() => {
     currentTab || (data && setCurrentTab(data.budgetingTemplateTabs[0]));
-    data && setTabList(data.budgetingTemplateTabs);
     currentTab && setTabName(currentTab.name);
   }, [data])
 

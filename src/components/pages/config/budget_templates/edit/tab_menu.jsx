@@ -14,6 +14,7 @@ import SaveIcon                                 from '@material-ui/icons/Save';
 import CreateIcon                               from '@material-ui/icons/Create'
 import Divider                                  from '@material-ui/core/Divider';
 import DeleteForeverIcon                        from '@material-ui/icons/DeleteForever';
+import MonetizationOnIcon                       from '@material-ui/icons/MonetizationOn';
 import Dialog                                   from '@material-ui/core/Dialog';
 import DialogContent                            from '@material-ui/core/DialogContent';
 import DialogTitle                              from '@material-ui/core/DialogTitle';
@@ -31,7 +32,7 @@ import client                                   from '../../../../../apollo';
 
 
 const TabMenu = (props) => {
-  const { classes, budgetingTemplateId, selected, active, setCurrentTab } = props;
+  const { classes, budgetingTemplateId, selected, active, setCurrentTab, calculable } = props;
   const [id] = React.useState(props.id);
   const [name, setName] = React.useState(props.name);
   const [editing, setEditing] =  React.useState(true);
@@ -99,6 +100,14 @@ const TabMenu = (props) => {
     )
   }
 
+  const changeCalculable = (event) => {
+    updateBudgetingTemplateTabMutation(
+      { 
+        variables: { id: id , calculable: !calculable}
+      }
+    )
+  }
+
   const [destroyBudgetingTemplateTabMutation] =
   useMutation(
     DESTROY_BUDGETING_TEMPLATE_TAB,
@@ -150,10 +159,10 @@ const TabMenu = (props) => {
 
     return(
       <>
-        <ListItemIcon  onClick={ changeTittle }>
+        <ListItemIcon>
           <CreateIcon className={ classes.defaultIcon }/>
         </ListItemIcon>
-        <Typography onClick={ changeTittle } noWrap>
+        <Typography noWrap>
           { name }
         </Typography>
       </>
@@ -173,7 +182,7 @@ const TabMenu = (props) => {
             className={ classes.inputSmall }
             size="small"
             id="standard-basic" 
-            label="&#8288;Nombre"
+            label="Nombre"
             value={ name }
             onChange={ handleNameChange }
             error={ !!error["name"] && true }
@@ -216,16 +225,15 @@ const TabMenu = (props) => {
         open={ open }
         onClose={ handleClose }
       >
-        <MenuItem key="budgetingTabMenu1" className={ classes.tittleTabMenu } 
-        >
-          { editing ? renderTittleTextTab() : renderTittleInputTab() }
+        <MenuItem key="budgetingTabMenu1" onClick={ changeTittle } className={ classes.tittleTabMenu } >
+          {/* { editing ? renderTittleTextTab() : renderTittleInputTab() } */}
         </MenuItem>
         <Divider key="budgetingTabMenuDivider1"/>
         <MenuItem key="budgetingTabMenu2" onClick={ handleClickOpenDialog }>
           <ListItemIcon >
             <DeleteForeverIcon className={ classes.defaultIcon } />
           </ListItemIcon>
-          <ListItemText primary="&#8288;Borrar"/>
+          <ListItemText primary="Borrar"/>
         </MenuItem>
         <Dialog
           open={openDialog}
@@ -275,9 +283,16 @@ const TabMenu = (props) => {
                 </ListItemIcon>
             }
             <ListItemText>
-              &#8288; { statusTemplate() }
+              { statusTemplate() }
             </ListItemText> 
           </Grid>
+        </MenuItem>
+        <Divider key="budgetingTabMenuDivider3"/>
+        <MenuItem key="budgetingTabMenu4" onClick={changeCalculable}>
+          <ListItemIcon>
+            <MonetizationOnIcon color={calculable ? 'primary' : 'secondary'} fontSize="medium"/>
+          </ListItemIcon>
+          <ListItemText primary={calculable ? "Desactivar Calculo" : "Activar Calculo"}/>
         </MenuItem>
       </Menu>
     </Grid>

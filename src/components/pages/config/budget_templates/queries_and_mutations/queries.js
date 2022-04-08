@@ -117,6 +117,7 @@ export const GET_BUDGETING_TEMPLATES_TABS = gql`
       id
       name
       budgetingTemplateId
+      calculable
     }
   }
 `
@@ -135,13 +136,14 @@ export const CREATE_BUDGETING_TEMPLATES_TABS = gql`
 `
 
 export const UPDATE_BUDGETING_TEMPLATE_TAB = gql`
-  mutation updateBudgetingTemplateTab ($id: ID!, $name: String, $active: Boolean){
-    updateBudgetingTemplateTab (input: {id: $id, name: $name, active: $active} ) {
+  mutation updateBudgetingTemplateTab ($id: ID!, $name: String, $active: Boolean, $calculable: Boolean){
+    updateBudgetingTemplateTab (input: {id: $id, name: $name, active: $active, calculable: $calculable} ) {
       budgetingTemplateTab {
         active
         id
         name
         budgetingTemplateId
+        calculable
       }
     }
   }
