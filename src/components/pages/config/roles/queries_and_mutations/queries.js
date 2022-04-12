@@ -13,13 +13,11 @@ export const LOAD_ROLES = gql`
 
 export const CREATE_ROLE = gql`
   mutation createRole (
-    $name: String!,
-    $permanentLink: String
+    $name: String!
   ){
     createRole(
       input: {
-        name: $name,
-        permanentLink: $permanentLink
+        name: $name
       }
     ){
       role{
@@ -33,15 +31,13 @@ export const CREATE_ROLE = gql`
 
 export const UPDATE_ROLE = gql`
   mutation updateRole (
-    $id: ID!
-    $name: String,
-    $permanentLink: String
+    $id: ID!,
+    $name: String!
   ){
     updateRole(
       input: {
         id: $id,
-        name: $name,
-        permanentLink: $permanentLink
+        name: $name
       }
     ){
       role{

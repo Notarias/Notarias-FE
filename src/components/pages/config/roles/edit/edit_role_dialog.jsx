@@ -17,6 +17,7 @@ const EditRoleDialog = (props) => {
   const [roleName, setRoleName] = useState(role.name);
   const [permanentLink, setPermanentLink] = useState(role.permanentLink);
   const [saveStatus, setSaveStatus] = useState(false);
+  const [errors, setErrors] = useState({});
 
   const changeNameField = (event) => {
     setRoleName(event.target.value);
@@ -28,16 +29,13 @@ const EditRoleDialog = (props) => {
       UPDATE_ROLE,
       {
         onError(error) {
-          client.writeQuery({
-            query: GLOBAL_MESSAGE,
-            data: {
-              globalMessage: {
-                message: "Ha ocurrio un error al actualizar el rol",
-                type: "error",
-                __typename: "globalMessage"
-              }
-            }
+          let errorsHash = {}
+          error.graphQLErrors.map((error) => {
+            errorsHash[error.extensions.attribute] = error.message
+            return(error.message)
           })
+          setErrors(errorsHash)
+          setSaveStatus(true)
         },
         onCompleted(cacheData) {
           client.writeQuery({
@@ -85,6 +83,8 @@ const EditRoleDialog = (props) => {
             type="text"
             onChange={changeNameField}
             value={roleName}
+            error={!!errors.name}
+            helperText={errors.name}
             fullWidth
           />
         </DialogContent>

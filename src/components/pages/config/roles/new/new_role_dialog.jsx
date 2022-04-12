@@ -15,8 +15,9 @@ const NewRoleDialog = (props) => {
   const { newDialog } = props
 
   const [roleName, setRoleName] = useState("");
-  const [saveStatus, setSaveStatus] = useState(false);
+  const [saveStatus, setSaveStatus] = useState(true);
   const [permanentLink, setPermanentLink] = useState();
+  const [errors, setErrors] = useState({});
 
   const changeNameField = (event) => {
     setRoleName(event.target.value);
@@ -28,16 +29,13 @@ const NewRoleDialog = (props) => {
       CREATE_ROLE,
       {
         onError(error) {
-          client.writeQuery({
-            query: GLOBAL_MESSAGE,
-            data: {
-              globalMessage: {
-                message: "Ha ocurrio un error al crear el rol",
-                type: "error",
-                __typename: "globalMessage"
-              }
-            }
+          console.log(error)
+          let errorsHash = {}
+          error.graphQLErrors.map((error) => {
+            errorsHash[error.extensions.attribute] = error.message
+            return(error.message)
           })
+          setErrors(errorsHash)
           setSaveStatus(true)
         },
         onCompleted(cacheData) {
@@ -86,6 +84,8 @@ const NewRoleDialog = (props) => {
             type="text"
             onChange={changeNameField}
             value={roleName}
+            error={!!errors.name}
+            helperText={errors.name}
             fullWidth
           />
         </DialogContent>
