@@ -7,6 +7,8 @@ import Button                           from '@material-ui/core/Button';
 import TextField                        from '@material-ui/core/TextField';
 import { useMutation }                  from '@apollo/client';
 import { CREATE_ROLE, LOAD_ROLES }      from '../queries_and_mutations/queries';
+import { GLOBAL_MESSAGE }               from '../../../../../resolvers/queries';
+import client                           from '../../../../../apollo';
 
 const NewRoleDialog = (props) => {
 
@@ -25,14 +27,30 @@ const NewRoleDialog = (props) => {
     useMutation(
       CREATE_ROLE,
       {
-        /* onError(error) {
-          let errorsHash = {}
-          error.graphQLErrors.map((error) => {
-            return errorsHash[error.extensions.attribute] = error.message
+        onError(error) {
+          client.writeQuery({
+            query: GLOBAL_MESSAGE,
+            data: {
+              globalMessage: {
+                message: "Ha ocurrio un error al crear el rol",
+                type: "error",
+                __typename: "globalMessage"
+              }
+            }
           })
           setSaveStatus(true)
-        }, */
+        },
         onCompleted(cacheData) {
+          client.writeQuery({
+            query: GLOBAL_MESSAGE,
+            data: {
+              globalMessage: {
+                message: "Rol creado con exito.",
+                type: "success",
+                __typename: "globalMessage"
+              }
+            }
+          })
           setSaveStatus(true);
           newDialog();
         },
@@ -59,7 +77,7 @@ const NewRoleDialog = (props) => {
       <DialogTitle id="form-dialog-title">Nuevo Role</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Escriba el nombre del nuevo role
+            Escriba el nombre del nuevo rol
           </DialogContentText>
           <TextField
             margin="dense"

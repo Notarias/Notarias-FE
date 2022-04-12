@@ -11,7 +11,9 @@ import Dialog                           from '@material-ui/core/Dialog';
 import GenericDropdownMenu              from '../../../../ui/generic_dropdown_menu';
 import { useMutation }                  from '@apollo/client';
 import { DESTROY_ROLE, LOAD_ROLES }     from '../queries_and_mutations/queries';
-import EditRoleDialog                    from '../edit/edit_role_dialog';
+import EditRoleDialog                   from '../edit/edit_role_dialog';
+import { GLOBAL_MESSAGE }               from '../../../../../resolvers/queries';
+import client                           from '../../../../../apollo';
 
 const RolesRows = (props) => {
 
@@ -27,7 +29,29 @@ const RolesRows = (props) => {
     useMutation(
       DESTROY_ROLE,
       {
+        onError(error) {
+          client.writeQuery({
+            query: GLOBAL_MESSAGE,
+            data: {
+              globalMessage: {
+                message: "Ha ocurrio un error al eliminar el rol",
+                type: "error",
+                __typename: "globalMessage"
+              }
+            }
+          })
+        },
         onCompleted(cacheData) {
+          client.writeQuery({
+            query: GLOBAL_MESSAGE,
+            data: {
+              globalMessage: {
+                message: "Rol eliminado con exito.",
+                type: "success",
+                __typename: "globalMessage"
+              }
+            }
+          })
         },
         refetchQueries: [
           {
@@ -54,7 +78,7 @@ const RolesRows = (props) => {
       <TableCell align="center">
         <Grid>
           <GenericDropdownMenu>
-            <MenuItem key={"1-rolMenu"} onClick={editDialog}>
+            <MenuItem key={"1-roleMenu"} onClick={editDialog}>
               <Grid container>
                 <ListItemIcon>
                   <BorderColorIcon/>
@@ -62,7 +86,7 @@ const RolesRows = (props) => {
                 <ListItemText primary="Editar" />
               </Grid>
             </MenuItem>
-            <MenuItem key={"2-rolMenu"} onClick={deleteRole}>
+            <MenuItem key={"2-roleMenu"} onClick={deleteRole}>
               <Grid container>
                 <ListItemIcon>
                   <DeleteForeverIcon/>

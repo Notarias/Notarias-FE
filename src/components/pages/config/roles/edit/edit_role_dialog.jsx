@@ -1,12 +1,14 @@
-import React, { useState }        from 'react';
-import DialogTitle                from '@material-ui/core/DialogTitle';
-import DialogContent              from '@material-ui/core/DialogContent';
-import DialogContentText          from '@material-ui/core/DialogContentText';
-import DialogActions              from '@material-ui/core/DialogActions';
-import Button                     from '@material-ui/core/Button';
-import TextField                  from '@material-ui/core/TextField';
+import React, { useState }              from 'react';
+import DialogTitle                      from '@material-ui/core/DialogTitle';
+import DialogContent                    from '@material-ui/core/DialogContent';
+import DialogContentText                from '@material-ui/core/DialogContentText';
+import DialogActions                    from '@material-ui/core/DialogActions';
+import Button                           from '@material-ui/core/Button';
+import TextField                        from '@material-ui/core/TextField';
 import { useMutation }                  from '@apollo/client';
 import { UPDATE_ROLE, LOAD_ROLES }      from '../queries_and_mutations/queries';
+import { GLOBAL_MESSAGE }               from '../../../../../resolvers/queries';
+import client                           from '../../../../../apollo';
 
 const EditRoleDialog = (props) => {
 
@@ -26,12 +28,28 @@ const EditRoleDialog = (props) => {
       UPDATE_ROLE,
       {
         onError(error) {
-          let errorsHash = {}
-          /* error.graphQLErrors.map((error) => {
-            return errorsHash[error.extensions.attribute] = error.message
-          }) */
+          client.writeQuery({
+            query: GLOBAL_MESSAGE,
+            data: {
+              globalMessage: {
+                message: "Ha ocurrio un error al actualizar el rol",
+                type: "error",
+                __typename: "globalMessage"
+              }
+            }
+          })
         },
         onCompleted(cacheData) {
+          client.writeQuery({
+            query: GLOBAL_MESSAGE,
+            data: {
+              globalMessage: {
+                message: "Rol actualizado con exito.",
+                type: "success",
+                __typename: "globalMessage"
+              }
+            }
+          })
           editDialog();
         },
         refetchQueries: [
