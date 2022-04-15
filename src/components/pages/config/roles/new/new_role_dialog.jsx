@@ -29,7 +29,6 @@ const NewRoleDialog = (props) => {
       CREATE_ROLE,
       {
         onError(error) {
-          console.log(error)
           let errorsHash = {}
           error.graphQLErrors.map((error) => {
             errorsHash[error.extensions.attribute] = error.message
