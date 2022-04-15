@@ -17,13 +17,14 @@ import BudgetInvoice                  from '../components/pages/budgets/edit/bud
 import BudgetsEdit                    from '../components/pages/budgets/edit';
 import budgetsNew                     from '../components/pages/budgets/new'
 import BudgetsIndex                   from '../components/pages/budgets/index';
-import ProcedureEdit                   from '../components/pages/procedures/edit';
+import ProcedureEdit                  from '../components/pages/procedures/edit';
 import ProcedureNew                   from '../components/pages/procedures/new';
 import ProceduresIndex                from '../components/pages/procedures/index';
 import AppointmentsIndex              from '../components/pages/appointments/index';
 import ReportsIndex                   from '../components/pages/reports/index';
 import ProfilesIndex                  from '../components/pages/profiles/index';
 import StatisticsIndex                from '../components/pages/statistics/index';
+import ConfigRolesIndex               from '../components/pages/config/roles/index';
 import ConfigClientsIndex             from '../components/pages/config/clients/index';
 import ConfigBudgetsTemplatesIndex    from '../components/pages/config/budget_templates/index';
 import ConfigBudgetsTemplatesEdit     from '../components/pages/config/budget_templates/edit';
@@ -60,6 +61,7 @@ export default function BaseRoutes(props) {
         <ProtectedRoute path="/statistics" component={StatisticsIndex}/>
         <ProtectedRoute path="/reports" component={ReportsIndex}/>
         <ProtectedRoute path="/profiles" component={ProfilesIndex}/>
+        <ProtectedRoute path="/config/roles" component={ConfigRolesIndex}/>
         <ProtectedRoute path="/config/clients" component={ConfigClientsIndex}/>
         <ProtectedRoute path="/config/procedure_templates/:id/edit" component={ConfigProcedureTemplatesEdit}/>
         <ProtectedRoute path="/config/procedure_templates" component={ConfigProcedureTemplatesIndex}/>
