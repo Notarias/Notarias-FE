@@ -26,7 +26,7 @@ const Tabs = (props) => {
     GET_BUDGETING_TEMPLATES_TABS, { variables: {"id": budgetingTemplateId }}
   );
 
-  let tabList = data.budgetingTemplateTabs
+  let tabList = data && data.budgetingTemplateTabs || []
 
   const [tabName, setTabName] = React.useState(currentTab ? currentTab.name : "");
   const [open, setOpen] = React.useState(false);
