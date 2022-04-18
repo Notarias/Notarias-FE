@@ -7,6 +7,7 @@ import withStyles           from '@material-ui/core/styles/withStyles';
 import classNames           from 'classnames';
 import compose              from 'recompose/compose';
 import NavigationMenu       from './components/ui/navigation_menu';
+import client               from './apollo';
 import './App.css';
 import 'typeface-roboto';
 
@@ -36,6 +37,7 @@ class App extends Component {
 
   setLogOut() {
     localStorage.clear();
+    client.clearStore()
     this.forceUpdate()
   }
 
