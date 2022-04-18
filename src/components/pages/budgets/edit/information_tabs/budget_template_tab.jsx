@@ -13,8 +13,10 @@ const BudgetTemplateTab = (props) => {
     props.setValue(props.index)
   }
 
+  let styles = !tab.calculable ? { backgroundColor: '#fff', color: '#3f51b5' } : {}
+
   return(
-    <Tab key={tab.id + "-tab"} label={tab.name} onClick={onClick}/>
+    <Tab key={tab.id + "-tab"} label={tab.name} style={styles} onClick={onClick}/>
   )
 }
 

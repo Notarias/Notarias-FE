@@ -368,6 +368,7 @@ export const GET_BUDGETING_TEMPLATES_TABS = gql`
       id
       name
       budgetingTemplateId
+      calculable
     }
   }
 `
