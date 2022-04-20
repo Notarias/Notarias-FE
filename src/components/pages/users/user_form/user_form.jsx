@@ -25,7 +25,7 @@ const USER_EDIT_MUTATION = gql`
         lockedAt
         address
         phone
-        role {
+        roles {
           name
           permanentLink
         }

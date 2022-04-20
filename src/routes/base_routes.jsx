@@ -25,6 +25,8 @@ import ReportsIndex                   from '../components/pages/reports/index';
 import ProfilesIndex                  from '../components/pages/profiles/index';
 import StatisticsIndex                from '../components/pages/statistics/index';
 import ConfigRolesIndex               from '../components/pages/config/roles/index';
+import ConfigRoleEdit                 from '../components/pages/config/roles/edit/edit';
+import ConfigPermissionsIndex         from '../components/pages/config/permissions/index'
 import ConfigClientsIndex             from '../components/pages/config/clients/index';
 import ConfigBudgetsTemplatesIndex    from '../components/pages/config/budget_templates/index';
 import ConfigBudgetsTemplatesEdit     from '../components/pages/config/budget_templates/edit';
@@ -61,7 +63,9 @@ export default function BaseRoutes(props) {
         <ProtectedRoute path="/statistics" component={StatisticsIndex}/>
         <ProtectedRoute path="/reports" component={ReportsIndex}/>
         <ProtectedRoute path="/profiles" component={ProfilesIndex}/>
+        <ProtectedRoute path="/config/roles/:id/permissions" component={ConfigRoleEdit}/>
         <ProtectedRoute path="/config/roles" component={ConfigRolesIndex}/>
+        <ProtectedRoute path="/config/permissions" component={ConfigPermissionsIndex}/>
         <ProtectedRoute path="/config/clients" component={ConfigClientsIndex}/>
         <ProtectedRoute path="/config/procedure_templates/:id/edit" component={ConfigProcedureTemplatesEdit}/>
         <ProtectedRoute path="/config/procedure_templates" component={ConfigProcedureTemplatesIndex}/>

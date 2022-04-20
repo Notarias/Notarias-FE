@@ -29,12 +29,10 @@ const LOAD_USERS = gql`
     lastName
     email
     lockedAt
-    roleId
-    role {
+    roles{
+      id
       name
       permanentLink
-      createdAt
-      updatedAt
     }
   }
   usersCount

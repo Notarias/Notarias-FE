@@ -30,13 +30,6 @@ export default (props) => {
           sort_direction={direction}
           callback={sortHandler}
         />
-        <SortHeader
-          text={"Role"}
-          field_property={"role"}
-          current_field={field}
-          sort_direction={direction}
-          callback={sortHandler}
-        />
         <TableCell align="center">Opciones</TableCell>
       </TableRow>
     </TableHead>

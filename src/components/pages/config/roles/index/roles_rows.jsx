@@ -1,29 +1,22 @@
-import React, { useState }              from 'react';
-import TableCell                        from '@material-ui/core/TableCell';
-import TableRow                         from '@material-ui/core/TableRow';
-import Grid                             from '@material-ui/core/Grid';
-import MenuItem                         from '@material-ui/core/MenuItem';
-import ListItemIcon                     from '@material-ui/core/ListItemIcon';
-import ListItemText                     from '@material-ui/core/ListItemText';
-import BorderColorIcon                  from '@material-ui/icons/BorderColor';
-import DeleteForeverIcon                from '@material-ui/icons/DeleteForever';
-import Dialog                           from '@material-ui/core/Dialog';
-import GenericDropdownMenu              from '../../../../ui/generic_dropdown_menu';
-import { useMutation }                  from '@apollo/client';
-import { DESTROY_ROLE, LOAD_ROLES }     from '../queries_and_mutations/queries';
-import EditRoleDialog                   from '../edit/edit_role_dialog';
-import { GLOBAL_MESSAGE }               from '../../../../../resolvers/queries';
-import client                           from '../../../../../apollo';
+import React, { useState }                  from 'react';
+import TableCell                            from '@material-ui/core/TableCell';
+import TableRow                             from '@material-ui/core/TableRow';
+import Grid                                 from '@material-ui/core/Grid';
+import MenuItem                             from '@material-ui/core/MenuItem';
+import ListItemIcon                         from '@material-ui/core/ListItemIcon';
+import ListItemText                         from '@material-ui/core/ListItemText';
+import BorderColorIcon                      from '@material-ui/icons/BorderColor';
+import DeleteForeverIcon                    from '@material-ui/icons/DeleteForever';
+import GenericDropdownMenu                  from '../../../../ui/generic_dropdown_menu';
+import { Link }                             from 'react-router-dom';
+import { useMutation }                      from '@apollo/client';
+import { DESTROY_ROLE, LOAD_ROLES }         from '../queries_and_mutations/queries';
+import { GLOBAL_MESSAGE }                   from '../../../../../resolvers/queries';
+import client                               from '../../../../../apollo';
 
 const RolesRows = (props) => {
 
   const { role } = props
-
-  const [editDialogStatus, setEditDialogStatus] = useState(false);
-
-  const editDialog = () => {
-    setEditDialogStatus(!editDialogStatus)
-  }
 
   const [destroyRole] =
     useMutation(
@@ -78,13 +71,15 @@ const RolesRows = (props) => {
       <TableCell align="center">
         <Grid>
           <GenericDropdownMenu>
-            <MenuItem key={"1-roleMenu"} onClick={editDialog}>
-              <Grid container>
-                <ListItemIcon>
-                  <BorderColorIcon/>
-                </ListItemIcon>
-                <ListItemText primary="Editar" />
-              </Grid>
+            <MenuItem key={"1-roleMenu"}>
+              <Link to={`/config/roles/${role.id}/permissions`} style={{ textDecoration: 'none' }}>
+                <Grid container>
+                  <ListItemIcon>
+                    <BorderColorIcon/>
+                  </ListItemIcon>
+                  <ListItemText primary="Editar" />
+                </Grid>
+              </Link>
             </MenuItem>
             <MenuItem key={"2-roleMenu"} onClick={deleteRole}>
               <Grid container>
@@ -97,9 +92,6 @@ const RolesRows = (props) => {
           </GenericDropdownMenu>
         </Grid>
       </TableCell>
-      <Dialog open={editDialogStatus} onClose={editDialog}>
-        <EditRoleDialog editDialog={editDialog} role={role} />
-      </Dialog>
     </TableRow>
   )
 }
