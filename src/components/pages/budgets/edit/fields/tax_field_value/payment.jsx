@@ -277,7 +277,7 @@ const Payment = (props) => {
                                 <CircularProgress />
                               </div>
                             :
-                              <p>Arrastre su archivo aqui o Haga clic para seleccioanrlo</p>
+                              <p>Arrastre su archivo aquí o Haga clic para seleccionar</p>
                             }
                           </>
                         }
