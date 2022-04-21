@@ -42,7 +42,7 @@ const CommentariesDashboard = (props) => {
           )
         })
       :
-        comments && comments ?
+        comments && comments.length > 0 ?
           comments.map((comment) => {
             return(
               <Fade in={!!comment}>
@@ -53,11 +53,13 @@ const CommentariesDashboard = (props) => {
             )
           })
         :
-          <Paper>
-            <Typography variant='h4' style={{padding: "20px"}}>
-              No hay comentarios por el momento
-            </Typography>
-          </Paper>
+          <Grid item xs style={{paddingRight: "30px"}}>
+            <Paper>
+              <Typography variant='h4' style={{padding: "20px"}}>
+                No hay reuniones registradas por el momento
+              </Typography>
+            </Paper>
+          </Grid>
       }
     </Grid>
   )
