@@ -42,7 +42,7 @@ const AppointmentsDashboard = (props) => {
           )
         })
       :
-        appointments && appointments ?
+        appointments && appointments.length > 0 ?
           appointments.map((appointment) => {
             return(
               <Fade in={!!appointment}>
@@ -53,11 +53,13 @@ const AppointmentsDashboard = (props) => {
             )
           })
         :
-          <Paper>
-            <Typography variant='h4' style={{padding: "20px"}}>
-              No hay reuniones registradas por el momento
-            </Typography>
-          </Paper>
+          <Grid item xs style={{paddingRight: "30px"}}>
+            <Paper>
+              <Typography variant='h4' style={{padding: "20px"}}>
+                No hay reuniones registradas por el momento
+              </Typography>
+            </Paper>
+          </Grid>
       }
     </Grid>
   )

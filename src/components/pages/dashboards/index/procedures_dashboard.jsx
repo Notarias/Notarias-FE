@@ -44,7 +44,7 @@ const ProceduresDashboard = (props) => {
           )
         })
       :
-        procedures && procedures ?
+        procedures && procedures.length > 0 ?
           procedures.map((procedure) => {
             return(
               <Fade in={!!procedure}>
@@ -55,11 +55,13 @@ const ProceduresDashboard = (props) => {
             )
           })
         :
-          <Paper>
-            <Typography variant='h4' style={{padding: "20px"}}>
-              No hay trámites registrados por el momento
-            </Typography>
-          </Paper>
+          <Grid item xs style={{paddingRight: "30px"}}>
+            <Paper>
+              <Typography variant='h4' style={{padding: "20px"}}>
+                No hay reuniones registradas por el momento
+              </Typography>
+            </Paper>
+          </Grid>
       }
     </Grid>
   )

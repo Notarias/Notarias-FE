@@ -44,7 +44,7 @@ const BudgetsDashboard = (props) => {
           )
         })
       :
-        budgets && budgets ?
+        budgets && budgets.length > 0 ?
           budgets.map((budget) => {
             return(
               <Fade in={!!budget}>
@@ -55,11 +55,13 @@ const BudgetsDashboard = (props) => {
             )
           })
         :
-          <Paper>
-            <Typography variant='h4' style={{padding: "20px"}}>
-              No hay presupuestos registrados por el momento
-            </Typography>
-          </Paper>
+          <Grid item xs style={{paddingRight: "30px"}}>
+            <Paper>
+              <Typography variant='h4' style={{padding: "20px"}}>
+                No hay reuniones registradas por el momento
+              </Typography>
+            </Paper>
+          </Grid>
       }
     </Grid>
   )

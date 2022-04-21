@@ -42,7 +42,7 @@ const PaymentsDashboard = (props) => {
           )
         })
       :
-        payments && payments ?
+        payments && payments > 0 ?
           payments.map((payment) => {
             return(
               <Fade in={!!payments}>
@@ -53,11 +53,13 @@ const PaymentsDashboard = (props) => {
             )
           })
         :
-          <Paper>
-            <Typography variant='h4' style={{padding: "20px"}}>
-              No hay pagos registrados por el momento
-            </Typography>
-          </Paper>
+          <Grid item xs style={{paddingRight: "30px"}}>
+            <Paper>
+              <Typography variant='h4' style={{padding: "20px"}}>
+                No hay reuniones registradas por el momento
+              </Typography>
+            </Paper>
+          </Grid>
       }
     </Grid>
   )
