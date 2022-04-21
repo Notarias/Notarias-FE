@@ -11,22 +11,22 @@ import Typography                     from '@material-ui/core/Typography';
 import Dialog                         from '@material-ui/core/Dialog';
 import PlaylistAddIcon                from '@material-ui/icons/PlaylistAdd';
 import Breadcrumbs                    from '../../../ui/breadcrumbs'
-import RolesRows                      from './index/roles_rows';
+import PermissionsRows                from './index/permissions_rows';
+import NewPermissionDialog            from './new/new';
 import { useQuery }                   from '@apollo/client';
-import { LOAD_ROLES }                 from './queries_and_mutations/queries';
-import NewRoleDialog                  from './new/new';
+import { LOAD_PERMISSIONS }           from './queries_and_mutations/queries';
 
 const BREADCRUMBS = [
   { name: "Inicio", path: "/" },
-  { name: "Roles", path: null }
+  { name: "Permisos", path: null }
 ]
 
-const ConfigRolesIndex = () => {
+const ConfigPermissionsIndex = () => {
 
   const [newDialogStatus, setNewDialogStatus] = useState(false);
 
   const { loading, data } = useQuery(
-    LOAD_ROLES
+    LOAD_PERMISSIONS
   );
 
   const newDialog = () => {
@@ -45,26 +45,26 @@ const ConfigRolesIndex = () => {
               endIcon={<PlaylistAddIcon/>}
               onClick={newDialog}
             >
-              Nuevo Rol
+              Nuevo Permiso
             </Button>
           </Grid>
         </Grid>
         <Grid item xs={12} style={{padding: '25px'}}>
           <Paper >
-            { data && data.roles.length > 0 ?
+            { data && data.permissions.length > 0 ?
               <Table>
                 <TableHead>
                   <TableRow>
                     <TableCell align="center">Serie</TableCell>
-                    <TableCell align="center">Role</TableCell>
+                    <TableCell align="center">Permisos</TableCell>
                     <TableCell align="center">Permanent Link</TableCell>
                     <TableCell align="center">Opciones</TableCell>
                   </TableRow>
                 </TableHead>
 
                 <TableBody>
-                  { data.roles.map((role) => {
-                    return( <RolesRows key={`${role.id}-rolesRows`} role={role} /> )
+                  { data.permissions.map((permission) => {
+                    return( <PermissionsRows key={`${permission.id}-permissionsRows`} permission={permission} /> )
                     })
                   }
                 </TableBody>
@@ -73,13 +73,13 @@ const ConfigRolesIndex = () => {
             :
               <Grid>
                 <Typography variant='h6' style={{paddingTop: '20px', paddingBottom: '20px'}}>
-                  "No Existen Roles Añadidos"
+                  "No Existen Permisos Añadidos"
                 </Typography>
               </Grid>
             }
           </Paper>
           <Dialog open={newDialogStatus} onClose={newDialog}>
-            <NewRoleDialog newDialog={newDialog}/>
+            <NewPermissionDialog newDialog={newDialog}/>
           </Dialog>
         </Grid>
       </Grid>
@@ -87,4 +87,4 @@ const ConfigRolesIndex = () => {
   )
 }
 
-export default ConfigRolesIndex;
+export default ConfigPermissionsIndex;

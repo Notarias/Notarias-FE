@@ -21,7 +21,12 @@ export const CREATE_APPOINTMENT = gql`
           id
           firstName
           lastName
-          avatarThumbUrl          
+          avatarThumbUrl
+          roles{
+            id
+            name
+            permanentLink
+          }
         }
         initDate
         endDate
@@ -80,10 +85,6 @@ export const GET_CURRENT_USER = gql`
       avatarMidUrl
       avatarUrl
       updatedAt
-      role {
-        name
-        permanentLink
-      }
     }
   }
 `

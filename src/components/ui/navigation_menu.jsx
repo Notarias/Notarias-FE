@@ -15,6 +15,7 @@ import ContactsSharpIcon        from '@material-ui/icons/ContactsSharp';
 import TimelineIcon             from '@material-ui/icons/Timeline';
 import HomeIcon                 from '@material-ui/icons/Home';
 import PortraitIcon             from '@material-ui/icons/Portrait';
+import VerifiedUserIcon         from '@material-ui/icons/VerifiedUser';
 import classNames               from 'classnames';
 import { styles }               from './navigation_menu_styles';
 import MenuLink                 from './menu_link'
@@ -81,6 +82,7 @@ class NavigationMenu extends Component {
           <List>
             <MenuLink nested={true} iconComponent={UsersIcon} linkPath="/users" menuText="Usuarios" />
             <MenuLink nested={true} rawIcon iconComponent={PortraitIcon} linkPath="/config/roles" menuText="Roles" />
+            <MenuLink nested={true} rawIcon iconComponent={VerifiedUserIcon} linkPath="/config/permissions" menuText="Permisos" />
             <MenuLink nested={true} iconComponent={BudgetsBuilderIcon} linkPath="/config/budget_templates" menuText="Presupuestos" />
             <MenuLink nested={true} iconComponent={FormsBuilderIcon} linkPath="/config/procedure_templates" menuText="Trámites" />
             <MenuLink nested={true} iconComponent={ReportsIcon} linkPath="/reports" menuText="Reportes" />

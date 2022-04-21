@@ -51,7 +51,8 @@ mutation updateUser(
       avatarThumbUrl
       avatarMidUrl
       avatarUrl
-      role {
+      roles {
+        id
         name
         permanentLink
       }

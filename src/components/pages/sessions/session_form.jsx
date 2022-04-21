@@ -22,7 +22,7 @@ const LOGIN_MUTATION = gql`
         avatarMidUrl
         avatarUrl
         updatedAt
-        role {
+        roles {
           name
           permanentLink
         }

@@ -78,9 +78,6 @@ const  UserTableRows = (props) => {
       <TableCell align="center">{user.lastName}</TableCell>
       <TableCell align="center">{user.email}</TableCell>
       <TableCell align="center">
-        {user.role ? user.role.name : "N/A"}
-      </TableCell>
-      <TableCell align="center">
         <Grid>
           <GenericDropdownMenu>
             <MenuItem key={user.id + "editar"}>

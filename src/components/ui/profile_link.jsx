@@ -24,7 +24,8 @@ const USER_CHANGE = gql`
       avatarMidUrl
       avatarUrl
       updatedAt
-      role {
+      roles {
+        id
         name
         permanentLink
       }

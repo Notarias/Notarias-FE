@@ -10,18 +10,11 @@ export const GET_USER = gql`
       address
       phone
       lockedAt
-      roleId
-      role {
+      roles{
+        id
         name
         permanentLink
-        createdAt
-        updatedAt
       }
-    }
-    roles{
-      name
-      createdAt
-      permanentLink
     }
   }
 `
@@ -33,8 +26,10 @@ export const UPDATE_USER = gql`
         firstName
         lastName
         lockedAt
-        role{
+        roles{
+          id
           name
+          permanentLink
         }
       }
     }
@@ -55,7 +50,8 @@ export const GET_CURRENT_USER = gql`
       avatarMidUrl
       avatarUrl
       updatedAt
-      role {
+      roles{
+        id
         name
         permanentLink
       }
@@ -85,8 +81,7 @@ export const LOAD_USERS = gql`
       lastName
       email
       lockedAt
-      roleId
-      role {
+      roles {
         name
         permanentLink
         createdAt

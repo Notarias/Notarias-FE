@@ -34,7 +34,8 @@ mutation updateUser($input: UpdateUserInput!) {
       email
       lockedAt
       phone
-      role {
+      roles {
+        id
         name
         permanentLink
       }

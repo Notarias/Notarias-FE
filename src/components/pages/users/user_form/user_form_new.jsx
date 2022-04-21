@@ -20,7 +20,8 @@ const USER_CREATE_MUTATION = gql`
         firstName
         lastName
         email
-        role{
+        roles{
+          id
           name
           permanentLink
         }
