@@ -3,8 +3,8 @@ import { withStyles }                       from '@material-ui/core/styles';
 import { styles }                           from '../../../../styles';
 import Button                               from '@material-ui/core/Button';
 import IconButton                           from '@material-ui/core/IconButton';
-import NoSimIcon                            from '@material-ui/icons/NoSim';
-import RestorePageIcon                      from '@material-ui/icons/RestorePage';
+import MoneyOffIcon                         from '@material-ui/icons/MoneyOff';
+import AttachMoneyIcon                      from '@material-ui/icons/AttachMoney';
 import Dialog                               from '@material-ui/core/Dialog';
 import DialogActions                        from '@material-ui/core/DialogActions';
 import DialogContent                        from '@material-ui/core/DialogContent';
@@ -76,16 +76,15 @@ const VoidOrInvoidPayment = (props) => {
   const showVoidOrInvoid = () => {
     return(
       statusVoid ? 
-
         <Tooltip title="Reactivar">
           <IconButton color='primary' onClick={handleClickOpen}>
-            <RestorePageIcon /> 
+            <AttachMoneyIcon /> 
           </IconButton>
         </Tooltip>
       : 
         <Tooltip title="Cancelar">
           <IconButton color='secondary' onClick={handleClickOpen}>
-            <NoSimIcon /> 
+            <MoneyOffIcon /> 
           </IconButton>
         </Tooltip>
     )
