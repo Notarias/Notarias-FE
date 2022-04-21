@@ -155,7 +155,7 @@ const Payment = (props) => {
         "budgetId": budget.id,
         "budgetFieldValueId": budgetFieldValue.id,
         "total": (valuePayment * 100),
-        "budgetUploadId": file.id
+        "budgetUploadId": file && file.id
        }
     })
   }
