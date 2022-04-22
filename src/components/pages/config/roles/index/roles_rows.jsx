@@ -1,4 +1,4 @@
-import React, { useState }                  from 'react';
+import React                                from 'react';
 import TableCell                            from '@material-ui/core/TableCell';
 import TableRow                             from '@material-ui/core/TableRow';
 import Grid                                 from '@material-ui/core/Grid';
@@ -39,7 +39,7 @@ const RolesRows = (props) => {
             query: GLOBAL_MESSAGE,
             data: {
               globalMessage: {
-                message: "Rol eliminado con exito.",
+                message: "Role eliminado con exito.",
                 type: "success",
                 __typename: "globalMessage"
               }
@@ -62,7 +62,7 @@ const RolesRows = (props) => {
       }
     })
   }
-
+  
   return(
     <TableRow>
       <TableCell align="center">{role.id}</TableCell>
@@ -71,16 +71,16 @@ const RolesRows = (props) => {
       <TableCell align="center">
         <Grid>
           <GenericDropdownMenu>
-            <MenuItem key={"1-roleMenu"}>
-              <Link to={`/config/roles/${role.id}/permissions`} style={{ textDecoration: 'none' }}>
+            <Link key={"1-roleMenu"} to={`/config/roles/${role.id}/permissions`} style={{ textDecoration: 'none' }}>
+              <MenuItem>
                 <Grid container>
                   <ListItemIcon>
                     <BorderColorIcon/>
                   </ListItemIcon>
                   <ListItemText primary="Editar" />
                 </Grid>
-              </Link>
-            </MenuItem>
+              </MenuItem>
+            </Link>
             <MenuItem key={"2-roleMenu"} onClick={deleteRole}>
               <Grid container>
                 <ListItemIcon>

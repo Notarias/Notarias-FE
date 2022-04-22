@@ -25,9 +25,9 @@ const Tabs = (props) => {
   const { data } = useQuery(
     GET_BUDGETING_TEMPLATES_TABS, { variables: {"id": budgetingTemplateId }}
   );
-console.log("--------->")
+  
   let tabList = data && data.budgetingTemplateTabs || []
-  console.log("---------<<<<")
+  
   const [tabName, setTabName] = React.useState(currentTab ? currentTab.name : "");
   const [open, setOpen] = React.useState(false);
   const [pristine, setPristine] = React.useState(true)
