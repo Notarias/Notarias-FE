@@ -41,7 +41,7 @@ console.log('edit---', data, loading)
             </Grid>
             <Divider variant="middle" />
             <Grid container item xs style={{paddingTop: '10px', paddingBottom: '10px', paddingLeft: '30px', paddingRight: '30px'}}>
-              { true ?
+              { loading ?
                 skeletonArray.map((item) => {
                   return(
                     <Grid key={`${item}-skeletonArray`} container item xs={4}>
