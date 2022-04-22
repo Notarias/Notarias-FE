@@ -25,7 +25,7 @@ const ConfigRoleEdit = (props) => {
   const { loading, data } = useQuery(
     GET_ROLE, { variables: { "id": match.params.id } } 
   );
-console.log('edit---', data, loading)
+  
   return(
     <>
       <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
