@@ -23,6 +23,7 @@ import ListItemIcon                             from '@material-ui/core/ListItem
 import ListItemText                             from '@material-ui/core/ListItemText';
 import RadioButtonUncheckedIcon                 from '@material-ui/icons/RadioButtonUnchecked';
 import RadioButtonCheckedIcon                   from '@material-ui/icons/RadioButtonChecked';
+import ClearIcon                                from '@material-ui/icons/Clear';
 import { useMutation }                          from '@apollo/client';
 import { GET_BUDGETING_TEMPLATES_TABS }         from '../queries_and_mutations/queries'
 import { UPDATE_BUDGETING_TEMPLATE_TAB }        from '../queries_and_mutations/queries'
@@ -155,6 +156,11 @@ const TabMenu = (props) => {
     setName(event.target.value);
   };
 
+  const cancelChangeName = () => {
+    setName(props.name)
+    setEditing(!editing)
+  }
+
   const renderTittleTextTab = () => {
 
     return(
@@ -169,7 +175,6 @@ const TabMenu = (props) => {
     )
   }
 
-  
   const renderTittleInputTab = () => {
 
     return(
@@ -179,6 +184,7 @@ const TabMenu = (props) => {
         </ListItemIcon>
         <ListItemText>
           <TextField
+            autoFocus
             className={ classes.inputSmall }
             size="small"
             id="standard-basic" 
@@ -190,6 +196,12 @@ const TabMenu = (props) => {
             name='name'
           />
         </ListItemText>
+        <IconButton
+        color="secondary"
+        onClick={ cancelChangeName }
+      >
+        <ClearIcon/>
+      </IconButton>
       </>
     )
   }
@@ -214,8 +226,8 @@ const TabMenu = (props) => {
         onClick={ handleClick }
         className={ selected ? classes.activeMenuTab : classes.menuTabDefault }
       >
-      <MoreVertIcon />
-        </IconButton>
+        <MoreVertIcon />
+      </IconButton>
       <Menu
         autoFocus={false}
         disableAutoFocusItem 
@@ -226,7 +238,7 @@ const TabMenu = (props) => {
         onClose={ handleClose }
       >
         <MenuItem key="budgetingTabMenu1" onClick={ changeTittle } className={ classes.tittleTabMenu } >
-          {/* { editing ? renderTittleTextTab() : renderTittleInputTab() } */}
+          { editing ? renderTittleTextTab() : renderTittleInputTab() }
         </MenuItem>
         <Divider key="budgetingTabMenuDivider1"/>
         <MenuItem key="budgetingTabMenu2" onClick={ handleClickOpenDialog }>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect}    from 'react';
+import React, { useState }              from 'react';
 import Grid                             from '@material-ui/core/Grid';
 import TextField                        from '@material-ui/core/TextField';
 import InputBase                        from '@material-ui/core/InputBase';
@@ -17,7 +17,7 @@ const RoleName = (params) => {
   const [fieldStatus, setFieldStatus] = useState(true);
   const [errors, setErrors] = useState({});
 
-  const [updateRole, { loadingUpdateRole }] =
+  const [updateRole] =
   useMutation(
     UPDATE_ROLE,
     {

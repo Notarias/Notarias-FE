@@ -222,7 +222,6 @@ const ButtonsNewFieldNewFieldsGroup = ({
                           value={ style }
                           onChange={ handleStyleChange }
                           error={ !!error["style"] && true }
-                          helperText={error["style"] || " "}
                           errorskey={ "style" }
                         >
                           <MenuItem key='string' value={'string'}>Texto</MenuItem>

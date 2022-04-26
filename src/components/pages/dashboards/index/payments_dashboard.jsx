@@ -42,11 +42,11 @@ const PaymentsDashboard = (props) => {
           )
         })
       :
-        payments && payments > 0 ?
+        payments && payments.length > 0 ?
           payments.map((payment) => {
             return(
-              <Fade in={!!payments}>
-                <Grid item key={`${payment.__typename}-${payment.id}`} style={{ paddingBottom: "20px", paddingRight: "30px" }}>
+              <Fade in={!!payments} key={`${payment.__typename}-${payment.id}`}>
+                <Grid item style={{ paddingBottom: "20px", paddingRight: "30px" }}>
                   <Payment payment={payment}/>
                 </Grid>
               </Fade>
@@ -56,7 +56,7 @@ const PaymentsDashboard = (props) => {
           <Grid item xs style={{paddingRight: "30px"}}>
             <Paper>
               <Typography variant='h4' style={{padding: "20px"}}>
-                No hay reuniones registradas por el momento
+                No hay pagos registradas por el momento.
               </Typography>
             </Paper>
           </Grid>

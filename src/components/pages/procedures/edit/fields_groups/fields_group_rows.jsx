@@ -222,6 +222,8 @@ const FieldsGroupsRows = (props) => {
             updateProcedureFieldValueFileLoading={updateProcedureFieldValueFileLoading}
           />
         )
+      default:
+        return("")
     }
   }
 

@@ -22,7 +22,6 @@ const ProceduresTableBody = (props) => {
     budgetingTemplateNameValue,
     proceduresTemplateNameValue,
     createdAtValue,
-    setTemplatesVariables,
     classes
   } = props
 

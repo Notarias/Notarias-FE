@@ -5,19 +5,11 @@ import DialogActions                        from '@material-ui/core/DialogAction
 import DialogContent                        from '@material-ui/core/DialogContent';
 import DialogTitle                          from '@material-ui/core/DialogTitle';
 import Button                               from '@material-ui/core/Button';
-import IconButton                           from '@material-ui/core/IconButton';
-import DescriptionIcon                      from '@material-ui/icons/Description';
 import Grid                                 from '@material-ui/core/Grid';
-import Tooltip                              from '@material-ui/core/Tooltip';
 import { useQuery }                         from '@apollo/client';
 import { GET_PAYMENTS }                     from '../../../../queries_and_mutations/queries';
-import PublishIcon                          from '@material-ui/icons/Publish';
-import CachedIcon                           from '@material-ui/icons/Cached';
-import TextField                            from '@material-ui/core/TextField';
 import NumberFormat                         from 'react-number-format';
 import PropTypes                            from 'prop-types';
-import InputAdornment                       from '@material-ui/core/InputAdornment';
-import VoidOrInvoidPayment                  from './void_unvoid_payment';
 import Typography                           from '@material-ui/core/Typography';
 import PaymentRow                           from './payment_row';
 

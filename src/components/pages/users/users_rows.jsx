@@ -40,7 +40,7 @@ const LOAD_USERS = gql`
 `
 
 export default (props) => {
-  const { page, per, sortDirection, sortField, searchField, searchValue, classes, setTotalRecords } = props
+  const { page, per, sortDirection, sortField, searchField, searchValue, setTotalRecords } = props
   let variables = {
     page: page + 1,
     per: per,
@@ -66,8 +66,8 @@ export default (props) => {
     return(
       <TableBody>
         <TableRow>
-          <TableCell align="center" colSpan={4} className={classes.loadingTableCell}>
-            <CircularProgress className={classes.searchLoadingIcon} size={100}/>
+          <TableCell align="center" colSpan={4}>
+            <CircularProgress size={100}/>
           </TableCell>
         </TableRow>
       </TableBody>

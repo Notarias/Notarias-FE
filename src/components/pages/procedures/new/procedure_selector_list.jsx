@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ProcedureSelectorList = (props) => {
 
-  const { selectedProcedure, setSelectedProcedure, setSelectedBudget } = props;
+  const { selectedProcedure, setSelectedProcedure } = props;
 
   const [procedureList, setProcedureList] = useState();
   const [searchList, setSearchList] = useState();

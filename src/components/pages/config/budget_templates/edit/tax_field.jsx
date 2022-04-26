@@ -30,7 +30,7 @@ import TaxedFields                                     from './taxed_fields'
 
 const TaxField = (props) => {
 
-  const { classes, currentTab, removeFromList } = props
+  const { classes, currentTab } = props
 
   const [open, setOpen] = useState(false);
   const [field]         = useState(props.field)

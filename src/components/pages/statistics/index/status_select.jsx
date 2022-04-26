@@ -3,19 +3,10 @@
 
 import React                        from 'react';
 import Grid                         from '@material-ui/core/Grid';
-import TextField                    from '@material-ui/core/TextField';
-import Typography                   from '@material-ui/core/Typography';
-import Divider                      from '@material-ui/core/Divider';
-import Button                       from '@material-ui/core/Button';
-import FormLabel from '@material-ui/core/FormLabel';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import ListItemText from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import { GET_STATISTICS_BUDGETING_TEMPLATES } from '../queries/queries';
-import TabsSelect from './tabs_select';
+import FormControl                  from '@material-ui/core/FormControl';
+import InputLabel                   from '@material-ui/core/InputLabel';
+import Select                       from '@material-ui/core/Select';
+import MenuItem                     from '@material-ui/core/MenuItem';
 
 const STATUSES = {
   "completed": 'Completados',

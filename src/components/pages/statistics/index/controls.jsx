@@ -1,13 +1,12 @@
-import React from 'react';
+import React                        from 'react';
 import Grid                         from '@material-ui/core/Grid';
 import TextField                    from '@material-ui/core/TextField';
 import Button                       from '@material-ui/core/Button';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Divider from '@material-ui/core/Divider';
-import TemplateControls from './template_controls';
-import StatusSelect from './status_select';
+import FormGroup                    from '@material-ui/core/FormGroup';
+import FormControlLabel             from '@material-ui/core/FormControlLabel';
+import Checkbox                     from '@material-ui/core/Checkbox';
+import TemplateControls             from './template_controls';
+import StatusSelect                 from './status_select';
 
 export default (props) => {
   const {

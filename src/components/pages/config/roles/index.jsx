@@ -25,7 +25,7 @@ const ConfigRolesIndex = () => {
 
   const [newDialogStatus, setNewDialogStatus] = useState(false);
 
-  const { loading, data } = useQuery(
+  const { data } = useQuery(
     LOAD_ROLES
   );
 

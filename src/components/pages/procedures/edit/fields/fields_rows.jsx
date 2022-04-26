@@ -192,6 +192,8 @@ const FieldsRows = (props) => {
             updateProcedureFieldValueFileLoading={updateProcedureFieldValueFileLoading}
           />
         )
+      default:
+        return("")
     }
   }
 

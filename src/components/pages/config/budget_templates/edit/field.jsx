@@ -28,7 +28,7 @@ import client                                         from '../../../../../apoll
 
 const Field = (props) => {
 
-  const { classes, id, currentTab, removeFromList } = props
+  const { classes, id, currentTab } = props
   const [open, setOpen] = useState(false);
   const [openB, setOpenB] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);

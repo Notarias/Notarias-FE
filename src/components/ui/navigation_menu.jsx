@@ -1,5 +1,4 @@
 import React, { Component }     from 'react';
-import { Redirect }             from 'react-router-dom';
 import Drawer                   from '@material-ui/core/Drawer';
 import Divider                  from '@material-ui/core/Divider';
 import List                     from '@material-ui/core/List';

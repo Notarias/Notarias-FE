@@ -98,7 +98,7 @@ export default (props) => {
             label="No. de Expediente"
             type="text"
             onChange={handleProceedingNumberChange}
-            value={proceedingNumber}
+            value={!!proceedingNumber ? proceedingNumber : ""}
             fullWidth
           />
         </DialogContent>

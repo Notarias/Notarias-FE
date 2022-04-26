@@ -17,7 +17,7 @@ const PermissionEditDialog = (props) => {
   const [saveStatus, setSaveStatus] = useState(true);
   const [errors, setErrors] = useState({});
 
-  const [updatePermission, { loading }] =
+  const [updatePermission] =
     useMutation(
       UPDATE_PERMISSION,
       {

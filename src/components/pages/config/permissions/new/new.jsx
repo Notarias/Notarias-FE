@@ -23,7 +23,7 @@ const NewPermissionDialog = (props) => {
     setSaveStatus(false);
   }
 
-  const [createPermission, { loading }] =
+  const [createPermission] =
     useMutation(
       CREATE_PERMISSION,
       {

@@ -45,7 +45,7 @@ export default (props) => {
     graphStatus
   } = props;
 
-  const { data, loading, refetch } = useQuery(
+  const { data, loading } = useQuery(
     TAB_STATISTICS_QUERY,
     {
       variables: {

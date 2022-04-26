@@ -25,7 +25,7 @@ const ConfigPermissionsIndex = () => {
 
   const [newDialogStatus, setNewDialogStatus] = useState(false);
 
-  const { loading, data } = useQuery(
+  const { data } = useQuery(
     LOAD_PERMISSIONS
   );
 

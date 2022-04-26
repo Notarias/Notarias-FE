@@ -1,4 +1,4 @@
-import React, { useState }                  from 'react';
+import React                                from 'react';
 import IconButton                           from '@material-ui/core/IconButton';
 import Grid                                 from '@material-ui/core/Grid';
 import Tooltip                              from '@material-ui/core/Tooltip';
@@ -63,7 +63,6 @@ const useStyles = makeStyles((theme) => ({
 
 const CreditPaymentRow = (props) => {
   const {creditPayment, budget} = props
-  const [file, setFile] = useState("");
 
   const classes = useStyles();
 
@@ -73,7 +72,6 @@ const CreditPaymentRow = (props) => {
       {
         context: { hasUpload: true },
         onCompleted(cacheData) {
-          setFile(cacheData.budgetUpload.budgetUpload)
         },
         refetchQueries: [
           {
