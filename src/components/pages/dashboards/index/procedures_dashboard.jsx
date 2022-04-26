@@ -47,7 +47,7 @@ const ProceduresDashboard = (props) => {
         procedures && procedures.length > 0 ?
           procedures.map((procedure) => {
             return(
-              <Fade in={!!procedure} key={`${procedure.__typename}-${procedure.id}`}>
+              <Fade in={!!procedure} key={`procedure-${procedure.id}`}>
                 <Grid item style={{ paddingBottom: "20px", paddingRight: "30px" }}>
                   <Procedure procedure={procedure}/>
                 </Grid>

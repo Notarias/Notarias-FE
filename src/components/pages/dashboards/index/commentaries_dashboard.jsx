@@ -45,7 +45,7 @@ const CommentariesDashboard = (props) => {
         comments && comments.length > 0 ?
           comments.map((comment) => {
             return(
-              <Fade in={!!comment} key={`${comment.__typename}-${comment.id}`}>
+              <Fade in={!!comment} key={`comment-${comment.id}`}>
                 <Grid item style={{ paddingBottom: "20px", paddingRight: "30px" }}>
                   <Commentary comment={comment}/>
                 </Grid>

@@ -45,7 +45,7 @@ const AppointmentsDashboard = (props) => {
         appointments && appointments.length > 0 ?
           appointments.map((appointment) => {
             return(
-              <Fade in={!!appointment} key={`${appointment.__typename}-${appointment.id}`}>
+              <Fade in={!!appointment} key={`appointment-${appointment.id}`}>
                 <Grid item style={{ paddingBottom: "20px", paddingRight: "30px" }}>
                   <Appointment appointment={appointment}/>
                 </Grid>

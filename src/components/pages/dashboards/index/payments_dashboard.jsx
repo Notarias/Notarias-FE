@@ -45,7 +45,7 @@ const PaymentsDashboard = (props) => {
         payments && payments.length > 0 ?
           payments.map((payment) => {
             return(
-              <Fade in={!!payments} key={`${payment.__typename}-${payment.id}`}>
+              <Fade in={!!payments} key={`payment-${payment.id}`}>
                 <Grid item style={{ paddingBottom: "20px", paddingRight: "30px" }}>
                   <Payment payment={payment}/>
                 </Grid>
