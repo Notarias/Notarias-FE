@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react'
-import { UPDATE_BUDGET_FIELD_VALUE_ACTIVE }  from '../../../queries_and_mutations/queries';
-import { GET_BUDGET_FIELD_VALUE }     from '../../../queries_and_mutations/queries';
-import { GET_BUDGETS_AUDITLOG }       from '../../../queries_and_mutations/queries';
-import { GET_BUDGET_TOTALS }          from '../../../queries_and_mutations/queries';
-import { useMutation }                from '@apollo/client';
-import Switch                         from '@material-ui/core/Switch';
-import FormControlLabel               from '@material-ui/core/FormControlLabel';
+import React, { useState }                      from 'react'
+import { UPDATE_BUDGET_FIELD_VALUE_ACTIVE }     from '../../../queries_and_mutations/queries';
+import { GET_BUDGET_FIELD_VALUE }               from '../../../queries_and_mutations/queries';
+import { GET_BUDGETS_AUDITLOG }                 from '../../../queries_and_mutations/queries';
+import { GET_BUDGET_TOTALS }                    from '../../../queries_and_mutations/queries';
+import { useMutation }                          from '@apollo/client';
+import Switch                                   from '@material-ui/core/Switch';
+import FormControlLabel                         from '@material-ui/core/FormControlLabel';
 
 export default (props) => {
 

@@ -16,7 +16,6 @@ const SearchInput = (props) => {
     searchLoading,
     onChangeSearch,
     switchAdvancedSearchClick,
-    runAdvancedSearch,
     openAdvancedSearch
   } = props
   const [open, setOpen] = React.useState(false)

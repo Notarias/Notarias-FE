@@ -14,7 +14,7 @@ export default (props) => {
   const { templateId, templateTabsIds, changeTemplateTabsIds } = props
 
 
-  const { data, loading } = useQuery(
+  const { data } = useQuery(
     GET_STATISTICS_BUDGETING_TEMPLATE_TABS,
     {
       variables: {

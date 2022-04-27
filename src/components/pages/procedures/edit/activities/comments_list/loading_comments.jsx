@@ -11,7 +11,7 @@ const LoadingComments = () => {
           <Grid item xs>
             <Skeleton variant="circle" width={40} height={40} />
           </Grid>
-          <Grid container item xs={8} direction='column' alignContent='left'>
+          <Grid container item xs={8} direction='column' alignContent='flex-start'>
             <Grid item>
               <Skeleton variant="text" />
             </Grid>

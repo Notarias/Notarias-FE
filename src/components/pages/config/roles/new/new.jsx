@@ -16,7 +16,6 @@ const NewRoleDialog = (props) => {
 
   const [roleName, setRoleName] = useState("");
   const [saveStatus, setSaveStatus] = useState(true);
-  const [permanentLink, setPermanentLink] = useState();
   const [errors, setErrors] = useState({});
 
   const changeNameField = (event) => {
@@ -24,7 +23,7 @@ const NewRoleDialog = (props) => {
     setSaveStatus(false);
   }
 
-  const [createRole, { loading }] =
+  const [createRole] =
     useMutation(
       CREATE_ROLE,
       {
@@ -63,8 +62,7 @@ const NewRoleDialog = (props) => {
   const saveNewRole = () => {
     createRole({
       variables: {
-        name: roleName,
-        permanentLink: permanentLink
+        name: roleName
       }
     })
   }

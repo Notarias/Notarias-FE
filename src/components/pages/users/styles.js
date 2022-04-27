@@ -17,11 +17,6 @@ export const styles = theme => {
       height: "100%",
       flexWrap: "nowrap"
     },
-    tableGutter: {
-      ...theme.mixins.gutters(),
-      paddingTop: theme.spacing(2),
-      paddingBottom: theme.spacing(2),
-    },
     usersTableBarWrapper: {
       padding:'23px 23px 0 23px'
     },
@@ -56,20 +51,6 @@ export const styles = theme => {
     searchInputRoot: {
       color: 'inherit',
       width: '100%',
-    },
-    searchInputInput: {
-      paddingTop: theme.spacing(),
-      paddingRight: theme.spacing(),
-      paddingBottom: theme.spacing(),
-      paddingLeft: theme.spacing(10),
-      transition: theme.transitions.create('width'),
-      width: '100%',
-      [theme.breakpoints.up('sm')]: {
-        width: 120,
-        '&:focus': {
-          width: 200,
-        },
-      }
     },
     buttonMaxwidth: {
       width: '100%'

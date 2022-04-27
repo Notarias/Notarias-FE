@@ -1,4 +1,4 @@
-import React, { useEffect, useState }       from 'react';
+import React                      from 'react';
 import Grid                       from '@material-ui/core/Grid';
 import { grey }                   from '@material-ui/core/colors';
 import Divider                    from '@material-ui/core/Divider';
@@ -21,11 +21,6 @@ export default (props) => {
       }
     }
   );
-
-  //boxShadow: '0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%)'
-
- // style={{ height: expandTaxedFields ? `${taxedFields ? (30 * taxedFields.length) : 0}px` : '0px', overflow: 'hidden', transition: 'height 0.19s ease-out' }} 
-  // style={{ height: '30px', backgroundColor: grey[300] }}
 
   const formatValue = (value) => {
     return((value * 1.0) / 100).toFixed(2)

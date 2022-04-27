@@ -47,8 +47,8 @@ const ProceduresDashboard = (props) => {
         procedures && procedures.length > 0 ?
           procedures.map((procedure) => {
             return(
-              <Fade in={!!procedure}>
-                <Grid item key={`${procedure.__typename}-${procedure.id}`} style={{ paddingBottom: "20px", paddingRight: "30px" }}>
+              <Fade in={!!procedure} key={`procedure-${procedure.id}`}>
+                <Grid item style={{ paddingBottom: "20px", paddingRight: "30px" }}>
                   <Procedure procedure={procedure}/>
                 </Grid>
               </Fade>
@@ -58,7 +58,7 @@ const ProceduresDashboard = (props) => {
           <Grid item xs style={{paddingRight: "30px"}}>
             <Paper>
               <Typography variant='h4' style={{padding: "20px"}}>
-                No hay reuniones registradas por el momento
+                No hay tramites registradas por el momento.
               </Typography>
             </Paper>
           </Grid>

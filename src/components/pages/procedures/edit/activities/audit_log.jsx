@@ -75,12 +75,12 @@ const AuditLog = (props) => {
                 <Grid container item xs={10} direction="row">
                   <Grid container item xs={6} justifyContent="flex-start">
                     <Grid item>
-                      <Typography variant="subtitle2">{obj.user.firstName} {obj.user.lastName}</Typography>
+                      <Typography variant="subtitle2" align="left">{obj.user.firstName} {obj.user.lastName}</Typography>
                     </Grid>
                   </Grid>
                   <Grid container item xs={6} justifyContent="flex-end">
                     <Grid item>
-                      <Typography variant="caption"> Fecha: {getCurrentDate(obj)}</Typography>
+                      <Typography variant="caption" align="right"> Fecha: {getCurrentDate(obj)}</Typography>
                     </Grid>
                   </Grid>
                   <Grid container item xs={12} justifyContent="flex-start">

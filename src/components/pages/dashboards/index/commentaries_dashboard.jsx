@@ -45,8 +45,8 @@ const CommentariesDashboard = (props) => {
         comments && comments.length > 0 ?
           comments.map((comment) => {
             return(
-              <Fade in={!!comment}>
-                <Grid item key={`${comment.__typename}-${comment.id}`} style={{ paddingBottom: "20px", paddingRight: "30px" }}>
+              <Fade in={!!comment} key={`comment-${comment.id}`}>
+                <Grid item style={{ paddingBottom: "20px", paddingRight: "30px" }}>
                   <Commentary comment={comment}/>
                 </Grid>
               </Fade>
@@ -56,7 +56,7 @@ const CommentariesDashboard = (props) => {
           <Grid item xs style={{paddingRight: "30px"}}>
             <Paper>
               <Typography variant='h4' style={{padding: "20px"}}>
-                No hay reuniones registradas por el momento
+                No hay comentarios registrados por el momento.
               </Typography>
             </Paper>
           </Grid>

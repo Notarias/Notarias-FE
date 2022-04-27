@@ -1,19 +1,12 @@
-import React                        from 'react';
-import Grid                         from '@material-ui/core/Grid';
-import TextField                    from '@material-ui/core/TextField';
-import Typography                   from '@material-ui/core/Typography';
-import Divider                      from '@material-ui/core/Divider';
-import Button                       from '@material-ui/core/Button';
-import { useQuery }                 from '@apollo/client';
-import FormLabel from '@material-ui/core/FormLabel';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import ListItemText from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import { GET_STATISTICS_BUDGETING_TEMPLATES } from '../queries/queries';
-import TabsSelect from './tabs_select';
+import React                                          from 'react';
+import Grid                                           from '@material-ui/core/Grid';
+import FormControl                                    from '@material-ui/core/FormControl';
+import InputLabel                                     from '@material-ui/core/InputLabel';
+import Select                                         from '@material-ui/core/Select';
+import MenuItem                                       from '@material-ui/core/MenuItem';
+import { useQuery }                                   from '@apollo/client';
+import { GET_STATISTICS_BUDGETING_TEMPLATES }         from '../queries/queries';
+import TabsSelect                                     from './tabs_select';
 
 export default (props) => {
   const {
@@ -23,7 +16,7 @@ export default (props) => {
     changeTemplateTabsIds
   } = props
 
-  const { data, loading } = useQuery(
+  const { data } = useQuery(
     GET_STATISTICS_BUDGETING_TEMPLATES,
     {
       fetchPolicy: 'cache-and-network'

@@ -8,18 +8,32 @@ import { LOAD_PERMISSIONS }             from '../queries_and_mutations/queries';
 const Permissions = ( params ) => {
   const { role } = params
 
-  const { data } = useQuery(
+  const skeletonArray = [1,2,3,4,5,6,7,8,9]
+
+  const { loading, data } = useQuery(
     LOAD_PERMISSIONS
   );
-  
+
   return(
-    data && data.permissions.map((permission) => {
-      return(
-        <Grid key={`${permission.id}-rolePermissions`} container item xs={4}>
-          <PermissionSwitch role={role} permission={permission}/>
-        </Grid>
-      )
-    })
+    <>
+      { loading ?
+        skeletonArray.map((item) => {
+          return(
+            <Grid key={`${item}-skeletonPermission`} container item xs={4}>
+              <LoadingPermissions/>
+            </Grid>
+          )
+        })
+      :
+        data && data.permissions.map((permission) => {
+          return(
+            <Grid key={`${permission.id}-rolePermissions`} container item xs={4}>
+              <PermissionSwitch role={role} permission={permission}/>
+            </Grid>
+          )
+        })
+      }
+    </>
   )
 }
 

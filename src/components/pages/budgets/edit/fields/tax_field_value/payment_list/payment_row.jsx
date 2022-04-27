@@ -1,4 +1,4 @@
-import React, { useState }                  from 'react';
+import React                                from 'react';
 import IconButton                           from '@material-ui/core/IconButton';
 import Grid                                 from '@material-ui/core/Grid';
 import Tooltip                              from '@material-ui/core/Tooltip';
@@ -63,7 +63,6 @@ const useStyles = makeStyles((theme) => ({
 
 const PaymentRow = (props) => {
   const { payment, budget, budgetFieldValue, field } = props
-  const [file, setFile] = useState("");
 
   const classes = useStyles();
 
@@ -73,7 +72,16 @@ const PaymentRow = (props) => {
       {
         context: { hasUpload: true },
         onCompleted(cacheData) {
-          setFile(cacheData.budgetUpload.budgetUpload)
+          client.writeQuery({
+          query: GLOBAL_MESSAGE,
+          data: {
+            globalMessage: {
+              message: "Archivo cargado con exito.",
+              type: "success",
+              __typename: "globalMessage"
+            }
+          }
+        })
         },
         refetchQueries: [
           {

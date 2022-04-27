@@ -98,7 +98,7 @@ export default (props) => {
             label="No. de Escritura"
             type="text"
             onChange={handleWritingNumberChange}
-            value={writingNumber}
+            value={!!writingNumber ? writingNumber : ""}
             fullWidth
           />
         </DialogContent>

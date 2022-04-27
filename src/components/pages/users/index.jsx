@@ -1,14 +1,21 @@
-import React, { useState } from 'react';
-import { withStyles }       from '@material-ui/core/styles';
-import Table                from '@material-ui/core/Table';
-import TableFooter          from '@material-ui/core/TableFooter';
-import TableHeaders                  from './table_headers';
-import TableRow             from '@material-ui/core/TableRow';
-import Paper                from '@material-ui/core/Paper';
-import { styles }           from './styles';
-import TablePagination      from '@material-ui/core/TablePagination';
-import UserRows            from './users_rows';
-import ControlsBar          from './controls_bar';
+import React, { useState }      from 'react';
+import { withStyles }           from '@material-ui/core/styles';
+import Table                    from '@material-ui/core/Table';
+import TableFooter              from '@material-ui/core/TableFooter';
+import TableHeaders             from './table_headers';
+import TableRow                 from '@material-ui/core/TableRow';
+import Paper                    from '@material-ui/core/Paper';
+import Grid                     from '@material-ui/core/Grid';
+import { styles }               from './styles';
+import TablePagination          from '@material-ui/core/TablePagination';
+import UserRows                 from './users_rows';
+import ControlsBar              from './controls_bar';
+import Breadcrumbs              from '../../ui/breadcrumbs'
+
+const BREADCRUMBS = [
+  { name: "Inicio", path: "/" },
+  { name: "Usuarios", path: null }
+]
 
 const Users = (props) => {
   const [searchLoading, setSearchLoading] = useState(false);
@@ -20,8 +27,6 @@ const Users = (props) => {
   const [page, setPage]                   = useState(0)
   const [per, setPer]                     = useState(5)
   const [total_records, setTotalRecords]  = useState(0)
-
-  const { classes } = props
 
   const changeRowsPerPage = (event) => {
     let per = event.target.value
@@ -49,15 +54,24 @@ const Users = (props) => {
   }
 
   return(
-    <div className={classes.root}>
-      <ControlsBar
-        classes={classes}
-        searchLoading={searchLoading}
-        onChangeSearch={onChangeSearch.bind(this)}/>
-      <div className={classes.tableWrapper}>
-        <Paper >
-          <Table className={classes.table}>
-            <TableHeaders field={sortField} direction={sortDirection} sortHandler={sort.bind(this) }/>
+    <Grid container direction='row'>
+      <Grid item xs={12}>
+        <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
+      </Grid>
+      <Grid container item xs={12} direction='row' justifyContent='flex-end'>
+        <ControlsBar
+          searchLoading={searchLoading}
+          onChangeSearch={onChangeSearch.bind(this)}
+        />
+      </Grid>
+      <Grid item xs={12} style={{paddingLeft: '25px', paddingRight: '25px'}}>
+        <Paper>
+          <Table>
+            <TableHeaders
+              field={sortField}
+              direction={sortDirection}
+              sortHandler={sort.bind(this)}
+            />
             <UserRows
               page={ page }
               per={ per }
@@ -67,7 +81,7 @@ const Users = (props) => {
               setTotalRecords={ setTotalRecords }
               searchValue={ searchValue }
               searchField={ searchField }
-              classes={ classes } />
+            />
             <TableFooter>
               <TableRow>
                 <TablePagination
@@ -83,8 +97,8 @@ const Users = (props) => {
             </TableFooter>
           </Table>
         </Paper>
-      </div>
-    </div>
+      </Grid>
+    </Grid>
   )
 }
 

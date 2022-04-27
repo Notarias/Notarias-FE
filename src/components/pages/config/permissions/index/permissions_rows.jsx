@@ -11,10 +11,6 @@ import DeleteForeverIcon                                from '@material-ui/icons
 import GenericDropdownMenu                              from '../../../../ui/generic_dropdown_menu';
 import PermissionEditDialog                             from '../edit/edit';
 import PermissionDeleteDialog                           from '../destroy/destroy';
-import { useMutation }                                  from '@apollo/client';
-import { DESTROY_PERMISSION, LOAD_PERMISSIONS }         from '../queries_and_mutations/queries';
-import { GLOBAL_MESSAGE }                               from '../../../../../resolvers/queries';
-import client                                           from '../../../../../apollo';
 
 const PermissionsRows = (props) => {
   const { permission } = props
@@ -46,12 +42,10 @@ const PermissionsRows = (props) => {
                 </ListItemIcon>
                 <ListItemText primary="Editar" />
               </Grid>
+              <Dialog open={editDialogStatus} onClose={editDialog}>
+                <PermissionEditDialog editDialog={editDialog} permission={permission}/>
+              </Dialog>
             </MenuItem>
-
-            <Dialog open={editDialogStatus} onClose={editDialog}>
-              <PermissionEditDialog editDialog={editDialog} permission={permission}/>
-            </Dialog>
-
             <MenuItem key={"2-permissionMenu"} onClick={deleteDialog}>
               <Grid container>
                 <ListItemIcon>
@@ -59,13 +53,10 @@ const PermissionsRows = (props) => {
                 </ListItemIcon>
                 <ListItemText primary="Eliminar" />
               </Grid>
+              <Dialog open={deleteDialogStatus} onClose={deleteDialog}>
+                <PermissionDeleteDialog deleteDialog={deleteDialog} permission={permission}/>
+              </Dialog>
             </MenuItem>
-
-
-          <Dialog open={deleteDialogStatus} onClose={deleteDialog}>
-            <PermissionDeleteDialog deleteDialog={deleteDialog} permission={permission}/>
-          </Dialog>
-
           </GenericDropdownMenu>
         </Grid>
       </TableCell>

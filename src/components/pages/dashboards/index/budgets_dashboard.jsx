@@ -47,8 +47,8 @@ const BudgetsDashboard = (props) => {
         budgets && budgets.length > 0 ?
           budgets.map((budget) => {
             return(
-              <Fade in={!!budget}>
-                <Grid item key={`${budget.__typename}-${budget.id}`} style={{ paddingBottom: "20px", paddingRight: "30px" }}>
+              <Fade in={!!budget} key={`budget-${budget.id}`}>
+                <Grid item style={{ paddingBottom: "20px", paddingRight: "30px" }}>
                   <Budget budget={budget}/>
                 </Grid>
               </Fade>
@@ -58,7 +58,7 @@ const BudgetsDashboard = (props) => {
           <Grid item xs style={{paddingRight: "30px"}}>
             <Paper>
               <Typography variant='h4' style={{padding: "20px"}}>
-                No hay reuniones registradas por el momento
+                No hay presupuestos registrados por el momento.
               </Typography>
             </Paper>
           </Grid>

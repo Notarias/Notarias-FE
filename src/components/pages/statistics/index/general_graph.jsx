@@ -44,7 +44,7 @@ export default (props) => {
     graphStatus
   } = props;
 
-  const { data, loading, refetch } = useQuery(
+  const { data, loading } = useQuery(
     STATISTICS_QUERY,
     {
       variables: {

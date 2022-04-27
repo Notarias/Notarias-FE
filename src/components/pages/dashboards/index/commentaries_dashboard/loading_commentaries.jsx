@@ -20,7 +20,7 @@ const LoadingCommentaries = () => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid container xs={12} direction='row' style={{padding: "10px"}}>
+      <Grid container item xs={12} direction='row' style={{padding: "10px"}}>
         <Grid item xs style={{padding: "10px", paddingLeft: "10px"}}>
           <Skeleton variant="rect" width="100%" heigth={50}/>
           <Skeleton variant="rect" width="100%" heigth={50}/>

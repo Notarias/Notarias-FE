@@ -33,7 +33,7 @@ const CommentsDialog = (props) => {
   return (
     <Dialog onClose={statsCommentDialog} aria-labelledby="comments-title" open={commentDialog}>
       <DialogTitle style={{ padding: '16px'}}>
-        <Grid container xs={12} justifyContent='flex-start' alignItems='center'>
+        <Grid container item xs={12} justifyContent='flex-start' alignItems='center'>
           <Grid item xs={1}>
             {procedure.asignee ?
               <Avatar aria-label={procedure.asignee.firstName} src={procedure.asignee.avatarThumbUrl}/>

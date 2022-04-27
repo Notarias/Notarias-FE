@@ -219,7 +219,6 @@ const Field = (props) => {
             id="standard-basic"
             value={ name }
             onChange={ handleNameChange }
-            defaultValue="Small"
             variant="outlined"
             style={{'backgroundColor': 'rgb(200, 200, 200)'}}
           />

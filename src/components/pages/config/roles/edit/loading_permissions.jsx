@@ -8,7 +8,7 @@ const LoadingPermissions = () => {
     <>
       <Grid container item xs justifyContent='flex-start' alignContent='center' style={{paddingTop: '10px', paddingLeft: '20%'}}>
         <Grid item>
-          <Skeleton variant="rect" width={200} height={20} />
+          <Skeleton variant="rect" width={150} height={20} />
         </Grid>
       </Grid>
       <Grid container item xs justifyContent='flex-end' style={{paddingTop: '10px', paddingRight: '20%'}}>

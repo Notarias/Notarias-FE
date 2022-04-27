@@ -14,17 +14,6 @@ const BREADCRUMBS = [
   { name: "Estadísticas", path: null }
 ]
 
-const getMonth = (dateObject, monthNum) => {
-  var objDate = new Date();
-  objDate.setDate(1);
-  objDate.setMonth(monthNum-1);
-
-  var locale = "es-mx",
-      month = objDate.toLocaleString(locale, { month: "long" });
-
-  return month;
-}
-
 const formatDate = (dateObject) => {
   let date = dateObject.getDate();
   let month = dateObject.getMonth() + 1;
@@ -129,6 +118,7 @@ export default (props) => {
                     templateTabsIds={templateTabsIds}
                     changeTemplateId={changeTemplateId}
                     changeTemplateTabsIds={changeTemplateTabsIds}
+                    changeTimeFrame={changeTimeFrame}
                     graphStatus={graphStatus}
                     changeGraphStatus={changeGraphStatus}/>
                 </Grid>

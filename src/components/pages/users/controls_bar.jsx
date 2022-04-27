@@ -8,30 +8,30 @@ import PersonAddIcon        from '@material-ui/icons/PersonAdd';
 import { Link }             from 'react-router-dom';
 
 export default (props) => {
-  const { classes, searchLoading, onChangeSearch } = props;
+  const { searchLoading, onChangeSearch } = props;
   return(
-    <Grid container  direction="row"  justifyContent="flex-end"  alignItems="flex-end" className={classes.usersTableBarWrapper}>
-      <div className={classes.search}>
-        <div className={classes.searchIcon}>
-          { 
-            searchLoading ?
-            <CircularProgress className={classes.searchLoadingIcon} size={25}/> :
-            <SearchIcon />
-          }
-        </div>
+    <Grid container item direction="row" xs={8} justifyContent="flex-end"  alignItems="center" spacing={1} style={{padding: '25px'}}>
+      <Grid container item xs={1} justifyContent="flex-end">
+        { 
+          searchLoading ?
+          <CircularProgress size={25}/> :
+          <SearchIcon />
+        }
+      </Grid>
+      
+      <Grid container item xs={4} justifyContent="flex-end">
         <InputBase
           placeholder="Buscar…"
           onChange={onChangeSearch}
           inputProps={{predicate: "all_fields.cont"}}
-          classes={{
-            root: classes.searchInputRoot,
-            input: classes.searchInputInput,
-          }}
         />
-      </div>
-      <Button component={Link} to="/users/new" variant="contained" color="primary">
-        <PersonAddIcon/>
-      </Button>
+      </Grid>
+
+      <Grid container item xs={2} justifyContent="flex-end">
+        <Button component={Link} to="/users/new" variant="contained" color="primary">
+          <PersonAddIcon/>
+        </Button>
+      </Grid>
     </Grid>
   )
 }

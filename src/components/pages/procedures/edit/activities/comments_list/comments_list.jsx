@@ -30,7 +30,7 @@ const CommentsList = (props) => {
       { loading || !data ? array.map(
           (index) => {
             return(
-              <LoadingComments/>
+              <LoadingComments key={index + "commentLoading"}/>
             )
           }
       ) : (

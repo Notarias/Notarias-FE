@@ -163,7 +163,7 @@ const NewBudget = (params) => {
   const handleBack = () => {
     if (activeStep > 0) {
       setActiveStep((prevActiveStep) => prevActiveStep - 1);}
-    if (activeStep == 2) {
+    if (activeStep === 2) {
       setSelectedProcedure("")
       setSelectedBudget("")
     }
