@@ -19,7 +19,85 @@ export const GET_USER = gql`
   }
 `
 
+export const USER_CREATE = gql`
+  mutation createUser(
+    $firstName: String!,
+    $lastName: String!,
+    $email: String!,
+    $address: String!,
+    $phone: String,
+    $authProvider: AuthProviderSignupData
+  ){
+    createUser(
+      input: {
+        firstName: $firstName,
+        lastName: $lastName,
+        email: $email,
+        address: $address 
+        phone: $phone
+        authProvider: $authProvider
+        }
+      ){
+      user{
+        id
+        firstName
+        lastName
+        email
+        address
+        phone
+        roles{
+          id
+          name
+          permanentLink
+        }
+      }
+    }
+  }
+`
+
 export const UPDATE_USER = gql`
+  mutation updateUser(
+    $id: ID!,
+    $firstName: String,
+    $lastName: String,
+    $email: String,
+    $address: String,
+    $phone: String,
+    $authProvider: AuthProviderSignupData,
+    $roleIds: [ID!]
+  ){
+    updateUser(
+      input: {
+        id: $id,
+        firstName: $firstName, lastName: $lastName,
+        email: $email,
+        address: $address,
+        phone: $phone,
+        authProvider: $authProvider
+        roleIds: $roleIds
+      }
+    ){
+      user {
+        id
+        firstName
+        lastName
+        email
+        lockedAt
+        address
+        phone
+        roles {
+          id
+          name
+          permanentLink
+        }
+      }
+      errors
+      pointers
+    }
+  }
+`
+
+export const LOCK_USER = gql`
   mutation updateUser($id: ID!, $locked: Boolean) {
     updateUser(input: {id:$id, locked: $locked}){
       user{
@@ -89,5 +167,16 @@ export const LOAD_USERS = gql`
       }
     }
     usersCount
+  }
+`
+
+export const LOAD_ROLES = gql`
+  query roles {
+    roles{
+      id
+      name
+      permanentLink
+      updatedAt
+    }
   }
 `

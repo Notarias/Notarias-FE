@@ -1,21 +1,22 @@
-import React, { useEffect }                from 'react'
-import TableCell            from '@material-ui/core/TableCell';
-import TableRow             from '@material-ui/core/TableRow';
-import MenuItem             from '@material-ui/core/MenuItem';
-import { useQuery }         from '@apollo/client';
-import { useMutation }      from '@apollo/client';
-import { UPDATE_USER }      from './queries_and_mutations/queries';
-import { styles }           from './styles';
-import { withStyles }       from '@material-ui/core/styles';
-import { Link }             from 'react-router-dom';
-import { GET_CURRENT_USER } from './queries_and_mutations/queries'
-import GenericDropdownMenu  from '../../ui/generic_dropdown_menu';
-import CreateIcon                     from '@material-ui/icons/Create';
-import Grid                           from '@material-ui/core/Grid';
-import ListItemIcon                   from '@material-ui/core/ListItemIcon';
-import ListItemText                   from '@material-ui/core/ListItemText';
-import LockOpenTwoToneIcon from '@material-ui/icons/LockOpenTwoTone';
-import LockTwoToneIcon from '@material-ui/icons/LockTwoTone';
+import React, { useEffect }     from 'react'
+import TableCell                from '@material-ui/core/TableCell';
+import TableRow                 from '@material-ui/core/TableRow';
+import MenuItem                 from '@material-ui/core/MenuItem';
+import { useQuery }             from '@apollo/client';
+import { useMutation }          from '@apollo/client';
+import { UPDATE_USER }          from './queries_and_mutations/queries';
+import { styles }               from './styles';
+import { withStyles }           from '@material-ui/core/styles';
+import { Link }                 from 'react-router-dom';
+import { GET_CURRENT_USER }     from './queries_and_mutations/queries'
+import GenericDropdownMenu      from '../../ui/generic_dropdown_menu';
+import CreateIcon               from '@material-ui/icons/Create';
+import Grid                     from '@material-ui/core/Grid';
+import ListItemIcon             from '@material-ui/core/ListItemIcon';
+import ListItemText             from '@material-ui/core/ListItemText';
+import Chip                     from '@material-ui/core/Chip';
+import LockOpenTwoToneIcon      from '@material-ui/icons/LockOpenTwoTone';
+import LockTwoToneIcon          from '@material-ui/icons/LockTwoTone';
 
 const  UserTableRows = (props) => {
   const {classes, user } = props
@@ -71,12 +72,27 @@ const  UserTableRows = (props) => {
     }
   }
 
-
   return( 
     <TableRow key={user.id} className={ locked && classes.lockedUserRow }>
+      <TableCell align="center">{user.id}</TableCell>
       <TableCell align="center">{user.firstName}</TableCell>
       <TableCell align="center">{user.lastName}</TableCell>
       <TableCell align="center">{user.email}</TableCell>
+      <TableCell align="center">
+        {user.roles.length > 0 ? 
+          <Chip 
+            label={user.roles.length}
+            variant='outlined'
+            color='primary'
+          /> 
+        : 
+        <Chip 
+          label='sin roles'
+          variant='outlined'
+          color='secondary'
+        /> 
+        }
+      </TableCell>
       <TableCell align="center">
         <Grid>
           <GenericDropdownMenu>

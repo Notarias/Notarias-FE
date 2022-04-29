@@ -1,46 +1,14 @@
 import React, { useEffect } from 'react'
 import TableCell            from '@material-ui/core/TableCell';
 import TableRow             from '@material-ui/core/TableRow';
-import { gql }                  from '@apollo/client';
 import { useQuery }         from '@apollo/client';
+import { LOAD_USERS }       from './queries_and_mutations/queries'
 import TableBody            from '@material-ui/core/TableBody';
 import CircularProgress     from '@material-ui/core/CircularProgress';
 import UserTableRows        from './userTableRows';
 
-const LOAD_USERS = gql`
-  query searchClients(
-    $page: Int,
-    $per: Int,
-    $sortField: String,
-    $sortDirection: String,
-    $searchField: String,
-    $searchValue: String
-  ) {
-  users(
-    page: $page,
-    per: $per,
-    sortField: $sortField,
-    sortDirection: $sortDirection,
-    searchField: $searchField,
-    searchValue: $searchValue
-  ) {
-    id
-    firstName
-    lastName
-    email
-    lockedAt
-    roles{
-      id
-      name
-      permanentLink
-    }
-  }
-  usersCount
-}
-`
-
 export default (props) => {
-  const { page, per, sortDirection, sortField, searchField, searchValue, setTotalRecords } = props
+  const { page, per, sortDirection, sortField, searchField, searchValue, setTotalRecords, users, setUsers } = props
   let variables = {
     page: page + 1,
     per: per,
@@ -48,19 +16,17 @@ export default (props) => {
     searchValue: searchValue,
     sortDirection: sortDirection,
     sortField: sortField
-  }
+  }                                                                       
 
   const { loading, data, refetch } = useQuery(
-    LOAD_USERS, { vairables: variables, errorPolicy: 'all' }
+    LOAD_USERS, { vairables: variables }
   );
-  
-  useEffect(() => {
-    refetch(variables);
-  }, [page, per, searchField, searchValue, sortField, sortDirection]);
 
   useEffect(() => {
+    refetch(variables);
+    data && setUsers(data.users)
     data && setTotalRecords(data.usersCount)
-  }, [data]);
+  }, [data, page, per, searchField, searchValue, sortField, sortDirection]);
 
   if (loading || !data) {
     return(
@@ -76,7 +42,7 @@ export default (props) => {
     return(
       <TableBody>
         {
-          data.users.map(user => (
+          users.map(user => (
             <UserTableRows 
               user={user}
               key={ user.id + "-userRow" }
