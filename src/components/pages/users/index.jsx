@@ -19,14 +19,15 @@ const BREADCRUMBS = [
 
 const Users = (props) => {
   const [searchLoading, setSearchLoading] = useState(false);
-  const [sortField, setSortField]         = useState("first_name")
-  const [sortDirection, setSortDirection] = useState("desc")
-  const [searchField]                     = useState("first_name_or_last_name_or_email_cont")
-  const [searchValue, setSearchValue]     = useState("")
-  const [timeout, setSetTimeout]          = useState(null)
-  const [page, setPage]                   = useState(0)
-  const [per, setPer]                     = useState(5)
-  const [total_records, setTotalRecords]  = useState(0)
+  const [sortField, setSortField]         = useState("created_at");
+  const [sortDirection, setSortDirection] = useState("desc");
+  const [searchField]                     = useState("first_name_or_last_name_or_email_cont");
+  const [searchValue, setSearchValue]     = useState("");
+  const [timeout, setSetTimeout]          = useState(null);
+  const [page, setPage]                   = useState(0);
+  const [per, setPer]                     = useState(5);
+  const [totalRecords, setTotalRecords]   = useState(0);
+  const [users, setUsers]                 = useState([]);
 
   const changeRowsPerPage = (event) => {
     let per = event.target.value
@@ -62,6 +63,14 @@ const Users = (props) => {
         <ControlsBar
           searchLoading={searchLoading}
           onChangeSearch={onChangeSearch.bind(this)}
+          userQueriVariables={{ 
+            page, 
+            per,
+            searchField,
+            searchValue,
+            sortDirection,
+            sortField
+          }}
         />
       </Grid>
       <Grid item xs={12} style={{paddingLeft: '25px', paddingRight: '25px'}}>
@@ -81,6 +90,8 @@ const Users = (props) => {
               setTotalRecords={ setTotalRecords }
               searchValue={ searchValue }
               searchField={ searchField }
+              users={users}
+              setUsers={setUsers}
             />
             <TableFooter>
               <TableRow>
@@ -90,7 +101,7 @@ const Users = (props) => {
                   rowsPerPageOptions={[5, 10, 15, 20]}
                   onPageChange={changePage}
                   onRowsPerPageChange={changeRowsPerPage}
-                  count={total_records}
+                  count={totalRecords}
                   labelRowsPerPage={"Filas por página:"}
                 />
               </TableRow>

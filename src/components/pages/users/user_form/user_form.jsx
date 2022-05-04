@@ -1,68 +1,72 @@
-import React, { useState } from 'react';
-import Button               from '@material-ui/core/Button';
-import MenuItem             from '@material-ui/core/MenuItem';
-import withStyles           from '@material-ui/core/styles/withStyles';
-import { styles }           from './styles';
-import CircularProgress     from '@material-ui/core/CircularProgress';
-import Grid                 from '@material-ui/core/Grid';
-import FormHelperText       from '@material-ui/core/FormHelperText';
-import TextField            from '@material-ui/core/TextField';
-import { gql, useMutation } from '@apollo/client';
-import Select               from '@material-ui/core/Select';
-import InputLabel           from '@material-ui/core/InputLabel';
-import FormControl          from '@material-ui/core/FormControl';
-import { Redirect }         from 'react-router-dom';
-import { GET_CURRENT_USER, GLOBAL_MESSAGE } from '../../../../resolvers/queries';
-
-const USER_EDIT_MUTATION = gql`
-  mutation updateUser($id: ID!, $firstName: String, $lastName: String, $email: String, $address: String, $phone: String, $rolePermanentLink: String, $authProvider: AuthProviderSignupData) {
-    updateUser(input: {id: $id, firstName: $firstName, lastName: $lastName, email: $email, address: $address, phone: $phone, rolePermanentLink: $rolePermanentLink, authProvider: $authProvider}) {
-      user {
-        id
-        firstName
-        lastName
-        email
-        lockedAt
-        address
-        phone
-        roles {
-          name
-          permanentLink
-        }
-      }
-      errors
-      pointers
-    }
-  }
-`
+import React, { useState }              from 'react';
+import Button                           from '@material-ui/core/Button';
+import MenuItem                         from '@material-ui/core/MenuItem';
+import ListItemText                     from '@material-ui/core/ListItemText';
+import withStyles                       from '@material-ui/core/styles/withStyles';
+import { styles }                       from './styles';
+import CircularProgress                 from '@material-ui/core/CircularProgress';
+import Grid                             from '@material-ui/core/Grid';
+import Input                            from '@material-ui/core/Input';
+import Chip                             from '@material-ui/core/Chip';
+import FormHelperText                   from '@material-ui/core/FormHelperText';
+import TextField                        from '@material-ui/core/TextField';
+import Select                           from '@material-ui/core/Select';
+import InputLabel                       from '@material-ui/core/InputLabel';
+import FormControl                      from '@material-ui/core/FormControl';
+import { useQuery, useMutation }        from '@apollo/client';
+import { Redirect }                     from 'react-router-dom';
+import { LOAD_ROLES, UPDATE_USER}       from '../queries_and_mutations/queries'
+import { GLOBAL_MESSAGE }               from '../../../../resolvers/queries';
 
 const UserForm = (props) => {
-  const { classes } = props
-  const { user, roles } = props.data
+  const { classes, userData } = props
 
-  const [id] = useState(parseInt(user.id))
-  const [pristine, setPristine] = useState(true)
-  const [errors, setErrors] = useState({})
-  const [firstName] = useState(user.firstName)
-  const [lastName] = useState(user.lastName)
-  const [email] = useState(user.email)
-  const [address] = useState(user.address)
-  const [phone] = useState(user.phone)
-  const [rolePermanentLink] = useState(user.role && user.role.permanentLink)
-  const [password] = useState("")
-  const [passwordConfirmation] = useState("")
-  const [redirect, setRedirect] = useState(false)
+  const [redirect, setRedirect] = useState(false);
+  const [errors, setErrors] = useState({});
+  const [user, setUser] = useState({
+                            id: userData.id,
+                            firstName: !!userData.firstName ? userData.firstName : "",
+                            lastName: !!userData.lastName ? userData.lastName : "",
+                            email: !!userData.email ? userData.email : "",
+                            address: !!userData.address ? userData.address : "",
+                            phone: !!userData.phone ? userData.phone : "",
+                            roles: !!userData.roles ? userData.roles : "",
+                            password: "",
+                            passwordConfirmation: ""
+                          })
+  const [selectedIds, setSelectedIds] = useState(
+    userData && userData.roles.map((role) => {
+      return(role.id)
+    })
+  );
+
+  const { data } = useQuery(LOAD_ROLES)
 
   const handleChange = ({ target }) => {
-    let {name, value} = target
-    name = name.charAt(0).toUpperCase() + name.slice(1);
-    eval(`set${name}("${value}")`)
-    setPristine(false)
+    const {name, value} = target
+    setUser({ ...user, [name]: value })
+  }
+
+  const selectRoles = (event) => {
+    setSelectedIds(event.target.value)
+  };
+
+  const printSelectedsNames = (id) => {
+    return(
+      data && data.roles.map((role) => {
+        if(role.id === id) {
+          return(
+            `${role.name}`
+          )
+        }
+        return('')
+      })
+    )
   }
 
   const [updateUserMutation, { loading }] =
     useMutation(
-      USER_EDIT_MUTATION,
+      UPDATE_USER,
       {
         onError(error) {
           let errorsHash = {}
@@ -71,10 +75,8 @@ const UserForm = (props) => {
             return(error.message)
           }) 
           setErrors(errorsHash)
-          setPristine(true)
         },
         update(store, { data: { updateUser } }) {
-          store.writeQuery({ query: GET_CURRENT_USER, data: { currentUser: updateUser.user } });
           store.writeQuery({
             query: GLOBAL_MESSAGE,
             data: {
@@ -85,7 +87,7 @@ const UserForm = (props) => {
               }
             }
           })
-          setTimeout(() => { setRedirect(true) }, 3000)
+          setTimeout(() => { setRedirect(true) }, 3000)
         }
       }
     )
@@ -93,17 +95,17 @@ const UserForm = (props) => {
   const submitForm = () => {
     updateUserMutation({
       variables:  {
-        id: id,
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        address: address,
-        phone: phone,
-        rolePermanentLink: rolePermanentLink,
+        id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        address: user.address,
+        phone: user.phone,
+        roleIds: selectedIds,
         authProvider: {
           credentials: {
-            password: password,
-            passwordConfirmation: passwordConfirmation
+            password: user.password,
+            passwordConfirmation: user.passwordConfirmation
           }
         }
       } 
@@ -118,11 +120,11 @@ const UserForm = (props) => {
           <Grid justifyContent='center' item container className={classes.marginInputs} >
             <Grid item xs={6}>
               <TextField
-                value={firstName}
+                value={user.firstName}
                 fullWidth
                 onChange={handleChange}
                 label="Nombre"
-                error={errors.firstName}
+                error={!!errors.firstName}
                 name="firstName"/>
               <FormHelperText error>{errors.first_name}</FormHelperText>
             </Grid>
@@ -130,11 +132,11 @@ const UserForm = (props) => {
           <Grid justifyContent='center' item container className={classes.marginInputs}>
             <Grid item xs={6}>
               <TextField
-                value={lastName}
+                value={user.lastName}
                 fullWidth
                 onChange={handleChange}
                 label="Apellido"
-                error={errors.lastName}
+                error={!!errors.lastName}
                 name="lastName"/>
               <FormHelperText error>{errors.last_name}</FormHelperText>
             </Grid>
@@ -142,11 +144,11 @@ const UserForm = (props) => {
           <Grid justifyContent='center' item container className={classes.marginInputs}>
             <Grid item xs={6}>
               <TextField
-                value={email}
+                value={user.email}
                 fullWidth
                 onChange={handleChange}
                 label="Correo"
-                error={errors.email}
+                error={!!errors.email}
                 name="email"/>
               <FormHelperText error>{errors.email}</FormHelperText>
             </Grid>
@@ -154,11 +156,11 @@ const UserForm = (props) => {
           <Grid justifyContent='center' item container className={classes.marginInputs}>
             <Grid item xs={6}>
               <TextField
-                value={address}
+                value={user.address}
                 fullWidth
                 onChange={handleChange}
                 label="Dirección"
-                error={errors.address}
+                error={!!errors.address}
                 name="address"/>
               <FormHelperText error>{errors.address}</FormHelperText>
             </Grid>
@@ -166,11 +168,11 @@ const UserForm = (props) => {
           <Grid justifyContent='center' item container className={classes.marginInputs}>
             <Grid item xs={6}>
               <TextField
-                value={phone}
+                value={user.phone}
                 fullWidth
                 onChange={handleChange}
                 label="Telefono"
-                error={errors.phone}
+                error={!!errors.phone}
                 name="phone"/>
               <FormHelperText error>{errors.phone}</FormHelperText>
             </Grid>
@@ -179,11 +181,11 @@ const UserForm = (props) => {
             <Grid item xs={6}>
               <TextField
                 type={'password'}
-                value={password}
+                value={user.password}
                 fullWidth
                 onChange={handleChange}
                 label="Contraseña"
-                error={errors.password}
+                error={!!errors.password}
                 name="password"/>
               <FormHelperText error>{errors.password}</FormHelperText>
             </Grid>
@@ -192,11 +194,11 @@ const UserForm = (props) => {
             <Grid item xs={6}>
               <TextField
                 type={'password'}
-                value={passwordConfirmation}
+                value={user.passwordConfirmation}
                 fullWidth
                 onChange={handleChange}
                 label="Confirmar Contraseña"
-                error={errors.passwordConfirmation}
+                error={!!errors.passwordConfirmation}
                 name="passwordConfirmation"/>
               <FormHelperText error>{errors.password_confirmation}</FormHelperText>
             </Grid>
@@ -204,25 +206,36 @@ const UserForm = (props) => {
           <Grid justifyContent='center' item container className={classes.marginInputs}>
             <Grid item xs={6}>
               <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-required-label" >Rol</InputLabel>
+                <InputLabel id="demo-mutiple-chip-label">Roles</InputLabel>
                 <Select
-                  labelId="demo-simple-select-required-label"
-                  id="demo-simple-select-required"
-                  name={"rolePermanentLink"}
-                  value={rolePermanentLink}
+                  multiline
+                  labelId="demo-mutiple-chip-label"
+                  id="demo-mutiple-chip"
+                  multiple
                   fullWidth
-                  onChange={handleChange}
+                  value={selectedIds}
+                  onChange={selectRoles}
+                  input={<Input id="select-multiple-chip" />}
+                  renderValue={(selected) => (
+                    <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                      {selected.map((id) => (
+                        <Chip 
+                          id={id}
+                          size="small"
+                          key={`selected-edit-${id}`}
+                          style={{ margin: 2 }}
+                          label={printSelectedsNames(id)}
+                          variant="outlined"
+                        />
+                      ))}
+                    </div>
+                  )}
                 >
-                  {
-                    roles.map((role)=> {
-                      return(
-                        <MenuItem key={role.createdAt + "role"} value={role.permanentLink}>
-                          {role.name}
-                        </MenuItem>
-                      )
-                      }
-                    )
-                  }
+                  {data && data.roles.map((role) => (
+                    <MenuItem id={role.id} key={`edit-user-roles-${role.id}`} value={role.id}>
+                      <ListItemText primary={role.name} />
+                    </MenuItem>
+                  ))}
                 </Select>
               </FormControl>
             </Grid>
@@ -231,7 +244,7 @@ const UserForm = (props) => {
             <Grid item xs={6}>
               <Button
                 fullWidth
-                disabled={pristine || loading || redirect}
+                disabled={loading || redirect}
                 variant="contained"
                 color="primary"
                 type="submit"

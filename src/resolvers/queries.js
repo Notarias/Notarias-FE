@@ -17,8 +17,8 @@ export const REMOVE_MESSAGE_MUTATION = gql`
 `
 
 export const GET_CURRENT_USER = gql`
-  query currentUser {
-    currentUser @client {
+  query currentUser{
+    currentUser{
       firstName
       lastName
       id
