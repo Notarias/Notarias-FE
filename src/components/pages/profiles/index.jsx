@@ -1,23 +1,20 @@
-import React        from 'react';
-import ProfilePanel from './profile_panel';
-import { withStyles }       from '@material-ui/core/styles';
-import { GET_CURRENT_USER } from '../../../resolvers/queries'
+import React                from 'react';
+import ProfilePanel         from './profile_panel';
+import LoadingProfile       from './loading_profile';
+import { GET_CURRENT_USER } from '../../../resolvers/queries';
 import { useQuery }         from '@apollo/client';
 
-const styles = {
-  columsWraper: {
-    height: '100%',
-    backgroundColor: "white",
-  }
-}
-
 const ProfilesIndex = (props) => {
-  const { loading, data, refetch } = useQuery(GET_CURRENT_USER);
+  const { loading, data } = useQuery(GET_CURRENT_USER);
 
   return(
-    <div style={ styles.columsWraper }>
-      <ProfilePanel currentUser={data && data.currentUser} loading={loading} refetch={refetch}/>
-    </div>
+    <>
+      {loading ?
+        <LoadingProfile/>
+      :
+        <ProfilePanel currentUser={data.currentUser}/>
+      }
+    </>
   )
 }
-export default withStyles(()=>{})(ProfilesIndex);
+export default ProfilesIndex;

@@ -19,7 +19,7 @@ const ADD_AVATAR = gql`
 
 const AvatarUploader = (props) => {
   const { classes, user } = props
-  // const { loading, data, refetch } = useQuery(
+  
   const { data: currentUserData } = useQuery(
     GET_CURRENT_USER, { vairables: {}, errorPolicy: 'all' }
   );
@@ -33,6 +33,12 @@ const AvatarUploader = (props) => {
         onCompleted(cacheData) {
           setImage(cacheData.avatarUpload.url)
         },
+        refetchQueries: [
+          {
+            query: GET_CURRENT_USER
+          },
+        ],
+        awaitRefetchQueries: true
       }
     )
 

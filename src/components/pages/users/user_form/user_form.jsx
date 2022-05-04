@@ -1,22 +1,22 @@
-import React, { useState }                    from 'react';
-import Button                                 from '@material-ui/core/Button';
-import MenuItem                               from '@material-ui/core/MenuItem';
-import ListItemText                           from '@material-ui/core/ListItemText';
-import withStyles                             from '@material-ui/core/styles/withStyles';
-import { styles }                             from './styles';
-import CircularProgress                       from '@material-ui/core/CircularProgress';
-import Grid                                   from '@material-ui/core/Grid';
-import Input                                  from '@material-ui/core/Input';
-import Chip                                   from '@material-ui/core/Chip';
-import FormHelperText                         from '@material-ui/core/FormHelperText';
-import TextField                              from '@material-ui/core/TextField';
-import Select                                 from '@material-ui/core/Select';
-import InputLabel                             from '@material-ui/core/InputLabel';
-import FormControl                            from '@material-ui/core/FormControl';
-import { useQuery, useMutation }              from '@apollo/client';
-import { Redirect }                           from 'react-router-dom';
-import { LOAD_ROLES, UPDATE_USER}             from '../queries_and_mutations/queries'
-import { GET_CURRENT_USER, GLOBAL_MESSAGE }   from '../../../../resolvers/queries';
+import React, { useState }              from 'react';
+import Button                           from '@material-ui/core/Button';
+import MenuItem                         from '@material-ui/core/MenuItem';
+import ListItemText                     from '@material-ui/core/ListItemText';
+import withStyles                       from '@material-ui/core/styles/withStyles';
+import { styles }                       from './styles';
+import CircularProgress                 from '@material-ui/core/CircularProgress';
+import Grid                             from '@material-ui/core/Grid';
+import Input                            from '@material-ui/core/Input';
+import Chip                             from '@material-ui/core/Chip';
+import FormHelperText                   from '@material-ui/core/FormHelperText';
+import TextField                        from '@material-ui/core/TextField';
+import Select                           from '@material-ui/core/Select';
+import InputLabel                       from '@material-ui/core/InputLabel';
+import FormControl                      from '@material-ui/core/FormControl';
+import { useQuery, useMutation }        from '@apollo/client';
+import { Redirect }                     from 'react-router-dom';
+import { LOAD_ROLES, UPDATE_USER}       from '../queries_and_mutations/queries'
+import { GLOBAL_MESSAGE }               from '../../../../resolvers/queries';
 
 const UserForm = (props) => {
   const { classes, userData } = props
@@ -77,7 +77,6 @@ const UserForm = (props) => {
           setErrors(errorsHash)
         },
         update(store, { data: { updateUser } }) {
-          store.writeQuery({ query: GET_CURRENT_USER, data: { currentUser: updateUser.user } });
           store.writeQuery({
             query: GLOBAL_MESSAGE,
             data: {
@@ -238,7 +237,6 @@ const UserForm = (props) => {
                     </MenuItem>
                   ))}
                 </Select>
-                {console.log(selectedIds)}
               </FormControl>
             </Grid>
           </Grid>

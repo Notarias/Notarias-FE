@@ -8,50 +8,11 @@ import { styles }           from './navigation_menu_styles'
 import Grid                 from '@material-ui/core/Grid';
 import Avatar               from '@material-ui/core/Avatar';
 import { GET_CURRENT_USER } from '../../resolvers/queries';
-import { gql, useQuery }    from '@apollo/client';
-
-const USER_CHANGE = gql`
-  subscription {
-    userChange {
-      id
-      firstName
-      lastName
-      address
-      email
-      lockedAt
-      phone
-      avatarThumbUrl
-      avatarMidUrl
-      avatarUrl
-      updatedAt
-      roles {
-        id
-        name
-        permanentLink
-      }
-    }
-  }
-`
+import { useQuery }    from '@apollo/client';
 
 const ProfileLink = (props) => {
   const { classes } = props
-  const { data, subscribeToMore } = useQuery(GET_CURRENT_USER);
-
-  subscribeToMore({
-    document: USER_CHANGE,
-    updateQuery: (prev, { subscriptionData }) => {
-      if (!subscriptionData.data) return prev
-
-      if (subscriptionData.data && subscriptionData.data.userChange && (prev.currentUser.id === subscriptionData.data.userChange.id)) {
-        return Object.assign({}, prev, {
-          currentUser: subscriptionData.data.userChange,
-          __typename: prev.__typename
-        })
-      } else {
-        return prev
-      }
-    }
-  })
+  const { data } = useQuery(GET_CURRENT_USER);
 
   return(
     <Link to="/profiles/general">
