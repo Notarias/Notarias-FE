@@ -7,6 +7,8 @@ import FormControlLabel             from '@material-ui/core/FormControlLabel';
 import Checkbox                     from '@material-ui/core/Checkbox';
 import TemplateControls             from './template_controls';
 import StatusSelect                 from './status_select';
+import SelectUsers                  from './select_users';
+import ClientSearch                 from './client_search';
 
 export default (props) => {
   const {
@@ -25,6 +27,10 @@ export default (props) => {
     changeSwitchDebt,
     templateId,
     templateTabsIds,
+    userInfo,
+    setUserInfo,
+    clientInfo,
+    setClientInfo,
     changeTemplateId,
     changeTemplateTabsIds,
     graphStatus,
@@ -39,6 +45,12 @@ export default (props) => {
         </Grid>
         <Grid item xs style={{ paddingTop: '30px' }}>
           <TextField type='date' fullWidth label="Fecha Final" value={endDate} onChange={changeEndDate}/>
+        </Grid>
+        <Grid item xs style={{ paddingTop: '30px' }}>
+          <SelectUsers userInfo={userInfo} setUserInfo={setUserInfo}/>
+        </Grid>
+        <Grid item xs style={{ paddingTop: '30px' }}>
+          <ClientSearch clientInfo={clientInfo} setClientInfo={setClientInfo}/>
         </Grid>
         <Grid item xs style={{ paddingTop: '30px' }}>
           <StatusSelect graphStatus={graphStatus} changeGraphStatus={changeGraphStatus}/>

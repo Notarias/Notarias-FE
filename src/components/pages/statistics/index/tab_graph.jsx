@@ -42,7 +42,9 @@ export default (props) => {
     timeFrame,
     templateId,
     templateTabsIds,
-    graphStatus
+    graphStatus,
+    selectUserId,
+    selectClientId
   } = props;
 
   const { data, loading } = useQuery(
@@ -55,7 +57,9 @@ export default (props) => {
         timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
         budgetingTemplateId: templateId,
         tabIds: templateTabsIds,
-        status: graphStatus
+        status: graphStatus,
+        userId: selectUserId,
+        clientId: selectClientId
       },
       fetchPolicy: 'cache-and-network'
     }

@@ -40,6 +40,8 @@ export default (props) => {
   const [templateId, setTemplateId] = useState('')
   const [templateTabsIds, setTemplateTabsIds] = useState([])
   const [graphStatus, setGraphStatus] = useState('all_budgets')
+  const [userInfo, setUserInfo] = useState('')
+  const [clientInfo, setClientInfo] =useState('')
 
   const changeInitDate = (e) => {
     setInitDate(e.target.value)
@@ -117,7 +119,11 @@ export default (props) => {
                     templateId={templateId}
                     templateTabsIds={templateTabsIds}
                     changeTemplateId={changeTemplateId}
-                    changeTemplateTabsIds={changeTemplateTabsIds}
+                    changeTemplateTabsIds={changeTemplateTabsIds}                    
+                    userInfo={userInfo}
+                    setUserInfo={setUserInfo}
+                    clientInfo={clientInfo}
+                    setClientInfo={setClientInfo}
                     changeTimeFrame={changeTimeFrame}
                     graphStatus={graphStatus}
                     changeGraphStatus={changeGraphStatus}/>
@@ -148,7 +154,10 @@ export default (props) => {
                         templateId={templateId}
                         templateTabsIds={templateTabsIds}
                         graphStatus={graphStatus}
-                        /> :
+                        selectUserId={userInfo.id}
+                        selectClientId={clientInfo.id}
+                      />
+                    :
                       <GeneralGraph
                         switchIncome={switchIncome}
                         switchTotal={switchTotal}
@@ -157,7 +166,10 @@ export default (props) => {
                         initDate={initDate}
                         endDate={endDate}
                         timeFrame={timeFrame}
-                        graphStatus={graphStatus}/>
+                        graphStatus={graphStatus}
+                        selectUserId={userInfo.id}
+                        selectClientId={clientInfo.id}
+                      />
                   }
                 </Grid>
               </Grid>

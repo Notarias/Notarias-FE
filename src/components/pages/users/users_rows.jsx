@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import TableCell            from '@material-ui/core/TableCell';
 import TableRow             from '@material-ui/core/TableRow';
 import { useQuery }         from '@apollo/client';
-import { LOAD_USERS }       from './queries_and_mutations/queries'
+import { LOAD_USERS }       from './queries_and_mutations/queries';
 import TableBody            from '@material-ui/core/TableBody';
 import CircularProgress     from '@material-ui/core/CircularProgress';
 import UserTableRows        from './userTableRows';
