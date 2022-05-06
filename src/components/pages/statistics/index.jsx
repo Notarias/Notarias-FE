@@ -40,6 +40,8 @@ export default (props) => {
   const [templateId, setTemplateId] = useState('')
   const [templateTabsIds, setTemplateTabsIds] = useState([])
   const [graphStatus, setGraphStatus] = useState('all_budgets')
+  const [userSelectedIds, setUserSelectedIds] = useState([])
+  const [clientInfo, setClientInfo] =useState('')
 
   const changeInitDate = (e) => {
     setInitDate(e.target.value)
@@ -81,6 +83,10 @@ export default (props) => {
     setTemplateTabsIds(tabsIds)
   }
 
+  const changeUserSelectedIds = (event) => {
+    setUserSelectedIds(event.target.value)
+  }
+
   const changeGraphStatus = (event) => {
     setGraphStatus(event.target.value)
   }
@@ -117,7 +123,11 @@ export default (props) => {
                     templateId={templateId}
                     templateTabsIds={templateTabsIds}
                     changeTemplateId={changeTemplateId}
-                    changeTemplateTabsIds={changeTemplateTabsIds}
+                    changeTemplateTabsIds={changeTemplateTabsIds}                    
+                    userSelectedIds={userSelectedIds}
+                    changeUserSelectedIds={changeUserSelectedIds}
+                    clientInfo={clientInfo}
+                    setClientInfo={setClientInfo}
                     changeTimeFrame={changeTimeFrame}
                     graphStatus={graphStatus}
                     changeGraphStatus={changeGraphStatus}/>
@@ -148,7 +158,10 @@ export default (props) => {
                         templateId={templateId}
                         templateTabsIds={templateTabsIds}
                         graphStatus={graphStatus}
-                        /> :
+                        userSelectedIds={userSelectedIds}
+                        selectClientId={clientInfo.id}
+                      />
+                    :
                       <GeneralGraph
                         switchIncome={switchIncome}
                         switchTotal={switchTotal}
@@ -157,7 +170,10 @@ export default (props) => {
                         initDate={initDate}
                         endDate={endDate}
                         timeFrame={timeFrame}
-                        graphStatus={graphStatus}/>
+                        graphStatus={graphStatus}
+                        userSelectedIds={userSelectedIds}
+                        selectClientId={clientInfo.id}
+                      />
                   }
                 </Grid>
               </Grid>
