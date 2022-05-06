@@ -129,13 +129,15 @@ const ClientSearch = (props) => {
 
   const renderInputSearch = () => {
     return(
-      <Grid item container justifyContent="flex-end" alignItems='center' style={{paddingTop: '20px', paddingBottom: '10px'}}>
-        <Grid item container xs={6} justifyContent='flex_start' alignItems='center' style={{paddingLeft: '40px'}}>
-          <Typography variant='h6'>
-            Clientes
-          </Typography>
+      <Grid item container justifyContent="center" alignItems='center' style={{paddingTop: '20px', paddingBottom: '10px'}}>
+        <Grid item container xs={6} justifyContent='flex-start' alignItems='center' style={{paddingLeft: '40px'}}>
+          <Grid item>
+            <Typography variant='h6'>
+              Clientes
+            </Typography>
+          </Grid>
         </Grid>
-        <Grid item container xs={6} spacing={1} justifyContent='flex-end' alignItems='flex-end'style={{paddingRight: '40px'}}>
+        <Grid item container xs={6} spacing={1} justifyContent='flex-end' alignItems='flex-end' style={{paddingRight: '40px'}}>
           <Grid item>
             { 
               searchLoading ?
@@ -260,7 +262,6 @@ const ClientSearch = (props) => {
           </Grid>
         </Grid>
       </Dialog>
-      {console.log(clientInfo)}
     </>
   )
 }

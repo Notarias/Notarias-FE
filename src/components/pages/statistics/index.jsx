@@ -40,7 +40,7 @@ export default (props) => {
   const [templateId, setTemplateId] = useState('')
   const [templateTabsIds, setTemplateTabsIds] = useState([])
   const [graphStatus, setGraphStatus] = useState('all_budgets')
-  const [userSelectedIds, setUserSelectedIds] = useState([])
+  const [userInfo, setUserInfo] = useState('')
   const [clientInfo, setClientInfo] =useState('')
 
   const changeInitDate = (e) => {
@@ -83,10 +83,6 @@ export default (props) => {
     setTemplateTabsIds(tabsIds)
   }
 
-  const changeUserSelectedIds = (event) => {
-    setUserSelectedIds(event.target.value)
-  }
-
   const changeGraphStatus = (event) => {
     setGraphStatus(event.target.value)
   }
@@ -124,8 +120,8 @@ export default (props) => {
                     templateTabsIds={templateTabsIds}
                     changeTemplateId={changeTemplateId}
                     changeTemplateTabsIds={changeTemplateTabsIds}                    
-                    userSelectedIds={userSelectedIds}
-                    changeUserSelectedIds={changeUserSelectedIds}
+                    userInfo={userInfo}
+                    setUserInfo={setUserInfo}
                     clientInfo={clientInfo}
                     setClientInfo={setClientInfo}
                     changeTimeFrame={changeTimeFrame}
@@ -158,7 +154,7 @@ export default (props) => {
                         templateId={templateId}
                         templateTabsIds={templateTabsIds}
                         graphStatus={graphStatus}
-                        userSelectedIds={userSelectedIds}
+                        selectUserId={userInfo.id}
                         selectClientId={clientInfo.id}
                       />
                     :
@@ -171,7 +167,7 @@ export default (props) => {
                         endDate={endDate}
                         timeFrame={timeFrame}
                         graphStatus={graphStatus}
-                        userSelectedIds={userSelectedIds}
+                        selectUserId={userInfo.id}
                         selectClientId={clientInfo.id}
                       />
                   }

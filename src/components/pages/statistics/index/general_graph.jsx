@@ -41,7 +41,9 @@ export default (props) => {
     initDate,
     endDate,
     timeFrame,
-    graphStatus
+    graphStatus,
+    selectUserId, 
+    selectClientId
   } = props;
 
   const { data, loading } = useQuery(
@@ -52,7 +54,9 @@ export default (props) => {
         endDate: endDate,
         timeFrame: timeFrame,
         timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-        status: graphStatus
+        status: graphStatus,
+        userId: selectUserId,
+        clientId: selectClientId
       },
       fetchPolicy: 'network-only'
     }

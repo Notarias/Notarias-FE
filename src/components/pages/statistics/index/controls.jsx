@@ -27,8 +27,8 @@ export default (props) => {
     changeSwitchDebt,
     templateId,
     templateTabsIds,
-    userSelectedIds,
-    changeUserSelectedIds,
+    userInfo,
+    setUserInfo,
     clientInfo,
     setClientInfo,
     changeTemplateId,
@@ -47,7 +47,7 @@ export default (props) => {
           <TextField type='date' fullWidth label="Fecha Final" value={endDate} onChange={changeEndDate}/>
         </Grid>
         <Grid item xs style={{ paddingTop: '30px' }}>
-          <SelectUsers userSelectedIds={userSelectedIds} changeUserSelectedIds={changeUserSelectedIds}/>
+          <SelectUsers userInfo={userInfo} setUserInfo={setUserInfo}/>
         </Grid>
         <Grid item xs style={{ paddingTop: '30px' }}>
           <ClientSearch clientInfo={clientInfo} setClientInfo={setClientInfo}/>

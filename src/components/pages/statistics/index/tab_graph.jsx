@@ -43,7 +43,7 @@ export default (props) => {
     templateId,
     templateTabsIds,
     graphStatus,
-    userSelectedIds,
+    selectUserId,
     selectClientId
   } = props;
 
@@ -58,7 +58,7 @@ export default (props) => {
         budgetingTemplateId: templateId,
         tabIds: templateTabsIds,
         status: graphStatus,
-        userIds: userSelectedIds,
+        userId: selectUserId,
         clientId: selectClientId
       },
       fetchPolicy: 'cache-and-network'

@@ -3,8 +3,6 @@ import Grid                               from '@material-ui/core/Grid';
 import FormControl                        from '@material-ui/core/FormControl';
 import InputLabel                         from '@material-ui/core/InputLabel';
 import Select                             from '@material-ui/core/Select';
-import Input                              from '@material-ui/core/Input';
-import Chip                               from '@material-ui/core/Chip';
 import MenuItem                           from '@material-ui/core/MenuItem';
 import Avatar                             from '@material-ui/core/Avatar';
 import ListItemIcon                       from '@material-ui/core/ListItemIcon';
@@ -13,7 +11,7 @@ import { useQuery }                       from '@apollo/client';
 import { USERS_QUICK_LIST }               from '../queries/queries';
 
 const SelectUsers = (props) => {
-  const { userSelectedIds, changeUserSelectedIds } = props;
+  const { userInfo, setUserInfo } = props;
 
   const [userList, setUserList] = useState();
 
@@ -27,38 +25,32 @@ const SelectUsers = (props) => {
     }
   }, [data]);
 
+  const selectUserInfo = (event) => {
+    setUserInfo(event.target.value);
+  }
   return(
     <Grid item container direction='column' xs>
       <Grid item xs>
         <FormControl fullWidth>
-          <InputLabel id="demo-mutiple-chip-label">Usuarios</InputLabel>
+          <InputLabel id="user-select">Usuarios</InputLabel>
           <Select
-            multiline
-            id="assigneeIds"
-            multiple
+            id="selected"
             fullWidth
-            value={userSelectedIds}
-            onChange={changeUserSelectedIds}
-            input={<Input id="select-multiple-chip" />}
-            renderValue={(selected) => (
-              <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-                {selected.map((user) => (
-                  <Chip 
-                    id={user.id}
-                    key={user.id}
-                    style={{ margin: 2 }}
-                    label={user.fullName}
-                    variant="outlined"/>
-                ))}
-              </div>
-            )}
+            value={userInfo}
+            onChange={selectUserInfo}
           >
             {userList && userList.map((user) => (
               <MenuItem id={user.id} key={`appointment-user.id-${user.id}`} value={user}>
-                <ListItemIcon>
-                  <Avatar alt={user.firstName} src={user.avatarThumbUrl} />
-                </ListItemIcon>
-                <ListItemText primary={`${user.firstName} ${user.lastName}`} />
+                <Grid container direction='row' justifyContent='flex-start' alignItems='center' style={{paddingLeft:'10px'}}>
+                  <Grid item>
+                    <ListItemIcon>
+                      <Avatar alt={user.firstName} src={user.avatarThumbUrl} />
+                    </ListItemIcon>
+                  </Grid>
+                  <Grid item>
+                    <ListItemText primary={user.fullName} />
+                  </Grid>
+                </Grid>
               </MenuItem>
             ))}
           </Select>
