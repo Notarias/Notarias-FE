@@ -10,14 +10,13 @@ import { GLOBAL_MESSAGE }                           from '../../../../../resolve
 import client                                       from '../../../../../apollo';
 
 const PermissionDeleteDialog = (props) => {
-  const { permission, deleteDialog } = props
+  const { permission, closeDeleteDialog } = props
 
   const [destroyPermission] =
     useMutation(
       DESTROY_PERMISSION,
       {
         onError(error) {
-          deleteDialog();
           client.writeQuery({
             query: GLOBAL_MESSAGE,
             data: {
@@ -30,7 +29,6 @@ const PermissionDeleteDialog = (props) => {
           })
         },
         onCompleted(cacheData) {
-          deleteDialog();
           client.writeQuery({
             query: GLOBAL_MESSAGE,
             data: {
@@ -41,6 +39,7 @@ const PermissionDeleteDialog = (props) => {
               }
             }
           })
+          closeDeleteDialog();
         },
         refetchQueries: [
           {
@@ -70,7 +69,7 @@ const PermissionDeleteDialog = (props) => {
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={deleteDialog} color="secondary" variant='contained'>
+        <Button onClick={closeDeleteDialog} color="secondary" variant='contained'>
           Cancelar
         </Button>
         <Button onClick={deletePermission} color="primary" variant='contained'>

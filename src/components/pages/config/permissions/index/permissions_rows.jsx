@@ -2,8 +2,8 @@ import React, { useState }                              from 'react';
 import TableCell                                        from '@material-ui/core/TableCell';
 import TableRow                                         from '@material-ui/core/TableRow';
 import Grid                                             from '@material-ui/core/Grid';
+import Dialog                                       from '@material-ui/core/Dialog';
 import MenuItem                                         from '@material-ui/core/MenuItem';
-import Dialog                                           from '@material-ui/core/Dialog';
 import ListItemIcon                                     from '@material-ui/core/ListItemIcon';
 import ListItemText                                     from '@material-ui/core/ListItemText';
 import BorderColorIcon                                  from '@material-ui/icons/BorderColor';
@@ -19,12 +19,20 @@ const PermissionsRows = (props) => {
   const [editDialogStatus, setEditDialogStatus] = useState(false);
   const [deleteDialogStatus, setDeleteDialogStatus] = useState(false);
 
-  const editDialog = () => {
-    setEditDialogStatus(!editDialogStatus);
+  const openEditDialog = () => {
+    setEditDialogStatus(true);
   }
 
-  const deleteDialog = () => {
-    setDeleteDialogStatus(!deleteDialogStatus);
+  const closeEditDialog = () => {
+    setEditDialogStatus(false);
+  }
+
+  const openDeleteDialog = () => {
+    setDeleteDialogStatus(true);
+  }
+
+  const closeDeleteDialog = () => {
+    setDeleteDialogStatus(false);
   }
 
   return(
@@ -35,29 +43,35 @@ const PermissionsRows = (props) => {
       <TableCell align="center">
         <Grid>
           <GenericDropdownMenu>
-            <MenuItem key={"1-permissionMenu"} onClick={editDialog}>
+            <MenuItem key={"1-permissionMenu"} onClick={openEditDialog}>
               <Grid container>
                 <ListItemIcon>
                   <BorderColorIcon/>
                 </ListItemIcon>
                 <ListItemText primary="Editar" />
               </Grid>
-              <Dialog open={editDialogStatus} onClose={editDialog}>
-                <PermissionEditDialog editDialog={editDialog} permission={permission}/>
-              </Dialog>
             </MenuItem>
-            <MenuItem key={"2-permissionMenu"} onClick={deleteDialog}>
+            <MenuItem key={"2-permissionMenu"} onClick={openDeleteDialog}>
               <Grid container>
                 <ListItemIcon>
                   <DeleteForeverIcon/>
                 </ListItemIcon>
                 <ListItemText primary="Eliminar" />
               </Grid>
-              <Dialog open={deleteDialogStatus} onClose={deleteDialog}>
-                <PermissionDeleteDialog deleteDialog={deleteDialog} permission={permission}/>
-              </Dialog>
             </MenuItem>
           </GenericDropdownMenu>
+          <Dialog open={editDialogStatus} onClose={closeEditDialog} id="form-dialog-title">
+            <PermissionEditDialog
+              permission={permission}
+              closeEditDialog={closeEditDialog}
+            />
+          </Dialog>
+          <Dialog open={deleteDialogStatus} onClose={closeDeleteDialog}>
+            <PermissionDeleteDialog
+              permission={permission}
+              closeDeleteDialog={closeDeleteDialog}
+            />
+          </Dialog>
         </Grid>
       </TableCell>
     </TableRow>

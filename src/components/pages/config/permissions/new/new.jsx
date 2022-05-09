@@ -77,6 +77,7 @@ const NewPermissionDialog = (props) => {
           Escriba el nombre del nuevo permiso.
         </DialogContentText>
         <TextField
+          autoFocus
           margin="dense"
           id="writing"
           label="Nombre del Permiso"

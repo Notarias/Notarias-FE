@@ -11,7 +11,7 @@ import { GLOBAL_MESSAGE }                           from '../../../../../resolve
 import client                                       from '../../../../../apollo';
 
 const PermissionEditDialog = (props) => {
-  const { permission, editDialog } = props;
+  const { permission, closeEditDialog } = props;
 
   const [permissionName, setPermissionName] = useState(permission && permission.name);
   const [saveStatus, setSaveStatus] = useState(true);
@@ -32,7 +32,6 @@ const PermissionEditDialog = (props) => {
         },
         onCompleted(cacheData) {
           setSaveStatus(true);
-          editDialog();
           client.writeQuery({
             query: GLOBAL_MESSAGE,
             data: {
@@ -43,6 +42,7 @@ const PermissionEditDialog = (props) => {
               }
             }
           })
+          closeEditDialog();
         },
         refetchQueries: [
           {
@@ -77,6 +77,7 @@ const PermissionEditDialog = (props) => {
           Cambie el nombre del permiso.
         </DialogContentText>
         <TextField
+          autoFocus
           margin="dense"
           id="writing"
           label="Nombre del Permiso"
@@ -89,7 +90,7 @@ const PermissionEditDialog = (props) => {
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={editDialog} color="secondary">
+        <Button onClick={closeEditDialog} color="secondary">
           Cancelar
         </Button>
         <Button onClick={saveUpdatePermission} disabled={saveStatus} color="primary" variant='contained'>
