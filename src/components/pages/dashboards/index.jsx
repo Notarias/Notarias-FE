@@ -8,14 +8,17 @@ import { withStyles }               from '@material-ui/core/styles';
 // import LastComments                 from './index/last_comments';
 // import NextEvents                   from './index/next_events';
 import Breadcrumbs                  from '../../ui/breadcrumbs';
+import Button                       from '@material-ui/core/Button';
+import PostAddIcon                  from '@material-ui/icons/PostAdd'; 
+import { Link }                     from 'react-router-dom';
 import Tabs                         from '@material-ui/core/Tabs';
 import Tab                          from '@material-ui/core/Tab';
-import AppointmentsDashboard         from './index/appointments_dashboard'
+import AppointmentsDashboard        from './index/appointments_dashboard'
 import BudgetsDashboard             from './index/budgets_dashboard'
 import PaymentsDashboard            from './index/payments_dashboard'
 import CreditPaymentsDashboard      from './index/credit_payments_dashboard'
 import ProceduresDashboard          from './index/procedures_dashboard'
-import CommentariesDashboard          from './index/commentaries_dashboard'
+import CommentariesDashboard        from './index/commentaries_dashboard'
 
 const BREADCRUMBS = [
   { name: "Inicio", path: "/" }
@@ -53,6 +56,19 @@ const DashboardsIndex = (props) => {
     <Grid container direction='column' alignItems="stretch" justifyContent="flex-start">
       <Grid item>
         <Breadcrumbs breadcrumbs={BREADCRUMBS}/>
+      </Grid>
+      <Grid item container justifyContent='flex-end' style={{paddingTop:'20px', paddingRight:'30px'}}>
+        <Grid item>
+          <Button 
+            variant="contained" 
+            color="primary" 
+            component={Link} 
+            to="/budgets/new"
+            endIcon={<PostAddIcon/>}
+          >
+            Nuevo Presupuesto
+          </Button>
+        </Grid>
       </Grid>
       <Grid container item style={{ flex: '1 1 auto' }}>
         <Grid container item xs={2} justifyContent='center' style={ { paddingTop: '30px' } }>
