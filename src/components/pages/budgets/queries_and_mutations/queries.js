@@ -747,10 +747,12 @@ export const GET_COMMENTABLE_COMMENTS = gql`
   query commentableComments(
     $commentableType: String!
     $commentableId: ID!
+    $per: Int
   ){
     commentableComments (
-      commentableType: $commentableType
-      commentableId: $commentableId
+      commentableType: $commentableType,
+      commentableId: $commentableId,
+      per: $per
     ){
       body
       commentableId
