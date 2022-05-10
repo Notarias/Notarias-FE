@@ -75,10 +75,11 @@ const CommentEdit = (props) => {
       },
       refetchQueries: [
         {
-          query: GET_COMMENTABLE_COMMENTS, variables: {"commentableType": "Procedure" , "commentableId": procedure.id, "per": 100 }
+          query: GET_COMMENTABLE_COMMENTS,
+            variables: {commentableType: "Procedure", commentableId: procedure.id, per: 100 }
         },
         {
-          query: GET_PROCEDURES_AUDITLOG, variables: { "procedureId": procedure.id }
+          query: GET_PROCEDURES_AUDITLOG, variables: { procedureId: procedure.id }
         }
       ],
       awaitRefetchQueries: true
