@@ -54,7 +54,7 @@ class App extends Component {
             setLogOut={ this.setLogOut.bind(this)}
           /> }
         <CssBaseline />
-        <main className={classes.content}>
+        <main className={classes.content} style={{ overflow:'hidden' }}>
           <BaseRoutes styles={classes}/>
         </main>
       </div>

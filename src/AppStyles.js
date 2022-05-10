@@ -6,7 +6,6 @@ export const styles = theme => {
   content: {
     flexGrow: 1,
     maxWidth: `calc(100% - ${72}px)`,
-    height: '100vh',
     overflow: 'auto',
   },
   appBarSpacer: theme.mixins.toolbar,

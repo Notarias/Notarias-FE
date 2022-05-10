@@ -35,7 +35,7 @@ const BudgetsEdit = (props) => {
       <Grid container item style={{ flex: '1 1 auto' }}>
         <Grid item xs={8} lg={8}>
           <Paper elevation={5} style={{ height: "100%" }} variant='outlined'>
-            <Grid container item direction="column"  justifyContent="flex-start" alignItems="stretch" style={{ height: "100%" }}>
+            <Grid container item direction="column"  justifyContent="flex-start" alignItems="stretch">
               <Grid container item style={{ flex: "1 1 auto" }}  alignItems="stretch">
                 { 
                   budget &&
