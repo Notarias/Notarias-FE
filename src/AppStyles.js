@@ -5,8 +5,7 @@ export const styles = theme => {
   },
   content: {
     flexGrow: 1,
-    maxWidth: `calc(100% - ${72}px)`,
-    overflow: 'auto',
+    maxWidth: `calc(100% - ${72}px)`
   },
   appBarSpacer: theme.mixins.toolbar,
   floatingMessage: {

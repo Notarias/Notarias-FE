@@ -74,10 +74,11 @@ const CommentEdit = (props) => {
       },
       refetchQueries: [
         {
-          query: GET_COMMENTABLE_COMMENTS, variables: {"commentableType": "Budget" , commentableId: budget.id }
+          query: GET_COMMENTABLE_COMMENTS,
+            variables: {commentableType: "Budget" , commentableId: budget.id, per:100 }
         },
         {
-          query: GET_BUDGETS_AUDITLOG, variables: {"budgetId": budget.id}
+          query: GET_BUDGETS_AUDITLOG, variables: { budgetId: budget.id }
         }
       ],
       awaitRefetchQueries: true

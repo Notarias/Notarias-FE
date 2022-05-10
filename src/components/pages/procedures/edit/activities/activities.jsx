@@ -41,7 +41,7 @@ const Activities = (props) => {
           <Tab label='Historial'/>
         </Tabs>
       </Grid>
-      <Grid container item justifyContent='center' style={{ flexGrow: '1', paddingLeft: "20px", paddingTop: "20px",paddingRight: "20px"}}>
+      <Grid container item justifyContent='center' style={{ flexGrow:'1', paddingLeft:'20px', paddingTop:'20px', paddingRight:'20px'}}>
         { renderActivitiesMenu() }
       </Grid>
     </Grid>
