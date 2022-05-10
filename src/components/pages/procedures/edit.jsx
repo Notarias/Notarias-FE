@@ -28,14 +28,14 @@ const ProceduresEdit = (props) => {
   }, [loading, data]);
 
   return(
-    <Grid container direction='column' alignItems="stretch" justifyContent="flex-start" style={{ minHeight: "100vh" }}>
+    <Grid container direction='column' alignItems="stretch" justifyContent="flex-start">
       <Grid item>
         <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
       </Grid>
       <Grid container item xs={12} style={{ flex: '1 1 auto' }}>
         <Grid item xs={8}>
-          <Paper elevation={5} style={{ height: "100%" }} variant='outlined'>
-            <Grid container item direction="column"  justifyContent="flex-start" alignItems="stretch" style={{ height: "100%" }}>
+          <Paper elevation={5} variant='outlined'>
+            <Grid container item direction="column"  justifyContent="flex-start" alignItems="stretch">
               <Grid container item style={{ flex: "1 1 auto" }}  alignItems="stretch">
                 { 
                   procedure && <InformationTabs procedure={ procedure }/>

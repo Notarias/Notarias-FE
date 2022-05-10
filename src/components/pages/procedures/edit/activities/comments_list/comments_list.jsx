@@ -12,8 +12,15 @@ const CommentsList = (props) => {
 
   const [array] = useState([1,2,3,4,5,6])
 
+  let variables = {
+    commentableType: "Procedure",
+    commentableId: procedure.id,
+    per: 100
+  }
+  
   const { loading, data } = useQuery(
-    GET_COMMENTABLE_COMMENTS, { variables: {"commentableType": "Procedure", "commentableId": procedure.id } }
+    GET_COMMENTABLE_COMMENTS,
+      { variables: variables, fetchPolicy: "cache-and-network" }
   );
 
   const [comments, setComments] = useState([])
