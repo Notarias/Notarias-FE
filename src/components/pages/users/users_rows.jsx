@@ -5,7 +5,7 @@ import { useQuery }         from '@apollo/client';
 import { LOAD_USERS }       from './queries_and_mutations/queries';
 import TableBody            from '@material-ui/core/TableBody';
 import CircularProgress     from '@material-ui/core/CircularProgress';
-import UserTableRows        from './userTableRows';
+import UserTableRows        from './user_table_rows';
 
 export default (props) => {
   const { page, per, sortDirection, sortField, searchField, searchValue, setTotalRecords, users, setUsers } = props
@@ -19,7 +19,7 @@ export default (props) => {
   }                                                                       
 
   const { loading, data, refetch } = useQuery(
-    LOAD_USERS, { vairables: variables }
+    LOAD_USERS, { vairables: variables, fetchPolicy: "cache-and-network" }
   );
 
   useEffect(() => {
