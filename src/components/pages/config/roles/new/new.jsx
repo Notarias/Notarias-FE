@@ -69,7 +69,7 @@ const NewRoleDialog = (props) => {
 
   return(
     <>
-      <DialogTitle id="form-dialog-title">Nuevo Role</DialogTitle>
+      <DialogTitle id="form-dialog-title">Nuevo Rol</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Escriba el nombre del nuevo rol
@@ -77,7 +77,7 @@ const NewRoleDialog = (props) => {
           <TextField
             margin="dense"
             id="writing"
-            label="Nombre del Role"
+            label="Nombre del Rol"
             type="text"
             onChange={changeNameField}
             value={roleName}
