@@ -14,14 +14,12 @@ import Select                           from '@material-ui/core/Select';
 import InputLabel                       from '@material-ui/core/InputLabel';
 import FormControl                      from '@material-ui/core/FormControl';
 import { useQuery, useMutation }        from '@apollo/client';
-import { Redirect }                     from 'react-router-dom';
 import { LOAD_ROLES, UPDATE_USER}       from '../queries_and_mutations/queries'
 import { GLOBAL_MESSAGE }               from '../../../../resolvers/queries';
 
 const UserForm = (props) => {
   const { classes, userData } = props
 
-  const [redirect, setRedirect] = useState(false);
   const [errors, setErrors] = useState({});
   const [user, setUser] = useState({
                             id: userData.id,
@@ -87,7 +85,6 @@ const UserForm = (props) => {
               }
             }
           })
-          setTimeout(() => { setRedirect(true) }, 3000)
         }
       }
     )
@@ -114,7 +111,6 @@ const UserForm = (props) => {
 
   return (
     <>
-      { redirect && <Redirect to={{ pathname: `/users` }} /> }
       <Grid container classes={{root: classes.editUserFormGrid}} >
         <form style={{ width: "100%" }} onSubmit={(e) => e.preventDefault()}>
           <Grid justifyContent='center' item container className={classes.marginInputs} >
@@ -244,13 +240,13 @@ const UserForm = (props) => {
             <Grid item xs={6}>
               <Button
                 fullWidth
-                disabled={loading || redirect}
+                disabled={loading}
                 variant="contained"
                 color="primary"
                 type="submit"
                 classes={{ root: classes.editUserFormSubmitButton }}
                 onClick={ submitForm }>
-                { redirect ? "Redirigiendo..." : "Guardar" }
+                { loading ? "Cargando..." : "Guardar" }
                 { loading && <CircularProgress className={classes.buttonProgress} size={24} /> }
               </Button>
             </Grid>

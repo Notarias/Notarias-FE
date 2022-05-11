@@ -22,7 +22,7 @@ const  UserTableRows = (props) => {
   const {classes, user } = props
   const [locked, setLocked] = React.useState(props.user.lockedAt)
 
-  const { data } = useQuery(GET_CURRENT_USER);
+  const { data } = useQuery(GET_CURRENT_USER, { fetchPolicy: "cache-and-network" });
 
   const [updateUserMutation] =
   useMutation(
