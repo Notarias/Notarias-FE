@@ -178,6 +178,7 @@ const GeneralForm = (props) => {
             color="primary"
             type="submit"
             onClick={ submitForm }
+            style={{marginTop:'20px'}}
           >
             Guardar Cambios
             { loading && <CircularProgress size={14} /> }
