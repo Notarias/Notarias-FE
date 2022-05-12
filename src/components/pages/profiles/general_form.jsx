@@ -1,25 +1,16 @@
-import React, { useState } from 'react';
-import InputText from "./input_with_icon"
-import PersonIcon from '@material-ui/icons/Person';
-import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
-import PersonPinCircleIcon from '@material-ui/icons/PersonPinCircle';
-import PhoneIcon from '@material-ui/icons/Phone';
-import MailIcon from '@material-ui/icons/Mail';
-import Button from '@material-ui/core/Button';
-import { withStyles }          from '@material-ui/core/styles';
+import React, { useState }     from 'react';
+import Grid                    from '@material-ui/core/Grid';
+import InputText               from "./input_with_icon"
+import PersonIcon              from '@material-ui/icons/Person';
+import PersonOutlineIcon       from '@material-ui/icons/PersonOutline';
+import PersonPinCircleIcon     from '@material-ui/icons/PersonPinCircle';
+import PhoneIcon               from '@material-ui/icons/Phone';
+import MailIcon                from '@material-ui/icons/Mail';
+import Button                  from '@material-ui/core/Button';
 import { gql, useMutation }    from '@apollo/client';
 import CircularProgress        from '@material-ui/core/CircularProgress';
 import { GET_CURRENT_USER }    from '../../../resolvers/queries'
 import { GLOBAL_MESSAGE }      from '../../../resolvers/queries';
-
-const styles = {
-  inputBase: {
-    margin: '15px 20px ',
-  },
-  iconStyle: {
-    marginBottom: '0px',
-  }
-}
 
 const UPDATE_USER_PROFILE = gql`
 mutation updateUser(
@@ -62,8 +53,6 @@ mutation updateUser(
 `
 
 const GeneralForm = (props) => {
-
-  const { classes } = props;
 
   const [currentUser, setCurrentUser] = useState(props.currentUser);
   const [pristine, setPristine] = useState(true);
@@ -136,7 +125,7 @@ const GeneralForm = (props) => {
   }
   
   return(
-      <div>
+      <Grid item container xs direction='column' justifyContent='center'>
         <form onSubmit={onSubmit}>
           <InputText
             errors={errors}
@@ -145,7 +134,7 @@ const GeneralForm = (props) => {
             handleChange={handleChange}
             value={currentUser.firstName}
             label="nombre(s)"
-            icon={ <PersonIcon className={classes.iconStyle}/>}
+            icon={ <PersonIcon/>}
           />
           <InputText
             errors={errors}
@@ -154,7 +143,7 @@ const GeneralForm = (props) => {
             handleChange={handleChange}
             value={currentUser.lastName}
             label="apellido(s)"
-            icon={ <PersonOutlineIcon className={classes.iconStyle}/>}
+            icon={ <PersonOutlineIcon/>}
           />
           <InputText
             errors={errors}
@@ -163,7 +152,7 @@ const GeneralForm = (props) => {
             handleChange={handleChange}
             value={currentUser.address}
             label="direccion"
-            icon={ <PersonPinCircleIcon className={classes.iconStyle}/>}
+            icon={ <PersonPinCircleIcon/>}
           />
           <InputText
             errors={errors}
@@ -172,7 +161,7 @@ const GeneralForm = (props) => {
             handleChange={handleChange}
             value={currentUser.email}
             label="e-mail"
-            icon={ <MailIcon className={classes.iconStyle}/>}
+            icon={ <MailIcon/>}
           />
           <InputText
             errors={errors}
@@ -181,22 +170,22 @@ const GeneralForm = (props) => {
             handleChange={handleChange}
             value={currentUser.phone}
             label="telefono"
-            icon={ <PhoneIcon className={classes.iconStyle}/>}
+            icon={ <PhoneIcon/>}
           />
           <Button
             disabled={canSubmit()}
             variant="contained"
             color="primary"
             type="submit"
-            className={classes.inputBase}
-            onClick={ submitForm }>
+            onClick={ submitForm }
+            style={{marginTop:'20px'}}
+          >
             Guardar Cambios
-            { loading && <CircularProgress className={classes.buttonProgress} size={14} /> }
+            { loading && <CircularProgress size={14} /> }
           </Button>
-                
         </form>
-      </div>
+      </Grid>
   )
 }
 
-export default withStyles(styles)(GeneralForm);
+export default GeneralForm;

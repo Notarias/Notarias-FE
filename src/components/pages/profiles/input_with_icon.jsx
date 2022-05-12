@@ -1,15 +1,7 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
-import { withStyles }       from '@material-ui/core/styles';
 import FormHelperText from '@material-ui/core/FormHelperText';
-
-const styles = {
-  margin: {
-    margin: '0px',
-    width: '350px',
-  },
-};
 
 class InputWithIcon extends React.Component  {
   constructor(props) {
@@ -18,10 +10,10 @@ class InputWithIcon extends React.Component  {
   }
 
   render() {
-    const { classes, errors, inputProps } = this.props;
+    const { errors, inputProps } = this.props;
 
     return(
-      <div className={classes.margin}>
+      <div>
         <Grid container spacing={1} alignItems="flex-end">
           <Grid item xs={2}>
           { this.props.icon || "" }
@@ -43,4 +35,4 @@ class InputWithIcon extends React.Component  {
   }
 }
 
-export default withStyles(styles)(InputWithIcon);
+export default InputWithIcon;

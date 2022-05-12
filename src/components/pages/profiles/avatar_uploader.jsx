@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import Avatar              from '@material-ui/core/Avatar';
 import UserDefaultImg      from '../../../images/user_default_img.png';
 import Dropzone            from 'react-dropzone';
+import styles                     from './styles';
+import { withStyles }             from '@material-ui/core/styles';
 import { gql }                 from '@apollo/client';
 import { GET_CURRENT_USER } from '../../../resolvers/queries';
 import { useQuery, useMutation }         from '@apollo/client';
@@ -73,4 +75,4 @@ const AvatarUploader = (props) => {
   )
 }
 
-export default AvatarUploader;
+export default withStyles(styles)(AvatarUploader);
