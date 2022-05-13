@@ -7,6 +7,7 @@ import MenuItem                           from '@material-ui/core/MenuItem';
 import Avatar                             from '@material-ui/core/Avatar';
 import ListItemIcon                       from '@material-ui/core/ListItemIcon';
 import ListItemText                       from '@material-ui/core/ListItemText';
+import BlockIcon                          from '@material-ui/icons/Block';
 import { useQuery }                       from '@apollo/client';
 import { USERS_QUICK_LIST }               from '../queries/queries';
 
@@ -39,6 +40,20 @@ const SelectUsers = (props) => {
             value={userInfo}
             onChange={selectUserInfo}
           >
+            <MenuItem id={'user-select-0'} key={'appointment-user-select-empty'} value={""}>
+              <Grid container direction='row' justifyContent='flex-start' alignItems='center' style={{paddingLeft:'10px'}}>
+                <Grid item>
+                  <ListItemIcon>
+                    <Avatar>
+                      <BlockIcon/>
+                    </Avatar>
+                  </ListItemIcon>
+                </Grid>
+                <Grid item>
+                  <ListItemText primary={'Sin Usuario'} />
+                </Grid>
+              </Grid>
+            </MenuItem>
             {userList && userList.map((user) => (
               <MenuItem id={user.id} key={`appointment-user.id-${user.id}`} value={user}>
                 <Grid container direction='row' justifyContent='flex-start' alignItems='center' style={{paddingLeft:'10px'}}>

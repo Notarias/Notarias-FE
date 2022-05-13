@@ -33,8 +33,8 @@ export const TAB_STATISTICS_QUERY = gql`
     $status: String,
     $budgetingTemplateId: ID!,
     $tabIds: [ID!]!,
-    $userIds: userIds,
-    $clientId: clientId
+    $userId: ID,
+    $clientId: ID
   ){
     tabStatistics(
       startDate: $startDate,
@@ -44,7 +44,7 @@ export const TAB_STATISTICS_QUERY = gql`
       budgetingTemplateId: $budgetingTemplateId,
       tabIds: $tabIds,
       status: $status,
-      userIds: $userIds,
+      userId: $userId,
       clientId: $clientId
     ){
       name
