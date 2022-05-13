@@ -7,9 +7,11 @@ import InputBase            from '@material-ui/core/InputBase';
 import Button               from '@material-ui/core/Button';
 import PersonAddIcon        from '@material-ui/icons/PersonAdd';
 import UserNew              from './new';
+import { styles }           from './styles';
+import { withStyles }       from '@material-ui/core/styles';
 
-export default (props) => {
-  const { searchLoading, onChangeSearch, userQueriVariables } = props;
+const ControlBar = (props) => {
+  const { classes, searchLoading, onChangeSearch, userQueriVariables } = props;
   
   const [createDialog, setCreateDialog] = useState(false);
 
@@ -18,24 +20,25 @@ export default (props) => {
   }
 
   return(
-    <Grid container item direction="row" xs={8} justifyContent="flex-end"  alignItems="center" spacing={1} style={{padding: '25px'}}>
-      <Grid container item xs={1} justifyContent="flex-end">
-        { 
-          searchLoading ?
-          <CircularProgress size={25}/> :
-          <SearchIcon />
-        }
-      </Grid>
-      
-      <Grid container item xs={4} justifyContent="flex-end">
-        <InputBase
-          placeholder="Buscar…"
-          onChange={onChangeSearch}
-          inputProps={{predicate: "all_fields.cont"}}
-        />
-      </Grid>
-
-      <Grid container item xs={2} justifyContent="flex-end">
+    <Grid container item direction="row" justifyContent="flex-end"  alignItems="center" style={{padding: '25px'}}>
+      <Grid container item direction="row"  justifyContent="flex-end"  alignItems="flex-end" >
+        <div className={classes.search}>
+          <div className={classes.searchIcon}>
+            { 
+              searchLoading ?
+              <CircularProgress className={classes.searchLoadingIcon} size={25} /> :
+              <SearchIcon /> 
+            }
+          </div>
+          <InputBase
+            placeholder="Buscar…"
+            onChange={onChangeSearch}
+            classes={{
+              root: classes.searchInputRoot,
+              input: classes.searchInputInput,
+            }}
+          />
+        </div>
         <Button onClick={switchCreateDialog} variant="contained" color="primary">
           <PersonAddIcon/>
         </Button>
@@ -53,3 +56,5 @@ export default (props) => {
     </Grid>
   )
 }
+
+export default withStyles(styles)(ControlBar);
