@@ -1,7 +1,6 @@
 import React, { useState }                          from 'react';
 import DialogTitle                                  from '@material-ui/core/DialogTitle';
 import DialogContent                                from '@material-ui/core/DialogContent';
-import DialogContentText                            from '@material-ui/core/DialogContentText';
 import DialogActions                                from '@material-ui/core/DialogActions';
 import TextField                                    from '@material-ui/core/TextField';
 import Button                                       from '@material-ui/core/Button';
@@ -73,14 +72,11 @@ const PermissionEditDialog = (props) => {
         Editar Permiso
       </DialogTitle>
       <DialogContent>
-        <DialogContentText>
-          Cambie el nombre del permiso.
-        </DialogContentText>
         <TextField
           autoFocus
           margin="dense"
           id="writing"
-          label="Nombre del Permiso"
+          label="Nuevo Nombre del Permiso"
           type="text"
           onChange={fieldValueChange}
           value={permissionName}
