@@ -24,12 +24,12 @@ const AppointmentsIndex = (props) => {
   const [sortField]                      = useState("created_at");
   const [sortDirection]                  = useState("desc");
   const [page]                           = useState(1); 
-  const [per]                            = useState(50);
-  const [searchField, setSearchField]    = useState();
-  const [searchValue, setSearchValue]    = useState("");
-  const [date, setDate]                  = useState("");
+  const [per]                            = useState(10);
+  const [searchField]                    = useState("init_date");
+  const [searchValue, setSearchValue]    = useState(new Date());
+  const [date, setDate]                  = useState(new Date());
   const [newDialog, setNewDialog]        = useState(false);
-
+console.log(new Date())
   let variables = {
     page: page,
     per: per,
@@ -52,18 +52,10 @@ const AppointmentsIndex = (props) => {
   };
   
   const selectDay = (event) => {
-    setSearchField("init_date");
     setSearchValue(event);
     setDate(event);
     refetch();
   };
-
-  const showAllAppointments = () => {
-    setSearchField("");
-    setSearchValue("");
-    setDate("");
-    refetch();
-  }
 
   return(
     <>
@@ -79,24 +71,11 @@ const AppointmentsIndex = (props) => {
                   <Grid container item xs={6} justifyContent='flex-start'>
                     <Grid item>
                       <Box color="primary.main">
-                        { date ?
-                          <Typography variant="h4" component="h2" >
-                            Citas del {(date.toLocaleDateString(
-                              'es-ES', { month: 'long', day: 'numeric', year: 'numeric' })).toUpperCase()}
-                          </Typography>
-                        :
-                          <Typography variant="h4" component="h2" >
-                            Todas las citas
-                          </Typography>
-                        }
+                        <Typography variant="h4" component="h2" >
+                          Citas del {(date.toLocaleDateString(
+                            'es-ES', { month: 'long', day: 'numeric', year: 'numeric' })).toUpperCase()}
+                        </Typography>
                       </Box>
-                    </Grid>
-                  </Grid>
-                  <Grid container item xs={6} justifyContent='flex-end'>
-                    <Grid item>
-                      <Button variant='contained' color='primary' onClick={showAllAppointments} disabled={!date}>
-                        Ver Todo
-                      </Button>
                     </Grid>
                   </Grid>
                 </Grid>
