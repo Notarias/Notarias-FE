@@ -49,7 +49,7 @@ const MonitorDisplay = (props) => {
         <Grid item xs style={{paddingRight:'10%'}}>
           <Paper variant='outlined'>
             <Grid container direction='row' justifyContent='center' alignItems='center' style={{padding:'30px'}}>
-              <Grid item xs={6}>
+              <Grid container item xs={6} justifyContent='center'>
                 <AvatarUploader user={currentUser}/>
               </Grid>
               <Grid item xs={6}>

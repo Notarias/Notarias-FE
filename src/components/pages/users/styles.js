@@ -1,4 +1,3 @@
-import { Hidden } from '@material-ui/core'
 import { alpha } from '@material-ui/core/styles'
 
 export const styles = theme => {

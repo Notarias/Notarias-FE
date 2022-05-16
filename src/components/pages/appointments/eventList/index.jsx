@@ -115,8 +115,8 @@ const EventList = (props) => {
   return(
     creatorUser ? 
     <Grid className={classes.paddingBottomEvent}>
-      <Paper className={classes.marginRightCalendarPaper}>
-        <Grid container direction='row' spacing={1}>
+      <Paper className={classes.marginCalendarPaper}>
+        <Grid container direction='row'>
           <Grid container item direction='row' xs>
             <Grid container item xs={4} justifyContent='center' alignContent='center'>
               <Avatar alt={creatorUser.firstName} src={creatorUser.avatarThumbUrl} />
@@ -206,7 +206,7 @@ const EventList = (props) => {
               })}
             </Menu>
           </Grid>
-          <Grid item xs={1}>
+          <Grid item container xs={1} justifyContent='flex-end'>
             <IconButton aria-label="moreActions" aria-controls="more-actions" aria-haspopup="true" onClick={openMoreActions}>
               <MoreVertIcon />
             </IconButton>
