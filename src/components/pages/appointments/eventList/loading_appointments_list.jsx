@@ -13,7 +13,7 @@ const LoadingAppointmentsList = (props) => {
   return(
     <Grid className={classes.paddingBottomEvent}>
       <Paper className={classes.marginRightCalendarPaper}>
-        <Grid container direction='row' spacing={3}>
+        <Grid container direction='row'>
           <Grid container item direction='row' xs>
             <Grid container item xs={4} justifyContent='center' alignContent='center'>
               <Skeleton variant="circle" width={50} height={50} />

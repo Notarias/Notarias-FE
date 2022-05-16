@@ -5,8 +5,9 @@ export const styles = theme => {
       paddingTop: "10%",
       paddingBottom: "5%",
     },
-    marginRightCalendarPaper: {
-      marginRight: "20px",
+    marginCalendarPaper: {
+      marginLeft: "30px",
+      marginRight: "30px",
       padding: "15px"
     },
     calendarNew: {
