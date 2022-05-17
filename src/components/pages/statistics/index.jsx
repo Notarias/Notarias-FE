@@ -30,8 +30,7 @@ const formatDate = (dateObject) => {
 
 export default (props) => {
 
-  const [initDate, setInitDate] = useState(formatDate(new Date()))
-  const [endDate, setEndDate] = useState(formatDate(new Date()))
+  const [date, setDate] = useState(formatDate(new Date()))
   const [timeFrame, setTimeFrame] = useState('day')
   const [switchIncome, setSwitchIncome] = useState(true)
   const [switchTotal, setSwitchTotal] = useState(true)
@@ -43,12 +42,8 @@ export default (props) => {
   const [userInfo, setUserInfo] = useState('')
   const [clientInfo, setClientInfo] =useState('')
 
-  const changeInitDate = (e) => {
-    setInitDate(e.target.value)
-  }
-
-  const changeEndDate = (e) => {
-    setEndDate(e.target.value)
+  const changeDate = (e) => {
+    setDate(e.target.value)
   }
 
   const changeTimeFrame = (e) => {
@@ -103,10 +98,8 @@ export default (props) => {
                 <Divider/>
                 <Grid container item xs>
                   <Controls
-                    initDate={initDate}
-                    endDate={endDate}
-                    changeInitDate={changeInitDate}
-                    changeEndDate={changeEndDate}
+                    date={date}
+                    changeDate={changeDate}
                     triggerFiltering={triggerFiltering}
                     switchIncome={switchIncome}
                     switchTotal={switchTotal}
@@ -148,8 +141,7 @@ export default (props) => {
                         switchTotal={switchTotal}
                         switchPaid={switchPaid}
                         switchDebt={switchDebt}
-                        initDate={initDate}
-                        endDate={endDate}
+                        date={date}
                         timeFrame={timeFrame}
                         templateId={templateId}
                         templateTabsIds={templateTabsIds}
@@ -163,8 +155,7 @@ export default (props) => {
                         switchTotal={switchTotal}
                         switchPaid={switchPaid}
                         switchDebt={switchDebt}
-                        initDate={initDate}
-                        endDate={endDate}
+                        date={date}
                         timeFrame={timeFrame}
                         graphStatus={graphStatus}
                         selectUserId={userInfo.id}

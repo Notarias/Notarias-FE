@@ -7,8 +7,7 @@ import MenuItem                     from '@material-ui/core/MenuItem';
 
 const STATUSES = {
   "completed": 'Completados',
-  "not_completed": 'Sin Completar',
-  "all_budgets": 'Todos'
+  "not_completed": 'Sin Completar'
 }
 
 export default (props) => {

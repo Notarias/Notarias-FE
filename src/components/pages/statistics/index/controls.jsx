@@ -12,10 +12,8 @@ import ClientSearch                 from './client_search';
 
 export default (props) => {
   const {
-    initDate,
-    endDate,
-    changeInitDate,
-    changeEndDate,
+    date,
+    changeDate,
     triggerFiltering,
     switchIncome,
     switchTotal,
@@ -41,10 +39,7 @@ export default (props) => {
     <>
       <Grid item container direction='column'>
         <Grid item xs style={{ paddingTop: '30px' }}>
-          <TextField type='date' fullWidth label="Fecha Inicial" value={initDate} onChange={changeInitDate}/>
-        </Grid>
-        <Grid item xs style={{ paddingTop: '30px' }}>
-          <TextField type='date' fullWidth label="Fecha Final" value={endDate} onChange={changeEndDate}/>
+          <TextField type='date' fullWidth label="Fecha Inicial" value={date} onChange={changeDate}/>
         </Grid>
         <Grid item xs style={{ paddingTop: '30px' }}>
           <SelectUsers userInfo={userInfo} setUserInfo={setUserInfo}/>

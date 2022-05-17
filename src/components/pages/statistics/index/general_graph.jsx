@@ -38,8 +38,7 @@ export default (props) => {
     switchTotal,
     switchPaid,
     switchDebt,
-    initDate,
-    endDate,
+    date,
     timeFrame,
     graphStatus,
     selectUserId, 
@@ -50,8 +49,7 @@ export default (props) => {
     STATISTICS_QUERY,
     {
       variables: {
-        startDate: initDate,
-        endDate: endDate,
+        date: date,
         timeFrame: timeFrame,
         timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
         status: graphStatus,

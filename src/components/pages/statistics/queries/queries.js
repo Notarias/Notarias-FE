@@ -2,18 +2,20 @@ import { gql } from '@apollo/client';
 
 export const STATISTICS_QUERY = gql`
   query statistics (
-    $startDate: String!
-    $endDate: String!
+    $date: String!
     $timeFrame: String
     $timeZone: String!
     $status: String
+    $userId: ID
+    $clientId: ID
   ){
     statistics(
-      startDate: $startDate
-      endDate: $endDate
+      date: $date
       timeFrame: $timeFrame
       timeZone: $timeZone
       status: $status
+      userId: $userId
+      clientId: $clientId
     ){
       name
       total
@@ -26,8 +28,7 @@ export const STATISTICS_QUERY = gql`
 
 export const TAB_STATISTICS_QUERY = gql`
   query tabStatistics (
-    $startDate: String!,
-    $endDate: String!,
+    $date: String!,
     $timeFrame: String,
     $timeZone: String!,
     $status: String,
@@ -37,8 +38,7 @@ export const TAB_STATISTICS_QUERY = gql`
     $clientId: ID
   ){
     tabStatistics(
-      startDate: $startDate,
-      endDate: $endDate,
+      date: $date,
       timeFrame: $timeFrame,
       timeZone: $timeZone,
       budgetingTemplateId: $budgetingTemplateId,
