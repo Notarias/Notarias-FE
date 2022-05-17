@@ -4,9 +4,9 @@ export default (theme) => {
   return (
       {
       large: {
-
-        maxWidth:theme.spacing(40),
-        maxHeight:theme.spacing(40),
+        maxWidth:'320px',
+        maxHeight:'320px',
+        minHeight:'320px',
         width: 'auto',
         height: 'auto',
       },
