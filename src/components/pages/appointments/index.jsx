@@ -67,17 +67,14 @@ console.log(new Date())
           :
             <>
               <Grid container style={{ paddingLeft:'30px', paddingTop: '30px', paddingBottom: '30px' }}>
-                <Grid item xs={4}></Grid>
-                <Grid container item xs={8} style={{paddingLeft:'30px', paddingRight:'30px'}}>
-                  <Grid container item xs={6} justifyContent='flex-start'>
-                    <Grid item>
-                      <Box color="primary.main">
-                        <Typography variant="h4" component="h2" >
-                          Citas del {(date.toLocaleDateString(
-                            'es-ES', { month: 'long', day: 'numeric', year: 'numeric' })).toUpperCase()}
-                        </Typography>
-                      </Box>
-                    </Grid>
+                <Grid container item justifyContent='center' style={{paddingLeft:'30px', paddingRight:'30px'}}>
+                  <Grid item>
+                    <Box color="primary.main">
+                      <Typography variant="h4" component="h2" >
+                        Citas del {(date.toLocaleDateString(
+                          'es-ES', { month: 'long', day: 'numeric', year: 'numeric' })).toUpperCase()}
+                      </Typography>
+                    </Box>
                   </Grid>
                 </Grid>
               </Grid>
