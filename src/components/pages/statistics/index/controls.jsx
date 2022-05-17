@@ -42,10 +42,10 @@ export default (props) => {
           <TextField type='date' fullWidth label="Fecha Inicial" value={date} onChange={changeDate}/>
         </Grid>
         <Grid item xs style={{ paddingTop: '30px' }}>
-          <SelectUsers userInfo={userInfo} setUserInfo={setUserInfo}/>
+          <SelectUsers userInfo={userInfo} setUserInfo={setUserInfo} clientInfo={clientInfo}/>
         </Grid>
         <Grid item xs style={{ paddingTop: '30px' }}>
-          <ClientSearch clientInfo={clientInfo} setClientInfo={setClientInfo}/>
+          <ClientSearch clientInfo={clientInfo} setClientInfo={setClientInfo} userInfo={userInfo}/>
         </Grid>
         <Grid item xs style={{ paddingTop: '30px' }}>
           <StatusSelect graphStatus={graphStatus} changeGraphStatus={changeGraphStatus}/>

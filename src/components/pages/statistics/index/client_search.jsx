@@ -24,7 +24,7 @@ import Button                           from '@material-ui/core/Button';
 import ArrowDropDownIcon                from '@material-ui/icons/ArrowDropDown';
 
 const ClientSearch = (props) => {
-  const { clientInfo, setClientInfo } = props;
+  const { clientInfo, setClientInfo, userInfo } = props;
   const [searchLoading, setSearchLoading] = useState(false);
   const [sortField, setSortField] = useState("first_name");
   const [sortDirection, setSortDirection] = useState("desc");
@@ -84,7 +84,7 @@ const ClientSearch = (props) => {
     setSelectClientDialog(!selectClientDialog);
   }
 
-  const cancelEditField = () =>{
+  const cancelClientSelect = () =>{
     setClientInfo("");
   }
 
@@ -103,7 +103,7 @@ const ClientSearch = (props) => {
             endAdornment={
               <InputAdornment position="end">
                 <IconButton
-                  onClick={cancelEditField}
+                  onClick={cancelClientSelect}
                   edge="end"
                 >
                   <ClearIcon fontSize="small"/>
@@ -119,6 +119,7 @@ const ClientSearch = (props) => {
           variant="outlined"
           onClick={openClientList}
           endIcon={<ArrowDropDownIcon />}
+          disabled={!!userInfo}
         >
           Cliente
         </Button>
