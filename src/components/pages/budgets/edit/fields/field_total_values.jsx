@@ -26,14 +26,14 @@ const FieldTotalValues = (props) => {
       <Grid container item xs={6}>
         <Grid container item direction="column"  justifyContent="flex-start" alignItems="stretch">
           <Grid container item>
-            <Grid container item xs={7} justifyContent="flex-end">
+            <Grid container item xs={4} justifyContent="flex-end">
               <Typography component="div" variant="body1">
                 <Box>
                   Total cargos
                 </Box>
               </Typography>
             </Grid>
-            <Grid container item xs={5} justifyContent="flex-start" className={classes.totalsGridAmount}>
+            <Grid container item xs={8} justifyContent="flex-start" className={classes.totalsGridAmount}>
               <Typography component="div" variant="body1">
                 <NumberFormat
                   value={data && data.budgetTotals.total / 100}
@@ -46,14 +46,14 @@ const FieldTotalValues = (props) => {
             </Grid>
           </Grid>
           <Grid container item>
-            <Grid container item xs={7} justifyContent="flex-end">
+            <Grid container item xs={4} justifyContent="flex-end">
               <Typography component="div" variant="body1">
                 <Box color="success.main">
                   Ingresos
                 </Box>
               </Typography>
             </Grid>
-            <Grid container item xs={5} justifyContent="flex-start" className={classes.totalsGridAmount}>
+            <Grid container item xs={8} justifyContent="flex-start" className={classes.totalsGridAmount}>
               <Typography component="div" variant="body1">
                 <NumberFormat
                   value={data && data.budgetTotals.totalCredit / 100}
@@ -67,7 +67,7 @@ const FieldTotalValues = (props) => {
           </Grid>
           <Divider style={{ margin: '15px' }}/>
           <Grid container item>
-            <Grid container item xs={7} justifyContent="flex-end">
+            <Grid container item xs={4} justifyContent="flex-end">
               <Typography component="div" variant="body1">
                 <Box color={"primary.main"}>
                   <Typography variant="body1">
@@ -76,7 +76,7 @@ const FieldTotalValues = (props) => {
                 </Box>
               </Typography>
             </Grid>
-            <Grid container item xs={5} justifyContent="flex-start" className={classes.totalsGridAmount}>
+            <Grid container item xs={8} justifyContent="flex-start" className={classes.totalsGridAmount}>
               <Typography component="div" variant="body1">
                 <NumberFormat 
                   value={data && data.budgetTotals.totalDebt / 100}
@@ -93,14 +93,14 @@ const FieldTotalValues = (props) => {
       <Grid container item xs={6}>
         <Grid container item direction="column"  justifyContent="flex-start" alignItems="stretch">
           <Grid container item>
-            <Grid container item xs={7} justifyContent="flex-end">
+            <Grid container item xs={4} justifyContent="flex-end">
               <Typography component="div" variant="body1">
                 <Box>
                   Total cargos
                 </Box>
               </Typography>
             </Grid>
-            <Grid container item xs={5} justifyContent="flex-start" className={classes.totalsGridAmount}>
+            <Grid container item xs={8} justifyContent="flex-start" className={classes.totalsGridAmount}>
               <Typography component="div" variant="body1">
                 <NumberFormat
                   value={data && data.budgetTotals.total / 100}
@@ -113,14 +113,14 @@ const FieldTotalValues = (props) => {
             </Grid>
           </Grid>
           <Grid container item>
-            <Grid container item xs={7} justifyContent="flex-end">
+            <Grid container item xs={4} justifyContent="flex-end">
               <Typography component="div" variant="body1">
                 <Box color="secondary.main">
                   Egresos
                 </Box>
               </Typography>
             </Grid>
-            <Grid container item xs={5} justifyContent="flex-start" className={classes.totalsGridAmount}>
+            <Grid container item xs={8} justifyContent="flex-start" className={classes.totalsGridAmount}>
               <Typography component="div" variant="body1">
                 <NumberFormat 
                   value={data && data.budgetTotals.totalPaid / 100}
@@ -134,14 +134,14 @@ const FieldTotalValues = (props) => {
           </Grid>
           <Divider style={{ margin: '15px' }}/>
           <Grid container item>
-            <Grid container item xs={7} justifyContent="flex-end">
+            <Grid container item xs={4} justifyContent="flex-end">
               <Typography component="div" variant="body1">
                 <Box color="secondary.main">
                   Por pagar
                 </Box>
               </Typography>
             </Grid>
-            <Grid container item xs={5} justifyContent="flex-start" className={classes.totalsGridAmount}>
+            <Grid container item xs={8} justifyContent="flex-start" className={classes.totalsGridAmount}>
               <Typography component="div" variant="body1">
                 <NumberFormat 
                   value={data && data.budgetTotals.totalPayable / 100}
