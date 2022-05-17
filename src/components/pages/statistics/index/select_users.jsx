@@ -12,7 +12,7 @@ import { useQuery }                       from '@apollo/client';
 import { USERS_QUICK_LIST }               from '../queries/queries';
 
 const SelectUsers = (props) => {
-  const { userInfo, setUserInfo } = props;
+  const { userInfo, setUserInfo, clientInfo } = props;
 
   const [userList, setUserList] = useState();
 
@@ -39,6 +39,7 @@ const SelectUsers = (props) => {
             fullWidth
             value={userInfo}
             onChange={selectUserInfo}
+            disabled={!!clientInfo}
           >
             <MenuItem id={'user-select-0'} key={'appointment-user-select-empty'} value={""}>
               <Grid container direction='row' justifyContent='flex-start' alignItems='center' style={{paddingLeft:'10px'}}>
