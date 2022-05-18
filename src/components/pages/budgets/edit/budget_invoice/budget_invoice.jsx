@@ -41,6 +41,8 @@ const BudgetInvoice = (props) => {
   const [asignee, setAsignee]                     = useState()
   const [createdAt, setCreatedAt]                 = useState()
   const [tabs, setTabs]                           = useState()
+  
+  const loadingArray = [1,2,3,4,5,6,7,8];
 
   const { loading, data } = useQuery(
     GET_PRINT_BUDGET, { variables: { "id": match.params.id } }
@@ -131,83 +133,56 @@ const BudgetInvoice = (props) => {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid container item xs={1} direction="column" justifyContent="flex-start" alignItems="flex-start">
+            <Grid container item xs={1} direction="column" alignItems="flex-start">
               <Typography style={{ fontWeight: 600 }} variant="button">Presupuesto:</Typography>
               <Typography style={{ fontWeight: 600 }} variant="button">Fecha:</Typography>
               <Typography style={{ fontWeight: 600 }} variant="button">Expediente:</Typography>
               <Typography style={{ fontWeight: 600 }} variant="button">Escritura:</Typography>
             </Grid>
-            <Grid container item xs={2} direction="column" justifyContent="flex-start" alignItems="flex-start">
-              <Grid item style={{ marginLeft: '10px' }}>
-                { budget ? <Typography align='left'>{ budget.serialNumber }</Typography> : <Skeleton variant="text" width="90%"/> }
+            <Grid container item xs={2} direction="column">
+              <Grid container item xs justifyContent='flex-end' style={{ marginLeft: '10px' }}>
+                { budget ? <Typography align='left'>{ budget.serialNumber }</Typography> : <Skeleton variant="text" width='50%'/> }
               </Grid>
-              <Grid item style={{ marginLeft: '10px' }}>
-                { budget ? <Typography align='left'>{ createdAt && `${createdAt.getDay() }/${months[createdAt.getMonth()]}/${createdAt.getFullYear()}` }</Typography> : <Skeleton variant="text" width="90%"/> }
+              <Grid container item xs justifyContent='flex-end' style={{ marginLeft: '10px' }}>
+                { budget ? <Typography align='left'>{ createdAt && `${createdAt.getDay() }/${months[createdAt.getMonth()]}/${createdAt.getFullYear()}` }</Typography> : <Skeleton variant="text" width='50%'/> }
               </Grid>
-              <Grid item style={{ marginLeft: '10px' }}>
-                { budget ? <Typography align='left'>{ budget.proceedingNumber }</Typography> : <Skeleton variant="text" width="90%"/> }
+              <Grid container item xs justifyContent='flex-end' style={{ marginLeft: '10px' }}>
+                { budget ? <Typography align='left'>{ budget.proceedingNumber }</Typography> : <Skeleton variant="text" width='50%'/> }
               </Grid>
-              <Grid item style={{ marginLeft: '10px' }}>
-                { budget ? <Typography align='left'>{ budget.deedNumber }</Typography> : <Skeleton variant="text" width="90%"/> }
+              <Grid container item xs justifyContent='flex-end' style={{ marginLeft: '10px' }}>
+                { budget ? <Typography align='left'>{ budget.deedNumber }</Typography> : <Skeleton variant="text" width='50%'/> }
               </Grid>
             </Grid>
           </Grid>
-          {/* <Grid container item direction="row">
-            <Grid container item xs={1}>
-            </Grid>
-            <Grid 
-              container 
-              item 
-              xs={7} 
-              direction="column" 
-              justifyContent="flex-start" 
-              alignItems="flex-start" 
-              className={classes.marginTopGridInvoice}
-            >
-              <Typography variant="button">Valor de contraprestación:</Typography>
-              <Typography variant="button">Valor de Avalúo:</Typography>
-              <Typography variant="button">Valor de terreno:</Typography>
-              <Typography variant="button">Valor de las construcciones:</Typography>
-              <Typography variant="button">Base para crédito:</Typography>
-            </Grid>
-            <Grid 
-              container 
-              item 
-              xs={4}
-              direction="column" 
-              justifyContent="flex-start" 
-              alignItems="flex-start"
-              className={classes.marginTopGridInvoice}
-            >
-              <Typography >$ 0.00</Typography>
-              <Typography >$ 0.00</Typography>
-              <Typography >$ 0.00</Typography>
-              <Typography >$ 0.00</Typography>
-              <Typography >$ 0.00</Typography>
-            </Grid>
-          </Grid> */}
           <Grid container item xs={8} >
             { budget && <ProcedureFields key={`${budget.id}-budget`} budget={budget}/> }
           </Grid>
           <Grid container item xs={8} className={classes.marginTopGridInvoice}>
-            <Grid
-              item 
-              xs={6} 
-            >
+            <Grid item xs={6} >
               <Typography variant='h5' align='left'>CONCEPTO:</Typography>
             </Grid>
-            <Grid
-              item 
-              xs={6} 
-            >
+            <Grid item xs={6} >
               <Typography variant='h5' align='right'>CANTIDAD:</Typography>
             </Grid>
           </Grid>
           <Grid container item xs={8} direction="column">
-            {
-              tabs && tabs.map((tab) => {
+            { tabs && tabs ?
+              tabs.map((tab) => {
                 return(
                   <Tab key={`${tab.id}-tab-invoice-information`} tab={tab} budget={budget}/>
+                )
+              })
+            :
+              loadingArray.map((row) => {
+                return(
+                  <Grid key={`loading-${row}`} container direction='row'>
+                    <Grid container item xs={6} justifyContent='flex-start'>
+                      <Skeleton variant='text' width='90%'/>
+                    </Grid>
+                    <Grid container item xs={6} justifyContent='flex-end'>
+                      <Skeleton variant='text' width='40%'/>
+                    </Grid>
+                  </Grid>
                 )
               })
             }
@@ -216,10 +191,17 @@ const BudgetInvoice = (props) => {
             <Grid item xs={6}>
               <Typography align='left' variant='h6'>Gran Total</Typography>
             </Grid>
-            <Grid item xs={6}>
-              <Typography align='right' variant='h6'>
-                { budget && ((budget.totalDebt * 1.0) / 100).toFixed(2) }
-              </Typography>
+            <Grid container item xs={6} justifyContent='flex-end'>
+              {budget && budget ?
+                <Typography align='right' variant='h6'>
+                  $ {budget && ((budget.totalDebt * 1.0) / 100).toFixed(2)}
+                </Typography>
+              :
+                <>
+                  <Typography variant='h6' style={{paddingRight:'10px'}}>$</Typography>
+                  <Skeleton variant='text' width='40%'/>
+                </>
+              }
             </Grid>
           </Grid>
           <Grid container item xs={8} direction="row">
