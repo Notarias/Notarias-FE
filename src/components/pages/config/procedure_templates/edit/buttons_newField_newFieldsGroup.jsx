@@ -5,7 +5,6 @@ import DialogContent                                            from '@material-
 import DialogTitle                                              from '@material-ui/core/DialogTitle';
 import DialogActions                                            from '@material-ui/core/DialogActions';
 import Grid                                                     from '@material-ui/core/Grid';
-import Typography                                               from '@material-ui/core/Typography';
 import { styles }                                               from '../styles';
 import { withStyles }                                           from '@material-ui/core/styles';
 import { useMutation }                                          from '@apollo/client';
@@ -144,34 +143,28 @@ const ButtonsNewFieldNewFieldsGroup = ({
   const renderNewFieldAndNewFieldsGroupButton = () => {
     return(
       <>
-        <Grid container  justifyContent="center" alignItems="center" direction="row" >
-          <Grid item xs={3}>
-            <Typography variant="button" display="block" gutterBottom>
-              <Button
-                variant="contained"
-                color="primary"
-                size="small"
-                disabled={ !currentTab }
-                onClick={ fieldHandleClickOpen }
-              >
-                Campo  <AddIcon className={ classes.addIconMargin }/>
-              </Button>
-            </Typography>
+        <Grid container  justifyContent="center" alignItems="center" direction="row" style={{paddingBottom:'20px'}}>
+          <Grid item xs={5}>
+            <Button
+              variant="contained"
+              color="primary"
+              size="small"
+              disabled={ !currentTab }
+              onClick={ fieldHandleClickOpen }
+            >
+              Campo  <AddIcon className={ classes.addIconMargin }/>
+            </Button>
           </Grid>
-          <Grid item xs={3}>
-            <Typography variant="button" display="block" gutterBottom>
-              {
-                <Button
-                  variant="contained"
-                  color="primary"
-                  size="small"
-                  disabled={ !currentTab }
-                  onClick={ groupHandleClickOpen }
-                >
-                  Grupo de Campos <AddIcon className={ classes.addIconMargin }/>
-                </Button>
-              }
-            </Typography>
+          <Grid item xs={5}>
+            <Button
+              variant="contained"
+              color="primary"
+              size="small"
+              disabled={ !currentTab }
+              onClick={ groupHandleClickOpen }
+            >
+              Grupo de Campos <AddIcon className={ classes.addIconMargin }/>
+            </Button>
           </Grid>
         </Grid>
         <Divider/>

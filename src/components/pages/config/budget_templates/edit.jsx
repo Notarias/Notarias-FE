@@ -3,6 +3,7 @@ import Breadcrumbs                          from '../../../ui/breadcrumbs'
 import Divider                              from '@material-ui/core/Divider';
 import Paper                                from '@material-ui/core/Paper';
 import Grid                                 from '@material-ui/core/Grid';
+import Hidden                               from '@material-ui/core/Hidden';
 import { styles }                           from './styles';
 import { withStyles }                       from '@material-ui/core/styles';
 import CircularProgress                     from '@material-ui/core/CircularProgress';
@@ -37,32 +38,56 @@ const Edit = (props) => {
       <Divider/>
       <Grid container direction="row">
         <Grid container item xs={9} direction="column">
-          <Grid container direction="row"  alignItems="center" className={ classes.addTittleProcedure }>
-            <Grid container item xs={7} justifyContent="flex-start">
-              <TemplateTitle
-                templateData={ data ? data.budgetingTemplate : " " }
-                match={ props.match.params }
-              />
-            </Grid>
-            <Grid container item xs={5} justifyContent="flex-end" alignItems="center">
-              <Grid container item xs={3} justifyContent="center">
-                </Grid>
-              <Grid container item xs={5} justifyContent="center">
+          <Grid container direction="row"  alignItems="center" 
+            style={{paddingLeft:'30px', paddingRight:'30px', paddingTop:'15px', paddingBottom:'15px'}}
+          >
+            <Hidden smDown>
+              <Grid container item xs justifyContent="flex-start">
+                <TemplateTitle
+                  templateData={ data ? data.budgetingTemplate : " " }
+                  match={ props.match.params }
+                />
+              </Grid>
+              <Grid container item xs={8} justifyContent="flex-end" alignItems="center">
+                <Grid item style={{paddingRight:'20px'}}>
                   <ProcedureTemplateLinkButton
                     id={ match.params.id }
                     proceduresTemplatesData={ data ? data.budgetingTemplate.proceduresTemplates : null }
                   />
                 </Grid>
-              <Grid container item xs={4} justifyContent="center">
+                <Grid item>
                   <ActiveTemplateButton
                     templateData={data ? data.budgetingTemplate : [] }
                     match={ props.match.params }
                   />
                 </Grid>
-            </Grid>
+              </Grid>
+            </Hidden>
+            <Hidden mdUp>
+              <Grid container item xs={12} alignItems="center">
+                <TemplateTitle
+                  templateData={ data ? data.budgetingTemplate : " " }
+                  match={ props.match.params }
+                />
+              </Grid>
+              <Grid container item xs={12} justifyContent="flex-start" alignItems="center">
+                <Grid item style={{paddingRight:'20px'}}>
+                  <ProcedureTemplateLinkButton
+                    id={ match.params.id }
+                    proceduresTemplatesData={ data ? data.budgetingTemplate.proceduresTemplates : null }
+                  />
+                </Grid>
+                <Grid item>
+                  <ActiveTemplateButton
+                    templateData={data ? data.budgetingTemplate : [] }
+                    match={ props.match.params }
+                  />
+                </Grid>
+              </Grid>
+            </Hidden>
           </Grid>
           <Divider/>
-          <Grid container direction="row">
+          <Grid container justifyContent='center' direction="row">
             <NewFieldButton
               templateData={data ? data.budgetingTemplate.fields : [] }
               currentTab={ currentTab }
