@@ -1,6 +1,8 @@
 import React, { useEffect, useState }     from 'react';
 import TextField                          from '@material-ui/core/TextField';
 import Grid                               from '@material-ui/core/Grid';
+import IconButton                         from '@material-ui/core/IconButton';
+import InputAdornment                     from '@material-ui/core/InputAdornment';
 import { styles }                         from '../styles';
 import { withStyles }                     from '@material-ui/core/styles';
 import Typography                         from '@material-ui/core/Typography';
@@ -81,13 +83,13 @@ const TemplateTitle = (props) => {
           <Typography variant="overline" >
             { name }
           </Typography>
+          <Button
+            className={ classes.templateTittleButton }
+            onClick={ changeTittle }
+          >
+            <CreateIcon />
+          </Button>
         </Grid>
-        <Button
-          className={ classes.templateTittleButton }
-          onClick={ changeTittle }
-        >
-          <CreateIcon />
-        </Button>
       </>
     )
   }
@@ -106,16 +108,19 @@ const TemplateTitle = (props) => {
             helperText={error["name"] || " "}
             errorskey={ "name" }
             name='name'
+            InputProps={{
+              endAdornment: 
+                <InputAdornment position="end">
+                  <IconButton
+                    color="primary"
+                    onClick={ updateTemplate }
+                    disabled={ loadingTemplate }
+                  >
+                    <SaveIcon/>
+                  </IconButton>
+                </InputAdornment>,
+            }}
           />
-        </Grid>
-        <Grid item className={ classes.saveTittleButton }>
-          <Button
-            onClick={ updateTemplate }
-            color="primary"
-            disabled={ loadingTemplate }
-          >
-            <SaveIcon/>
-          </Button>
         </Grid>
       </>
     )

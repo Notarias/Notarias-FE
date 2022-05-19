@@ -4,6 +4,8 @@ import Grid                               from '@material-ui/core/Grid';
 import { styles }                         from '../styles';
 import { withStyles }                     from '@material-ui/core/styles';
 import Typography                         from '@material-ui/core/Typography';
+import IconButton                         from '@material-ui/core/IconButton';
+import InputAdornment                     from '@material-ui/core/InputAdornment';
 import Button                             from '@material-ui/core/Button';
 import SaveIcon                           from '@material-ui/icons/Save';
 import CreateIcon                         from '@material-ui/icons/Create';
@@ -89,17 +91,14 @@ const TemplateTitle = (props) => {
   const renderTittleText = (name) => {
     return(
       <>
-        <Grid className={ classes.templateTextTittle } onClick={ changeTittle }>
+        <Grid item onClick={ changeTittle }>
           <Typography variant="overline" >
             { name }
           </Typography>
+          <Button onClick={ changeTittle }>
+            <CreateIcon />
+          </Button>
         </Grid>
-        <Button
-          className={ classes.templateTittleButton }
-          onClick={ changeTittle }
-        >
-          <CreateIcon />
-        </Button>
       </>
     )
   }
@@ -112,22 +111,24 @@ const TemplateTitle = (props) => {
             id="standard-basic" 
             label="Nombre de la plantilla"
             value={ name }
-            className={ classes.textInputTittle }
             onChange={ handleNameChange }
             error={ !!error["name"] && true }
             helperText={error["name"] || " "}
             errorskey={ "name" }
             name='name'
+            InputProps={{
+              endAdornment: 
+                <InputAdornment position="end">
+                  <IconButton
+                    color="primary"
+                    onClick={ updateTemplate }
+                    disabled={ loadingTemplate }
+                  >
+                    <SaveIcon/>
+                  </IconButton>
+                </InputAdornment>,
+            }}
           />
-        </Grid>
-        <Grid item className={ classes.saveTittleButton }>
-          <Button
-            color="primary"
-            onClick={ updateTemplate }
-            disabled={ loadingTemplate }
-          >
-            <SaveIcon/>
-          </Button>
         </Grid>
       </>
     )

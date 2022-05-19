@@ -127,15 +127,6 @@ export const styles = theme => {
       height: "70px",
       opacity: "0.7"
     },
-    templateTextTittle: {
-      height: "70px",
-      maxWidth: "550px",
-      textAlign: "left",
-      display: "flex",
-      alignItems: "center",
-      cursor: "pointer",
-      paddingLeft: "10px"
-    },
     templateTittleButton: {
       minWidth: "45px",
       minHeight: "45px",
