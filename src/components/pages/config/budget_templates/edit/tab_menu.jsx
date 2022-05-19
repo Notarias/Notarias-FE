@@ -1,5 +1,5 @@
 
-import React                                    from 'react';
+import React, { useState }                      from 'react';
 import { styles }                               from '../styles';
 import { withStyles }                           from '@material-ui/core/styles';
 import Typography                               from '@material-ui/core/Typography';
@@ -10,7 +10,6 @@ import Menu                                     from '@material-ui/core/Menu';
 import MenuItem                                 from '@material-ui/core/MenuItem';
 import MoreVertIcon                             from '@material-ui/icons/MoreVert';
 import TextField                                from '@material-ui/core/TextField';
-import SaveIcon                                 from '@material-ui/icons/Save';
 import CreateIcon                               from '@material-ui/icons/Create'
 import Divider                                  from '@material-ui/core/Divider';
 import DeleteForeverIcon                        from '@material-ui/icons/DeleteForever';
@@ -23,7 +22,6 @@ import ListItemIcon                             from '@material-ui/core/ListItem
 import ListItemText                             from '@material-ui/core/ListItemText';
 import RadioButtonUncheckedIcon                 from '@material-ui/icons/RadioButtonUnchecked';
 import RadioButtonCheckedIcon                   from '@material-ui/icons/RadioButtonChecked';
-import ClearIcon                                from '@material-ui/icons/Clear';
 import { useMutation }                          from '@apollo/client';
 import { GET_BUDGETING_TEMPLATES_TABS }         from '../queries_and_mutations/queries'
 import { UPDATE_BUDGETING_TEMPLATE_TAB }        from '../queries_and_mutations/queries'
@@ -34,13 +32,13 @@ import client                                   from '../../../../../apollo';
 
 const TabMenu = (props) => {
   const { classes, budgetingTemplateId, selected, active, setCurrentTab, calculable } = props;
-  const [id] = React.useState(props.id);
-  const [name, setName] = React.useState(props.name);
-  const [editing, setEditing] =  React.useState(true);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [openDialog, setOpenDialog] = React.useState(false);
+  const [id] = useState(props.id);
+  const [name, setName] = useState(props.name);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [action, setAction] = useState(false);
+  const [error, setError] = useState(false);
 
-  const [error, setError] = React.useState(false)
   const inputsList = ["name"]
 
   const [updateBudgetingTemplateTabMutation, updateProcessInfo] =
@@ -61,13 +59,16 @@ const TabMenu = (props) => {
         })
       },
       update(store, cacheData) {
-        setError(false)
-        setEditing(!editing)
+        setError(false);
+      },
+      onCompleted(store, cacheData) {
+        setOpenDialog(false);
       },
       refetchQueries: [{
         query: GET_BUDGETING_TEMPLATES_TABS,
         variables: { "id": budgetingTemplateId },
       }],
+      awaitRefetchQueries: true
     }
   )
 
@@ -140,49 +141,31 @@ const TabMenu = (props) => {
 
   let open = Boolean(anchorEl);
 
-  const handleClickOpenDialog = () => {
+  const openEditDialog = () => {
     setOpenDialog(true);
+    setAction(true);
+    setAnchorEl(null);
   }
 
-  const handleCloseDialog = () => {
+  const openDeleteDialog = () => {
+    setOpenDialog(true);
+    setAction(false);
+    setAnchorEl(null);
+  }
+
+  const closeDialog = () => {
     setOpenDialog(false);
   };
-
-  const changeTittle = () => {
-    setEditing(!editing)
-  }
 
   const handleNameChange = (event) => {
     setName(event.target.value);
   };
 
-  const cancelChangeName = () => {
-    setName(props.name)
-    setEditing(!editing)
-  }
-
-  const renderTittleTextTab = () => {
-
+  const dialogEditTab = () => {
     return(
       <>
-        <ListItemIcon>
-          <CreateIcon className={ classes.defaultIcon }/>
-        </ListItemIcon>
-        <Typography noWrap>
-          { name }
-        </Typography>
-      </>
-    )
-  }
-
-  const renderTittleInputTab = () => {
-
-    return(
-      <>
-        <ListItemIcon>
-          <SaveIcon color="primary" className={ classes.defaultIcon } onClick={ updateTab }/>
-        </ListItemIcon>
-        <ListItemText>
+        <DialogTitle id="alert-dialog-title">{"Editar Nombre de la Pestaña"}</DialogTitle>
+        <DialogContent>
           <TextField
             autoFocus
             className={ classes.inputSmall }
@@ -195,21 +178,24 @@ const TabMenu = (props) => {
             errorskey={ "name" }
             name='name'
           />
-        </ListItemText>
-        <IconButton
-        color="secondary"
-        onClick={ cancelChangeName }
-      >
-        <ClearIcon/>
-      </IconButton>
+        </DialogContent>
       </>
     )
   }
 
-  const markStatus = () => {
-    if(!active) {
-      return  classes.statusTemplateRow 
-    }
+  const dialogDeleteTab = () => {
+    return(
+      <>
+        <DialogTitle id="alert-dialog-title">{"Eliminar pestaña"}</DialogTitle>
+        <DialogContent>
+          <Typography variant="body1">
+            Se eliminará permanentemente la pestaña
+            <strong style={ { color: "red", padding: "0 4px" }}>{ name }</strong>
+            junto con sus <strong style={ { color: "blue", padding: "0 4px" }}>grupos y campos</strong>.
+          </Typography>
+        </DialogContent>
+      </>
+    )
   }
 
   const statusTemplate = () => { 
@@ -217,7 +203,7 @@ const TabMenu = (props) => {
   }
 
   return (
-    <Grid className={ markStatus() } container alignItems="center" justifyContent="flex-start">
+    <Grid container alignItems="center" justifyContent="flex-start">
       <IconButton
         aria-label="more"
         aria-controls="long-menu"
@@ -237,43 +223,19 @@ const TabMenu = (props) => {
         open={ open }
         onClose={ handleClose }
       >
-        <MenuItem key="budgetingTabMenu1" onClick={ changeTittle } className={ classes.tittleTabMenu } >
-          { editing ? renderTittleTextTab() : renderTittleInputTab() }
+        <MenuItem key="budgetingTabMenu1" onClick={ openEditDialog } className={ classes.tittleTabMenu } >
+          <ListItemIcon >
+            <CreateIcon className={ classes.defaultIcon } />
+          </ListItemIcon>
+          <ListItemText primary="Editar"/>
         </MenuItem>
         <Divider key="budgetingTabMenuDivider1"/>
-        <MenuItem key="budgetingTabMenu2" onClick={ handleClickOpenDialog }>
+        <MenuItem key="budgetingTabMenu2" onClick={ openDeleteDialog }>
           <ListItemIcon >
             <DeleteForeverIcon className={ classes.defaultIcon } />
           </ListItemIcon>
           <ListItemText primary="Borrar"/>
         </MenuItem>
-        <Dialog
-          open={openDialog}
-          onClose={handleCloseDialog}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">{"Eliminar pestaña"}</DialogTitle>
-          <DialogContent>
-            <Typography variant="body1">
-              Se eliminará permanentemente la pestaña
-              <strong style={ { color: "red", padding: "0 4px" }}>{ name }</strong>
-              junto con sus <strong style={ { color: "blue", padding: "0 4px" }}>grupos y campos</strong>.
-            </Typography>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={ handleCloseDialog } color="secondary">
-              Cancelar
-            </Button>
-            <Button
-              color="primary"
-              autoFocus
-              onClick={ deleteTabClick }
-            >
-              Borrar
-            </Button>
-          </DialogActions>
-        </Dialog>
         <Divider key="budgetingTabMenuDivider2"/>
         <MenuItem key="budgetingTabMenu3" disabled={updateProcessInfo.loading}>
           <Grid container item alignItems="center" >
@@ -307,6 +269,26 @@ const TabMenu = (props) => {
           <ListItemText primary={calculable ? "Desactivar Calculo" : "Activar Calculo"}/>
         </MenuItem>
       </Menu>
+      <Dialog
+        open={openDialog}
+        onClose={closeDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        { action ? dialogEditTab() : dialogDeleteTab() }
+        <DialogActions>
+          <Button onClick={closeDialog} color="secondary">
+            Cancelar
+          </Button>
+          <Button
+            color="primary"
+            autoFocus
+            onClick={ action ? updateTab : deleteTabClick }
+          >
+            { action ? 'Guardar' : 'Borrar' }
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Grid>
   )
 }

@@ -115,7 +115,7 @@ const Tabs = (props) => {
 
   return(
     <Grid container item direction="column">
-      <Grid  container item>
+      <Grid container item>
         {
           (currentTab || (data && data.proceduresTemplateTabs)) && renderTabList()
         }

@@ -1,5 +1,5 @@
 
-import React                                    from 'react';
+import React, {useState}                                    from 'react';
 import { styles }                               from '../styles';
 import { withStyles }                           from '@material-ui/core/styles';
 import Typography                               from '@material-ui/core/Typography';
@@ -10,7 +10,6 @@ import Menu                                     from '@material-ui/core/Menu';
 import MenuItem                                 from '@material-ui/core/MenuItem';
 import MoreVertIcon                             from '@material-ui/icons/MoreVert';
 import TextField                                from '@material-ui/core/TextField';
-import SaveIcon                                 from '@material-ui/icons/Save';
 import CreateIcon                               from '@material-ui/icons/Create'
 import { useMutation }                          from '@apollo/client';
 import { GET_PROCEDURES_TEMPLATE_TABS }         from '../queries_and_mutations/queries'
@@ -29,14 +28,12 @@ import ListItemText                             from '@material-ui/core/ListItem
 
 const TabMenu = (props) => {
   const { classes, proceduresTemplateId, selected, active, setCurrentTab } = props;
-  const [id] = React.useState(props.id);
-  const [name, setName] = React.useState(props.name);
-  const [editing, setEditing] =  React.useState(true);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [openDialog, setOpenDialog] = React.useState(false);
-  const [setUpdateLoading] = React.useState(false)
-
-  const [error, setError] = React.useState(false)
+  const [id] = useState(props.id);
+  const [name, setName] = useState(props.name);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [action, setAction] = useState(false);
+  const [error, setError] = useState(false);
   const inputsList = ["name"]
 
   const [updateProceduresTemplateTabMutation] =
@@ -47,14 +44,16 @@ const TabMenu = (props) => {
         setErrors(apolloError)
       },
       update(store, cacheData) {
-        setError(false)
-        setEditing(!editing)
-        setUpdateLoading(false)
+        setError(false);
+      },
+      onCompleted(store, cacheData) {
+        setOpenDialog(false);
       },
       refetchQueries: [{
         query: GET_PROCEDURES_TEMPLATE_TABS,
         variables: { "proceduresTemplateId": proceduresTemplateId },
       }],
+      awaitRefetchQueries: true
     }
   )
 
@@ -72,7 +71,6 @@ const TabMenu = (props) => {
   }
 
   const updateTab = (event) => {
-    setUpdateLoading(true)
     updateProceduresTemplateTabMutation(
       { 
         variables: { id: id , name: name}
@@ -117,45 +115,31 @@ const TabMenu = (props) => {
 
   let open = Boolean(anchorEl);
 
-  const handleClickOpenDialog = () => {
+  const openEditDialog = () => {
     setOpenDialog(true);
+    setAction(true);
+    setAnchorEl(null);
   }
 
-  const handleCloseDialog = () => {
+  const openDeleteDialog = () => {
+    setOpenDialog(true);
+    setAction(false);
+    setAnchorEl(null);
+  }
+
+  const closeDialog = () => {
     setOpenDialog(false);
   };
-
-  const changeTittle = () => {
-    setEditing(!editing)
-  }
 
   const handleNameChange = (event) => {
     setName(event.target.value);
   };
 
-  const renderTittleTextTab = () => {
-
+  const dialogEditTab = () => {
     return(
       <>
-        <ListItemIcon  onClick={ changeTittle }>
-          <CreateIcon className={ classes.defaultIcon }/>
-        </ListItemIcon>
-        <Typography onClick={ changeTittle } noWrap>
-          { name }
-        </Typography>
-      </>
-    )
-  }
-
-  
-  const renderTittleInputTab = () => {
-
-    return(
-      <>
-        <ListItemIcon>
-          <SaveIcon color="primary" className={ classes.defaultIcon } onClick={ updateTab }/>
-        </ListItemIcon>
-        <ListItemText >
+        <DialogTitle id="alert-dialog-title">{"Editar Nombre de la Pestaña"}</DialogTitle>
+        <DialogContent>
           <TextField
             className={ classes.inputSmall }
             size="small"
@@ -167,19 +151,31 @@ const TabMenu = (props) => {
             errorskey={ "name" }
             name='name'
           />
-        </ListItemText>
+        </DialogContent>
       </>
     )
   }
 
-  const markStatus = () => {
-    if(!active) {
-      return  classes.statusTemplateRow 
-    }
+  
+  const dialogDeleteTab = () => {
+    return(
+      <>
+        <DialogTitle id="alert-dialog-title">{"Eliminar pestaña"}</DialogTitle>
+        <DialogContent>
+          <Typography variant="body1">
+            Se eliminará permanentemente la pestaña
+            <strong style={ { color: "red", padding: "0 4px" }}>{ name }</strong>
+            junto con sus <strong style={ { color: "blue", padding: "0 4px" }}>grupos y campos</strong>.
+          </Typography>
+        </DialogContent>
+      </>
+    )
   }
 
+
+
   return (
-    <Grid className={ markStatus() } container alignItems="center" justifyContent="flex-start">
+    <Grid container alignItems="center" justifyContent="flex-start">
       <IconButton
         aria-label="more"
         aria-controls="long-menu"
@@ -197,53 +193,49 @@ const TabMenu = (props) => {
         open={ open }
         onClose={ handleClose }
       >
-        <MenuItem key="budgetingTabMenu1" className={ classes.tittleTabMenu } >
-          { editing ? renderTittleTextTab() : renderTittleInputTab() }
+        <MenuItem key="budgetingTabMenu1" onClick={openEditDialog} className={ classes.tittleTabMenu } >
+        <ListItemIcon>
+          <CreateIcon className={classes.defaultIcon}/>
+        </ListItemIcon>
+          <ListItemText primary="Editar"/>
         </MenuItem>
         <Divider/>
-        <MenuItem key="budgetingTabMenu2" onClick={ handleClickOpenDialog }>
+        <MenuItem key="budgetingTabMenu2" onClick={openDeleteDialog}>
           <ListItemIcon >
-            <DeleteForeverIcon className={ classes.defaultIcon } />
+            <DeleteForeverIcon className={classes.defaultIcon}/>
           </ListItemIcon>
-          <ListItemText primary="&#8288;Borrar"/>
+          <ListItemText primary="Borrar"/>
         </MenuItem>
-        <Dialog
-          open={openDialog}
-          onClose={handleCloseDialog}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-        <DialogTitle id="alert-dialog-title">{"Eliminar pestaña"}</DialogTitle>
-        <DialogContent>
-          <Typography variant="body1">
-            Se eliminará permanentemente la pestaña
-            <strong style={ { color: "red", padding: "0 4px" }}>{ name }</strong>
-            junto con sus <strong style={ { color: "blue", padding: "0 4px" }}>grupos y campos</strong>.
-          </Typography>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={ handleCloseDialog } color="secondary">
-            Cancelar
-          </Button>
-          <Button
-            color="primary"
-            autoFocus
-            onClick={ deleteTabClick }
-          >
-            Borrar
-          </Button>
-        </DialogActions>
-      </Dialog>
         <Divider/>
         <MenuItem key="budgetingTabMenu3">
-          <Grid container item alignItems="center" >
+          <Grid item alignItems="center" >
             <StatusRadioButton
                 active={ active }
                 changeStatus= { changeStatus }
               />
           </Grid>
-      </MenuItem>
+        </MenuItem>
       </Menu>
+      <Dialog
+          open={openDialog}
+          onClose={closeDialog}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+        { action ? dialogEditTab() : dialogDeleteTab() }
+        <DialogActions>
+          <Button onClick={closeDialog} color="secondary">
+            Cancelar
+          </Button>
+          <Button
+            color="primary"
+            autoFocus
+            onClick={ action ? updateTab : deleteTabClick }
+          >
+            { action ? "Guardar" : "Borrar" }
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Grid>
   )
 }

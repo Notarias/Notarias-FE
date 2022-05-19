@@ -110,7 +110,7 @@ const Edit = (props) => {
             
           </Grid>
         </Grid>
-        <Grid container item xs={3} justifyContent="center">
+        <Grid container item xs={3} direction="column">
           <Paper>
             {
             (loading || !data) ?
