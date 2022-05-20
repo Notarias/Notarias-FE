@@ -29,6 +29,7 @@ import { DESTROY_PROCEDURES_TEMPLATE_TAB_FIELD }      from '../queries_and_mutat
 import { GET_PROCEDURE_TEMPLATE_TAB_FIELDS }          from '../queries_and_mutations/queries'
 import RadioButtonUncheckedIcon                       from '@material-ui/icons/RadioButtonUnchecked';
 import RadioButtonCheckedIcon                         from '@material-ui/icons/RadioButtonChecked';
+import { Hidden } from '@material-ui/core';
 
 
 const INPUT_TYPES = {
@@ -180,23 +181,23 @@ const Field = (props) => {
 
   const renderTextField = () => {
     return(
-      <Grid container item xs={8} spacing={2}>
-        <Grid container item xs={2} alignItems="center" justifyContent="center">
+      <Grid container item xs={12} alignItems="center" justifyContent="center">
+        <Grid item xs={2}>
           <Button
             onClick={ editField }
           >
             <CreateIcon/>
           </Button>
         </Grid>
-        <Grid container item xs={5} alignItems="center">
+        <Grid item xs={5}>
           <InputBase
             value={ name }
             readOnly={true}
             inputProps={{ 'aria-label': 'naked' }}
           />
         </Grid>
-        <Grid container item xs={5}>
-        <Typography className={ classes.textTittleType }>
+        <Grid container item xs={5} alignItems='center'>
+          <Typography className={ classes.textTittleType }>
             {  INPUT_TYPES[style] }
           </Typography>
         </Grid>
@@ -206,15 +207,15 @@ const Field = (props) => {
 
   const renderInputField = () => {
     return(
-      <Grid container item xs={8} spacing={2}>
-        <Grid container item xs={2} alignItems="center" justifyContent="center">
+      <Grid container item xs={12} alignItems="center" justifyContent="center">
+        <Grid item xs={2}>
           <Button
             onClick={ updateField }
           >
             <SaveIcon />
           </Button>
         </Grid>
-        <Grid container item xs={5}>
+        <Grid item xs={5}>
           <TextField
             id="standard-basic"
             value={ name }
@@ -223,7 +224,7 @@ const Field = (props) => {
             style={{'backgroundColor': 'rgb(200, 200, 200)'}}
           />
         </Grid>
-        <Grid container item xs={5}>
+        <Grid item xs={5}>
           <FormControl variant="outlined" className={ classes.textFieldTittleType }>
             <Select
               labelId="demo-simple-select-outlined-label"
@@ -242,150 +243,299 @@ const Field = (props) => {
   }
 
   return (
-    <Grid container item spacing={2} justifyContent="center" className={ classes.fielPaddingBottom }>
-      <Paper>
-        <Grid container item className={ classes.fieldHeightRow }>
-          { editing ? renderTextField() : renderInputField() }
-          <Grid container item xs={1} alignItems="center" justifyContent="center">
-            <Grid item>
-              <FormControlLabel
-                control={<Checkbox 
-                  icon={<StarBorderIcon />} 
-                  checkedIcon={<StarsIcon />} 
-                  name="favourite"
-                  checked={ favourite }
-                />}
-                label=" "
-                color="primary"
-                className={ classes.formControlPadding }
-                onChange={ openFavoriteDialog }
-              />
+    <Grid id='fields-rows' container direction='row' justifyContent="center" style={{padding:'5px'}}>
+      <Paper style={{padding:'5px'}}>
+        <Grid container xs={12} justifyContent="center">
+          <Hidden smDown>
+            <Grid container item xs={8} alignItems="center" justifyContent="center">
+              { editing ? renderTextField() : renderInputField() }
             </Grid>
-            <Dialog
-              open={favoriteDialog}
-              onClose={closeFavoriteDialog}
-              aria-labelledby="favorite-alert"
-              aria-describedby="favorite-alert-dialog"
-            >
-              <DialogTitle id="favorite-alert">
-                { favourite === true ? "Eliminar Favorito": "Añadir Favorito"}
-              </DialogTitle>
-              <DialogContent>
-              { favourite === true ? "Este campo dejará de ser importante": "Se marcará este campo como importante"}
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={closeFavoriteDialog} color="secondary">
-                  Cancelar
-                </Button>
-                <Button color={ colorButton() } autoFocus onClick={ checkFavoriteField } variant="contained">
-                  { favourite ? "Quitar": "Añadir"}
-                </Button>
-              </DialogActions>
-            </Dialog>
-          </Grid>
-          <Grid container item xs={1} alignItems="center" justifyContent="center">
-            <Grid item>
-              <FormControlLabel
-                control={<Checkbox 
-                  icon={<PrintOutlinedIcon />} 
-                  checkedIcon={<PrintIcon />} 
-                  name="printable"
-                  checked={ printable }
-                />}
-                label=" "
-                color="primary"
-                className={ classes.formControlPadding }
-                onChange={ openPrintableDialog }
-              />
-            </Grid>
-            <Dialog
-              open={printableDialog}
-              onClose={closePrintableDialog}
-              aria-labelledby="print-aletrt"
-              aria-describedby="print-alert-dialog"
-            >
-              <DialogTitle id="favorite-alert">
-                { printable === true ? "No imprimir" : "Agregar a formulario de impresión"}
-              </DialogTitle>
-              <DialogContent>
-                { printable === true ? "Este campo dejará de aparecer en el formato de impresión" : "Se marcará este campo para aparecer en el formulario de impresión"}
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={ closePrintableDialog } color="secondary">
-                  Cancelar
-                </Button>
-                <Button color={ colorButton() } autoFocus onClick={ checkPrintableField } variant="contained">
-                  { printable ? "Quitar" : "Añadir"}
-                </Button>
-              </DialogActions>
-            </Dialog>
-          </Grid>
-          <Grid container item xs={1} alignItems="center" justifyContent="center">
-            <Grid item>
-              <Button onClick={ openDeleteDialog }>
-                <DeleteForeverIcon/>
-              </Button>
-            </Grid>
-            <Dialog
-              open={deleteDialog}
-              onClose={closeDeleteDialog}
-              aria-labelledby="alert-dialog-title"
-              aria-describedby="alert-dialog-description"
-            >
-              <DialogTitle id="alert-dialog-title">{"Eliminar campo"}</DialogTitle>
-              <DialogContent>
-                Se eliminara de manera permantente el campo: 
-                <Typography variant="subtitle2" className={ classes.texPlainTittleName }>
-                  {name}
-                </Typography>
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={ closeDeleteDialog } color="secondary">
-                  Cancelar
-                </Button>
-                <Button color="primary" autoFocus onClick={ deleteFieldClick }>
-                  Borrar
-                </Button>
-              </DialogActions>
-            </Dialog>
-          </Grid>
-          <Grid container item xs={1} alignItems="center" justifyContent="center" onClick={ openStatusDialog }>
-            <Grid item>
-              {
-              active ?
-                <Button>
-                  <RadioButtonCheckedIcon className={classes.radioButtonActiveGreen}/>
-                </Button>
-              :
-                <Button>
-                  <RadioButtonUncheckedIcon color="secondary" className={ classes.defaultIcon }/>
-                </Button>
-              }
-            </Grid>
-          </Grid>
-          <Dialog
-            open={statusDialog}
-            onClose={closeStatusDialog}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-          >
-            <DialogTitle id="alert-dialog-title"> Deseas {statusField()}</DialogTitle>
-            <DialogContent>
-              Realmente deseas { statusField() }
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={ closeStatusDialog } color="secondary">
-                Cancelar
-              </Button>
-              <Button
-                color="primary"
-                autoFocus
-                onClick={ changeFieldStatus }
+            <Grid container item xs={1} alignItems="center" justifyContent="center">
+              <Grid item>
+                <FormControlLabel
+                  control={<Checkbox 
+                    icon={<StarBorderIcon />} 
+                    checkedIcon={<StarsIcon />} 
+                    name="favourite"
+                    checked={ favourite }
+                  />}
+                  label=" "
+                  color="primary"
+                  className={ classes.formControlPadding }
+                  onChange={ openFavoriteDialog }
+                />
+              </Grid>
+              <Dialog
+                open={favoriteDialog}
+                onClose={closeFavoriteDialog}
+                aria-labelledby="favorite-alert"
+                aria-describedby="favorite-alert-dialog"
               >
-                { statusField() }
-              </Button>
-            </DialogActions>
-          </Dialog>
+                <DialogTitle id="favorite-alert">
+                  { favourite === true ? "Eliminar Favorito": "Añadir Favorito"}
+                </DialogTitle>
+                <DialogContent>
+                { favourite === true ? "Este campo dejará de ser importante": "Se marcará este campo como importante"}
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={closeFavoriteDialog} color="secondary">
+                    Cancelar
+                  </Button>
+                  <Button color={ colorButton() } autoFocus onClick={ checkFavoriteField } variant="contained">
+                    { favourite ? "Quitar": "Añadir"}
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            </Grid>
+            <Grid container item xs={1} alignItems="center" justifyContent="center">
+              <Grid item>
+                <FormControlLabel
+                  control={<Checkbox 
+                    icon={<PrintOutlinedIcon />} 
+                    checkedIcon={<PrintIcon />} 
+                    name="printable"
+                    checked={ printable }
+                  />}
+                  label=" "
+                  color="primary"
+                  className={ classes.formControlPadding }
+                  onChange={ openPrintableDialog }
+                />
+              </Grid>
+              <Dialog
+                open={printableDialog}
+                onClose={closePrintableDialog}
+                aria-labelledby="print-aletrt"
+                aria-describedby="print-alert-dialog"
+              >
+                <DialogTitle id="favorite-alert">
+                  { printable === true ? "No imprimir" : "Agregar a formulario de impresión"}
+                </DialogTitle>
+                <DialogContent>
+                  { printable === true ? "Este campo dejará de aparecer en el formato de impresión" : "Se marcará este campo para aparecer en el formulario de impresión"}
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={ closePrintableDialog } color="secondary">
+                    Cancelar
+                  </Button>
+                  <Button color={ colorButton() } autoFocus onClick={ checkPrintableField } variant="contained">
+                    { printable ? "Quitar" : "Añadir"}
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            </Grid>
+            <Grid container item xs={1} alignItems="center" justifyContent="center">
+              <Grid item>
+                <Button onClick={ openDeleteDialog }>
+                  <DeleteForeverIcon/>
+                </Button>
+              </Grid>
+              <Dialog
+                open={deleteDialog}
+                onClose={closeDeleteDialog}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title">{"Eliminar campo"}</DialogTitle>
+                <DialogContent>
+                  Se eliminara de manera permantente el campo: 
+                  <Typography variant="subtitle2" className={ classes.texPlainTittleName }>
+                    {name}
+                  </Typography>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={ closeDeleteDialog } color="secondary">
+                    Cancelar
+                  </Button>
+                  <Button color="primary" autoFocus onClick={ deleteFieldClick }>
+                    Borrar
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            </Grid>
+            <Grid container item xs={1} alignItems="center" justifyContent="center" onClick={ openStatusDialog }>
+              <Grid item>
+                {
+                active ?
+                  <Button>
+                    <RadioButtonCheckedIcon className={classes.radioButtonActiveGreen}/>
+                  </Button>
+                :
+                  <Button>
+                    <RadioButtonUncheckedIcon color="secondary" className={ classes.defaultIcon }/>
+                  </Button>
+                }
+              </Grid>
+              <Dialog
+                open={statusDialog}
+                onClose={closeStatusDialog}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title"> Deseas {statusField()}</DialogTitle>
+                <DialogContent>
+                  Realmente deseas { statusField() }
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={ closeStatusDialog } color="secondary">
+                    Cancelar
+                  </Button>
+                  <Button
+                    color="primary"
+                    autoFocus
+                    onClick={ changeFieldStatus }
+                  >
+                    { statusField() }
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            </Grid>
+          </Hidden>
+          <Hidden mdUp>
+            <Grid container item xs={12} alignItems="center" justifyContent="center">
+              { editing ? renderTextField() : renderInputField() }
+            </Grid>
+            <Grid container item xs={3} alignItems="center" justifyContent="center">
+              <Grid item>
+                <FormControlLabel
+                  control={<Checkbox 
+                    icon={<StarBorderIcon />} 
+                    checkedIcon={<StarsIcon />} 
+                    name="favourite"
+                    checked={ favourite }
+                  />}
+                  label=" "
+                  color="primary"
+                  className={ classes.formControlPadding }
+                  onChange={ openFavoriteDialog }
+                />
+              </Grid>
+              <Dialog
+                open={favoriteDialog}
+                onClose={closeFavoriteDialog}
+                aria-labelledby="favorite-alert"
+                aria-describedby="favorite-alert-dialog"
+              >
+                <DialogTitle id="favorite-alert">
+                  { favourite === true ? "Eliminar Favorito": "Añadir Favorito"}
+                </DialogTitle>
+                <DialogContent>
+                { favourite === true ? "Este campo dejará de ser importante": "Se marcará este campo como importante"}
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={closeFavoriteDialog} color="secondary">
+                    Cancelar
+                  </Button>
+                  <Button color={ colorButton() } autoFocus onClick={ checkFavoriteField } variant="contained">
+                    { favourite ? "Quitar": "Añadir"}
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            </Grid>
+            <Grid container item xs={3} alignItems="center" justifyContent="center">
+              <Grid item>
+                <FormControlLabel
+                  control={<Checkbox 
+                    icon={<PrintOutlinedIcon />} 
+                    checkedIcon={<PrintIcon />} 
+                    name="printable"
+                    checked={ printable }
+                  />}
+                  label=" "
+                  color="primary"
+                  className={ classes.formControlPadding }
+                  onChange={ openPrintableDialog }
+                />
+              </Grid>
+              <Dialog
+                open={printableDialog}
+                onClose={closePrintableDialog}
+                aria-labelledby="print-aletrt"
+                aria-describedby="print-alert-dialog"
+              >
+                <DialogTitle id="favorite-alert">
+                  { printable === true ? "No imprimir" : "Agregar a formulario de impresión"}
+                </DialogTitle>
+                <DialogContent>
+                  { printable === true ? "Este campo dejará de aparecer en el formato de impresión" : "Se marcará este campo para aparecer en el formulario de impresión"}
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={ closePrintableDialog } color="secondary">
+                    Cancelar
+                  </Button>
+                  <Button color={ colorButton() } autoFocus onClick={ checkPrintableField } variant="contained">
+                    { printable ? "Quitar" : "Añadir"}
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            </Grid>
+            <Grid container item xs={3} alignItems="center" justifyContent="center">
+              <Grid item>
+                <Button onClick={ openDeleteDialog }>
+                  <DeleteForeverIcon/>
+                </Button>
+              </Grid>
+              <Dialog
+                open={deleteDialog}
+                onClose={closeDeleteDialog}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title">{"Eliminar campo"}</DialogTitle>
+                <DialogContent>
+                  Se eliminara de manera permantente el campo: 
+                  <Typography variant="subtitle2" className={ classes.texPlainTittleName }>
+                    {name}
+                  </Typography>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={ closeDeleteDialog } color="secondary">
+                    Cancelar
+                  </Button>
+                  <Button color="primary" autoFocus onClick={ deleteFieldClick }>
+                    Borrar
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            </Grid>
+            <Grid container item xs={3} alignItems="center" justifyContent="center" onClick={ openStatusDialog }>
+              <Grid item>
+                {
+                active ?
+                  <Button>
+                    <RadioButtonCheckedIcon className={classes.radioButtonActiveGreen}/>
+                  </Button>
+                :
+                  <Button>
+                    <RadioButtonUncheckedIcon color="secondary" className={ classes.defaultIcon }/>
+                  </Button>
+                }
+              </Grid>
+              <Dialog
+                open={statusDialog}
+                onClose={closeStatusDialog}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title"> Deseas {statusField()}</DialogTitle>
+                <DialogContent>
+                  Realmente deseas { statusField() }
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={ closeStatusDialog } color="secondary">
+                    Cancelar
+                  </Button>
+                  <Button
+                    color="primary"
+                    autoFocus
+                    onClick={ changeFieldStatus }
+                  >
+                    { statusField() }
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            </Grid>
+          </Hidden>
         </Grid>
       </Paper>
     </Grid>

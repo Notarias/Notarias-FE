@@ -28,37 +28,27 @@ const FieldList = (props) => {
     setFields(newArray)
   }
 
-  const renderFields = () => {
-    return(
-      <>
-        {
-          fields.map(
-            (field, index) => {
-              return(
-                <Field
-                  key={ field.id + "-field"}
-                  arrayIndex={ index }
-                  currentTab={ currentTab }
-                  removeFromList={ removeFromList }
-                  name={ field.name || "" }
-                  printable={ field.printable || false }
-                  style={ field.style || "" }
-                  favourite={ field.favourite || false }
-                  id={ field.id || " " }
-                  active={ field.active }
-                />
-              )
-            }
-          )
-        }
-      </>
-    )
-  }
-
-  return (
+  return(
     <>
       {
-        renderFields()
+        fields.map(
+          (field, index) => {
+            return(
+              <Field
+                key={ field.id + "-field"}
+                arrayIndex={ index }
+                currentTab={ currentTab }
+                removeFromList={ removeFromList }
+                name={ field.name || "" }
+                printable={ field.printable || false }
+                style={ field.style || "" }
+                favourite={ field.favourite || false }
+                id={ field.id || " " }
+                active={ field.active }
+              />
+            )
+          }
+        )
       }
     </>
   )

@@ -114,9 +114,10 @@ export const styles = theme => {
       paddingLeft: "10px"
     },
     textFieldTittleType: {
-      width: "230px",
+      width: "100%",
       fontFamily: "Lucida Console, Courier, monospace",
       fontWeight: "bold",
+      paddingLeft: "10px"
     },
     texPlainTittleName: {
       textAlign: "left",
@@ -132,19 +133,16 @@ export const styles = theme => {
       textAlign: "left",
       display: "flex",
       alignItems: "center",
-      cursor: "pointer",
       backgroundColor: "#d7d7e6",
       paddingLeft: "8px",
       paddingRight: "8px"
 
     },
     inputTittleGroupName: {
-      width: "250px",
+      width: "100%",
       textAlign: "left",
-
       paddingLeft: "10px",
       wordWrap: "break-word",
-
     },
     editGroupNameIcon:{
       width:"30px", 
@@ -157,12 +155,10 @@ export const styles = theme => {
       marginTop: "5px",
     },
     textTittleType: {
-      width: "230px",
-      height: "56px",
-      paddingTop: "15px",
-      paddingRight: "18px",
+      minWidth:'150px',
       border: "1px solid",
       borderRadius: "6px",
+      padding:'15px'
     },
     buttonHeight: {
       height: "30px",
@@ -172,7 +168,7 @@ export const styles = theme => {
     },
     fieldHeightRow: {
       padding: "10px",
-      width: "850px",
+      maxWidth: "650px",
     },
     fielPaddingBottom: {
       marginBottom: "2px"
