@@ -68,8 +68,8 @@ const FieldsGroup = (props) => {
 
   const renderTextGroupName = () => {
     return(
-      <Grid container item xs={12} direction="row">
-        <Grid item xs={11} className={ classes.textPlainGoupName } onClick={ editFieldGroup } style={{ marginTop: "2px"}}>
+      <Grid container item direction="row">
+        <Grid item xs={10} className={ classes.textPlainGoupName } onClick={ editFieldGroup } style={{ marginTop: "2px"}}>
           <Typography>
             { groupName }
           </Typography>
@@ -86,7 +86,7 @@ const FieldsGroup = (props) => {
   const renderInputGroupName = () => {
     return(
       <>
-        <Grid item xs={11} className={ classes.textPlainGoupName } style={{ marginTop: "2px"}}>
+        <Grid item xs={10} className={ classes.textPlainGoupName } style={{ marginTop: "2px"}}>
           <InputBase 
             id="filled-basic"
             label="Nombre del Grupo"
@@ -116,10 +116,10 @@ const FieldsGroup = (props) => {
       <Paper className={ classes.roundedBorderGruop }>
         <Divider/>
         <Grid container alignItems="center" className={ classes.fieldHeightRow }>
-          <Grid container item xs={11} direction="row" alignItems="flex-start" >
+          <Grid container item xs={10} direction="row" alignItems="flex-start" >
             { editing ? renderTextGroupName() : renderInputGroupName() }
           </Grid>
-          <Grid container item xs={1} alignItems="center" justifyContent="flex-end">
+          <Grid container item xs={2} alignItems="center" justifyContent="flex-end">
             <FieldsGroupMenu
               groupName={ groupName }
               active={ active }
