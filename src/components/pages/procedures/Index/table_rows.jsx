@@ -40,7 +40,7 @@ const TableRows = (props) => {
       return <Chip color="secondary" label="En Proceso" />
     }
   }
-console.log(procedure)
+
   return(
     <TableRow>
       <TableCell align="center" className={classes.tablecellWidth}>{ procedure.serialNumber }</TableCell>

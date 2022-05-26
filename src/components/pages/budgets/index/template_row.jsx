@@ -29,7 +29,7 @@ const TemplateRow = (props) => {
       return <Chip color="secondary" label="En Proceso" />
     }
   }
-console.log(budget)
+
   return(
     <TableRow>
       <TableCell align="center" className={classes.tablecellWidth}>{ budget.serialNumber }</TableCell>
