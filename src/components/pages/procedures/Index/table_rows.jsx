@@ -43,7 +43,8 @@ const TableRows = (props) => {
 
   return(
     <TableRow>
-      <TableCell align="center" className={classes.tablecellWidth}>{ procedure && procedure.serialNumber }</TableCell>
+      <TableCell align="center" className={classes.tablecellWidth}>{ procedure.serialNumber }</TableCell>
+      <TableCell align="center" className={classes.tablecellWidth}>{ procedure.budget.writingNumber }</TableCell>
       <TableCell align="center" className={classes.tablecellWidth}>{ procedure.proceduresTemplate.name }</TableCell>
       <TableCell align="center" className={classes.tablecellWidth}>{ procedure.budgetingTemplate.name }</TableCell>
       <TableCell align="center" className={classes.tablecellWidth}>{ procedure.client.fullName }</TableCell>

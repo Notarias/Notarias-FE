@@ -33,6 +33,7 @@ const TemplateRow = (props) => {
   return(
     <TableRow>
       <TableCell align="center" className={classes.tablecellWidth}>{ budget.serialNumber }</TableCell>
+      <TableCell align="center" className={classes.tablecellWidth}>{ budget.writingNumber }</TableCell>
       <TableCell align="center" className={classes.tablecellWidth}>{ budget.budgetingTemplate.name }</TableCell>
       <TableCell align="center" className={classes.tablecellWidth}>{ budget.proceduresTemplate.name }</TableCell>
       <TableCell align="center" className={classes.tablecellWidth}>{ budget.client.fullName }</TableCell>

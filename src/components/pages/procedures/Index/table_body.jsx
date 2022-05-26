@@ -11,18 +11,22 @@ import { Typography }                           from '@material-ui/core';
 const ProceduresTableBody = (props) => {
 
   const { 
+    classes,
     page,
     per,
     sortDirection,
     sortField,
-    assingTotalRecords,
     simpleSearchValue,
-    clientFullNameValue,
+    assingTotalRecords,
+    clientNameValue,
     serialNumberValue,
-    budgetingTemplateNameValue,
-    proceduresTemplateNameValue,
-    createdAtValue,
-    classes
+    writingNumberValue,
+    budgetTemplateName,
+    procedureTemplateName,
+    initDateValue,
+    endDateValue,
+    setRunAdvancedSearch,
+    runAdvancedSearch
   } = props
 
   let variables = {
@@ -32,23 +36,37 @@ const ProceduresTableBody = (props) => {
     sortField: sortField,
     search: {
       simpleSearch: simpleSearchValue,
-      clientFullName: clientFullNameValue,
+      clientFullName: clientNameValue,
       serialNumber: serialNumberValue,
-      budgetingTemplateName: budgetingTemplateNameValue,
-      proceduresTemplateName: proceduresTemplateNameValue,
-      createdAt: createdAtValue,
+      writingNumber: writingNumberValue,
+      budgetingTemplate: budgetTemplateName,
+      proceduresTemplate: procedureTemplateName,
+      initDate: initDateValue,
+      endDate: endDateValue,
     }
   }
   
   const [array] = useState([1,2,3,4,5]);
 
-  const { loading, data } = useQuery(
+  const { loading, data, refetch } = useQuery(
     GET_PROCEDURES, { variables: variables, fetchPolicy: "cache-and-network" }
   );
   
   useEffect(() => {
     assingTotalRecords((data && data.proceduresCount) || 0)
   }, [data && data.proceduresCount]);
+
+  useEffect(() => {
+    if(!loading && runAdvancedSearch) {
+      setRunAdvancedSearch(false)
+    }
+  }, [loading])
+
+  useEffect(() => {
+    if (runAdvancedSearch) {
+      refetch()
+    }
+  }, [runAdvancedSearch])
 
   return(
     <TableBody>

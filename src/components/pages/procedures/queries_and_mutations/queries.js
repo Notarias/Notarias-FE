@@ -59,11 +59,17 @@ export const GET_PROCEDURES = gql`
         avatarThumbUrl
       }
       reporter { avatarThumbUrl }
+      budget{ 
+        writingNumber
+        proceedingNumber
+      }
       createdAt
       updatedAt
       completedAt
     }
-    proceduresCount
+    proceduresCount(
+      search: $search
+    )
   }
 `
 

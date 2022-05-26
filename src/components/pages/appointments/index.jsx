@@ -30,7 +30,7 @@ const AppointmentsIndex = (props) => {
   const [searchValue, setSearchValue]    = useState(new Date());
   const [date, setDate]                  = useState(new Date());
   const [newDialog, setNewDialog]        = useState(false);
-console.log(new Date())
+
   let variables = {
     page: page,
     per: per,
