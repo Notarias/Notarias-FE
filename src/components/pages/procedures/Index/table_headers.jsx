@@ -10,8 +10,15 @@ const TableHeaders = (props) => {
     <TableHead>
       <TableRow>
         <SortHeader
-          text="No. de serie"
+          text="No. de Serie"
           field_property="serial_number"
+          current_field={ field }
+          sort_direction={ direction }
+          callback={ sortHandler }
+        />
+        <SortHeader
+          text="No. Escritura"
+          field_property="writing_number"
           current_field={ field }
           sort_direction={ direction }
           callback={ sortHandler }

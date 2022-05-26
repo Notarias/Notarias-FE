@@ -40,10 +40,11 @@ const TableRows = (props) => {
       return <Chip color="secondary" label="En Proceso" />
     }
   }
-
+console.log(procedure)
   return(
     <TableRow>
-      <TableCell align="center" className={classes.tablecellWidth}>{ procedure && procedure.serialNumber }</TableCell>
+      <TableCell align="center" className={classes.tablecellWidth}>{ procedure.serialNumber }</TableCell>
+      <TableCell align="center" className={classes.tablecellWidth}>{ procedure.budget.writingNumber }</TableCell>
       <TableCell align="center" className={classes.tablecellWidth}>{ procedure.proceduresTemplate.name }</TableCell>
       <TableCell align="center" className={classes.tablecellWidth}>{ procedure.budgetingTemplate.name }</TableCell>
       <TableCell align="center" className={classes.tablecellWidth}>{ procedure.client.fullName }</TableCell>

@@ -1,4 +1,4 @@
-import React, { useState }                  from 'react'
+import React, {useState}                    from 'react'
 import Grid                                 from '@material-ui/core/Grid';
 import TextField                            from '@material-ui/core/TextField';
 import { withStyles }                       from '@material-ui/core/styles';
@@ -7,65 +7,76 @@ import Paper                                from '@material-ui/core/Paper';
 import Button                               from '@material-ui/core/Button';
 
 const AdvancedSearchProcedure = (props) => {
-  const { 
-    classes,
-    changeAdvanceSearch,
+  const {
     setClientNameValue,
     setSerialNumberValue,
-    setBudgetTemplateNameValue,
-    setProcedureTemplateNameValue,
-    setCreatedAtValue,
+    setWritingNumberValue,
+    setProcedureTemplateName,
+    setBudgetTemplateName,
+    setInitDateValue,
+    setEndDateValue,
     clientNameInputRef,
     serialNumberInputRef,
-    budgetTempalteInputRef,
+    writingNumberInputRef,
     procedureTemplateInputRef,
-    createdAtInputRef
+    budgetTempalteInputRef,
+    createdAtInputRef,
+    setRunAdvancedSearch
   } = props
- 
-  const [changeClientName, setChangeClientName] = useState(null)
-  const [changeSerialNumber, setChangeSerialNumber] = useState(null)
-  const [changeBudgetTemplateName, setChangeBudgetTemplateName] = useState(null)
-  const [changeProcedureTemplateName, setChangeProcedureTemplateName]  = useState(null)
-  const [changeCreatedAt, setChangeCreatedAt] = useState(null)
-  
+
+  const [clientName, setClientName] = useState();
+  const [serialNumber, setSerialNumber] = useState();
+  const [writingNumber, setWritingNumber] = useState();
+  const [procedureTemplate, setProcedureTemplate] = useState();
+  const [budgetTemplate, setBudgetTemplate] = useState();
+  const [initDate, setInitDate] = useState();
+  const [endDate, setEndDate] = useState();
 
   const onChangeClientName = (event) => {
-    setChangeClientName(event.target.value)
+    setClientName(event.target.value);
   }
 
   const onChangeSerialNumber = (event) => {
-    const onlyString = event.target.value.toString()
-    const onlyNums = onlyString.replace(/[^0-9]/g, '');
-    event.target.value = onlyNums
-    setChangeSerialNumber(Number(event.target.value))
+    setSerialNumber(event.target.value);
   }
 
-  const onChangeBudgetTemplateName = (event) => {
-    setChangeBudgetTemplateName(event.target.value)
+  const onChangeWritingNumber = (event) => {
+    setWritingNumber(event.target.value);
   }
 
   const onChangeProcedureTemplateName = (event) => {
-    setChangeProcedureTemplateName(event.target.value)
+    setProcedureTemplate(event.target.value);
   }
 
-  const onChangeCreatedAtName = (event) => {
-    setChangeCreatedAt(event.target.value)
+  const onChangeBudgetTemplateName = (event) => {
+    setBudgetTemplate(event.target.value);
+  }
+
+  const onChangeInitDate = (event) => {
+    setInitDate(event.target.value);
+  }
+
+  const onChangeEndDate = (event) => {
+    setEndDate(event.target.value);
   }
 
   const startAdvanceSearch = () => {
-    setClientNameValue(changeClientName)
-    setSerialNumberValue(changeSerialNumber > 0 ? changeSerialNumber : null)
-    setBudgetTemplateNameValue(changeBudgetTemplateName)
-    setProcedureTemplateNameValue(changeProcedureTemplateName)
-    setCreatedAtValue(changeCreatedAt)
+    setClientNameValue(clientName);
+    setSerialNumberValue(serialNumber);
+    setWritingNumberValue(writingNumber);
+    setProcedureTemplateName(procedureTemplate);
+    setBudgetTemplateName(budgetTemplate);
+    setInitDateValue(new Date(`${initDate} 00:00:00`));
+    setEndDateValue(new Date(`${endDate} 23:59:59`));
+    setRunAdvancedSearch(true);
   }
 
   return(
-    <Grid container justifyContent="flex-end" className={changeAdvanceSearch ? classes.gridInputAdvancedSearchHide : classes.gridInputAdvancedSearch}>
+    <Grid container justifyContent="flex-end" style={{paddingTop:'23px'}}>
       <Grid container item xs={6} direction="row" justifyContent="flex-end">
         <Paper style={{padding: "20px"}}>
-          <Grid container item xs={12} direction="row">
-            <Grid item xs={8} style={{paddingRight: "15px"}}>
+          <Grid container item xs={12} direction="row" justifyContent="flex-end">
+            <Grid item xs={6} style={{paddingRight: "15px"}}>
               <TextField
                 inputRef={clientNameInputRef}
                 onChange={onChangeClientName}
@@ -76,20 +87,57 @@ const AdvancedSearchProcedure = (props) => {
                 fullWidth
               />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={3} style={{paddingRight: "15px"}}>
+              <TextField
+                inputRef={procedureTemplateInputRef}
+                onChange={onChangeProcedureTemplateName}
+                size="small"
+                 id="procedure_template_name"
+                label="Trámite"                                            
+                variant="outlined"
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={3}>
+              <TextField
+                inputRef={createdAtInputRef}
+                onChange={onChangeInitDate}
+                size="small"
+                id="created_at"
+                label="Fecha Inicial"
+                variant="outlined"
+                type="date"
+                fullWidth
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            </Grid>
+          </Grid>
+          <Grid container item xs={12} direction="row" justifyContent="flex-end" style={{ paddingTop: '15px' }}>
+            <Grid item xs={2} style={{paddingRight: "15px"}}>
               <TextField
                 inputRef={serialNumberInputRef}
                 onChange={onChangeSerialNumber}
                 size="small"
                 id="serial_number"
-                label="No. serie"
+                label="No.Serie"
                 variant="outlined"
                 fullWidth
               />
             </Grid>
-          </Grid>
-          <Grid container item xs={12} direction="row" style={{ paddingTop: '15px' }}>
             <Grid item xs={4} style={{paddingRight: "15px"}}>
+              <TextField
+                inputRef={writingNumberInputRef}
+                onChange={onChangeWritingNumber}
+                size="small"
+                id="writing_number"
+                label="No.Escritura"
+                variant="outlined"
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={3} style={{paddingRight: "15px"}}>
               <TextField
                 inputRef={budgetTempalteInputRef}
                 onChange={onChangeBudgetTemplateName}
@@ -100,26 +148,19 @@ const AdvancedSearchProcedure = (props) => {
                 fullWidth
               />
             </Grid>
-            <Grid item xs={4} style={{paddingRight: "15px"}}>
-              <TextField
-                inputRef={procedureTemplateInputRef}
-                onChange={onChangeProcedureTemplateName}
-                size="small"
-                id="procedure_template_name"
-                label="Trámite"
-                variant="outlined"
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={3}>
               <TextField
                 inputRef={createdAtInputRef}
-                onChange={onChangeCreatedAtName}
+                onChange={onChangeEndDate}
                 size="small"
                 id="created_at"
-                label="Fecha Inicial"
+                label="Fecha Final"
                 variant="outlined"
+                type="date"
                 fullWidth
+                InputLabelProps={{
+                  shrink: true,
+                }}
               />
             </Grid>
           </Grid>

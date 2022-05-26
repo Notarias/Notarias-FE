@@ -11,19 +11,19 @@ import { Typography }                           from '@material-ui/core';
 
 export default (props) => {
   const { 
+    classes,
     page,
     per,
     sortDirection,
     sortField,
     simpleSearchValue,
     assingTotalRecords,
-    classes,
     clientNameValue,
     serialNumberValue,
+    writingNumberValue,
+    budgetTemplateNameValue,
     moreThanValue,
-    lessThanValue,
-    setRunAdvancedSearch,
-    runAdvancedSearch
+    lessThanValue
   } = props
 
   let variables = {
@@ -35,32 +35,22 @@ export default (props) => {
       simpleSearch: simpleSearchValue,
       clientName: clientNameValue,
       serialNumber: serialNumberValue,
+      writingNumber: writingNumberValue,
+      templateName: budgetTemplateNameValue,
       totalMoreThanEq: moreThanValue,
       totalLessThanEq: lessThanValue,
     }
   };
 
-  const { loading, data, refetch } = useQuery(
+  const { loading, data } = useQuery(
     GET_BUDGETS, { variables: variables, fetchPolicy: "cache-and-network" }
   );
-
+console.log(data)
   const [array] = useState([1,2,3,4,5]);
 
   useEffect(() => {
     assingTotalRecords((data && data.budgetsCount) || 0)
-  }, [loading]);
-
-  useEffect(() => {
-    if(!loading && runAdvancedSearch) {
-      setRunAdvancedSearch(false)
-    }
-  }, [loading])
-
-  useEffect(() => {
-    if (runAdvancedSearch) {
-      refetch()
-    }
-  }, [runAdvancedSearch])
+  }, [data && data.budgetsCount]);
 
   return(
     <TableBody>

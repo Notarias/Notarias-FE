@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { styles } from './styles';
 import Breadcrumbs from '../../ui/breadcrumbs'
+import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableRow from '@material-ui/core/TableRow';
@@ -20,40 +21,62 @@ const BREADCRUMBS = [
 const ProceduresIndex = (props) => {
 
   const { classes } = props
-  const [searchLoading, setSearchLoading] = useState(false);
-  const [changeAdvanceSearch, setChangeAdvanceSearch] = useState(true);
-  const [advanceSearchActived, setAdvanceSearchActived] = useState(false);
-  const [page, setPage] = useState(0);
-  const [per, setPer] = useState(5);
-  const [timeout, setSetTimeout] = useState(null);
-  const [sortField, setSortField] = useState("serial_number");
-  const [sortDirection, setSortDirection] = useState("desc");
-  const [simpleSearchValue, setSimpleSearchValue] = useState(null);
-  const [serialNumberValue, setSerialNumberValue] = useState(null);
-  const [clientFullName, setClientFullName] = useState(null);
-  const [budgetTemplateName, setBudgetTemplateName] = useState(null);
-  const [proceduresTemplateName, setProceduresTemplateName] = useState(null);
-  const [createdAt, setCreatedAt] = useState(null);
-  const [templatesVariables, setTemplatesVariables] = useState(null);
-  const [totalRecords, setTotalRecords]  = useState(0);
+  const [searchLoading, setSearchLoading]           = useState(false);
+  const [sortField, setSortField]                   = useState("serial_number");
+  const [sortDirection, setSortDirection]           = useState("desc");
+  const [timeout, setSetTimeout]                    = useState(null);
+  const [page, setPage]                             = useState(0);
+  const [per, setPer]                               = useState(5);
+  const [totalRecords, setTotalRecords]             = useState(0);
+  const [simpleSearchValue, setSimpleSearchValue]   = useState(null);
 
-  const clientNameInputRef = useRef();
-  const serialNumberInputRef = useRef();
-  const budgetTempalteInputRef = useRef();
+  const [clientNameValue, setClientNameValue]               = useState(null);
+  const [serialNumberValue, setSerialNumberValue]           = useState(null);
+  const [writingNumberValue, setWritingNumberValue]         = useState(null);
+  const [budgetTemplateName, setBudgetTemplateName]         = useState(null);
+  const [procedureTemplateName, setProcedureTemplateName] = useState(null);
+  const [initDateValue, setInitDateValue]                   = useState(null);
+  const [endDateValue, setEndDateValue]                     = useState(null);
+
+  const [runAdvancedSearch, setRunAdvancedSearch]     = useState(false);
+  const [openAdvancedSearch, setOpenAdvancedSearch]   = useState(false);
+
+  const clientNameInputRef        = useRef();
+  const serialNumberInputRef      = useRef();
+  const writingNumberRef          = useRef();
+  const budgetTempalteInputRef    = useRef();
   const procedureTemplateInputRef = useRef();
-  const createdAtInputRef = useRef();
+  const initDateValueRef          = useRef();
+  const endDateValueRef           = useRef();
 
-  const toEraseValue = () => {
-    clientFullName && (clientFullName.current.value = "")
-    budgetTemplateName && (budgetTemplateName.current.value = "")
-    proceduresTemplateName && (proceduresTemplateName.current.value = "")
+  const clearAdvancedSearchRefsValues = () => {
+    clientNameInputRef && clientNameInputRef.current && (clientNameInputRef.current.value = null);
+    serialNumberInputRef && serialNumberInputRef.current && (serialNumberInputRef.current.value = null);
+    writingNumberRef && writingNumberRef.current && (writingNumberRef.current.value = null);
+    budgetTempalteInputRef && budgetTempalteInputRef.current && (budgetTempalteInputRef.current.value = null);
+    procedureTemplateInputRef && procedureTemplateInputRef.current && (procedureTemplateInputRef.current.value = null);
+    initDateValueRef && initDateValueRef.current && (initDateValueRef.current.value = null);
+    endDateValueRef && endDateValueRef.current && (endDateValueRef.current.value = null);
   }
 
-  const advancedButtonClick = (simpleSearchRef, callback) => {
+  const clearAdvancedSearchValues = () => {
+    setClientNameValue(null);
+    setSerialNumberValue(null);
+    setWritingNumberValue(null);
+    setBudgetTemplateName(null);
+    setProcedureTemplateName(null);
+    setInitDateValue(null);
+    setEndDateValue(null);
+  }
+
+  const switchAdvancedSearchClick = (simpleSearchRef, callback) => {
     return(() => {
       simpleSearchRef.current.value = null
       callback()
-      toEraseValue()
+      setSimpleSearchValue(null)
+      clearAdvancedSearchValues()
+      clearAdvancedSearchRefsValues()
+      setOpenAdvancedSearch(!openAdvancedSearch)
     })
   }
 
@@ -83,39 +106,43 @@ const ProceduresIndex = (props) => {
     setSetTimeout(setTimeout(() => {
       setSimpleSearchValue(value)
       setSearchLoading(false)
+      clearAdvancedSearchValues()
+      clearAdvancedSearchRefsValues()
     }, 2000))
   }
 
   return(
     <>
       <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
-      <div className={ classes.root }>
+      <Grid container direction='row' className={ classes.root }>
         <SearchInput
           classes={classes}
           searchLoading={searchLoading}
-          changeAdvanceSearch={changeAdvanceSearch}
-          setChangeAdvanceSearch={setChangeAdvanceSearch}
           onChangeSearch={onChangeSearch.bind(this)}
-          setSimpleSearchValue={setSimpleSearchValue}
-          setSerialNumberValue={setSerialNumberValue}
-          setClientFullName={setClientFullName}
-          setBudgetingTemplateName={setBudgetTemplateName}
-          setProceduresTemplateName={setProceduresTemplateName}
-          setCreatedAt={setCreatedAt}
-          advancedButtonClick={advancedButtonClick}
-          advanceSearchActived={advanceSearchActived}
-          setAdvanceSearchActived={setAdvanceSearchActived}
+          switchAdvancedSearchClick={switchAdvancedSearchClick}
+          setRunAdvancedSearch={setRunAdvancedSearch}
+          openAdvancedSearch={openAdvancedSearch}
         />
-        <AdvancedSearchProcedure
-          classes={classes}
-          changeAdvanceSearch={changeAdvanceSearch}
-          setSerialNumberValue={setSerialNumberValue}
-          clientNameInputRef={clientNameInputRef}
-          serialNumberInputRef={serialNumberInputRef}
-          budgetTempalteInputRef={budgetTempalteInputRef}
-          procedureTemplateInputRef={procedureTemplateInputRef}
-          createdAtInputRef={createdAtInputRef}
-        />
+        {
+          openAdvancedSearch && <AdvancedSearchProcedure
+            setClientNameValue={setClientNameValue}
+            setSerialNumberValue={setSerialNumberValue}
+            setWritingNumberValue={setWritingNumberValue}
+            setBudgetTemplateName={setBudgetTemplateName}
+            setProcedureTemplateName={setProcedureTemplateName}
+            setInitDateValue={setInitDateValue}
+            setEndDateValue={setEndDateValue}
+            clientNameInputRef={clientNameInputRef}
+            serialNumberInputRef={serialNumberInputRef}
+            writingNumberRef={writingNumberRef}
+            budgetTempalteInputRef={budgetTempalteInputRef}
+            procedureTemplateInputRef={procedureTemplateInputRef}
+            initDateValueRef={initDateValueRef}
+            endDateValueRef={endDateValueRef}
+            runAdvancedSearch={runAdvancedSearch}
+            setRunAdvancedSearch={setRunAdvancedSearch}
+          />
+        }
         <div className={ classes.tableWrapper }>
           <Paper>
             <Table>
@@ -125,20 +152,22 @@ const ProceduresIndex = (props) => {
                 sortHandler={ sort.bind(this) }
               />
               <ProceduresTableBody
+                classes={classes}
                 page={page}
                 per={per}
-                sortField={sortField}
                 sortDirection={sortDirection}
+                sortField={sortField}
                 simpleSearchValue={simpleSearchValue}
-                serialNumberValue={serialNumberValue}
-                clientFullName ={clientFullName}
-                budgetingTemplateName={budgetTemplateName}
-                proceduresTemplateName ={proceduresTemplateName}
-                createdAt={createdAt}
-                templatesVariables={templatesVariables}
-                setTemplatesVariables={setTemplatesVariables}
                 assingTotalRecords={assingTotalRecords}
-                classes={classes}
+                clientNameValue={clientNameValue}
+                serialNumberValue={serialNumberValue}
+                writingNumberValue={writingNumberValue}
+                budgetTemplateName={budgetTemplateName}
+                procedureTemplateName={procedureTemplateName}
+                initDateValue={initDateValue}
+                endDateValue={endDateValue}
+                setRunAdvancedSearch={setRunAdvancedSearch}
+                runAdvancedSearch={runAdvancedSearch}
               />
               <TableFooter>
                 <TableRow>
@@ -156,7 +185,7 @@ const ProceduresIndex = (props) => {
             </Table>
           </Paper>
         </div>
-      </div>
+      </Grid>
     </>
   )
 }

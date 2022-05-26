@@ -104,6 +104,7 @@ export const GET_BUDGETS = gql`
       }
       id
       serialNumber
+      writingNumber
       total
       totalCredit
       totalDebt
@@ -111,7 +112,9 @@ export const GET_BUDGETS = gql`
       totalPayable
       completedAt
     }
-    budgetsCount
+    budgetsCount(
+      search: $search
+    )
   }
 `
 
