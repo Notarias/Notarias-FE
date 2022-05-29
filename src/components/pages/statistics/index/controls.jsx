@@ -19,10 +19,12 @@ export default (props) => {
     switchTotal,
     switchPaid,
     switchDebt,
+    switchPayable,
     changeSwitchIncome,
     changeSwitchTotal,
     changeSwitchPaid,
     changeSwitchDebt,
+    changeSwitchPayable,
     templateId,
     templateTabsIds,
     userInfo,
@@ -39,7 +41,7 @@ export default (props) => {
     <>
       <Grid item container direction='column'>
         <Grid item xs style={{ paddingTop: '30px' }}>
-          <TextField type='date' fullWidth label="Fecha Inicial" value={date} onChange={changeDate}/>
+          <TextField type='month' fullWidth label="Fecha Inicial" value={date} onChange={changeDate}/>
         </Grid>
         <Grid item xs style={{ paddingTop: '30px' }}>
           <SelectUsers userInfo={userInfo} setUserInfo={setUserInfo} clientInfo={clientInfo}/>
@@ -62,23 +64,27 @@ export default (props) => {
             <FormGroup>
               <FormControlLabel
                 control={<Checkbox checked={switchIncome} onChange={changeSwitchIncome} name="income" />}
-                label="Ingreso"
+                label="Ingresos"
               />
               <FormControlLabel
                 control={<Checkbox checked={switchTotal} onChange={changeSwitchTotal} name="total" />}
                 label="Total a pagar"
+              />
+              <FormControlLabel
+                control={<Checkbox checked={switchPayable} onChange={changeSwitchPayable} name="payable" />}
+                label="Por saldar"
               />
             </FormGroup>
           </Grid>
           <Grid item xs={6}>
             <FormGroup>
               <FormControlLabel
-                control={<Checkbox checked={switchPaid} onChange={changeSwitchPaid} name="pagado" />}
-                label="Egreso"
+                control={<Checkbox checked={switchPaid} onChange={changeSwitchPaid} name="paid" />}
+                label="Egresos"
               />
               <FormControlLabel
                 control={<Checkbox checked={switchDebt} onChange={changeSwitchDebt} name="debt" />}
-                label="Saldo"
+                label="Por Pagar"
               />
             </FormGroup>
           </Grid>

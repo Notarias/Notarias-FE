@@ -22,6 +22,7 @@ export const STATISTICS_QUERY = gql`
       income
       paid
       debt
+      payable
     }
   }
 `
@@ -49,8 +50,10 @@ export const TAB_STATISTICS_QUERY = gql`
     ){
       name
       total
+      income
       paid
       debt
+      payable
     }
   }
 `

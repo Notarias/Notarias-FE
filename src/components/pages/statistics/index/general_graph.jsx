@@ -38,6 +38,7 @@ export default (props) => {
     switchTotal,
     switchPaid,
     switchDebt,
+    switchPayable,
     date,
     timeFrame,
     graphStatus,
@@ -74,10 +75,16 @@ export default (props) => {
               <Tooltip content={<CustomTooltip />}/>
               <Legend />
               <LabelList dataKey="name" position="top" />
+              total
+              income
+              paid
+              debt
+              payable
               { switchTotal && <Bar isAnimationActive={false} type="monotone" name='Total a Pagar' dataKey="total" fill="#141414" fillOpacity={1}  />}
               { switchIncome && <Bar isAnimationActive={false} type="monotone" name='Ingresos' dataKey="income" fill="#3f952b" fillOpacity={1}  /> }
               { switchPaid && <Bar isAnimationActive={false} type="monotone" name='Egresos' dataKey="paid" fill="#ff0000" fillOpacity={1}  />}
-              { switchDebt && <Bar isAnimationActive={false} type="monotone" name='Saldo' dataKey="debt" fill="#1727ff" fillOpacity={1}  /> }
+              { switchDebt && <Bar isAnimationActive={false} type="monotone" name='Por pagar' dataKey="debt" fill="#1727ff" fillOpacity={1}  /> }
+              { switchPayable && <Bar isAnimationActive={false} type="monotone" name='Por saldar' dataKey="payable" fill="#CCCC00" fillOpacity={1}  /> }
             </BarChart>
           </ResponsiveContainer>
       }

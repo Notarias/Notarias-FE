@@ -36,6 +36,7 @@ export default (props) => {
   const [switchTotal, setSwitchTotal] = useState(true)
   const [switchPaid, setSwitchPaid] = useState(true)
   const [switchDebt, setSwitchDebt] = useState(true)
+  const [switchPayable, setSwitchPayable] = useState(true)
   const [templateId, setTemplateId] = useState('')
   const [templateTabsIds, setTemplateTabsIds] = useState([])
   const [graphStatus, setGraphStatus] = useState('all_budgets')
@@ -68,6 +69,10 @@ export default (props) => {
 
   const changeSwitchDebt = (event) => {
     setSwitchDebt(!!event.target.checked)
+  }
+
+  const changeSwitchPayable = (event) => {
+    setSwitchPayable(!!event.target.checked)
   }
 
   const changeTemplateId = (event) => {
@@ -105,10 +110,12 @@ export default (props) => {
                     switchTotal={switchTotal}
                     switchPaid={switchPaid}
                     switchDebt={switchDebt}
+                    switchPayable={switchPayable}
                     changeSwitchIncome={changeSwitchIncome}
                     changeSwitchTotal={changeSwitchTotal}
                     changeSwitchPaid={changeSwitchPaid}
                     changeSwitchDebt={changeSwitchDebt}
+                    changeSwitchPayable={changeSwitchPayable}
                     templateId={templateId}
                     templateTabsIds={templateTabsIds}
                     changeTemplateId={changeTemplateId}
@@ -141,6 +148,7 @@ export default (props) => {
                         switchTotal={switchTotal}
                         switchPaid={switchPaid}
                         switchDebt={switchDebt}
+                        switchPayable={switchPayable}
                         date={date}
                         timeFrame={timeFrame}
                         templateId={templateId}
@@ -155,6 +163,7 @@ export default (props) => {
                         switchTotal={switchTotal}
                         switchPaid={switchPaid}
                         switchDebt={switchDebt}
+                        switchPayable={switchPayable}
                         date={date}
                         timeFrame={timeFrame}
                         graphStatus={graphStatus}
