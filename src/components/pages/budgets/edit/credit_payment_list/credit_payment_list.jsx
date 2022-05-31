@@ -1,11 +1,15 @@
 import React, { useState, useEffect }       from 'react'
 import Button                               from '@material-ui/core/Button';
+import MenuItem                             from '@material-ui/core/MenuItem';
+import ListItemIcon                         from '@material-ui/core/ListItemIcon';
 import ListItemText                         from '@material-ui/core/ListItemText';
 import Dialog                               from '@material-ui/core/Dialog';
 import DialogActions                        from '@material-ui/core/DialogActions';
 import DialogContent                        from '@material-ui/core/DialogContent';
 import DialogTitle                          from '@material-ui/core/DialogTitle';
 import Grid                                 from '@material-ui/core/Grid';
+import MoneyOffIcon                         from '@material-ui/icons/MoneyOff';
+import ListAltIcon                          from '@material-ui/icons/ListAlt';
 import NumberFormat                         from 'react-number-format';
 import PropTypes                            from 'prop-types';
 import CreditPaymentRow                     from './credit_payment_row';
@@ -67,12 +71,20 @@ const CreditPaymentList = (props) => {
 
   if (data && data.creditPayments.length === 0) {
     return(
-      <ListItemText primary="No hay Ingresos" />
+      <>
+        <MenuItem key="2-creditPayment">
+          <ListItemIcon><MoneyOffIcon/></ListItemIcon>
+          <ListItemText primary="No hay Ingresos" />
+        </MenuItem>
+      </>
     )
   } else {
     return(
       <>
-        <ListItemText primary="Lista de Ingresos" onClick={handleClickOpen}/>
+        <MenuItem key="2-paymentList" onClick={handleClickOpen}>
+          <ListItemIcon><ListAltIcon/></ListItemIcon>
+          <ListItemText primary="Ingresos"/>
+        </MenuItem>
         <Dialog open={open} onClose={handleClose} fullWidth maxWidth='md'>
           <DialogTitle>
             <Grid container direction="row" justifyContent='center'>

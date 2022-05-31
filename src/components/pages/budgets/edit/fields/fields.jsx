@@ -1,5 +1,6 @@
 import React, { useState, useEffect }         from 'react';
 import Grid                                   from '@material-ui/core/Grid';
+import Hidden                                 from '@material-ui/core/Hidden';
 import Skeleton                               from '@material-ui/lab/Skeleton';
 import Divider                                from '@material-ui/core/Divider';
 import FieldValue                             from './field_value';
@@ -28,12 +29,6 @@ const Fields = (props) => {
   useEffect(() => {
     data && setFields(data.budgetingTemplateTabFields);;
   }, [loading, data])
-
-  // useEffect(() => {
-  //   if (parentRef.current && !scrollHeight) {
-  //     setScrollHeight(parentRef.current.scrollHeight)
-  //   }
-  // }, [parentRef.current && parentRef.current.scrollHeight])
 
   const renderFields = () => {
 
@@ -74,42 +69,28 @@ const Fields = (props) => {
           )}
         </Grid>
         <Divider variant="middle"/>
-        <Grid container  justifyContent="flex-end" item style={{ paddingTop: "20px", paddingBottom: "20px" }}>
-          <Grid container item direction="row" xs={4} md={4} lg={6}>
-            { loading || !data ? 
-              <Grid container item xs={12} justifyContent="center" alignContent='flex-start'>
-                <Grid container item xs={2} justifyContent="center">
-                  <Skeleton variant="circle" width={40} height={40}/>
-                </Grid>
-                <Grid container item xs={10} justifyContent="flex-start">
-                  <Skeleton variant="rect" width="100%" height={40}/>
-                </Grid>
-              </Grid>
-            : 
+        <Hidden mdDown>
+          <Grid container item justifyContent="flex-end"  style={{ paddingTop: "20px", paddingBottom: "20px" }}>
+            <Grid container item xs>
               <CreateComments budget={budget}/>
-            }
-          </Grid>
-          <Grid container item xs={8} md={8} lg={6} alignItems="center" className={classes.totalValuesGridContainer}>
-            { loading || !data ? 
-              <Grid container item direction="row" justifyContent='center'>
-                <Grid item xs={7}>
-                  <Skeleton variant="text"/>
-                </Grid>
-                <Grid item xs={7}>
-                  <Skeleton variant="text"/>
-                </Grid>
-                <Grid item xs={7}>
-                  <Skeleton variant="text"/>
-                </Grid>
-                <Grid item xs={7}>
-                  <Skeleton variant="text"/>
-                </Grid>
-              </Grid>
-            : 
+            </Grid>
+            <Grid container item xs={8} lg={8} xl={6} alignItems="flex-end" className={classes.totalValuesGridContainer}>
               <FieldTotalValues budget={budget}/>
-            }
+            </Grid>
           </Grid>
-        </Grid>
+        </Hidden>
+
+        <Hidden lgUp>
+          <Grid container item direction='column' justifyContent="center" alignItems='stretch'  style={{ padding: "20px"}}>
+            <Grid container item style={{ paddingBottom: "20px"}}>
+              <CreateComments budget={budget}/>
+            </Grid>
+            <Grid container item alignItems="center" className={classes.totalValuesGridContainer}>
+              <FieldTotalValues budget={budget}/>
+            </Grid>
+          </Grid>
+        </Hidden>
+
       </Grid>
     )
   }

@@ -1,6 +1,7 @@
 import React, {useState}           from 'react';
 import Skeleton                    from '@material-ui/lab/Skeleton';
 import Grid                        from '@material-ui/core/Grid';
+import Hidden                      from '@material-ui/core/Hidden';
 import Typography                  from '@material-ui/core/Typography';
 import Divider                     from '@material-ui/core/Divider';
 import IconButton                  from '@material-ui/core/IconButton';
@@ -12,13 +13,12 @@ import OpenInNewIcon               from '@material-ui/icons/OpenInNew';
 import { Link }                    from 'react-router-dom';
 import AsigneesList                from '../asignees_list';
 import Reporter                    from '../reporter';
-import BudgetActions               from './budget_actions';
+import BudgetActionsMenu           from './budget_actions_menu';
 import BudgetFileUploader          from './budget_file_uploader';
-import PaymentDrawer               from '../payment_drawer';
 import { BASE_URI }                from '../../../../../apollo';
 import ProceedingNumber            from './proceeding_number';
 import WritingNumber               from './writing_number';
-import CompleteBudget              from './complete_budget';
+import CompleteBudgetButton        from './complete_budget_button';
 
 export default (props) => {
 
@@ -40,7 +40,7 @@ export default (props) => {
               <Skeleton variant="circle" width={50} height={50}/>
             </Grid>
           </Grid>
-          <Divider style={{marginTop: '15px', marginBottom: '15px'}}/>
+          <Divider/>
           <Grid container item direction='row' spacing={2}>
             { array.map( (index) => {
               return(
@@ -58,54 +58,55 @@ export default (props) => {
         </Grid>
       :
         <>
-          <Grid item container xs={12} style={{ padding: "0" }} justifyContent='flex-end' alignItems='center' spacing={2}>
-            <Grid item>
-              <Tooltip title="Imprimir">
-                <Button
-                  href={`http://${BASE_URI}/invoices/${budget.id}.pdf?auth=${localStorage.getItem('jwtToken')}`}
-                  variant="contained"
-                  color="primary"
-                  target='_blank'
-                >
-                  <Print />
-                </Button>
-              </Tooltip>
+          <Hidden mdDown>
+            <Grid item container xs={12} style={{ padding: "0" }} justifyContent='flex-end' alignItems='center'>
+              <Grid item>
+                <Tooltip title="Imprimir">
+                  <Button
+                    href={`http://${BASE_URI}/invoices/${budget.id}.pdf?auth=${localStorage.getItem('jwtToken')}`}
+                    variant="contained"
+                    color="primary"
+                    target='_blank'
+                  >
+                    <Print />
+                  </Button>
+                </Tooltip>
+              </Grid>
+              <Grid item>
+                <Tooltip title="Vista Previa">
+                  <Link
+                    to={`/budgets/${ budget.id }/invoice`}
+                    color="inherit"
+                    underline="none"
+                    key="3-paymentList"
+                  >
+                    <IconButton color="default" >
+                      <VisibilityIcon/>
+                    </IconButton>
+                  </Link>
+                </Tooltip>
+              </Grid>
+              <Grid item>
+                <BudgetFileUploader budget={budget}/>
+              </Grid>
+              <Grid item>
+                <CompleteBudgetButton budget={budget}/>
+              </Grid>
+              <Grid item>
+                <BudgetActionsMenu budget={budget}/>
+              </Grid>
             </Grid>
-            <Grid item>
-              <Tooltip title="Vista Previa">
-                <Link
-                  to={`/budgets/${ budget.id }/invoice`}
-                  color="inherit"
-                  underline="none"
-                  key="3-paymentList"
-                >
-                  <IconButton color="default" >
-                    <VisibilityIcon/>
-                  </IconButton>
-                </Link>
-              </Tooltip>
+            <Grid item xs={12}>
+              <Divider/>
             </Grid>
-            <Grid item>
-              <BudgetFileUploader budget={budget}/>
-            </Grid>
-            <Grid item>
-              <PaymentDrawer budget={budget}/>
-            </Grid>
-            <Grid item>
-              <CompleteBudget budget={budget}/>
-            </Grid>
-            <Grid item>
-              <BudgetActions budget={budget}/>
-            </Grid>
-          </Grid>
-          <Grid item xs={12}>
-            <Divider/>
-          </Grid>
+          </Hidden>
           <Grid container item xs={12} alignItems='center'>
-            <Grid item xs={3}>
-              <Typography align='left'>Encargado:</Typography>
-            </Grid>
-            <Grid item xs={9}>
+            <Hidden mdDown>
+              <Grid item xs={3}>
+                <Typography align='left'>Encargado:</Typography>
+              </Grid>
+            </Hidden>
+            <Grid item xs>
               <AsigneesList
                 asigneeData={budget && budget.asignee}
                 budget={budget}
@@ -113,10 +114,12 @@ export default (props) => {
             </Grid>
           </Grid>
           <Grid container item xs={12} alignItems='center'>
-            <Grid item xs={3}>
-              <Typography align='left'>Reportador:</Typography>
-            </Grid>
-            <Grid container item xs={9}>
+            <Hidden mdDown>
+              <Grid item xs={3}>
+                <Typography align='left'>Reportador:</Typography>
+              </Grid>
+            </Hidden>
+            <Grid item xs>
               <Reporter
                 reporterData={budget && budget.reporter}
                 budget={budget}
@@ -124,40 +127,48 @@ export default (props) => {
             </Grid>
           </Grid>
           <Grid container item xs={12} alignItems='center'>
-            <Grid item xs={3}>
-              <Typography align='left'>Cliente:</Typography>
-            </Grid>
-            <Grid item xs={9}>
+            <Hidden mdDown>
+              <Grid item xs={3}>
+                <Typography align='left'>Cliente:</Typography>
+              </Grid>
+            </Hidden>
+            <Grid item xs>
               <Typography noWrap align='left' style={{ padding: '10px', textTransform: 'uppercase' }}>
                 <strong>{ budget && budget.client.firstName } { budget && budget.client.lastName }</strong>
               </Typography>
             </Grid>
           </Grid>
           <Grid container item xs={12} alignItems='center'>
-            <Grid item xs={3}>
-              <Typography align='left'>Presupuesto:</Typography>
-            </Grid>
-            <Grid item xs={9}>
+            <Hidden mdDown>
+              <Grid item xs={3}>
+                <Typography align='left'>Presupuesto:</Typography>
+              </Grid>
+            </Hidden>
+            <Grid item xs>
               <Typography noWrap align='left' style={{ padding: '10px', textTransform: 'uppercase' }}>
                 <strong>{ budget && budget.budgetingTemplate.name }</strong>
               </Typography>
             </Grid>
           </Grid>
           <Grid container item xs={12} alignItems='center'>
-            <Grid item xs={3}>
-              <Typography align='left'>Presupuesto No.</Typography>
-            </Grid>
-            <Grid item xs={9}>
+            <Hidden mdDown>
+              <Grid item xs={3}>
+                <Typography align='left'>Presupuesto No.</Typography>
+              </Grid>
+            </Hidden>
+            <Grid item xs>
               <Typography noWrap align='left' style={{ padding: '10px', textTransform: 'uppercase' }}>
                 <strong>{ budget && budget.serialNumber.toString().padStart(10, "0") }</strong>
               </Typography>
             </Grid>
           </Grid>
           <Grid container item xs={12} alignItems='center'>
-            <Grid item xs={3}>
-              <Typography align='left'>Trámite:</Typography>
-            </Grid>
-            <Grid item xs={9}>
+            <Hidden mdDown>
+              <Grid item xs={3}>
+                <Typography align='left'>Trámite:</Typography>
+              </Grid>
+            </Hidden>
+            <Grid item xs>
               {
                 budget.procedure ?
                   (
@@ -184,10 +195,12 @@ export default (props) => {
             </Grid>
           </Grid>
           <Grid container item xs={12} alignItems='center'>
-            <Grid item xs={3}>
-              <Typography align='left'>Trámite No.</Typography>
-            </Grid>
-            <Grid item xs={9}>
+            <Hidden mdDown>
+              <Grid item xs={3}>
+                <Typography align='left'>Trámite No.</Typography>
+              </Grid>
+            </Hidden>
+            <Grid item xs>
               <Typography noWrap align='left' style={{ padding: '10px', textTransform: 'uppercase' }}>
                 <strong>{ budget && budget.procedure.serialNumber.toString().padStart(10, "0") }</strong>
               </Typography>

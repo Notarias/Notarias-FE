@@ -1,9 +1,6 @@
 import React, { useState }        from 'react';
 import Grid                       from '@material-ui/core/Grid';
 import Paper                      from '@material-ui/core/Paper';
-import MoreHorizIcon              from '@material-ui/icons/MoreHoriz';
-import MenuItem                   from '@material-ui/core/MenuItem';
-import ListItemText               from '@material-ui/core/ListItemText';
 import Dialog                     from '@material-ui/core/Dialog';
 import DialogActions              from '@material-ui/core/DialogActions';
 import DialogContent              from '@material-ui/core/DialogContent';
@@ -22,9 +19,7 @@ import { useMutation }            from '@apollo/client'
 import Dropzone                   from 'react-dropzone';
 import PropTypes                  from 'prop-types';
 import NumberFormat               from 'react-number-format';
-import GenericDropdownMenu        from '../../../../ui/generic_dropdown_menu';
-import CurrentUserAvatar          from '../../edit/current_user_avatar';
-import CreditPaymentList          from '../../edit/credit_payment_list/credit_payment_list';
+import CurrentUserAvatar          from '../current_user_avatar';
 import { GLOBAL_MESSAGE }         from '../../../../../resolvers/queries';
 import client                     from '../../../../../apollo';
 import {
@@ -75,10 +70,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default (props) => {
-  const { budget } = props;
+const BudgetNewPayment = (props) => {
+  const { budget, open, openDialog } = props;
 
-  const [open, setOpen]                 = useState(false);
   const [pristine, setPristine]         = useState(true);
   const [paymentType, setPaymentType]   = useState("cash");
   const [paymentValue, setPaymentValue] = useState(0);
@@ -89,16 +83,6 @@ export default (props) => {
   const classes = useStyles();
   const inputsList = ["total"]
 
-  const handleClickOpen = () => {
-    setOpen(true)
-  }
-
-  const handleClose = () => {
-    setOpen(false);
-    setPristine(false);
-    setFile();
-  }
-
   const [createCreditPaymentMutation, {loading: createCreditPaymentLoading}] =
   useMutation(
     CREATE_CREDIT_PAYMENT,
@@ -108,7 +92,7 @@ export default (props) => {
         setPristine(false)
       },
       onCompleted(cacheData) {
-        setOpen(false);
+        openDialog();
       },
       refetchQueries: [
         {
@@ -176,6 +160,12 @@ export default (props) => {
     return (`${date}${separator}${month<10?`0${month}`:`${month}`}${separator}${year}`)
   }
 
+  const handleClose = () => {
+    setPristine(false);
+    setFile();
+    openDialog();
+  }
+
   const handlePaymentTypeChange = (event) => {
     setPaymentType(event.target.value)
   }
@@ -217,14 +207,6 @@ export default (props) => {
 
   return(
     <>
-      <GenericDropdownMenu icon={MoreHorizIcon}>
-        <MenuItem key="1-abono" onClick={handleClickOpen}>
-          <ListItemText primary="Nuevo Ingreso"/>
-        </MenuItem>
-        <MenuItem key="2-paymentList">
-          <CreditPaymentList budget={budget}/>
-        </MenuItem>
-      </GenericDropdownMenu>
       <Dialog open={open} onClose={handleClose} fullWidth>
         <DialogTitle>
           <Grid container direction='row'>
@@ -350,3 +332,5 @@ export default (props) => {
     </>
   )
 }
+
+export default BudgetNewPayment;
