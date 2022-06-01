@@ -28,15 +28,15 @@ const BudgetsEdit = (props) => {
   }, [loading, data])
 
   return(
-    <Grid container direction='column' alignItems="stretch" justifyContent="flex-start" style={{ minHeight: "100vh" }}>
+    <Grid container direction='column' alignItems="stretch" justifyContent="flex-start">
       <Grid item>
         <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
       </Grid>
       <Grid container item style={{ flex: '1 1 auto' }}>
-        <Grid item xs={8} lg={8}>
-          <Paper elevation={5} style={{ height: "100%" }} variant='outlined'>
+        <Grid item xs={8}>
+          <Paper elevation={5} variant='outlined'>
             <Grid container item direction="column"  justifyContent="flex-start" alignItems="stretch">
-              <Grid container item style={{ flex: "1 1 auto" }}  alignItems="stretch">
+              <Grid container item alignItems="stretch">
                 { 
                   budget &&
                   <InformationTabs budget={ budget }/>
@@ -45,7 +45,7 @@ const BudgetsEdit = (props) => {
             </Grid>
           </Paper>
         </Grid>
-        <Grid item xs={4} lg={4}>
+        <Grid item xs={4}>
           <Paper elevation={0} style={{ minHeight: "100%" }}>
             { budget && <Activities budget={budget} loadingBudget={loading}/> }
           </Paper>

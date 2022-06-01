@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Grid                from '@material-ui/core/Grid';
+import Hidden              from '@material-ui/core/Hidden';
 import Typography          from '@material-ui/core/Typography';
 import Button              from '@material-ui/core/Button';
 import TextField           from '@material-ui/core/TextField';
@@ -71,10 +72,12 @@ export default (props) => {
 
   return(
     <Grid container item xs={12} alignItems='center'>
-      <Grid item xs={3}>
-        <Typography align='left'>Expediente:</Typography>
-      </Grid>
-      <Grid item xs={9}>
+      <Hidden mdDown>
+        <Grid item xs={3}>
+          <Typography align='left'>Expediente:</Typography>
+        </Grid>
+      </Hidden>
+      <Grid item xs>
         <Button fullWidth style={{ padding: '10px' }} onClick={handleOpen}>
           <Grid container alignItems="center" justifyContent='flex-start' >
             <Typography noWrap align='left' style={{ paddingRight: "10px", fontWeight: 600 }}>

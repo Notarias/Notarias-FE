@@ -118,7 +118,7 @@ const CreateComments = (props) => {
       )
     } else {
       return(
-        <Grid container item xs={10} direction="row" justifyContent="flex-start" alignItems="flex-start">
+        <Grid container item xs direction="row" justifyContent="flex-start" alignItems="flex-start" style={{paddingLeft: '20px'}}>
           <TextField
             value={commentValue}
             fullWidth
@@ -134,7 +134,7 @@ const CreateComments = (props) => {
 
   return(
     <>
-      <Grid container item xs={2} justifyContent="center" alignItems="flex-start">
+      <Grid container item xs={1} lg={2} justifyContent="center" alignItems="flex-start">
         <Grid container justifyContent="center">
           {
             !loading && data &&
