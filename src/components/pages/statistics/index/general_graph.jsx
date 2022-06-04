@@ -5,12 +5,10 @@ import CircularProgress             from '@material-ui/core/CircularProgress';
 import Typography                   from '@material-ui/core/Typography';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LabelList } from 'recharts';
 
-
 const moneyFormatter = new Intl.NumberFormat('es-MX', {
   style: 'currency',
   currency: 'MXN',
 });
-
 
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
@@ -30,9 +28,7 @@ const CustomTooltip = ({ active, payload, label }) => {
   return null;
 };
 
-
-export default (props) => {
-
+const GeneralGraph = (props) => {
   const {
     switchIncome,
     switchTotal,
@@ -91,3 +87,5 @@ export default (props) => {
     </>
   )
 }
+
+export default GeneralGraph;

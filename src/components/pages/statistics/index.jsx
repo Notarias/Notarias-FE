@@ -6,6 +6,7 @@ import Divider                      from '@material-ui/core/Divider';
 import Breadcrumbs                  from '../../ui/breadcrumbs';
 import GeneralGraph                 from './index/general_graph';
 import TabGraph                     from './index/tab_graph';
+import TotalCards                   from './index/total_cards';
 import Controls                     from './index/controls';
 
 
@@ -27,10 +28,9 @@ const formatDate = (dateObject) => {
   )
 }
 
-
 export default (props) => {
-
-  const [date, setDate] = useState(formatDate(new Date()))
+  
+  const [date, setDate] = useState(new Date())
   const [timeFrame, setTimeFrame] = useState('day')
   const [switchIncome, setSwitchIncome] = useState(true)
   const [switchTotal, setSwitchTotal] = useState(true)
@@ -44,7 +44,8 @@ export default (props) => {
   const [clientInfo, setClientInfo] =useState('')
 
   const changeDate = (e) => {
-    setDate(e.target.value)
+    let dateStr = formatDate(new Date(`${e.target.value}-03`));
+    setDate(new Date(dateStr));
   }
 
   const changeTimeFrame = (e) => {
@@ -133,7 +134,10 @@ export default (props) => {
           </Grid>
         </Grid>
         <Grid container item xs={8} style={{ padding: '10px' }}>
-          <Grid item xs>
+          <Grid item xs={12}>
+            <TotalCards date={date}/>
+          </Grid>
+          <Grid item xs={12}>
             <Paper style={{ padding: '10px' }}>
               <Grid container direction='column'>
                 <Grid item>
