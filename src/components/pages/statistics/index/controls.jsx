@@ -10,7 +10,7 @@ import StatusSelect                 from './status_select';
 import SelectUsers                  from './select_users';
 import ClientSearch                 from './client_search';
 
-export default (props) => {
+const Controls = (props) => {
   const {
     date,
     changeDate,
@@ -37,11 +37,32 @@ export default (props) => {
     changeGraphStatus
   } = props
 
+  const formatMonthDate = (dateObject) => {
+    let date = new Date(dateObject)
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+  
+    month = month < 10 ? `0${month}` : `${month}`
+  
+    return (
+      `${year}-${month}`
+    )
+  }
+
   return(
     <>
       <Grid item container direction='column'>
         <Grid item xs style={{ paddingTop: '30px' }}>
-          <TextField type='month' fullWidth label="Fecha Inicial" value={date} onChange={changeDate}/>
+          <TextField
+            fullWidth
+            type='month'
+            label="Fecha Inicial"
+            value={formatMonthDate(date)}
+            onChange={changeDate}
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
         </Grid>
         <Grid item xs style={{ paddingTop: '30px' }}>
           <SelectUsers userInfo={userInfo} setUserInfo={setUserInfo} clientInfo={clientInfo}/>
@@ -98,3 +119,5 @@ export default (props) => {
     </>
   )
 }
+
+export default Controls;

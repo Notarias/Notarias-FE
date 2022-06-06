@@ -77,6 +77,39 @@ export const GET_STATISTICS_BUDGETING_TEMPLATE_TABS = gql`
     }
   }
 `
+
+export const GET_GENERAL_STATISTICS = gql`
+  query generalStatistics(
+    $date: String!,
+    $timeFrame: String,
+    $timeZone: String,
+    $status: String,
+    $userId: ID,
+    $clientId: ID
+  ){
+    statisticsPaymentsTotal(
+      date: $date,
+      timeFrame: $timeFrame,
+      timeZone: $timeZone,
+      status: $status,
+      userId: $userId,
+      clientId: $clientId
+    ){
+      total
+    }
+    statisticsCreditPaymentsTotal(
+      date: $date,
+      timeFrame: $timeFrame,
+      timeZone: $timeZone,
+      status: $status,
+      userId: $userId,
+      clientId: $clientId
+    ){      
+      total
+    }
+  }
+`
+
 export const USERS_QUICK_LIST = gql`
   query usersQuickList{
     usersQuickList{
