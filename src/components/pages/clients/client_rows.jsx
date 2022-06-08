@@ -70,7 +70,7 @@ export default (props) => {
                 <Grid>
                   <GenericDropdownMenu>
                     <Link 
-                      href={ `/clients/${client.id}` }
+                      href={ `/clients/${client.id}/edit` }
                       color="inherit"
                       underline="none"
                       className={ classes.linkWidthAndHeigth }

@@ -1,4 +1,4 @@
-import React, {useEffect }                from 'react';
+import React, { useState, useEffect }     from 'react';
 import { withStyles }                     from '@material-ui/core/styles';
 import { styles }                         from '../styles';
 import ListItemText                       from '@material-ui/core/ListItemText';
@@ -8,16 +8,16 @@ import SaveIcon                           from '@material-ui/icons/Save';
 import CancelIcon                         from '@material-ui/icons/Cancel';
 import Button                             from '@material-ui/core/Button';
 import { useMutation }                    from '@apollo/client'
-import { CREATE_CLIENT_ATTRIBUTE_VALUE }  from '../../clients_queries_and_mutations/queries'
+import { CREATE_CLIENT_ATTRIBUTE_VALUE }  from '../clients_queries_and_mutations/queries'
 import { useQuery }                       from '@apollo/client';
-import { GET_CLIENT_ATTRIBUTE_VALUE }     from '../../clients_queries_and_mutations/queries';
-import { UPDATE_CLIENT_ATTRIBUTE_VALUE }  from '../../clients_queries_and_mutations/queries';
+import { GET_CLIENT_ATTRIBUTE_VALUE }     from '../clients_queries_and_mutations/queries';
+import { UPDATE_CLIENT_ATTRIBUTE_VALUE }  from '../clients_queries_and_mutations/queries';
 
 
 const ClientAttribute = (props) => {
-  const {classes , attr, match} = props
-  const [attributeValue, setAttributeValue] = React.useState("")
-  const [pristine, setPristine] = React.useState(true)
+  const {attr, match} = props
+  const [attributeValue, setAttributeValue] = useState("")
+  const [pristine, setPristine] = useState(true)
 
   const { data: dataAttributeValue} = 
   useQuery(GET_CLIENT_ATTRIBUTE_VALUE, { variables: { "attributeId": Number(attr.id),"clientId":
@@ -105,7 +105,7 @@ const ClientAttribute = (props) => {
           />
         </Grid>
         <Grid container item xs={2} direction="row">
-          <Button className={classes.buttonAttributeDefault} disabled={pristine} onClick={() => {
+          <Button disabled={pristine} onClick={() => {
             setPristine(true) 
             setAttributeValue(attrValue ? dataAttributeValue.clientAttributeValue.value : "")
           }}
@@ -115,7 +115,7 @@ const ClientAttribute = (props) => {
         </Grid>
         <Grid container item xs={2} direction="row">
           <Button 
-            className={classes.buttonAttributeDefault}
+          
             disabled={pristine || loadingCreateClientAttributeValue || loadingUpdateClientAttributeValue}
             onClick={attrValue ? updateClientAttributeValue : newClientAttributeValue}
           >
@@ -144,7 +144,7 @@ const ClientAttribute = (props) => {
           />
         </Grid>
         <Grid container item xs={2} direction="row">
-          <Button className={classes.buttonAttributeDefault} disabled={pristine} onClick={() => {
+          <Button disabled={pristine} onClick={() => {
             setPristine(true) 
             setAttributeValue(attrValue ? dataAttributeValue.clientAttributeValue.value : "") 
           }}
@@ -153,8 +153,7 @@ const ClientAttribute = (props) => {
           </Button>
         </Grid>
         <Grid container item xs={2} direction="row">
-          <Button 
-            className={classes.buttonAttributeDefault}
+          <Button
             disabled={pristine || loadingCreateClientAttributeValue || loadingUpdateClientAttributeValue}
             onClick={attrValue ? updateClientAttributeValue : newClientAttributeValue}
           >

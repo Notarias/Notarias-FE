@@ -8,32 +8,93 @@ export const GET_CLIENT = gql`
       lastName
       email
       phone
-      address
-      business
-      category
-      rfc
-      serialNumber
       curp
+      zipCode
+      address
+      countryCode
+      state
+      city
+      business
+      rfc
       moral
+      legalPhone
+      legalZipCode
+      legalAddress
+      legalCountryCode
+      legalState
+      legalCity
     }
   }
 `
 
 export const UPDATE_CLIENT_MUTATION = gql`
-  mutation updateClient($id: ID!, $firstName: String, $lastName:String,$email: String, $rfc: String, $curp: String, $phone: String, $address: String, $business: String, $category: String){
-    updateClient(input: {id: $id, firstName: $firstName, lastName: $lastName, email: $email, rfc: $rfc, curp: $curp, phone: $phone, address: $address, business: $business, category: $category }){
+  mutation updateClient(
+    $id: ID!
+    $firstName: String
+    $lastName: String
+    $email: String
+    $phone: String
+    $curp: String
+    $zipCode: String
+    $address: String
+    $countryCode: String
+    $state: String
+    $city: String
+    $business: String
+    $rfc: String
+    $moral: Boolean
+    $legalPhone: String
+    $legalZipCode: String
+    $legalAddress: String
+    $legalCountryCode: String
+    $legalState: String
+    $legalCity: String
+    ){
+    updateClient(
+      input: {
+        id: $id,
+        firstName: $firstName,
+        lastName: $lastName,
+        email: $email,
+        phone: $phone,
+        curp: $curp,
+        zipCode: $zipCode,
+        address: $address,
+        countryCode: $countryCode,
+        state: $state,
+        city: $city,
+        business: $business,
+        rfc: $rfc,
+        moral: $moral,
+        legalPhone: $legalPhone,
+        legalZipCode: $legalZipCode,
+        legalAddress: $legalAddress,
+        legalCountryCode: $legalCountryCode,
+        legalState: $legalState,
+        legalCity: $legalCity,
+      }
+        ){
       client{
         id
         firstName
         lastName
         email
         phone
-        address
-        business
-        category
-        rfc
         curp
+        zipCode
+        address
+        countryCode
+        state
+        city
+        business
+        rfc
         moral
+        legalPhone
+        legalZipCode
+        legalAddress
+        legalCountryCode
+        legalState
+        legalCity
       }
     }
   }
