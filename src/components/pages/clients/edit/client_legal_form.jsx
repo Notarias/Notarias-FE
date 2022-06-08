@@ -37,7 +37,7 @@ const ClientLegalForm = (props) => {
             onChange={setFormValue}
             error={!!errors.rfc}
             helperText={errors.rfc}
-          />{console.log(errors)}
+          />
         </Grid>
         <Grid item xs={4} style={{paddingLeft:'10px', paddingTop:'20px'}}>
           <TextField

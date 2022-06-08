@@ -86,7 +86,6 @@ const Edit = (props) => {
           errorsHash[error.extensions.attribute] = error.message
           return(error.message)
         })
-        console.log("error")
         setErrors(errorsHash)
       },
       onCompleted(cacheData) {
@@ -100,7 +99,6 @@ const Edit = (props) => {
             }
           }
         })
-        console.log("Complete")
         setPristine(true);
       }
     }
