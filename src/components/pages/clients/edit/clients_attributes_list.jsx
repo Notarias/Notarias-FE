@@ -1,10 +1,10 @@
 import React, { useEffect, useState }     from 'react'
 import List                               from '@material-ui/core/List';
 import ListItem                           from '@material-ui/core/ListItem';
+import Typography                         from '@material-ui/core/Typography';
 import ClientAttribute                    from './client_attribute';
 import { useQuery }                       from '@apollo/client';
 import { GET_CLIENT_ATTRIBUTE }           from '../clients_queries_and_mutations/queries';
-import { Typography } from '@material-ui/core';
 
 const ClientsAttributesList = (props) => {
   const { match } = props

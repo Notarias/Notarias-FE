@@ -1,14 +1,52 @@
-import React                          from 'react';
-import Grid                           from '@material-ui/core/Grid';
-import TextField                      from '@material-ui/core/TextField';
-import MenuItem                       from '@material-ui/core/MenuItem';
+import React, { useState, useEffect }    from 'react';
+import Grid                              from '@material-ui/core/Grid';
+import TextField                         from '@material-ui/core/TextField';
+import MenuItem                          from '@material-ui/core/MenuItem';
+import { withStyles }                    from '@material-ui/core/styles';
+import { styles }                        from '../styles';
 
 const ClientLegalForm = (props) => {
-  const { clientInfo, setFormValue, errors } = props;
+  const { classes, clientInfo, setClientInfo, setFormValue, errors } = props;
+
+  const [legalPristine, setLegalPristine] = useState(false);
+  const [legalCountries, setLegalCountries] = useState([]);
+  const [legalStates, setLegalStates] = useState([]);
+
+  const clearLegalCitiesList = () => {
+    if (legalPristine) {
+      setClientInfo({ ...clientInfo, legalCountryCode: "", legalState: "" });
+      setLegalStates([]);
+    }
+  }
+
+  useEffect(() => {
+    fetch("https://www.universal-tutorial.com/api/countries/",
+    {headers:{
+      "Authorization": `Bearer ${window.localStorage.wwToken}`,
+      "Accept": "application/json"
+    }}
+    )
+    .then(response => response.json())
+    .then(response => setLegalCountries(response));
+    setLegalPristine(true);
+  }, [legalPristine]);
+  
+  useEffect(() =>{
+    if (legalPristine && clientInfo.legalCountryCode) {
+      fetch(`https://www.universal-tutorial.com/api/states/${clientInfo.legalCountryCode}`,
+        {headers:{
+          "Authorization": `Bearer ${window.localStorage.wwToken}`,
+          "Accept": "application/json"
+        }}
+      )
+      .then(response => response.json())
+      .then(response => setLegalStates(response))
+    }
+  }, [clientInfo.legalCountryCode])
 
   return (
     <>
-      <Grid item xs={12}>
+      <Grid item xs={12} className={classes.clientFieldsPaddingXS}>
         <TextField
           id='client-business'
           name='business'
@@ -24,7 +62,7 @@ const ClientLegalForm = (props) => {
         />
       </Grid>
       <Grid container item direction='row' alignItems='flex-start'>
-        <Grid item xs={8} style={{paddingRight:'10px', paddingTop:'20px'}}>
+        <Grid item xs={12} sm={8} className={classes.clientFieldsPaddingRightTop}>
           <TextField
             id='client-rfc'
             name='rfc'
@@ -39,7 +77,7 @@ const ClientLegalForm = (props) => {
             helperText={errors.rfc}
           />
         </Grid>
-        <Grid item xs={4} style={{paddingLeft:'10px', paddingTop:'20px'}}>
+        <Grid item xs={12} sm={4} className={classes.clientFieldsPaddingLeftTop}>
           <TextField
             id='client-moral'
             name='moral'
@@ -63,7 +101,7 @@ const ClientLegalForm = (props) => {
         </Grid>
       </Grid>
       <Grid container item direction='row' alignItems='flex-start'>
-        <Grid item xs={8} style={{paddingRight:'10px', paddingTop:'20px'}}>
+        <Grid item xs={12} sm={8} className={classes.clientFieldsPaddingRightTop}>
           <TextField
             id='client-legal-phone'
             name='legalPhone'
@@ -79,7 +117,7 @@ const ClientLegalForm = (props) => {
             helperText={errors.legal_phone}
           />
         </Grid>
-        <Grid item xs={4} style={{paddingLeft:'10px', paddingTop:'20px'}}>
+        <Grid item xs={12} sm={4} className={classes.clientFieldsPaddingLeftTop}>
           <TextField
             id='client-legal-zip-code'
             name='legalZipCode'
@@ -95,7 +133,7 @@ const ClientLegalForm = (props) => {
           />
         </Grid>
       </Grid>
-      <Grid item xs={12} style={{paddingTop:'20px'}}>
+      <Grid item xs={12} className={classes.clientFieldsPaddingTop}>
         <TextField
           id='client-legal-address'
           name='legalAddress'
@@ -111,7 +149,7 @@ const ClientLegalForm = (props) => {
           helperText={errors.legal_address}
         />
       </Grid>
-      <Grid item xs={4} style={{paddingRight:'10px', paddingTop:'20px'}}>
+      <Grid item xs={12} sm={4} className={classes.clientFieldsPaddingRightTop}>
         <TextField
           id='client-legal-country-code'
           name='legalCountryCode'
@@ -120,13 +158,30 @@ const ClientLegalForm = (props) => {
           variant="outlined"
           size="small"
           fullWidth
+          select
           value={clientInfo.legalCountryCode == null ? "" : clientInfo.legalCountryCode}
           onChange={setFormValue}
           error={!!errors.legal_country_code}
           helperText={errors.legal_country_code}
-        />
+          SelectProps={{
+            onOpen: clearLegalCitiesList,
+          }}
+        >
+          <MenuItem key={"legal-country-00"} value={""}>
+            Seleccione un Pais
+          </MenuItem>
+          { legalCountries ?
+            legalCountries.map(legalCountry => (
+              <MenuItem key={`legal-country-${legalCountry.country_short_name}`} value={legalCountry.country_name}>
+                {legalCountry.country_name}
+              </MenuItem>
+            ))
+            :
+            <></>
+          }
+        </TextField>
       </Grid>
-      <Grid item xs={4} style={{paddingLeft:'10px', paddingRight:'10px', paddingTop:'20px'}}>
+      <Grid item xs={12} sm={4} className={classes.clientFieldsPaddingLeftRightTop}>
         <TextField
           id='client-legal-state'
           name='legalState'
@@ -135,14 +190,27 @@ const ClientLegalForm = (props) => {
           variant="outlined"
           size="small"
           fullWidth
-          multiline
+          select
           value={clientInfo.legalState == null ? "" : clientInfo.legalState}
           onChange={setFormValue}
           error={!!errors.legal_state}
           helperText={errors.legal_state}
-        />
+        >
+          <MenuItem key={"legal-city-00"} value={""}>
+            Seleccione un Estado
+          </MenuItem>
+          { legalStates ?
+            legalStates.map(legalState => (
+              <MenuItem key={`legal-city-${legalState.state_name}`} value={legalState.state_name}>
+                {legalState.state_name}
+              </MenuItem>
+            ))
+            :
+            <></>
+          }
+        </TextField>
       </Grid>
-      <Grid item xs={4} style={{paddingLeft:'10px', paddingTop:'20px'}}>
+      <Grid item xs={12} sm={4} className={classes.clientFieldsPaddingLeftTop}>
         <TextField
           id='client-legal-city'
           name='legalCity'
@@ -161,4 +229,4 @@ const ClientLegalForm = (props) => {
   )
 }
 
-export default ClientLegalForm;
+export default withStyles(styles)(ClientLegalForm);

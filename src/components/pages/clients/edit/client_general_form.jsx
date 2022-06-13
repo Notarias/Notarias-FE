@@ -1,14 +1,53 @@
-import React                          from 'react';
-import Grid                           from '@material-ui/core/Grid';
-import TextField                      from '@material-ui/core/TextField';
+import React, { useState, useEffect }    from 'react';
+import Grid                              from '@material-ui/core/Grid';
+import TextField                         from '@material-ui/core/TextField';
+import MenuItem                          from '@material-ui/core/MenuItem';
+import { withStyles }                    from '@material-ui/core/styles';
+import { styles }                        from '../styles';
 
 const ClientGeneralForm = (props) => {
-  const { clientInfo, setFormValue, errors } = props;
+  const { classes, clientInfo, setClientInfo, setFormValue, errors } = props;
+
+  const [pristine, setPristine] = useState(false);
+  const [countries, setCountries] = useState([]);
+  const [states, setStates] = useState([]);
+
+  const clearCitiesList = () => {
+    if (pristine) {
+      setClientInfo({ ...clientInfo, countryCode: "", state: "" });
+      setStates([]);
+    }
+  }
+
+  useEffect(() => {
+    fetch("https://www.universal-tutorial.com/api/countries/",
+    {headers:{
+      "Authorization": `Bearer ${window.localStorage.wwToken}`,
+      "Accept": "application/json"
+    }}
+    )
+    .then(response => response.json())
+    .then(response => setCountries(response));
+    setPristine(true);
+  }, [pristine]);
+
+  useEffect(() =>{
+    if (pristine && clientInfo.countryCode) {
+      fetch(`https://www.universal-tutorial.com/api/states/${clientInfo.countryCode}`,
+        {headers:{
+          "Authorization": `Bearer ${window.localStorage.wwToken}`,
+          "Accept": "application/json"
+        }}
+      )
+      .then(response => response.json())
+      .then(response => setStates(response))
+    }
+  }, [clientInfo.countryCode])
 
   return (
     <>
       <Grid container item direction='row' alignItems='flex-start'>
-        <Grid item xs={6} style={{paddingRight:'10px'}}>
+        <Grid item xs={12} sm={6} className={classes.clientFieldsPaddingRight}>
           <TextField
             id='client-firstName'
             name='firstName'
@@ -23,7 +62,7 @@ const ClientGeneralForm = (props) => {
             helperText={errors.first_name}
           />
         </Grid>
-        <Grid item xs={6} style={{paddingLeft:'10px'}}>
+        <Grid item xs={12} sm={6} className={classes.clientFieldsPaddingLeft}>
           <TextField
             id='client-lastName'
             name='lastName'
@@ -40,7 +79,7 @@ const ClientGeneralForm = (props) => {
         </Grid>
       </Grid>
       <Grid container item direction='row' alignItems='flex-start'>
-        <Grid item xs={6} style={{paddingRight:'10px', paddingTop:'20px'}}>
+        <Grid item xs={12} sm={6} className={classes.clientFieldsPaddingRightTop}>
           <TextField
             id='client-email'
             name='email'
@@ -55,7 +94,7 @@ const ClientGeneralForm = (props) => {
             helperText={errors.email}
           />
         </Grid>
-        <Grid item xs={6} style={{paddingLeft:'10px', paddingTop:'20px'}}>
+        <Grid item xs={12} sm={6} className={classes.clientFieldsPaddingLeftTop}>
           <TextField
             id='client-phone'
             name='phone'
@@ -72,7 +111,7 @@ const ClientGeneralForm = (props) => {
         </Grid>
       </Grid>
       <Grid container item direction='row' alignItems='flex-start'>
-        <Grid item xs={8} style={{paddingRight:'10px', paddingTop:'20px'}}>
+        <Grid item xs={12} sm={8} className={classes.clientFieldsPaddingRightTop}>
           <TextField
             id='client-curp'
             name='curp'
@@ -87,7 +126,7 @@ const ClientGeneralForm = (props) => {
             helperText={errors.curp}
           />
         </Grid>
-        <Grid item xs={4} style={{paddingLeft:'10px', paddingTop:'20px'}}>
+        <Grid item xs={12} sm={4} className={classes.clientFieldsPaddingLeftTop}>
           <TextField
             id='client-zip-code'
             name='zipCode'
@@ -104,7 +143,7 @@ const ClientGeneralForm = (props) => {
         </Grid>
       </Grid>
       <Grid container item direction='row' alignItems='flex-start'>
-        <Grid item xs={12} style={{ paddingTop:'20px'}}>
+        <Grid item xs={12} className={classes.clientFieldsPaddingTop}>
           <TextField
             id='client-address'
             name='address'
@@ -122,7 +161,7 @@ const ClientGeneralForm = (props) => {
         </Grid>
       </Grid>
       <Grid container item direction='row' alignItems='flex-start'>
-        <Grid item xs={4} style={{paddingRight:'10px', paddingTop:'20px'}}>
+        <Grid item xs={12} sm={4} className={classes.clientFieldsPaddingRightTop}>
           <TextField
             id='client-country-code'
             name='countryCode'
@@ -131,13 +170,30 @@ const ClientGeneralForm = (props) => {
             variant="outlined"
             size="small"
             fullWidth
+            select
             value={clientInfo.countryCode == null ? "" : clientInfo.countryCode}
             onChange={setFormValue}
             error={!!errors.countryCode}
             helperText={errors.countryCode}
-          />
+            SelectProps={{
+              onOpen: clearCitiesList,
+            }}
+          >
+            <MenuItem key={"country-00"} value={""}>
+              Seleccione un Pais
+            </MenuItem>
+            { countries ?
+              countries.map(country => (
+                <MenuItem key={`country-${country.country_short_name}`} value={country.country_name}>
+                  {country.country_name}
+                </MenuItem>
+              ))
+              :
+              <></>
+            }
+          </TextField>
         </Grid>
-        <Grid item xs={4} style={{paddingLeft:'10px', paddingRight:'10px', paddingTop:'20px'}}>
+        <Grid item xs={12} sm={4} className={classes.clientFieldsPaddingLeftRightTop}>
           <TextField
             id='client-state'
             name='state'
@@ -146,13 +202,27 @@ const ClientGeneralForm = (props) => {
             variant="outlined"
             size="small"
             fullWidth
+            select
             value={clientInfo.state == null ? "" : clientInfo.state}
             onChange={setFormValue}
             error={!!errors.state}
             helperText={errors.state}
-          />
+          >
+            <MenuItem key={"city-00"} value={""}>
+              Seleccione un Estado
+            </MenuItem>
+            { states ?
+              states.map(state => (
+                <MenuItem key={`city-${state.state_name}`} value={state.state_name}>
+                  {state.state_name}
+                </MenuItem>
+              ))
+              :
+              <></>
+            }
+          </TextField>
         </Grid>
-        <Grid item xs={4} style={{paddingLeft:'10px', paddingTop:'20px'}}>
+        <Grid item xs={12} sm={4} className={classes.clientFieldsPaddingLeftTop}>
           <TextField
             id='client-city'
             name='city'
@@ -172,4 +242,4 @@ const ClientGeneralForm = (props) => {
   )
 }
 
-export default ClientGeneralForm;
+export default withStyles(styles)(ClientGeneralForm);
