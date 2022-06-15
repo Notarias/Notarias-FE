@@ -27,7 +27,7 @@ const Edit = (props) => {
   const { match } = props
 
   const [errors, setErrors] = useState({});
-  const [pristine, setPristine] = useState(false);
+  const [pristine, setPristine] = useState(true);
   const [clientInfo, setClientInfo] = useState({
                                                 id: "",
                                                 firstName: "",
@@ -51,28 +51,11 @@ const Edit = (props) => {
                                                 legalCity: ""
                                               });
 
-  if (!localStorage.wwToken) {
-    useEffect(() => {
-      fetch("https://www.universal-tutorial.com/api/getaccesstoken",
-        {headers:{
-          "Accept": "application/json",
-          "api-token": "0If1aY4jUevUbNrnxPYspSVjiD6ik8aNw-LF7QetOdIO0xCTX52--39Zh8iEaAeI1M4",
-          "user-email": "roga.zero@gmail.com"
-        }}
-      )
-      .then(response => response.json())
-      .then(response => localStorage.setItem('wwToken', response.auth_token))
-    }, [localStorage])
-  }
-
-  const setFormValue = (event) => {
-    /* const {name, value} = target
+  const setFormValue = ({ target }) => {
+    const {name, value} = target
     setClientInfo({...clientInfo, [name]: value});
-    setPristine(false); */
-    console.log(event)
+    setPristine(false);
   }
-
-
 
   const { loading, data } = useQuery(
     GET_CLIENT, { variables: {"id": match.params.id } }
@@ -83,8 +66,6 @@ const Edit = (props) => {
       setClientInfo(data.client)
     }
   }, [loading, data]);
-
-  
 
   const [updateClient] = useMutation(
     UPDATE_CLIENT_MUTATION,

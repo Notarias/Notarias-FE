@@ -1,23 +1,16 @@
-import React, { useState }    from 'react';
-import Grid                   from '@material-ui/core/Grid';
-import TextField              from '@material-ui/core/TextField';
-import SelectCountry          from './select_country'
-import SelectState            from './select_state';
-import { withStyles }         from '@material-ui/core/styles';
-import { styles }             from '../styles';
+import React, { useState, useEffect }    from 'react';
+import Grid                              from '@material-ui/core/Grid';
+import TextField                         from '@material-ui/core/TextField';
+import SelectCountry                     from './select_country'
+import SelectState                       from './select_state';
+import { withStyles }                    from '@material-ui/core/styles';
+import { styles }                        from '../styles';
 
 const ClientGeneralForm = (props) => {
   const { classes, clientInfo, setClientInfo, setFormValue, errors } = props;
 
   const [countriesList, setCountriesList] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState();
-
-  const clearCitiesList = () => {
-    if (clientInfo.countryCode) {
-      setClientInfo({ ...clientInfo, countryCode: "", state: "" });
-      setSelectedCountry();
-    }
-  }
 
   return (
     <>
@@ -139,13 +132,11 @@ const ClientGeneralForm = (props) => {
         <Grid item xs={12} sm={4} className={classes.clientFieldsPaddingRightTop}>
           <SelectCountry 
             clientInfo={clientInfo}
-            clearCitiesList={clearCitiesList}
+            setClientInfo={setClientInfo}
             countriesList={countriesList}
             setCountriesList={setCountriesList}
             countryCode={clientInfo.countryCode}
-            selectedCountry={selectedCountry}
             setSelectedCountry={setSelectedCountry}
-            fieldName={"countryCode"}
             setFormValue={setFormValue}
             errors={errors}
           />
@@ -156,7 +147,6 @@ const ClientGeneralForm = (props) => {
             countriesList={countriesList}
             selectedCountry={selectedCountry}
             selectedState={clientInfo.state}
-            fieldName={"state"}
             setFormValue={setFormValue}
             errors={errors}
           />

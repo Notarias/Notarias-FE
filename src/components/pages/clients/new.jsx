@@ -41,7 +41,6 @@ const NewClientForm = (props) => {
           }
         })
         let errorsHash = {}
-        console.log(apolloError)
         apolloError.graphQLErrors.map((error) => {
           errorsHash[error.extensions.attribute] = error.message
           return(error.message)

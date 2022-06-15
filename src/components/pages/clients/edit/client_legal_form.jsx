@@ -1,48 +1,24 @@
-import React, { useState, useEffect }    from 'react';
-import Grid                              from '@material-ui/core/Grid';
-import TextField                         from '@material-ui/core/TextField';
-import MenuItem                          from '@material-ui/core/MenuItem';
-import { withStyles }                    from '@material-ui/core/styles';
-import { styles }                        from '../styles';
+import React, { useState }    from 'react';
+import Grid                   from '@material-ui/core/Grid';
+import TextField              from '@material-ui/core/TextField';
+import SelectCountry          from './select_country'
+import SelectState            from './select_state';
+import MenuItem               from '@material-ui/core/MenuItem';
+import { withStyles }         from '@material-ui/core/styles';
+import { styles }             from '../styles';
 
 const ClientLegalForm = (props) => {
   const { classes, clientInfo, setClientInfo, setFormValue, errors } = props;
 
-  const [legalPristine, setLegalPristine] = useState(false);
-  const [legalCountries, setLegalCountries] = useState([]);
-  const [legalStates, setLegalStates] = useState([]);
+  const [countriesList, setCountriesList] = useState([]);
+  const [selectedLegalCountry, setSelectedLegalCountry] = useState();
 
-  const clearLegalCitiesList = () => {
-    if (legalPristine) {
+  const clearCitiesList = () => {
+    if (clientInfo.countryCode) {
       setClientInfo({ ...clientInfo, legalCountryCode: "", legalState: "" });
-      setLegalStates([]);
+      setSelectedLegalCountry();
     }
   }
-
-  useEffect(() => {
-    fetch("https://www.universal-tutorial.com/api/countries/",
-    {headers:{
-      "Authorization": `Bearer ${window.localStorage.wwToken}`,
-      "Accept": "application/json"
-    }}
-    )
-    .then(response => response.json())
-    .then(response => setLegalCountries(response));
-    setLegalPristine(true);
-  }, [legalPristine]);
-  
-  useEffect(() =>{
-    if (legalPristine && clientInfo.legalCountryCode) {
-      fetch(`https://www.universal-tutorial.com/api/states/${clientInfo.legalCountryCode}`,
-        {headers:{
-          "Authorization": `Bearer ${window.localStorage.wwToken}`,
-          "Accept": "application/json"
-        }}
-      )
-      .then(response => response.json())
-      .then(response => setLegalStates(response))
-    }
-  }, [clientInfo.legalCountryCode])
 
   return (
     <>
@@ -150,65 +126,29 @@ const ClientLegalForm = (props) => {
         />
       </Grid>
       <Grid item xs={12} sm={4} className={classes.clientFieldsPaddingRightTop}>
-        <TextField
-          id='client-legal-country-code'
-          name='legalCountryCode'
-          label="Pais"
-          type='text'
-          variant="outlined"
-          size="small"
-          fullWidth
-          select
-          value={clientInfo.legalCountryCode == null ? "" : clientInfo.legalCountryCode}
-          onChange={setFormValue}
-          error={!!errors.legal_country_code}
-          helperText={errors.legal_country_code}
-          SelectProps={{
-            onOpen: clearLegalCitiesList,
-          }}
-        >
-          <MenuItem key={"legal-country-00"} value={""}>
-            Seleccione un Pais
-          </MenuItem>
-          { legalCountries ?
-            legalCountries.map(legalCountry => (
-              <MenuItem key={`legal-country-${legalCountry.country_short_name}`} value={legalCountry.country_name}>
-                {legalCountry.country_name}
-              </MenuItem>
-            ))
-            :
-            <></>
-          }
-        </TextField>
+        <SelectCountry 
+          clientInfo={clientInfo}
+          clearCitiesList={clearCitiesList}
+          countriesList={countriesList}
+          setCountriesList={setCountriesList}
+          countryCode={clientInfo.legalCountryCode}
+          selectedCountry={selectedLegalCountry}
+          setSelectedCountry={setSelectedLegalCountry}
+          fieldName={"legalCountryCode"}
+          setFormValue={setFormValue}
+          errors={errors}
+        />
       </Grid>
       <Grid item xs={12} sm={4} className={classes.clientFieldsPaddingLeftRightTop}>
-        <TextField
-          id='client-legal-state'
-          name='legalState'
-          label="Estado"
-          type='text'
-          variant="outlined"
-          size="small"
-          fullWidth
-          select
-          value={clientInfo.legalState == null ? "" : clientInfo.legalState}
-          onChange={setFormValue}
-          error={!!errors.legal_state}
-          helperText={errors.legal_state}
-        >
-          <MenuItem key={"legal-city-00"} value={""}>
-            Seleccione un Estado
-          </MenuItem>
-          { legalStates ?
-            legalStates.map(legalState => (
-              <MenuItem key={`legal-city-${legalState.state_name}`} value={legalState.state_name}>
-                {legalState.state_name}
-              </MenuItem>
-            ))
-            :
-            <></>
-          }
-        </TextField>
+        <SelectState
+          clientInfo={clientInfo}
+          countriesList={countriesList}
+          selectedCountry={selectedLegalCountry}
+          selectedState={clientInfo.legalState}
+          fieldName={"legalState"}
+          setFormValue={setFormValue}
+          errors={errors}
+        />
       </Grid>
       <Grid item xs={12} sm={4} className={classes.clientFieldsPaddingLeftTop}>
         <TextField
