@@ -9,6 +9,9 @@ const SelectState = (props) => {
   const [states, setStates] = useState([]);
 
   useEffect(() =>{
+    if (states.length > 0) {
+      setStates([])
+    }
     if (selectedCountry) {
       fetch(`https://www.universal-tutorial.com/api/states/${selectedCountry.country_name}`,
         {headers:{
