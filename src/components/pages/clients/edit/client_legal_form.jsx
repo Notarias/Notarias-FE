@@ -1,14 +1,28 @@
-import React                          from 'react';
-import Grid                           from '@material-ui/core/Grid';
-import TextField                      from '@material-ui/core/TextField';
-import MenuItem                       from '@material-ui/core/MenuItem';
+import React, { useState }    from 'react';
+import Grid                   from '@material-ui/core/Grid';
+import TextField              from '@material-ui/core/TextField';
+import SelectCountry          from './select_country'
+import SelectState            from './select_state';
+import MenuItem               from '@material-ui/core/MenuItem';
+import { withStyles }         from '@material-ui/core/styles';
+import { styles }             from '../styles';
 
 const ClientLegalForm = (props) => {
-  const { clientInfo, setFormValue, errors } = props;
+  const { classes, clientInfo, setClientInfo, setFormValue, errors } = props;
+
+  const [countriesList, setCountriesList] = useState([]);
+  const [selectedLegalCountry, setSelectedLegalCountry] = useState();
+
+  const clearCitiesList = () => {
+    if (clientInfo.countryCode) {
+      setClientInfo({ ...clientInfo, legalCountryCode: "", legalState: "" });
+      setSelectedLegalCountry();
+    }
+  }
 
   return (
     <>
-      <Grid item xs={12}>
+      <Grid item xs={12} className={classes.clientFieldsPaddingXS}>
         <TextField
           id='client-business'
           name='business'
@@ -24,7 +38,7 @@ const ClientLegalForm = (props) => {
         />
       </Grid>
       <Grid container item direction='row' alignItems='flex-start'>
-        <Grid item xs={8} style={{paddingRight:'10px', paddingTop:'20px'}}>
+        <Grid item xs={12} sm={8} className={classes.clientFieldsPaddingRightTop}>
           <TextField
             id='client-rfc'
             name='rfc'
@@ -39,7 +53,7 @@ const ClientLegalForm = (props) => {
             helperText={errors.rfc}
           />
         </Grid>
-        <Grid item xs={4} style={{paddingLeft:'10px', paddingTop:'20px'}}>
+        <Grid item xs={12} sm={4} className={classes.clientFieldsPaddingLeftTop}>
           <TextField
             id='client-moral'
             name='moral'
@@ -63,7 +77,7 @@ const ClientLegalForm = (props) => {
         </Grid>
       </Grid>
       <Grid container item direction='row' alignItems='flex-start'>
-        <Grid item xs={8} style={{paddingRight:'10px', paddingTop:'20px'}}>
+        <Grid item xs={12} sm={8} className={classes.clientFieldsPaddingRightTop}>
           <TextField
             id='client-legal-phone'
             name='legalPhone'
@@ -79,7 +93,7 @@ const ClientLegalForm = (props) => {
             helperText={errors.legal_phone}
           />
         </Grid>
-        <Grid item xs={4} style={{paddingLeft:'10px', paddingTop:'20px'}}>
+        <Grid item xs={12} sm={4} className={classes.clientFieldsPaddingLeftTop}>
           <TextField
             id='client-legal-zip-code'
             name='legalZipCode'
@@ -95,7 +109,7 @@ const ClientLegalForm = (props) => {
           />
         </Grid>
       </Grid>
-      <Grid item xs={12} style={{paddingTop:'20px'}}>
+      <Grid item xs={12} className={classes.clientFieldsPaddingTop}>
         <TextField
           id='client-legal-address'
           name='legalAddress'
@@ -111,38 +125,32 @@ const ClientLegalForm = (props) => {
           helperText={errors.legal_address}
         />
       </Grid>
-      <Grid item xs={4} style={{paddingRight:'10px', paddingTop:'20px'}}>
-        <TextField
-          id='client-legal-country-code'
-          name='legalCountryCode'
-          label="Pais"
-          type='text'
-          variant="outlined"
-          size="small"
-          fullWidth
-          value={clientInfo.legalCountryCode == null ? "" : clientInfo.legalCountryCode}
-          onChange={setFormValue}
-          error={!!errors.legal_country_code}
-          helperText={errors.legal_country_code}
+      <Grid item xs={12} sm={4} className={classes.clientFieldsPaddingRightTop}>
+        <SelectCountry 
+          clientInfo={clientInfo}
+          clearCitiesList={clearCitiesList}
+          countriesList={countriesList}
+          setCountriesList={setCountriesList}
+          countryCode={clientInfo.legalCountryCode}
+          selectedCountry={selectedLegalCountry}
+          setSelectedCountry={setSelectedLegalCountry}
+          fieldName={"legalCountryCode"}
+          setFormValue={setFormValue}
+          errors={errors}
         />
       </Grid>
-      <Grid item xs={4} style={{paddingLeft:'10px', paddingRight:'10px', paddingTop:'20px'}}>
-        <TextField
-          id='client-legal-state'
-          name='legalState'
-          label="Estado"
-          type='text'
-          variant="outlined"
-          size="small"
-          fullWidth
-          multiline
-          value={clientInfo.legalState == null ? "" : clientInfo.legalState}
-          onChange={setFormValue}
-          error={!!errors.legal_state}
-          helperText={errors.legal_state}
+      <Grid item xs={12} sm={4} className={classes.clientFieldsPaddingLeftRightTop}>
+        <SelectState
+          clientInfo={clientInfo}
+          countriesList={countriesList}
+          selectedCountry={selectedLegalCountry}
+          selectedState={clientInfo.legalState}
+          fieldName={"legalState"}
+          setFormValue={setFormValue}
+          errors={errors}
         />
       </Grid>
-      <Grid item xs={4} style={{paddingLeft:'10px', paddingTop:'20px'}}>
+      <Grid item xs={12} sm={4} className={classes.clientFieldsPaddingLeftTop}>
         <TextField
           id='client-legal-city'
           name='legalCity'
@@ -161,4 +169,4 @@ const ClientLegalForm = (props) => {
   )
 }
 
-export default ClientLegalForm;
+export default withStyles(styles)(ClientLegalForm);

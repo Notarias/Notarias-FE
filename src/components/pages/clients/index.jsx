@@ -1,33 +1,53 @@
-import React, { useState }          from 'react';
-import { withStyles }               from '@material-ui/core/styles';
-import Table                        from '@material-ui/core/Table';
-import Paper                        from '@material-ui/core/Paper';
-import TableRow                     from '@material-ui/core/TableRow';
-import { styles }                   from './styles';
-import TableHeaders                 from './table_headers';
-import ClientRows                   from './client_rows';
-import TableFooter                  from '@material-ui/core/TableFooter';
-import TablePagination              from '@material-ui/core/TablePagination';
-import ControlsBar                  from './controls_bar';
-import Breadcrumbs                  from '../../ui/breadcrumbs'
+import React, { useState, useEffect }      from 'react';
+import { withStyles }                      from '@material-ui/core/styles';
+import Table                               from '@material-ui/core/Table';
+import Paper                               from '@material-ui/core/Paper';
+import TableRow                            from '@material-ui/core/TableRow';
+import Grid                                from '@material-ui/core/Grid';
+import Dialog                              from '@material-ui/core/Dialog';
+import DialogTitle                         from '@material-ui/core/DialogTitle';
+import DialogContent                       from '@material-ui/core/DialogContent';
+import { styles }                          from './styles';
+import TableHeaders                        from './table_headers';
+import ClientRows                          from './client_rows';
+import TableFooter                         from '@material-ui/core/TableFooter';
+import TablePagination                     from '@material-ui/core/TablePagination';
+import ControlsBar                         from './controls_bar';
+import NewClientForm                       from './new';
+import Breadcrumbs                         from '../../ui/breadcrumbs';
 
 const BREADCRUMBS = [
   { name: "Inicio", path: "/" },
   { name: "Clientes", path: null }
 ]
 
-const Clients = (props) => {
-  const [searchLoading, setSearchLoading] = useState(false);
-  const [sortField, setSortField]         = useState("first_name")
-  const [sortDirection, setSortDirection] = useState("desc")
-  const [searchField]                     = useState("first_name_or_last_name_or_rfc_cont")
-  const [searchValue, setSearchValue]     = useState("")
-  const [timeout, setSetTimeout]          = useState(null)
-  const [page, setPage]                   = useState(0)
-  const [per, setPer]                     = useState(5)
-  const [total_records, setTotalRecords]  = useState(0)
+if (!localStorage.wwToken) {
+  useEffect(() => {
+    fetch("https://www.universal-tutorial.com/api/getaccesstoken",
+      {headers:{
+        "Accept": "application/json",
+        "api-token": "0If1aY4jUevUbNrnxPYspSVjiD6ik8aNw-LF7QetOdIO0xCTX52--39Zh8iEaAeI1M4",
+        "user-email": "roga.zero@gmail.com"
+      }}
+    )
+    .then(response => response.json())
+    .then(response => localStorage.setItem('wwToken', response.auth_token))
+  }, [localStorage.wwToken])
+}
 
+const Clients = (props) => {
   const { classes } = props
+
+  const [searchLoading, setSearchLoading]     = useState(false);
+  const [sortField, setSortField]             = useState("first_name");
+  const [sortDirection, setSortDirection]     = useState("desc");
+  const [searchField]                         = useState("first_name_or_last_name_or_rfc_cont");
+  const [searchValue, setSearchValue]         = useState("");
+  const [timeout, setSetTimeout]              = useState(null);
+  const [page, setPage]                       = useState(0);
+  const [per, setPer]                         = useState(5);
+  const [total_records, setTotalRecords]      = useState(0);
+  const [newClientDialog, setNewClientDialog] = useState(false);
 
   const changeRowsPerPage = (event) => {
     let per = event.target.value
@@ -54,6 +74,10 @@ const Clients = (props) => {
     setSortField(Object.keys(params["sort"])[0])
   }
 
+  const newClientDialogSwitch = () => {
+    setNewClientDialog(!newClientDialog)
+  }
+
   return(
     <>
       <Breadcrumbs breadcrumbs={BREADCRUMBS}/>
@@ -62,6 +86,7 @@ const Clients = (props) => {
           classes={classes}
           searchLoading={searchLoading}
           onChangeSearch={onChangeSearch.bind(this)}
+          newClientDialogSwitch={newClientDialogSwitch}
         />
         <div className={classes.tableWrapper}>
           <Paper >
@@ -91,6 +116,18 @@ const Clients = (props) => {
                 </TableRow>
               </TableFooter>
             </Table>
+            <Dialog fullWidth open={newClientDialog} onClose={newClientDialogSwitch}>
+              <DialogTitle>
+                <Grid container justifyContent="center">
+                  Nuevo Cliente
+                </Grid>
+              </DialogTitle>
+              <DialogContent>
+                <Grid container justifyContent="center" alignItems='center'>
+                  <NewClientForm newClientDialogSwitch={newClientDialogSwitch}/>
+                </Grid>
+              </DialogContent>
+            </Dialog>
           </Paper>
         </div>
       </div>

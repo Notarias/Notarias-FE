@@ -5,12 +5,11 @@ import SearchIcon           from '@material-ui/icons/Search';
 import InputBase            from '@material-ui/core/InputBase';
 import Button               from '@material-ui/core/Button';
 import PersonAddIcon        from '@material-ui/icons/PersonAdd';
-import { Link }             from 'react-router-dom';
 import { styles }           from './styles';
 import { withStyles }       from '@material-ui/core/styles';
 
 const styles_control_bar = (props) => {
-  const { classes, searchLoading, onChangeSearch } = props;
+  const { classes, searchLoading, onChangeSearch, newClientDialogSwitch } = props;
   return(
     <Grid container  direction="row"  justifyContent="flex-end"  alignItems="flex-end" >
       <div className={classes.search}>
@@ -30,7 +29,7 @@ const styles_control_bar = (props) => {
           }}
         />
       </div>
-      <Button component={Link} to="/clients/new" variant="contained" color="primary">
+      <Button variant="contained" color="primary" onClick={newClientDialogSwitch}>
         <PersonAddIcon/>
       </Button>
     </Grid>

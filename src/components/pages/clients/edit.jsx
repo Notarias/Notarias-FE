@@ -9,7 +9,7 @@ import ArrowBackIcon                    from '@material-ui/icons/ArrowBack';
 import Breadcrumbs                      from '../../ui/breadcrumbs';
 import ClientGeneralForm                from './edit/client_general_form'
 import ClientLegalForm                  from './edit/client_legal_form'
-import ClientsAttributesList            from './edit/clients_attributes_list'
+//import ClientsAttributesList            from './edit/clients_attributes_list'
 import { Link }                         from 'react-router-dom';
 import { useQuery, useMutation }        from '@apollo/client';
 import { GET_CLIENT }                   from './clients_queries_and_mutations/queries';
@@ -140,7 +140,7 @@ const Edit = (props) => {
     <>
       <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
       <Grid container direction='row' justifyContent='center' alignItems='center'>
-        <Grid container item xs={8} direction='row' justifyContent='flex-start' alignItems='center' style={{paddingTop:'15px', paddingBottom:'10px'}}>
+        <Grid container item xs={10} md={8} direction='row' justifyContent='flex-start' alignItems='center' style={{paddingTop:'15px', paddingBottom:'10px'}}>
           <Grid container item xs={8} alignItems='center'>
             <Grid item style={{paddingRight:'10px'}}>
               <IconButton 
@@ -165,63 +165,63 @@ const Edit = (props) => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={8}>
+        <Grid item xs={10} md={8}>
           <Divider/>
         </Grid>
-        <Grid container item xs={8} direction='row' justifyContent='flex-start' alignItems='flex-start' style={{paddingTop:'10px', paddingBottom:'10px'}}>
-          <Grid item xs={4}>
-            <Typography variant="subtitle1" align='left' style={{paddingTop:'20px', paddingLeft:'10px'}}>
+        <Grid container item xs={10} md={8} direction='row' justifyContent='flex-start' alignItems='flex-start' style={{paddingTop:'10px', paddingBottom:'10px'}}>
+          <Grid item xs={12} lg={4}>
+            <Typography variant="subtitle1" align='left' style={{paddingTop:'10px', paddingBottom:'10px', paddingLeft:'10px'}}>
               Informacion General
             </Typography>
           </Grid>
           <Grid item xs style={{paddingRight:'10px'}}>
             <Paper variant="outlined" style={{padding:'20px'}}>
               <Grid container direction='row' justifyContent='center' alignItems='center'>
-                <ClientGeneralForm clientInfo={clientInfo} setFormValue={setFormValue} errors={errors}/>
+                <ClientGeneralForm clientInfo={clientInfo} setClientInfo={setClientInfo} setFormValue={setFormValue} errors={errors}/>
               </Grid>
             </Paper>
           </Grid>
         </Grid>
-        <Grid item xs={8}>
+        <Grid item xs={10} md={8}>
           <Divider/>
         </Grid>
-        <Grid container item xs={8} direction='row' justifyContent='flex-start' alignItems='flex-start' style={{paddingTop:'10px', paddingBottom:'10px'}}>
-          <Grid item xs={4}>
-            <Typography variant="subtitle1" align='left' style={{paddingTop:'20px', paddingLeft:'10px'}}>
+        <Grid container item xs={10} md={8} direction='row' justifyContent='flex-start' alignItems='flex-start' style={{paddingTop:'10px', paddingBottom:'10px'}}>
+          <Grid item xs={12} lg={4}>
+            <Typography variant="subtitle1" align='left' style={{paddingTop:'10px', paddingBottom:'10px', paddingLeft:'10px'}}>
               Informacion Fiscal
             </Typography>
           </Grid>
           <Grid item xs style={{paddingRight:'10px'}}>
             <Paper variant="outlined" style={{padding:'20px'}}>
               <Grid container direction='row' justifyContent='center' alignItems='center'>
-                <ClientLegalForm clientInfo={clientInfo} setFormValue={setFormValue} errors={errors}/>
+                <ClientLegalForm clientInfo={clientInfo} setClientInfo={setClientInfo} setFormValue={setFormValue} errors={errors}/>
               </Grid>
             </Paper>
           </Grid>
         </Grid>
-        <Grid item xs={8}>
+        <Grid item xs={10} md={8}>
           <Divider/>
         </Grid>
-        <Grid container item xs={8} direction='row' justifyContent='flex-start' alignItems='flex-start' style={{paddingTop:'10px', paddingBottom:'10px'}}>
-          <Grid item xs={4}>
-            <Typography variant="subtitle1" align='left' style={{paddingTop:'20px', paddingLeft:'10px'}}>
+        <Grid container item xs={10} md={8} direction='row' justifyContent='flex-start' alignItems='flex-start' style={{paddingTop:'10px', paddingBottom:'10px'}}>
+          <Grid item xs={12} lg={4}>
+            <Typography variant="subtitle1" align='left' style={{paddingTop:'10px', paddingBottom:'10px', paddingLeft:'10px'}}>
               Atributos
             </Typography>
           </Grid>
           <Grid item xs style={{paddingRight:'10px'}}>
             <Paper variant="outlined" style={{padding:'20px'}}>
               <Grid container direction='row' justifyContent='center' alignItems='center'>
-                <ClientsAttributesList/>
+                {/* <ClientsAttributesList/> */}
               </Grid>
             </Paper>
           </Grid>
         </Grid>
-        <Grid item xs={8}>
+        <Grid item xs={10} md={8}>
           <Divider/>
         </Grid>
-        <Grid container item xs={8} direction='row' justifyContent='flex-start' alignItems='flex-start' style={{paddingTop:'10px', paddingBottom:'10px'}}>
-          <Grid item xs={4}>
-            <Typography variant="subtitle1" align='left' style={{paddingTop:'20px', paddingLeft:'10px'}}>
+        <Grid container item xs={10} md={8} direction='row' justifyContent='flex-start' alignItems='flex-start' style={{paddingTop:'10px', paddingBottom:'10px'}}>
+          <Grid item xs={12} lg={4}>
+            <Typography variant="subtitle1" align='left' style={{paddingTop:'10px', paddingBottom:'10px', paddingLeft:'10px'}}>
               Comentaríos
             </Typography>
           </Grid>

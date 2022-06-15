@@ -262,6 +262,62 @@ export const styles = theme => {
       marginBottom: "6px",
       marginTop: "6px"
     },
-
+    clientFieldsPaddingXS: {
+      [theme.breakpoints.down('xs')]: {
+        padding: "10px",
+      }
+    },
+    clientFieldsPaddingLeft: {
+      [theme.breakpoints.down('xs')]: {
+        padding: "10px",
+      },
+      [theme.breakpoints.up('xs')]: {
+        paddingLeft: "10px",
+      }
+    },
+    clientFieldsPaddingRight: {
+      [theme.breakpoints.down('xs')]: {
+        padding: "10px",
+      },
+      [theme.breakpoints.up('xs')]: {
+        paddingRight: "10px",
+      }
+    },
+    clientFieldsPaddingTop: {
+      [theme.breakpoints.down('xs')]: {
+        padding: "10px",
+      },
+      [theme.breakpoints.up('xs')]: {
+        paddingTop: "20px",
+      }
+    },
+    clientFieldsPaddingLeftTop: {
+      [theme.breakpoints.down('xs')]: {
+        padding: "10px",
+      },
+      [theme.breakpoints.up('xs')]: {
+        paddingLeft: "10px",
+        paddingTop:'20px'
+      }
+    },
+    clientFieldsPaddingRightTop: {
+      [theme.breakpoints.down('xs')]: {
+        padding: "10px",
+      },
+      [theme.breakpoints.up('xs')]: {
+        paddingRight: "10px",
+        paddingTop:'20px'
+      }
+    },
+    clientFieldsPaddingLeftRightTop: {
+      [theme.breakpoints.down('xs')]: {
+        padding: "10px",
+      },
+      [theme.breakpoints.up('xs')]: {
+        paddingLeft: "10px",
+        paddingRight: "10px",
+        paddingTop: "20px"
+      },
+    }
   })
 }
