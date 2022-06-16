@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ConfigClientsIndex  = ()=> {
 
-  const { loading, data } = useQuery(GET_CLIENT_ATTRIBUTES)
+  const { loading, data } = useQuery(GET_CLIENT_ATTRIBUTES, {fetchPolicy: 'no-cache'})
   const [attrList, setAttrList] = React.useState(data ? data.clientAttributes : [])
 
   useEffect(() => {

@@ -1,20 +1,20 @@
-import React, { useState, useEffect }      from 'react';
-import { withStyles }                      from '@material-ui/core/styles';
-import Table                               from '@material-ui/core/Table';
-import Paper                               from '@material-ui/core/Paper';
-import TableRow                            from '@material-ui/core/TableRow';
-import Grid                                from '@material-ui/core/Grid';
-import Dialog                              from '@material-ui/core/Dialog';
-import DialogTitle                         from '@material-ui/core/DialogTitle';
-import DialogContent                       from '@material-ui/core/DialogContent';
-import { styles }                          from './styles';
-import TableHeaders                        from './table_headers';
-import ClientRows                          from './client_rows';
-import TableFooter                         from '@material-ui/core/TableFooter';
-import TablePagination                     from '@material-ui/core/TablePagination';
-import ControlsBar                         from './controls_bar';
-import NewClientForm                       from './new';
-import Breadcrumbs                         from '../../ui/breadcrumbs';
+import React, { useState }      from 'react';
+import { withStyles }           from '@material-ui/core/styles';
+import Table                    from '@material-ui/core/Table';
+import Paper                    from '@material-ui/core/Paper';
+import TableRow                 from '@material-ui/core/TableRow';
+import Grid                     from '@material-ui/core/Grid';
+import Dialog                   from '@material-ui/core/Dialog';
+import DialogTitle              from '@material-ui/core/DialogTitle';
+import DialogContent            from '@material-ui/core/DialogContent';
+import { styles }               from './styles';
+import TableHeaders             from './table_headers';
+import ClientRows               from './client_rows';
+import TableFooter              from '@material-ui/core/TableFooter';
+import TablePagination          from '@material-ui/core/TablePagination';
+import ControlsBar              from './controls_bar';
+import NewClientForm            from './new';
+import Breadcrumbs              from '../../ui/breadcrumbs';
 
 const BREADCRUMBS = [
   { name: "Inicio", path: "/" },
@@ -62,20 +62,6 @@ const Clients = (props) => {
 
   const newClientDialogSwitch = () => {
     setNewClientDialog(!newClientDialog)
-  }
-
-  if (!localStorage.wwToken) {
-    useEffect(() => {
-      fetch("https://www.universal-tutorial.com/api/getaccesstoken",
-        {headers:{
-          "Accept": "application/json",
-          "api-token": "0If1aY4jUevUbNrnxPYspSVjiD6ik8aNw-LF7QetOdIO0xCTX52--39Zh8iEaAeI1M4",
-          "user-email": "roga.zero@gmail.com"
-        }}
-      )
-      .then(response => response.json())
-      .then(response => localStorage.setItem('wwToken', response.auth_token))
-    }, [localStorage.wwToken])
   }
 
   return(

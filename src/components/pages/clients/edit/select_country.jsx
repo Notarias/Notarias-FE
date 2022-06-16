@@ -1,33 +1,21 @@
-import React, { useState, useEffect }    from 'react';
-import TextField                         from '@material-ui/core/TextField';
-import MenuItem                          from '@material-ui/core/MenuItem';
-import Skeleton                          from '@material-ui/lab/Skeleton';
+import React, { useEffect }    from 'react';
+import TextField               from '@material-ui/core/TextField';
+import MenuItem                from '@material-ui/core/MenuItem';
+import Skeleton                from '@material-ui/lab/Skeleton';
+import CountriesList           from './countries_list.json';
 
 const SelectCountry = (props) => {
-  const { clientInfo, clearCitiesList, countriesList, setCountriesList, countryCode, selectedCountry, setSelectedCountry, setFormValue, fieldName, errors } = props;
-
-  const [requestCountries, setRequestCountries] = useState(false);
+  const { clientInfo, clearCitiesList, countryCode, selectedCountry, setSelectedCountry, setFormValue, fieldName, errors } = props;
 
   useEffect(() => {
-    if (!requestCountries && countriesList.length < 1) {
-      setRequestCountries(true);
-      fetch("https://www.universal-tutorial.com/api/countries/",
-      {headers:{
-        "Authorization": `Bearer ${window.localStorage.wwToken}`,
-        "Accept": "application/json"
-      }}
-      )
-      .then(response => response.json())
-      .then(response => setCountriesList(response));
-    };
     if (!!countryCode) {
-      setSelectedCountry(countriesList.find(country => (country.country_short_name === countryCode)));
+      setSelectedCountry(CountriesList.find(country => (country.country_short_name === countryCode)));
     }
-  }, [countriesList, selectedCountry, clientInfo]);
+  }, [CountriesList, selectedCountry, clientInfo]);
 
   return (
     <>
-      {countriesList && countriesList.length > 0 ?
+      {CountriesList && CountriesList.length > 0 ?
         <TextField
           id='client-country-code'
           name={fieldName}
@@ -48,7 +36,7 @@ const SelectCountry = (props) => {
           <MenuItem key={"country-00"} value={""}>
             Seleccione un Pais
           </MenuItem>
-          {countriesList.map(country => (
+          {CountriesList.map(country => (
               <MenuItem key={`country-${country.country_short_name}`} value={country.country_short_name}>
                 {country.country_name}
               </MenuItem>
