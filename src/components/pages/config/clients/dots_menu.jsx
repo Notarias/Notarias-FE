@@ -1,12 +1,10 @@
 import React              from 'react';
 import Grid               from '@material-ui/core/Grid';
-import Button             from '@material-ui/core/Button';
-import MoreVertIcon       from '@material-ui/icons/MoreVert';
 import FormControlLabel   from '@material-ui/core/FormControlLabel';
 import Switch             from '@material-ui/core/Switch';
 import IconButton         from '@material-ui/core/IconButton';
-import Menu               from '@material-ui/core/Menu';
-import MenuItem           from '@material-ui/core/MenuItem';
+import SaveIcon           from '@material-ui/icons/Save';
+import DeleteForeverIcon  from '@material-ui/icons/DeleteForever';
 
 
 const dotsMenu  = ({
@@ -19,58 +17,32 @@ const dotsMenu  = ({
     loadingAttr,
   })=> {
 
-  const [anchorEl, setAnchorEl] = React.useState(null) 
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget)
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null)
-  };
-
-  let open = Boolean(anchorEl);
-
   return (
     <Grid container item justifyContent="flex-end" alignItems="center">
-      <IconButton
-        aria-label="more"
-        aria-controls="long-menu"
-        aria-haspopup="true"
-        onClick={handleClick}
-      >
-        <MoreVertIcon />
-      </IconButton>
-      <Menu
-        id="long-menu"
-        keepMounted
-        anchorEl={ anchorEl }
-        open={ open }
-        onClose={ handleClose }
-      >
-        <MenuItem>
-          <Button 
+      <Grid item xs={4}>
+        <IconButton 
           onClick={ id ?  updateAttribute : createNewAttribute }
           disabled={ loadingAttr }
-          >
-            Guardar
-          </Button>
-        </MenuItem>
-        <MenuItem>
-          <Button 
+          color='primary'
+        >
+          <SaveIcon/>
+        </IconButton>
+      </Grid>
+      <Grid item xs={4}>
+        <IconButton 
           onClick={ deleteAttrClick }
-          >
-              borrar
-          </Button>
-        </MenuItem>
-        <MenuItem>
-          <FormControlLabel
-            value="top"
-            control={<Switch color="primary" onChange={ handleActiveChange } checked={ active } />}
-            labelPlacement="top"
-          />
-        </MenuItem>
-      </Menu>
+          color='secondary'
+        > 
+          <DeleteForeverIcon/>
+        </IconButton>
+      </Grid>
+      <Grid item xs={4}>
+        <FormControlLabel
+          value="top"
+          control={<Switch color="primary" onChange={ handleActiveChange } checked={ active } />}
+          labelPlacement="top"
+        />
+      </Grid>
     </Grid>
   );
 }

@@ -1,13 +1,16 @@
-import React, { useEffect }    from 'react';
-import TextField               from '@material-ui/core/TextField';
-import MenuItem                from '@material-ui/core/MenuItem';
-import Skeleton                from '@material-ui/lab/Skeleton';
+import React, { useState, useEffect }    from 'react';
+import TextField                         from '@material-ui/core/TextField';
+import MenuItem                          from '@material-ui/core/MenuItem';
+import Skeleton                          from '@material-ui/lab/Skeleton';
 
 const SelectCountry = (props) => {
   const { clientInfo, clearCitiesList, countriesList, setCountriesList, countryCode, selectedCountry, setSelectedCountry, setFormValue, fieldName, errors } = props;
 
+  const [requestCountries, setRequestCountries] = useState(false);
+
   useEffect(() => {
-    if (countriesList.length < 1) {
+    if (!requestCountries && countriesList.length < 1) {
+      setRequestCountries(true);
       fetch("https://www.universal-tutorial.com/api/countries/",
       {headers:{
         "Authorization": `Bearer ${window.localStorage.wwToken}`,
