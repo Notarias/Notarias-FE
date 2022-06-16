@@ -1,17 +1,14 @@
 import React, { useEffect, useState }     from 'react'
-import List                               from '@material-ui/core/List';
-import ListItem                           from '@material-ui/core/ListItem';
+import Grid                               from '@material-ui/core/Grid';
 import Typography                         from '@material-ui/core/Typography';
 import ClientAttribute                    from './client_attribute';
 import { useQuery }                       from '@apollo/client';
-import { GET_CLIENT_ATTRIBUTE }           from '../clients_queries_and_mutations/queries';
+import { GET_CLIENT_ATTRIBUTES }           from '../clients_queries_and_mutations/queries';
 
 const ClientsAttributesList = (props) => {
   const { match } = props
 
-
-
-  const  { data: dataAttribute}  = useQuery(GET_CLIENT_ATTRIBUTE)
+  const  { data: dataAttribute}  = useQuery(GET_CLIENT_ATTRIBUTES)
 
   const [attributes, setAttributes] = useState(dataAttribute ? dataAttribute.clientAttributes : [] )
   
@@ -20,24 +17,27 @@ const ClientsAttributesList = (props) => {
   }, [dataAttribute])
 
   return (
-    <List>
-      { attributes.length > 0 ?
-        attributes.map((attr) => {
-          return(
-            <ListItem key={attr.id + "-attr"}>
-              <ClientAttribute
-                attr={attr}
-                match={match}
-              />
-            </ListItem>
-          )
-        })
-      :
-        <Typography>
-          Sin Atributos Adicionales
-        </Typography>
-      }
-    </List>
+    <>
+      <Grid container item direction='row' alignItems='flex-start'>
+        <Grid item xs={12} >
+          { attributes.length > 0 ?
+            attributes.map((attr) => {
+              return(
+                <ClientAttribute
+                  key={`client-attr-${attr.id}`}
+                  attr={attr}
+                  match={match}
+                />
+              )
+            })
+          :
+            <Typography>
+              Sin Atributos Adicionales
+            </Typography>
+          }
+        </Grid>
+      </Grid>
+    </>
   )
 }
 

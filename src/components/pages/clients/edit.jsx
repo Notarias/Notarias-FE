@@ -9,7 +9,7 @@ import ArrowBackIcon                    from '@material-ui/icons/ArrowBack';
 import Breadcrumbs                      from '../../ui/breadcrumbs';
 import ClientGeneralForm                from './edit/client_general_form'
 import ClientLegalForm                  from './edit/client_legal_form'
-//import ClientsAttributesList            from './edit/clients_attributes_list'
+import ClientsAttributesList            from './edit/clients_attributes_list'
 import { Link }                         from 'react-router-dom';
 import { useQuery, useMutation }        from '@apollo/client';
 import { GET_CLIENT }                   from './clients_queries_and_mutations/queries';
@@ -211,7 +211,7 @@ const Edit = (props) => {
           <Grid item xs style={{paddingRight:'10px'}}>
             <Paper variant="outlined" style={{padding:'20px'}}>
               <Grid container direction='row' justifyContent='center' alignItems='center'>
-                {/* <ClientsAttributesList/> */}
+                <ClientsAttributesList match={match}/>
               </Grid>
             </Paper>
           </Grid>

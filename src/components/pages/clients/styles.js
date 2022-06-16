@@ -318,6 +318,15 @@ export const styles = theme => {
         paddingRight: "10px",
         paddingTop: "20px"
       },
+    },
+    clientAttrPadding: {
+      [theme.breakpoints.up('xs')]: {
+        paddingTop: "10px",
+        paddingBottom: "10px"
+      },
+      [theme.breakpoints.down('xs')]: {
+        padding: "10px"
+      }
     }
   })
 }
