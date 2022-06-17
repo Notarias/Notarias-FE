@@ -4,7 +4,7 @@ import MenuItem                          from '@material-ui/core/MenuItem';
 import Skeleton                          from '@material-ui/lab/Skeleton';
 
 const SelectState = (props) => {
-  const { countriesList, selectedCountry, selectedState, setFormValue, fieldName, errors} = props
+  const { selectedCountry, selectedState, setFormValue, fieldName, errors} = props
 
   const [states, setStates] = useState([]);
 
@@ -22,7 +22,7 @@ const SelectState = (props) => {
       .then(response => response.json())
       .then(response => setStates(response))
     }
-  }, [selectedCountry, countriesList])
+  }, [selectedCountry])
 
   return (
     <>
