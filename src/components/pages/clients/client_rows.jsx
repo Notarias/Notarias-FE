@@ -59,7 +59,7 @@ export default (props) => {
             <TableRow key={`clientList-${client.id}`}>
               <TableCell align= "center" colSpan={1}>
                 <Grid>
-                <ClientPreviewDrawer id={client.id}/>
+                  <ClientPreviewDrawer clientId={client.id}/>
                 </Grid>
               </TableCell>
               <TableCell align= "center">{ client.firstName }</TableCell>
@@ -109,7 +109,7 @@ export default (props) => {
                       <MenuItem>
                         <img alt={"Trámites"} src={FormsIcon} className={ classes.imgIconGeneric }/>
                         <span className={ classes.genericPaddingLeft }>
-                        Trámites
+                          Trámites
                         </span>
                       </MenuItem>
                     </Link>

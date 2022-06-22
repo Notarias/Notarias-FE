@@ -327,6 +327,15 @@ export const styles = theme => {
       [theme.breakpoints.down('xs')]: {
         padding: "10px"
       }
+    },
+    clientCommentPadding: {
+      [theme.breakpoints.up('xs')]: {
+        paddingTop: "10px",
+        paddingBottom: "10px"
+      },
+      [theme.breakpoints.down('xs')]: {
+        padding: "10px"
+      }
     }
   })
 }

@@ -7,9 +7,11 @@ import IconButton                       from '@material-ui/core/IconButton';
 import Paper                            from '@material-ui/core/Paper';
 import ArrowBackIcon                    from '@material-ui/icons/ArrowBack';
 import Breadcrumbs                      from '../../ui/breadcrumbs';
-import ClientGeneralForm                from './edit/client_general_form'
-import ClientLegalForm                  from './edit/client_legal_form'
-import ClientsAttributesList            from './edit/clients_attributes_list'
+import ClientGeneralForm                from './edit/client_general_form';
+import ClientLegalForm                  from './edit/client_legal_form';
+import ClientsAttributesList            from './edit/clients_attributes_list';
+import ClientCommentInput               from './edit/client_comment_input';
+import CommentsList                     from './edit/comments_list/comments_list'
 import { Link }                         from 'react-router-dom';
 import { useQuery, useMutation }        from '@apollo/client';
 import { GET_CLIENT }                   from './clients_queries_and_mutations/queries';
@@ -241,8 +243,13 @@ const Edit = (props) => {
           </Grid>
           <Grid item xs style={{paddingRight:'10px'}}>
             <Paper variant="outlined" style={{padding:'20px'}}>
-              <Grid container direction='row' justifyContent='center' alignItems='center'>
-                
+              <Grid container direction='column' alignItems='stretch'>
+                <Grid container item direction='row' justifyContent='center' alignItems='center' style={{paddingTop:'10px', paddingBottom:'10px'}}>
+                  <ClientCommentInput clientInfo={clientInfo}/>
+                </Grid>
+                <Grid container item direction='row' justifyContent='center' alignItems='center' style={{paddingTop:'10px', paddingBottom:'10px'}}>
+                  <CommentsList clientInfo={clientInfo}/>
+                </Grid>
               </Grid>
             </Paper>
           </Grid>

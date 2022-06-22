@@ -150,51 +150,6 @@ export const LOAD_CLIENTS = gql`
   }
 `
 
-export const LOAD_CLIENT_COMMENTS = gql `
-  query clientComments($clientId: ID!,
-    $page: Int,
-    $per: Int
-    $sortDirection: String,
-    $sortField: String,
-    $searchField: String,
-    $searchValue: String)
-    {
-      clientComments(clientId: $clientId,
-        page: $page, 
-        per: $per,
-        sortDirection: $sortDirection,
-        sortField: $sortField,
-        searchField: $searchField,
-        searchValue: $searchValue)
-        {
-          id
-          commentableId
-          commentableType
-          body
-          user{
-            firstName
-            lastName
-            id
-            avatarThumbUrl
-          }
-        }
-    }
-`
-
-export const CREATE_CLIENT_COMMENT_MUTATION = gql `
-  mutation createComments($commentableId: ID!, $commentableType: String!, $body: String!){
-    createComment(input:{ commentableId: $commentableId,commentableType: $commentableType, body: $body}){
-      comment{
-        commentableId
-        commentableType
-        body
-      }
-      errors
-      pointers
-    }
-  }
-`
-
 export const GET_CLIENT_ATTRIBUTES = gql`
   query clientAttributes {
     clientAttributes {
@@ -350,23 +305,58 @@ export const GET_BUDGETS = gql`
   }
 `
 
+export const GET_CLIENT_COMMENTS = gql`
+  query clientComments(
+    $clientId: ID!
+    $page: Int
+    $per: Int
+    $sortDirection: String
+    $sortField: String
+    $searchField: String
+    $searchValue: String
+  ){
+    clientComments(
+        clientId: $clientId
+        page: $page
+        per: $per
+        sortDirection: $sortDirection
+        sortField: $sortField
+        searchField: $searchField
+        searchValue: $searchValue
+      ){
+        id
+        commentableId
+        commentableType
+        body
+        createdAt
+        updatedAt
+        user {
+          id
+          firstName
+          lastName
+          avatarThumbUrl
+        }
+    }
+  }
+`
+
 export const CREATE_COMMENT = gql`
   mutation createComment(
     $commentableId: ID!,
-    $commentableType:String!
-    $body:String!
+    $commentableType: String!,
+    $body: String!
   ){
     createComment(input:{
-      commentableId: $commentableId
-      commentableType: $commentableType
-      body: $body
+      commentableId: $commentableId,
+      commentableType: $commentableType,
+      body: $body,
     }
     ){
       comment{
-        body
+        id
         commentableId
         commentableType
-        id
+        body
       }
     }
   }
@@ -392,6 +382,19 @@ export const UPDATE_COMMENT = gql`
   }
 `
 
+export const DESTROY_COMMENT = gql`
+  mutation destroyComment(
+    $id: ID!,
+  ){
+    destroyComment(input:{
+      id: $id
+    }
+    ){
+      destroyed
+    }
+  }
+`
+
 export const GET_CURRENT_USER = gql`
   query currentUser {
     currentUser @client {
@@ -411,19 +414,6 @@ export const GET_CURRENT_USER = gql`
         name
         permanentLink
       }
-    }
-  }
-`
-
-export const DESTROY_COMMENT = gql`
-  mutation destroyComment(
-    $id: ID!,
-  ){
-    destroyComment(input:{
-      id: $id
-    }
-    ){
-      destroyed
     }
   }
 `
