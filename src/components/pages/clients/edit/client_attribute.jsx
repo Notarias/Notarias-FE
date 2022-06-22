@@ -1,12 +1,11 @@
 import React, { useState, useEffect }     from 'react';
 import Grid                               from '@material-ui/core/Grid';
-import InputAdornment                     from '@material-ui/core/InputAdornment';
 import IconButton                         from '@material-ui/core/IconButton';
 import SaveIcon                           from '@material-ui/icons/Save';
 import AttributeField                     from './attribute_field';
-import { useQuery, useMutation }          from '@apollo/client';
 import { withStyles }                     from '@material-ui/core/styles';
 import { styles }                         from '../styles';
+import { useQuery, useMutation }          from '@apollo/client';
 import { GET_CLIENT_ATTRIBUTE_VALUE }     from '../clients_queries_and_mutations/queries';
 import { CREATE_CLIENT_ATTRIBUTE_VALUE }  from '../clients_queries_and_mutations/queries'
 import { UPDATE_CLIENT_ATTRIBUTE_VALUE }  from '../clients_queries_and_mutations/queries';
@@ -109,17 +108,15 @@ const ClientAttribute = (props) => {
           ""
         :
           <Grid item xs={1}>
-            <InputAdornment position="end">
-              <IconButton
-                aria-label="cancel-attr-edit"
-                disabled={pristine || loadingCreateClientAttributeValue || loadingUpdateClientAttributeValue}
-                onClick={attrValue ? updateClientAttributeValue : newClientAttributeValue}
-                edge="end"
-                color='primary'
-              >
-                <SaveIcon/>
-              </IconButton>
-            </InputAdornment>
+            <IconButton
+              aria-label="cancel-attr-edit"
+              disabled={pristine || loadingCreateClientAttributeValue || loadingUpdateClientAttributeValue}
+              onClick={attrValue ? updateClientAttributeValue : newClientAttributeValue}
+              edge="end"
+              color='primary'
+            >
+              <SaveIcon/>
+            </IconButton>
           </Grid>
         }
       </Grid>
