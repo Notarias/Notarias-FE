@@ -44,8 +44,7 @@ export default (props) => {
   const [clientInfo, setClientInfo] =useState('')
 
   const changeDate = (e) => {
-    let dateStr = formatDate(new Date(`${e.target.value}-03`));
-    setDate(new Date(dateStr));
+    setDate(e)
   }
 
   const changeTimeFrame = (e) => {
@@ -93,10 +92,10 @@ export default (props) => {
       <Grid item>
         <Breadcrumbs breadcrumbs={BREADCRUMBS}/>
       </Grid>
-      <Grid container item style={{ flex: '1 1 auto' }}>
-        <Grid container item xs={4} style={{ padding: '10px' }}>
+      <Grid container item direction='row' alignItems='stretch' style={{ flex: '1 1 auto' }}>
+        <Grid container item xs={3} style={{ padding: '10px' }}>
           <Grid item xs>
-            <Paper style={{ padding: '10px' }}>
+            <Paper style={{ minHeight:'100%', padding:'10px' }}>
               <Grid container direction='column'>
                 <Grid item>
                   <Typography  align='left' variant='h5'>Controles</Typography>
@@ -133,7 +132,7 @@ export default (props) => {
             </Paper>
           </Grid>
         </Grid>
-        <Grid container item xs={8} style={{ padding: '10px' }}>
+        <Grid container item xs={9} style={{ padding: '10px' }}>
           <Grid item xs={12}>
             <TotalCards date={date}/>
           </Grid>
