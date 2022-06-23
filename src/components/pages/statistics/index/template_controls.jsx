@@ -35,8 +35,8 @@ export default (props) => {
               value={templateId}
               onChange={changeTemplateId}
             >
-              <MenuItem value="">
-                <em>-</em>
+              <MenuItem value='all_budgets'>
+                <em>Todos</em>
               </MenuItem>
               {
                 data && data.statisticsBudgetingTemplates.map(

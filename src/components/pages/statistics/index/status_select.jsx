@@ -28,10 +28,11 @@ export default (props) => {
               value={graphStatus}
               onChange={changeGraphStatus}
             >
+              <MenuItem key={`all-template-select-item`} value={'all_budgets'}>Todos</MenuItem>
               {
                 Object.keys(STATUSES).map(
                   (status) => (
-                      <MenuItem key={`${status}-template-select-item`} value={status}>{STATUSES[status]}</MenuItem>
+                    <MenuItem key={`${status}-template-select-item`} value={status}>{STATUSES[status]}</MenuItem>
                   )
                 )
               }

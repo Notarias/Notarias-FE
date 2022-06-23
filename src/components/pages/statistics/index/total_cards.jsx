@@ -29,12 +29,14 @@ const useStyles = makeStyles((theme) => ({
   creditPaymentTotal: {
     paddingTop:'25px',
     paddingBottom:'25px',
-    boxShadow: 'inset 10px 0px 0px -5px #4caf50'
+    boxShadow: 'inset 10px 0px 0px -5px #4caf50',
+    minHeight:'100%'
   },
   paymentTotal: {
     paddingTop:'25px',
     paddingBottom:'25px',
-    boxShadow: 'inset 10px 0px 0px -5px #f44336'
+    boxShadow: 'inset 10px 0px 0px -5px #f44336',
+    minHeight:'100%'
   }
 }));
 
@@ -69,7 +71,7 @@ const TotalCards = (props) => {
   }, [loading, data])
 
   return(
-    <Grid container direction='row' style={{marginBottom:'15px'}}>
+    <Grid container direction='row' alignItems='stretch' style={{marginBottom:'15px'}}>
       <Grid item xs style={{paddingRight:'15px'}}>
         <Paper variant="outlined" 
           className={classes.creditPaymentTotal}>
@@ -143,7 +145,8 @@ const TotalCards = (props) => {
           style={{
             paddingTop:'15px',
             paddingBottom:'15px',
-            boxShadow: 'inset 10px 0px 0px -5px #2196f3'
+            boxShadow: 'inset 10px 0px 0px -5px #2196f3',
+            minHeight:'100%'
           }}>
         
         </Paper>
@@ -153,7 +156,8 @@ const TotalCards = (props) => {
           style={{
             paddingTop:'15px',
             paddingBottom:'15px',
-            boxShadow: 'inset 10px 0px 0px -5px #ffeb3b'
+            boxShadow: 'inset 10px 0px 0px -5px #ffeb3b',
+            minHeight:'100%'
           }}>
         
         </Paper>
@@ -163,7 +167,8 @@ const TotalCards = (props) => {
           style={{
             paddingTop:'15px',
             paddingBottom:'15px',
-            boxShadow: 'inset 10px 0px 0px -5px #9c27b0'
+            boxShadow: 'inset 10px 0px 0px -5px #9c27b0',
+            minHeight:'100%'
           }}>
         
         </Paper>

@@ -1,14 +1,16 @@
-import React                        from 'react';
-import Grid                         from '@material-ui/core/Grid';
-import TextField                    from '@material-ui/core/TextField';
-import Button                       from '@material-ui/core/Button';
-import FormGroup                    from '@material-ui/core/FormGroup';
-import FormControlLabel             from '@material-ui/core/FormControlLabel';
-import Checkbox                     from '@material-ui/core/Checkbox';
-import TemplateControls             from './template_controls';
-import StatusSelect                 from './status_select';
-import SelectUsers                  from './select_users';
-import ClientSearch                 from './client_search';
+import React                                    from 'react';
+import Grid                                     from '@material-ui/core/Grid';
+import Button                                   from '@material-ui/core/Button';
+import FormGroup                                from '@material-ui/core/FormGroup';
+import FormControlLabel                         from '@material-ui/core/FormControlLabel';
+import Checkbox                                 from '@material-ui/core/Checkbox';
+import TemplateControls                         from './template_controls';
+import StatusSelect                             from './status_select';
+import SelectUsers                              from './select_users';
+import ClientSearch                             from './client_search';
+import DateFnsUtils                             from "@date-io/date-fns";
+import { MuiPickersUtilsProvider, DatePicker }  from "@material-ui/pickers";
+import "date-fns";
 
 const Controls = (props) => {
   const {
@@ -37,50 +39,40 @@ const Controls = (props) => {
     changeGraphStatus
   } = props
 
-  const formatMonthDate = (dateObject) => {
-    let date = new Date(dateObject)
-    let month = date.getMonth() + 1;
-    let year = date.getFullYear();
-  
-    month = month < 10 ? `0${month}` : `${month}`
-  
-    return (
-      `${year}-${month}`
-    )
-  }
-
   return(
     <>
-      <Grid item container direction='column'>
-        <Grid item xs style={{ paddingTop: '30px' }}>
-          <TextField
-            fullWidth
-            type='month'
-            label="Fecha Inicial"
-            value={formatMonthDate(date)}
-            onChange={changeDate}
-            InputLabelProps={{
-              shrink: true,
-            }}
-          />
+      <Grid container item direction='column' alignItems='stretch'>
+        <Grid container item xs direction='row' justifyContent='center' style={{ paddingTop: '30px' }}>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <DatePicker
+              fullWidth
+              variant="inline"
+              openTo="year"
+              views={["year", "month"]}
+              label="Mes y Año"
+              helperText="Empieza por seleccionar el año"
+              value={date}
+              onChange={changeDate}
+            />
+          </MuiPickersUtilsProvider>
         </Grid>
-        <Grid item xs style={{ paddingTop: '30px' }}>
+        <Grid item xs style={{ paddingTop: '35px' }}>
           <SelectUsers userInfo={userInfo} setUserInfo={setUserInfo} clientInfo={clientInfo}/>
         </Grid>
-        <Grid item xs style={{ paddingTop: '30px' }}>
+        <Grid item xs style={{ paddingTop: '35px' }}>
           <ClientSearch clientInfo={clientInfo} setClientInfo={setClientInfo} userInfo={userInfo}/>
         </Grid>
-        <Grid item xs style={{ paddingTop: '30px' }}>
+        <Grid item xs style={{ paddingTop: '35px' }}>
           <StatusSelect graphStatus={graphStatus} changeGraphStatus={changeGraphStatus}/>
         </Grid>
-        <Grid item xs style={{ paddingTop: '30px' }}>
+        <Grid item xs style={{ paddingTop: '35px' }}>
           <TemplateControls 
             templateId={templateId}
             templateTabsIds={templateTabsIds}
             changeTemplateId={changeTemplateId}
             changeTemplateTabsIds={changeTemplateTabsIds}/>
         </Grid> 
-        <Grid container item xs style={{ paddingTop: '30px' }}>
+        <Grid container item xs style={{ paddingTop: '45px' }}>
           <Grid item xs={6}>
             <FormGroup>
               <FormControlLabel
@@ -109,7 +101,7 @@ const Controls = (props) => {
               />
             </FormGroup>
           </Grid>
-          <Grid container item xs style={{ paddingTop: '30px' }} justifyContent="flex-end">
+          <Grid container item xs style={{ minHeight:'100%', paddingTop: '25px' }} justifyContent="flex-end" alignItems='flex-end'>
             <Grid item>
               <Button variant='contained'  color="primary" onClick={triggerFiltering}>Filtrar</Button>
             </Grid>
