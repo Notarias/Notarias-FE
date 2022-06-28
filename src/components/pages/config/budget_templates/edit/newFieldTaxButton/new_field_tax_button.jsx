@@ -9,7 +9,7 @@ import DialogContent                          from '@material-ui/core/DialogCont
 import DialogTitle                            from '@material-ui/core/DialogTitle';
 import DialogActions                          from '@material-ui/core/DialogActions';
 import Divider                                from '@material-ui/core/Divider';
-import FieldSearch                            from './operators_and_selectors';
+import SelectTaxType                          from './select_tax_type';
 import TextField                              from '@material-ui/core/TextField';
 import { useMutation }                        from '@apollo/client';
 import { CREATE_TAX_FIELD}                    from '../../queries_and_mutations/queries'
@@ -90,12 +90,20 @@ const NewFieldTaxButton = (props) => {
   }
 
   useEffect(() => {
-    if(operator.length && taxableSelector.length && (fieldName && fieldName.length) && defaultValue && taxedFieldsIds.length) {
-      setAllOptionsMarked(true)
+    if(taxableSelector === "tariff") {
+      if(taxableSelector.length && (fieldName && fieldName.length) && (taxedFieldsIds && taxedFieldsIds.length)) {
+        setAllOptionsMarked(true)
+      } else {
+        setAllOptionsMarked(false)
+      }
     } else {
-      setAllOptionsMarked(false)
+      if(operator.length && taxableSelector.length && (fieldName && fieldName.length) && defaultValue && taxedFieldsIds.length) {
+        setAllOptionsMarked(true)
+      } else {
+        setAllOptionsMarked(false)
+      }
     }
-  },[operator.length, taxableSelector.length, (fieldName && fieldName.length), (defaultValue && defaultValue.length), taxedFieldsIds.length])
+  },[operator.length, taxableSelector.length, (fieldName && fieldName.length), (defaultValue && defaultValue.length), (taxedFieldsIds && taxedFieldsIds.length)])
 
   const renderNewFieldTaxButton = () => {
     return(
@@ -137,7 +145,7 @@ const NewFieldTaxButton = (props) => {
                 variant="outlined"
               />
             </Grid>
-            <FieldSearch
+            <SelectTaxType
               currentTab={currentTab}
               templateData={templateData}
               defaultValue={defaultValue}

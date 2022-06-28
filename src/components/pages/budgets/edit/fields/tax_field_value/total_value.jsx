@@ -99,13 +99,17 @@ const TotalValue = (props) => {
       />
     )
   }
-
+console.log(templateField.operator)
   return(
     <Grid container item>
       <Grid container item direction="row" justifyContent="flex-end">
         <Grid item container spacing={1}>
           <Grid item>
-            <Chip label={`${inferOperatorAdornment()}`} variant="outlined" color='secondary' />
+            {templateField.operator ?
+              <Chip label={`${inferOperatorAdornment()}`} variant="outlined" color='secondary' />
+            :
+              <></>
+            }
           </Grid>
           <Grid item>
             {budgetFieldValue && loadChip()}

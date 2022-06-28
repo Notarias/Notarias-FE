@@ -174,6 +174,7 @@ export const GET_BUDGETING_TEMPLATE_TAB_FIELDS = gql`
       extendable
       fieldType
       operator
+      taxableSelector
       categories {
         id
         name
@@ -185,6 +186,7 @@ export const GET_BUDGETING_TEMPLATE_TAB_FIELDS = gql`
         payable
         fieldType
         operator
+        taxableSelector
         budgetingTemplateTabId
         createdAt
         updatedAt
