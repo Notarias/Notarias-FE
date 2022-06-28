@@ -229,9 +229,16 @@ const TaxField = (props) => {
         <Grid container item className={ classes.fieldHeightRow }>
           { editing ? renderTextField() : renderInputField() }
           <Grid container alignItems="center" justifyContent="center" item xs={1}>
-            <Badge classes={{badge: classes.badgeGreenColor}} overlap="circular" badgeContent={field && field.defaultValue + "%"}>
-              <div ></div>
-            </Badge>
+            {field.taxableSelector === 'tariff' ?
+              <Chip
+                label='Arancel'
+                color='primary'
+              />
+            :
+              <Badge classes={{badge: classes.badgeGreenColor}} overlap="circular" badgeContent={field && field.defaultValue + "%"}>
+                <div ></div>
+              </Badge>
+            }
           </Grid>
           <Grid container direction="column"  alignItems="center" justifyContent="center" item xs={3}>
             <Chip
