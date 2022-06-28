@@ -99,7 +99,7 @@ const TotalValue = (props) => {
       />
     )
   }
-console.log(templateField.operator)
+
   return(
     <Grid container item>
       <Grid container item direction="row" justifyContent="flex-end">
