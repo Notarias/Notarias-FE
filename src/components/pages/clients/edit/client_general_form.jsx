@@ -9,14 +9,19 @@ import { styles }             from '../styles';
 const ClientGeneralForm = (props) => {
   const { classes, clientInfo, setClientInfo, setFormValue, errors } = props;
 
-  const [countriesList, setCountriesList] = useState([]);
-  const [selectedCountry, setSelectedCountry] = useState();
+  const [initCountryCode, setInitCountryCode] = useState();
+  const [initState, setInitState] = useState();
 
   const clearCitiesList = () => {
     if (clientInfo.countryCode) {
+      setInitCountryCode(clientInfo.countryCode);
+      setInitState(clientInfo.state)
       setClientInfo({ ...clientInfo, countryCode: "", state: "" });
-      setSelectedCountry();
     }
+  }
+
+  const returnCountryValue = () => {
+    setClientInfo({ ...clientInfo, countryCode: initCountryCode, state: initState });
   }
 
   return (
@@ -138,13 +143,9 @@ const ClientGeneralForm = (props) => {
       <Grid container item direction='row' alignItems='flex-start'>
         <Grid item xs={12} sm={4} className={classes.clientFieldsPaddingRightTop}>
           <SelectCountry 
-            clientInfo={clientInfo}
             clearCitiesList={clearCitiesList}
-            countriesList={countriesList}
-            setCountriesList={setCountriesList}
+            returnCountryValue={returnCountryValue}
             countryCode={clientInfo.countryCode}
-            selectedCountry={selectedCountry}
-            setSelectedCountry={setSelectedCountry}
             fieldName={"countryCode"}
             setFormValue={setFormValue}
             errors={errors}
@@ -152,9 +153,7 @@ const ClientGeneralForm = (props) => {
         </Grid>
         <Grid item xs={12} sm={4} className={classes.clientFieldsPaddingLeftRightTop}>
           <SelectState
-            clientInfo={clientInfo}
-            countriesList={countriesList}
-            selectedCountry={selectedCountry}
+            selectedCountry={clientInfo.countryCode}
             selectedState={clientInfo.state}
             fieldName={"state"}
             setFormValue={setFormValue}

@@ -13,7 +13,7 @@ import { styles }                   from './styles';
 import { withStyles }               from '@material-ui/core/styles';
 import { useQuery }                 from '@apollo/client';
 import { GET_CLIENT }               from './clients_queries_and_mutations/queries';
-import CountriesList                from './edit/countries_list.json';
+import { Country }                  from 'country-state-city';
 
 
 const clientPreviewDrawer = (props) => {
@@ -77,10 +77,10 @@ const clientPreviewDrawer = (props) => {
       )
     } 
     if(typeof propertyValue === 'string'){
-      let countryObj = CountriesList.find(country => (country.country_short_name === propertyValue))
+      let countryObj = Country.getCountryByCode(propertyValue)
       return(
         <>
-          {countryObj && countryObj.country_name}
+          {countryObj && countryObj.name}
         </>
       )
     }
