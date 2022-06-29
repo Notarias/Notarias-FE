@@ -53,20 +53,6 @@ const Edit = (props) => {
                                                 legalCity: ""
                                               });
 
-  useEffect(() => {
-    if (!localStorage.wwToken) {
-      fetch("https://www.universal-tutorial.com/api/getaccesstoken",
-        {headers:{
-          "Accept": "application/json",
-          "api-token": "0If1aY4jUevUbNrnxPYspSVjiD6ik8aNw-LF7QetOdIO0xCTX52--39Zh8iEaAeI1M4",
-          "user-email": "roga.zero@gmail.com"
-        }}
-      )
-      .then(response => response.json())
-      .then(response => localStorage.setItem('wwToken', response.auth_token))
-    }
-  }, [localStorage.wwToken]);
-
   const setFormValue = ({ target }) => {
     const {name, value} = target
     setClientInfo({...clientInfo, [name]: value});

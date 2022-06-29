@@ -2,9 +2,10 @@ import React, { useState, useEffect }    from 'react';
 import TextField                         from '@material-ui/core/TextField';
 import MenuItem                          from '@material-ui/core/MenuItem';
 import Skeleton                          from '@material-ui/lab/Skeleton';
+import { State }                         from 'country-state-city';
 
 const SelectState = (props) => {
-  const { selectedCountry, selectedState, setFormValue, fieldName, errors} = props
+  const { selectedCountry, selectedState, fieldName, setFormValue, errors} = props
 
   const [states, setStates] = useState([]);
 
@@ -13,14 +14,7 @@ const SelectState = (props) => {
       setStates([])
     }
     if (selectedCountry) {
-      fetch(`https://www.universal-tutorial.com/api/states/${selectedCountry.country_name}`,
-        {headers:{
-          "Authorization": `Bearer ${window.localStorage.wwToken}`,
-          "Accept": "application/json"
-        }}
-      )
-      .then(response => response.json())
-      .then(response => setStates(response))
+      setStates(State.getStatesOfCountry(selectedCountry))
     }
   }, [selectedCountry])
 
@@ -45,8 +39,8 @@ const SelectState = (props) => {
             Seleccione un Estado
           </MenuItem>
           { states && states.map(state => (
-              <MenuItem key={`city-${state.state_name}`} value={state.state_name}>
-                {state.state_name}
+              <MenuItem key={`city-${state.name}`} value={state.name}>
+                {state.name}
               </MenuItem>
             ))
           }

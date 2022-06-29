@@ -10,14 +10,19 @@ import { styles }             from '../styles';
 const ClientLegalForm = (props) => {
   const { classes, clientInfo, setClientInfo, setFormValue, errors } = props;
 
-  const [countriesList, setCountriesList] = useState([]);
-  const [selectedLegalCountry, setSelectedLegalCountry] = useState();
+  const [initLegalCountryCode, setInitLegalCountryCode] = useState();
+  const [initLegalState, setInitLegalState] = useState();
 
   const clearCitiesList = () => {
     if (clientInfo.countryCode) {
+      setInitLegalCountryCode(clientInfo.legalCountryCode);
+      setInitLegalState(clientInfo.legalState)
       setClientInfo({ ...clientInfo, legalCountryCode: "", legalState: "" });
-      setSelectedLegalCountry();
     }
+  }
+
+  const returnCountryValue = () => {
+    setClientInfo({ ...clientInfo, legalCountryCode: initLegalCountryCode, legalState: initLegalState });
   }
 
   return (
@@ -127,13 +132,9 @@ const ClientLegalForm = (props) => {
       </Grid>
       <Grid item xs={12} sm={4} className={classes.clientFieldsPaddingRightTop}>
         <SelectCountry 
-          clientInfo={clientInfo}
           clearCitiesList={clearCitiesList}
-          countriesList={countriesList}
-          setCountriesList={setCountriesList}
+          returnCountryValue={returnCountryValue}
           countryCode={clientInfo.legalCountryCode}
-          selectedCountry={selectedLegalCountry}
-          setSelectedCountry={setSelectedLegalCountry}
           fieldName={"legalCountryCode"}
           setFormValue={setFormValue}
           errors={errors}
@@ -141,9 +142,7 @@ const ClientLegalForm = (props) => {
       </Grid>
       <Grid item xs={12} sm={4} className={classes.clientFieldsPaddingLeftRightTop}>
         <SelectState
-          clientInfo={clientInfo}
-          countriesList={countriesList}
-          selectedCountry={selectedLegalCountry}
+          selectedCountry={clientInfo.legalCountryCode}
           selectedState={clientInfo.legalState}
           fieldName={"legalState"}
           setFormValue={setFormValue}
