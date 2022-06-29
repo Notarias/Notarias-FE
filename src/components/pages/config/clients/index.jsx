@@ -114,11 +114,6 @@ const ConfigClientsIndex  = ()=> {
               }
             </Grid>
           </Grid>
-          <Grid container justifyContent="center">
-            <Grid item>
-              Nuevo atributo de cliente
-            </Grid>
-          </Grid>
         </Paper>
       </Grid>
     </Grid>

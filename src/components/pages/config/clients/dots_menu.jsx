@@ -18,7 +18,7 @@ const dotsMenu  = ({
   })=> {
 
   return (
-    <Grid container item justifyContent="flex-end" alignItems="center">
+    <Grid container item justifyContent="flex-end" alignItems="center" style={{marginBottom:'25px'}}>
       <Grid item xs={4}>
         <IconButton 
           onClick={ id ?  updateAttribute : createNewAttribute }
