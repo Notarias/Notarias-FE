@@ -176,17 +176,17 @@ const attrList = (props)=> {
     <Grid container item>
       <Grid container item>
         <Grid item xs={4}>
-        <TextField 
-          label="Nombre"
-          value={ name }
-          variant="outlined"
-          className={ classes.boxOutLined }
-          onChange={ handleNameChange }
-          error={ !!error["name"] && true }
-          errorskey={ "name" }
-          name='name'
-          helperText={error["name"] || " "}
-        />
+          <TextField 
+            label="Nombre"
+            value={ name }
+            variant="outlined"
+            className={ classes.boxOutLined }
+            onChange={ handleNameChange }
+            error={ !!error["name"] && true }
+            errorskey={ "name" }
+            name='name'
+            helperText={error["name"] || " "}
+          />
         </Grid>
         <Grid item xs={4}>
           <FormControl variant="outlined" className={classes.boxOutLined} error={ !!error["style"] && true }>
@@ -198,9 +198,10 @@ const attrList = (props)=> {
               error={ !!error["style"] && true }
               errorskey={ "style" }
               name='style'
+              label='Seleccionar'
             >
               <MenuItem key='string' value={'string'}>Texto</MenuItem>
-              <MenuItem key='number' value={'number'}>Numerico</MenuItem>
+              <MenuItem key='number' value={'number'}>Numérico</MenuItem>
             </Select>
             <FormHelperText>{ error["style"] || " " }</FormHelperText>
           </FormControl>
