@@ -82,9 +82,8 @@ const FileAttribute = (props) => {
         awaitRefetchQueries: true
       }
     )
-console.log(attrValue)
+
   const updateClientAttributeFile = (files, event) => {
-    console.log(files[0])
     updateClientAttributeValueMutation({
       variables:{
         "id": attrValue && attrValue.id,

@@ -71,7 +71,6 @@ const FieldsRows = (props) => {
   }
 
   const updateFieldValueFile = ( files, event ) => {
-    console.log(files[0])
     updateProcedureFieldValueFile (
       {
         variables: {
