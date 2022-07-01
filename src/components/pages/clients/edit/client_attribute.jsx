@@ -7,7 +7,7 @@ import { withStyles }                     from '@material-ui/core/styles';
 import { styles }                         from '../styles';
 import { useQuery, useMutation }          from '@apollo/client';
 import { GET_CLIENT_ATTRIBUTE_VALUE }     from '../clients_queries_and_mutations/queries';
-import { CREATE_CLIENT_ATTRIBUTE_VALUE }  from '../clients_queries_and_mutations/queries';
+import { CREATE_CLIENT_ATTRIBUTE_VALUE }  from '../clients_queries_and_mutations/queries'
 import { UPDATE_CLIENT_ATTRIBUTE_VALUE }  from '../clients_queries_and_mutations/queries';
 
 const ClientAttribute = (props) => {
@@ -57,21 +57,21 @@ const ClientAttribute = (props) => {
       })
     }
 
-  const [updateClientAttributeValueMutation, {loading: loadingUpdateClientAttributeValue}] =
-    useMutation(
-      UPDATE_CLIENT_ATTRIBUTE_VALUE,
-      {
-        onCompleted(cacheData) {
-          setPristine(true)
-        },
-        refetchQueries: [
-          {
-            query: GET_CLIENT_ATTRIBUTE_VALUE, variables: {"attributeId": Number(attr.id), "clientId": match.params.id} 
+    const [updateClientAttributeValueMutation, {loading: loadingUpdateClientAttributeValue}] =
+      useMutation(
+        UPDATE_CLIENT_ATTRIBUTE_VALUE,
+        {
+          onCompleted(cacheData) {
+            setPristine(true)
           },
-        ],
-        awaitRefetchQueries: true
-      }
-    )
+          refetchQueries: [
+            {
+              query: GET_CLIENT_ATTRIBUTE_VALUE, variables: {"attributeId": Number(attr.id), "clientId": match.params.id} 
+            },
+          ],
+          awaitRefetchQueries: true
+        }
+      )
 
   const updateClientAttributeValue = (event) => {
     updateClientAttributeValueMutation({
@@ -98,12 +98,10 @@ const ClientAttribute = (props) => {
         <Grid item xs>
           <AttributeField
             attr={attr}
-            attrValue={attrValue}
             attributeValue={attributeValue}
             editAttrField={editAttrField}
             cancelEdit={cancelEdit}
             pristine={pristine}
-            match={match}
           />
         </Grid>
         {pristine ?

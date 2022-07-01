@@ -167,14 +167,12 @@ export const CREATE_CLIENT_ATTRIBUTE_VALUE = gql`
   mutation createClientAttributeValue(
     $clientId: ID!,
     $clientAttributeId: ID!,
-    $value: String,
-    $file: Upload
+    $value: String!,
     ){
       createClientAttributeValue(input:{
         clientId: $clientId,
         clientAttributeId: $clientAttributeId,
-        value: $value,
-        file: $file
+        value: $value
       }){
         clientAttributeValue{
           clientId
@@ -215,38 +213,32 @@ export const GET_CLIENT_ATTRIBUTE_VALUE = gql`
       clientId: $clientId
     ){
       clientId
+      file
       id
       name
       permanentLink
       clientAttributeId
       value
-      file
-      fileName
-      fileUrl
     }
   }
 `
 
 export const UPDATE_CLIENT_ATTRIBUTE_VALUE = gql`
   mutation UpdateClientAttributeValue(
-    $id: ID,!
-    $value: String,
-    $file: Upload
+    $id: ID!
+    $value: String!
   ){
     updateClientAttributeValue(input:{
-      id: $id,
-      value: $value,
-      file: $file
+          id: $id,
+      value: $value 
     })
     {
       clientAttributeValue{
+        file
         clientId
         id
         value
         clientAttributeId
-        file
-        fileName
-        fileUrl
       }
     }
   }
