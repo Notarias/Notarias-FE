@@ -3,6 +3,7 @@ import TextField              from '@material-ui/core/TextField';
 import InputAdornment         from '@material-ui/core/InputAdornment';
 import IconButton             from '@material-ui/core/IconButton';
 import CancelIcon             from '@material-ui/icons/Cancel';
+import FileAttribute          from './client_attribute_type/file_attribute'
 import NumberFormat           from 'react-number-format';
 import PropTypes              from 'prop-types';
 
@@ -11,31 +12,30 @@ function NumberFormatCustom(props) {
   
   return (
     <NumberFormat
-      {...other}
-      getInputRef={inputRef}
-      onValueChange={(values) => {
-        if(values.value !== defaultClientValue ){
-          onChange({
-            target: {
-              value: values.value,
-            },
-          });
-        }
-      }}
-      isNumericString
+    {...other}
+    getInputRef={inputRef}
+    onValueChange={(values) => {
+      if(values.value !== defaultClientValue ){
+        onChange({
+          target: {
+            value: values.value,
+          },
+        });
+      }
+    }}
+    isNumericString
     />
-  );
-}
-
-NumberFormatCustom.propTypes = {
-  inputRef: PropTypes.func.isRequired,
-
-  onChange: PropTypes.func.isRequired,
-};
-
+    );
+  }
+  
+  NumberFormatCustom.propTypes = {
+    inputRef: PropTypes.func.isRequired,
+    
+    onChange: PropTypes.func.isRequired,
+  };
+  
 const AttributeField = (props) => {
-  const { attr, attributeValue, editAttrField, cancelEdit, pristine } = props
-
+  const { attr, attrValue, attributeValue, editAttrField, cancelEdit, pristine, match } = props
   const renderAttrField = () => {
     switch (attr.style) {
       case "string":
@@ -95,7 +95,13 @@ const AttributeField = (props) => {
           />
         );
       case "file":
-        return(<></>);
+        return(
+          <FileAttribute
+            attr={attr}
+            attrValue={attrValue}
+            match={match}
+          />
+        );
       default:
         return(<>Tipo de campo no reconocido</>);
     }

@@ -8,7 +8,7 @@ import { GET_CLIENT_ATTRIBUTES }           from '../clients_queries_and_mutation
 const ClientsAttributesList = (props) => {
   const { match } = props
 
-  const  { data: dataAttribute}  = useQuery(GET_CLIENT_ATTRIBUTES)
+  const  { data: dataAttribute}  = useQuery(GET_CLIENT_ATTRIBUTES, { fetchPolicy: 'no-cache' })
 
   const [attributes, setAttributes] = useState(dataAttribute ? dataAttribute.clientAttributes : [] )
   

@@ -202,6 +202,7 @@ const attrList = (props)=> {
             >
               <MenuItem key='string' value={'string'}>Texto</MenuItem>
               <MenuItem key='number' value={'number'}>Numérico</MenuItem>
+              <MenuItem key='file' value={'file'}>Archivo</MenuItem>
             </Select>
             <FormHelperText>{ error["style"] || " " }</FormHelperText>
           </FormControl>
