@@ -7,9 +7,8 @@ import InputAdornment                     from '@material-ui/core/InputAdornment
 import Link                               from '@material-ui/core/Link';
 import IconButton                         from '@material-ui/core/IconButton';
 import Paper                              from '@material-ui/core/Paper';
-import DescriptionIcon                    from '@material-ui/icons/Description';
 import CloudUploadIcon                    from '@material-ui/icons/CloudUpload';
-import CachedIcon                         from '@material-ui/icons/Cached';
+import GetAppIcon                         from '@material-ui/icons/GetApp';
 import FileAttrLoading                    from './file_attr_loading';
 import { useMutation }                    from '@apollo/client';
 import { GET_CLIENT_ATTRIBUTE_VALUE }     from '../../clients_queries_and_mutations/queries';
@@ -120,7 +119,7 @@ const FileAttribute = (props) => {
                 <input {...getInputProps()} />
                 <Tooltip title={attrValue && attrValue.fileUrl ? "Cambiar Archivo" : "Subir Archivo"}>
                   <IconButton color='primary'>
-                    {attrValue && attrValue.fileUrl ? <CachedIcon/> : <CloudUploadIcon/>}
+                    <CloudUploadIcon/>
                   </IconButton>
                 </Tooltip>
               </div>
@@ -160,7 +159,7 @@ const FileAttribute = (props) => {
                           edge="end"
                           color='primary'
                         >
-                          { attrValue && attrValue.fileUrl ? <DescriptionIcon/> : "" }
+                          <GetAppIcon/>
                         </IconButton>
                       </Link>
                     </Tooltip>
