@@ -35,17 +35,21 @@ const InformationTabs = (props) => {
     return(
       tabList.map(
         (tab, index) => {
-          return(
-            <BudgetTemplateTab
-              key={tab.id + "-tab"} 
-              setValue={setValue}
-              setCurrentTab={setCurrentTab}
-              currentTab={currentTab}
-              tab={tab} 
-              label={tab.name}
-              index={index}
-            />
-          )
+          if(tab.active) {
+            return(
+              <BudgetTemplateTab
+                key={tab.id + "-tab"} 
+                setValue={setValue}
+                setCurrentTab={setCurrentTab}
+                currentTab={currentTab}
+                tab={tab} 
+                label={tab.name}
+                index={index}
+              />
+            )
+          } else {
+            return(<></>)
+          }
         }
       )
     )

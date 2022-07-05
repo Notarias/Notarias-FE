@@ -71,7 +71,7 @@ const logoutLink = onError(({ networkError, forward, operation }) => {
 const apolloClient = new ApolloClient(
   {
     cache,
-    link: from([authMiddleware, logoutLink, httpLinkConnection]),
+    link: from([authMiddleware, logoutLink, httpLink]),
     typeDefs,
     resolvers
   }
