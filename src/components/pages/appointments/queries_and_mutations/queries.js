@@ -73,7 +73,7 @@ export const UPDATE_APPOINTMENT = gql`
 
 export const GET_CURRENT_USER = gql`
   query currentUser {
-    currentUser @client {
+    currentUser {
       firstName
       lastName
       id
@@ -85,6 +85,16 @@ export const GET_CURRENT_USER = gql`
       avatarMidUrl
       avatarUrl
       updatedAt
+      roles {
+        id
+        name
+        permanentLink
+      }
+      permissions {
+        id
+        name
+        permanentLink
+      }
     }
   }
 `

@@ -999,6 +999,11 @@ export const GET_CURRENT_USER = gql`
         name
         permanentLink
       }
+      permissions {
+        id
+        name
+        permanentLink
+      }
     }
   }
 `

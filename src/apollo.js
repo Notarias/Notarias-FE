@@ -12,16 +12,17 @@ import ActionCableLink          from 'graphql-ruby-client/dist/subscriptions/Act
 
 export const cache = new InMemoryCache();
 
-export const BASE_URI = 'peaceful-eyrie-59851.herokuapp.com'
+//export const BASE_URI = 'peaceful-eyrie-59851.herokuapp.com'
+export const BASE_URI = 'localhost:3000'
 
 // Change protocol https to http for localhost
-const URI = `https://${BASE_URI}/graphql`;
+const URI = `http://${BASE_URI}/graphql`;
 
 const uploadLink = new createUploadLink({ uri: URI });
 // Change protocol wss to ws for localhost
 
 const cableTokenUriAssignation = function() {
-  return(`https://${BASE_URI}/cable?token=${localStorage.getItem('jwtToken')}`)
+  return(`http://${BASE_URI}/cable?token=${localStorage.getItem('jwtToken')}`)
 }
 
 const cable = createConsumer(cableTokenUriAssignation)

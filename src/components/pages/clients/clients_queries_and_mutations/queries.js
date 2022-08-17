@@ -405,7 +405,7 @@ export const DESTROY_COMMENT = gql`
 
 export const GET_CURRENT_USER = gql`
   query currentUser {
-    currentUser @client {
+    currentUser {
       firstName
       lastName
       id
@@ -417,7 +417,12 @@ export const GET_CURRENT_USER = gql`
       avatarMidUrl
       avatarUrl
       updatedAt
-      roles{
+      roles {
+        id
+        name
+        permanentLink
+      }
+      permissions {
         id
         name
         permanentLink
