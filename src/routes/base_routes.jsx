@@ -43,7 +43,9 @@ export default function BaseRoutes(props) {
   const { data } = useQuery(GET_CURRENT_USER)
 
   useEffect(() => {
-    setCurrentUser(data.currentUser)
+    if(data) {
+      setCurrentUser(data.currentUser)
+    }
   }, [data])
 
   useEffect(() => {
@@ -60,6 +62,40 @@ export default function BaseRoutes(props) {
     }
   }
 
+  const loadRoutes = () => {
+    let routes = []
+    if(withPermission('clientes')) {
+      routes.push(<ProtectedRoute path='/clients/:id/edit' currentUser={currentUser} component={ClientsEdit} permission='clientes'/>)
+      routes.push(<ProtectedRoute path='/clients/new' currentUser={currentUser} component={clientsNew} permission='clientes'/>)
+      routes.push(<ProtectedRoute path="/clients" currentUser={currentUser} component={ClientsIndex} permission='clientes'/>)
+    }
+    if(withPermission('presupuestos')) {
+      routes.push(<ProtectedRoute path="/budgets/templates" currentUser={currentUser} component={BudgetBuilderIndex} permission='presupuestos'/>)
+      routes.push(<ProtectedRoute path='/budgets/:id/invoice' currentUser={currentUser} component={BudgetInvoice} permission='presupuestos'/>)
+      routes.push(<ProtectedRoute path='/budgets/:id/edit' currentUser={currentUser} component={BudgetsEdit} permission='presupuestos'/>)
+      routes.push(<ProtectedRoute path='/budgets/new' currentUser={currentUser} component={budgetsNew} permission='presupuestos'/>)
+      routes.push(<ProtectedRoute path='/budgets' currentUser={currentUser} component={BudgetsIndex} permission='presupuestos'/>)
+    }
+    if(withPermission('config')) {
+      routes.push(<ProtectedRoute path='/users/:id/edit' currentUser={currentUser} component={UsersEdit} permission='config'/>)
+      routes.push(<ProtectedRoute path='/users/new' currentUser={currentUser} component={UsersNew} permission='config'/>)
+      routes.push(<ProtectedRoute path='/users' currentUser={currentUser} component={UsersIndex} permission='config'/>)
+      routes.push(<ProtectedRoute path='/procedures/:id/edit' currentUser={currentUser} component={ProcedureEdit} permission='tramites'/>)
+      routes.push(<ProtectedRoute path="/procedures/new" currentUser={currentUser} component={ProcedureNew} permission='tramites'/>)
+      routes.push(<ProtectedRoute path="/procedures" currentUser={currentUser} component={ProceduresIndex} permission='tramites'/>)
+      routes.push(<ProtectedRoute path="/config/roles/:id/permissions" currentUser={currentUser} component={ConfigRoleEdit} permission='config'/>)
+      routes.push(<ProtectedRoute path="/config/roles" currentUser={currentUser} component={ConfigRolesIndex} permission='config'/>)
+      routes.push(<ProtectedRoute path="/config/permissions" currentUser={currentUser} component={ConfigPermissionsIndex} permission='config'/>)
+      routes.push(<ProtectedRoute path="/config/clients" currentUser={currentUser} component={ConfigClientsIndex} permission='config'/>)
+      routes.push(<ProtectedRoute path="/config/procedure_templates/:id/edit" currentUser={currentUser} component={ConfigProcedureTemplatesEdit} permission='config'/>)
+      routes.push(<ProtectedRoute path="/config/procedure_templates" currentUser={currentUser} component={ConfigProcedureTemplatesIndex} permission='config'/>)
+      routes.push(<ProtectedRoute path="/config/budget_templates/:id/edit" currentUser={currentUser} component={ConfigBudgetsTemplatesEdit} permission='config'/>)
+      routes.push(<ProtectedRoute path="/config/budget_templates" currentUser={currentUser} component={ConfigBudgetsTemplatesIndex} permission='config'/>)
+    }
+    return(routes)
+  }
+
+  console.log(currentUser)
   return(
     <div style={{ minHeight: "100vh" }}>
       <GlobalMessage classes={styles}/>
@@ -67,66 +103,10 @@ export default function BaseRoutes(props) {
         { !localStorage.jwtToken &&
           (<Route path="/sign_in" component={SessionsNew}/>)
         }
-        {
-          withPermission('config') &&
-          (
-            <>
-              <ProtectedRoute path='/users/:id/edit' currentUser={currentUser} component={UsersEdit} permission='config'/>
-              <ProtectedRoute path='/users/new' currentUser={currentUser} component={UsersNew} permission='config'/>
-              <ProtectedRoute path='/users' currentUser={currentUser} component={UsersIndex} permission='config'/>
-            </>
-          )
-        }
-        {
-          withPermission('clientes') &&
-          (
-            <>
-              <ProtectedRoute path='/clients/:id/edit' currentUser={currentUser} component={ClientsEdit} permission='clientes'/>
-              <ProtectedRoute path='/clients/new' currentUser={currentUser} component={clientsNew} permission='clientes'/>
-              <ProtectedRoute path="/clients" currentUser={currentUser} component={ClientsIndex} permission='clientes'/>
-            </>
-          )
-        }
-        {
-          withPermission('presupuestos') &&
-          (
-            <>
-              <ProtectedRoute path="/budgets/templates" currentUser={currentUser} component={BudgetBuilderIndex} permission='presupuestos'/>
-              <ProtectedRoute path='/budgets/:id/invoice' currentUser={currentUser} component={BudgetInvoice} permission='presupuestos'/>
-              <ProtectedRoute path='/budgets/:id/edit' currentUser={currentUser} component={BudgetsEdit} permission='presupuestos'/>
-              <ProtectedRoute path='/budgets/new' currentUser={currentUser} component={budgetsNew} permission='presupuestos'/>
-              <ProtectedRoute path='/budgets' currentUser={currentUser} component={BudgetsIndex} permission='presupuestos'/>
-            </>
-          )
-        }
-        {
-          withPermission('config') &&
-          (
-            <>
-              <ProtectedRoute path='/procedures/:id/edit' currentUser={currentUser} component={ProcedureEdit} permission='tramites'/>
-              <ProtectedRoute path="/procedures/new" currentUser={currentUser} component={ProcedureNew} permission='tramites'/>
-              <ProtectedRoute path="/procedures" currentUser={currentUser} component={ProceduresIndex} permission='tramites'/>
-            </>
-          )
-        }
+        { loadRoutes() }
         { withPermission('citas') && <ProtectedRoute path="/appointments" currentUser={currentUser} component={AppointmentsIndex} permission='citas'/> }
         { withPermission('estadisticas') && <ProtectedRoute path="/statistics" currentUser={currentUser} component={StatisticsIndex} permission='estadisticas'/> }
         <ProtectedRoute path="/profiles" currentUser={currentUser} component={ProfilesIndex}/>
-        {
-          withPermission('config') &&
-          (
-            <>
-              <ProtectedRoute path="/config/roles/:id/permissions" currentUser={currentUser} component={ConfigRoleEdit} permission='config'/>
-              <ProtectedRoute path="/config/roles" currentUser={currentUser} component={ConfigRolesIndex} permission='config'/>
-              <ProtectedRoute path="/config/permissions" currentUser={currentUser} component={ConfigPermissionsIndex} permission='config'/>
-              <ProtectedRoute path="/config/clients" currentUser={currentUser} component={ConfigClientsIndex} permission='config'/>
-              <ProtectedRoute path="/config/procedure_templates/:id/edit" currentUser={currentUser} component={ConfigProcedureTemplatesEdit} permission='config'/>
-              <ProtectedRoute path="/config/procedure_templates" currentUser={currentUser} component={ConfigProcedureTemplatesIndex} permission='config'/>
-              <ProtectedRoute path="/config/budget_templates/:id/edit" currentUser={currentUser} component={ConfigBudgetsTemplatesEdit} permission='config'/>
-              <ProtectedRoute path="/config/budget_templates" currentUser={currentUser} component={ConfigBudgetsTemplatesIndex} permission='config'/>
-            </>
-          )
-        }
         <ProtectedRoute path='*' component={DashboardsIndex} />
         <Route render={() => <ProtectedRoute path='/' component={DashboardsIndex}/>}/>
       </Switch>
