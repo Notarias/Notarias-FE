@@ -28,7 +28,7 @@ const ProceduresEdit = (props) => {
   }, [loading, data]);
 
   return(
-    <Grid container direction='column' alignItems="stretch" justifyContent="flex-start">
+    <Grid container direction='column' alignItems="stretch" justifyContent="flex-start" style={{ minHeight: "100vh" }}>
       <Grid item>
         <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
       </Grid>

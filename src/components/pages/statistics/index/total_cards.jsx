@@ -66,6 +66,7 @@ const TotalCards = (props) => {
   );
 
   useEffect( () => {
+    console.log(data)
     setPayment(data && data.statisticsPaymentsTotal.total);
     setCreditPayment(data && data.statisticsCreditPaymentsTotal.total);
   }, [loading, data])
@@ -94,7 +95,7 @@ const TotalCards = (props) => {
             <Grid item xs={10} style={{paddingLeft:'10px', paddingTop:'20px'}}>
               <Typography variant="h6" align='left'>
               <NumberFormat
-                value={Math.abs(payment/100)}
+                value={Math.abs(creditPayment/100)}
                 displayType={'text'} 
                 thousandSeparator={true} 
                 prefix={'$ '}
@@ -128,7 +129,7 @@ const TotalCards = (props) => {
             <Grid item xs={10} style={{paddingLeft:'10px', paddingTop:'20px'}}>
               <Typography variant="h6" align='left'>
                 <NumberFormat
-                  value={Math.abs(creditPayment/100)}
+                  value={Math.abs(payment/100)}
                   displayType={'text'} 
                   thousandSeparator={true} 
                   prefix={'$ '}
