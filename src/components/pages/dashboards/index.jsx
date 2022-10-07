@@ -51,7 +51,7 @@ const DashboardsIndex = (props) => {
         return <AppointmentsDashboard/>
     }
   }
-console.log("fdsafdsafdsafdsfdsafds")
+
   return (
     <Grid container direction='column' alignItems="stretch" justifyContent="flex-start">
       <Grid item>
@@ -66,7 +66,6 @@ console.log("fdsafdsafdsafdsfdsafds")
             to="/budgets/new"
             endIcon={<PostAddIcon/>}
           >
-            {console.log("-------------------------")}
             Nuevo Presupuesto
           </Button>
         </Grid>

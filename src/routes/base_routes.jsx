@@ -95,7 +95,6 @@ export default function BaseRoutes(props) {
     return(routes)
   }
 
-  console.log(currentUser)
   return(
     <div style={{ minHeight: "100vh" }}>
       <GlobalMessage classes={styles}/>
