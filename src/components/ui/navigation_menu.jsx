@@ -84,7 +84,6 @@ class NavigationMenu extends Component {
             <MenuLink nested={true} rawIcon iconComponent={VerifiedUserIcon} linkPath="/config/permissions" menuText="Permisos" />
             <MenuLink nested={true} iconComponent={BudgetsBuilderIcon} linkPath="/config/budget_templates" menuText="Presupuestos" />
             <MenuLink nested={true} iconComponent={FormsBuilderIcon} linkPath="/config/procedure_templates" menuText="Trámites" />
-            <MenuLink nested={true} iconComponent={ReportsIcon} linkPath="/reports" menuText="Reportes" />
             <MenuLink nested={true} rawIcon iconComponent={ContactsSharpIcon} linkPath="/config/clients" menuText="Clientes" />
           </List>
         </Collapse>
