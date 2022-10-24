@@ -5,6 +5,8 @@ import { useQuery }                          from '@apollo/client';
 import { GET_BUDGETING_TEMPLATE_TAB_FIELDS } from '../../queries_and_mutations/queries';
 import { GET_BUDGETING_TAB_TOTALS }          from '../../queries_and_mutations/queries';
 import Field                                 from './field';
+import Payment                               from './payment';
+import Divider                               from '@material-ui/core/Divider';
 
 export default (props) => {
   const [tab]               = useState(props.tab)
@@ -39,11 +41,18 @@ export default (props) => {
           )
         })
       }
+      <Divider />
       <Grid item>
         <Typography align='right' variant='h6'>
           ${totalsData && totalsData.tabTotals && ((totalsData.tabTotals.total * 1.0) / 100).toFixed(2)}
         </Typography>
       </Grid>
+      <Divider />
+      <Grid item>
+        <Payment/>
+      </Grid>
+      <Divider />
+      <br/>
     </Grid>
   )
 }
