@@ -2,9 +2,7 @@ import React, { useState, useEffect }        from 'react';
 import Grid                                  from '@material-ui/core/Grid';
 import Typography                            from '@material-ui/core/Typography';
 import { useQuery }                          from '@apollo/client';
-import { GET_BUDGET_FIELD_VALUE } from '../../queries_and_mutations/queries'
-
-
+import { GET_BUDGET_FIELD_VALUE }            from '../../queries_and_mutations/queries';
 
 export default (props) => {
   const [field] = useState(props.field)

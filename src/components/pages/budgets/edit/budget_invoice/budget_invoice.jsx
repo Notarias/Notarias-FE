@@ -3,6 +3,7 @@ import { withStyles }       from '@material-ui/core/styles';
 import Grid                 from '@material-ui/core/Grid';
 import Paper                from '@material-ui/core/Paper';
 import Typography           from '@material-ui/core/Typography';
+import Divider              from '@material-ui/core/Divider';
 import Skeleton             from '@material-ui/lab/Skeleton';
 import { useQuery }         from '@apollo/client';
 import { styles }           from '../../styles';
@@ -30,7 +31,6 @@ const months = [
   'Nov',
   'Dic'
 ]
-
 
 const BudgetInvoice = (props) => {
   const { classes, match } = props
@@ -74,8 +74,7 @@ const BudgetInvoice = (props) => {
 
   return(
     <>
-    <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
-    <Paper>
+      <Breadcrumbs breadcrumbs={ BREADCRUMBS }/>
       <Grid container direction="column" justifyContent="center" alignItems="flex-end">
         <Grid item style={{ paddingLeft: '20px', paddingRight: '20px' }}>
           { 
@@ -92,9 +91,8 @@ const BudgetInvoice = (props) => {
           }
         </Grid>
       </Grid>
-    </Paper>
-    <Paper>
-      <Grid container  direction='column' alignItems="center">
+      <Paper>
+        <Grid container  direction='column' alignItems="center" spacing={2}>
           <Grid item style={{ marginBottom: '30px' }}>
             <img className={classes.logoInInvoice} src={logo_notaria} alt="Logo"/>
           </Grid>
@@ -154,25 +152,22 @@ const BudgetInvoice = (props) => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid container item xs={8} >
+          <Grid container item xs={8}>
             { budget && <ProcedureFields key={`${budget.id}-budget`} budget={budget}/> }
           </Grid>
           <Grid container item xs={8} className={classes.marginTopGridInvoice}>
-            <Grid item xs={6} >
-              <Typography variant='h5' align='left'>CONCEPTO:</Typography>
+            <Grid item xs={12} style={{ marginTop: '20px', marginBottom: '20px' }}>
+              <Divider />
             </Grid>
-            <Grid item xs={6} >
-              <Typography variant='h5' align='right'>CANTIDAD:</Typography>
-            </Grid>
-          </Grid>
-          <Grid container item xs={8} direction="column">
             { tabs && tabs ?
               tabs.map((tab) => {
                 return(
-                  <Tab key={`${tab.id}-tab-invoice-information`} tab={tab} budget={budget}/>
+                  <Grid item key={`${tab.id}-tab-invoice-information`} xs={6} style={{ paddingLeft: '15px', paddingRight: '15px' }}>
+                    <Tab tab={tab} budget={budget}/>
+                  </Grid>
                 )
               })
-            :
+              :
               loadingArray.map((row) => {
                 return(
                   <Grid key={`loading-${row}`} container direction='row'>
@@ -187,11 +182,14 @@ const BudgetInvoice = (props) => {
               })
             }
           </Grid>
-          <Grid container item xs={8} style={{ marginTop: "20px" }}>
+          <Grid container item xs={8} >
+            <Grid item xs={12} style={{ marginTop: '20px', marginBottom: '10px' }}>
+              <Divider />
+            </Grid>
             <Grid item xs={6}>
               <Typography align='left' variant='h6'>Gran Total</Typography>
             </Grid>
-            <Grid container item xs={6} justifyContent='flex-end'>
+            <Grid item xs={6} justifyContent='flex-end'>
               {budget && budget ?
                 <Typography align='right' variant='h6'>
                   $ {budget && ((budget.totalDebt * 1.0) / 100).toFixed(2)}
@@ -203,8 +201,11 @@ const BudgetInvoice = (props) => {
                 </>
               }
             </Grid>
+            <Grid item xs={12} style={{ marginTop: '10px', marginBottom: '20px' }}>
+              <Divider />
+            </Grid>
           </Grid>
-          <Grid container item xs={8} direction="row">
+          {/* <Grid container item xs={8} direction="row">
             <Grid
               container 
               item 
@@ -237,7 +238,7 @@ const BudgetInvoice = (props) => {
               <Typography variant="subtitle2"> Dirección: Av. Paseo de la Reforma 510, Col. Juárez,</Typography>
               <Typography variant="subtitle2"> C.P. 06600, Delegación Cuauhtémoc, D.F. </Typography>
             </Grid>
-          </Grid>
+          </Grid> */}
           <Grid container item xs={8} direction="row" className={classes.marginTopGridInvoice}>
             <Grid
               container
@@ -254,8 +255,8 @@ const BudgetInvoice = (props) => {
               </Typography>
             </Grid>
           </Grid>
-      </Grid>
-    </Paper>
+        </Grid>
+      </Paper>
     </>
   )
 }
