@@ -105,7 +105,7 @@ const TotalValue = (props) => {
       <Grid container item direction="row" justifyContent="flex-end">
         <Grid item container spacing={1}>
           <Grid item>
-            {templateField.operator ?
+            {templateField.operator === "percentile" ?
               <Chip label={`${inferOperatorAdornment()}`} variant="outlined" color='secondary' />
             :
               <></>
