@@ -11,7 +11,7 @@ export default function ProtectedRoute({ component: Component, currentUser, perm
      
       render={props => {
         return(
-          localStorage.jwtToken ? ( <Component {...props} {...rest } /> ) :
+          localStorage.jwtToken ? ( <Component {...props} {...rest } currentUser={currentUser} /> ) :
           (
             <Redirect
               to={{
