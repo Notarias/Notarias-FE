@@ -14,8 +14,6 @@ import Button                                 from '@material-ui/core/Button';
 import Divider                                from '@material-ui/core/Divider';
 import ArrowBackIosIcon                       from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon                    from '@material-ui/icons/ArrowForwardIos';
-import { useQuery }                           from '@apollo/client';
-import { GET_BUDGETING_TEMPLATE_TAB_FIELDS }  from '../../queries_and_mutations/queries';
 
 function not(a, b) {
   return a.filter((value) => b.indexOf(value) === -1);
@@ -28,34 +26,21 @@ function intersection(a, b) {
 const TaxFieldsSelector = (props) => {
   const {
     classes,
-    currentTab,
     templateData,
     setTaxedFieldsIds,
     setPristine,
   } = props
 
-  const [searchList, setSearchList]        = useState([]);
+  const [searchList, setSearchList]        = useState(templateData);
   const [fuzzySearcher, setFuzzySearcher]  = useState(new Fuse(templateData, { keys: ['name'] }));
   
   const [checked, setChecked]              = useState([]);
-  const [left, setLeft]                    = useState([]);
+  const [left, setLeft]                    = useState(templateData);
   const [right, setRight]                  = useState([]);
 
 
   const leftChecked = intersection(checked, left);
   const rightChecked = intersection(checked, right);
-
-  const { data } = useQuery(
-    GET_BUDGETING_TEMPLATE_TAB_FIELDS,
-    {
-      variables: { "id": currentTab.id }
-    }
-  );
-
-  useEffect(() => {
-    setLeft(data && data.budgetingTemplateTabFields);
-    setSearchList(data && data.budgetingTemplateTabFields);
-  }, [data])
 
   useEffect(() => {
     if(right.length > 0){
@@ -138,7 +123,8 @@ const TaxFieldsSelector = (props) => {
       </List>
     </Card>
   );
-
+console.log(left , "LEFT List")
+console.log(templateData, "tempalteData")
   return(
     <>
       <Grid container item xs={5} alignItems="center" justifyContent="flex-start">
