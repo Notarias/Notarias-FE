@@ -123,8 +123,7 @@ const TaxFieldsSelector = (props) => {
       </List>
     </Card>
   );
-console.log(left , "LEFT List")
-console.log(templateData, "tempalteData")
+
   return(
     <>
       <Grid container item xs={5} alignItems="center" justifyContent="flex-start">
