@@ -11,34 +11,19 @@ import ListItemText                           from '@material-ui/core/ListItemTe
 import ListItemIcon                           from '@material-ui/core/ListItemIcon';
 import Checkbox                               from '@material-ui/core/Checkbox';
 import Divider                                from '@material-ui/core/Divider';
-import { useQuery }                           from '@apollo/client';
-import { GET_BUDGETING_TEMPLATE_TAB_FIELDS }  from '../../queries_and_mutations/queries';
 
 const TariffTaxFieldSelector = (props) => {
   const {
     classes,
-    currentTab,
     templateData,
     setTaxedFieldsIds,
     setPristine,
   } = props
 
-  const [fieldsList, setFieldsList]        = useState([]);
-  const [searchList, setSearchList]        = useState([]);
+  const [fieldsList]        = useState(templateData);
+  const [searchList, setSearchList]        = useState(templateData);
   const [fuzzySearcher, setFuzzySearcher]  = useState(new Fuse(templateData, { keys: ['name'] }));
   const [checked, setChecked]              = useState([]);
-
-  const { data } = useQuery(
-    GET_BUDGETING_TEMPLATE_TAB_FIELDS,
-    {
-      variables: { "id": currentTab.id }
-    }
-  );
-
-  useEffect(() => {
-    setFieldsList(data && data.budgetingTemplateTabFields);
-    setSearchList(data && data.budgetingTemplateTabFields);
-  }, [data])
 
   useEffect(() => {
     setFuzzySearcher(new Fuse(fieldsList, { keys: ['name'] }))

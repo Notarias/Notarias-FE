@@ -13,7 +13,6 @@ import TariffTaxFieldSelector     from './tariff_tax_field_selector';
 const SelectTaxType = (props) => {
   const {
     classes,
-    currentTab,
     templateData,
     setTaxedFieldsIds,
     setDefaultValue,
@@ -107,14 +106,12 @@ const SelectTaxType = (props) => {
 
         {tariffSelect ?
           <TariffTaxFieldSelector
-            currentTab={currentTab}
             templateData={templateData}
             setTaxedFieldsIds={setTaxedFieldsIds}
             setPristine={setPristine}
           />
         :
           <TaxFieldsSelector
-            currentTab={currentTab}
             templateData={templateData}
             setTaxedFieldsIds={setTaxedFieldsIds}
             setPristine={setPristine}

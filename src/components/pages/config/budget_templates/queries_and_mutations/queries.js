@@ -23,6 +23,33 @@ export const GET_BUDGETING_TEMPLATE = gql`
           id
         }
       }
+      fields{
+        id
+        name
+        active
+        budgetingTemplateTabId
+        defaultValue
+        extendable
+        fieldType
+        operator
+        taxableSelector
+        categories {
+          id
+          name
+        }
+        taxes {
+          id
+          defaultValue
+          active
+          payable
+          fieldType
+          operator
+          taxableSelector
+          budgetingTemplateTabId
+          createdAt
+          updatedAt
+        }
+      }
     }
   }
 `
