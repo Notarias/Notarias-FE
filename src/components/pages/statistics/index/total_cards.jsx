@@ -66,7 +66,6 @@ const TotalCards = (props) => {
   );
 
   useEffect( () => {
-    console.log(data)
     setPayment(data && data.statisticsPaymentsTotal.total);
     setCreditPayment(data && data.statisticsCreditPaymentsTotal.total);
   }, [loading, data])
