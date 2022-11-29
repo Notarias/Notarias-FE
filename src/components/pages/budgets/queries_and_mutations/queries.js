@@ -364,6 +364,17 @@ export const GET_BUDGET_PROCEDURE_PRINTABLE_FIELDS = gql`
   }
 `
 
+export const GET_BUDGETING_TEMPLATE_PRINTABLE_FIELDS = gql`
+  query budgetingTemplatePrintableFields($budgetId: ID!) {
+    budgetingTemplatePrintableFields(id: $budgetId){
+      id
+      name
+      active
+      printable
+    }
+  }
+`
+
 export const GET_BUDGETING_TEMPLATES_TABS = gql`
   query budgetingTemplateTabs ($id: ID! ) {
     budgetingTemplateTabs (id: $id) {
@@ -398,6 +409,7 @@ export const GET_BUDGETING_TEMPLATE_TAB_FIELDS = gql`
       id
       name
       active
+      printable
       fieldType
       operator
       taxableSelector
@@ -944,6 +956,7 @@ export const GET_BUDGETING_TEMPLATE_FIELDS = gql`
   query budgetingTemplateFields ($id: ID! ) {
     budgetingTemplateFields (id: $id) {
       active
+      printable
       id
       name
       extendable

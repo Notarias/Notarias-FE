@@ -1,20 +1,21 @@
-import React, {useEffect, useState}   from 'react';
-import { withStyles }       from '@material-ui/core/styles';
-import Grid                 from '@material-ui/core/Grid';
-import Paper                from '@material-ui/core/Paper';
-import Typography           from '@material-ui/core/Typography';
-import Divider              from '@material-ui/core/Divider';
-import Skeleton             from '@material-ui/lab/Skeleton';
-import { useQuery }         from '@apollo/client';
-import { styles }           from '../../styles';
-import { GET_PRINT_BUDGET } from '../../queries_and_mutations/queries'
-import Breadcrumbs          from '../../../../ui/breadcrumbs';
-import Tab                  from './tab';
-import ProcedureFields      from './procedure_fields';
-import logo_notaria         from '../../../../../images/logo_notaria.JPG';
-import { Button }           from '@material-ui/core';
-import CloudDownloadIcon    from '@material-ui/icons/CloudDownload';
-import { BASE_URI }         from '../../../../../apollo'
+import React, {useEffect, useState}      from 'react';
+import { withStyles }                    from '@material-ui/core/styles';
+import Grid                              from '@material-ui/core/Grid';
+import Paper                             from '@material-ui/core/Paper';
+import Typography                        from '@material-ui/core/Typography';
+import Divider                           from '@material-ui/core/Divider';
+import Skeleton                          from '@material-ui/lab/Skeleton';
+import { useQuery }                      from '@apollo/client';
+import { styles }                        from '../../styles';
+import { GET_PRINT_BUDGET }              from '../../queries_and_mutations/queries'
+import Breadcrumbs                       from '../../../../ui/breadcrumbs';
+import Tab                               from './tab';
+import ProcedurePrintableFields          from './procedure_printable_fields';
+import BudgetPrintableFields             from './budget_printable_fields';
+import logo_notaria                      from '../../../../../images/logo_notaria.JPG';
+import { Button }                        from '@material-ui/core';
+import CloudDownloadIcon                 from '@material-ui/icons/CloudDownload';
+import { BASE_URI }                      from '../../../../../apollo'
 
 
 const months = [
@@ -153,8 +154,12 @@ const BudgetInvoice = (props) => {
               </Grid>
             </Grid>
             <Grid container item xs={8}>
-              { budget && <ProcedureFields key={`${budget.id}-budget`} budget={budget}/> }
+              { budget && <ProcedurePrintableFields key={`${budget.id}-procedure_fields`} budget={budget}/> }
             </Grid>
+            <Grid container item xs={8}>
+              { budget && <BudgetPrintableFields key={`${budget.id}-budget_fields`} budget={budget}/> }
+            </Grid>
+
             <Grid container item xs={8} className={classes.marginTopGridInvoice}>
               <Grid item xs={12} style={{ marginBottom: '20px' }}>
                 <Divider />
@@ -202,7 +207,7 @@ const BudgetInvoice = (props) => {
               <Grid item xs={6}>
                 <Typography align='left' variant='h6'>Gran Total</Typography>
               </Grid>
-              <Grid item xs={6} justifyContent='flex-end'>
+              <Grid item xs={6}>
                 {budget && budget ?
                   <Typography align='right' variant='h6'>
                     $ {budget && ((budget.totalDebt * 1.0) / 100).toFixed(2)}

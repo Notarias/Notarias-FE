@@ -2,7 +2,6 @@ import React, { useState, useEffect }       from 'react';
 import Breadcrumbs                          from '../../ui/breadcrumbs'
 import Grid                                 from '@material-ui/core/Grid';
 import Paper                                from '@material-ui/core/Paper';
-import Container                            from '@material-ui/core/Container';
 import InformationTabs                      from './edit/information_tabs/information_tabs'
 import { useQuery }                         from '@apollo/client';
 import { GET_BUDGET }                       from './queries_and_mutations/queries'

@@ -3,6 +3,10 @@ import Grid                                           from '@material-ui/core/Gr
 import TextField                                      from '@material-ui/core/TextField';
 import Button                                         from '@material-ui/core/Button';
 import DeleteForeverIcon                              from '@material-ui/icons/DeleteForever';
+import FormControlLabel                               from '@material-ui/core/FormControlLabel';
+import Checkbox                                       from '@material-ui/core/Checkbox';
+import PrintOutlinedIcon                              from '@material-ui/icons/PrintOutlined';
+import PrintIcon                                      from '@material-ui/icons/Print';
 import { withStyles }                                 from '@material-ui/core/styles';
 import { styles }                                     from '../styles';
 import Dialog                                         from '@material-ui/core/Dialog';
@@ -36,11 +40,13 @@ const TaxField = (props) => {
   const [field]         = useState(props.field)
   const [categoryListOpen, setCategoryListOpen] = useState(false);
   const [categoriesToSave, setCategoriesToSave] = useState([])
+  const [printableDialog, setPrintableDialog] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
   const [editing, setEditing]       = useState(true);
   const [error, setError]           = useState(false);
   const [name, setName]             = useState()
   const [active, setActive]         = useState(false);
+  const [printable, setPrintable] = useState(false);
   const [categories, setCategories] = useState([]);
   const inputsList = ["name"]
 
@@ -98,6 +104,7 @@ const TaxField = (props) => {
       setCategories(field.categories)
       setName(field.name)
       setActive(field.active)
+      setPrintable(field.printable)
     }
   }, [field && field.id])
 
@@ -124,6 +131,14 @@ const TaxField = (props) => {
   const handleCloseCategoryList = () => {
     setCategoryListOpen(false);
   };
+  
+  const openPrintableDialog = () => {
+    setPrintableDialog(true);
+  }
+
+  const closePrintableDialog = () => {
+    setPrintableDialog(false);
+  }
 
   const handleClickOpenDialog = () => {
     setOpenDialog(true);
@@ -137,6 +152,12 @@ const TaxField = (props) => {
     updateBudgetingTemplateTabFieldMutation({ variables: { id: field.id, active: !active}})
     setActive(!active)
     setOpenDialog(false);
+  }
+
+  const checkPrintableField = (event) => {
+    updateBudgetingTemplateTabFieldMutation({ variables: { id: field.id, printable: !printable }})
+    setPrintable(!printable);
+    setPrintableDialog(false);
   }
 
   const [destroyBudgetingTemplateTabFieldMutation] =
@@ -166,6 +187,14 @@ const TaxField = (props) => {
 
   const statusField = () => { 
     return active ? "Desactivar" : "Activar"
+  }
+
+  const printableColorButton = () => {
+    if (printable === true) {
+      return 'disabled'
+    } else {
+      return "primary"
+    }
   }
 
   const renderTextField = () => {
@@ -240,7 +269,7 @@ const TaxField = (props) => {
               </Badge>
             }
           </Grid>
-          <Grid container direction="column"  alignItems="center" justifyContent="center" item xs={3}>
+          <Grid container direction="column"  alignItems="center" justifyContent="center" item xs={2}>
             <Chip
               avatar={<Avatar>{ categoriesToShow() }</Avatar>}
               label={ ` categorias` }
@@ -265,6 +294,44 @@ const TaxField = (props) => {
               <DialogActions>
                 <Button onClick={ handleCloseCategoryList }> Cancelar </Button>
                 <Button onClick={ updateFieldCategories }> Aceptar </Button>
+              </DialogActions>
+            </Dialog>
+          </Grid>
+
+          <Grid container item xs={1} alignItems="center" justifyContent="center">
+            <Grid item>
+              <FormControlLabel
+                control={<Checkbox 
+                  icon={<PrintOutlinedIcon />} 
+                  checkedIcon={<PrintIcon />} 
+                  name="printable"
+                  checked={ printable }
+                />}
+                label=" "
+                color="primary"
+                className={ classes.formControlPadding }
+                onChange={ openPrintableDialog }
+              />
+            </Grid>
+            <Dialog
+              open={printableDialog}
+              onClose={closePrintableDialog}
+              aria-labelledby="print-aletrt"
+              aria-describedby="print-alert-dialog"
+            >
+              <DialogTitle id="favorite-alert">
+                { printable === true ? "No imprimir" : "Agregar a formulario de impresión"}
+              </DialogTitle>
+              <DialogContent>
+                { printable === true ? "Este campo dejará de aparecer en el formato de impresión" : "Se marcará este campo para aparecer en el formulario de impresión"}
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={ closePrintableDialog } color="secondary">
+                  Cancelar
+                </Button>
+                <Button color={ printableColorButton() } autoFocus onClick={ checkPrintableField } variant="contained">
+                  { printable ? "Quitar" : "Añadir"}
+                </Button>
               </DialogActions>
             </Dialog>
           </Grid>
