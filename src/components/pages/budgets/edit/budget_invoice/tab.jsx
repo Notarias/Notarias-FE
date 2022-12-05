@@ -37,7 +37,9 @@ export default (props) => {
       {
         fields && fields.map((field) => {
           return(
-            <Field key={field.id + 'print-field'} field={field} budget={budget}/>
+            <React.Fragment key={field.id + 'print-field'}>
+              { !field.printable && <Field field={field} budget={budget}/> }
+            </React.Fragment>
           )
         })
       }

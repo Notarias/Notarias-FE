@@ -22,7 +22,7 @@ export default (props) => {
     {
       fields && fields.map((field) => {
         return(
-          <React.Fragment key={`${field.id}-printable-field-budget-${budget.id}`}>
+          <React.Fragment key={`printable-procedure-field-${field.id}-budget-${budget.id}`}>
             { field.active && field.printable && <ProcedureField field={field} budget={budget}/> }
           </React.Fragment>
         )
