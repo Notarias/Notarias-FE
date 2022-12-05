@@ -394,3 +394,15 @@ export const CREATE_TAX_FIELD = gql`
     }
   }
 `
+export const CLONE_BUDGETING_TEMPLATE = gql`
+  mutation CloneBudgetingTemplate($id: ID!){
+    cloneBudgetingTemplate(input:{budgetingTemplateId: $id}){
+      budgetingTemplate{
+        id
+        name
+        serialNumber
+        active      
+      }
+    }
+  }
+`
