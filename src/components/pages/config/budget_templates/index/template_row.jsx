@@ -1,4 +1,4 @@
-import React                          from 'react';
+import React, { useState }            from 'react';
 import Grid                           from '@material-ui/core/Grid';
 import TableRow                       from '@material-ui/core/TableRow';
 import TableCell                      from '@material-ui/core/TableCell';
@@ -6,6 +6,7 @@ import GenericDropdownMenu            from '../../../../ui/generic_dropdown_menu
 import Chip                           from '@material-ui/core/Chip';
 import Button                         from '@material-ui/core/Button';
 import CreateIcon                     from '@material-ui/icons/Create';
+import FileCopyIcon                   from '@material-ui/icons/FileCopy';
 import MenuItem                       from '@material-ui/core/MenuItem';
 import RadioButtonUncheckedIcon       from '@material-ui/icons/RadioButtonUnchecked';
 import RadioButtonCheckedIcon         from '@material-ui/icons/RadioButtonChecked';
@@ -20,17 +21,20 @@ import useMediaQuery                  from '@material-ui/core/useMediaQuery';
 import { useTheme }                   from '@material-ui/core/styles';
 import { Link }                       from 'react-router-dom';
 import { useMutation }                from '@apollo/client';
-import { UPDATE_BUDGETING_TEMPLATE }  from '../queries_and_mutations/queries'
+import { UPDATE_BUDGETING_TEMPLATE }  from '../queries_and_mutations/queries';
+import { CLONE_BUDGETING_TEMPLATE }   from '../queries_and_mutations/queries';
 import { useQuery }                   from '@apollo/client';
-import { GET_BUDGETING_TEMPLATE }     from '../queries_and_mutations/queries'
-
+import { GET_BUDGETING_TEMPLATE }     from '../queries_and_mutations/queries';
+import { GLOBAL_MESSAGE }             from '../../../../../resolvers/queries';
+import client                         from '../../../../../apollo';
 
 const TemplateRow = (props) => {
 
   const budgetingTemplate  = props.data
-  const { classes } = props
-  const [active, setActive] = React.useState(budgetingTemplate.active);
-  const [open, setOpen] = React.useState(false);
+  const { classes, cloned, setCloned } = props
+  const [active, setActive] = useState(budgetingTemplate.active);
+  const [activeDialog, setActiveDialog] = useState(false);
+  const [duplicateDialog, setDuplicateDialog] = useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const id = budgetingTemplate.id;
@@ -54,17 +58,50 @@ const TemplateRow = (props) => {
     }
   )
 
+  const [cloneBudgetingTemplateMutation] =
+  useMutation(
+    CLONE_BUDGETING_TEMPLATE,
+    {
+      onComplete(cacheData) {
+        client.writeQuery({
+          query: GLOBAL_MESSAGE,
+          data: {
+            globalMessage: {
+              message: "La plantilla se duplico con exito.",
+              type: "success",
+              __typename: "globalMessage"
+            }
+          }
+        })
+        setCloned(!cloned);
+      }
+    }
+  )
+
   const changeStatus = (e) => {
     updateBudgetingTemplateMutation({ variables: { id: id, active: !active } })
-    setOpen(false);
+    setActiveDialog(false);
   }
 
-  const handleClickOpen = (event) => {
-    setOpen(true);
+  const duplicateTemplate = (e) => {
+    cloneBudgetingTemplateMutation({ variables: { id: id } })
+    setDuplicateDialog(false);
+  }
+
+  const openActiveDialog = (event) => {
+    setActiveDialog(true);
   };
 
-  const handleClose = () => {
-    setOpen(false);
+  const closeActiveDialog = () => {
+    setActiveDialog(false);
+  };
+
+  const openDuplicateDialog = (event) => {
+    setDuplicateDialog(true);
+  };
+
+  const closeDuplicateDialog = () => {
+    setDuplicateDialog(false);
   };
 
   const markStatus = () => {
@@ -120,10 +157,37 @@ const TemplateRow = (props) => {
                 </Grid>
               </Link>
             </MenuItem>
-            <MenuItem 
-              key={ budgetingTemplate.id + "-status" }
-            >
-              <Grid container onClick={ handleClickOpen }>
+            <MenuItem key={ budgetingTemplate.id + "-clone" } >
+              <Grid container onClick={ openDuplicateDialog }>
+                <ListItemIcon>
+                  <FileCopyIcon className={ classes.defaultIcon }/>
+                </ListItemIcon>
+                <ListItemText primary="Duplicar" />
+              </Grid>
+              <Dialog
+                fullScreen={ fullScreen }
+                open={ duplicateDialog }
+                onClose={ closeDuplicateDialog }
+                aria-labelledby="responsive-dialog-title"
+              >
+                <DialogTitle id="responsive-dialog-title"> Confirmar Duplicar </DialogTitle>
+                <DialogContent>
+                  <DialogContentText>
+                    ¿Realmente deseas duplicar está plantilla de presupuesto ?
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={ closeDuplicateDialog } color="primary">
+                    Cancelar
+                  </Button>
+                  <Button autoFocus onClick={ duplicateTemplate } color="primary">
+                    Duplicar
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            </MenuItem>
+            <MenuItem key={ budgetingTemplate.id + "-status" } >
+              <Grid container onClick={ openActiveDialog } >
                 <ListItemIcon>
                   {
                     active ? 
@@ -136,8 +200,8 @@ const TemplateRow = (props) => {
               </Grid>
               <Dialog
                 fullScreen={ fullScreen }
-                open={ open }
-                onClose={ handleClose }
+                open={ activeDialog }
+                onClose={ closeActiveDialog }
                 aria-labelledby="responsive-dialog-title"
               >
                 <DialogTitle id="responsive-dialog-title">{"Confirmar " + statusTemplate() }</DialogTitle>
@@ -147,7 +211,7 @@ const TemplateRow = (props) => {
                   </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                  <Button onClick={ handleClose } color="primary">
+                  <Button onClick={ closeActiveDialog } color="primary">
                     Cancelar
                   </Button>
                   <Button autoFocus onClick={ changeStatus } color="primary">

@@ -1,4 +1,4 @@
-import React, { useEffect }                from 'react'
+import React, { useState, useEffect }      from 'react'
 import CircularProgress                    from '@material-ui/core/CircularProgress';
 import TableRow                            from '@material-ui/core/TableRow';
 import TableCell                           from '@material-ui/core/TableCell';
@@ -21,6 +21,8 @@ export default (props) => {
     id: id
   }
 
+  const [cloned, setCloned] = useState(false);
+
   const { loading, data, refetch } = useQuery(
     GET_BUDGETING_TEMPLATES, { variables: variables }
   );
@@ -31,7 +33,7 @@ export default (props) => {
     refetch(variables);
     setGetTemplatesVariables(variables)
     totalCount && assingTotalRecords(totalCount)
-  }, [page, per, searchField, searchValue, sortField, sortDirection, totalCount]);
+  }, [page, per, searchField, searchValue, sortField, sortDirection, totalCount, cloned]);
 
 
   if (loading || !data) {
@@ -53,6 +55,8 @@ export default (props) => {
               data={ budgetingTemplate }
               key={ budgetingTemplate.id + "-BudgetingTemplaterow" }
               classes={ classes }
+              cloned={ cloned }
+              setCloned={ setCloned }
             />
           ))
         }
