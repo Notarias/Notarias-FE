@@ -30,14 +30,14 @@ export default (props) => {
     GET_BUDGET_FIELD_VALUE,
     { variables: { budgetingTemplateFieldId: field.id, budgetId: budget.id }}
   )
-console.log(data)
+
   useEffect(() => {
     if(data && data.budgetFieldValue) {
       setFieldValue(data && data.budgetFieldValue)
       setValue(data && data.budgetFieldValue.value)
     }
   }, [loading, data])
-console.log(value)
+
   const handleClose = (event) => {
     setOpen(false);
     setValue(fieldValue.value);
