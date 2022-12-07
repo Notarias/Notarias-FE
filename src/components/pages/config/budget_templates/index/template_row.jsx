@@ -138,7 +138,10 @@ const TemplateRow = (props) => {
         }
       </TableCell>
       <TableCell align= "center">{ procedureLinked() }</TableCell>
-      <TableCell align= "center">2.0</TableCell>
+      <TableCell align= "center">
+        { budgetingTemplate.version ? budgetingTemplate.version : "0" }
+        .0
+      </TableCell>
       <TableCell align= "center">
         <Grid>
           <GenericDropdownMenu>
