@@ -4,6 +4,7 @@ export const GET_BUDGETING_TEMPLATE = gql`
   query budgetingTemplate ($id: ID! ) {
     budgetingTemplate (id: $id) {
       active
+      version
       id
       name
       fields{
@@ -120,6 +121,7 @@ export const GET_BUDGETING_TEMPLATES = gql`
     )
     {
       active
+      version
       id
       name
       serialNumber
@@ -390,6 +392,18 @@ export const CREATE_TAX_FIELD = gql`
           id
           name
         }
+      }
+    }
+  }
+`
+export const CLONE_BUDGETING_TEMPLATE = gql`
+  mutation CloneBudgetingTemplate($id: ID!){
+    cloneBudgetingTemplate(input:{budgetingTemplateId: $id}){
+      budgetingTemplate{
+        id
+        name
+        serialNumber
+        active      
       }
     }
   }
