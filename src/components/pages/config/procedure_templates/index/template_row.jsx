@@ -1,8 +1,10 @@
-import React                          from 'react';
+import React, { useState }            from 'react';
 import Button                         from '@material-ui/core/Button';
 import Grid                           from '@material-ui/core/Grid';
 import GenericDropdownMenu            from '../../../../ui/generic_dropdown_menu';
+import Chip                           from '@material-ui/core/Chip';
 import CreateIcon                     from '@material-ui/icons/Create';
+import FileCopyIcon                   from '@material-ui/icons/FileCopy';
 import MenuItem                       from '@material-ui/core/MenuItem';
 import { Link }                       from 'react-router-dom';
 import TableRow                       from '@material-ui/core/TableRow';
@@ -22,6 +24,9 @@ import ListItemIcon                   from '@material-ui/core/ListItemIcon';
 import ListItemText                   from '@material-ui/core/ListItemText';
 import { useQuery }                   from '@apollo/client';
 import { GET_PROCEDURE_TEMPLATE }     from '../queries_and_mutations/queries';
+import { CLONE_PROCEDURES_TEMPLATE }  from '../queries_and_mutations/queries';
+import { GLOBAL_MESSAGE }             from '../../../../../resolvers/queries';
+import client                         from '../../../../../apollo';
 
 
 
@@ -29,11 +34,12 @@ const TempleteRow = (props) => {
 
   const procedureTemplate  = props.data
   const { classes } = props
-  const [id] = React.useState(procedureTemplate.id);
-  const [active, setActive] = React.useState(procedureTemplate.active);
+  const [active, setActive] = useState(procedureTemplate.active);
+  const [activeDialog, setActiveDialog] = useState(false);
+  const [duplicateDialog, setDuplicateDialog] = useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
-  const [open, setOpen] = React.useState(false);
+  const id = procedureTemplate.id;
 
   const { data } = useQuery(GET_PROCEDURE_TEMPLATE,
     { variables: {"id": id } } 
@@ -53,22 +59,61 @@ const TempleteRow = (props) => {
     }
   )
 
-  const handleClickOpen = (event) => {
-    setOpen(true);
+  const [cloneProceduresTemplateMutation] =
+  useMutation(
+    CLONE_PROCEDURES_TEMPLATE,
+    {
+      onComplete(cacheData) {
+        client.writeQuery({
+          query: GLOBAL_MESSAGE,
+          data: {
+            globalMessage: {
+              message: "La plantilla se duplico con exito.",
+              type: "success",
+              __typename: "globalMessage"
+            }
+          }
+        })
+      }
+    }
+  )
+
+  const openActiveDialog = (event) => {
+    setActiveDialog(true);
   };
 
-  const handleClose = () => {
-    setOpen(false);
+  const closeActiveDialog = () => {
+    setActiveDialog(false);
   };
 
   const changeStatus = (e) => {
     updateProcedureTemplatesMutation({ variables: { id: id, active: !active } })
-    setOpen(false);
+    setActiveDialog(false);
   }
+
+  const duplicateTemplate = (e) => {
+    cloneProceduresTemplateMutation({ variables: { id: id } })
+    setDuplicateDialog(false);
+  }
+
+  const openDuplicateDialog = (event) => {
+    setDuplicateDialog(true);
+  };
+
+  const closeDuplicateDialog = () => {
+    setDuplicateDialog(false);
+  };
 
   const statusTemplate = () => { 
     return active ? "Desactivar" : "Activar"
   }
+
+  const statusProcedureTemplate = () => {
+    return(
+      procedureTemplate.active ? "Activo" : "Inactivo"
+    )
+  }
+
 
   const markStatus = () => {
     if(!active) {
@@ -84,8 +129,21 @@ const TempleteRow = (props) => {
     <TableRow key={ procedureTemplate.id + "-row" }  className={ markStatus() } >
       <TableCell align= "center">{ procedureTemplate.name }</TableCell>
       <TableCell align= "center">{ folioNumber(procedureTemplate.serialNumber) }</TableCell>
+      <TableCell align= "center">
+        { 
+          <Chip
+            size="small" label={ statusProcedureTemplate() }
+            classes={{colorPrimary: classes.activeGreen}}
+            color={ active ? "primary" : "secondary"} 
+          />
+        }
+      </TableCell>
       <TableCell align= "center">{ budgetingLinked() }</TableCell>
       <TableCell align= "center">{data ? data.proceduresTemplate.budgetingTemplates.map((item) => item.id) + " " : ""}</TableCell>
+      <TableCell align= "center">
+        { procedureTemplate.version ? procedureTemplate.version : "0" }
+        .0
+      </TableCell>
       <TableCell align= "center">
         <Grid>
           <GenericDropdownMenu>
@@ -104,10 +162,37 @@ const TempleteRow = (props) => {
                 </Grid>
               </Link>
             </MenuItem>
-            <MenuItem 
-              key={ procedureTemplate.id + "-status" }
-            >
-              <Grid container onClick={ handleClickOpen }>
+            <MenuItem key={ procedureTemplate.id + "-clone" } >
+              <Grid container onClick={ openDuplicateDialog }>
+                <ListItemIcon>
+                  <FileCopyIcon className={ classes.defaultIcon }/>
+                </ListItemIcon>
+                <ListItemText primary="Duplicar" />
+              </Grid>
+              <Dialog
+                fullScreen={ fullScreen }
+                open={ duplicateDialog }
+                onClose={ closeDuplicateDialog }
+                aria-labelledby="responsive-dialog-title"
+              >
+                <DialogTitle id="responsive-dialog-title"> Confirmar Duplicar </DialogTitle>
+                <DialogContent>
+                  <DialogContentText>
+                    ¿Realmente deseas duplicar está plantilla de presupuesto ?
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={ closeDuplicateDialog } color="primary">
+                    Cancelar
+                  </Button>
+                  <Button autoFocus onClick={ duplicateTemplate } color="primary">
+                    Duplicar
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            </MenuItem>
+            <MenuItem key={ procedureTemplate.id + "-status" } >
+              <Grid container onClick={ openActiveDialog }>
                 <ListItemIcon>
                   {
                     active ? 
@@ -120,8 +205,8 @@ const TempleteRow = (props) => {
               </Grid>
               <Dialog
                   fullScreen={ fullScreen }
-                  open={ open }
-                  onClose={ handleClose }
+                  open={ activeDialog }
+                  onClose={ closeActiveDialog }
                   aria-labelledby="responsive-dialog-title"
                 >
                   <DialogTitle id="responsive-dialog-title">{"Confirmar " + statusTemplate() }</DialogTitle>
@@ -131,7 +216,7 @@ const TempleteRow = (props) => {
                     </DialogContentText>
                   </DialogContent>
                   <DialogActions>
-                    <Button onClick={ handleClose } color="primary">
+                    <Button onClick={ closeActiveDialog } color="primary">
                       Cancelar
                     </Button>
                     <Button autoFocus onClick={ changeStatus } color="primary">

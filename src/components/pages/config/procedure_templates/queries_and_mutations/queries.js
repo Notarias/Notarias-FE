@@ -23,6 +23,7 @@ export const PROCEDURE_TEMPLATES = gql`
       name
       active
       serialNumber
+      version
       tabs {
         id
       }
@@ -53,6 +54,7 @@ export const UPDATE_PROCEDURE_TEMPLATES = gql`
         id
         name
         active
+        version
         serialNumber
         budgetingTemplates{
           name
@@ -70,6 +72,7 @@ export const GET_PROCEDURE_TEMPLATE = gql`
       id
       name
       serialNumber
+      version
       budgetingTemplates{
         id
         name
@@ -89,6 +92,7 @@ export const CREATE_PROCEDURE_TEMPLATE = gql`
         active
         id
         name
+        version
       }
     }
   }
@@ -314,6 +318,20 @@ export const GET_PROCEDURES_TEMPLATE_FIELDS_GROUPS_FIELDS = gql`
       favourite
       style
       active
+    }
+  }
+`
+
+export const CLONE_PROCEDURES_TEMPLATE = gql`
+  mutation CloneProceduresTemplate($id: ID!){
+    cloneProceduresTemplate(input:{proceduresTemplateId: $id}){
+      proceduresTemplate{
+        id
+        name
+        serialNumber
+        active
+        version
+      }
     }
   }
 `
