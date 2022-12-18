@@ -1,6 +1,7 @@
 import React                                from 'react';
 import Breadcrumbs                          from '../../../ui/breadcrumbs'
 import Paper                                from '@material-ui/core/Paper';
+import Chip                                 from '@material-ui/core/Chip';
 import Grid                                 from '@material-ui/core/Grid';
 import Hidden                               from '@material-ui/core/Hidden';
 import { styles }                           from './styles';
@@ -49,6 +50,13 @@ const Edit = (props) => {
                 />
               </Grid>
               <Grid container item xs={8} justifyContent="flex-end">
+                <Grid item style={{paddingRight:'50px'}}>
+                  <Chip 
+                    classes={{colorPrimary: classes.activeGreen}}
+                    color={data.proceduresTemplate.active ? "primary" : "secondary"}
+                    label={`VERSION: ${data.proceduresTemplate.version ? data.proceduresTemplate.version : "0"}.0 `}
+                  />
+                </Grid>
                 <Grid item style={{paddingRight:'20px'}}>
                   <ButgetingTemplateLinkButton
                     id={ match.params.id }

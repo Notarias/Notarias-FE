@@ -208,7 +208,7 @@ const TabMenu = (props) => {
         </MenuItem>
         <Divider/>
         <MenuItem key="budgetingTabMenu3">
-          <Grid item alignItems="center" >
+          <Grid item>
             <StatusRadioButton
                 active={ active }
                 changeStatus= { changeStatus }

@@ -20,7 +20,7 @@ import ProcedureEdit                  from '../components/pages/procedures/edit'
 import ProcedureNew                   from '../components/pages/procedures/new';
 import ProceduresIndex                from '../components/pages/procedures/index';
 import AppointmentsIndex              from '../components/pages/appointments/index';
-import ReportsIndex                   from '../components/pages/reports/index';
+//import ReportsIndex                   from '../components/pages/reports/index';
 import ProfilesIndex                  from '../components/pages/profiles/index';
 import StatisticsIndex                from '../components/pages/statistics/index';
 import ConfigRolesIndex               from '../components/pages/config/roles/index';
@@ -65,32 +65,32 @@ export default function BaseRoutes(props) {
   const loadRoutes = () => {
     let routes = []
     if(withPermission('clientes')) {
-      routes.push(<ProtectedRoute path='/clients/:id/edit' currentUser={currentUser} component={ClientsEdit} permission='clientes'/>)
-      routes.push(<ProtectedRoute path='/clients/new' currentUser={currentUser} component={clientsNew} permission='clientes'/>)
-      routes.push(<ProtectedRoute path="/clients" currentUser={currentUser} component={ClientsIndex} permission='clientes'/>)
+      routes.push(<ProtectedRoute key='clients-edit' path='/clients/:id/edit' currentUser={currentUser} component={ClientsEdit} permission='clientes'/>)
+      routes.push(<ProtectedRoute key='clients-new' path='/clients/new' currentUser={currentUser} component={clientsNew} permission='clientes'/>)
+      routes.push(<ProtectedRoute key='clients-index' path="/clients" currentUser={currentUser} component={ClientsIndex} permission='clientes'/>)
     }
     if(withPermission('presupuestos')) {
-      routes.push(<ProtectedRoute path="/budgets/templates" currentUser={currentUser} component={BudgetBuilderIndex} permission='presupuestos'/>)
-      routes.push(<ProtectedRoute path='/budgets/:id/invoice' currentUser={currentUser} component={BudgetInvoice} permission='presupuestos'/>)
-      routes.push(<ProtectedRoute path='/budgets/:id/edit' currentUser={currentUser} component={BudgetsEdit} permission='presupuestos'/>)
-      routes.push(<ProtectedRoute path='/budgets/new' currentUser={currentUser} component={budgetsNew} permission='presupuestos'/>)
-      routes.push(<ProtectedRoute path='/budgets' currentUser={currentUser} component={BudgetsIndex} permission='presupuestos'/>)
+      routes.push(<ProtectedRoute key='budgets-templates' path="/budgets/templates" currentUser={currentUser} component={BudgetBuilderIndex} permission='presupuestos'/>)
+      routes.push(<ProtectedRoute key='budgets-invoice' path='/budgets/:id/invoice' currentUser={currentUser} component={BudgetInvoice} permission='presupuestos'/>)
+      routes.push(<ProtectedRoute key='budgets-edit' path='/budgets/:id/edit' currentUser={currentUser} component={BudgetsEdit} permission='presupuestos'/>)
+      routes.push(<ProtectedRoute key='budgets-new' path='/budgets/new' currentUser={currentUser} component={budgetsNew} permission='presupuestos'/>)
+      routes.push(<ProtectedRoute key='budgets-index' path='/budgets' currentUser={currentUser} component={BudgetsIndex} permission='presupuestos'/>)
     }
     if(withPermission('config')) {
-      routes.push(<ProtectedRoute path='/users/:id/edit' currentUser={currentUser} component={UsersEdit} permission='config'/>)
-      routes.push(<ProtectedRoute path='/users/new' currentUser={currentUser} component={UsersNew} permission='config'/>)
-      routes.push(<ProtectedRoute path='/users' currentUser={currentUser} component={UsersIndex} permission='config'/>)
-      routes.push(<ProtectedRoute path='/procedures/:id/edit' currentUser={currentUser} component={ProcedureEdit} permission='tramites'/>)
-      routes.push(<ProtectedRoute path="/procedures/new" currentUser={currentUser} component={ProcedureNew} permission='tramites'/>)
-      routes.push(<ProtectedRoute path="/procedures" currentUser={currentUser} component={ProceduresIndex} permission='tramites'/>)
-      routes.push(<ProtectedRoute path="/config/roles/:id/permissions" currentUser={currentUser} component={ConfigRoleEdit} permission='config'/>)
-      routes.push(<ProtectedRoute path="/config/roles" currentUser={currentUser} component={ConfigRolesIndex} permission='config'/>)
-      routes.push(<ProtectedRoute path="/config/permissions" currentUser={currentUser} component={ConfigPermissionsIndex} permission='config'/>)
-      routes.push(<ProtectedRoute path="/config/clients" currentUser={currentUser} component={ConfigClientsIndex} permission='config'/>)
-      routes.push(<ProtectedRoute path="/config/procedure_templates/:id/edit" currentUser={currentUser} component={ConfigProcedureTemplatesEdit} permission='config'/>)
-      routes.push(<ProtectedRoute path="/config/procedure_templates" currentUser={currentUser} component={ConfigProcedureTemplatesIndex} permission='config'/>)
-      routes.push(<ProtectedRoute path="/config/budget_templates/:id/edit" currentUser={currentUser} component={ConfigBudgetsTemplatesEdit} permission='config'/>)
-      routes.push(<ProtectedRoute path="/config/budget_templates" currentUser={currentUser} component={ConfigBudgetsTemplatesIndex} permission='config'/>)
+      routes.push(<ProtectedRoute key='users--edit' path='/users/:id/edit' currentUser={currentUser} component={UsersEdit} permission='config'/>)
+      routes.push(<ProtectedRoute key='users--new' path='/users/new' currentUser={currentUser} component={UsersNew} permission='config'/>)
+      routes.push(<ProtectedRoute key='users--index' path='/users' currentUser={currentUser} component={UsersIndex} permission='config'/>)
+      routes.push(<ProtectedRoute key='procedures--edit' path='/procedures/:id/edit' currentUser={currentUser} component={ProcedureEdit} permission='tramites'/>)
+      routes.push(<ProtectedRoute key='procedures--new' path="/procedures/new" currentUser={currentUser} component={ProcedureNew} permission='tramites'/>)
+      routes.push(<ProtectedRoute key='procedures--index' path="/procedures" currentUser={currentUser} component={ProceduresIndex} permission='tramites'/>)
+      routes.push(<ProtectedRoute key='roles-permit' path="/config/roles/:id/permissions" currentUser={currentUser} component={ConfigRoleEdit} permission='config'/>)
+      routes.push(<ProtectedRoute key='roles-index' path="/config/roles" currentUser={currentUser} component={ConfigRolesIndex} permission='config'/>)
+      routes.push(<ProtectedRoute key='permissions' path="/config/permissions" currentUser={currentUser} component={ConfigPermissionsIndex} permission='config'/>)
+      routes.push(<ProtectedRoute key='clients' path="/config/clients" currentUser={currentUser} component={ConfigClientsIndex} permission='config'/>)
+      routes.push(<ProtectedRoute key='procedure-templates-edit' path="/config/procedure_templates/:id/edit" currentUser={currentUser} component={ConfigProcedureTemplatesEdit} permission='config'/>)
+      routes.push(<ProtectedRoute key='procedure-templates-new' path="/config/procedure_templates" currentUser={currentUser} component={ConfigProcedureTemplatesIndex} permission='config'/>)
+      routes.push(<ProtectedRoute key='budget-templates-edit' path="/config/budget_templates/:id/edit" currentUser={currentUser} component={ConfigBudgetsTemplatesEdit} permission='config'/>)
+      routes.push(<ProtectedRoute key='budget-templates-new' path="/config/budget_templates" currentUser={currentUser} component={ConfigBudgetsTemplatesIndex} permission='config'/>)
     }
     return(routes)
   }

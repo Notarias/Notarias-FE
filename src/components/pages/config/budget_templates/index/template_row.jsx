@@ -31,7 +31,7 @@ import client                         from '../../../../../apollo';
 const TemplateRow = (props) => {
 
   const budgetingTemplate  = props.data
-  const { classes, cloned, setCloned } = props
+  const { classes } = props
   const [active, setActive] = useState(budgetingTemplate.active);
   const [activeDialog, setActiveDialog] = useState(false);
   const [duplicateDialog, setDuplicateDialog] = useState(false);
@@ -73,7 +73,6 @@ const TemplateRow = (props) => {
             }
           }
         })
-        setCloned(!cloned);
       }
     }
   )
@@ -114,7 +113,7 @@ const TemplateRow = (props) => {
     return active ? "Desactivar" : "Activar"
   }
 
-  const statusBadgetTemplate = () => {
+  const statusBudgetTemplate = () => {
     return(
       budgetingTemplate.active ? "Activo" : "Inactivo"
     )
@@ -131,7 +130,7 @@ const TemplateRow = (props) => {
       <TableCell align= "center">
         { 
           <Chip
-            size="small" label={ statusBadgetTemplate() }
+            size="small" label={ statusBudgetTemplate() }
             classes={{colorPrimary: classes.activeGreen}}
             color={ active ? "primary" : "secondary"} 
           />

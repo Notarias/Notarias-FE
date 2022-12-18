@@ -79,6 +79,9 @@ export const styles = theme => {
       marginRight: "5px",
       marginTop: "10px"
     },
+    activeGreen: {
+      backgroundColor: "green"
+    },
     activeIconGreen:{
       width:"30px", 
       height:"40px",

@@ -24,6 +24,13 @@ export default (props) => {
           callback={ sortHandler }
         />
         <SortHeader
+          text={ "Estado" }
+          field_property={ "status" }
+          current_field={ field }
+          sort_direction={ direction }
+          callback={ sortHandler }
+        />
+        <SortHeader
           text={"Presupuestos"}
           current_field={ field }
           sort_direction={ direction }
@@ -31,6 +38,13 @@ export default (props) => {
         />
         <SortHeader
           text={ "Trámites" }
+          current_field={ field }
+          sort_direction={ direction }
+          callback={ sortHandler }
+        />
+        <SortHeader
+          text={ "Versión" }
+          field_property={ "version" }
           current_field={ field }
           sort_direction={ direction }
           callback={ sortHandler }

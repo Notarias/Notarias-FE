@@ -245,7 +245,7 @@ const Field = (props) => {
   return (
     <Grid id='fields-rows' container direction='row' justifyContent="center" style={{padding:'5px'}}>
       <Paper style={{padding:'5px'}}>
-        <Grid container xs={12} justifyContent="center">
+        <Grid container justifyContent="center">
           <Hidden smDown>
             <Grid container item xs={8} alignItems="center" justifyContent="center">
               { editing ? renderTextField() : renderInputField() }
