@@ -18,7 +18,8 @@ export default (props) => {
       variables: {
         "fieldId": templateField.id,
         "budgetId": budget.id
-      }
+      },
+      fetchPolicy: 'no-cache'
     }
   );
 
