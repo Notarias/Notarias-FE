@@ -190,6 +190,8 @@ export const GET_PROCEDURES_TEMPLATES_QUICK_LIST = gql`
     proceduresTemplatesQuickList{
       name
       id
+      version
+      active
       budgetingTemplatesIds
     }
   }

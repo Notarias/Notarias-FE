@@ -53,8 +53,8 @@ const Edit = (props) => {
                 <Grid item style={{paddingRight:'50px'}}>
                   <Chip 
                     classes={{colorPrimary: classes.activeGreen}}
-                    color={data.proceduresTemplate.active ? "primary" : "secondary"}
-                    label={`VERSION: ${data.proceduresTemplate.version ? data.proceduresTemplate.version : "0"}.0 `}
+                    color={ data && data.proceduresTemplate.active ? "primary" : "secondary" }
+                    label={ `VERSION: ${data && data.proceduresTemplate.version ? data.proceduresTemplate.version : "0"}.0 ` }
                   />
                 </Grid>
                 <Grid item style={{paddingRight:'20px'}}>
@@ -65,7 +65,7 @@ const Edit = (props) => {
                 </Grid>
                 <Grid item>
                   <ActiveTemplateButton
-                    templateData={data ?  data.proceduresTemplate : [] }
+                    templateData={ data ?  data.proceduresTemplate : [] }
                     match={ props.match.params }
                   />
                 </Grid>

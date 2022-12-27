@@ -123,6 +123,8 @@ export const GET_PROCEDURES_TEMPLATES_QUICK_LIST = gql`
     proceduresTemplatesQuickList{
       name
       id
+      version
+      active
       budgetingTemplatesIds
     }
   }
@@ -227,6 +229,7 @@ export const BUDGETING_TEMPLATE_BY_PROCEDURE_ID = gql`
       name
       serialNumber
       active
+      version
     }
   }
 `

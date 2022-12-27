@@ -9,6 +9,8 @@ import SearchIcon from '@material-ui/icons/Search';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import Chip from '@material-ui/core/Chip';
 import Divider from '@material-ui/core/Divider';
 import Fuse from 'fuse.js';
 import { useQuery } from '@apollo/client';
@@ -62,8 +64,8 @@ const ProcedureSelectorList = (props) => {
     }
   }
 
-  const selectItem = (event, index, name) => {
-    setSelectedProcedure({id: index, name: name});
+  const selectItem = (event, procedure) => {
+    setSelectedProcedure(procedure);
     setSelectedBudget(0);
   }
 
@@ -77,12 +79,19 @@ const ProcedureSelectorList = (props) => {
               button
               dense={true}
               selected={selectedProcedure.id === item.id}
-              onClick={(event) => selectItem(event, item.id, item.name)}
+              onClick={(event) => selectItem(event, item)}
               >
               <ListItemText 
                 id={item.id} 
                 primary={item.name}
               />
+              <ListItemIcon id={item.id}>
+                <Chip
+                  size="small"
+                  color={ item.active ? "primary" : "secondary" }
+                  label={ `${item.version ? item.version : "0"}.0` }
+                />
+              </ListItemIcon>
             </ListItem>
             <Divider/>
           </React.Fragment>
