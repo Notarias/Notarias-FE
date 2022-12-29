@@ -65,6 +65,7 @@ const NewAppointmentDialog = (props) => {
   const [place, setPlace] = useState("");
   const [extraData, setExtraData] = useState("");
   const [selecteds, setSelecteds] = useState([]);
+  const [destinationEmails, setDestinationEmails] = useState("")
   const [currentDate] = useState(new Date())
 
   const [createAppointment] =
@@ -95,6 +96,7 @@ const NewAppointmentDialog = (props) => {
     createAppointment( {
       variables: {
         assignedIds: array,
+        destinationEmails, destinationEmails,
         initDate: (new Date(formatDateTime(initDate, initTime))).toUTCString(),
         endDate: (new Date(formatDateTime(endDate, endTime))).toUTCString(),
         place: place,
@@ -125,6 +127,10 @@ const NewAppointmentDialog = (props) => {
 
   const extraDataChange = (event) => {
     setExtraData(event.target.value)
+  }
+
+  const colectEmails = (event) => {
+    setDestinationEmails(event.target.value)
   }
 
   return(
@@ -204,6 +210,17 @@ const NewAppointmentDialog = (props) => {
             </Grid>
             <Grid container item xs={12} className={classes.marginTopStartAndEnd}>
               <AssigneSelectorList selecteds={selecteds} setSelecteds={setSelecteds}/>
+            </Grid>
+            <Grid container item xs={12} className={classes.marginTopStartAndEnd}>
+              <TextField
+                id="clients"
+                label="Clientes"
+                helperText="Separar cada correo con comas. Ejemplo: correo@dominio.com, correo2@dom..."
+                onChange={colectEmails}
+                value={destinationEmails}
+                fullWidth
+                multiline
+              />
             </Grid>
             <Grid item xs={12} className={classes.marginTopStartAndEnd}>
               <TextField

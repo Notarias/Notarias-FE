@@ -18,7 +18,7 @@ const AssigneSelectorList = (props) => {
   const [userList, setUserList] = useState();
 
   const { data } = useQuery(
-    USERS_QUICK_LIST
+    USERS_QUICK_LIST, { fetchPolicy: 'no-cache' }
   );
 
   useEffect( () => {
