@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Chip from '@material-ui/core/Chip';
 import Avatar from '@material-ui/core/Avatar';
 import Dialog from '@material-ui/core/Dialog';
@@ -78,16 +79,30 @@ const Summary = (props) => {
             Trámite
           </Typography>
           <ListItem dense={true}>
-            <ListItemText 
-              secondary={selectedProcedure ? selectedProcedure.name : "N/A" }/>
+            <ListItemText secondary={selectedProcedure ? selectedProcedure.name : "N/A" }/>
+            <ListItemIcon>
+              <Chip
+                size="small"
+                color={ selectedProcedure ? "primary" : "" }
+                label={ `${selectedProcedure.version ? selectedProcedure.version : "0"}.0` }
+                disabled
+              />
+            </ListItemIcon>
           </ListItem>
           <Divider/>
           <Typography variant="subtitle2" style={{ marginTop: "10px", fontWeight: "600" }}>
             Presupuesto
           </Typography>
           <ListItem dense={true}>
-            <ListItemText 
-              secondary={selectedBudget ? selectedBudget.name : "N/A" }/>
+            <ListItemText secondary={selectedBudget ? selectedBudget.name : "N/A" }/>
+            <ListItemIcon>
+              <Chip
+                size="small"
+                color={ selectedBudget ? "primary" : "" }
+                label={ `${selectedBudget.version ? selectedBudget.version : "0"}.0` }
+                disabled
+              />
+            </ListItemIcon>
           </ListItem>
         </List>
       </Grid>

@@ -135,6 +135,8 @@ export const GET_PROCEDURES_TEMPLATES_QUICK_LIST = gql`
     proceduresTemplatesQuickList{
       name
       id
+      version
+      active
     }
   }
 `
@@ -336,8 +338,10 @@ export const CREATE_BUDGETING_CATEGORIES = gql`
 export const GET_BUDGETING_TEMPLATES_QUICK_LIST = gql`
 query budgetingTemplatesQuickList{
   budgetingTemplatesQuickList{
-    name
+      name
       id
+      version
+      active
     }
   }
 `

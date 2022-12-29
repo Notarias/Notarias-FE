@@ -1,13 +1,14 @@
-import React, { useEffect }                              from 'react';
-import { styles }                                     from '../styles';
-import { withStyles }                                 from '@material-ui/core/styles';
-import Fuse                                           from 'fuse.js';
-import Divider                                        from '@material-ui/core/Divider';
-import { TextField }                                  from '@material-ui/core';
+import React, { useEffect }                 from 'react';
+import { styles }                           from '../styles';
+import { withStyles }                       from '@material-ui/core/styles';
+import Fuse                                 from 'fuse.js';
+import Divider                              from '@material-ui/core/Divider';
+import { TextField }                        from '@material-ui/core';
 import List                                 from '@material-ui/core/List';
 import ListItem                             from '@material-ui/core/ListItem';
 import ListItemIcon                         from '@material-ui/core/ListItemIcon';
 import ListItemText                         from '@material-ui/core/ListItemText';
+import Chip                                 from '@material-ui/core/Chip';
 import Checkbox                             from '@material-ui/core/Checkbox';
 
 
@@ -34,12 +35,19 @@ const renderSearchList = (searchList, checked, classes, handleToggle) => {
                     disableRipple
                     inputProps={{ 'aria-labelledby': obj.id }}
                   />
-                  </ListItemIcon>
-                  <ListItemText 
-                    id={obj.id} 
-                    primary={` ${ obj.name }`} 
+                </ListItemIcon>
+                <ListItemText 
+                  id={obj.id} 
+                  primary={` ${ obj.name }`} 
+                />
+                <ListItemIcon id={obj.id}>
+                  <Chip
+                    size="small"
+                    color={ obj.active ? "primary" : "secondary" }
+                    label={ `${obj.version ? obj.version : "0"}.0` }
                   />
-                </ListItem>
+                </ListItemIcon>
+              </ListItem>
               <Divider/>
             </React.Fragment>
           )

@@ -102,7 +102,9 @@ export const GET_BUDGETING_TEMPLATES_QUICK_LIST = gql`
 query budgetingTemplatesQuickList{
   budgetingTemplatesQuickList{
     name
-      id
+    id
+    version
+    active
     }
   }
 `

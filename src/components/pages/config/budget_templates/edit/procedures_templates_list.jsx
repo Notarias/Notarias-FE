@@ -1,13 +1,14 @@
-import React, { useEffect }                              from 'react';
-import { styles }                                     from '../styles';
-import { withStyles }                                 from '@material-ui/core/styles';
-import Fuse                                           from 'fuse.js';
-import Divider                                        from '@material-ui/core/Divider';
-import { TextField }                                  from '@material-ui/core';
+import React, { useEffect }                 from 'react';
+import { styles }                           from '../styles';
+import { withStyles }                       from '@material-ui/core/styles';
+import Fuse                                 from 'fuse.js';
+import Divider                              from '@material-ui/core/Divider';
+import { TextField }                        from '@material-ui/core';
 import List                                 from '@material-ui/core/List';
 import ListItem                             from '@material-ui/core/ListItem';
 import ListItemIcon                         from '@material-ui/core/ListItemIcon';
 import ListItemText                         from '@material-ui/core/ListItemText';
+import Chip                                 from '@material-ui/core/Chip';
 import Checkbox                             from '@material-ui/core/Checkbox';
 
 
@@ -21,29 +22,36 @@ const renderSearchList = (searchList, checked, classes, handleToggle) => {
       >
       { 
         searchList.map(
-        (item) => {
+          (item) => {
             let obj = item.item || item
             return(
             <React.Fragment key={obj.id + "fragment"}>
-                <ListItem key={obj.id} role={undefined} dense button onClick={handleToggle(obj)}>
+              <ListItem key={obj.id} role={undefined} dense button onClick={handleToggle(obj)}>
                 <ListItemIcon>
-                    <Checkbox
-                        edge="start"
-                        checked={checkedIds.indexOf(obj.id) !== -1}
-                        tabIndex={-1}
-                        disableRipple
-                        inputProps={{ 'aria-labelledby': obj.id }}
-                    />
-                    </ListItemIcon>
-                    <ListItemText 
-                    id={obj.id} 
-                    primary={` ${ obj.name }`} 
-                    />
-                </ListItem>
-                <Divider/>
+                  <Checkbox
+                    edge="start"
+                    checked={checkedIds.indexOf(obj.id) !== -1}
+                    tabIndex={-1}
+                    disableRipple
+                    inputProps={{ 'aria-labelledby': obj.id }}
+                  />
+                </ListItemIcon>
+                <ListItemText 
+                  id={obj.id} 
+                  primary={` ${ obj.name }`} 
+                />
+                <ListItemIcon id={obj.id}>
+                  <Chip
+                    size="small"
+                    color={ obj.active ? "primary" : "secondary" }
+                    label={ `${obj.version ? obj.version : "0"}.0` }
+                  />
+                </ListItemIcon>
+              </ListItem>
+              <Divider/>
             </React.Fragment>
             )
-        }
+          }
         )
       }
       </List>
