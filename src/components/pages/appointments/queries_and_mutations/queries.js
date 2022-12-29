@@ -3,6 +3,7 @@ import { gql } from '@apollo/client';
 export const CREATE_APPOINTMENT = gql`
   mutation createAppointment(
     $assignedIds: [ID!]!,
+    $destinationEmails: String!,
     $initDate: String!,
     $endDate: String!,
     $place: String!,
@@ -11,6 +12,7 @@ export const CREATE_APPOINTMENT = gql`
     createAppointment(
       input: {
         assignedIds: $assignedIds,
+        destinationEmails: $destinationEmails,
         initDate: $initDate,
         endDate: $endDate,
         place: $place,
@@ -28,6 +30,7 @@ export const CREATE_APPOINTMENT = gql`
             permanentLink
           }
         }
+        destinationEmails
         initDate
         endDate
         place
