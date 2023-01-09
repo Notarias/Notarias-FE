@@ -14,6 +14,7 @@ import Divider from '@material-ui/core/Divider';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import AssigneSelectorList from './assigne_selector_list';
 import EventNoteIcon from '@material-ui/icons/EventNote';
+import EmailInput from '../email_input';
 import { useMutation } from '@apollo/client';
 import { GET_APPOINTMENTS } from '../queries_and_mutations/queries';
 import { UPDATE_APPOINTMENT } from '../queries_and_mutations/queries';
@@ -61,8 +62,8 @@ const EditAppointmentDialog = (props) => {
   const [endTime, setEndTime] = useState(formatTime(appointment.endDate));
   const [place, setPlace] = useState(appointment.place);
   const [extraData, setExtraData] = useState(appointment.extraData);
-  const [destinationEmails, setDestinationEmails] = useState(appointment.destinationEmails)
   const [selecteds] = useState(appointment.users);
+  const [emailCollection] = useState(appointment.destinationEmails.split(','));
 
   const [selectedIds, setSelectedIds] = useState(
     selecteds && selecteds.map((user) => {
@@ -92,7 +93,7 @@ const EditAppointmentDialog = (props) => {
       variables: {
         id: appointment.id,
         assignedIds: selectedIds,
-        destinationEmails: destinationEmails,
+        destinationEmails: emailCollection.join(),
         initDate: (new Date(formatDateTime(initDate, initTime))).toUTCString(),
         endDate: (new Date(formatDateTime(endDate, endTime))).toUTCString(),
         place: place,
@@ -123,10 +124,6 @@ const EditAppointmentDialog = (props) => {
 
   const extraDataChange = (event) => {
     setExtraData(event.target.value)
-  }
-
-  const colectEmails = (event) => {
-    setDestinationEmails(event.target.value)
   }
 
   return(
@@ -208,14 +205,8 @@ const EditAppointmentDialog = (props) => {
               <AssigneSelectorList selectedIds={selectedIds} setSelectedIds={setSelectedIds} appointment={appointment} selecteds={selecteds}/>
             </Grid>
             <Grid container item xs={12} className={classes.marginTopStartAndEnd}>
-              <TextField
-                id="clients"
-                label="Clientes"
-                helperText="Separar cada correo con comas. Ejemplo: correo@dominio.com, correo2@dom..."
-                onChange={colectEmails}
-                value={destinationEmails}
-                fullWidth
-                multiline
+              <EmailInput
+                emailCollection={emailCollection}
               />
             </Grid>
             <Grid item xs={12} className={classes.marginTopStartAndEnd}>
