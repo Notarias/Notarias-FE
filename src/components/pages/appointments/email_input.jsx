@@ -9,8 +9,7 @@ const EmailInput = (props) => {
   const { emailCollection } = props
 
   const [reload, setReload] = useState(false);
-  const [invalidMail, setInvalidMail] = useState(false);
-  const [mailExist, setMailExist] = useState(false)
+  const [error, setError] = useState("")
   const [fieldValue, setFieldValue] = useState("");
 
   const validEmail = (email) => {
@@ -20,66 +19,59 @@ const EmailInput = (props) => {
   const handleChange = (event) => {
     if (!(event.target.value.charAt(event.target.value.length-1) === ",")) {
       setFieldValue(event.target.value)
-      setMailExist(false)
     }
   }
 
   const catchKey = (event) => {
     if (event.key === ',' && event.keyCode === 188) {
       if (emailCollection.includes(fieldValue)) {
-        setMailExist(true)
+        setError("Correo duplicado")
         setFieldValue("")
       } else {
-        if (!(validEmail(fieldValue))){
-          setInvalidMail(true)
+        if (validEmail(fieldValue)){
+          emailCollection.push(fieldValue)
+        } else {
+          setError("Correo no valido")
         }
-        emailCollection.push(fieldValue)
         setFieldValue("")
       }
+    } else {
+      setError("")
     }
   }
 
   const removeMail = (mail, index) => {
-    var invalidCount = 0
     if (emailCollection[index] === mail) {
       emailCollection.splice(index, 1)
       setReload(!reload)
-      emailCollection.map((mail) => {
-        if (!(validEmail(mail))){
-          invalidCount = invalidCount + 1
-        }
-        return("")
-      })
-      if (invalidCount < 1 || emailCollection.length < 1) {
-        setInvalidMail(false)
-      }
     }
   }
   
   return(
     <>
-      { invalidMail || mailExist ? 
+      { error ? 
       <Grid item xs={12}>
         <Typography variant="caption" display="block" gutterBottom color='secondary'>
-          { invalidMail ? "Hay un correo invalido." : "" } { mailExist ? "El correo ya existe" : "" }
+          { error }
         </Typography>
       </Grid>
       :
         ""
       }
       {emailCollection.length > 0 ?
-        emailCollection.map((mail, index) => (
-          <Chip 
-            id={index}
-            key={index}
-            style={{ margin: 2 }}
-            label={mail}
-            size="small"
-            variant="outlined"
-            onDelete={() => removeMail(mail, index)}
-            color={validEmail(mail) ? "default" : "secondary" }
-          />
-        ))
+        <Grid item xs={12} style={{paddingBottom:"5px"}}>
+          {emailCollection.map((mail, index) => (
+            <Chip 
+              id={index}
+              key={index}
+              style={{ margin: 2 }}
+              label={mail}
+              size="small"
+              variant="outlined"
+              onDelete={() => removeMail(mail, index)}
+            />
+          ))}
+        </Grid>
       :
         ""
       }
@@ -92,7 +84,7 @@ const EmailInput = (props) => {
         helperText="Separar cada correo con comas. Ejemplo: correo@dominio.com, correo2@dom..."
         fullWidth
         multiline
-        error={invalidMail || mailExist}
+        error={!!error}
       />
     </>
   )
