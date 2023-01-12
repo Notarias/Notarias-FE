@@ -30,21 +30,53 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+const budgetsRows = (props) => {
+
+  const { searchList, selectedProcedure, selectedBudget, setData, selectItem } = props
+
+  const { data } = useQuery(
+    BUDGETING_TEMPLATE_BY_PROCEDURE_ID, {
+      variables: { "proceduresTemplateId": selectedProcedure.id }
+    }
+  );
+
+  useEffect(() => {
+    setData(data)
+  }, data)
+
+  return(
+    searchList.map((item) => {
+      item = item.item ? item.item : item
+      return(
+        <React.Fragment key={`procedures-budgetSelectorList-${item.id}`}>
+          <ListItem
+            button
+            dense={true}
+            selected={selectedBudget.id === item.id}
+            onClick={(event) => selectItem(event, item.id, item.name)}
+            >
+            <ListItemText 
+              id={item.id} 
+              primary={item.name}
+            />
+          </ListItem>
+          <Divider/>
+        </React.Fragment>
+      );
+    })
+  );
+};
+
 const BudgetSelectorList = (props) => {
 
   const { selectedProcedure, selectedBudget, setSelectedBudget } = props;
 
   const [budgetList, setBudgetList] = useState();
   const [searchList, setSearchList] = useState();
+  const [data, setData] = useState();
 
   const classes = useStyles();
   
-  const { data } = useQuery(
-    BUDGETING_TEMPLATE_BY_PROCEDURE_ID, {
-      variables: {"proceduresTemplateId": selectedProcedure.id}
-    }
-  );
-
   let fuzzySearch = new Fuse(budgetList, { keys: ['name'] });
 
   useEffect( () => {
@@ -67,29 +99,7 @@ const BudgetSelectorList = (props) => {
     setSelectedBudget({id: index, name: data});
   }
 
-  const budgetsRows = (searchList) => {
-    return(
-      searchList.map((item) => {
-        item = item.item ? item.item : item
-        return(
-          <React.Fragment key={`procedures-budgetSelectorList-${item.id}`}>
-            <ListItem
-              button
-              dense={true}
-              selected={selectedBudget.id === item.id}
-              onClick={(event) => selectItem(event, item.id, item.name)}
-              >
-              <ListItemText 
-                id={item.id} 
-                primary={item.name}
-              />
-            </ListItem>
-            <Divider/>
-          </React.Fragment>
-        );
-      })
-    );
-  };
+  
 
   return (
     <>
@@ -112,7 +122,16 @@ const BudgetSelectorList = (props) => {
       <Card className={classes.root} variant="outlined" style={{ overflowY: "scroll" }}>
         <CardContent>
           <List>
-            {searchList && budgetsRows(searchList)}
+            {
+              searchList &&
+              selectedProcedure &&
+                <budgetsRows
+                  searchList={searchList}
+                  selectedProcedure={selectedProcedure}
+                  selectedBudget={selectedBudget}
+                  setData={setData}
+                  selectItem={selectItem} />
+            }
           </List>
         </CardContent>
       </Card>
