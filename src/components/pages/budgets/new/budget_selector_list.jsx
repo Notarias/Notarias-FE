@@ -32,20 +32,60 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+const BudgetsRows = (props) => {
+  const { searchList, selectedBudget, selectItem, selectedProcedure, setData } = props;
+
+  const { data } = useQuery(
+    BUDGETING_TEMPLATE_BY_PROCEDURE_ID, {
+      variables: {"proceduresTemplateId": selectedProcedure.id},
+      fetchPolicy: 'no-cache'
+    }
+  );
+
+  useEffect(() => {
+    setData(data)
+  }, [data])
+
+  return(
+    searchList.map((item) => {
+      item = item.item ? item.item : item
+      return(
+        <React.Fragment key={`budgets-budgetSelectorList-${item.id}`}>
+          <ListItem
+            key={item.id}
+            button
+            dense={true}
+            selected={selectedBudget.id === item.id}
+            onClick={(event) => selectItem(event, item)}
+            >
+            <ListItemText 
+              id={item.id} 
+              primary={item.name}
+            />
+            <ListItemIcon id={item.id}>
+              <Chip
+                size="small"
+                color={ item.active ? "primary" : "secondary" }
+                label={ `${item.version ? item.version : "0"}.0` }
+              />
+            </ListItemIcon>
+          </ListItem>
+          <Divider/>
+        </React.Fragment>
+      );
+    })
+  );
+};
+
 const BudgetSelectorList = (props) => {
 
   const { selectedProcedure, selectedBudget, setSelectedBudget } = props;
 
   const [budgetList, setBudgetList] = useState();
-  const [searchList, setSearchList] = useState();
+  const [searchList, setSearchList] = useState([]);
+  const [data, setData] = useState();
 
   const classes = useStyles();
-
-  const { data } = useQuery(
-    BUDGETING_TEMPLATE_BY_PROCEDURE_ID, {
-      variables: {"proceduresTemplateId": selectedProcedure.id}
-    }
-  );
 
   let fuzzySearch = new Fuse(budgetList, { keys: ['name'] });
 
@@ -69,38 +109,7 @@ const BudgetSelectorList = (props) => {
     setSelectedBudget(budget);
   }
 
-  const budgetsRows = (searchList) => {
-    return(
-      searchList.map((item) => {
-        item = item.item ? item.item : item
-        return(
-          <React.Fragment key={`budgets-budgetSelectorList-${item.id}`}>
-            <ListItem
-              key={item.id}
-              button
-              dense={true}
-              selected={selectedBudget.id === item.id}
-              onClick={(event) => selectItem(event, item)}
-              >
-              <ListItemText 
-                id={item.id} 
-                primary={item.name}
-              />
-              <ListItemIcon id={item.id}>
-                <Chip
-                  size="small"
-                  color={ item.active ? "primary" : "secondary" }
-                  label={ `${item.version ? item.version : "0"}.0` }
-                />
-              </ListItemIcon>
-            </ListItem>
-            <Divider/>
-          </React.Fragment>
-        );
-      })
-    );
-  };
-
+  console.log(selectedProcedure)
   return (
     <>
       <Typography className={classes.title} color="textSecondary" gutterBottom>
@@ -122,7 +131,16 @@ const BudgetSelectorList = (props) => {
       <Card className={classes.root} variant="outlined" style={{ overflowY: "scroll" }}>
         <CardContent>
           <List>
-            {searchList && budgetsRows(searchList)}
+            {
+              searchList &&
+              selectedProcedure &&
+              <BudgetsRows
+                searchList={searchList}
+                selectItem={selectItem}
+                selectedBudget={selectedBudget}
+                setData={setData}
+                selectedProcedure={selectedProcedure}/>
+            }
           </List>
         </CardContent>
       </Card>

@@ -30,19 +30,20 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const budgetsRows = (props) => {
+const BudgetsRows = (props) => {
 
   const { searchList, selectedProcedure, selectedBudget, setData, selectItem } = props
 
   const { data } = useQuery(
     BUDGETING_TEMPLATE_BY_PROCEDURE_ID, {
-      variables: { "proceduresTemplateId": selectedProcedure.id }
+      variables: { "proceduresTemplateId": selectedProcedure.id },
+      fetchPolicy: 'no-cache'
     }
   );
 
   useEffect(() => {
     setData(data)
-  }, data)
+  }, [data])
 
   return(
     searchList.map((item) => {
@@ -125,7 +126,7 @@ const BudgetSelectorList = (props) => {
             {
               searchList &&
               selectedProcedure &&
-                <budgetsRows
+                <BudgetsRows
                   searchList={searchList}
                   selectedProcedure={selectedProcedure}
                   selectedBudget={selectedBudget}
