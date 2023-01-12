@@ -12,7 +12,7 @@ import ActionCableLink          from 'graphql-ruby-client/dist/subscriptions/Act
 
 export const cache = new InMemoryCache();
 
-export const BASE_URI = 'peaceful-eyrie-59851.herokuapp.com'
+export const BASE_URI = 'notarias-rails.herokuapp.com'
 //export const BASE_URI = 'localhost:3000'
 
 // Change protocol https to http for localhost
