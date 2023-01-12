@@ -44,6 +44,7 @@ export const UPDATE_APPOINTMENT = gql`
   mutation updateAppointment(
     $id: ID!,
     $assignedIds: [ID!]!,
+    $destinationEmails: String!,
     $initDate: String!,
     $endDate: String!,
     $place: String,
@@ -53,6 +54,7 @@ export const UPDATE_APPOINTMENT = gql`
       input: {
         id: $id
         assignedIds: $assignedIds,
+        destinationEmails: $destinationEmails,
         initDate: $initDate,
         endDate: $endDate,
         place: $place,
@@ -65,6 +67,7 @@ export const UPDATE_APPOINTMENT = gql`
           lastName
           avatarThumbUrl          
         }
+        destinationEmails
         initDate
         endDate
         place
@@ -132,6 +135,7 @@ export const GET_APPOINTMENTS = gql`
         lastName
         avatarThumbUrl
       }
+      destinationEmails
     }
   }
 `
