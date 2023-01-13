@@ -149,7 +149,7 @@ const CausantSearch = (props) => {
   let sortHandler = sort.bind(this)
 
   return(
-    <Grid container item xs={10}>
+    <Grid container item direction="column" style={{ padding: "20px" }}>
       { renderInputSearch() }
       <Table>
         <TableHead >
