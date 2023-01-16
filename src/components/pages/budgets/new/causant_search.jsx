@@ -131,9 +131,10 @@ const CausantSearch = (props) => {
             <TableRow
               index={causant.id}
               key={`RenderClientsTable-${causant.id}`}
-              hover 
               selected={causantInfo ? causant.id === causantInfo.id : causant.id === selectedIndex} 
               onClick={handleMenuItemClick}
+              hover
+              style={{cursor:'pointer'}}
             >
               <TableCell align= "center" className={classes.tableRowMax}>{ causant.firstName }</TableCell>
               <TableCell align= "center" className={classes.tableRowMax}>{ causant.lastName }</TableCell>
