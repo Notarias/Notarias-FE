@@ -43,6 +43,7 @@ export const GET_APPOINTMENTS = gql`
         lastName
         avatarThumbUrl
       }
+      destinationEmails
     }
   }
 `
