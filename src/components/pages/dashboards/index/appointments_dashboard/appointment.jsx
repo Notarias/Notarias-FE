@@ -4,13 +4,14 @@ import Paper                            from '@material-ui/core/Paper';
 import Typography                       from '@material-ui/core/Typography';
 import Avatar                           from '@material-ui/core/Avatar';
 import AvatarGroup                      from '@material-ui/lab/AvatarGroup';
+import ListSubheader                    from '@material-ui/core/ListSubheader';
 import Box                              from '@material-ui/core/Box';
 import Menu                             from '@material-ui/core/Menu';
 import MenuItem                         from '@material-ui/core/MenuItem';
 import Button                           from '@material-ui/core/Button';
+import Badge                            from '@material-ui/core/Badge';
+import Chip                             from '@material-ui/core/Chip';
 import Divider                          from '@material-ui/core/Divider';
-import ListItemIcon                     from '@material-ui/core/ListItemIcon';
-import ListItemText                     from '@material-ui/core/ListItemText';
 import { useQuery }                     from '@apollo/client';
 import { GET_USER }                     from '../../index_queries_and_mutations/queries'
 
@@ -20,6 +21,7 @@ const Appointment = (props) => {
   const [creator, setCreator] = useState();
   const [anchorEl, setAnchorEl] = useState();
   const [assigneList, setAssigneList] = useState(false);
+  const [destinationEmails] = useState(appointment && appointment.destinationEmails.split(","))
 
   const { data } = useQuery(GET_USER, { variables: { "id": appointment.creatorId }})
 
@@ -120,11 +122,13 @@ const Appointment = (props) => {
                 <strong>Invitados:</strong>
               </Typography>
               <Button aria-controls="assigned-list" aria-haspopup="true" onClick={openAssigneList}>
-                <AvatarGroup max={3}>
-                  {appointment.users.map((user) => {
-                    return(<Avatar key={user.id} alt={user.fullName} src={user.avatarThumbUrl} />)
-                  })}
-                </AvatarGroup>
+                <Badge badgeContent={`+ ${destinationEmails.length}`} color="primary">
+                  <AvatarGroup max={3}>
+                    {appointment.users.map((user) => {
+                      return(<Avatar key={user.id} alt={user.fullName} src={user.avatarThumbUrl} />)
+                    })}
+                  </AvatarGroup>
+                </Badge>
               </Button>
               <Menu
                 id="assigned-list"
@@ -133,13 +137,34 @@ const Appointment = (props) => {
                 open={assigneList}
                 onClose={closeAssigneList}
               >
+                <ListSubheader component="div" id="nested-list-subheader">
+                  Colaboradores
+                </ListSubheader>
                 {appointment.users.map((user) => {
                   return(
-                    <MenuItem key={user.id}>
-                      <ListItemIcon>
-                        <Avatar alt={user.firstName} src={user.avatarThumbUrl} />
-                      </ListItemIcon>
-                      <ListItemText primary={`${user.firstName} ${user.lastName}`} />
+                    <MenuItem key={`invitee-list-${appointment.id}-user-${user.id}`}>
+                      <Chip
+                        key={user.id}
+                        avatar={<Avatar alt={user.firstName} src={user.avatarThumbUrl} />}
+                        label={`${user.firstName} ${user.lastName}`}
+                        variant="outlined"
+                      />
+                    </MenuItem>
+                  )
+                })}
+                <Divider />
+                <ListSubheader component="div" id="nested-list-subheader">
+                  Participantes
+                </ListSubheader>
+                {destinationEmails && destinationEmails.map((mail, index) => {
+                  return(
+                    <MenuItem key={`destination-email-list-${index + 1}`}>
+                      <Chip
+                        key={index}
+                        avatar={<Avatar alt={mail} />}
+                        label={mail}
+                        variant="outlined"
+                      />
                     </MenuItem>
                   )
                 })}

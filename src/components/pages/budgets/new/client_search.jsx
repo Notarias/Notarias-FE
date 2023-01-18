@@ -132,9 +132,10 @@ const ClientSearch = (props) => {
             <TableRow
               index={client.id}
               key={client.id}
-              hover 
               selected={clientInfo ? client.id === clientInfo.id : client.id === selectedIndex} 
               onClick={handleMenuItemClick}
+              hover
+              style={{cursor:'pointer'}}
             >
               <TableCell align= "center">{ client.firstName }</TableCell>
               <TableCell align= "center">{ client.lastName }</TableCell>

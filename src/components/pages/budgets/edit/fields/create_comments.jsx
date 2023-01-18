@@ -34,7 +34,7 @@ const CreateComments = (props) => {
       refetchQueries: [
         {
           query: GET_COMMENTABLE_COMMENTS,
-          variables: { "commentableType": "Budget" , commentableId: budget.id }
+          variables: { commentableType: "Budget" , commentableId: budget.id, per: 100 }
         },
         {
           query: GET_BUDGETS_AUDITLOG,  

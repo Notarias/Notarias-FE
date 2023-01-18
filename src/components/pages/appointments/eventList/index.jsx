@@ -6,11 +6,14 @@ import Grid from '@material-ui/core/Grid';
 import 'react-calendar/dist/Calendar.css';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import Badge from '@material-ui/core/Badge';
 import Chip from '@material-ui/core/Chip';
 import Avatar from '@material-ui/core/Avatar';
 import AvatarGroup from '@material-ui/lab/AvatarGroup';
+import ListSubheader from '@material-ui/core/ListSubheader';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import Divider from '@material-ui/core/Divider';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Dialog from '@material-ui/core/Dialog';
@@ -51,6 +54,7 @@ const EventList = (props) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [initDate] = useState(appointment.initDate);
   const [endDate] = useState(appointment.endDate);
+  const [destinationEmails] = useState(appointment && appointment.destinationEmails.split(","))
 
   const { data } = useQuery(GET_USER, { variables: { "id": appointment.creatorId }})
   useEffect(() => {
@@ -179,11 +183,13 @@ const EventList = (props) => {
           </Grid>
           <Grid container item xs={2} justifyContent='flex-end'>
             <Button aria-controls="assigned-list" aria-haspopup="true" onClick={openAssigneList}>
-              <AvatarGroup max={3}>
-                {appointment.users.map((user) => {
-                  return(<Avatar key={user.id} alt={user.fullName} src={user.avatarThumbUrl} />)
-                })}
-              </AvatarGroup>
+              <Badge badgeContent={`+ ${destinationEmails.length}`} color="primary">
+                <AvatarGroup max={3}>
+                  {appointment.users.map((user) => {
+                    return(<Avatar key={user.id} alt={user.fullName} src={user.avatarThumbUrl} />)
+                  })}
+                </AvatarGroup>
+              </Badge>
             </Button>
             <Menu
               id="assigned-list"
@@ -192,6 +198,9 @@ const EventList = (props) => {
               open={assigneList}
               onClose={closeAssigneList}
             >
+              <ListSubheader component="div" id="nested-list-subheader">
+                Colaboradores
+              </ListSubheader>
               {appointment.users.map((user) => {
                 return(
                   <MenuItem key={`invitee-list-${appointment.id}-user-${user.id}`}>
@@ -199,6 +208,22 @@ const EventList = (props) => {
                       key={user.id}
                       avatar={<Avatar alt={user.firstName} src={user.avatarThumbUrl} />}
                       label={`${user.firstName} ${user.lastName}`}
+                      variant="outlined"
+                    />
+                  </MenuItem>
+                )
+              })}
+              <Divider />
+              <ListSubheader component="div" id="nested-list-subheader">
+                Invitados
+              </ListSubheader>
+              {destinationEmails && destinationEmails.map((mail, index) => {
+                return(
+                  <MenuItem key={`destination-email-list-${index + 1}`}>
+                    <Chip
+                      key={index}
+                      avatar={<Avatar alt={mail} />}
+                      label={mail}
                       variant="outlined"
                     />
                   </MenuItem>
