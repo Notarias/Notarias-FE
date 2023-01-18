@@ -215,7 +215,7 @@ const EventList = (props) => {
               })}
               <Divider />
               <ListSubheader component="div" id="nested-list-subheader">
-                Participantes
+                Invitados
               </ListSubheader>
               {destinationEmails && destinationEmails.map((mail, index) => {
                 return(
