@@ -20,10 +20,10 @@ const CommentsList = (props) => {
 
   const { loading, data } = useQuery(
     GET_COMMENTABLE_COMMENTS, 
-      { variables: variables, fetchPolicy: "cache-and-network" }
+      { variables: variables }
   );
 
-  const [comments, setComments] = React.useState(data ? data.commentableComments : [])
+  const [comments, setComments] = useState(data ? data.commentableComments : [])
 
   useEffect(
     () => {
