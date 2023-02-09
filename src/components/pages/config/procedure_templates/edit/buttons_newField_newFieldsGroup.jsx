@@ -1,4 +1,4 @@
-import React                                                    from 'react';
+import React, {useState}                                        from 'react';
 import Button                                                   from '@material-ui/core/Button';
 import Dialog                                                   from '@material-ui/core/Dialog';
 import DialogContent                                            from '@material-ui/core/DialogContent';
@@ -26,13 +26,13 @@ const ButtonsNewFieldNewFieldsGroup = ({
   classes,
   ...props
 }) => {
-  const [open, setOpen] = React.useState(false);
-  const [renderValue, setRenderValue] = React.useState();
-  const [fieldName, setFieldName] = React.useState("");
-  const [style, setStyle] = React.useState("")
-  const [groupFieldName, setGroupFieldName] = React.useState("");
-  const [pristine, setPristine] = React.useState(true)
-  const [error, setError] = React.useState(false)
+  const [open, setOpen] = useState(false);
+  const [renderValue, setRenderValue] = useState();
+  const [fieldName, setFieldName] = useState("");
+  const [style, setStyle] = useState("")
+  const [groupFieldName, setGroupFieldName] = useState("");
+  const [pristine, setPristine] = useState(true)
+  const [error, setError] = useState(false)
   const inputsList = ["name", "style"]
 
   const [createProcedureTemplateTabFieldMutation] =
@@ -220,6 +220,8 @@ const ButtonsNewFieldNewFieldsGroup = ({
                           <MenuItem key='string' value={'string'}>Texto</MenuItem>
                           <MenuItem key='number' value={'number'}>Numerico</MenuItem>
                           <MenuItem key='file' value={'file'}>Archivo</MenuItem>
+                          <MenuItem key='date' value={'date'}>Fecha</MenuItem>
+                          <MenuItem key='list' value={'list'}>Lista</MenuItem>
                         </Select>
                       </FormControl>
                     </Grid>

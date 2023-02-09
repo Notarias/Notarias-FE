@@ -13,6 +13,8 @@ import { GET_PROCEDURES_AUDITLOG }              from '../../queries_and_mutation
 import TextField                                from './text_field';
 import NumberField                              from './number_field';
 import FileField                                from './file_field';
+import DateField                                from './date_field';
+import ListField                                from './list_field';
 
 const FieldsRows = (props) => {
 
@@ -190,6 +192,34 @@ const FieldsRows = (props) => {
             fileUrl={fileUrl}
             updateFieldValueFile={updateFieldValueFile}
             updateProcedureFieldValueFileLoading={updateProcedureFieldValueFileLoading}
+          />
+        )
+      case "date":
+        return (
+          <DateField
+            field={field}
+            initFieldValue={initFieldValue}
+            fieldValue={fieldValue}
+            setFieldValue={setFieldValue}
+            fieldStatus={fieldStatus}
+            setFieldStatus={setFieldStatus}
+            saveButtonStatus={saveButtonStatus}
+            setSaveButtonStatus={setSaveButtonStatus}
+            updateFieldValue={updateFieldValue}
+          />
+        )
+      case "list":
+        return (
+          <ListField
+            field={field}
+            initFieldValue={initFieldValue}
+            fieldValue={fieldValue}
+            setFieldValue={setFieldValue}
+            fieldStatus={fieldStatus}
+            setFieldStatus={setFieldStatus}
+            saveButtonStatus={saveButtonStatus}
+            setSaveButtonStatus={setSaveButtonStatus}
+            updateFieldValue={updateFieldValue}
           />
         )
       default:
