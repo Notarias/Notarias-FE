@@ -241,7 +241,7 @@ const FieldsGroupMenu = (props) => {
                       <MenuItem key='number' value={'number'}>Numerico</MenuItem>
                       <MenuItem key='file' value={'file'}>Archivo</MenuItem>
                       <MenuItem key='date' value={'date'}>Fecha</MenuItem>
-                      <MenuItem key='list' value={'list'}>Lista</MenuItem>
+                      <MenuItem key='dropdown' value={'dropdown'}>Desplegable</MenuItem>
                     </Select>
                   </FormControl>
                 </Grid>

@@ -14,25 +14,25 @@ import { GET_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS }            from '../queries
 import { CREATE_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS }         from '../queries_and_mutations/queries'
 import AddIcon                                                  from '@material-ui/icons/Add';
 import Divider                                                  from '@material-ui/core/Divider';
-import FormControl                                              from '@material-ui/core/FormControl';
-import TextField                                                from '@material-ui/core/TextField';
-import Select                                                   from '@material-ui/core/Select';
-import MenuItem                                                 from '@material-ui/core/MenuItem';
-import InputLabel                                               from '@material-ui/core/InputLabel';
-
+import NewFieldName                                             from './new_field_name'
+import NewFieldsGroupName                                       from './new_fields_group_name'
 
 const ButtonsNewFieldNewFieldsGroup = ({
   currentTab,
   classes,
   ...props
 }) => {
+
   const [open, setOpen] = useState(false);
   const [renderValue, setRenderValue] = useState();
   const [fieldName, setFieldName] = useState("");
-  const [style, setStyle] = useState("")
+  const [defaultValue, setDefaultValue] = useState();
   const [groupFieldName, setGroupFieldName] = useState("");
-  const [pristine, setPristine] = useState(true)
-  const [error, setError] = useState(false)
+  const [style, setStyle] = useState("");
+  const [pristine, setPristine] = useState(true);
+  const [error, setError] = useState(false);
+  const [addOptions, setAddOptions] = useState(false);
+  const [options, setOptions] = useState([]);
   const inputsList = ["name", "style"]
 
   const [createProcedureTemplateTabFieldMutation] =
@@ -69,10 +69,13 @@ const ButtonsNewFieldNewFieldsGroup = ({
     }
 
   const addNewField = (event) => {
+    if (style === "dropdown"){
+      setDefaultValue(options)
+    }
     createProcedureTemplateTabFieldMutation(
       { 
         variables: 
-          { "name": fieldName, "tabId": currentTab.id, "style": style}
+          { name: fieldName, tabId: currentTab.id, style: style, defaultValue: defaultValue}
       }
     )
   }
@@ -123,6 +126,7 @@ const ButtonsNewFieldNewFieldsGroup = ({
 
   const handleClose = () => {
     setOpen(false);
+    setOptions([])
   };
 
   const handleFieldNameChange = (event) => {
@@ -133,7 +137,17 @@ const ButtonsNewFieldNewFieldsGroup = ({
   const handleStyleChange = (event) => {
     setStyle(event.target.value);
     setPristine(false)
+    if (event.target.value === "dropdown") {
+      options.push("")
+    } else {
+      setOptions([])
+    }
   };
+
+  const addSelectOption = () => {
+    options.push("")
+    setAddOptions(!addOptions)
+  }
 
   const handleFieldGroupNameChange = (event) => {
     setGroupFieldName(event.target.value);
@@ -187,63 +201,23 @@ const ButtonsNewFieldNewFieldsGroup = ({
         <Divider/>
         <DialogContent>
           <Grid container alignItems="center"  >
-            {
-              (renderValue)?
-                (
-                  <Grid container direction="row">
-                    <Grid container item xs={6}>
-                      <TextField 
-                        id="fieldName" 
-                        label="Editar nombre"
-                        className={ classes.textInputTittleName }
-                        value={ fieldName }
-                        onChange={ handleFieldNameChange }
-                        error={ !!error["name"] && true }
-                        helperText={error["name"] || " "}
-                        errorskey={ "name" }
-                        name='name'
-                      />
-                    </Grid>
-                    <Grid container item xs={1}>
-                    </Grid>
-                    <Grid container item xs={5}>
-                      <FormControl variant="outlined" className={ classes.textFieldTittleType }>
-                        <InputLabel id="label-field">Selecciona el tipo de campo</InputLabel>
-                        <Select
-                          labelId="demo-simple-select-outlined-label"
-                          name='style'
-                          value={ style }
-                          onChange={ handleStyleChange }
-                          error={ !!error["style"] && true }
-                          errorskey={ "style" }
-                        >
-                          <MenuItem key='string' value={'string'}>Texto</MenuItem>
-                          <MenuItem key='number' value={'number'}>Numerico</MenuItem>
-                          <MenuItem key='file' value={'file'}>Archivo</MenuItem>
-                          <MenuItem key='date' value={'date'}>Fecha</MenuItem>
-                          <MenuItem key='list' value={'list'}>Lista</MenuItem>
-                        </Select>
-                      </FormControl>
-                    </Grid>
-                  </Grid>
-                )
-              :
-                (
-                  <Grid>
-                    <TextField 
-                      id="filled-basic"
-                      label="Nombre del Grupo"
-                      value={ groupFieldName } 
-                      variant="filled" 
-                      size="small" 
-                      onChange={ handleFieldGroupNameChange }
-                      error={ !!error["name"] && true }
-                      helperText={error["name"] || " "}
-                      errorskey={ "name" }
-                      name='name'
-                    />
-                  </Grid>
-                )
+            { renderValue ?
+              <NewFieldName
+                fieldName={ fieldName }
+                handleFieldNameChange={ handleFieldNameChange }
+                error={ error }
+                style={ style }
+                handleStyleChange={ handleStyleChange }
+                options={ options }
+                setOptions={ setOptions }
+                addSelectOption={ addSelectOption }
+              />
+            :
+              <NewFieldsGroupName
+                groupFieldName={ groupFieldName }
+                handleFieldGroupNameChange={ handleFieldGroupNameChange }
+                error={ error }
+              />
             }
           </Grid>
         </DialogContent>

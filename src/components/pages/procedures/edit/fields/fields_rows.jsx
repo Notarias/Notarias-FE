@@ -14,7 +14,7 @@ import TextField                                from './text_field';
 import NumberField                              from './number_field';
 import FileField                                from './file_field';
 import DateField                                from './date_field';
-import ListField                                from './list_field';
+import DropdownField                            from './dropdown_field';
 
 const FieldsRows = (props) => {
 
@@ -208,9 +208,9 @@ const FieldsRows = (props) => {
             updateFieldValue={updateFieldValue}
           />
         )
-      case "list":
+      case "dropdown":
         return (
-          <ListField
+          <DropdownField
             field={field}
             initFieldValue={initFieldValue}
             fieldValue={fieldValue}

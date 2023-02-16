@@ -9,7 +9,7 @@ import SaveIcon                                 from '@material-ui/icons/Save';
 import EditIcon                                 from '@material-ui/icons/Edit';
 import ClearIcon                                from '@material-ui/icons/Clear';
 
-const ListField = (props) => {
+const DropdownField = (props) => {
   const { 
     field,
     initFieldValue,
@@ -33,7 +33,7 @@ const ListField = (props) => {
   }
   const fieldValueChange = ({ target }) => {
     let { value } = target
-    setFieldValue(value);
+    setFieldValue(String(value));
     setSaveButtonStatus(false);
   }
 
@@ -55,9 +55,9 @@ const ListField = (props) => {
                 size="small"
                 fullWidth
               >
-                <MenuItem value={"10"}>Ten</MenuItem>
-                <MenuItem value={"20"}>Twenty</MenuItem>
-                <MenuItem value={"30"}>Thirty</MenuItem>
+                <MenuItem value={10}>Ten</MenuItem>
+                <MenuItem value={20}>Twenty</MenuItem>
+                <MenuItem value={30}>Thirty</MenuItem>
               </Select>
             </FormControl>
           </Grid>
@@ -83,4 +83,4 @@ const ListField = (props) => {
   )
 }
 
-export default ListField;
+export default DropdownField;

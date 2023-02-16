@@ -9,7 +9,7 @@ import SaveIcon                                 from '@material-ui/icons/Save';
 import EditIcon                                 from '@material-ui/icons/Edit';
 import ClearIcon                                from '@material-ui/icons/Clear';
 
-const ListField = (props) => {
+const DropdownField = (props) => {
   const { 
     templateField,
     procedureFieldValue,
@@ -84,4 +84,4 @@ const ListField = (props) => {
   )
 }
 
-export default ListField;
+export default DropdownField;
