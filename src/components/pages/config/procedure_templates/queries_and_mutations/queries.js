@@ -236,6 +236,7 @@ export const GET_PROCEDURE_TEMPLATE_TAB_FIELDS = gql`
         name
         style
         active
+        defaultValue
       }
     }
 `

@@ -12,18 +12,18 @@ const FieldsAndGroupFields = (props) => {
   return(
     <>
       { currentTab ? 
-        <Grid container item xs={12} direction="row" justifyContent="center">
-          <Grid container item xs={12} alignItems="center" justifyContent="center">
+        <>
+          <Grid container item xs={10} direction='row' justifyContent="center">
             <FieldList
               currentTab={ currentTab }
             />
           </Grid>
-          <Grid container item xs={12} alignItems="center" justifyContent="center">
+          <Grid container item xs={10} direction='row' justifyContent="center">
             <FieldsGroupList
               currentTab={ currentTab }
             />
           </Grid>
-        </Grid> 
+        </>
       : 
         <Grid container item direction="column" alignItems="center">
           <Grid container item xs={10} alignItems="center" justifyContent="center">

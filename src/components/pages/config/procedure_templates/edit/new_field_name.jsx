@@ -1,7 +1,8 @@
-import React                from 'react';
+import React, {useState}    from 'react';
 import Button               from '@material-ui/core/Button';
 import Grid                 from '@material-ui/core/Grid';
 import AddIcon              from '@material-ui/icons/Add';
+import RemoveIcon           from '@material-ui/icons/Remove';
 import FormControl          from '@material-ui/core/FormControl';
 import TextField            from '@material-ui/core/TextField';
 import Select               from '@material-ui/core/Select';
@@ -9,7 +10,7 @@ import MenuItem             from '@material-ui/core/MenuItem';
 import InputLabel           from '@material-ui/core/InputLabel';
 import { styles }           from '../styles';
 import { withStyles }       from '@material-ui/core/styles';
-import DropdownOption      from './dropdown_option';
+import DropdownOption       from './dropdown_option';
 
 const NewFieldName = (props) => {
   const {
@@ -24,11 +25,18 @@ const NewFieldName = (props) => {
     addSelectOption
   } = props
 
+  const [removeOption, setRemoveOption] = useState(true);
+
   const addOption = (option, index) => {
     options[index] = option
     setOptions(options)
   }
-
+  const removeLastOption = () => {
+    options.pop()
+    setRemoveOption(!removeOption)
+  }
+  
+  console.log(options)
   return(
     <Grid container direction='row'>
       <Grid container item xs={6}>
@@ -91,6 +99,17 @@ const NewFieldName = (props) => {
                   fullWidth
                 >
                   Agregar Campo  <AddIcon/>
+                </Button>
+              </Grid>
+              <Grid item xs={8}>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  size="small"
+                  onClick={ removeLastOption }
+                  fullWidth
+                >
+                  Eliminar Campo  <RemoveIcon/>
                 </Button>
               </Grid>
             </Grid>

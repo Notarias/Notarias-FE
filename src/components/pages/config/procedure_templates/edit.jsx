@@ -39,7 +39,7 @@ const Edit = (props) => {
       <Divider/>
       <Grid container direction="row">
         <Grid container item xs={9} direction="column">
-          <Grid container direction="row"  alignItems="center" 
+          <Grid container direction="row" alignItems="center" 
             style={{paddingLeft:'30px', paddingRight:'30px'}}
           >
             <Hidden smDown>
@@ -95,8 +95,8 @@ const Edit = (props) => {
             </Hidden>
           </Grid>
           <Divider/>
-          <Grid container direction="row">
-            <Grid container item xs justifyContent="center">
+          <Grid container direction="row" justifyContent="center">
+            <Grid container item xs={9} direction="row" justifyContent="center">
               <ButtonsNewFieldNewFieldsGroup
                 currentTab={ currentTab }
               />

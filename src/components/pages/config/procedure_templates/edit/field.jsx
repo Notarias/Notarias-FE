@@ -42,7 +42,7 @@ const INPUT_TYPES = {
 
 const Field = (props) => {
 
-  const { classes, id, currentTab, removeFromList } = props
+  const { classes, id, currentTab } = props
   const [favoriteDialog, setFavoriteDialog] = useState(false);
   const [printableDialog, setPrintableDialog] = useState(false);
   const [deleteDialog, setDeleteDialog] = useState(false);
@@ -50,7 +50,7 @@ const Field = (props) => {
   const [editing, setEditing] = useState(true);
   const [name, setName] = useState(props.name);
   const [style, setStyle] = useState(props.style);
-  const [defaultValue, setDefaultValue] = useState(props.defaultValue)
+  const [options, setOptions] = useState(props.defaultValue)
   const [active, setActive] = useState(props.active);
   const [favourite, setFavourite] = useState(props.favourite);
   const [printable, setPrintable] = useState(props.printable);
@@ -64,7 +64,7 @@ const Field = (props) => {
           setErrors(apolloError)
         }, */
         update(store, cacheData) {
-          setDefaultValue(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.defaultValue)
+          setOptions(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.defaultValue)
           setFavourite(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.favourite)
           setActive(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.active)
           //setError(false)
@@ -87,7 +87,7 @@ const Field = (props) => {
     } */
 
   const updateField = (event) => {
-    updateProceduresTemplateTabFieldMutation({ variables: { id: id, name: name, style: style, defaultValue: defaultValue}})
+    updateProceduresTemplateTabFieldMutation({ variables: { id: id, name: name, style: style, defaultValue: options}})
   }
 
   const openFavoriteDialog = () => {
@@ -154,14 +154,14 @@ const Field = (props) => {
       {
         refetchQueries: [{
           query: GET_PROCEDURE_TEMPLATE_TAB_FIELDS,
-          variables: { "id": currentTab && currentTab.id },
+          variables: { "id": currentTab && currentTab.id }
         }],
         awaitRefetchQueries: true
       }
     )
 
   const deleteFieldClick = () => {
-    removeFromList(props.arrayIndex, destroyProceduresTemplateTabFieldMutation, { variables: { id: id } }, id )
+    destroyProceduresTemplateTabFieldMutation( { variables: { id: id } })
     setDeleteDialog(false);
   }
 
@@ -200,7 +200,7 @@ const Field = (props) => {
         </Grid>
         <Grid container item xs={5} alignItems='center'>
           <Typography className={ classes.textTittleType }>
-            {  INPUT_TYPES[style] }
+            { INPUT_TYPES[style] }
           </Typography>
         </Grid>
       </Grid>
@@ -247,9 +247,9 @@ const Field = (props) => {
   }
 
   return (
-    <Grid id='fields-rows' container direction='row' justifyContent="center" style={{padding:'5px'}}>
+    <Grid id='fields-rows' container item xs={12} direction='row' justifyContent="center" style={{padding:'5px'}}>
       <Paper style={{padding:'5px'}}>
-        <Grid container justifyContent="center">
+        <Grid container item xs={12} direction='row' justifyContent="center">
           <Hidden smDown>
             <Grid container item xs={8} alignItems="center" justifyContent="center">
               { editing ? renderTextField() : renderInputField() }
@@ -366,36 +366,28 @@ const Field = (props) => {
             </Grid>
           </Hidden>
         </Grid>
-        <Grid container justifyContent="center">
-          { style === 'dropdown' ?
-            defaultValue && defaultValue.map((option, index) => {
+        { style === 'dropdown' ?
+          <Grid container item xs={12} direction='column' style={{padding:'5px'}}>
+            {options && options.map((option, index) => {
               return(
-                <Grid key={`select-field-option-${index}`} container item xs={12} style={{paddingTop:'10px'}}>
-                  <Grid item xs>
-                    <TextField
-                      id="standard-basic"
-                      value={ `${option} ${index + 1}` }
-                      variant="outlined"
-                      style={{'backgroundColor': 'rgb(200, 200, 200)'}}
-                      size='small'
-                      fullWidth
-                    />
-                  </Grid>
-                  <Grid item xs={2}>
-                    <Button
-                      /* onClick={ updateField } */
-                    >
-                      <SaveIcon />
-                    </Button>
-                  </Grid>
+                <Grid key={`select-field-option-${index}`} item style={{paddingTop:'10px'}}>
+                  <TextField
+                    id="standard-basic"
+                    value={ option }
+                    variant="outlined"
+                    style={{'backgroundColor': 'rgb(200, 200, 200)'}}
+                    size='small'
+                    fullWidth
+                  />
                 </Grid>
               )
-            })
-          :
+            })}
+          </Grid>
+        :
             ""
-          }
-        </Grid>
+        }
       </Paper>
+
       <Dialog
         open={favoriteDialog}
         onClose={closeFavoriteDialog}

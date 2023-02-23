@@ -132,7 +132,6 @@ export const styles = theme => {
       maxWidth: "150px",
     },
     textPlainGoupName: {
-      height: "48px",
       textAlign: "left",
       display: "flex",
       alignItems: "center",
@@ -142,7 +141,6 @@ export const styles = theme => {
 
     },
     inputTittleGroupName: {
-      width: "100%",
       textAlign: "left",
       paddingLeft: "10px",
       wordWrap: "break-word",

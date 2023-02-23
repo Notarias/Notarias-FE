@@ -22,6 +22,7 @@ const DropdownOption = (props) => {
         value={ optionName }
         placeholder={`Opcion ${index + 1}`}
         onChange={ changeOptionName }
+        autoFocus={true}
         fullWidth
       />
     </Grid>

@@ -19,13 +19,6 @@ const FieldsGroupFieldList = (props) => {
     data && setFields(data.proceduresTemplateFieldsGroupFields);;
   }, [data])
 
-  const removeFromList = (index, mutation, variables, id) => {
-    id && mutation(variables)
-    fields.splice(index, 1)
-    let newArray = fields.slice()
-    setFields(newArray)
-  }
-
   return(
     <>
       {
@@ -40,8 +33,6 @@ const FieldsGroupFieldList = (props) => {
                 favourite={ field.favourite || false }
                 id={ field.id || " " }
                 active={ field.active }
-                groupId={ groupId }
-                removeFromList={removeFromList}
               />
             )
           }

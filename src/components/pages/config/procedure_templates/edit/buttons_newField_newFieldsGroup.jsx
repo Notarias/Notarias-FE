@@ -26,7 +26,6 @@ const ButtonsNewFieldNewFieldsGroup = ({
   const [open, setOpen] = useState(false);
   const [renderValue, setRenderValue] = useState();
   const [fieldName, setFieldName] = useState("");
-  const [defaultValue, setDefaultValue] = useState();
   const [groupFieldName, setGroupFieldName] = useState("");
   const [style, setStyle] = useState("");
   const [pristine, setPristine] = useState(true);
@@ -43,9 +42,10 @@ const ButtonsNewFieldNewFieldsGroup = ({
           setErrors(apolloError)
         },
         onCompleted(cacheData) {
-          setPristine(true)
-          setError(false)
+          setPristine(true);
+          setError(false);
           setOpen(false);
+          setOptions([]);
         },
         refetchQueries: [{
           query: GET_PROCEDURE_TEMPLATE_TAB_FIELDS,
@@ -55,29 +55,35 @@ const ButtonsNewFieldNewFieldsGroup = ({
       }
     )
 
-    const setErrors = (apolloError) => {
-      let errorsList = {}
-      let errorTemplateList = apolloError.graphQLErrors
-      for ( let i = 0; i < errorTemplateList.length; i++) {
-        for( let n = 0; n < inputsList.length; n++) {
-          if(errorTemplateList[i].extensions.attribute === inputsList[n]){
-            errorsList[inputsList[n]] = errorTemplateList[i].message
-          }
+  const setErrors = (apolloError) => {
+    let errorsList = {}
+    let errorTemplateList = apolloError.graphQLErrors
+    for ( let i = 0; i < errorTemplateList.length; i++) {
+      for( let n = 0; n < inputsList.length; n++) {
+        if(errorTemplateList[i].extensions.attribute === inputsList[n]){
+          errorsList[inputsList[n]] = errorTemplateList[i].message
         }
       }
-      setError(errorsList);//{name: "mensaje", style: "mensaje"} 
     }
+    setError(errorsList);//{name: "mensaje", style: "mensaje"} 
+  }
 
   const addNewField = (event) => {
     if (style === "dropdown"){
-      setDefaultValue(options)
+      createProcedureTemplateTabFieldMutation(
+        { 
+          variables: 
+            { name: fieldName, tabId: currentTab.id, style: style, defaultValue: options}
+        }
+      )
+    } else {
+      createProcedureTemplateTabFieldMutation(
+        { 
+          variables: 
+            { name: fieldName, tabId: currentTab.id, style: style, defaultValue: null}
+        }
+      )
     }
-    createProcedureTemplateTabFieldMutation(
-      { 
-        variables: 
-          { name: fieldName, tabId: currentTab.id, style: style, defaultValue: defaultValue}
-      }
-    )
   }
 
   const [createProcedureTemplateTabFieldGroupsMutation] =
@@ -191,11 +197,13 @@ const ButtonsNewFieldNewFieldsGroup = ({
       <Grid container justifyContent="center" alignItems="center" className={ classes.addFieldsAndGroupsButton } >
         { currentTab && renderNewFieldAndNewFieldsGroupButton() }
       </Grid>
-      <Dialog open={open} onClose={ handleClose }>
-        <DialogTitle 
-          id="simple-dialog-title"
-          className={ classes.tittleDialogWidth }
-        >
+      <Dialog
+        open={open}
+        onClose={ handleClose }
+        maxWidth='sm'
+        fullWidth
+      >
+        <DialogTitle id="simple-dialog-title">
           Rellena los campos para continuar
         </DialogTitle >
         <Divider/>
