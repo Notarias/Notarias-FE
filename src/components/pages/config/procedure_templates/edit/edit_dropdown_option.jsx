@@ -1,14 +1,14 @@
 import React, {useEffect, useState}     from 'react';
-import Grid                             from '@material-ui/core/Grid';
 import TextField                        from '@material-ui/core/TextField';
 
 const DropdownOption = (props) => {
-  const { option, index, addOption } = props
+  const { option, index, addOption, setChangeOptions, changeOptions } = props
 
   const [optionName, setOptionName] = useState(option ? option : "");
 
   useEffect(() => {
     addOption(optionName, index)
+    setChangeOptions(!changeOptions)
   },[optionName])
 
   const changeOptionName = (event) => {
@@ -16,16 +16,16 @@ const DropdownOption = (props) => {
   }
 
   return(
-    <Grid item xs={10}>
-      <TextField 
-        id="option-field"
-        value={ optionName }
-        placeholder={`Opcion ${index + 1}`}
-        onChange={ changeOptionName }
-        autoFocus={true}
-        fullWidth
+    <TextField 
+      id="option-field"
+      value={ optionName }
+      placeholder={`Opcion ${index + 1}`}
+      onChange={ changeOptionName }
+      variant="outlined"
+      size='small'
+      fullWidth
+      style={{'backgroundColor': 'rgb(200, 200, 200)'}}
       />
-    </Grid>
   )
 }
 

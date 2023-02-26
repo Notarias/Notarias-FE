@@ -1,4 +1,4 @@
-import React                                from 'react';
+import React, {useState}                    from 'react';
 import Breadcrumbs                          from '../../../ui/breadcrumbs'
 import Paper                                from '@material-ui/core/Paper';
 import Chip                                 from '@material-ui/core/Chip';
@@ -31,7 +31,7 @@ const Edit = (props) => {
   const { loading, data } = useQuery(GET_PROCEDURE_TEMPLATE,
     { variables: {"id": match.params.id }, fetchPolicy: "cache-and-network" } 
   );
-  const [currentTab, setCurrentTab] = React.useState()
+  const [currentTab, setCurrentTab] = useState()
 
   return (
     <>

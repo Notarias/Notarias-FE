@@ -277,7 +277,7 @@ export const UPDATE_PROCEDURES_TEMPLATE_TAB_FIELD = gql`
     $name: String,
     $favourite: Boolean,
     $style: String,
-    $defaultValue: [String],
+    $defaultValue: [String!],
     $active: Boolean,
     $printable: Boolean
   )

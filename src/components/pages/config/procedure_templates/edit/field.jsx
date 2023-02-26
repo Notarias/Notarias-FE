@@ -1,4 +1,4 @@
-import React, { useState }                            from 'react';
+import React, { useState, useEffect }                 from 'react';
 import Grid                                           from '@material-ui/core/Grid';
 import TextField                                      from '@material-ui/core/TextField';
 import StarsIcon                                      from '@material-ui/icons/Stars';
@@ -6,6 +6,8 @@ import FormControlLabel                               from '@material-ui/core/Fo
 import Checkbox                                       from '@material-ui/core/Checkbox';
 import StarBorderIcon                                 from '@material-ui/icons/StarBorder';
 import Button                                         from '@material-ui/core/Button';
+import AddIcon                                        from '@material-ui/icons/Add';
+import RemoveIcon                                     from '@material-ui/icons/Remove';
 import DeleteForeverIcon                              from '@material-ui/icons/DeleteForever';
 import FormControl                                    from '@material-ui/core/FormControl';
 import Select                                         from '@material-ui/core/Select';
@@ -30,6 +32,7 @@ import { GET_PROCEDURE_TEMPLATE_TAB_FIELDS }          from '../queries_and_mutat
 import RadioButtonUncheckedIcon                       from '@material-ui/icons/RadioButtonUnchecked';
 import RadioButtonCheckedIcon                         from '@material-ui/icons/RadioButtonChecked';
 import { Hidden } from '@material-ui/core';
+import EditDropdownOption from './edit_dropdown_option';
 
 
 const INPUT_TYPES = {
@@ -43,6 +46,7 @@ const INPUT_TYPES = {
 const Field = (props) => {
 
   const { classes, id, currentTab } = props
+
   const [favoriteDialog, setFavoriteDialog] = useState(false);
   const [printableDialog, setPrintableDialog] = useState(false);
   const [deleteDialog, setDeleteDialog] = useState(false);
@@ -50,10 +54,12 @@ const Field = (props) => {
   const [editing, setEditing] = useState(true);
   const [name, setName] = useState(props.name);
   const [style, setStyle] = useState(props.style);
-  const [options, setOptions] = useState(props.defaultValue)
+  const [defaultValue, setDefaultValue] = useState(props.defaultValue || [])
   const [active, setActive] = useState(props.active);
   const [favourite, setFavourite] = useState(props.favourite);
   const [printable, setPrintable] = useState(props.printable);
+  const [changeOptions, setChangeOptions] = useState(true);
+  const [options, setOptions] = useState([]);
   //const [error, setError] = useState(false);
 
   const [updateProceduresTemplateTabFieldMutation] =
@@ -64,11 +70,13 @@ const Field = (props) => {
           setErrors(apolloError)
         }, */
         update(store, cacheData) {
-          setOptions(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.defaultValue)
+          setDefaultValue(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.defaultValue || [])
           setFavourite(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.favourite)
           setActive(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.active)
           //setError(false)
           setEditing(true)
+          setOptions([])
+
         }
       }
     )
@@ -87,7 +95,11 @@ const Field = (props) => {
     } */
 
   const updateField = (event) => {
-    updateProceduresTemplateTabFieldMutation({ variables: { id: id, name: name, style: style, defaultValue: options}})
+    if (style === "dropdown"){
+      updateProceduresTemplateTabFieldMutation({ variables: { id: id, name: name, style: style, defaultValue: options}})
+    } else {
+      updateProceduresTemplateTabFieldMutation({ variables: { id: id, name: name, style: style}})
+    }
   }
 
   const openFavoriteDialog = () => {
@@ -167,6 +179,10 @@ const Field = (props) => {
 
   const editField = () => {
     setEditing(!editing)
+    defaultValue.map((option)=>{
+      options.push(option)
+      return("")
+    })
   }
 
   const handleNameChange = (event) => {
@@ -180,6 +196,26 @@ const Field = (props) => {
   const statusField = () => { 
     return active ? "Desactivar" : "Activar"
   }
+
+  const addOption = (option, index) => {
+    options[index] = option
+    setOptions(options)
+  }
+
+  const removeLastOption = () => {
+    options.pop()
+    setChangeOptions(!changeOptions)
+  }
+
+  const addSelectOption = () => {
+    options.push("")
+    setChangeOptions(!changeOptions)
+  }
+
+  useEffect(() => {
+    setChangeOptions(!changeOptions)
+  },[options])
+
 
   const renderTextField = () => {
     return(
@@ -367,24 +403,71 @@ const Field = (props) => {
           </Hidden>
         </Grid>
         { style === 'dropdown' ?
-          <Grid container item xs={12} direction='column' style={{padding:'5px'}}>
-            {options && options.map((option, index) => {
-              return(
-                <Grid key={`select-field-option-${index}`} item style={{paddingTop:'10px'}}>
-                  <TextField
-                    id="standard-basic"
-                    value={ option }
-                    variant="outlined"
-                    style={{'backgroundColor': 'rgb(200, 200, 200)'}}
-                    size='small'
-                    fullWidth
-                  />
+          editing ?
+            <Grid container item xs={12} direction='column' style={{padding:'5px'}}>
+              {defaultValue && defaultValue.map((option, index) => {
+                return(
+                  <Grid key={`select-field-option-${index}`} item xs={12}>
+                    <TextField
+                      id="standard-basic"
+                      value={ option }
+                      variant="outlined"
+                      size='small'
+                      fullWidth
+                      disabled
+                    />
+                  </Grid>
+                )
+              })}
+            </Grid>
+          :
+            <Grid container item xs={12} direction='column' justifyContent='center' alignItems='stretch' style={{padding:'5px'}}>
+              <Grid item xs={12} >
+                <Grid container direction='row' justifyContent='center' alignItems='center' style={{paddingTop:'5px'}}>
+                  <Grid item xs={8} style={{padding:'5px'}}>
+                    {options && options.map((option, index) => {
+                      return(
+                        <Grid key={`select-field-option-${index}`} item xs={12} style={{paddingTop:'5px'}}>
+                          <EditDropdownOption
+                            index={index}
+                            option={option}
+                            addOption={addOption}
+                            setChangeOptions={setChangeOptions}
+                            changeOptions={changeOptions}
+                          />
+                        </Grid>
+                      )
+                    })}
+                  </Grid>
+                  <Grid item xs={4} style={{padding:'5px'}}>
+                    <Grid item xs={12} style={{paddingTop:'5px'}}>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        size="small"
+                        onClick={ addSelectOption }
+                        fullWidth
+                        >
+                        Agregar Opcion <AddIcon/>
+                      </Button>
+                    </Grid>
+                    <Grid item xs={12} style={{paddingTop:'5px'}}>
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        size="small"
+                        onClick={ removeLastOption }
+                        fullWidth
+                        >
+                        Eliminar Opcion <RemoveIcon/>
+                      </Button>
+                    </Grid>
+                  </Grid>
                 </Grid>
-              )
-            })}
-          </Grid>
+              </Grid>
+            </Grid>
         :
-            ""
+          ""
         }
       </Paper>
 

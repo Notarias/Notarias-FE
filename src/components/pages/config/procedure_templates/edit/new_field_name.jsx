@@ -31,12 +31,13 @@ const NewFieldName = (props) => {
     options[index] = option
     setOptions(options)
   }
+
   const removeLastOption = () => {
     options.pop()
     setRemoveOption(!removeOption)
   }
-  
-  console.log(options)
+
+  console.log("options --------", options)
   return(
     <Grid container direction='row'>
       <Grid container item xs={6}>
@@ -85,9 +86,8 @@ const NewFieldName = (props) => {
                     index={index}
                     addOption={addOption}
                   />
-                  )
-                })
-              }
+                )
+              })}
             </Grid>
             <Grid container item xs={6} justifyContent='flex-end'>
               <Grid item xs={8}>
