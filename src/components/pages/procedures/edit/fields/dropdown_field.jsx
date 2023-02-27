@@ -55,9 +55,11 @@ const DropdownField = (props) => {
                 size="small"
                 fullWidth
               >
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
+                {field.defaultValue.map((option, index) =>{
+                  return(
+                    <MenuItem key={`${index}-${option}`} value={option}>{option}</MenuItem>
+                  )
+                })}
               </Select>
             </FormControl>
           </Grid>

@@ -37,6 +37,7 @@ const DropdownField = (props) => {
     setSaveButtonStatus(false);
   }
 
+  console.log("TemplateField ---------", templateField)
   return(
     <>
       <Grid container item xs={10} justifyContent="flex-start">
@@ -56,9 +57,11 @@ const DropdownField = (props) => {
                 variant="outlined"
                 fullWidth
               >
-                <MenuItem value={"10"}>Ten</MenuItem>
-                <MenuItem value={"20"}>Twenty</MenuItem>
-                <MenuItem value={"30"}>Thirty</MenuItem>
+                {templateField.defaultValue.map((option, index) =>{
+                  return(
+                    <MenuItem key={`${index}-${option}`} value={option}>{option}</MenuItem>
+                  )
+                })}
               </Select>
             </FormControl>
           </Grid>
