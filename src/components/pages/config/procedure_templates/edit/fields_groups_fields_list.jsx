@@ -1,4 +1,4 @@
-import React                                                from 'react';
+import React, { useState, useEffect }                       from 'react';
 import Field                                                from './field';
 import { useQuery }                                         from '@apollo/client';
 import { GET_PROCEDURES_TEMPLATE_FIELDS_GROUPS_FIELDS }     from '../queries_and_mutations/queries';
@@ -11,9 +11,14 @@ const FieldsGroupFieldList = (props) => {
       variables: {"id": groupId }
     } 
   );
-  const fields = data ? data.proceduresTemplateFieldsGroupFields : []
 
- 
+  const [fields, setFields] = useState(data ? data.proceduresTemplateFieldsGroupFields : [])
+
+
+  useEffect(() => {
+    data && setFields(data.proceduresTemplateFieldsGroupFields);;
+  }, [data])
+
   return(
     <>
       {
@@ -28,7 +33,6 @@ const FieldsGroupFieldList = (props) => {
                 favourite={ field.favourite || false }
                 id={ field.id || " " }
                 active={ field.active }
-                groupId={ groupId }
               />
             )
           }

@@ -18,6 +18,8 @@ import client                                   from '../../../../../../src/apol
 import TextField                                from './text_field';
 import NumberField                              from './number_field';
 import FileField                                from './file_field';
+import DateField                                from './date_field';
+import DropdownField                            from './dropdown_field';
 
 const FieldsGroupsRows = (props) => {
 
@@ -220,6 +222,34 @@ const FieldsGroupsRows = (props) => {
             fileUrl={fileUrl && fileUrl}
             updateFieldValueFile={updateFieldValueFile}
             updateProcedureFieldValueFileLoading={updateProcedureFieldValueFileLoading}
+          />
+        )
+      case "date":
+        return (
+          <DateField
+            templateField={templateField}
+            initFieldValue={procedureFieldValue}
+            value={value}
+            setValue={setValue}
+            fieldStatus={fieldStatus}
+            setFieldStatus={setFieldStatus}
+            saveButtonStatus={saveButtonStatus}
+            setSaveButtonStatus={setSaveButtonStatus}
+            updateFieldValue={updateFieldValue}
+          />
+        )
+      case "dropdown":
+        return (
+          <DropdownField
+            templateField={templateField}
+            initFieldValue={procedureFieldValue}
+            value={value}
+            setValue={setValue}
+            fieldStatus={fieldStatus}
+            setFieldStatus={setFieldStatus}
+            saveButtonStatus={saveButtonStatus}
+            setSaveButtonStatus={setSaveButtonStatus}
+            updateFieldValue={updateFieldValue}
           />
         )
       default:

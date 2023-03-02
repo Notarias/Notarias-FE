@@ -1,4 +1,4 @@
-import React                                                    from 'react';
+import React, {useState}                                        from 'react';
 import Button                                                   from '@material-ui/core/Button';
 import Dialog                                                   from '@material-ui/core/Dialog';
 import DialogContent                                            from '@material-ui/core/DialogContent';
@@ -14,25 +14,24 @@ import { GET_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS }            from '../queries
 import { CREATE_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS }         from '../queries_and_mutations/queries'
 import AddIcon                                                  from '@material-ui/icons/Add';
 import Divider                                                  from '@material-ui/core/Divider';
-import FormControl                                              from '@material-ui/core/FormControl';
-import TextField                                                from '@material-ui/core/TextField';
-import Select                                                   from '@material-ui/core/Select';
-import MenuItem                                                 from '@material-ui/core/MenuItem';
-import InputLabel                                               from '@material-ui/core/InputLabel';
-
+import NewFieldName                                             from './new_field_name'
+import NewFieldsGroupName                                       from './new_fields_group_name'
 
 const ButtonsNewFieldNewFieldsGroup = ({
   currentTab,
   classes,
   ...props
 }) => {
-  const [open, setOpen] = React.useState(false);
-  const [renderValue, setRenderValue] = React.useState();
-  const [fieldName, setFieldName] = React.useState("");
-  const [style, setStyle] = React.useState("")
-  const [groupFieldName, setGroupFieldName] = React.useState("");
-  const [pristine, setPristine] = React.useState(true)
-  const [error, setError] = React.useState(false)
+
+  const [open, setOpen] = useState(false);
+  const [renderValue, setRenderValue] = useState();
+  const [fieldName, setFieldName] = useState("");
+  const [groupFieldName, setGroupFieldName] = useState("");
+  const [style, setStyle] = useState("");
+  const [pristine, setPristine] = useState(true);
+  const [error, setError] = useState(false);
+  const [addOptions, setAddOptions] = useState(false);
+  const [options, setOptions] = useState([]);
   const inputsList = ["name", "style"]
 
   const [createProcedureTemplateTabFieldMutation] =
@@ -43,9 +42,10 @@ const ButtonsNewFieldNewFieldsGroup = ({
           setErrors(apolloError)
         },
         onCompleted(cacheData) {
-          setPristine(true)
-          setError(false)
+          setPristine(true);
+          setError(false);
           setOpen(false);
+          setOptions([]);
         },
         refetchQueries: [{
           query: GET_PROCEDURE_TEMPLATE_TAB_FIELDS,
@@ -55,26 +55,35 @@ const ButtonsNewFieldNewFieldsGroup = ({
       }
     )
 
-    const setErrors = (apolloError) => {
-      let errorsList = {}
-      let errorTemplateList = apolloError.graphQLErrors
-      for ( let i = 0; i < errorTemplateList.length; i++) {
-        for( let n = 0; n < inputsList.length; n++) {
-          if(errorTemplateList[i].extensions.attribute === inputsList[n]){
-            errorsList[inputsList[n]] = errorTemplateList[i].message
-          }
+  const setErrors = (apolloError) => {
+    let errorsList = {}
+    let errorTemplateList = apolloError.graphQLErrors
+    for ( let i = 0; i < errorTemplateList.length; i++) {
+      for( let n = 0; n < inputsList.length; n++) {
+        if(errorTemplateList[i].extensions.attribute === inputsList[n]){
+          errorsList[inputsList[n]] = errorTemplateList[i].message
         }
       }
-      setError(errorsList);//{name: "mensaje", style: "mensaje"} 
     }
+    setError(errorsList);//{name: "mensaje", style: "mensaje"} 
+  }
 
   const addNewField = (event) => {
-    createProcedureTemplateTabFieldMutation(
-      { 
-        variables: 
-          { "name": fieldName, "tabId": currentTab.id, "style": style}
-      }
-    )
+    if (style === "dropdown"){
+      createProcedureTemplateTabFieldMutation(
+        { 
+          variables: 
+            { name: fieldName, tabId: currentTab.id, style: style, defaultValue: options}
+        }
+      )
+    } else {
+      createProcedureTemplateTabFieldMutation(
+        { 
+          variables: 
+            { name: fieldName, tabId: currentTab.id, style: style, defaultValue: null}
+        }
+      )
+    }
   }
 
   const [createProcedureTemplateTabFieldGroupsMutation] =
@@ -123,6 +132,7 @@ const ButtonsNewFieldNewFieldsGroup = ({
 
   const handleClose = () => {
     setOpen(false);
+    setOptions([])
   };
 
   const handleFieldNameChange = (event) => {
@@ -133,7 +143,17 @@ const ButtonsNewFieldNewFieldsGroup = ({
   const handleStyleChange = (event) => {
     setStyle(event.target.value);
     setPristine(false)
+    if (event.target.value === "dropdown") {
+      options.push("")
+    } else {
+      setOptions([])
+    }
   };
+
+  const addSelectOption = () => {
+    options.push("")
+    setAddOptions(!addOptions)
+  }
 
   const handleFieldGroupNameChange = (event) => {
     setGroupFieldName(event.target.value);
@@ -177,71 +197,35 @@ const ButtonsNewFieldNewFieldsGroup = ({
       <Grid container justifyContent="center" alignItems="center" className={ classes.addFieldsAndGroupsButton } >
         { currentTab && renderNewFieldAndNewFieldsGroupButton() }
       </Grid>
-      <Dialog open={open} onClose={ handleClose }>
-        <DialogTitle 
-          id="simple-dialog-title"
-          className={ classes.tittleDialogWidth }
-        >
+      <Dialog
+        open={open}
+        onClose={ handleClose }
+        maxWidth='sm'
+        fullWidth
+      >
+        <DialogTitle id="simple-dialog-title">
           Rellena los campos para continuar
         </DialogTitle >
         <Divider/>
         <DialogContent>
           <Grid container alignItems="center"  >
-            {
-              (renderValue)?
-                (
-                  <Grid container direction="row">
-                    <Grid container item xs={6}>
-                      <TextField 
-                        id="fieldName" 
-                        label="Editar nombre"
-                        className={ classes.textInputTittleName }
-                        value={ fieldName }
-                        onChange={ handleFieldNameChange }
-                        error={ !!error["name"] && true }
-                        helperText={error["name"] || " "}
-                        errorskey={ "name" }
-                        name='name'
-                      />
-                    </Grid>
-                    <Grid container item xs={1}>
-                    </Grid>
-                    <Grid container item xs={5}>
-                      <FormControl variant="outlined" className={ classes.textFieldTittleType }>
-                        <InputLabel id="label-field">Selecciona el tipo de campo</InputLabel>
-                        <Select
-                          labelId="demo-simple-select-outlined-label"
-                          name='style'
-                          value={ style }
-                          onChange={ handleStyleChange }
-                          error={ !!error["style"] && true }
-                          errorskey={ "style" }
-                        >
-                          <MenuItem key='string' value={'string'}>Texto</MenuItem>
-                          <MenuItem key='number' value={'number'}>Numerico</MenuItem>
-                          <MenuItem key='file' value={'file'}>Archivo</MenuItem>
-                        </Select>
-                      </FormControl>
-                    </Grid>
-                  </Grid>
-                )
-              :
-                (
-                  <Grid>
-                    <TextField 
-                      id="filled-basic"
-                      label="Nombre del Grupo"
-                      value={ groupFieldName } 
-                      variant="filled" 
-                      size="small" 
-                      onChange={ handleFieldGroupNameChange }
-                      error={ !!error["name"] && true }
-                      helperText={error["name"] || " "}
-                      errorskey={ "name" }
-                      name='name'
-                    />
-                  </Grid>
-                )
+            { renderValue ?
+              <NewFieldName
+                fieldName={ fieldName }
+                handleFieldNameChange={ handleFieldNameChange }
+                error={ error }
+                style={ style }
+                handleStyleChange={ handleStyleChange }
+                options={ options }
+                setOptions={ setOptions }
+                addSelectOption={ addSelectOption }
+              />
+            :
+              <NewFieldsGroupName
+                groupFieldName={ groupFieldName }
+                handleFieldGroupNameChange={ handleFieldGroupNameChange }
+                error={ error }
+              />
             }
           </Grid>
         </DialogContent>
