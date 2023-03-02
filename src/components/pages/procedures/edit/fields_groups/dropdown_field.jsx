@@ -37,7 +37,6 @@ const DropdownField = (props) => {
     setSaveButtonStatus(false);
   }
 
-  console.log("TemplateField ---------", templateField)
   return(
     <>
       <Grid container item xs={10} justifyContent="flex-start">
