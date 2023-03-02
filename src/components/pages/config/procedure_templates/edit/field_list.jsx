@@ -6,7 +6,7 @@ import { styles }                                   from '../styles';
 import { withStyles }                               from '@material-ui/core/styles';
 
 const FieldList = (props) => {
-  const { currentTab } = props
+  const { currentTab} = props
 
   const { data } = useQuery(
     GET_PROCEDURE_TEMPLATE_TAB_FIELDS,
@@ -21,6 +21,12 @@ const FieldList = (props) => {
     data && setFields(data.proceduresTemplateTabFields);;
   }, [data])
 
+  const removeFromList = (index, mutation, variables, id) => {
+    id && mutation(variables)
+    fields.splice(index, 1)
+    let newArray = fields.slice()
+    setFields(newArray)
+  }
 
   return(
     <>
@@ -32,13 +38,13 @@ const FieldList = (props) => {
                 key={ field.id + "-field"}
                 arrayIndex={ index }
                 currentTab={ currentTab }
+                removeFromList={ removeFromList }
                 name={ field.name || "" }
                 printable={ field.printable || false }
                 style={ field.style || "" }
                 favourite={ field.favourite || false }
                 id={ field.id || " " }
                 active={ field.active }
-                defaultValue={field.defaultValue}
               />
             )
           }

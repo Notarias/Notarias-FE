@@ -165,6 +165,32 @@ const FieldsGroupMenu = (props) => {
           </ListItemIcon>
           <ListItemText primary="Borrar" />
         </MenuItem>
+          <Dialog
+            open={openDialog}
+            onClose={handleCloseDialogDelete}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">{"Eliminar grupo"}</DialogTitle>
+            <DialogContent>
+              Se eliminara de manera permantente este grupo de campos:
+              <Typography variant="subtitle2" className={ classes.texPlainTittleName }>
+                { groupName }
+              </Typography>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={ handleCloseDialogDelete } color="secondary">
+                Cancelar
+              </Button>
+              <Button
+                color="primary"
+                autoFocus
+                onClick={ deleteFieldsGroupClick }
+              >
+                Borrar
+              </Button>
+            </DialogActions>
+          </Dialog>
         <Divider/>
         <MenuItem>
           <StatusRadioButton
@@ -178,99 +204,65 @@ const FieldsGroupMenu = (props) => {
             <AddBoxIcon className={ classes.defaultIcon } />
           </ListItemIcon>
           <ListItemText primary="&#8288;Campo" onClick={ handleClickOpen}/>
+          <Dialog open={openB} onClose={ handleClose }>
+            <DialogTitle>
+              Añade un campo al grupo { groupName }
+            </DialogTitle>
+            <DialogContent>
+              <Grid container direction="row">
+                <Grid container item xs={6}>
+                  <TextField 
+                    id="fieldName" 
+                    label="Editar nombre"
+                    className={ classes.textInputTittleName }
+                    value={ fieldName }
+                    onChange={ handleFieldNameChange }
+                    error={ !!error["name"] && true }
+                    helperText={error["name"] || " "}
+                    errorskey={ "name" }
+                    name='name'
+                  />
+                </Grid>
+                <Grid container item xs={1}>
+                </Grid>
+                <Grid container item xs={5}>
+                  <FormControl variant="outlined" className={ classes.textFieldTittleType }>
+                    <InputLabel id="label-field">Selecciona el tipo de campo</InputLabel>
+                    <Select
+                      labelId="demo-simple-select-outlined-label"
+                      name='style'
+                      value={ style }
+                      onChange={ handleStyleChange }
+                      error={ !!error["style"] && true }
+                      helperText={error["style"] || " "}
+                      errorskey={ "style" }
+                    >
+                      <MenuItem key='string' value={'string'}>Texto</MenuItem>
+                      <MenuItem key='number' value={'number'}>Numerico</MenuItem>
+                      <MenuItem key='file' value={'file'}>Archivo</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
+              </Grid>
+            </DialogContent>
+            <DialogActions>
+              <Grid container direction="row" justifyContent="flex-end">
+                <Button onClick={ handleClose } color="secondary" >
+                  Cancelar
+                </Button>
+                <Button 
+                  onClick={ addNewField } 
+                  color="primary"
+                  variant="contained"
+                  disabled={ pristine }
+                >
+                  "Añadir campo"
+                </Button>
+              </Grid>
+            </DialogActions>
+          </Dialog>
         </MenuItem>
       </Menu>
-      <Dialog
-        open={openDialog}
-        onClose={handleCloseDialogDelete}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-        maxWidth='sm'
-      >
-        <DialogTitle id="alert-dialog-title">{"Eliminar grupo"}</DialogTitle>
-        <DialogContent>
-          Se eliminara de manera permantente este grupo de campos:
-          <Typography variant="subtitle2" className={ classes.texPlainTittleName }>
-            { groupName }
-          </Typography>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={ handleCloseDialogDelete } color="secondary">
-            Cancelar
-          </Button>
-          <Button
-            color="primary"
-            autoFocus
-            onClick={ deleteFieldsGroupClick }
-          >
-            Borrar
-          </Button>
-        </DialogActions>
-      </Dialog>
-      <Dialog
-        open={openB}
-        onClose={ handleClose } 
-        maxWidth='sm'
-        fullWidth
-      >
-        <DialogTitle>
-          Añade un campo al grupo { groupName }
-        </DialogTitle>
-        <DialogContent>
-          <Grid container direction="row">
-            <Grid container item xs={6}>
-              <TextField 
-                id="fieldName" 
-                label="Editar nombre"
-                className={ classes.textInputTittleName }
-                value={ fieldName }
-                onChange={ handleFieldNameChange }
-                error={ !!error["name"] && true }
-                helperText={error["name"] || " "}
-                errorskey={ "name" }
-                name='name'
-              />
-            </Grid>
-            <Grid container item xs={1}>
-            </Grid>
-            <Grid container item xs={5}>
-              <FormControl variant="outlined" className={ classes.textFieldTittleType }>
-                <InputLabel id="label-field">Selecciona el tipo de campo</InputLabel>
-                <Select
-                  labelId="demo-simple-select-outlined-label"
-                  name='style'
-                  value={ style }
-                  onChange={ handleStyleChange }
-                  error={ !!error["style"] && true }
-                  helperText={error["style"] || " "}
-                  errorskey={ "style" }
-                >
-                  <MenuItem key='string' value={'string'}>Texto</MenuItem>
-                  <MenuItem key='number' value={'number'}>Numerico</MenuItem>
-                  <MenuItem key='file' value={'file'}>Archivo</MenuItem>
-                  <MenuItem key='date' value={'date'}>Fecha</MenuItem>
-                  <MenuItem key='dropdown' value={'dropdown'}>Desplegable</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-          </Grid>
-        </DialogContent>
-        <DialogActions>
-          <Grid container direction="row" justifyContent="flex-end">
-            <Button onClick={ handleClose } color="secondary" >
-              Cancelar
-            </Button>
-            <Button 
-              onClick={ addNewField } 
-              color="primary"
-              variant="contained"
-              disabled={ pristine }
-            >
-              "Añadir campo"
-            </Button>
-          </Grid>
-        </DialogActions>
-      </Dialog>
     </>
   )
 }

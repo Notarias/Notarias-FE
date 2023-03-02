@@ -109,6 +109,7 @@ const BudgetSelectorList = (props) => {
     setSelectedBudget(budget);
   }
 
+  console.log(selectedProcedure)
   return (
     <>
       <Typography className={classes.title} color="textSecondary" gutterBottom>

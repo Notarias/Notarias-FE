@@ -236,7 +236,6 @@ export const GET_PROCEDURE_TEMPLATE_TAB_FIELDS = gql`
         name
         style
         active
-        defaultValue
       }
     }
 `
@@ -247,7 +246,6 @@ mutation createProceduresTemplateTabField (
   $name: String!, 
   $fieldsGroupId: ID,
   $style: String,
-  $defaultValue: [String!]
 ){
   createProceduresTemplateField (
     input: {
@@ -255,7 +253,6 @@ mutation createProceduresTemplateTabField (
       name: $name, 
       fieldsGroupId: $fieldsGroupId,
       style: $style,
-      defaultValue: $defaultValue
     } 
   ) 
   {
@@ -264,7 +261,6 @@ mutation createProceduresTemplateTabField (
       name
       favourite
       style
-      defaultValue
       proceduresTemplateTabId
     }
   }
@@ -277,7 +273,6 @@ export const UPDATE_PROCEDURES_TEMPLATE_TAB_FIELD = gql`
     $name: String,
     $favourite: Boolean,
     $style: String,
-    $defaultValue: [String!],
     $active: Boolean,
     $printable: Boolean
   )
@@ -288,7 +283,6 @@ export const UPDATE_PROCEDURES_TEMPLATE_TAB_FIELD = gql`
           name: $name,
           favourite: $favourite,
           style: $style,
-          defaultValue: $defaultValue,
           active: $active,
           printable: $printable
         } 
@@ -299,7 +293,6 @@ export const UPDATE_PROCEDURES_TEMPLATE_TAB_FIELD = gql`
         name
         favourite
         style
-        defaultValue
         active
         printable
         proceduresTemplateTabId
@@ -326,7 +319,6 @@ export const GET_PROCEDURES_TEMPLATE_FIELDS_GROUPS_FIELDS = gql`
       name
       favourite
       style
-      defaultValue
       active
     }
   }

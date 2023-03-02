@@ -486,7 +486,6 @@ export const GET_PROCEDURES_TEMPLATE_TAB_FIELDS = gql`
       favourite
       printable
       proceduresTemplateFieldsGroupId
-      defaultValue
     }
   }
 `
@@ -503,7 +502,6 @@ export const GET_PROCEDURES_TEMPLATE_TAB_FIELDS_GROUPS = gql`
         style
         printable
         proceduresTemplateFieldsGroupId
-        defaultValue
       }
     }
   }
@@ -525,7 +523,6 @@ export const GET_PROCEDURE_FIELD_GROUP_VALUES = gql`
         name
         style
         printable
-        defaultValue
       }
       procedureFieldValue{
         id
