@@ -37,7 +37,7 @@ const BudgetInvoice = (props) => {
   const { classes, match } = props
   const [budget, setBudget]                       = useState()
   const [budgetingTemplate, setBudgetingTemplate] = useState()
-  const [causant, setCausant]                     = useState()
+  const [attorney, setAttorney]                     = useState()
   const [client, setClient]                       = useState()
   const [asignee, setAsignee]                     = useState()
   const [createdAt, setCreatedAt]                 = useState()
@@ -58,7 +58,7 @@ const BudgetInvoice = (props) => {
   useEffect(() => {
     if(budget) {
       setBudgetingTemplate(budget.budgetingTemplate);
-      setCausant(budget.causant);
+      setAttorney(budget.attorney);
       setClient(budget.client);
       setAsignee(budget.asignee);
       setTabs(budget.tabs);
@@ -101,10 +101,10 @@ const BudgetInvoice = (props) => {
               <Grid container item xs={9} md={9} lg={9} direction="column">
                 <Grid container item>
                   <Grid item xs={2}>
-                    <Typography style={{ fontWeight: 600 }} align='left'>Causante:</Typography>
+                    <Typography style={{ fontWeight: 600 }} align='left'>Attorneye:</Typography>
                   </Grid>
                   <Grid item xs={10}>
-                    { !loading ? <Typography align='left'> { causant ? causant.fullName : "" }</Typography> : <Skeleton variant="text" width="90%"/> }
+                    { !loading ? <Typography align='left'> { attorney ? attorney.fullName : "" }</Typography> : <Skeleton variant="text" width="90%"/> }
                   </Grid>
                 </Grid>
                 <Grid container item>

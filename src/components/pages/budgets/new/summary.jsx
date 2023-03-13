@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Summary = (props) => {
 
-  const { clientInfo, causantInfo, selectedProcedure, selectedBudget, asignee, setAsignee} = props
+  const { clientInfo, attorneyInfo, selectedProcedure, selectedBudget, asignee, setAsignee} = props
   const [openDialog, setOpenDialog] = useState(false);
   const classes = useStyles();
 
@@ -67,12 +67,12 @@ const Summary = (props) => {
       <Divider/>
       <Grid item style={{marginTop: "10px"}}>
         <Typography ariant="body1" style={{ fontWeight: "600" }}>
-          Causante:
+          Despacho Solicitante:
         </Typography>
         <List>
           <ListItem dense={true}>
             <ListItemText
-              secondary={causantInfo ? `${causantInfo.firstName} ${causantInfo.lastName}` : "N/A"} />
+              secondary={attorneyInfo ? `${attorneyInfo.firstName} ${attorneyInfo.lastName}` : "N/A"} />
           </ListItem>
           <Divider/>
           <Typography variant="subtitle2" style={{ marginTop: "10px", fontWeight: "600" }}>

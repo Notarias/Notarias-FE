@@ -7,7 +7,7 @@ export const CREATE_BUDGET = gql`
     $budgetingTemplateId: ID!,
   	$clientMutationId:String,
     $asigneeId: ID,
-    $causantId: ID
+    $attorneyId: ID
   ){
     createBudget (
       input: {
@@ -16,7 +16,7 @@ export const CREATE_BUDGET = gql`
         budgetingTemplateId: $budgetingTemplateId,
         clientMutationId: $clientMutationId,
         asigneeId: $asigneeId,
-        causantId: $causantId
+        attorneyId: $attorneyId
       } 
     ) 
     {
@@ -158,8 +158,8 @@ export const LOAD_CLIENTS = gql`
   }
 `
 
-export const LOAD_CAUSANTS = gql`
-  query searchCausants(
+export const LOAD_ATTORNEYS = gql`
+  query searchAttorneys(
       $page: Int,
       $per: Int,
       $sortField: String,
@@ -167,7 +167,7 @@ export const LOAD_CAUSANTS = gql`
       $searchField: String,
       $searchValue: String
     ) {
-    causants(
+    attorneys(
       page: $page,
       per: $per,
       sortField: $sortField,
@@ -181,9 +181,9 @@ export const LOAD_CAUSANTS = gql`
       fullName
       rfc
       curp
-      causant
+      attorney
     }
-    causantsCount
+    attorneysCount
   }
 `
 
@@ -194,7 +194,7 @@ export const CREATE_CLIENT = gql`
     $curp: String,
     $rfc: String,
     $moral: Boolean,
-    $causant: Boolean
+    $attorney: Boolean
   ) {
     createClient(input: {
       firstName: $firstName,
@@ -202,7 +202,7 @@ export const CREATE_CLIENT = gql`
       curp: $curp,
       rfc: $rfc,
       moral: $moral,
-      causant: $causant
+      attorney: $attorney
     }
   ) 
     {
@@ -341,7 +341,7 @@ query budget(
         curp
         id
       }
-      causant {
+      attorney {
         fullName
         rfc
         curp
