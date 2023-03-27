@@ -14,12 +14,12 @@ import TableCell from '@material-ui/core/TableCell';
 import SortHeader from '../../../ui/sort_header';
 import TableRow from '@material-ui/core/TableRow';
 import { useQuery } from '@apollo/client';
-import { LOAD_CAUSANTS } from '../queries_and_mutations/queries';
+import { LOAD_ATTORNEYS } from '../queries_and_mutations/queries';
 import Button from '@material-ui/core/Button';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
-const CausantSearch = (props) => {
-  const { classes, causantInfo, setCausantInfo, setNewClientForm } = props
+const AttorneySearch = (props) => {
+  const { classes, attorneyInfo, setAttorneyInfo, setNewClientForm } = props
   const [searchLoading, setSearchLoading] = useState(false);
   const [sortField, setSortField] = useState("first_name");
   const [sortDirection, setSortDirection] = useState("desc");
@@ -41,11 +41,11 @@ const CausantSearch = (props) => {
   }
 
   const { data, refetch } = useQuery(
-    LOAD_CAUSANTS, { vairables: variables, errorPolicy: 'all' }
+    LOAD_ATTORNEYS, { vairables: variables, errorPolicy: 'all' }
   );
 
   useEffect(() => {
-    data && setTotalRecords(data.causantsCount)
+    data && setTotalRecords(data.attorneysCount)
     refetch(variables)
   }, [data, page, per, searchField, searchValue, sortField, sortDirection]);
 
@@ -80,7 +80,7 @@ const CausantSearch = (props) => {
 
   const renderInputSearch = () => {
     return(
-      <Grid container  direction="row" spacing={3} justifyContent="flex-end">
+      <Grid container direction="row" spacing={3} justifyContent="flex-end">
         <Grid item>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
@@ -117,29 +117,31 @@ const CausantSearch = (props) => {
 
   const RenderClientsTable = (props) => {
 
-    const { causantInfo, setCausantInfo } = props
+    const { attorneyInfo, setAttorneyInfo } = props
 
     return(
-      <TableBody>
+      <TableBody className={classes.clientSearchTable}>
         {
-          data && data.causants.map((causant, index ) => {
+          data && data.attorneys.map((attorney, index ) => {
+            
             const handleMenuItemClick = (event) => {
-              setSelectedIndex(causant.id);
-              setCausantInfo(causant);
+              setSelectedIndex(attorney.id);
+              setAttorneyInfo(attorney);
             };
+
             return(
             <TableRow
-              index={causant.id}
-              key={`RenderClientsTable-${causant.id}`}
-              selected={causantInfo ? causant.id === causantInfo.id : causant.id === selectedIndex} 
+              index={attorney.id}
+              key={attorney.id}
+              selected={attorneyInfo ? attorney.id === attorneyInfo.id : attorney.id === selectedIndex} 
               onClick={handleMenuItemClick}
               hover
               style={{cursor:'pointer'}}
             >
-              <TableCell align= "center" className={classes.tableRowMax}>{ causant.firstName }</TableCell>
-              <TableCell align= "center" className={classes.tableRowMax}>{ causant.lastName }</TableCell>
-              <TableCell align= "center">{ causant.rfc }</TableCell>
-              <TableCell align= "center">{ causant.curp }</TableCell>
+              <TableCell align= "center" className={classes.tableRowMax}>{ attorney.firstName }</TableCell>
+              <TableCell align= "center" className={classes.tableRowMax}>{ attorney.lastName }</TableCell>
+              <TableCell align= "center">{ attorney.rfc }</TableCell>
+              <TableCell align= "center">{ attorney.curp }</TableCell>
             </TableRow>
           )})
         }
@@ -150,9 +152,9 @@ const CausantSearch = (props) => {
   let sortHandler = sort.bind(this)
 
   return(
-    <Grid container item direction="column" style={{ padding: "20px" }}>
-      { renderInputSearch() }
-      <Table>
+    <Grid container item xs={10}>
+     { renderInputSearch() }
+      <Table className={classes.clientSearchTable} >
         <TableHead >
           <TableRow >
           <SortHeader
@@ -185,7 +187,7 @@ const CausantSearch = (props) => {
             />
           </TableRow>
         </TableHead>
-        <RenderClientsTable causantInfo={causantInfo} setCausantInfo={setCausantInfo} />
+        <RenderClientsTable attorneyInfo={attorneyInfo} setAttorneyInfo={setAttorneyInfo} />
         <TableFooter>
           <TableRow>
             <TablePagination
@@ -204,4 +206,4 @@ const CausantSearch = (props) => {
   )
 }
 
-export default withStyles(styles)(CausantSearch);
+export default withStyles(styles)(AttorneySearch);

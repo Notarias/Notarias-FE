@@ -13,7 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import Dialog from '@material-ui/core/Dialog';
 import ClientSearch from './new/client_search';
-import CausantSearch from './new/causant_search';
+import AttorneySearch from './new/attorney_search';
 import FastCreateClientForm from './new/fast_create_client_form';
 import ProcedureSelectorList from './new/procedure_selector_list';
 import BudgetSelectorList from './new/budget_selector_list';
@@ -53,15 +53,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function getSteps() {
-  return ['Agregar cliente', 'Agregar causante', 'Trámite y Presupuesto'];
+  return ['Agregar cliente', 'Despacho Solicitante', 'Trámite y Presupuesto'];
 }
 
 function getStepContent(stepIndex, listData) {
   const {
     clientInfo,
     setClientInfo, 
-    causantInfo,
-    setCausantInfo, 
+    attorneyInfo,
+    setAttorneyInfo, 
     selectedProcedure, 
     setSelectedProcedure, 
     selectedBudget, 
@@ -104,13 +104,13 @@ function getStepContent(stepIndex, listData) {
                 setNewClientForm={setNewClientForm}
                 activeStep={stepIndex}
                 setActiveStep={setActiveStep}
-                setCausantInfo={setCausantInfo}
+                setAttorneyInfo={setAttorneyInfo}
                 handleNext={handleNext}
               /> : 
-              <CausantSearch
+              <AttorneySearch
                 setNewClientForm={setNewClientForm}
-                causantInfo={causantInfo}
-                setCausantInfo={setCausantInfo}
+                attorneyInfo={attorneyInfo}
+                setAttorneyInfo={setAttorneyInfo}
               />
           }
         </Grid>
@@ -144,7 +144,7 @@ function getStepContent(stepIndex, listData) {
 const NewProcedure = (params) => {
 
   const [clientInfo, setClientInfo] = useState("");
-  const [causantInfo, setCausantInfo] = useState("");
+  const [attorneyInfo, setAttorneyInfo] = useState("");
   const [selectedProcedure, setSelectedProcedure] = useState("");
   const [selectedBudget, setSelectedBudget] = useState("");
   const [asignee, setAsignee] = useState("");
@@ -171,15 +171,15 @@ const NewProcedure = (params) => {
 
   const handleReset = () => {
     setClientInfo("");
-    setCausantInfo("");
+    setAttorneyInfo("");
     setSelectedProcedure("");
     setSelectedBudget("");
     setNewClientForm(false);
     setActiveStep(0);
   };
 
-  const clientAsCausant = () => {
-    setCausantInfo(clientInfo);
+  const clientAsAttorney = () => {
+    setAttorneyInfo(clientInfo);
     handleNext();
   };
 
@@ -222,7 +222,7 @@ const NewProcedure = (params) => {
       { 
         variables: { 
           "clientId": clientInfo.id,
-          "causantId": causantInfo.id,
+          "attorneyId": attorneyInfo.id,
           "proceduresTemplateId": selectedProcedure.id,
           "budgetingTemplateId": selectedBudget.id,
           "asigneeId": asignee.id
@@ -249,9 +249,9 @@ const NewProcedure = (params) => {
           <Button
             variant="contained"
             color="primary"
-            onClick={causantInfo ? handleNext : clientAsCausant}
+            onClick={attorneyInfo ? handleNext : clientAsAttorney}
           >
-            {causantInfo ? 'Siguiente' : 'Omitir'}
+            {attorneyInfo ? 'Siguiente' : 'Omitir'}
           </Button>
         )
       case 2:
@@ -273,8 +273,8 @@ const NewProcedure = (params) => {
   let listData = {
     clientInfo: clientInfo,
     setClientInfo: setClientInfo,
-    causantInfo: causantInfo,
-    setCausantInfo: setCausantInfo,
+    attorneyInfo: attorneyInfo,
+    setAttorneyInfo: setAttorneyInfo,
     selectedProcedure: selectedProcedure,
     setSelectedProcedure: setSelectedProcedure,
     selectedBudget: selectedBudget,
@@ -313,7 +313,7 @@ const NewProcedure = (params) => {
                       <Grid container item xs={2} lg={false} alignItems='center' justifyContent='center' style={{ paddingRight: "20px" }}>
                         <WizardSummmary
                           clientInfo={clientInfo}
-                          causantInfo={causantInfo}
+                          attorneyInfo={attorneyInfo}
                           selectedProcedure={selectedProcedure}
                           selectedBudget={selectedBudget}
                           asignee={asignee}
@@ -373,7 +373,7 @@ const NewProcedure = (params) => {
                 <Grid container item xs={3}>
                   <Summary
                     clientInfo={clientInfo}
-                    causantInfo={causantInfo}
+                    attorneyInfo={attorneyInfo}
                     selectedProcedure={selectedProcedure}
                     selectedBudget={selectedBudget}
                     asignee={asignee}

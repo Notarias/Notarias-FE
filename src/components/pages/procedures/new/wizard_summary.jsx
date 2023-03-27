@@ -5,7 +5,7 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import Divider from '@material-ui/core/Divider';
 import { makeStyles } from '@material-ui/core/styles';
 import ClientData from './wizard_summary/client_data';
-import CausantData from './wizard_summary/causant_data';
+import AttorneyData from './wizard_summary/attorney_data';
 import ProcedureData from './wizard_summary/procedure_data';
 import BudgetData from './wizard_summary/budget_data';
 import AsigneeData from './wizard_summary/asignee_data';
@@ -27,7 +27,7 @@ export default (props) => {
   const {
     classes,
     clientInfo,
-    causantInfo,
+    attorneyInfo,
     selectedProcedure,
     selectedBudget,
     asignee,
@@ -65,7 +65,7 @@ export default (props) => {
         }}>
         <ClientData client={clientInfo}/>
         <Divider/>
-        <CausantData causant={causantInfo}/>
+        <AttorneyData attorney={attorneyInfo}/>
         <Divider/>
         <ProcedureData procedure={selectedProcedure}/>
         <Divider/>

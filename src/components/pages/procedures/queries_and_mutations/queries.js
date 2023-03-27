@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 export const CREATE_PROCEDURE = gql`
 mutation createProcedure(
   $clientId: ID!,
-  $causantId: ID,
+  $attorneyId: ID,
   $proceduresTemplateId: ID!,
   $budgetingTemplateId: ID!,
   $asigneeId: ID,
@@ -11,7 +11,7 @@ mutation createProcedure(
   createProcedure (
     input:{
 	    clientId: $clientId
-      causantId: $causantId
+      attorneyId: $attorneyId
       proceduresTemplateId: $proceduresTemplateId
       budgetingTemplateId: $budgetingTemplateId
       asigneeId: $asigneeId
@@ -21,7 +21,7 @@ mutation createProcedure(
       id
       serialNumber
       client{ fullName }
-      causant{ fullName }
+      attorney{ fullName }
       budgetingTemplate { name }
       proceduresTemplate { name }
       asignee { avatarThumbUrl }
@@ -126,8 +126,8 @@ export const LOAD_CLIENTS = gql`
   }
 `
 
-export const LOAD_CAUSANTS = gql`
-  query searchCausants(
+export const LOAD_ATTORNEYS = gql`
+  query searchAttorneys(
       $page: Int,
       $per: Int,
       $sortField: String,
@@ -135,7 +135,7 @@ export const LOAD_CAUSANTS = gql`
       $searchField: String,
       $searchValue: String
     ) {
-    causants(
+    attorneys(
       page: $page,
       per: $per,
       sortField: $sortField,
@@ -148,9 +148,9 @@ export const LOAD_CAUSANTS = gql`
       lastName
       rfc
       curp
-      causant
+      attorney
     }
-    causantsCount
+    attorneysCount
   }
 `
 
@@ -161,7 +161,7 @@ export const CREATE_CLIENT = gql`
     $curp: String,
     $rfc: String,
     $moral: Boolean,
-    $causant: Boolean
+    $attorney: Boolean
   ) {
     createClient(input: {
       firstName: $firstName,
@@ -169,7 +169,7 @@ export const CREATE_CLIENT = gql`
       curp: $curp,
       rfc: $rfc,
       moral: $moral,
-      causant: $causant
+      attorney: $attorney
     }
   ) 
     {
@@ -240,7 +240,7 @@ query procedure(
         curp
         id
       }
-      causant{
+      attorney{
         firstName
         lastName
         rfc
@@ -297,7 +297,7 @@ export const UPDATE_PROCEDURE = gql`
         id
         serialNumber
         client{ fullName }
-        causant{ fullName }
+        attorney{ fullName }
         budgetingTemplate { name }
         proceduresTemplate { name }
         asignee { avatarThumbUrl }

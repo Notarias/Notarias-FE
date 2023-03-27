@@ -11,7 +11,7 @@ import { CREATE_CLIENT }   from '../queries_and_mutations/queries'
 
 const FastCreateClientForm = (props) => {
 
-  const { setNewClientForm, activeStep, handleNext, setClientInfo, setCausantInfo} = props;
+  const { setNewClientForm, activeStep, handleNext, setClientInfo, setAttorneyInfo} = props;
 
   const [errors, setErrors] = useState({});
   const [errorFormSpacing, setErrorFormSpacing] = useState(2);
@@ -21,11 +21,11 @@ const FastCreateClientForm = (props) => {
                                       curp: "",
                                       rfc: "",
                                       moral: false,
-                                      causant: false,
+                                      attorney: false,
                                     });
 
   useEffect(() => {
-    setNewClient({ ...newClient, causant: activeStep === 1 ? true : false })
+    setNewClient({ ...newClient, attorney: activeStep === 1 ? true : false })
   }, [activeStep]) 
 
   const setFormValue = ({ target }) => {
@@ -55,7 +55,7 @@ const FastCreateClientForm = (props) => {
         setErrors(errorsHash)
       },
       onCompleted(cacheData) {
-        (activeStep === 0) ? setClientInfo(cacheData.createClient.client) : setCausantInfo(cacheData.createClient.client);
+        (activeStep === 0) ? setClientInfo(cacheData.createClient.client) : setAttorneyInfo(cacheData.createClient.client);
         closeCreateClientForm();
         setErrorFormSpacing(2);
         handleNext();
@@ -69,7 +69,7 @@ const FastCreateClientForm = (props) => {
     rfc: newClient.rfc,
     curp: newClient.curp,
     moral: newClient.moral,
-    causant: true,
+    attorney: true,
   }
 
   const createNewClient = (event) => {

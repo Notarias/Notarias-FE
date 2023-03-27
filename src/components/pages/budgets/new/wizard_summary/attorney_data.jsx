@@ -4,15 +4,15 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 
 export default (props) => {
-  const { causant } = props;
+  const { attorney } = props;
 
   return(
-    <React.Fragment key='causant-data-fragment'>
-      <ListItem button key="causant-data" style={{ paddingBottom: '0px' }}>
-        <ListItemText primaryTypographyProps={{ variant: 'h6' }} primary="Causante"/>
+    <React.Fragment key='attorney-data-fragment'>
+      <ListItem button key="attorney-data" style={{ paddingBottom: '0px' }}>
+        <ListItemText primaryTypographyProps={{ variant: 'h6' }} primary="Despacho Solicitante"/>
       </ListItem>
 
-      <ListItem button key="causant-name">
+      <ListItem button key="attorney-name">
         <ListItemText
           primary="Nombre:"
           style={{ margin: '0px' }}
@@ -23,7 +23,7 @@ export default (props) => {
                 variant="body2"
                 color="textPrimary"
               >
-                { (causant && causant.fullName) || 'N/A'}
+                { (attorney && attorney.fullName) || 'N/A'}
               </Typography>
             </React.Fragment>
           }
