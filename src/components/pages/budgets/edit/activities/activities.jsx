@@ -13,6 +13,7 @@ import ListItemText         from '@material-ui/core/ListItemText';
 import SwipeableDrawer      from '@material-ui/core/SwipeableDrawer';
 import Collapse             from '@material-ui/core/Collapse';
 import IconButton           from '@material-ui/core/IconButton';
+import PostAddIcon          from '@material-ui/icons/PostAdd';
 import MenuIcon             from '@material-ui/icons/Menu';
 import PrintIcon            from '@material-ui/icons/Print';
 import VisibilityIcon       from '@material-ui/icons/Visibility';
@@ -34,6 +35,7 @@ import Tabs                 from '@material-ui/core/Tabs';
 import Tab                  from '@material-ui/core/Tab';
 import { green }            from '@material-ui/core/colors';
 import { Typography } from '@material-ui/core';
+import NewBudgetDialog from './new_budget_dialog';
 
 function ListItemLink(props) {
   return <ListItem button component="a" {...props} />;
@@ -45,9 +47,10 @@ const Activities = (props) => {
   const [drawerState, setDrawerState] = useState(false);
   const [completeDialog, setCompleteDialog] = useState(false);
   const [newPaymentDialog, setNewPaymentDialog] = useState(false);
+  const [newBudgetDialog, setNewBudgetDialog] = useState(false);
   const [moreActions, setMoreActions] = useState(false);
 
-  const  renderActivitiesMenu = () => {
+  const renderActivitiesMenu = () => {
     switch (activity) {
       case 0 :
         return(<GeneralInformation budget={budget} loadingBudget={loadingBudget}/>)
@@ -83,12 +86,16 @@ const Activities = (props) => {
   }
 
   const openNewPaymentDialog = () => {
-    setNewPaymentDialog(!newPaymentDialog)
+    setNewPaymentDialog(!newPaymentDialog);
   }
 
   const expandActions = () => {
     setMoreActions(!moreActions);
-  };
+  }
+
+  const openNewBudgetDialog = () => {
+    setNewBudgetDialog(!newBudgetDialog);
+  }
 
   return(
     <Grid container direction="column" justifyContent="flex-start" alignItems="stretch">
@@ -175,6 +182,13 @@ const Activities = (props) => {
                 </ListItemIcon>
                 <ListItemText primary={budget.completedAt ? "Desmarcar Completado" : "Marcar Completado"}/>
               </ListItem>
+              <ListItem key="newBudget" button onClick={openNewBudgetDialog}>
+                <ListItemIcon>
+                  <PostAddIcon/>
+                </ListItemIcon>
+                <ListItemText primary="Nuevo Presupuesto"/>
+              </ListItem>
+
               <ListItem key="payments" button onClick={expandActions}>
                 <ListItemIcon>
                   <MoreHorizIcon />
@@ -202,6 +216,11 @@ const Activities = (props) => {
               budget={budget} 
               open={newPaymentDialog} 
               openDialog={openNewPaymentDialog}/>
+            <NewBudgetDialog 
+              budget={budget} 
+              dialog={newBudgetDialog} 
+              setDialog={setNewBudgetDialog} 
+              openDialog={openNewBudgetDialog}/>
           </SwipeableDrawer>
 
         </Grid>

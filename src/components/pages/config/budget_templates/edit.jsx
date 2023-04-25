@@ -28,7 +28,7 @@ const BREADCRUMBS = [
 const Edit = (props) => {
   const { classes, match } = props
   const { loading, data } = useQuery(GET_BUDGETING_TEMPLATE,
-    { variables: {"id": match.params.id }, fetchPolicy: "cache-and-network", } 
+    { variables: {"id": match.params.id } } 
   );
 
   const [currentTab, setCurrentTab] = React.useState()

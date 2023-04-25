@@ -65,6 +65,73 @@ export const CREATE_BUDGET = gql`
   }
 `
 
+export const CREATE_BUDGET_FROM_BUDGET = gql`
+ mutation createBudgetFromBudget(
+    $proceduresTemplateId: ID!,
+  	$clientId: ID!,
+    $budgetingTemplateId: ID!,
+  	$clientMutationId:String,
+    $asigneeId: ID,
+    $attorneyId: ID,
+    $procedureId: ID!,
+  ){
+    createBudgetFromBudget (
+      input: {
+        proceduresTemplateId: $proceduresTemplateId,
+        clientId: $clientId,
+        budgetingTemplateId: $budgetingTemplateId,
+        clientMutationId: $clientMutationId,
+        asigneeId: $asigneeId,
+        attorneyId: $attorneyId,
+        procedureId: $procedureId
+      } 
+    ) 
+    {
+      budget{
+        asignee{
+          firstName
+          lastName
+          avatarThumbUrl
+          id
+        }
+        asigneeId
+        reporter{
+          firstName
+          lastName
+          avatarThumbUrl
+          id
+        }
+        reporterId
+      	budgetingTemplate{
+        	active
+        	id
+        	name
+          serialNumber
+          proceduresTemplates{
+            name
+            id
+          }
+      	}
+      	client{
+        	firstName
+        	lastName
+          id
+          email
+          phone
+      	}
+      	id
+      	serialNumber
+        total
+        totalDebt
+        totalCredit
+        totalPaid
+        totalPayable
+      }
+      clientMutationId
+    }
+  }
+`
+
 export const GET_BUDGETS = gql`
   query budgets (
     $page: Int,
@@ -87,6 +154,18 @@ export const GET_BUDGETS = gql`
         id
         active
         serialNumber
+        version
+      }
+      proceduresTemplate{
+        name
+        id
+        active
+        serialNumber
+        version
+      }
+      procedures{
+        id
+        serialNumber
       }
       client{
         firstName
@@ -95,12 +174,6 @@ export const GET_BUDGETS = gql`
         id
         email
         phone
-      }
-      proceduresTemplate{
-        name
-        id
-        active
-        serialNumber
       }
       id
       serialNumber
@@ -121,8 +194,8 @@ export const GET_BUDGETS = gql`
 export const GET_PROCEDURES_TEMPLATES_QUICK_LIST = gql`
   query proceduresTemplatesQuickList{
     proceduresTemplatesQuickList{
-      name
       id
+      name
       version
       active
       budgetingTemplatesIds
@@ -269,8 +342,16 @@ query budget(
         active
         id
         name
+        version
       },
       client {
+        firstName
+        lastName
+        rfc
+        curp
+        id
+      },
+      attorney {
         firstName
         lastName
         rfc
@@ -281,10 +362,16 @@ query budget(
         active
         name
         id
+        version
       },
-      procedure {
+      procedures {
         id
         serialNumber
+        proceduresTemplate{
+          name
+          id
+          version
+        }
       }
       fieldValues{
         id
@@ -1047,6 +1134,17 @@ export const BUDGET_UPLOAD_FILE = gql`
         transactionableId,
         transactionableType
       }
+    }
+  }
+`
+
+export const GET_BUDGETING_TEMPLATES_QUICK_LIST = gql`
+  query budgetingTemplatesQuickList{
+    budgetingTemplatesQuickList{
+      id
+      name
+      version
+      active
     }
   }
 `

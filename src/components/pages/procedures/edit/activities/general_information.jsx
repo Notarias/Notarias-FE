@@ -15,12 +15,14 @@ import ProcedureActions            from './procedure_actions';
 import ProceedingNumber            from './proceeding_number';
 import WritingNumber               from './writing_number';
 import CompleteProcedure           from './complete_procedure';
+import NewProcedureButton          from './new_procedure_button';
 
  const GeneralInformation = (props) => {
 
   const { procedure, loadingProcedure } = props
 
   const [array] = useState([1,2,3,4,5,6,7])
+  const budget = procedure.budgets[procedure.budgets.length - 1]
 
   return(
     <Grid container item alignItems="center">
@@ -72,6 +74,9 @@ import CompleteProcedure           from './complete_procedure';
               <CompleteProcedure procedure={procedure}/>
             </Grid>
             <Grid item>
+              <NewProcedureButton procedure={procedure}/>
+            </Grid>
+            <Grid item>
               <ProcedureActions procedure={procedure}/>
             </Grid>
           </Grid>
@@ -112,13 +117,23 @@ import CompleteProcedure           from './complete_procedure';
           </Grid>
           <Grid container item xs={12} alignItems='center'>
             <Grid item xs={3}>
+              <Typography align='left'>Despacho Solicitante:</Typography>
+            </Grid>
+            <Grid item xs={9}>
+              <Typography noWrap align='left' style={{ padding: '10px', textTransform: 'uppercase' }}>
+                <strong>{ procedure && procedure.attorney.firstName } { procedure && procedure.attorney.lastName }</strong>
+              </Typography>
+            </Grid>
+          </Grid>
+          <Grid container item xs={12} alignItems='center'>
+            <Grid item xs={3}>
               <Typography align='left'>Presupuesto:</Typography>
             </Grid>
             <Grid item xs={9}>
               {
-                procedure.budget ?
+                procedure.budgets ?
                   (
-                    <Button fullWidth style={{ padding: '10px' }} target='_blank' href={`/budgets/${procedure.budget.id}/edit`}>
+                    <Button fullWidth style={{ padding: '10px' }} target='_blank' href={`/budgets/${budget.id}/edit`}>
                       <Grid container alignItems="center" justifyContent='flex-start'>
                         <Grid item>
                           <Typography noWrap align='left' style={{ paddingRight: "10px", fontWeight: 600 }}>
@@ -150,8 +165,14 @@ import CompleteProcedure           from './complete_procedure';
               </Typography>
             </Grid>
           </Grid>
-          <ProceedingNumber procedure={procedure}/>
-          <WritingNumber procedure={procedure}/>
+          <ProceedingNumber
+            procedure={procedure}
+            budget={budget}
+          />
+          <WritingNumber
+            procedure={procedure}
+            budget={budget}
+          />
         </>
       }
     </Grid>

@@ -19,12 +19,14 @@ import { BASE_URI }                from '../../../../../apollo';
 import ProceedingNumber            from './proceeding_number';
 import WritingNumber               from './writing_number';
 import CompleteBudgetButton        from './complete_budget_button';
+import NewBudgetButton             from './new_budget_button';
 
 export default (props) => {
 
   const { budget, loadingBudget } = props
 
   const [array] = useState([1,2,3,4,5,6,7,8,9])
+  const procedure = budget.procedures[budget.procedures.length - 1]
 
   return(
     <Grid container item alignItems="center">
@@ -93,6 +95,9 @@ export default (props) => {
                 <CompleteBudgetButton budget={budget}/>
               </Grid>
               <Grid item>
+                <NewBudgetButton budget={budget}/>
+              </Grid>
+              <Grid item>
                 <BudgetActionsMenu budget={budget}/>
               </Grid>
             </Grid>
@@ -141,6 +146,18 @@ export default (props) => {
           <Grid container item xs={12} alignItems='center'>
             <Hidden mdDown>
               <Grid item xs={3}>
+                <Typography align='left'>Despacho Solicitante:</Typography>
+              </Grid>
+            </Hidden>
+            <Grid item xs>
+              <Typography noWrap align='left' style={{ padding: '10px', textTransform: 'uppercase' }}>
+                <strong>{ budget && budget.attorney.firstName } { budget && budget.attorney.lastName }</strong>
+              </Typography>
+            </Grid>
+          </Grid>
+          <Grid container item xs={12} alignItems='center'>
+            <Hidden mdDown>
+              <Grid item xs={3}>
                 <Typography align='left'>Presupuesto:</Typography>
               </Grid>
             </Hidden>
@@ -170,9 +187,9 @@ export default (props) => {
             </Hidden>
             <Grid item xs>
               {
-                budget.procedure ?
+                budget.procedures ?
                   (
-                    <Button fullWidth style={{ padding: '10px' }} target='_blank' href={`/procedures/${budget.procedure.id}/edit`}>
+                    <Button fullWidth style={{ padding: '10px' }} target='_blank' href={`/procedures/${procedure.id}/edit`}>
                       <Grid container alignItems="center" justifyContent='flex-start'>
                         <Grid item>
                           <Typography noWrap align='left' style={{ paddingRight: "10px", fontWeight: 600 }}>
@@ -202,7 +219,7 @@ export default (props) => {
             </Hidden>
             <Grid item xs>
               <Typography noWrap align='left' style={{ padding: '10px', textTransform: 'uppercase' }}>
-                <strong>{ budget && budget.procedure.serialNumber.toString().padStart(10, "0") }</strong>
+                <strong>{ procedure && procedure.serialNumber.toString().padStart(10, "0") }</strong>
               </Typography>
             </Grid>
           </Grid>

@@ -336,10 +336,11 @@ export const CREATE_BUDGETING_CATEGORIES = gql`
 `
 
 export const GET_BUDGETING_TEMPLATES_QUICK_LIST = gql`
-query budgetingTemplatesQuickList{
-  budgetingTemplatesQuickList{
-      name
+  query budgetingTemplatesQuickList{
+    budgetingTemplatesQuickList{
       id
+      name
+      serial_number
       version
       active
     }

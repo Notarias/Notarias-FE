@@ -59,7 +59,7 @@ export const GET_PROCEDURES = gql`
         avatarThumbUrl
       }
       reporter { avatarThumbUrl }
-      budget{ 
+      budgets{ 
         writingNumber
         proceedingNumber
       }
@@ -188,15 +188,13 @@ export const CREATE_CLIENT = gql`
 export const GET_PROCEDURES_TEMPLATES_QUICK_LIST = gql`
   query proceduresTemplatesQuickList{
     proceduresTemplatesQuickList{
-      name
       id
+      name
       version
       active
-      budgetingTemplatesIds
     }
   }
 `
-
 export const BUDGETING_TEMPLATE_BY_PROCEDURE_ID = gql`
   query budgetingTemplatesByProcedureId (
     $proceduresTemplateId: ID!
@@ -259,7 +257,7 @@ query procedure(
         avatarThumbUrl
         id
       }
-      budget{
+      budgets{
         id
         proceedingNumber
         writingNumber
@@ -268,11 +266,13 @@ query procedure(
         active
         name
         id
+        version
       }
       budgetingTemplate{
         active
         name
         id
+        version
       }
     }
   }
@@ -667,6 +667,17 @@ export const DESTROY_PROCEDURE_FIELD_GROUP_VALUES = gql`
   mutation destroyProcedureFieldGroupValues ($id: ID!){
     destroyProcedureFieldGroupValues (input:{id: $id}){
       destroyed
+    }
+  }
+`
+
+export const GET_BUDGETING_TEMPLATES_QUICK_LIST = gql`
+  query budgetingTemplatesQuickList{
+    budgetingTemplatesQuickList{
+      name
+      id
+      version
+      active
     }
   }
 `

@@ -37,7 +37,6 @@ const NewFieldName = (props) => {
     setRemoveOption(!removeOption)
   }
 
-  console.log("options --------", options)
   return(
     <Grid container direction='row'>
       <Grid container item xs={6}>
