@@ -1,9 +1,9 @@
 import React, { useState, useEffect }           from 'react';
 import Grid                                     from '@material-ui/core/Grid';
+import Typography                               from '@material-ui/core/Typography';
 import Dialog                                   from '@material-ui/core/Dialog';
 import DialogTitle                              from '@material-ui/core/DialogTitle';
 import DialogContent                            from '@material-ui/core/DialogContent';
-import DialogContentText                        from '@material-ui/core/DialogContentText';
 import DialogActions                            from '@material-ui/core/DialogActions';
 import Divider                                  from '@material-ui/core/Divider';
 import List                                     from '@material-ui/core/List';
@@ -15,7 +15,7 @@ import Button                                   from '@material-ui/core/Button';
 import { useQuery, useMutation }                from '@apollo/client';
 import { Redirect }                             from 'react-router-dom';
 import { GET_PROCEDURES_TEMPLATES_QUICK_LIST }  from '../../queries_and_mutations/queries';
-import { CREATE_PROCEDURE }                     from '../../queries_and_mutations/queries';
+import { CREATE_PROCEDURE_FROM_PROCEDURE }      from '../../queries_and_mutations/queries';
 import { GLOBAL_MESSAGE }                       from '../../../../../resolvers/queries';
 import client                                   from '../../../../../apollo';
 
@@ -37,9 +37,9 @@ const NewProcedureDialog = (props) => {
       setProceduresTemplatesList(data && data.proceduresTemplatesQuickList);
   }}, [data]);
 
-  const [createProcedureMutation] =
+  const [createProcedureFromProcedureMutation] =
   useMutation(
-    CREATE_PROCEDURE,
+    CREATE_PROCEDURE_FROM_PROCEDURE,
     {
       onError(apolloError) {
         client.writeQuery({
@@ -54,7 +54,7 @@ const NewProcedureDialog = (props) => {
         })
       },
       onCompleted(cacheData) {
-        const id = cacheData.createBudget.procedure.id
+        const id = cacheData.createProcedureFromProcedure.procedure.id
         id && setRedirect(
           <Redirect to={{ pathname: `/procedures/${id}/edit` }} />
         );
@@ -63,14 +63,15 @@ const NewProcedureDialog = (props) => {
   )
 
   const createNewProcedure = (event) => {
-    createProcedureMutation(
+    createProcedureFromProcedureMutation(
       { 
         variables: { 
           "clientId": procedure.client.id,
           "attorneyId": procedure.attorney.id,
-          "proceduresTemplateId": procedure.proceduresTemplate.id,
+          "budgetingTemplateId": procedure.budgetingTemplate.id,
           "proceduresTemplateId": proceduresTemplatesList[templateSelected].id,
-          "asigneeId": procedure.asignee.id
+          "asigneeId": procedure.asignee.id,
+          "budgetId": budget.id
         }
       }
     )
@@ -88,32 +89,43 @@ const NewProcedureDialog = (props) => {
         </DialogTitle>
         <Divider />
         <DialogContent>
-          <DialogContentText align='center' style={{paddingLeft:'25px', paddingRight:'25px'}}>
-            El tramite nuevo se vinculara con el presupuesto exitente actualmente vinculado a este tramite.
-          </DialogContentText>
-
           <Grid container direction='row'>
-            <Grid container item xs={5}>
+            <Grid container item xs={6}>
               <Grid item xs={12} style={{padding:'0', margin:'0'}}>
-                {`Tramite No. ${procedure.id}`}
+                <Typography variant="subtitle1" style={{ fontWeight: 'bold' }}>
+                  Tramite Original
+                </Typography>
+              </Grid>
+              <Grid item xs={12}>
+                {`No. ${procedure.id}`}
               </Grid>
               <Grid item xs={12}>
                 {`Plantilla: ${procedure.proceduresTemplate.name}`}
               </Grid>
               <Grid item xs={12}>
-                {`Version No. ${procedure.proceduresTemplate.version}`}
+                {`Version No. ${procedure.proceduresTemplate.version}.0`}
               </Grid>
               <Grid item xs={12} style={{padding:'0', margin:'0'}}>
-                {`Presupuesto vinculado No. ${budget.id}`}
+                <Typography variant="subtitle1" style={{ fontWeight: 'bold' }}>
+                  Presupuesto Vinculado
+                </Typography>
+              </Grid>
+              <Grid item xs={12}>
+                {`No. ${budget.id}`}
               </Grid>
               <Grid item xs={12}>
                 {`Plantilla: ${procedure.budgetingTemplate.name}`}
               </Grid>
               <Grid item xs={12}>
-                {`Version No. ${procedure.budgetingTemplate.version}`}
+                {`Version No. ${procedure.budgetingTemplate.version}.0`}
               </Grid>
             </Grid>
-            <Grid item xs={7}>
+            <Grid item xs={6}>
+              <Grid item xs={12} style={{padding:'0', margin:'0'}}>
+                <Typography variant="subtitle1" style={{ paddingLeft: '20px', fontWeight: 'bold' }}>
+                  Plantilla del Nuevo Tramite
+                </Typography>
+              </Grid>
               <Card variant="outlined">
                 <CardContent>
                   <List component="nav" aria-label="proceduresTemplate">

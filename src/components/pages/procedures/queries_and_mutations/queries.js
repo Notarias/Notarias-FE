@@ -33,6 +33,41 @@ mutation createProcedure(
 }
 `
 
+export const CREATE_PROCEDURE_FROM_PROCEDURE = gql`
+mutation createProcedureFromProcedure(
+  $clientId: ID!,
+  $attorneyId: ID,
+  $proceduresTemplateId: ID!,
+  $budgetingTemplateId: ID!,
+  $asigneeId: ID,
+  $budgetId: ID!
+){
+  createProcedureFromProcedure (
+    input:{
+	    clientId: $clientId
+      attorneyId: $attorneyId
+      proceduresTemplateId: $proceduresTemplateId
+      budgetingTemplateId: $budgetingTemplateId
+      asigneeId: $asigneeId
+      budgetId: $budgetId
+    }
+  ){
+    procedure {
+      id
+      serialNumber
+      client{ fullName }
+      attorney{ fullName }
+      budgetingTemplate { name }
+      proceduresTemplate { name }
+      asignee { avatarThumbUrl }
+      createdAt
+      updatedAt
+      completedAt
+    }
+  }
+}
+`
+
 export const GET_PROCEDURES = gql`
   query procedures(
     $page: Int

@@ -1,9 +1,9 @@
 import React, { useState, useEffect }          from 'react';
 import Grid                                    from '@material-ui/core/Grid';
+import Typography                               from '@material-ui/core/Typography';
 import Dialog                                  from '@material-ui/core/Dialog';
 import DialogTitle                             from '@material-ui/core/DialogTitle';
 import DialogContent                           from '@material-ui/core/DialogContent';
-import DialogContentText                       from '@material-ui/core/DialogContentText';
 import DialogActions                           from '@material-ui/core/DialogActions';
 import Divider                                 from '@material-ui/core/Divider';
 import List                                    from '@material-ui/core/List';
@@ -91,14 +91,15 @@ console.log("redirect", redirect)
         </DialogTitle>
         <Divider />
         <DialogContent>
-          <DialogContentText align='center' style={{paddingLeft:'25px', paddingRight:'25px'}}>
-            El presupuesto nuevo se vinculara con el tramite exitente actualmente vinculado a este presupuesto.
-          </DialogContentText>
-
           <Grid container direction='row'>
-            <Grid container item xs={5}>
+            <Grid container item xs={6}>
               <Grid item xs={12} style={{padding:'0', margin:'0'}}>
-                {`Presupuesto No. ${budget.id}`}
+                <Typography variant="subtitle1" style={{ fontWeight: 'bold' }}>
+                  Presupuesto Original
+                </Typography>
+              </Grid>
+              <Grid item xs={12}>
+                {`No. ${budget.id}`}
               </Grid>
               <Grid item xs={12}>
                 {`Plantilla: ${budget.budgetingTemplate.name}`}
@@ -107,7 +108,12 @@ console.log("redirect", redirect)
                 {`Version No. ${budget.budgetingTemplate.version}`}
               </Grid>
               <Grid item xs={12} style={{padding:'0', margin:'0'}}>
-                {`Tramite Vinculado No. ${procedure.id}`}
+                <Typography variant="subtitle1" style={{ fontWeight: 'bold' }}>
+                  Tramite Vinculado
+                </Typography>
+              </Grid>
+              <Grid item xs={12}>
+                {`No. ${procedure.id}`}
               </Grid>
               <Grid item xs={12}>
                 {`Plantilla: ${budget.proceduresTemplate.name}`}
@@ -116,7 +122,12 @@ console.log("redirect", redirect)
                 {`Version No. ${budget.proceduresTemplate.version}`}
               </Grid>
             </Grid>
-            <Grid item xs={7}>
+            <Grid item xs={6}>
+              <Grid item xs={12} style={{padding:'0', margin:'0'}}>
+                <Typography variant="subtitle1" style={{ paddingLeft: '20px', fontWeight: 'bold' }}>
+                  Plantilla del Nuevo Presupuesto
+                </Typography>
+              </Grid>
               <Card variant="outlined">
                 <CardContent>
                   <List component="nav" aria-label="budgetingTemplate">
