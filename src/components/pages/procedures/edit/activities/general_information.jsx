@@ -15,7 +15,7 @@ import ProcedureActions            from './procedure_actions';
 import ProceedingNumber            from './proceeding_number';
 import WritingNumber               from './writing_number';
 import CompleteProcedure           from './complete_procedure';
-import NewProcedureButton          from './new_procedure_button';
+import NewBudgetButton             from './new_budget_button';
 
  const GeneralInformation = (props) => {
 
@@ -74,7 +74,7 @@ import NewProcedureButton          from './new_procedure_button';
               <CompleteProcedure procedure={procedure}/>
             </Grid>
             <Grid item>
-              <NewProcedureButton procedure={procedure}/>
+              <NewBudgetButton procedure={procedure} budgetId={budget.id}/>
             </Grid>
             <Grid item>
               <ProcedureActions procedure={procedure}/>

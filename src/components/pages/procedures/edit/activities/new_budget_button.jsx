@@ -2,11 +2,11 @@ import React, { useState }       from 'react';
 import IconButton                from '@material-ui/core/IconButton';
 import PostAddIcon               from '@material-ui/icons/PostAdd';
 import Tooltip                   from '@material-ui/core/Tooltip';
-import NewProcedureDialog        from './new_procedure_dialog';
+import NewBudgetDialog           from './new_budget_dialog';
 
-const NewProcedureButton = (props) => {
+const NewBudgetButton = (props) => {
 
-  const { procedure } = props;
+  const { procedure, budgetId } = props;
   const [dialog, setDialog] = useState(false);
 
   const openDialog = () => {
@@ -15,14 +15,14 @@ const NewProcedureButton = (props) => {
 
   return(
     <>
-      <Tooltip title="Nuevo Presupuesto">
+      <Tooltip title="Nuevo Tramite">
         <IconButton color="default" onClick={openDialog}>
           <PostAddIcon/>
         </IconButton>
       </Tooltip>
-      <NewProcedureDialog procedure={procedure} dialog={dialog} setDialog={setDialog} openDialog={openDialog}/>
+      <NewBudgetDialog procedure={procedure} budgetId={budgetId} dialog={dialog} setDialog={setDialog} openDialog={openDialog}/>
     </>
   )
 }
 
-export default NewProcedureButton;
+export default NewBudgetButton;

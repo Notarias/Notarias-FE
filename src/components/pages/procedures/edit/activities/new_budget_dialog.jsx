@@ -1,6 +1,6 @@
 import React, { useState, useEffect }          from 'react';
 import Grid                                    from '@material-ui/core/Grid';
-import Typography                               from '@material-ui/core/Typography';
+import Typography                              from '@material-ui/core/Typography';
 import Dialog                                  from '@material-ui/core/Dialog';
 import DialogTitle                             from '@material-ui/core/DialogTitle';
 import DialogContent                           from '@material-ui/core/DialogContent';
@@ -23,10 +23,8 @@ import client                                  from '../../../../../apollo';
 
 const NewBudgetDialog = (props) => {
 
-  const { budget, dialog, openDialog } = props;
+  const { procedure, budgetId, dialog, openDialog } = props;
 
-  
-  const [procedure] = useState(budget.procedures[budget.procedures.length - 1]);
   const [budgetingTemplatesList, setBudgetingTemplatesList] = useState([]);
   const [templateSelected, setTemplateSelected] = useState(0);
   const [redirect, setRedirect] = useState();
@@ -57,7 +55,6 @@ const NewBudgetDialog = (props) => {
         })
       },
       onCompleted(cacheData) {
-        console.log(cacheData)
         const id = cacheData.createBudgetFromBudget.budget.id
         id && setRedirect(
           <Redirect to={{ pathname: `/budgets/${id}/edit` }} />
@@ -70,11 +67,11 @@ const NewBudgetDialog = (props) => {
     createBudgetFromBudgetMutation(
       { 
         variables: { 
-          "clientId": budget.client.id,
-          "attorneyId": budget.attorney.id,
+          "clientId": procedure.client.id,
+          "attorneyId": procedure.attorney.id,
           "proceduresTemplateId": procedure.proceduresTemplate.id,
           "budgetingTemplateId": budgetingTemplatesList[templateSelected].id,
-          "asigneeId": budget.asignee ? budget.asignee.id : null,
+          "asigneeId": procedure.asignee ? procedure.asignee.id : null,
           "procedureId": procedure.id
         }
       }
@@ -84,7 +81,7 @@ const NewBudgetDialog = (props) => {
   const selectTempalte = (event, index) => {
     setTemplateSelected(index)
   }
-console.log("redirect", redirect)
+
   return(
     <>
       <Dialog fullWidth open={dialog} onClose={openDialog} maxWidth='sm'>
@@ -101,13 +98,13 @@ console.log("redirect", redirect)
                 </Typography>
               </Grid>
               <Grid item xs={12}>
-                {`No. ${budget.id}`}
+                {`No. ${budgetId}`}
               </Grid>
               <Grid item xs={12}>
-                {`Plantilla: ${budget.budgetingTemplate.name}`}
+                {`Plantilla: ${procedure.budgetingTemplate.name}`}
               </Grid>
               <Grid item xs={12}>
-                {`Version No. ${budget.budgetingTemplate.version}`}
+                {`Version No. ${procedure.budgetingTemplate.version}`}
               </Grid>
               <Grid item xs={12} style={{padding:'0', margin:'0'}}>
                 <Typography variant="subtitle1" style={{ fontWeight: 'bold' }}>
@@ -118,10 +115,10 @@ console.log("redirect", redirect)
                 {`No. ${procedure.id}`}
               </Grid>
               <Grid item xs={12}>
-                {`Plantilla: ${budget.proceduresTemplate.name}`}
+                {`Plantilla: ${procedure.proceduresTemplate.name}`}
               </Grid>
               <Grid item xs={12}>
-                {`Version No. ${budget.proceduresTemplate.version}`}
+                {`Version No. ${procedure.proceduresTemplate.version}`}
               </Grid>
             </Grid>
             <Grid item xs={7}>
@@ -135,12 +132,13 @@ console.log("redirect", redirect)
                   <List component="nav" aria-label="budgetingTemplate">
                     {budgetingTemplatesList && budgetingTemplatesList.map((template, index) => (
                       <ListItem
+                        id={template.id}
                         key={`budgeting-template-${template.id}`}
                         button
                         selected={templateSelected === index}
                         onClick={(event) => selectTempalte(event, index)}
                       >
-                        <ListItemText primary={template.name} />
+                        <ListItemText id={template.id} primary={template.name} />
                         <ListItemIcon id={template.id}>
                           <Chip
                             size="small"

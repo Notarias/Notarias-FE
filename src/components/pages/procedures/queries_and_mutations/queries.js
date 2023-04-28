@@ -33,39 +33,71 @@ mutation createProcedure(
 }
 `
 
-export const CREATE_PROCEDURE_FROM_PROCEDURE = gql`
-mutation createProcedureFromProcedure(
-  $clientId: ID!,
-  $attorneyId: ID,
-  $proceduresTemplateId: ID!,
-  $budgetingTemplateId: ID!,
-  $asigneeId: ID,
-  $budgetId: ID!
-){
-  createProcedureFromProcedure (
-    input:{
-	    clientId: $clientId
-      attorneyId: $attorneyId
-      proceduresTemplateId: $proceduresTemplateId
-      budgetingTemplateId: $budgetingTemplateId
-      asigneeId: $asigneeId
-      budgetId: $budgetId
-    }
+export const CREATE_BUDGET_FROM_BUDGET = gql`
+ mutation createBudgetFromBudget(
+    $proceduresTemplateId: ID!,
+  	$clientId: ID!,
+    $budgetingTemplateId: ID!,
+  	$clientMutationId:String,
+    $asigneeId: ID,
+    $attorneyId: ID,
+    $procedureId: ID!,
   ){
-    procedure {
-      id
-      serialNumber
-      client{ fullName }
-      attorney{ fullName }
-      budgetingTemplate { name }
-      proceduresTemplate { name }
-      asignee { avatarThumbUrl }
-      createdAt
-      updatedAt
-      completedAt
+    createBudgetFromBudget (
+      input: {
+        proceduresTemplateId: $proceduresTemplateId,
+        clientId: $clientId,
+        budgetingTemplateId: $budgetingTemplateId,
+        clientMutationId: $clientMutationId,
+        asigneeId: $asigneeId,
+        attorneyId: $attorneyId,
+        procedureId: $procedureId
+      } 
+    ) 
+    {
+      budget{
+        asignee{
+          firstName
+          lastName
+          avatarThumbUrl
+          id
+        }
+        asigneeId
+        reporter{
+          firstName
+          lastName
+          avatarThumbUrl
+          id
+        }
+        reporterId
+      	budgetingTemplate{
+        	active
+        	id
+        	name
+          serialNumber
+          proceduresTemplates{
+            name
+            id
+          }
+      	}
+      	client{
+        	firstName
+        	lastName
+          id
+          email
+          phone
+      	}
+      	id
+      	serialNumber
+        total
+        totalDebt
+        totalCredit
+        totalPaid
+        totalPayable
+      }
+      clientMutationId
     }
   }
-}
 `
 
 export const GET_PROCEDURES = gql`
