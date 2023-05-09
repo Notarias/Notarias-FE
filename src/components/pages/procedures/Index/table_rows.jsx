@@ -1,20 +1,20 @@
-import React                          from 'react';
-import Grid                           from '@material-ui/core/Grid';
-import TableRow                       from '@material-ui/core/TableRow';
-import TableCell                      from '@material-ui/core/TableCell';
-import GenericDropdownMenu            from '../../../ui/generic_dropdown_menu';
-import CreateIcon                     from '@material-ui/icons/Create';
-import MenuItem                       from '@material-ui/core/MenuItem';
-import ListItemIcon                   from '@material-ui/core/ListItemIcon';
-import ListItemText                   from '@material-ui/core/ListItemText';
-import Typography                     from '@material-ui/core/Typography';
-import { Link }                       from 'react-router-dom';
-import { withStyles }                 from '@material-ui/core/styles';
-import { styles }                     from '../styles';
-import VisibilityIcon                 from '@material-ui/icons/Visibility';
-import PrintIcon                      from '@material-ui/icons/Print';
-import Chip                           from '@material-ui/core/Chip';
-import Avatar                         from '@material-ui/core/Avatar';
+import React                  from 'react';
+import Grid                   from '@material-ui/core/Grid';
+import TableRow               from '@material-ui/core/TableRow';
+import TableCell              from '@material-ui/core/TableCell';
+import GenericDropdownMenu    from '../../../ui/generic_dropdown_menu';
+import CreateIcon             from '@material-ui/icons/Create';
+import MenuItem               from '@material-ui/core/MenuItem';
+import ListItemIcon           from '@material-ui/core/ListItemIcon';
+import ListItemText           from '@material-ui/core/ListItemText';
+import Typography             from '@material-ui/core/Typography';
+import { Link }               from 'react-router-dom';
+import { withStyles }         from '@material-ui/core/styles';
+import { styles }             from '../styles';
+import VisibilityIcon         from '@material-ui/icons/Visibility';
+import PrintIcon              from '@material-ui/icons/Print';
+import Chip                   from '@material-ui/core/Chip';
+import Avatar                 from '@material-ui/core/Avatar';
 
 const buildDate = (value, separator='/') => {
   let newDate = new Date(value)
@@ -44,7 +44,7 @@ const TableRows = (props) => {
   return(
     <TableRow>
       <TableCell align="center" className={classes.tablecellWidth}>{ procedure.serialNumber }</TableCell>
-      <TableCell align="center" className={classes.tablecellWidth}>{ procedure.budget.writingNumber }</TableCell>
+      <TableCell align="center" className={classes.tablecellWidth}>{ procedure.budgets[procedure.budgets.length - 1].writingNumber }</TableCell>
       <TableCell align="center" className={classes.tablecellWidth}>{ procedure.proceduresTemplate.name }</TableCell>
       <TableCell align="center" className={classes.tablecellWidth}>{ procedure.budgetingTemplate.name }</TableCell>
       <TableCell align="center" className={classes.tablecellWidth}>{ procedure.client.fullName }</TableCell>

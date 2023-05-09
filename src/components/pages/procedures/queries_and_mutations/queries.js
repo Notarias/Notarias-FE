@@ -33,6 +33,73 @@ mutation createProcedure(
 }
 `
 
+export const CREATE_BUDGET_FROM_BUDGET = gql`
+ mutation createBudgetFromBudget(
+    $proceduresTemplateId: ID!,
+  	$clientId: ID!,
+    $budgetingTemplateId: ID!,
+  	$clientMutationId:String,
+    $asigneeId: ID,
+    $attorneyId: ID,
+    $procedureId: ID!,
+  ){
+    createBudgetFromBudget (
+      input: {
+        proceduresTemplateId: $proceduresTemplateId,
+        clientId: $clientId,
+        budgetingTemplateId: $budgetingTemplateId,
+        clientMutationId: $clientMutationId,
+        asigneeId: $asigneeId,
+        attorneyId: $attorneyId,
+        procedureId: $procedureId
+      } 
+    ) 
+    {
+      budget{
+        asignee{
+          firstName
+          lastName
+          avatarThumbUrl
+          id
+        }
+        asigneeId
+        reporter{
+          firstName
+          lastName
+          avatarThumbUrl
+          id
+        }
+        reporterId
+      	budgetingTemplate{
+        	active
+        	id
+        	name
+          serialNumber
+          proceduresTemplates{
+            name
+            id
+          }
+      	}
+      	client{
+        	firstName
+        	lastName
+          id
+          email
+          phone
+      	}
+      	id
+      	serialNumber
+        total
+        totalDebt
+        totalCredit
+        totalPaid
+        totalPayable
+      }
+      clientMutationId
+    }
+  }
+`
+
 export const GET_PROCEDURES = gql`
   query procedures(
     $page: Int
@@ -59,7 +126,7 @@ export const GET_PROCEDURES = gql`
         avatarThumbUrl
       }
       reporter { avatarThumbUrl }
-      budget{ 
+      budgets{ 
         writingNumber
         proceedingNumber
       }
@@ -188,15 +255,13 @@ export const CREATE_CLIENT = gql`
 export const GET_PROCEDURES_TEMPLATES_QUICK_LIST = gql`
   query proceduresTemplatesQuickList{
     proceduresTemplatesQuickList{
-      name
       id
+      name
       version
       active
-      budgetingTemplatesIds
     }
   }
 `
-
 export const BUDGETING_TEMPLATE_BY_PROCEDURE_ID = gql`
   query budgetingTemplatesByProcedureId (
     $proceduresTemplateId: ID!
@@ -259,20 +324,26 @@ query procedure(
         avatarThumbUrl
         id
       }
-      budget{
+      budgets{
         id
+        serialNumber
         proceedingNumber
         writingNumber
+        budgetingTemplate {
+          name
+        }
       }
       proceduresTemplate{
         active
         name
         id
+        version
       }
       budgetingTemplate{
         active
         name
         id
+        version
       }
     }
   }
@@ -667,6 +738,17 @@ export const DESTROY_PROCEDURE_FIELD_GROUP_VALUES = gql`
   mutation destroyProcedureFieldGroupValues ($id: ID!){
     destroyProcedureFieldGroupValues (input:{id: $id}){
       destroyed
+    }
+  }
+`
+
+export const GET_BUDGETING_TEMPLATES_QUICK_LIST = gql`
+  query budgetingTemplatesQuickList{
+    budgetingTemplatesQuickList{
+      name
+      id
+      version
+      active
     }
   }
 `

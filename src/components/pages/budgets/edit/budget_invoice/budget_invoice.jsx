@@ -101,7 +101,7 @@ const BudgetInvoice = (props) => {
               <Grid container item xs={9} md={9} lg={9} direction="column">
                 <Grid container item>
                   <Grid item xs={2}>
-                    <Typography style={{ fontWeight: 600 }} align='left'>Attorneye:</Typography>
+                    <Typography style={{ fontWeight: 600 }} align='left'>Despacho Solicitante:</Typography>
                   </Grid>
                   <Grid item xs={10}>
                     { !loading ? <Typography align='left'> { attorney ? attorney.fullName : "" }</Typography> : <Skeleton variant="text" width="90%"/> }

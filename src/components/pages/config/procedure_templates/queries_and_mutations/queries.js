@@ -98,17 +98,6 @@ export const CREATE_PROCEDURE_TEMPLATE = gql`
   }
 `
 
-export const GET_BUDGETING_TEMPLATES_QUICK_LIST = gql`
-query budgetingTemplatesQuickList{
-  budgetingTemplatesQuickList{
-    name
-    id
-    version
-    active
-    }
-  }
-`
-
 export const GET_PROCEDURES_TEMPLATE_TABS = gql`
   query proceduresTemplateTabs($proceduresTemplateId: ID!){
     proceduresTemplateTabs(proceduresTemplateId: $proceduresTemplateId) {
@@ -342,6 +331,28 @@ export const CLONE_PROCEDURES_TEMPLATE = gql`
         active
         version
       }
+    }
+  }
+`
+
+export const GET_BUDGETING_TEMPLATES_QUICK_LIST = gql`
+  query budgetingTemplatesQuickList{
+    budgetingTemplatesQuickList{
+      name
+      id
+      version
+      active
+    }
+  }
+`
+
+export const GET_PROCEDURES_TEMPLATES_QUICK_LIST = gql`
+  query proceduresTemplatesQuickList{
+    proceduresTemplatesQuickList{
+      name
+      id
+      version
+      active
     }
   }
 `

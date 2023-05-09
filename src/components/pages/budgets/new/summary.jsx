@@ -83,7 +83,7 @@ const Summary = (props) => {
             <ListItemIcon>
               <Chip
                 size="small"
-                color={ selectedProcedure ? "primary" : "" }
+                color={ selectedProcedure ? "primary" : "default" }
                 label={ `${selectedProcedure.version ? selectedProcedure.version : "0"}.0` }
                 disabled
               />
@@ -98,7 +98,7 @@ const Summary = (props) => {
             <ListItemIcon>
               <Chip
                 size="small"
-                color={ selectedBudget ? "primary" : "" }
+                color={ selectedBudget ? "primary" : "default" }
                 label={ `${selectedBudget.version ? selectedBudget.version : "0"}.0` }
                 disabled
               />

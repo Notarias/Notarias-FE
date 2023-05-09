@@ -12,11 +12,11 @@ import { useMutation }     from '@apollo/client';
 import { UPDATE_BUDGET, GET_PROCEDURE } from '../../queries_and_mutations/queries';
 
 export default (props) => {
-  const { procedure } = props
+  const { procedure, budget } = props
 
   const [open, setOpen]         = useState(false)
   const [pristine, setPristine] = useState(true)
-  const [proceedingNumber, setProceedingNumber] = useState(procedure.proceedingNumber)
+  const [proceedingNumber, setProceedingNumber] = useState(budget.proceedingNumber)
 
   const handleClose = () => {
     setOpen(false)
@@ -59,15 +59,15 @@ export default (props) => {
   const handleSave = () => {
     updateBudget({
       variables: {
-        id: procedure.budget.id,
+        id: budget.id,
         proceedingNumber: proceedingNumber
       }
     })
   }
 
   useEffect(() => {
-    setProceedingNumber(procedure.budget.proceedingNumber)
-  }, [procedure.budget.proceedingNumber])
+    setProceedingNumber(budget.proceedingNumber)
+  }, [budget.proceedingNumber])
 
   return(
     <Grid container item xs={12} alignItems='center'>
@@ -79,7 +79,7 @@ export default (props) => {
           <Grid container alignItems="center" justifyContent='flex-start' >
             <Typography noWrap align='left' style={{ paddingRight: "10px", fontWeight: 600 }}>
               {
-                (procedure && procedure.budget.proceedingNumber) || 'Agregar No. de Expediente'
+                (budget && budget.proceedingNumber) || 'Agregar No. de Expediente'
               }
             </Typography>
           </Grid>
