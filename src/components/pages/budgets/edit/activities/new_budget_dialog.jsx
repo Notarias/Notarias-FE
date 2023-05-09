@@ -57,7 +57,6 @@ const NewBudgetDialog = (props) => {
         })
       },
       onCompleted(cacheData) {
-        console.log(cacheData)
         const id = cacheData.createBudgetFromBudget.budget.id
         id && setRedirect(
           <Redirect to={{ pathname: `/budgets/${id}/edit` }} />
@@ -84,7 +83,7 @@ const NewBudgetDialog = (props) => {
   const selectTempalte = (event, index) => {
     setTemplateSelected(index)
   }
-console.log("redirect", redirect)
+
   return(
     <>
       <Dialog fullWidth open={dialog} onClose={openDialog} maxWidth='sm'>
@@ -101,13 +100,13 @@ console.log("redirect", redirect)
                 </Typography>
               </Grid>
               <Grid item xs={12}>
-                {`No. ${budget.id}`}
+                No. {budget.id}
               </Grid>
               <Grid item xs={12}>
-                {`Plantilla: ${budget.budgetingTemplate.name}`}
+                Plantilla: {budget.budgetingTemplate.name}
               </Grid>
               <Grid item xs={12}>
-                {`Version No. ${budget.budgetingTemplate.version}`}
+                Version No. {budget.budgetingTemplate.version}
               </Grid>
               <Grid item xs={12} style={{padding:'0', margin:'0'}}>
                 <Typography variant="subtitle1" style={{ fontWeight: 'bold' }}>
@@ -115,13 +114,13 @@ console.log("redirect", redirect)
                 </Typography>
               </Grid>
               <Grid item xs={12}>
-                {`No. ${procedure.id}`}
+                No. {procedure.id}
               </Grid>
               <Grid item xs={12}>
-                {`Plantilla: ${budget.proceduresTemplate.name}`}
+                Plantilla: {budget.proceduresTemplate.name}
               </Grid>
               <Grid item xs={12}>
-                {`Version No. ${budget.proceduresTemplate.version}`}
+                Version No. {budget.proceduresTemplate.version}
               </Grid>
             </Grid>
             <Grid item xs={7}>

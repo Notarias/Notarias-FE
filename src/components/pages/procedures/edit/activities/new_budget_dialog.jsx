@@ -98,13 +98,13 @@ const NewBudgetDialog = (props) => {
                 </Typography>
               </Grid>
               <Grid item xs={12}>
-                {`No. ${budgetId}`}
+                No. {budgetId}
               </Grid>
               <Grid item xs={12}>
-                {`Plantilla: ${procedure.budgetingTemplate.name}`}
+                Plantilla: {procedure.budgetingTemplate.name}
               </Grid>
               <Grid item xs={12}>
-                {`Version No. ${procedure.budgetingTemplate.version}`}
+                Version No. {procedure.budgetingTemplate.version}
               </Grid>
               <Grid item xs={12} style={{padding:'0', margin:'0'}}>
                 <Typography variant="subtitle1" style={{ fontWeight: 'bold' }}>
@@ -112,13 +112,13 @@ const NewBudgetDialog = (props) => {
                 </Typography>
               </Grid>
               <Grid item xs={12}>
-                {`No. ${procedure.id}`}
+                No. {procedure.id}
               </Grid>
               <Grid item xs={12}>
-                {`Plantilla: ${procedure.proceduresTemplate.name}`}
+                Plantilla: {procedure.proceduresTemplate.name}
               </Grid>
               <Grid item xs={12}>
-                {`Version No. ${procedure.proceduresTemplate.version}`}
+                Version No. {procedure.proceduresTemplate.version}
               </Grid>
             </Grid>
             <Grid item xs={7}>

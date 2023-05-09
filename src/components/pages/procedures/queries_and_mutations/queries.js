@@ -326,8 +326,12 @@ query procedure(
       }
       budgets{
         id
+        serialNumber
         proceedingNumber
         writingNumber
+        budgetingTemplate {
+          name
+        }
       }
       proceduresTemplate{
         active
