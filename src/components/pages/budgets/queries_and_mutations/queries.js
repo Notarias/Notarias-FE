@@ -166,6 +166,8 @@ export const GET_BUDGETS = gql`
       procedures{
         id
         serialNumber
+        writingNumber
+        proceedingNumber
       }
       client{
         firstName
@@ -177,7 +179,6 @@ export const GET_BUDGETS = gql`
       }
       id
       serialNumber
-      writingNumber
       total
       totalCredit
       totalDebt
@@ -328,8 +329,6 @@ query budget(
       totalDebt
       totalPayable
       serialNumber
-      proceedingNumber
-      writingNumber
       completedAt
       reporter{
         firstName
@@ -367,6 +366,8 @@ query budget(
       procedures {
         id
         serialNumber
+        writingNumber
+        proceedingNumber
         proceduresTemplate{
           name
           id
@@ -408,9 +409,11 @@ query budget(
         avatarThumbUrl
         id
       }
-      procedure {
+      procedures {
         id
         serialNumber
+        writingNumber
+        proceedingNumber
       }
       budgetingTemplate {
         active
@@ -953,8 +956,6 @@ export const UPDATE_BUDGET = gql`
     $proceduresTemplateId: ID,
     $budgetingTemplateId: ID,
     $asigneeId: ID,
-    $proceedingNumber: String,
-    $writingNumber: String,
     $completedAt: ISO8601DateTime
   ){
     updateBudget(input :{
@@ -963,8 +964,6 @@ export const UPDATE_BUDGET = gql`
       budgetingTemplateId: $budgetingTemplateId
       proceduresTemplateId: $proceduresTemplateId
       asigneeId: $asigneeId
-      proceedingNumber: $proceedingNumber
-      writingNumber: $writingNumber
       completedAt: $completedAt
       }
     ){
@@ -976,8 +975,6 @@ export const UPDATE_BUDGET = gql`
         totalPaid
         totalCredit
         totalPayable
-        proceedingNumber
-        writingNumber
         asignee{
           firstName
           lastName
@@ -1013,6 +1010,12 @@ export const UPDATE_BUDGET = gql`
           id
           budgetId
           value
+        }
+        procedures{
+          id
+          serialNumber
+          writingNumber
+          proceedingNumber
         }
       }
     }
@@ -1145,6 +1148,44 @@ export const GET_BUDGETING_TEMPLATES_QUICK_LIST = gql`
       name
       version
       active
+    }
+  }
+`
+
+export const UPDATE_PROCEDURE = gql`
+  mutation updateProcedure(
+    $id: ID!,
+    $clientId: ID,
+    $asigneeId: ID,
+    $proceedingNumber: String,
+    $writingNumber: String,
+    $completedAt: ISO8601DateTime,
+  ){
+    updateProcedure (
+      input:{
+        id: $id
+        clientId: $clientId
+        asigneeId: $asigneeId
+        proceedingNumber: $proceedingNumber
+        writingNumber: $writingNumber
+        completedAt: $completedAt
+      }
+    ){
+      procedure {
+        id
+        serialNumber
+        proceedingNumber
+        writingNumber
+        client{ fullName }
+        attorney{ fullName }
+        budgetingTemplate { name }
+        proceduresTemplate { name }
+        asignee { avatarThumbUrl }
+        reporter { avatarThumbUrl }
+        createdAt
+        updatedAt
+        completedAt
+      }
     }
   }
 `

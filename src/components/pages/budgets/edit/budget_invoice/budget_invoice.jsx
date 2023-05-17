@@ -146,7 +146,7 @@ const BudgetInvoice = (props) => {
                   { budget ? <Typography align='left'>{ createdAt && `${createdAt.getDay() }/${months[createdAt.getMonth()]}/${createdAt.getFullYear()}` }</Typography> : <Skeleton variant="text" width='50%'/> }
                 </Grid>
                 <Grid container item xs justifyContent='flex-end' style={{ marginLeft: '10px' }}>
-                  { budget ? <Typography align='left'>{ budget.proceedingNumber }</Typography> : <Skeleton variant="text" width='50%'/> }
+                  { budget ? <Typography align='left'>{ budget.procedures[0].proceedingNumber }</Typography> : <Skeleton variant="text" width='50%'/> }
                 </Grid>
                 <Grid container item xs justifyContent='flex-end' style={{ marginLeft: '10px' }}>
                   { budget ? <Typography align='left'>{ budget.deedNumber }</Typography> : <Skeleton variant="text" width='50%'/> }

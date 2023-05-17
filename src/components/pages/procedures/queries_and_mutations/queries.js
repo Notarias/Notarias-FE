@@ -117,6 +117,8 @@ export const GET_PROCEDURES = gql`
     {
       id
       serialNumber
+      writingNumber
+      proceedingNumber
       client{ fullName }
       budgetingTemplate { name }
       proceduresTemplate { name }
@@ -126,10 +128,6 @@ export const GET_PROCEDURES = gql`
         avatarThumbUrl
       }
       reporter { avatarThumbUrl }
-      budgets{ 
-        writingNumber
-        proceedingNumber
-      }
       createdAt
       updatedAt
       completedAt
@@ -297,6 +295,8 @@ query procedure(
     ){
       id
       serialNumber
+      proceedingNumber
+      writingNumber
       completedAt
       client{
         firstName
@@ -327,8 +327,7 @@ query procedure(
       budgets{
         id
         serialNumber
-        proceedingNumber
-        writingNumber
+        createdAt
         budgetingTemplate {
           name
         }
@@ -354,6 +353,8 @@ export const UPDATE_PROCEDURE = gql`
     $id: ID!,
     $clientId: ID,
     $asigneeId: ID,
+    $proceedingNumber: String,
+    $writingNumber: String,
     $completedAt: ISO8601DateTime,
   ){
     updateProcedure (
@@ -361,12 +362,16 @@ export const UPDATE_PROCEDURE = gql`
         id: $id
         clientId: $clientId
         asigneeId: $asigneeId
+        proceedingNumber: $proceedingNumber
+        writingNumber: $writingNumber
         completedAt: $completedAt
       }
     ){
       procedure {
         id
         serialNumber
+        proceedingNumber
+        writingNumber
         client{ fullName }
         attorney{ fullName }
         budgetingTemplate { name }
@@ -387,9 +392,7 @@ export const UPDATE_BUDGET = gql`
     $clientId: ID,
     $proceduresTemplateId: ID,
     $budgetingTemplateId: ID,
-    $asigneeId: ID,
-    $proceedingNumber: String,
-    $writingNumber: String
+    $asigneeId: ID
   ){
     updateBudget(input :{
       id: $id
@@ -397,8 +400,6 @@ export const UPDATE_BUDGET = gql`
       budgetingTemplateId: $budgetingTemplateId
       proceduresTemplateId: $proceduresTemplateId
       asigneeId: $asigneeId
-      proceedingNumber: $proceedingNumber
-      writingNumber: $writingNumber
       }
     ){
       budget{
@@ -409,8 +410,6 @@ export const UPDATE_BUDGET = gql`
         totalPaid
         totalCredit
         totalPayable
-        proceedingNumber
-        writingNumber
         asignee{
           firstName
           lastName
@@ -446,6 +445,10 @@ export const UPDATE_BUDGET = gql`
           id
           budgetId
           value
+        }
+        procedure{
+          proceedingNumber
+          writingNumber
         }
       }
     }

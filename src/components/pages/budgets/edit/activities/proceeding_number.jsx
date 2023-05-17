@@ -10,14 +10,14 @@ import DialogContent       from '@material-ui/core/DialogContent';
 import DialogContentText   from '@material-ui/core/DialogContentText';
 import DialogTitle         from '@material-ui/core/DialogTitle';
 import { useMutation }     from '@apollo/client';
-import { UPDATE_BUDGET, GET_BUDGET } from '../../queries_and_mutations/queries';
+import { UPDATE_PROCEDURE, GET_BUDGET } from '../../queries_and_mutations/queries';
 
 export default (props) => {
   const { budget } = props
 
   const [open, setOpen]         = useState(false)
   const [pristine, setPristine] = useState(true)
-  const [proceedingNumber, setProceedingNumber] = useState(budget.proceedingNumber)
+  const [proceedingNumber, setProceedingNumber] = useState(budget.procedures[0].proceedingNumber)
 
   const handleClose = () => {
     setOpen(false)
@@ -32,9 +32,9 @@ export default (props) => {
     setPristine(false)
   }
 
-  const [updateBudget, { loading }] =
+  const [updateProcedure, { loading }] =
     useMutation(
-      UPDATE_BUDGET,
+      UPDATE_PROCEDURE,
       {
         onError(error) {
           let errorsHash = {}
@@ -58,16 +58,16 @@ export default (props) => {
     )
 
   const handleSave = () => {
-    updateBudget({
+    updateProcedure({
       variables: {
-        id: budget.id,
+        id: budget.procedures[0].id,
         proceedingNumber: proceedingNumber
       }
     })
   }
 
   useEffect(() => {
-    setProceedingNumber(budget.proceedingNumber)
+    setProceedingNumber(budget.procedures[0].proceedingNumber)
   }, [budget.proceedingNumber])
 
   return(
@@ -82,7 +82,7 @@ export default (props) => {
           <Grid container alignItems="center" justifyContent='flex-start' >
             <Typography noWrap align='left' style={{ paddingRight: "10px", fontWeight: 600 }}>
               {
-                (budget && budget.proceedingNumber) || 'Agregar No. de Expediente'
+                (budget && budget.procedures[0].proceedingNumber) || 'Agregar No. de Expediente'
               }
             </Typography>
           </Grid>

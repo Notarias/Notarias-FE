@@ -6,6 +6,7 @@ import Divider                     from '@material-ui/core/Divider';
 import IconButton                  from '@material-ui/core/IconButton';
 import Button                      from '@material-ui/core/Button';
 import Badge                       from '@material-ui/core/Badge';
+import Avatar from '@material-ui/core/Avatar';
 import Dialog                      from '@material-ui/core/Dialog';
 import DialogTitle                 from '@material-ui/core/DialogTitle';
 import DialogContent               from '@material-ui/core/DialogContent';
@@ -19,6 +20,7 @@ import Paper                       from '@material-ui/core/Paper';
 import OpenInNewIcon               from '@material-ui/icons/OpenInNew';
 import Print                       from '@material-ui/icons/Print';
 import ListAltIcon                 from '@material-ui/icons/ListAlt';
+import { green, grey }             from '@material-ui/core/colors';
 import { Link }                    from 'react-router-dom';
 import Asignee                     from '../asignee';
 import Reporter                    from '../reporter';
@@ -34,7 +36,7 @@ import NewBudgetButton             from './new_budget_button';
   const { procedure, loadingProcedure } = props
 
   const [array] = useState([1,2,3,4,5,6,7]);
-  const budget = procedure.budgets[procedure.budgets.length - 1];
+  const budgets = [...procedure.budgets].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
   const [budgetsDialog, setBudgetsDialog] = useState(false);
 
   const openBudgetsDialog = () => {
@@ -91,7 +93,7 @@ import NewBudgetButton             from './new_budget_button';
               <CompleteProcedure procedure={procedure}/>
             </Grid>
             <Grid item>
-              <NewBudgetButton procedure={procedure} budgetId={budget.id}/>
+              <NewBudgetButton procedure={procedure} budgetId={budgets[0].id}/>
             </Grid>
             <Grid item>
               <ProcedureActions procedure={procedure}/>
@@ -150,7 +152,7 @@ import NewBudgetButton             from './new_budget_button';
               {procedure.budgets ?
                 (
                   <Button style={{ padding: '10px' }} target='_blank'
-                  href={procedure.budgets.length < 2 ? `/budgets/${budget.id}/edit` : false}
+                  href={procedure.budgets.length < 2 ? `/budgets/${budgets[0].id}/edit` : ''}
                   onClick={procedure.budgets.length < 2 ? null : openBudgetsDialog}>
                     <Grid item container alignItems="center" justifyContent='flex-start'>
                       <Grid item>
@@ -197,11 +199,9 @@ import NewBudgetButton             from './new_budget_button';
           </Grid>
           <ProceedingNumber
             procedure={procedure}
-            budget={budget}
           />
           <WritingNumber
             procedure={procedure}
-            budget={budget}
           />
         </>
       }
@@ -215,20 +215,22 @@ import NewBudgetButton             from './new_budget_button';
             <Table aria-label="simple table">
               <TableHead>
                 <TableRow>
-                  <TableCell align="right">Serie No.</TableCell>
-                  <TableCell align="right">No. Esc.</TableCell>
-                  <TableCell align="right">No. Exp.</TableCell>
+                  <TableCell align="right">No.</TableCell>
                   <TableCell>Plantilla</TableCell>
+                  <TableCell align="right">Creacion</TableCell>
                   <TableCell></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {procedure.budgets.map((budget) => (
+                {budgets.map((budget, index) => (
                   <TableRow key={`budget-${budget.id}`} hover>
-                    <TableCell align="right">{budget.id}</TableCell>
-                    <TableCell align="right">{budget.writingNumber}</TableCell>
-                    <TableCell align="right">{budget.proceedingNumber}</TableCell>
+                    <TableCell align="right">
+                      <Avatar style={index > 0 ? {backgroundColor: grey[500]} : {backgroundColor: green[500]}}>
+                        {budget.serialNumber}
+                      </Avatar>
+                    </TableCell>
                     <TableCell>{budget.budgetingTemplate.name}</TableCell>
+                    <TableCell align="right">{budget.createdAt}</TableCell>
                     <TableCell>
                       <IconButton target='_blank' href={`/budgets/${budget.id}/edit`}>
                         <OpenInNewIcon/>
