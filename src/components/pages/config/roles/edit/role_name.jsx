@@ -1,4 +1,4 @@
-import React, { useState }              from 'react';
+import React, { useState, useEffect }   from 'react';
 import Grid                             from '@material-ui/core/Grid';
 import TextField                        from '@material-ui/core/TextField';
 import InputBase                        from '@material-ui/core/InputBase';
@@ -30,7 +30,6 @@ const RoleName = (params) => {
         setErrors(errorsHash);
       },
       onCompleted(cacheData) {
-        setFieldStatus(true);
         setInitialValue(cacheData.updateRole.role.name)
       },
       refetchQueries: [
@@ -49,6 +48,7 @@ const RoleName = (params) => {
         name: fieldValue
       }
     })
+    setFieldStatus(true);
   }
 
   const enableEditField = () => {
@@ -63,7 +63,7 @@ const RoleName = (params) => {
   const fieldValueChange = ({ target }) => {
     setFieldValue(target.value);
   }
-
+console.log(fieldStatus)
   return(
     <>
       <Grid container item xs={6} justifyContent='flex-start'>
