@@ -96,7 +96,7 @@ const ProcedureTemplateLinkButton = (props) => {
   }
 
   const { data } = useQuery(
-    GET_PROCEDURES_TEMPLATES_QUICK_LIST ,
+    GET_PROCEDURES_TEMPLATES_QUICK_LIST , { fetchPolicy: 'no-cache' }
   );
 
   const handleClickOpenDialog = () => {

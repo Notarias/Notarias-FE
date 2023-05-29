@@ -99,7 +99,7 @@ const ButgetingTemplateLinkButton = (props) => {
   }
 
   const { data } = useQuery(
-    GET_BUDGETING_TEMPLATES_QUICK_LIST,
+    GET_BUDGETING_TEMPLATES_QUICK_LIST, { fetchPolicy: 'no-cache' }
   );
 
   const handleClickOpenDialog = () => {
