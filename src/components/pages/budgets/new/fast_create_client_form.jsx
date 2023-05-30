@@ -69,7 +69,7 @@ const FastCreateClientForm = (props) => {
     rfc: newClient.rfc,
     curp: newClient.curp,
     moral: newClient.moral,
-    attorney: true,
+    attorney: newClient.attorney,
   }
 
   const createNewClient = (event) => {
