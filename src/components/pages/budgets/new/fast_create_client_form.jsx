@@ -80,8 +80,8 @@ const FastCreateClientForm = (props) => {
     <Grid container item xs={10} alignItems="center">
       <Card style={{ minWidth: "100%" }}>
         <CardContent>
-          <Grid container item xs={12} direction="column" spacing={errorFormSpacing} alignItems="center" justifyContent="center">
-            <Grid item xs={12} style={{ minWidth: "80%" }}>
+          <Grid container item xs={12} spacing={errorFormSpacing} alignItems="center" justifyContent="center">
+            <Grid item xs={10}>
               <TextField 
                 id="first-name-basic" 
                 label="Nombres"
@@ -96,7 +96,7 @@ const FastCreateClientForm = (props) => {
                 fullWidth
               />
             </Grid>
-            <Grid item xs={12} style={{ minWidth: "80%" }}>
+            <Grid item xs={10}>
               <TextField 
                 id="last-name-basic" 
                 label="Apellidos" 
@@ -111,7 +111,7 @@ const FastCreateClientForm = (props) => {
                 fullWidth
               />
             </Grid>
-            <Grid item xs={12} style={{ minWidth: "80%" }}>
+            <Grid item xs={10}>
               <TextField 
                 id="rfc-basic" 
                 label="RFC" 
@@ -125,7 +125,7 @@ const FastCreateClientForm = (props) => {
                 fullWidth
               />
             </Grid>
-            <Grid item xs={12} style={{ minWidth: "80%" }}>
+            <Grid item xs={10}>
               <TextField 
                 id="curp-basic" 
                 label="CURP" 
