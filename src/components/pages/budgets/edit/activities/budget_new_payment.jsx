@@ -257,7 +257,7 @@ const BudgetNewPayment = (props) => {
             </Grid>
             <Grid container item xs={5} justifyContent="flex-end" alignItems="center" style={{paddingLeft: '20px'}}>
               <Dropzone
-                accept='file_extension/.jpg, .jpeg, .png, .pdf'
+                accept='file_extension:, .jpg, .jpeg, .png, .pdf'
                 onDrop={onDrop}
                 onDropRejected={rejectedFile}
                 multiple={false}

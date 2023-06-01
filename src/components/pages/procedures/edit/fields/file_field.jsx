@@ -36,7 +36,7 @@ const FileField = (props) => {
     <>
       <Grid item xs={1}>
         <Dropzone
-          accept='file_extension/.jpg, .jpeg, .png, .pdf'
+          accept='file_extension:, .jpg, .jpeg, .png, .pdf'
           onDrop={updateFieldValueFile}
           onDropRejected={rejectedFile}
           multiple={false}
