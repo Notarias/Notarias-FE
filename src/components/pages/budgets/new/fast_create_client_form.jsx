@@ -77,11 +77,11 @@ const FastCreateClientForm = (props) => {
   }
 
   return (
-    <Grid container item xs={6} alignItems="center">
+    <Grid container item xs={10} alignItems="center">
       <Card style={{ minWidth: "100%" }}>
         <CardContent>
-          <Grid container direction="column" spacing={errorFormSpacing} alignItems="center" justifyContent="center">
-            <Grid item xs={12}>
+          <Grid container item xs={12} spacing={errorFormSpacing} alignItems="center" justifyContent="center">
+            <Grid item xs={10}>
               <TextField 
                 id="first-name-basic" 
                 label="Nombres"
@@ -93,9 +93,10 @@ const FastCreateClientForm = (props) => {
                 name="firstName"
                 margin="dense"
                 required
+                fullWidth
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={10}>
               <TextField 
                 id="last-name-basic" 
                 label="Apellidos" 
@@ -107,34 +108,37 @@ const FastCreateClientForm = (props) => {
                 name="lastName"
                 margin="dense"
                 required
-
+                fullWidth
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={10}>
               <TextField 
                 id="rfc-basic" 
                 label="RFC" 
                 onChange={setFormValue}
                 variant="outlined"
-                value={newClient.rfc}
+                value={newClient.rfc.toUpperCase()}
                 error={!!errors.rfc}
                 helperText={errors.rfc}
                 name="rfc"
                 margin="dense"
+                fullWidth
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={10}>
               <TextField 
                 id="curp-basic" 
                 label="CURP" 
                 onChange={setFormValue}
                 variant="outlined"
-                value={newClient.curp}
+                value={newClient.curp.toUpperCase()}
                 disabled={newClient.moral}
                 error={!!errors.curp}
                 helperText={errors.curp}
                 name="curp"
                 margin="dense"
+                fullWidth
+                
               />
             </Grid>
             <Grid item xs={12}>
