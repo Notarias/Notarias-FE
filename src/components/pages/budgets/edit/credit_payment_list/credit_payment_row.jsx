@@ -189,7 +189,7 @@ const CreditPaymentRow = (props) => {
       </Grid>
       <Grid container item xs={1} alignItems="center" justifyContent="center">
         <Dropzone
-          accept='file_extension/.jpg, .jpeg, .png, .pdf'
+          accept='file_extension:, .jpg, .jpeg, .png, .pdf'
           onDrop={onDrop}
           onDropRejected={rejectedFile}
           multiple={false}

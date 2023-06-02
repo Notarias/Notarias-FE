@@ -108,7 +108,7 @@ const FileAttribute = (props) => {
     <Grid container direction='row' alignItems='center'>
       <Grid item xs={1}>
         <Dropzone
-          accept='file_extension/.jpg, .jpeg, .png, .pdf, .docx, .xlsx'
+          accept='file_extension:, .jpg, .jpeg, .png, .pdf, .docx, .xlsx'
           onDrop={attrValue && attrValue.fileName ? updateClientAttributeFile : newClientAttributeValue}
           onDropRejected={rejectedFile}
           multiple={false}
