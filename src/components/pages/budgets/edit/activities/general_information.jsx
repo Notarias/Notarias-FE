@@ -19,7 +19,6 @@ import { BASE_URI }                from '../../../../../apollo';
 import ProceedingNumber            from './proceeding_number';
 import WritingNumber               from './writing_number';
 import CompleteBudgetButton        from './complete_budget_button';
-import NewBudgetButton             from './new_budget_button';
 
 export default (props) => {
 
@@ -93,9 +92,6 @@ export default (props) => {
               </Grid>
               <Grid item>
                 <CompleteBudgetButton budget={budget}/>
-              </Grid>
-              <Grid item>
-                <NewBudgetButton budget={budget}/>
               </Grid>
               <Grid item>
                 <BudgetActionsMenu budget={budget}/>

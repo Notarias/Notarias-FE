@@ -15,7 +15,7 @@ const NewBudgetButton = (props) => {
 
   return(
     <>
-      <Tooltip title="Nuevo Tramite">
+      <Tooltip title="Nuevo Presupuesto">
         <IconButton color="default" onClick={openDialog}>
           <PostAddIcon/>
         </IconButton>
