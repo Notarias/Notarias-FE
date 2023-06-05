@@ -118,21 +118,25 @@ const AttorneySearch = (props) => {
   const RenderClientsTable = (props) => {
 
     const { attorneyInfo, setAttorneyInfo } = props
-
+console.log(attorneyInfo)
     return(
       <TableBody>
         {
           data && data.attorneys.map((attorney, index ) => {
-            const handleMenuItemClick = (event) => {
+            const selectAttorneyItem = (event) => {
               setSelectedIndex(attorney.id);
               setAttorneyInfo(attorney);
+            };
+            const unselectAttorneyItem = (event) => {
+              setSelectedIndex(null);
+              setAttorneyInfo(null);
             };
             return(
             <TableRow
               index={attorney.id}
               key={`RenderClientsTable-${attorney.id}`}
               selected={attorneyInfo ? attorney.id === attorneyInfo.id : attorney.id === selectedIndex} 
-              onClick={handleMenuItemClick}
+              onClick={attorneyInfo ? unselectAttorneyItem : selectAttorneyItem}
               hover
               style={{cursor:'pointer'}}
             >
