@@ -76,8 +76,8 @@ const AttributeField = (props) => {
             fullWidth
             value={attributeValue}
             onChange={editAttrField}
-            inputProps={{defaultClientValue: attributeValue}}
-            InputProps={{ 
+            InputProps={{
+              defaultClientValue: attributeValue, 
               inputComponent: NumberFormatCustom,
               endAdornment: 
                 <InputAdornment position="end">

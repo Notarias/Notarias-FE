@@ -20,8 +20,6 @@ import { styles }               from './navigation_menu_styles';
 import MenuLink                 from './menu_link'
 import ProfileLink              from './profile_link'
 import SessionsDestroy          from './../pages/sessions/destroy';
-
-import ReportsIcon              from './../../icons/reportes.svg';
 import ClientsIcon              from './../../icons/CLIENTES.svg';
 import BudgetsIcon              from './../../icons/presupuestos.svg';
 import FormsIcon                from './../../icons/tramites.svg';
@@ -29,6 +27,7 @@ import AppointmentsIcon         from './../../icons/calendario.svg';
 import UsersIcon                from './../../icons/usuarios.svg';
 import BudgetsBuilderIcon       from './../../icons/plantillas_presupuestos.svg';
 import FormsBuilderIcon         from './../../icons/plantillas_tramites.svg';
+//import ReportsIcon              from './../../icons/reportes.svg';
 
 
 class NavigationMenu extends Component {
