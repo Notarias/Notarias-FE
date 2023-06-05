@@ -118,7 +118,7 @@ const AttorneySearch = (props) => {
   const RenderClientsTable = (props) => {
 
     const { attorneyInfo, setAttorneyInfo } = props
-console.log(attorneyInfo)
+
     return(
       <TableBody>
         {
