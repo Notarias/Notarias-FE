@@ -42,7 +42,7 @@ const DropdownField = (props) => {
       <Grid container item xs={10} justifyContent="flex-start">
         <Grid container item xs={12}>
           <Grid item xs>
-            <FormControl variant='outlined' fullWidth>
+            <FormControl fullWidth>
               <InputLabel htmlFor={field.id}>{field.name}</InputLabel>
               <Select
                 id={field.id}
@@ -51,7 +51,6 @@ const DropdownField = (props) => {
                 value={fieldValue}
                 onChange={fieldValueChange}
                 disabled={fieldStatus}
-                type='select'
                 size="small"
                 fullWidth
               >
@@ -63,9 +62,10 @@ const DropdownField = (props) => {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={1}>
+          <Grid continer item xs={1}>
             <IconButton
               onClick={fieldStatus ? enableEditField : cancelEditField}
+              edge="end"
             >
               {fieldStatus ? <EditIcon fontSize="small"/> : <ClearIcon fontSize="small"/>}
             </IconButton>
