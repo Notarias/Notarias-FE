@@ -10,15 +10,14 @@ import TemplateRow                         from './template_row';
 
 export default (props) => {
 
-  const { page, per, sortDirection, sortField, searchField, searchValue, assingTotalRecords, classes, id, setGetTemplatesVariables } = props
+  const { page, per, sortDirection, sortField, searchField, searchValue, assingTotalRecords, classes, setGetTemplatesVariables } = props
   let variables = {
     page: page + 1,
     per: per,
     searchField: searchField,
     searchValue: searchValue,
     sortDirection: sortDirection,
-    sortField: sortField,
-    id: id
+    sortField: sortField
   }
 
   const [cloned, setCloned] = useState(false);

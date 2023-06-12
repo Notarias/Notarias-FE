@@ -1,32 +1,33 @@
-import React, { useState }            from 'react';
-import Grid                           from '@material-ui/core/Grid';
-import TableRow                       from '@material-ui/core/TableRow';
-import TableCell                      from '@material-ui/core/TableCell';
-import GenericDropdownMenu            from '../../../../ui/generic_dropdown_menu';
-import Chip                           from '@material-ui/core/Chip';
-import Button                         from '@material-ui/core/Button';
-import CreateIcon                     from '@material-ui/icons/Create';
-import FileCopyIcon                   from '@material-ui/icons/FileCopy';
-import MenuItem                       from '@material-ui/core/MenuItem';
-import RadioButtonUncheckedIcon       from '@material-ui/icons/RadioButtonUnchecked';
-import RadioButtonCheckedIcon         from '@material-ui/icons/RadioButtonChecked';
-import ListItemIcon                   from '@material-ui/core/ListItemIcon';
-import ListItemText                   from '@material-ui/core/ListItemText';
-import Dialog                         from '@material-ui/core/Dialog';
-import DialogActions                  from '@material-ui/core/DialogActions';
-import DialogContent                  from '@material-ui/core/DialogContent';
-import DialogContentText              from '@material-ui/core/DialogContentText';
-import DialogTitle                    from '@material-ui/core/DialogTitle';
-import useMediaQuery                  from '@material-ui/core/useMediaQuery';
-import { useTheme }                   from '@material-ui/core/styles';
-import { Link }                       from 'react-router-dom';
-import { useMutation }                from '@apollo/client';
-import { UPDATE_BUDGETING_TEMPLATE }  from '../queries_and_mutations/queries';
-import { CLONE_BUDGETING_TEMPLATE }   from '../queries_and_mutations/queries';
-import { useQuery }                   from '@apollo/client';
-import { GET_BUDGETING_TEMPLATE }     from '../queries_and_mutations/queries';
-import { GLOBAL_MESSAGE }             from '../../../../../resolvers/queries';
-import client                         from '../../../../../apollo';
+import React, { useState, useEffect }   from 'react';
+import Grid                             from '@material-ui/core/Grid';
+import TableRow                         from '@material-ui/core/TableRow';
+import TableCell                        from '@material-ui/core/TableCell';
+import GenericDropdownMenu              from '../../../../ui/generic_dropdown_menu';
+import Chip                             from '@material-ui/core/Chip';
+import Button                           from '@material-ui/core/Button';
+import CreateIcon                       from '@material-ui/icons/Create';
+import FileCopyIcon                     from '@material-ui/icons/FileCopy';
+import MenuItem                         from '@material-ui/core/MenuItem';
+import RadioButtonUncheckedIcon         from '@material-ui/icons/RadioButtonUnchecked';
+import RadioButtonCheckedIcon           from '@material-ui/icons/RadioButtonChecked';
+import ListItemIcon                     from '@material-ui/core/ListItemIcon';
+import ListItemText                     from '@material-ui/core/ListItemText';
+import Dialog                           from '@material-ui/core/Dialog';
+import DialogActions                    from '@material-ui/core/DialogActions';
+import DialogContent                    from '@material-ui/core/DialogContent';
+import DialogContentText                from '@material-ui/core/DialogContentText';
+import DialogTitle                      from '@material-ui/core/DialogTitle';
+import useMediaQuery                    from '@material-ui/core/useMediaQuery';
+import { useTheme }                     from '@material-ui/core/styles';
+import { Link }                         from 'react-router-dom';
+import { useMutation }                  from '@apollo/client';
+import { UPDATE_BUDGETING_TEMPLATE }    from '../queries_and_mutations/queries';
+import { CLONE_BUDGETING_TEMPLATE }     from '../queries_and_mutations/queries';
+import { useQuery }                     from '@apollo/client';
+import { GET_BUDGETING_TEMPLATES }      from '../queries_and_mutations/queries';
+import { GET_BUDGETING_TEMPLATE }       from '../queries_and_mutations/queries';
+import { GLOBAL_MESSAGE }               from '../../../../../resolvers/queries';
+import client                           from '../../../../../apollo';
 
 const TemplateRow = (props) => {
 
@@ -54,7 +55,33 @@ const TemplateRow = (props) => {
     {
       update(store, cacheData) {
         setActive(cacheData.data.updateBudgetingTemplate.budgetingTemplate.active)
-      }
+      },
+      onCompleted(cacheData) {
+        client.writeQuery({
+          query: GLOBAL_MESSAGE,
+          data: {
+            globalMessage: {
+              message: "La plantilla se actualizo con exito.",
+              type: "success",
+              __typename: "globalMessage"
+            }
+          }
+        })
+      },
+      refetchQueries: [
+        {
+          query: GET_BUDGETING_TEMPLATES,
+          variables: {
+            page: 1,
+            per: 10,
+            searchField: "name",
+            sortDirection: "desc",
+            sortField: "created_at",
+            searchValue: "",
+          }
+        },
+      ],
+      awaitRefetchQueries: true
     }
   )
 
@@ -62,7 +89,7 @@ const TemplateRow = (props) => {
   useMutation(
     CLONE_BUDGETING_TEMPLATE,
     {
-      onComplete(cacheData) {
+      onCompleted(cacheData) {
         client.writeQuery({
           query: GLOBAL_MESSAGE,
           data: {
@@ -73,9 +100,27 @@ const TemplateRow = (props) => {
             }
           }
         })
-      }
+      },
+      refetchQueries: [
+        {
+          query: GET_BUDGETING_TEMPLATES,
+          variables: {
+            page: 1,
+            per: 10,
+            searchField: "name",
+            sortDirection: "desc",
+            sortField: "created_at",
+            searchValue: "",
+          }
+        }
+      ],
+      awaitRefetchQueries: true
     }
   )
+
+  useEffect(() => {
+    setDuplicateDialog(false)
+  }, [props.data])
 
   const changeStatus = (e) => {
     updateBudgetingTemplateMutation({ variables: { id: id, active: !active } })
