@@ -3,7 +3,6 @@ import Grid                                     from '@material-ui/core/Grid';
 import FormControl                              from '@material-ui/core/FormControl';
 import Input                                    from '@material-ui/core/Input';
 import InputLabel                               from '@material-ui/core/InputLabel';
-import InputAdornment                           from '@material-ui/core/InputAdornment';
 import IconButton                               from '@material-ui/core/IconButton';
 import SaveIcon                                 from '@material-ui/icons/Save';
 import EditIcon                                 from '@material-ui/icons/Edit';
@@ -40,32 +39,32 @@ const TextField = (props) => {
   return(
     <>
       <Grid container item xs={10} justifyContent="flex-start">
-        <Grid item xs={12}>
-          <FormControl variant="outlined" fullWidth>
-            <InputLabel htmlFor={templateField.id}>{templateField.name}</InputLabel>
-            <Input
-              id={templateField.id}
-              key={templateField.name}
-              label={templateField.name}
-              value={value}
-              onChange={fieldValueChange}
-              disabled={fieldStatus}
-              type='string'
-              size="small"
-              variant="outlined"
-              fullWidth
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    onClick={fieldStatus ? enableEditField : cancelEditField}
-                    edge="end"
-                  >
-                    {fieldStatus ? <EditIcon fontSize="small"/> : <ClearIcon fontSize="small"/>}
-                  </IconButton>
-                </InputAdornment>
-              }
-            />
-          </FormControl>
+        <Grid container item xs={12}>
+          <Grid item xs>
+            <FormControl variant="outlined" fullWidth>
+              <InputLabel htmlFor={templateField.id}>{templateField.name}</InputLabel>
+              <Input
+                id={templateField.id}
+                key={templateField.name}
+                label={templateField.name}
+                value={value}
+                onChange={fieldValueChange}
+                disabled={fieldStatus}
+                type='string'
+                size="small"
+                variant="outlined"
+                fullWidth
+              />
+            </FormControl>
+          </Grid>
+          <Grid item xs={1}>
+            <IconButton
+              onClick={fieldStatus ? enableEditField : cancelEditField}
+              edge="end"
+            >
+              {fieldStatus ? <EditIcon fontSize="small"/> : <ClearIcon fontSize="small"/>}
+            </IconButton>
+          </Grid>
         </Grid>
       </Grid>
       <Grid item xs={1} width="100%">

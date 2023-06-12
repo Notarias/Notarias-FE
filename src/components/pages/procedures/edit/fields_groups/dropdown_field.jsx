@@ -42,7 +42,7 @@ const DropdownField = (props) => {
       <Grid container item xs={10} justifyContent="flex-start">
         <Grid container item xs={12}>
           <Grid item xs>
-            <FormControl variant="outlined" fullWidth>
+            <FormControl fullWidth>
               <InputLabel htmlFor={templateField.id}>{templateField.name}</InputLabel>
               <Select
                 id={templateField.id}
@@ -53,7 +53,6 @@ const DropdownField = (props) => {
                 disabled={fieldStatus}
                 type='select'
                 size="small"
-                variant="outlined"
                 fullWidth
               >
                 {templateField.defaultValue.map((option, index) =>{
@@ -67,6 +66,7 @@ const DropdownField = (props) => {
           <Grid item xs={1}>
             <IconButton
               onClick={fieldStatus ? enableEditField : cancelEditField}
+              edge="end"
             >
               {fieldStatus ? <EditIcon fontSize="small"/> : <ClearIcon fontSize="small"/>}
             </IconButton>
