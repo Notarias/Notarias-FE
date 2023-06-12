@@ -62,7 +62,7 @@ const DropdownField = (props) => {
               </Select>
             </FormControl>
           </Grid>
-          <Grid continer item xs={1}>
+          <Grid item xs={1}>
             <IconButton
               onClick={fieldStatus ? enableEditField : cancelEditField}
               edge="end"
