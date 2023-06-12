@@ -17,7 +17,7 @@ import Button                                  from '@material-ui/core/Button';
 import { useQuery, useMutation }               from '@apollo/client';
 import { Redirect }                            from 'react-router-dom';
 import { GET_BUDGETING_TEMPLATES_QUICK_LIST }  from '../../queries_and_mutations/queries';
-import { CREATE_BUDGET_FROM_BUDGET }                       from '../../queries_and_mutations/queries';
+import { CREATE_BUDGET_FROM_BUDGET }           from '../../queries_and_mutations/queries';
 import { GLOBAL_MESSAGE }                      from '../../../../../resolvers/queries';
 import client                                  from '../../../../../apollo';
 
