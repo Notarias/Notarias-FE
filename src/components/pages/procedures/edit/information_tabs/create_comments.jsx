@@ -34,7 +34,7 @@ const CreateComments = (props) => {
         refetchQueries: [
           {
             query: GET_COMMENTABLE_COMMENTS,
-            variables: { "commentableType": "Procedure" , commentableId: procedure.id }
+            variables: { "commentableType": "Procedure" , commentableId: procedure.id, per:100 }
           },
           {
             query: GET_PROCEDURES_AUDITLOG,  
