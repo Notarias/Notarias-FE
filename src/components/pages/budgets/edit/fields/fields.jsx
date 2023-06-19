@@ -20,7 +20,10 @@ const Fields = (props) => {
   const { loading, data } = useQuery(
     GET_BUDGETING_TEMPLATE_TAB_FIELDS,
     {
-      variables: { "id": currentTab && currentTab.id }
+      variables: {
+        "id": currentTab && currentTab.id,
+        "active": true
+      }
     }
   );
 

@@ -492,11 +492,13 @@ export const GET_BUDGETING_TAB_TOTALS = gql`
 
 export const GET_BUDGETING_TEMPLATE_TAB_FIELDS = gql`
   query budgetingTemplateTabFields(
-    $id: ID!
+    $id: ID!,
+    $active: Boolean
   )
   {
     budgetingTemplateTabFields(
-      id: $id
+      id: $id,
+      active: $active
     )
     {
       id
