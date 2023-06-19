@@ -79,7 +79,7 @@ export default (props) => {
             }
           ) : (
             <TableRow>
-              <TableCell align="center" colSpan={7} className={ classes.loadingTableCell }>
+              <TableCell align="center" colSpan={12} className={ classes.loadingTableCell }>
                 <Typography variant='h5' align='center'>Sin Resultados</Typography>
               </TableCell>
             </TableRow>
