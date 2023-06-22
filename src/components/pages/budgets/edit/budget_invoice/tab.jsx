@@ -14,7 +14,13 @@ export default (props) => {
   const [fields, setFields] = useState()
 
   const { loading, data } = useQuery(
-    GET_BUDGETING_TEMPLATE_TAB_FIELDS, { variables: { "id": tab.id } }
+    GET_BUDGETING_TEMPLATE_TAB_FIELDS,
+    {
+      variables: {
+        "id": tab.id,
+        "active": true
+      }
+    }
   );
 
   const { data: totalsData } = useQuery(
