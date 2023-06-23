@@ -33,6 +33,7 @@ const FieldsGroupFieldList = (props) => {
                 favourite={ field.favourite || false }
                 id={ field.id || " " }
                 active={ field.active }
+                defaultValue={ field.defaultValue }
               />
             )
           }

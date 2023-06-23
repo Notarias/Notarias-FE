@@ -59,7 +59,7 @@ const Field = (props) => {
   const [favourite, setFavourite] = useState(props.favourite);
   const [printable, setPrintable] = useState(props.printable);
   const [changeOptions, setChangeOptions] = useState(true);
-  const [options, setOptions] = useState([]);
+  const [options, setOptions] = useState(props.defaultValue || []);
   //const [error, setError] = useState(false);
 
   const [updateProceduresTemplateTabFieldMutation] =
