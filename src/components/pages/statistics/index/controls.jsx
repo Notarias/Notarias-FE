@@ -7,7 +7,9 @@ import Checkbox                                 from '@material-ui/core/Checkbox
 import TemplateControls                         from './template_controls';
 import StatusSelect                             from './status_select';
 import SelectUsers                              from './select_users';
+import CalculationTypeControl                   from './calculation_type_control';
 import ClientSearch                             from './client_search';
+import AttorneySearch                           from './attorney_search';
 import DateFnsUtils                             from "@date-io/date-fns";
 import { MuiPickersUtilsProvider, DatePicker }  from "@material-ui/pickers";
 import "date-fns";
@@ -36,7 +38,11 @@ const Controls = (props) => {
     changeTemplateId,
     changeTemplateTabsIds,
     graphStatus,
-    changeGraphStatus
+    changeGraphStatus,
+    calculationType,
+    setCalculationType,
+    attorneyId,
+    setAttorneyId
   } = props
 
   return(
@@ -57,11 +63,18 @@ const Controls = (props) => {
           </MuiPickersUtilsProvider>
         </Grid>
         <Grid item xs style={{ paddingTop: '35px' }}>
-          <SelectUsers userInfo={userInfo} setUserInfo={setUserInfo} clientInfo={clientInfo}/>
+          <CalculationTypeControl calculationType={calculationType} setCalculationType={setCalculationType}/>
         </Grid>
         <Grid item xs style={{ paddingTop: '35px' }}>
           <ClientSearch clientInfo={clientInfo} setClientInfo={setClientInfo} userInfo={userInfo}/>
         </Grid>
+        <Grid item xs style={{ paddingTop: '35px' }}>
+          <AttorneySearch attorneyId={attorneyId} setAttorneyId={setAttorneyId}/>
+        </Grid>
+        <Grid item xs style={{ paddingTop: '35px' }}>
+          <SelectUsers userInfo={userInfo} setUserInfo={setUserInfo} clientInfo={clientInfo}/>
+        </Grid>
+        
         <Grid item xs style={{ paddingTop: '35px' }}>
           <StatusSelect graphStatus={graphStatus} changeGraphStatus={changeGraphStatus}/>
         </Grid>

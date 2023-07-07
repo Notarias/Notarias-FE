@@ -44,7 +44,8 @@ export default (props) => {
     templateTabsIds,
     graphStatus,
     selectUserId,
-    selectClientId
+    selectClientId,
+    calculationType
   } = props;
 
   const { data, loading } = useQuery(
@@ -59,7 +60,8 @@ export default (props) => {
         tabIds: templateTabsIds,
         status: graphStatus,
         userId: selectUserId,
-        clientId: selectClientId
+        clientId: selectClientId,
+        calculationType: calculationType
       },
       fetchPolicy: 'cache-and-network'
     }

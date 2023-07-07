@@ -8,6 +8,8 @@ export const STATISTICS_QUERY = gql`
     $status: String
     $userId: ID
     $clientId: ID
+    $calculationType: String
+    $attorneyId: ID
   ){
     statistics(
       date: $date
@@ -16,6 +18,8 @@ export const STATISTICS_QUERY = gql`
       status: $status
       userId: $userId
       clientId: $clientId
+      calculationType: $calculationType
+      attorneyId: $attorneyId
     ){
       name
       total
@@ -129,7 +133,8 @@ export const LOAD_CLIENTS = gql`
       $sortField: String,
       $sortDirection: String,
       $searchField: String,
-      $searchValue: String
+      $searchValue: String,
+      $attorney: Boolean
     ) {
     clients(
       page: $page,
@@ -137,7 +142,8 @@ export const LOAD_CLIENTS = gql`
       sortField: $sortField,
       sortDirection: $sortDirection,
       searchField: $searchField,
-      searchValue: $searchValue
+      searchValue: $searchValue,
+      attorney: $attorney
     ) {
       id
       firstName

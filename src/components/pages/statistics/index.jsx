@@ -42,6 +42,8 @@ export default (props) => {
   const [graphStatus, setGraphStatus] = useState('all_budgets')
   const [userInfo, setUserInfo] = useState('')
   const [clientInfo, setClientInfo] =useState('')
+  const [calculationType, setCalculationType] = useState('cumulative')
+  const [attorneyId, setAttorneyId] = useState()
 
   const changeDate = (e) => {
     setDate(e)
@@ -111,11 +113,13 @@ export default (props) => {
                     switchPaid={switchPaid}
                     switchDebt={switchDebt}
                     switchPayable={switchPayable}
+                    calculationType={calculationType}
                     changeSwitchIncome={changeSwitchIncome}
                     changeSwitchTotal={changeSwitchTotal}
                     changeSwitchPaid={changeSwitchPaid}
                     changeSwitchDebt={changeSwitchDebt}
                     changeSwitchPayable={changeSwitchPayable}
+                    setCalculationType={setCalculationType}
                     templateId={templateId}
                     templateTabsIds={templateTabsIds}
                     changeTemplateId={changeTemplateId}
@@ -126,7 +130,9 @@ export default (props) => {
                     setClientInfo={setClientInfo}
                     changeTimeFrame={changeTimeFrame}
                     graphStatus={graphStatus}
-                    changeGraphStatus={changeGraphStatus}/>
+                    changeGraphStatus={changeGraphStatus}
+                    attorneyId={attorneyId}
+                    setAttorneyId={setAttorneyId}/>
                 </Grid>
               </Grid>
             </Paper>
@@ -159,6 +165,8 @@ export default (props) => {
                         graphStatus={graphStatus}
                         selectUserId={userInfo.id}
                         selectClientId={clientInfo.id}
+                        calculationType={calculationType}
+                        attorneyId={attorneyId}
                       />
                     :
                       <GeneralGraph
@@ -172,6 +180,8 @@ export default (props) => {
                         graphStatus={graphStatus}
                         selectUserId={userInfo.id}
                         selectClientId={clientInfo.id}
+                        calculationType={calculationType}
+                        attorneyId={attorneyId}
                       />
                   }
                 </Grid>

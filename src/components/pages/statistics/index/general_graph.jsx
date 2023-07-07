@@ -39,9 +39,12 @@ const GeneralGraph = (props) => {
     timeFrame,
     graphStatus,
     selectUserId, 
-    selectClientId
+    selectClientId,
+    calculationType,
+    attorneyId
   } = props;
 
+  console.log(calculationType)
   const { data, loading } = useQuery(
     STATISTICS_QUERY,
     {
@@ -51,7 +54,9 @@ const GeneralGraph = (props) => {
         timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
         status: graphStatus,
         userId: selectUserId,
-        clientId: selectClientId
+        clientId: selectClientId,
+        calculationType: calculationType,
+        attorneyId: attorneyId
       },
       fetchPolicy: 'network-only'
     }
