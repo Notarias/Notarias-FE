@@ -10,6 +10,7 @@ import { GET_PRINT_BUDGET }              from '../../queries_and_mutations/queri
 import Breadcrumbs                       from '../../../../ui/breadcrumbs';
 import Tab                               from './tab';
 import ProcedurePrintableFields          from './procedure_printable_fields';
+import ProcedurePrintableBottomFields    from './procedure_printable_bottom_fields'
 import BudgetPrintableFields             from './budget_printable_fields';
 import logo_notaria                      from '../../../../../images/logo_notaria.JPG';
 import { Button }                        from '@material-ui/core';
@@ -219,6 +220,10 @@ const BudgetInvoice = (props) => {
             <Grid item xs={12} style={{ marginTop: '10px', marginBottom: '20px' }}>
               <Divider />
             </Grid>
+          </Grid>
+
+          <Grid container item xs={8} style={{ padding: '20px' }}>
+            { budget && <ProcedurePrintableBottomFields key={`${budget.id}-procedure_fields`} budget={budget}/> }
           </Grid>
           <Grid container item xs={8} direction="row" className={classes.marginTopGridInvoice}>
             <Grid
