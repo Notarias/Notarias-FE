@@ -453,6 +453,7 @@ export const GET_BUDGET_PROCEDURE_PRINTABLE_FIELDS = gql`
       printable
       style
       active
+      printPosition
     }
   }
 `

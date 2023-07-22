@@ -222,6 +222,7 @@ export const GET_PROCEDURE_TEMPLATE_TAB_FIELDS = gql`
         id
         favourite
         printable
+        printPosition
         name
         style
         active
@@ -268,7 +269,8 @@ export const UPDATE_PROCEDURES_TEMPLATE_TAB_FIELD = gql`
     $style: String,
     $defaultValue: [String!],
     $active: Boolean,
-    $printable: Boolean
+    $printable: Boolean,
+    $printPosition: String
   )
     {
       updateProceduresTemplateField (
@@ -280,6 +282,7 @@ export const UPDATE_PROCEDURES_TEMPLATE_TAB_FIELD = gql`
           defaultValue: $defaultValue,
           active: $active,
           printable: $printable
+          printPosition: $printPosition
         } 
       ) 
     {
@@ -291,6 +294,7 @@ export const UPDATE_PROCEDURES_TEMPLATE_TAB_FIELD = gql`
         defaultValue
         active
         printable
+        printPosition
         proceduresTemplateTabId
         proceduresTemplateFieldsGroupId
       }

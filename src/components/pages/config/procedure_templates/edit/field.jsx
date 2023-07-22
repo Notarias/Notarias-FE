@@ -10,6 +10,7 @@ import AddIcon                                        from '@material-ui/icons/A
 import RemoveIcon                                     from '@material-ui/icons/Remove';
 import DeleteForeverIcon                              from '@material-ui/icons/DeleteForever';
 import FormControl                                    from '@material-ui/core/FormControl';
+import Switch                                         from '@material-ui/core/Switch';
 import Select                                         from '@material-ui/core/Select';
 import MenuItem                                       from '@material-ui/core/MenuItem';
 import InputBase                                      from '@material-ui/core/InputBase';
@@ -58,6 +59,7 @@ const Field = (props) => {
   const [active, setActive] = useState(props.active);
   const [favourite, setFavourite] = useState(props.favourite);
   const [printable, setPrintable] = useState(props.printable);
+  const [printPosition, setPrintPosition] = useState(props.printPosition === "bottom")
   const [changeOptions, setChangeOptions] = useState(true);
   const [options, setOptions] = useState([]);
   //const [error, setError] = useState(false);
@@ -73,6 +75,7 @@ const Field = (props) => {
           setDefaultValue(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.defaultValue || [])
           setFavourite(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.favourite)
           setActive(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.active)
+          setPrintPosition(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.printPosition === "bottom")
           //setError(false)
           setEditing(true)
           setOptions([])
@@ -143,7 +146,14 @@ const Field = (props) => {
   const checkPrintableField = (event) => {
     updateProceduresTemplateTabFieldMutation({ variables: { id: id, printable: !printable }})
     setPrintable(!printable);
-    setPrintableDialog(false);
+  }
+
+  const checkPrintPositionField = (event) => {
+    !printPosition ?
+      updateProceduresTemplateTabFieldMutation({ variables: { id: id, printPosition: "bottom" }})
+    :
+      updateProceduresTemplateTabFieldMutation({ variables: { id: id, printPosition: "top" }})
+    setPrintPosition(!printPosition);
   }
 
   const changeFieldStatus = (event) => {
@@ -499,17 +509,50 @@ const Field = (props) => {
         aria-describedby="print-alert-dialog"
       >
         <DialogTitle id="favorite-alert">
-          { printable === true ? "No imprimir" : "Agregar a formulario de impresión"}
+          Preferencias de Imprimibles
         </DialogTitle>
         <DialogContent>
-          { printable === true ? "Este campo dejará de aparecer en el formato de impresión" : "Se marcará este campo para aparecer en el formulario de impresión"}
+          <Grid>
+            <Grid>
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={printable}
+                    onChange={checkPrintableField}
+                    color="primary"
+                    name={"printable"}
+                  />
+                }
+                label={printable ? 
+                  "El campo aparecera en el formato imprimible del presupuesto"
+                :
+                  "El campo no aparecerea en el formato imprimible del presupuesto"
+                }
+              />
+            </Grid>
+            <Grid>
+              <FormControlLabel
+                disabled={!printable}
+                control={
+                  <Switch
+                    checked={printPosition}
+                    onChange={checkPrintPositionField}
+                    color="primary"
+                    name={"printPosition"}
+                  />
+                }
+                label={printPosition ?
+                  "El campo se imprimira al fondo del presupuesto"
+                :
+                  "El campo se imprimira al tope del presupuesto"
+                }
+              />
+            </Grid>
+          </Grid>
         </DialogContent>
         <DialogActions>
-          <Button onClick={ closePrintableDialog } color="secondary">
-            Cancelar
-          </Button>
-          <Button color={ colorButton() } autoFocus onClick={ checkPrintableField } variant="contained">
-            { printable ? "Quitar" : "Añadir"}
+          <Button onClick={ closePrintableDialog } >
+            Cerrar
           </Button>
         </DialogActions>
       </Dialog>

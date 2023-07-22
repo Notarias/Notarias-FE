@@ -34,6 +34,7 @@ const FieldList = (props) => {
                 currentTab={ currentTab }
                 name={ field.name || "" }
                 printable={ field.printable || false }
+                printPosition={ field.printPosition }
                 style={ field.style || "" }
                 favourite={ field.favourite || false }
                 id={ field.id || " " }
