@@ -29,7 +29,7 @@ export default (props) => {
   const { loading, data, refetch } = useQuery(
     GET_PROCEDURE_FIELD_VALUE,
     {
-      variables: { "proceduresTemplateFieldId": field.id, "procedureId": budget.procedures[0].id },
+      variables: { "proceduresTemplateFieldId": field.id, "procedureId": budget && budget.procedures[0].id },
       fetchPolicy: 'no-cache'
     }
   );
@@ -78,7 +78,7 @@ export default (props) => {
       { variables: { 
         id: fieldValue && fieldValue.id,
         proceduresTemplateFieldId: field.id,
-        procedureId: budget.procedures[0].id,
+        procedureId: budget && budget.procedures[0].id,
         value: value 
       }}
     )
