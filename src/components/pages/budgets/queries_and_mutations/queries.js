@@ -419,6 +419,9 @@ query budget(
         active
         id
         name
+        fields{
+          printable
+        },
       }
       proceduresTemplate {
         id

@@ -222,7 +222,7 @@ const BudgetInvoice = (props) => {
             </Grid>
           </Grid>
 
-          <Grid container item xs={8} style={{ padding: '20px' }}>
+          <Grid container item xs={8}>
             { budget && <ProcedurePrintableBottomFields key={`${budget.id}-procedure_fields`} budget={budget}/> }
           </Grid>
           <Grid container item xs={8} direction="row" className={classes.marginTopGridInvoice}>
