@@ -506,6 +506,7 @@ export const GET_BUDGETING_TEMPLATE_TAB_FIELDS = gql`
       name
       active
       printable
+      calculable
       fieldType
       operator
       taxableSelector
@@ -1053,6 +1054,7 @@ export const GET_BUDGETING_TEMPLATE_FIELDS = gql`
     budgetingTemplateFields (id: $id) {
       active
       printable
+      calculable
       id
       name
       extendable

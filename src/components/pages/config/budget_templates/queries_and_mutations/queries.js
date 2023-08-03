@@ -201,6 +201,7 @@ export const GET_BUDGETING_TEMPLATE_TAB_FIELDS = gql`
       name
       active
       printable
+      calculable
       budgetingTemplateTabId
       defaultValue
       extendable
@@ -274,7 +275,8 @@ export const UPDATE_BUDGETING_TEMPLATE_TAB_FIELD = gql`
     $id: ID!,
     $name: String, 
     $active: Boolean, 
-    $printable: Boolean, 
+    $printable: Boolean,
+    $calculable: Boolean, 
     $categoriesIds: [ID!]
   ){
     updateBudgetingTemplateField (input: {
@@ -282,11 +284,13 @@ export const UPDATE_BUDGETING_TEMPLATE_TAB_FIELD = gql`
       name: $name,
       active: $active,
       printable: $printable,
+      calculable: $calculable,
       categoriesIds: $categoriesIds
     } ) {
       budgetingTemplateField {
         active
         printable
+        calculable
         id
         name
         categories {

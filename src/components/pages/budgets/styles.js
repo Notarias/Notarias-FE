@@ -231,5 +231,10 @@ export const styles = theme => {
     selectPayType: {
       marginTop: "35px"
     },
+    avatarSizeSmall: {
+      width: theme.spacing(3),
+      height: theme.spacing(3),
+      backgroundColor: "#f50057"
+    },
   })
 }

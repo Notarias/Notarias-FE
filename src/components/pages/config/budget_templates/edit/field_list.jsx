@@ -53,6 +53,7 @@ const FieldList = (props) => {
                   id={ field.id || " " }
                   active={ field.active }
                   printable={ field.printable }
+                  calculable={field.calculable }
                   currentTab={ currentTab }
                   field={ field }
                 />
