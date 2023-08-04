@@ -53,7 +53,7 @@ const FieldValue = (props) => {
     setTotalPayable(data && data.budgetFieldValue ? ((data.budgetFieldValue.totalPayable * 1.0) / 100).toFixed(2) : 0.0);
     setWithValue(data && data.budgetFieldValue ? true : false);
   }, [data])
-console.log(field.calculable)
+
   return(
     <Grid 
       container
