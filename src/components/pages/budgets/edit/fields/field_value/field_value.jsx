@@ -1,23 +1,23 @@
-import React, { useState, useEffect }               from 'react';
-import { withStyles }                               from '@material-ui/core/styles';
-import { styles }                                   from '../../../styles';
-import { useQuery }                                 from '@apollo/client';
-import { GET_BUDGET_FIELD_VALUE }                   from '../../../queries_and_mutations/queries'
-import GenericDropdownMenu                          from '../../../../../ui/generic_dropdown_menu';
-import AddFieldValue                                from './add_field_value';
-import TotalValue                                   from './total_value'
-import Payment                                      from './payment'
-import MenuItem                                     from '@material-ui/core/MenuItem';
-import AccountBalanceIcon                           from '@material-ui/icons/AccountBalance';
-import AccountBalanceWalletIcon                     from '@material-ui/icons/AccountBalanceWallet';
-import MoneyOffIcon                                 from '@material-ui/icons/MoneyOff';
-import Typography                                   from '@material-ui/core/Typography';
-import Grid                                         from '@material-ui/core/Grid';
-import Tooltip                                      from '@material-ui/core/Tooltip';
-import Avatar from '@material-ui/core/Avatar';
-import { green, deepOrange }                        from '@material-ui/core/colors';
-import NumberFormat                                 from 'react-number-format';
-import PaymentList                                  from './payment_list';
+import React, { useState, useEffect }   from 'react';
+import { withStyles }                   from '@material-ui/core/styles';
+import { styles }                       from '../../../styles';
+import { useQuery }                     from '@apollo/client';
+import { GET_BUDGET_FIELD_VALUE }       from '../../../queries_and_mutations/queries'
+import GenericDropdownMenu              from '../../../../../ui/generic_dropdown_menu';
+import AddFieldValue                    from './add_field_value';
+import TotalValue                       from './total_value'
+import Payment                          from './payment'
+import MenuItem                         from '@material-ui/core/MenuItem';
+import AccountBalanceIcon               from '@material-ui/icons/AccountBalance';
+import AccountBalanceWalletIcon         from '@material-ui/icons/AccountBalanceWallet';
+import MoneyOffIcon                     from '@material-ui/icons/MoneyOff';
+import Typography                       from '@material-ui/core/Typography';
+import Grid                             from '@material-ui/core/Grid';
+import Tooltip                          from '@material-ui/core/Tooltip';
+import Avatar                           from '@material-ui/core/Avatar';
+import { green }                        from '@material-ui/core/colors';
+import NumberFormat                     from 'react-number-format';
+import PaymentList                      from './payment_list';
 
 const payableTooltipText = (totalPayable) => {
   if(totalPayable === '0.00' || totalPayable === 0) {

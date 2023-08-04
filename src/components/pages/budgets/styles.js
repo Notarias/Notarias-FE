@@ -234,7 +234,10 @@ export const styles = theme => {
     avatarSizeSmall: {
       width: theme.spacing(3),
       height: theme.spacing(3),
-      backgroundColor: "#f50057"
+      backgroundColor: "#ff5722"
     },
+    taxChipNoCalculable: {
+      backgroundColor: "#ff5722"
+    }
   })
 }

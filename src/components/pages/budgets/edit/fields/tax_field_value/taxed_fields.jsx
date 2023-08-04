@@ -1,6 +1,6 @@
 import React                      from 'react';
 import Grid                       from '@material-ui/core/Grid';
-import { grey }                   from '@material-ui/core/colors';
+import { grey, deepOrange }       from '@material-ui/core/colors';
 import Divider                    from '@material-ui/core/Divider';
 import Collapse                   from '@material-ui/core/Collapse';
 import Typography                 from '@material-ui/core/Typography';
@@ -60,7 +60,8 @@ export default (props) => {
                       :
                         <Tooltip title="Campo no calculable">
                           <Chip
-                            color="secondary"
+                            style={{backgroundColor: deepOrange[500]}}
+                            color="primary"
                             icon={<AttachMoneyIcon/>}
                             label={`Impuesto: N/A`}
                           />
