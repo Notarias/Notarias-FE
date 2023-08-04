@@ -1,24 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import { withStyles }                 from '@material-ui/core/styles';
-import { styles }                     from '../../../styles';
-import { useQuery }                   from '@apollo/client';
-import { GET_BUDGET_FIELD_VALUE }     from '../../../queries_and_mutations/queries'
-import GenericDropdownMenu            from '../../../../../ui/generic_dropdown_menu';
-import TotalValue                     from './total_value';
-import TaxedFields                    from './taxed_fields';
-import Payment                        from './payment';
-import PaymentList                    from './payment_list';
-import ActiveSwitch                   from './active_switch';
-import MenuItem                       from '@material-ui/core/MenuItem';
-import AccountBalanceIcon             from '@material-ui/icons/AccountBalance';
-import Typography                     from '@material-ui/core/Typography';
-import Grid                           from '@material-ui/core/Grid';
-import { green }                      from '@material-ui/core/colors';
-import ExpandMoreIcon                 from '@material-ui/icons/ExpandMore';
-import IconButton                     from '@material-ui/core/IconButton';
-import Tooltip                        from '@material-ui/core/Tooltip';
-import { grey }                       from '@material-ui/core/colors';
-import NumberFormat                   from 'react-number-format';
+import React, { useState, useEffect }  from 'react';
+import { withStyles }                  from '@material-ui/core/styles';
+import { styles }                      from '../../../styles';
+import { useQuery }                    from '@apollo/client';
+import { GET_BUDGET_FIELD_VALUE }      from '../../../queries_and_mutations/queries'
+import GenericDropdownMenu             from '../../../../../ui/generic_dropdown_menu';
+import TotalValue                      from './total_value';
+import TaxedFields                     from './taxed_fields';
+import Payment                         from './payment';
+import PaymentList                     from './payment_list';
+import ActiveSwitch                    from './active_switch';
+import MenuItem                        from '@material-ui/core/MenuItem';
+import AccountBalanceIcon              from '@material-ui/icons/AccountBalance';
+import MoneyOffIcon                    from '@material-ui/icons/MoneyOff';
+import Typography                      from '@material-ui/core/Typography';
+import Grid                            from '@material-ui/core/Grid';
+import { green, grey }                 from '@material-ui/core/colors';
+import ExpandMoreIcon                  from '@material-ui/icons/ExpandMore';
+import IconButton                      from '@material-ui/core/IconButton';
+import Tooltip                         from '@material-ui/core/Tooltip';
+import Avatar                          from '@material-ui/core/Avatar';
+import NumberFormat                    from 'react-number-format';
 
 const payableTooltipText = (totalPayable) => {
   if(totalPayable === '0.00' || totalPayable === 0) {
@@ -31,7 +32,7 @@ const payableTooltipText = (totalPayable) => {
 }
 
 const FieldValue = (props) => {
-  const { budget, field } = props
+  const { classes, budget, field } = props
 
   const [value, setValue] = useState(0)
   const [totalPayable, setTotalPayable] = useState(0)
@@ -190,6 +191,17 @@ const FieldValue = (props) => {
           <IconButton  color="primary" onClick={handleExpandTaxedFields}>
             <ExpandMoreIcon/>
           </IconButton>
+        </Grid>
+        <Grid container item xs={3} justifyContent='flex-end' style={{paddingRight: "20px"}}>
+            {!field.calculable?
+              <Tooltip title="Campo no calculable" >
+                <Avatar className={classes.avatarSizeSmall}>
+                  <MoneyOffIcon/>
+                </Avatar>
+              </Tooltip>
+            :
+              ""
+            }
         </Grid>
       </Grid>
       </Grid>

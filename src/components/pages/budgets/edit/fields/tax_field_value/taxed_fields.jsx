@@ -1,11 +1,12 @@
 import React                      from 'react';
 import Grid                       from '@material-ui/core/Grid';
-import { grey }                   from '@material-ui/core/colors';
+import { grey, deepOrange }       from '@material-ui/core/colors';
 import Divider                    from '@material-ui/core/Divider';
 import Collapse                   from '@material-ui/core/Collapse';
 import Typography                 from '@material-ui/core/Typography';
 import AttachMoneyIcon            from '@material-ui/icons/AttachMoney';
 import Chip                       from '@material-ui/core/Chip';
+import Tooltip                    from '@material-ui/core/Tooltip';
 import { useQuery }               from '@apollo/client';
 import { BUDGET_TAXED_FIELDS_FOR_FIELD } from '../../../queries_and_mutations/queries';
 
@@ -51,10 +52,21 @@ export default (props) => {
                   </Grid>
                   <Grid item>
                     <Grid item>
-                      <Chip
-                        icon={<AttachMoneyIcon/>}
-                        label={`Impuesto: ${formatValue(taxedField.tax)}`}
-                      />
+                      { templateField && templateField.calculable?
+                        <Chip
+                          icon={<AttachMoneyIcon/>}
+                          label={`Impuesto: ${formatValue(taxedField.tax)}`}
+                        />
+                      :
+                        <Tooltip title="Campo no calculable">
+                          <Chip
+                            style={{backgroundColor: deepOrange[500]}}
+                            color="primary"
+                            icon={<AttachMoneyIcon/>}
+                            label={`Impuesto: N/A`}
+                          />
+                        </Tooltip>
+                      }
                     </Grid></Grid>
                 </Grid>
                 <Divider/>

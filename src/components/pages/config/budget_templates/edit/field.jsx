@@ -7,6 +7,8 @@ import FormControlLabel                               from '@material-ui/core/Fo
 import Checkbox                                       from '@material-ui/core/Checkbox';
 import PrintOutlinedIcon                              from '@material-ui/icons/PrintOutlined';
 import PrintIcon                                      from '@material-ui/icons/Print';
+import MonetizationOnOutlinedIcon                     from '@material-ui/icons/MonetizationOnOutlined';
+import MonetizationOnIcon                             from '@material-ui/icons/MonetizationOn';
 import { withStyles }                                 from '@material-ui/core/styles';
 import { styles }                                     from '../styles';
 import Dialog                                         from '@material-ui/core/Dialog';
@@ -37,11 +39,13 @@ const Field = (props) => {
   const [openB, setOpenB] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
   const [printableDialog, setPrintableDialog] = useState(false);
+  const [calculableDialog, setCalculableDialog] = useState(false);
   const [editing, setEditing] = useState(true);
   const [name, setName] = useState(props.name)
   const [categories, setCategories] = useState(props.categories);
   const [active, setActive] = useState(props.active || false);
   const [printable, setPrintable] = useState(props.printable || false);
+  const [calculable, setCalculable] = useState(props.calculable || false);
   const [error, setError] = useState(false);
   const inputsList = ["name"]
   const [categoriesToSave, setCategoriesToSave] = useState(props.categories || [])
@@ -127,6 +131,14 @@ const Field = (props) => {
     setPrintableDialog(false);
   }
 
+  const openCalculableDialog = () => {
+    setCalculableDialog(true);
+  }
+
+  const closeCalculableDialog = () => {
+    setCalculableDialog(false);
+  }
+
   const handleCloseCategoryList = () => {
     setOpenB(false);
   };
@@ -149,6 +161,12 @@ const Field = (props) => {
     updateBudgetingTemplateTabFieldMutation({ variables: { id: id, printable: !printable }})
     setPrintable(!printable);
     setPrintableDialog(false);
+  }
+
+  const checkCalculableField = (event) => {
+    updateBudgetingTemplateTabFieldMutation({ variables: { id: id, calculable: !calculable }})
+    setCalculable(!calculable);
+    setCalculableDialog(false);
   }
 
   const [destroyBudgetingTemplateTabFieldMutation] =
@@ -235,14 +253,6 @@ const Field = (props) => {
     }
   }
 
-  const printableColorButton = () => {
-    if (printable === true) {
-      return 'disabled'
-    } else {
-      return "primary"
-    }
-  }
-
   return (
     <Grid container item alignItems="flex-start" justifyContent="flex-start" className={ classes.fielPaddingBottom } xs={12}>
       <Paper className={ classes.fieldPaper }>
@@ -250,7 +260,7 @@ const Field = (props) => {
           { editing ? renderTextField() : renderInputField() }
           <Grid container alignItems="center" justifyContent="center" item xs={1}>
           </Grid>
-          <Grid container direction="column"  alignItems="center" justifyContent="center" item xs={2}>
+          <Grid container direction="column"  alignItems="center" justifyContent="center" item xs={1}>
             <Chip
               avatar={<Avatar>{ categoriesToShow() }</Avatar>}
               label={ ` categorias` }
@@ -283,13 +293,13 @@ const Field = (props) => {
             <Grid item>
               <FormControlLabel
                 control={<Checkbox 
+                  color="secondary"
                   icon={<PrintOutlinedIcon />} 
                   checkedIcon={<PrintIcon />} 
                   name="printable"
                   checked={ printable }
                 />}
                 label=" "
-                color="primary"
                 className={ classes.formControlPadding }
                 onChange={ openPrintableDialog }
               />
@@ -310,8 +320,46 @@ const Field = (props) => {
                 <Button onClick={ closePrintableDialog } color="secondary">
                   Cancelar
                 </Button>
-                <Button color={ printableColorButton() } autoFocus onClick={ checkPrintableField } variant="contained">
+                <Button autoFocus onClick={ checkPrintableField } variant="contained">
                   { printable ? "Quitar" : "Añadir"}
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </Grid>
+
+          <Grid container item xs={1} alignItems="center" justifyContent="center">
+            <Grid item>
+              <FormControlLabel
+                control={<Checkbox 
+                  color="primary"
+                  icon={<MonetizationOnOutlinedIcon />} 
+                  checkedIcon={<MonetizationOnIcon />} 
+                  name="calculable"
+                  checked={ calculable }
+                />}
+                label=" "
+                className={ classes.formControlPadding }
+                onChange={ openCalculableDialog }
+              />
+            </Grid>
+            <Dialog
+              open={calculableDialog}
+              onClose={closeCalculableDialog}
+              aria-labelledby="calculable-aletrt"
+              aria-describedby="calculable-alert-dialog"
+            >
+              <DialogTitle id="favorite-alert">
+                { calculable === true ? "Omitir en los calculos del presupuesto" : "Agregar a los calculos del presupuesto"}
+              </DialogTitle>
+              <DialogContent>
+                { calculable === true ? "Este campo dejará de calcularse en el presupuesto" : "Este campo agregara a los calculos del presupuesto"}
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={ closeCalculableDialog } color="secondary">
+                  Cancelar
+                </Button>
+                <Button autoFocus onClick={ checkCalculableField } variant="contained">
+                  { calculable ? "Quitar" : "Añadir"}
                 </Button>
               </DialogActions>
             </Dialog>
