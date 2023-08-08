@@ -66,10 +66,6 @@ export const styles = theme => {
         },
       }
     },
-    defaultIcon:{
-      width:"30px", 
-      height:"30px",
-    },
     inputSmall:{
       height:"50px",
     },
@@ -86,11 +82,6 @@ export const styles = theme => {
       width:"30px", 
       height:"40px",
       marginRight: "10px",
-      color: "green",
-    },
-    radioButtonActiveGreen:{
-      width:"30px", 
-      height:"30px",
       color: "green",
     },
     textIconDefault:{

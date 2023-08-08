@@ -1,39 +1,29 @@
 import React, { useState, useEffect }                 from 'react';
 import Grid                                           from '@material-ui/core/Grid';
 import TextField                                      from '@material-ui/core/TextField';
-import StarsIcon                                      from '@material-ui/icons/Stars';
-import FormControlLabel                               from '@material-ui/core/FormControlLabel';
-import Checkbox                                       from '@material-ui/core/Checkbox';
-import StarBorderIcon                                 from '@material-ui/icons/StarBorder';
 import Button                                         from '@material-ui/core/Button';
-import AddIcon                                        from '@material-ui/icons/Add';
-import RemoveIcon                                     from '@material-ui/icons/Remove';
-import DeleteForeverIcon                              from '@material-ui/icons/DeleteForever';
+import IconButton                                     from '@material-ui/core/IconButton';
 import FormControl                                    from '@material-ui/core/FormControl';
-import Switch                                         from '@material-ui/core/Switch';
 import Select                                         from '@material-ui/core/Select';
 import MenuItem                                       from '@material-ui/core/MenuItem';
 import InputBase                                      from '@material-ui/core/InputBase';
-import Dialog                                         from '@material-ui/core/Dialog';
-import DialogActions                                  from '@material-ui/core/DialogActions';
-import DialogContent                                  from '@material-ui/core/DialogContent';
-import DialogTitle                                    from '@material-ui/core/DialogTitle';
 import Paper                                          from '@material-ui/core/Paper';
 import Typography                                     from '@material-ui/core/Typography';
+import AddIcon                                        from '@material-ui/icons/Add';
+import RemoveIcon                                     from '@material-ui/icons/Remove';
+import DeleteForeverIcon                              from '@material-ui/icons/DeleteForever';
 import SaveIcon                                       from '@material-ui/icons/Save';
 import CreateIcon                                     from '@material-ui/icons/Create';
-import PrintOutlinedIcon                              from '@material-ui/icons/PrintOutlined';
-import PrintIcon                                      from '@material-ui/icons/Print';
+import SettingsIcon                                   from '@material-ui/icons/Settings';
 import { withStyles }                                 from '@material-ui/core/styles';
 import { styles }                                     from '../styles';
 import { useMutation }                                from '@apollo/client';
 import { UPDATE_PROCEDURES_TEMPLATE_TAB_FIELD }       from '../queries_and_mutations/queries'
 import { DESTROY_PROCEDURES_TEMPLATE_TAB_FIELD }      from '../queries_and_mutations/queries'
 import { GET_PROCEDURE_TEMPLATE_TAB_FIELDS }          from '../queries_and_mutations/queries'
-import RadioButtonUncheckedIcon                       from '@material-ui/icons/RadioButtonUnchecked';
-import RadioButtonCheckedIcon                         from '@material-ui/icons/RadioButtonChecked';
-import { Hidden } from '@material-ui/core';
-import EditDropdownOption from './edit_dropdown_option';
+import EditDropdownOption                             from './edit_dropdown_option';
+import FieldSettingsDialog                            from './field_settings_dialog';
+import DeleteFieldDialog                              from './delete_field_dialog';
 
 
 const INPUT_TYPES = {
@@ -48,10 +38,8 @@ const Field = (props) => {
 
   const { classes, id, currentTab } = props
 
-  const [favoriteDialog, setFavoriteDialog] = useState(false);
-  const [printableDialog, setPrintableDialog] = useState(false);
+  const [settingsDialog, setSettingsDialog] = useState(false);
   const [deleteDialog, setDeleteDialog] = useState(false);
-  const [statusDialog, setStatusDialog] = useState(false);
   const [editing, setEditing] = useState(true);
   const [name, setName] = useState(props.name);
   const [style, setStyle] = useState(props.style);
@@ -75,11 +63,11 @@ const Field = (props) => {
           setDefaultValue(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.defaultValue || [])
           setFavourite(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.favourite)
           setActive(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.active)
+          setPrintable(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.printable)
           setPrintPosition(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.printPosition === "bottom")
           //setError(false)
           setEditing(true)
           setOptions([])
-
         }
       }
     )
@@ -105,20 +93,12 @@ const Field = (props) => {
     }
   }
 
-  const openFavoriteDialog = () => {
-    setFavoriteDialog(true);
+  const openSettingsDialog = () => {
+    setSettingsDialog(true);
   };
 
-  const closeFavoriteDialog = () => {
-    setFavoriteDialog(false);
-  };
-
-  const openPrintableDialog = () => {
-    setPrintableDialog(true);
-  };
-
-  const closePrintableDialog = () => {
-    setPrintableDialog(false);
+  const closeSettingsDialog = () => {
+    setSettingsDialog(false);
   };
 
   const openDeleteDialog = () => {
@@ -129,18 +109,9 @@ const Field = (props) => {
     setDeleteDialog(false);
   };
 
-  const openStatusDialog = () => {
-    setStatusDialog(true);
-  }
-
-  const closeStatusDialog = () => {
-    setStatusDialog(false);
-  }
-
   const checkFavoriteField = () => {
     updateProceduresTemplateTabFieldMutation({ variables: { id: id, favourite: !favourite }})
     setFavourite(!favourite);
-    setFavoriteDialog(false);
   };
 
   const checkPrintableField = (event) => {
@@ -159,16 +130,7 @@ const Field = (props) => {
   const changeFieldStatus = (event) => {
     updateProceduresTemplateTabFieldMutation({ variables: { id: id, active: !active }})
     setActive(!active)
-    setStatusDialog(false);
   };
-
-  const colorButton = () => {
-    if (favourite === true) {
-      return 'secondary'
-    } else {
-      return "primary"
-    }
-  }
 
   const [destroyProceduresTemplateTabFieldMutation  ] =
     useMutation(
@@ -203,10 +165,6 @@ const Field = (props) => {
     setStyle(event.target.value);
   };
 
-  const statusField = () => { 
-    return active ? "Desactivar" : "Activar"
-  }
-
   const addOption = (option, index) => {
     options[index] = option
     setOptions(options)
@@ -230,21 +188,23 @@ const Field = (props) => {
   const renderTextField = () => {
     return(
       <Grid container item xs={12} alignItems="center" justifyContent="center">
-        <Grid item xs={2}>
-          <Button
+        <Grid item xs={1}>
+          <IconButton
             onClick={ editField }
           >
             <CreateIcon/>
-          </Button>
+          </IconButton>
         </Grid>
-        <Grid item xs={5}>
+        <Grid container item xs={7} justifyContent='flex-start'>
           <InputBase
             value={ name }
             readOnly={true}
             inputProps={{ 'aria-label': 'naked' }}
+            fullWidth
+            style={{paddingLeft: '5px'}}
           />
         </Grid>
-        <Grid container item xs={5} alignItems='center'>
+        <Grid container item xs={4} alignItems='center'>
           <Typography className={ classes.textTittleType }>
             { INPUT_TYPES[style] }
           </Typography>
@@ -256,14 +216,14 @@ const Field = (props) => {
   const renderInputField = () => {
     return(
       <Grid container item xs={12} alignItems="center" justifyContent="center">
-        <Grid item xs={2}>
+        <Grid item xs={1}>
           <Button
             onClick={ updateField }
           >
             <SaveIcon />
           </Button>
         </Grid>
-        <Grid item xs={5}>
+        <Grid item xs={7}>
           <TextField
             id="standard-basic"
             value={ name }
@@ -272,7 +232,7 @@ const Field = (props) => {
             style={{'backgroundColor': 'rgb(200, 200, 200)'}}
           />
         </Grid>
-        <Grid item xs={5}>
+        <Grid item xs={4}>
           <FormControl variant="outlined" className={ classes.textFieldTittleType }>
             <Select
               labelId="demo-simple-select-outlined-label"
@@ -293,124 +253,26 @@ const Field = (props) => {
   }
 
   return (
-    <Grid id='fields-rows' container item xs={12} direction='row' justifyContent="center" style={{padding:'5px'}}>
+    <Grid id='fields-rows' container item xs={12} direction='column' justifyContent="center" style={{padding:'5px'}}>
       <Paper style={{padding:'5px'}}>
         <Grid container item xs={12} direction='row' justifyContent="center">
-          <Hidden smDown>
-            <Grid container item xs={8} alignItems="center" justifyContent="center">
-              { editing ? renderTextField() : renderInputField() }
+          <Grid container item xs={10} alignItems="center" justifyContent="center">
+            { editing ? renderTextField() : renderInputField() }
+          </Grid>
+          <Grid container item xs={1} alignItems="center" justifyContent="center">
+            <Grid item>
+              <IconButton onClick={ openSettingsDialog }>
+                <SettingsIcon/>
+              </IconButton>
             </Grid>
-            <Grid container item xs={1} alignItems="center" justifyContent="center">
-              <Grid item>
-                <FormControlLabel
-                  control={<Checkbox 
-                    icon={<StarBorderIcon />} 
-                    checkedIcon={<StarsIcon />} 
-                    name="favourite"
-                    checked={ favourite }
-                  />}
-                  label=" "
-                  color="primary"
-                  className={ classes.formControlPadding }
-                  onChange={ openFavoriteDialog }
-                />
-              </Grid>
+          </Grid>
+          <Grid container item xs={1} alignItems="center" justifyContent="center">
+            <Grid item>
+              <IconButton color="secondary" onClick={ openDeleteDialog }>
+                <DeleteForeverIcon/>
+              </IconButton>
             </Grid>
-            <Grid container item xs={1} alignItems="center" justifyContent="center">
-              <Grid item>
-                <FormControlLabel
-                  control={<Checkbox 
-                    icon={<PrintOutlinedIcon />} 
-                    checkedIcon={<PrintIcon />} 
-                    name="printable"
-                    checked={ printable }
-                  />}
-                  label=" "
-                  color="primary"
-                  className={ classes.formControlPadding }
-                  onChange={ openPrintableDialog }
-                />
-              </Grid>
-            </Grid>
-            <Grid container item xs={1} alignItems="center" justifyContent="center">
-              <Grid item>
-                <Button onClick={ openDeleteDialog }>
-                  <DeleteForeverIcon/>
-                </Button>
-              </Grid>
-            </Grid>
-            <Grid container item xs={1} alignItems="center" justifyContent="center" onClick={ openStatusDialog }>
-              <Grid item>
-                { active ?
-                  <Button>
-                    <RadioButtonCheckedIcon className={classes.radioButtonActiveGreen}/>
-                  </Button>
-                :
-                  <Button>
-                    <RadioButtonUncheckedIcon color="secondary" className={ classes.defaultIcon }/>
-                  </Button>
-                }
-              </Grid>
-            </Grid>
-          </Hidden>
-          <Hidden mdUp>
-            <Grid container item xs={12} alignItems="center" justifyContent="center">
-              { editing ? renderTextField() : renderInputField() }
-            </Grid>
-            <Grid container item xs={3} alignItems="center" justifyContent="center">
-              <Grid item>
-                <FormControlLabel
-                  control={<Checkbox 
-                    icon={<StarBorderIcon />} 
-                    checkedIcon={<StarsIcon />} 
-                    name="favourite"
-                    checked={ favourite }
-                  />}
-                  label=" "
-                  color="primary"
-                  className={ classes.formControlPadding }
-                  onChange={ openFavoriteDialog }
-                />
-              </Grid>
-            </Grid>
-            <Grid container item xs={3} alignItems="center" justifyContent="center">
-              <Grid item>
-                <FormControlLabel
-                  control={<Checkbox 
-                    icon={<PrintOutlinedIcon />} 
-                    checkedIcon={<PrintIcon />} 
-                    name="printable"
-                    checked={ printable }
-                  />}
-                  label=" "
-                  color="primary"
-                  className={ classes.formControlPadding }
-                  onChange={ openPrintableDialog }
-                />
-              </Grid>
-            </Grid>
-            <Grid container item xs={3} alignItems="center" justifyContent="center">
-              <Grid item>
-                <Button onClick={ openDeleteDialog }>
-                  <DeleteForeverIcon/>
-                </Button>
-              </Grid>
-            </Grid>
-            <Grid container item xs={3} alignItems="center" justifyContent="center" onClick={ openStatusDialog }>
-              <Grid item>
-                {
-                active ?
-                  <Button>
-                    <RadioButtonCheckedIcon className={classes.radioButtonActiveGreen}/>
-                  </Button>
-                :
-                  <Button>
-                    <RadioButtonUncheckedIcon color="secondary" className={ classes.defaultIcon }/>
-                  </Button>
-                }
-              </Grid>
-            </Grid>
-          </Hidden>
+          </Grid>
         </Grid>
         { style === 'dropdown' ?
           editing ?
@@ -480,130 +342,26 @@ const Field = (props) => {
           ""
         }
       </Paper>
-
-      <Dialog
-        open={favoriteDialog}
-        onClose={closeFavoriteDialog}
-        aria-labelledby="favorite-alert"
-        aria-describedby="favorite-alert-dialog"
-      >
-        <DialogTitle id="favorite-alert">
-          { favourite === true ? "Eliminar Favorito": "Añadir Favorito"}
-        </DialogTitle>
-        <DialogContent>
-        { favourite === true ? "Este campo dejará de ser importante": "Se marcará este campo como importante"}
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={closeFavoriteDialog} color="secondary">
-            Cancelar
-          </Button>
-          <Button color={ colorButton() } autoFocus onClick={ checkFavoriteField } variant="contained">
-            { favourite ? "Quitar": "Añadir"}
-          </Button>
-        </DialogActions>
-      </Dialog>
-      <Dialog
-        open={printableDialog}
-        onClose={closePrintableDialog}
-        aria-labelledby="print-aletrt"
-        aria-describedby="print-alert-dialog"
-      >
-        <DialogTitle id="favorite-alert">
-          Preferencias de Imprimibles
-        </DialogTitle>
-        <DialogContent>
-          <Grid>
-            <Grid>
-              <FormControlLabel
-                control={
-                  <Switch
-                    checked={printable}
-                    onChange={checkPrintableField}
-                    color="primary"
-                    name={"printable"}
-                  />
-                }
-                label={printable ? 
-                  "El campo aparecera en el formato imprimible del presupuesto"
-                :
-                  "El campo no aparecerea en el formato imprimible del presupuesto"
-                }
-              />
-            </Grid>
-            <Grid>
-              <FormControlLabel
-                disabled={!printable}
-                control={
-                  <Switch
-                    checked={printPosition}
-                    onChange={checkPrintPositionField}
-                    color="primary"
-                    name={"printPosition"}
-                  />
-                }
-                label={printPosition ?
-                  "El campo se imprimira al fondo del presupuesto"
-                :
-                  "El campo se imprimira al tope del presupuesto"
-                }
-              />
-            </Grid>
-          </Grid>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={ closePrintableDialog } >
-            Cerrar
-          </Button>
-        </DialogActions>
-      </Dialog>
-      <Dialog
-        open={deleteDialog}
-        onClose={closeDeleteDialog}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">{"Eliminar campo"}</DialogTitle>
-        <DialogContent>
-          Se eliminara de manera permantente el campo: 
-          <Typography variant="subtitle2" className={ classes.texPlainTittleName }>
-            {name}
-          </Typography>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={ closeDeleteDialog } color="secondary">
-            Cancelar
-          </Button>
-          <Button color="primary" autoFocus onClick={ deleteFieldClick }>
-            Borrar
-          </Button>
-        </DialogActions>
-      </Dialog>
-      <Dialog
-        open={statusDialog}
-        onClose={closeStatusDialog}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title"> Deseas {statusField()}</DialogTitle>
-        <DialogContent>
-          Realmente deseas { statusField() }
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={ closeStatusDialog } color="secondary">
-            Cancelar
-          </Button>
-          <Button
-            color="primary"
-            autoFocus
-            onClick={ changeFieldStatus }
-          >
-            { statusField() }
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <FieldSettingsDialog
+        settingsDialog={settingsDialog}
+        closeSettingsDialog={closeSettingsDialog}
+        checkFavoriteField={checkFavoriteField}
+        checkPrintableField={checkPrintableField}
+        checkPrintPositionField={checkPrintPositionField}
+        changeFieldStatus={changeFieldStatus}
+        active={active}
+        favourite={favourite}
+        printable={printable}
+        printPosition={printPosition}
+      />
+      <DeleteFieldDialog
+        deleteDialog={deleteDialog}
+        closeDeleteDialog={closeDeleteDialog}
+        deleteFieldClick={deleteFieldClick}
+        fieldName={name}
+      />
     </Grid>
   )
 }
-
 
 export default  withStyles(styles)(Field);
