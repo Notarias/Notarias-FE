@@ -43,9 +43,15 @@ const FieldSettingsDialog = (props) => {
   })(Switch);
 
   return(
-    <Dialog open={settingsDialog} onClose={closeSettingsDialog} aria-labelledby="preferences-aletrt" aria-describedby="preferences-alert-dialog">
+    <Dialog 
+      open={settingsDialog}
+      onClose={closeSettingsDialog}
+      aria-labelledby="preferences-aletrt"
+      aria-describedby="preferences-alert-dialog"
+      maxWidth="xs"
+    >
       <DialogTitle id="preferences-alert">
-        Preferencias del Campo
+        Propiedades del Campo
       </DialogTitle>
       <DialogContent>
         <Grid container>
@@ -53,7 +59,7 @@ const FieldSettingsDialog = (props) => {
             <Grid container item xs={2} justifyContent='center'>
               <StarIcon fontSize="large" style={favourite ? {color: yellow[700]} : {color: grey[500]}}/>
             </Grid>
-            <Grid item xs={8}>
+            <Grid item xs={7}>
               <FormControlLabel
                 control={
                   <Switch
@@ -65,8 +71,6 @@ const FieldSettingsDialog = (props) => {
                 }
                 label="Favorito"
               />
-            </Grid>
-            <Grid item xs={1}>
               <Tooltip title="Marca el campo como favorito">
                 <HelpIcon/>
               </Tooltip>
@@ -76,7 +80,7 @@ const FieldSettingsDialog = (props) => {
             <Grid container item xs={2} justifyContent='center'>
               <PowerSettingsNewIcon fontSize="large" style={active ? {color: green[500]} : {color: grey[500]}}/>
             </Grid>
-            <Grid item xs={8}>
+            <Grid item xs={7}>
               <FormControlLabel
                 control={
                   <Switch
@@ -88,8 +92,6 @@ const FieldSettingsDialog = (props) => {
                 }
                 label={active ? "Activado" : "Desactivado"}
               />
-            </Grid>
-            <Grid item xs={1}>
               <Tooltip title="Activa o desactiva el campo">
                 <HelpIcon/>
               </Tooltip>
@@ -99,7 +101,7 @@ const FieldSettingsDialog = (props) => {
             <Grid container item xs={2} justifyContent='center'>
               <PrintIcon fontSize="large" style={printable ? {color: indigo[500]} : {color: grey[500]}}/>
             </Grid>
-            <Grid item xs={8}>
+            <Grid item xs={7}>
               <FormControlLabel
                 control={
                   <Switch
@@ -111,8 +113,6 @@ const FieldSettingsDialog = (props) => {
                 }
                 label={printable ? "Imprimible" : "No Imprimible"}
               />
-            </Grid>
-            <Grid item xs={1}>
               <Tooltip title="Muestra el campo en el documento imprimible del presupuesto">
                 <HelpIcon/>
               </Tooltip>
@@ -129,7 +129,7 @@ const FieldSettingsDialog = (props) => {
                 <PrintDisabledIcon fontSize="large" style={{color: grey[500]}}/>
               }
             </Grid>
-            <Grid item xs={8}>
+            <Grid item xs={7}>
               <FormControlLabel
                 disabled={!printable}
                 control={
@@ -140,10 +140,8 @@ const FieldSettingsDialog = (props) => {
                     name={"printPosition"}
                   />
                 }
-                label={printable ? printPosition ? "Al Final" : "Al Inicio" : "El campo no es imprimible"}
+                label={printable ? printPosition ? "Al Final" : "Al Inicio" : "No Disponible"}
               />
-            </Grid>
-            <Grid item xs={1}>
               <Tooltip title="Selecciona la pocicion del campo en el presupuesto imprimible, este campo se deshabilitara si el campo no es imprimible">
                 <HelpIcon/>
               </Tooltip>
