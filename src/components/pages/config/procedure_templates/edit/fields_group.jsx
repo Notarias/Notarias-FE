@@ -2,7 +2,8 @@ import React, { useState }                                      from 'react';
 import { styles }                                               from '../styles';
 import { withStyles }                                           from '@material-ui/core/styles';
 import Grid                                                     from '@material-ui/core/Grid';
-import IconButton                                               from '@material-ui/core/Button';
+import IconButton                                               from '@material-ui/core/IconButton';
+import InputBase                                                from '@material-ui/core/InputBase';
 import TextField                                                from '@material-ui/core/TextField';
 import FieldsGroupFieldList                                     from './fields_groups_fields_list';
 import Paper                                                    from '@material-ui/core/Paper';
@@ -82,30 +83,27 @@ const FieldsGroup = (props) => {
 
   const lockedNameGroup = () => {
     return(
-      <TextField 
+      <InputBase
         id="filled-basic"
-        value={ groupName } 
-        variant={ "outlined" } 
+        value={ groupName }
+        variant="outlined"
         size="small"
         onChange={ handleGroupNameChange }
         error={ !!error["name"] && true }
         errorskey={ "name" }
         name='name'
-        disabled
-        inputProps={{ 'aria-label': 'naked' }}
+        readOnly={true}
         fullWidth
+        style={{paddingLeft: '5px'}}
       />
     )
   }
 
   return(
-    <Grid id='group-rows' container item xs={12} direction='row' justifyContent="center" style={{padding:'5px'}}>
+    <Grid id='group-rows' container item xs={12} direction='column' justifyContent="center" style={{padding:'5px'}}>
       <Paper style={{padding:'10px'}}>
         <Grid container item xs={12} direction='row' justifyContent="center" style={{paddingLeft:'10px'}}>
           <Grid container item xs={9} alignItems="center">
-            <Grid item xs >
-              { editing ? editNameGroup() : lockedNameGroup() }
-            </Grid>
             <Grid item xs={1}>
               {editing ?
                 <IconButton onClick={ updateFieldsGroup }>
@@ -116,6 +114,9 @@ const FieldsGroup = (props) => {
                   <CreateIcon />
                 </IconButton>
               }
+            </Grid>
+            <Grid item xs >
+              { editing ? editNameGroup() : lockedNameGroup() }
             </Grid>
           </Grid>
           <Grid container item xs={3} alignItems="center" justifyContent="flex-end">

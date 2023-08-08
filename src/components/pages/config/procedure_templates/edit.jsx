@@ -96,26 +96,20 @@ const Edit = (props) => {
           </Grid>
           <Divider/>
           <Grid container direction="row" justifyContent="center">
-            <Grid container item xs={9} direction="row" justifyContent="center">
+            <Grid container item xs={6} direction="row" justifyContent="center">
               <ButtonsNewFieldNewFieldsGroup
                 currentTab={ currentTab }
               />
-              { 
-              (loading || !data) ?
-                (
-                  <Grid container item className={ classes.circularProgressLoading } direction="column" alignItems="center" justifyContent="center">
-                    <CircularProgress size={ 100 }/>
-                  </Grid>
-                )
-              :
-                (
-                  <FieldsAndGroupFields
-                    currentTab={ currentTab }
-                  />
-                )
-              }
             </Grid>
-            
+            {(loading || !data) ?
+              <Grid container item className={ classes.circularProgressLoading } direction="column" alignItems="center" justifyContent="center">
+                <CircularProgress size={ 100 }/>
+              </Grid>
+            :
+              <FieldsAndGroupFields
+                currentTab={ currentTab }
+              />
+            }
           </Grid>
         </Grid>
         <Grid container item xs={3} direction="column">

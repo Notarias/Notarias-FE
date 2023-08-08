@@ -188,21 +188,23 @@ const Field = (props) => {
   const renderTextField = () => {
     return(
       <Grid container item xs={12} alignItems="center" justifyContent="center">
-        <Grid item xs={2}>
-          <Button
+        <Grid item xs={1}>
+          <IconButton
             onClick={ editField }
           >
             <CreateIcon/>
-          </Button>
+          </IconButton>
         </Grid>
-        <Grid item xs={5}>
+        <Grid container item xs={7} justifyContent='flex-start'>
           <InputBase
             value={ name }
             readOnly={true}
             inputProps={{ 'aria-label': 'naked' }}
+            fullWidth
+            style={{paddingLeft: '5px'}}
           />
         </Grid>
-        <Grid container item xs={5} alignItems='center'>
+        <Grid container item xs={4} alignItems='center'>
           <Typography className={ classes.textTittleType }>
             { INPUT_TYPES[style] }
           </Typography>
@@ -214,14 +216,14 @@ const Field = (props) => {
   const renderInputField = () => {
     return(
       <Grid container item xs={12} alignItems="center" justifyContent="center">
-        <Grid item xs={2}>
+        <Grid item xs={1}>
           <Button
             onClick={ updateField }
           >
             <SaveIcon />
           </Button>
         </Grid>
-        <Grid item xs={5}>
+        <Grid item xs={7}>
           <TextField
             id="standard-basic"
             value={ name }
@@ -230,7 +232,7 @@ const Field = (props) => {
             style={{'backgroundColor': 'rgb(200, 200, 200)'}}
           />
         </Grid>
-        <Grid item xs={5}>
+        <Grid item xs={4}>
           <FormControl variant="outlined" className={ classes.textFieldTittleType }>
             <Select
               labelId="demo-simple-select-outlined-label"
@@ -251,13 +253,12 @@ const Field = (props) => {
   }
 
   return (
-    <Grid id='fields-rows' container item xs={12} direction='row' justifyContent="center" style={{padding:'5px'}}>
+    <Grid id='fields-rows' container item xs={12} direction='column' justifyContent="center" style={{padding:'5px'}}>
       <Paper style={{padding:'5px'}}>
         <Grid container item xs={12} direction='row' justifyContent="center">
-          <Grid container item xs={8} alignItems="center" justifyContent="center">
+          <Grid container item xs={10} alignItems="center" justifyContent="center">
             { editing ? renderTextField() : renderInputField() }
           </Grid>
-          <Grid item xs={2}></Grid>
           <Grid container item xs={1} alignItems="center" justifyContent="center">
             <Grid item>
               <IconButton onClick={ openSettingsDialog }>

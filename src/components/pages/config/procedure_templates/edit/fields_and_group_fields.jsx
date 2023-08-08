@@ -11,7 +11,7 @@ const FieldsAndGroupFields = (props) => {
 
   return(
     <>
-      { currentTab ? 
+      { currentTab ?
         <>
           <Grid container item xs={10} direction='row' justifyContent="center">
             <FieldList
@@ -25,13 +25,11 @@ const FieldsAndGroupFields = (props) => {
           </Grid>
         </>
       : 
-        <Grid container item direction="column" alignItems="center">
-          <Grid container item xs={10} alignItems="center" justifyContent="center">
-            <Typography variant="h6">
-              Agrega una pestaña para continuar 
-            </Typography>
-          </Grid>
-        </Grid> 
+        <Grid container item xs={10} alignItems="center" justifyContent="center">
+          <Typography variant="h6">
+            Agrega una pestaña para continuar 
+          </Typography>
+        </Grid>
       }
     </>
   )
