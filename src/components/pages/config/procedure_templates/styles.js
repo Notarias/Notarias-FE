@@ -102,22 +102,6 @@ export const styles = theme => {
     buttonAddProcedure: {
       height: "30px",
     },
-    textInputTittleName: {
-      fontWeight: "bold",
-      wordWrap: "break-word",
-      paddingLeft: "10px"
-    },
-    textFieldTittleType: {
-      width: "100%",
-      fontFamily: "Lucida Console, Courier, monospace",
-      fontWeight: "bold",
-      paddingLeft: "10px"
-    },
-    texPlainTittleName: {
-      textAlign: "left",
-      paddingLeft: "10px",
-      wordWrap: "break-word",
-    },
     wordWrapToTabName: {
       wordWrap: "break-word",
       maxWidth: "150px",
@@ -157,10 +141,6 @@ export const styles = theme => {
     },
     inputFieldName: {
       width: "180px",
-    },
-    fieldHeightRow: {
-      padding: "10px",
-      maxWidth: "650px",
     },
     fielPaddingBottom: {
       marginBottom: "2px"

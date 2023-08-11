@@ -1,4 +1,4 @@
-import React                                    from 'react';
+import React, { useState }                      from 'react';
 import Grid                                     from '@material-ui/core/Grid';
 import FormControlLabel                         from '@material-ui/core/FormControlLabel';
 import Button                                   from '@material-ui/core/Button';
@@ -23,15 +23,8 @@ const FieldSettingsDialog = (props) => {
 
   const {
     settingsDialog,
-    closeSettingsDialog,
-    checkFavoriteField,
-    checkPrintableField,
-    checkPrintPositionField,
-    changeFieldStatus,
-    active,
-    favourite,
-    printable,
-    printPosition
+    openSettingsDialog,
+    updateProceduresTemplateTabFieldMutation,
   } = props
 
   const PrintPositionSwitch = withStyles({
@@ -42,10 +35,41 @@ const FieldSettingsDialog = (props) => {
     track: {},
   })(Switch);
 
+
+  const [active, setActive] = useState(props.active);
+  const [favourite, setFavourite] = useState(props.favourite);
+  const [printable, setPrintable] = useState(props.printable);
+  const [printPosition, setPrintPosition] = useState(props.printPosition === "bottom")
+
+
+  const checkFavoriteField = () => {
+    updateProceduresTemplateTabFieldMutation({ variables: { id: props.id, favourite: !favourite }})
+    setFavourite(!favourite);
+  };
+
+  const checkPrintableField = (event) => {
+    updateProceduresTemplateTabFieldMutation({ variables: { id: props.id, printable: !printable }})
+    setPrintable(!printable);
+  }
+
+  const checkPrintPositionField = (event) => {
+    !printPosition ?
+      updateProceduresTemplateTabFieldMutation({ variables: { id: props.id, printPosition: "bottom" }})
+    :
+      updateProceduresTemplateTabFieldMutation({ variables: { id: props.id, printPosition: "top" }})
+    setPrintPosition(!printPosition);
+  }
+
+  const changeFieldStatus = (event) => {
+    updateProceduresTemplateTabFieldMutation({ variables: { id: props.id, active: !active }})
+    setActive(!active)
+  };
+
+
   return(
     <Dialog 
-      open={settingsDialog}
-      onClose={closeSettingsDialog}
+      open={ settingsDialog }
+      onClose={ openSettingsDialog }
       aria-labelledby="preferences-aletrt"
       aria-describedby="preferences-alert-dialog"
       maxWidth="xs"
@@ -150,7 +174,7 @@ const FieldSettingsDialog = (props) => {
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button onClick={ closeSettingsDialog } >
+        <Button onClick={ openSettingsDialog } >
           Cerrar
         </Button>
       </DialogActions>
