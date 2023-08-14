@@ -465,6 +465,7 @@ export const GET_BUDGETING_TEMPLATE_PRINTABLE_FIELDS = gql`
       name
       active
       printable
+      fieldType
     }
   }
 `

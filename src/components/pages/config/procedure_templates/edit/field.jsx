@@ -8,7 +8,6 @@ import Select                                         from '@material-ui/core/Se
 import MenuItem                                       from '@material-ui/core/MenuItem';
 import InputBase                                      from '@material-ui/core/InputBase';
 import Paper                                          from '@material-ui/core/Paper';
-import Typography                                     from '@material-ui/core/Typography';
 import AddIcon                                        from '@material-ui/icons/Add';
 import RemoveIcon                                     from '@material-ui/icons/Remove';
 import DeleteForeverIcon                              from '@material-ui/icons/DeleteForever';
@@ -25,7 +24,6 @@ import EditDropdownOption                             from './edit_dropdown_opti
 import FieldSettingsDialog                            from './field_settings_dialog';
 import DeleteFieldDialog                              from './delete_field_dialog';
 
-
 const INPUT_TYPES = {
   string: "Texto",
   number: "Numerico",
@@ -36,7 +34,7 @@ const INPUT_TYPES = {
 
 const Field = (props) => {
 
-  const { classes, id, currentTab } = props
+  const { id, currentTab } = props
 
   const [settingsDialog, setSettingsDialog] = useState(false);
   const [deleteDialog, setDeleteDialog] = useState(false);
@@ -44,10 +42,6 @@ const Field = (props) => {
   const [name, setName] = useState(props.name);
   const [style, setStyle] = useState(props.style);
   const [defaultValue, setDefaultValue] = useState(props.defaultValue || [])
-  const [active, setActive] = useState(props.active);
-  const [favourite, setFavourite] = useState(props.favourite);
-  const [printable, setPrintable] = useState(props.printable);
-  const [printPosition, setPrintPosition] = useState(props.printPosition === "bottom")
   const [changeOptions, setChangeOptions] = useState(true);
   const [options, setOptions] = useState([]);
   //const [error, setError] = useState(false);
@@ -61,10 +55,6 @@ const Field = (props) => {
         }, */
         update(store, cacheData) {
           setDefaultValue(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.defaultValue || [])
-          setFavourite(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.favourite)
-          setActive(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.active)
-          setPrintable(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.printable)
-          setPrintPosition(cacheData.data.updateProceduresTemplateField.proceduresTemplateField.printPosition === "bottom")
           //setError(false)
           setEditing(true)
           setOptions([])
@@ -94,42 +84,11 @@ const Field = (props) => {
   }
 
   const openSettingsDialog = () => {
-    setSettingsDialog(true);
-  };
-
-  const closeSettingsDialog = () => {
-    setSettingsDialog(false);
+    setSettingsDialog(!settingsDialog);
   };
 
   const openDeleteDialog = () => {
-    setDeleteDialog(true);
-  };
-
-  const closeDeleteDialog = () => {
-    setDeleteDialog(false);
-  };
-
-  const checkFavoriteField = () => {
-    updateProceduresTemplateTabFieldMutation({ variables: { id: id, favourite: !favourite }})
-    setFavourite(!favourite);
-  };
-
-  const checkPrintableField = (event) => {
-    updateProceduresTemplateTabFieldMutation({ variables: { id: id, printable: !printable }})
-    setPrintable(!printable);
-  }
-
-  const checkPrintPositionField = (event) => {
-    !printPosition ?
-      updateProceduresTemplateTabFieldMutation({ variables: { id: id, printPosition: "bottom" }})
-    :
-      updateProceduresTemplateTabFieldMutation({ variables: { id: id, printPosition: "top" }})
-    setPrintPosition(!printPosition);
-  }
-
-  const changeFieldStatus = (event) => {
-    updateProceduresTemplateTabFieldMutation({ variables: { id: id, active: !active }})
-    setActive(!active)
+    setDeleteDialog(!deleteDialog);
   };
 
   const [destroyProceduresTemplateTabFieldMutation  ] =
@@ -187,7 +146,7 @@ const Field = (props) => {
 
   const renderTextField = () => {
     return(
-      <Grid container item xs={12} alignItems="center" justifyContent="center">
+      <Grid container item xs={12} alignItems="center" justifyContent="flex-start">
         <Grid item xs={1}>
           <IconButton
             onClick={ editField }
@@ -204,10 +163,14 @@ const Field = (props) => {
             style={{paddingLeft: '5px'}}
           />
         </Grid>
-        <Grid container item xs={4} alignItems='center'>
-          <Typography className={ classes.textTittleType }>
-            { INPUT_TYPES[style] }
-          </Typography>
+        <Grid container item xs={4} alignItems='center' style={{paddingLeft: '10px'}}>
+          <TextField
+            value={ INPUT_TYPES[style] }
+            readOnly={true}
+            variant="outlined"
+            fullWidth
+            inputProps={{min: 0, style: { textAlign: 'center' }}}
+          />
         </Grid>
       </Grid>
     )
@@ -215,25 +178,26 @@ const Field = (props) => {
 
   const renderInputField = () => {
     return(
-      <Grid container item xs={12} alignItems="center" justifyContent="center">
+      <Grid container item xs={12} alignItems="center" justifyContent="flex-start">
         <Grid item xs={1}>
-          <Button
+          <IconButton
             onClick={ updateField }
           >
             <SaveIcon />
-          </Button>
+          </IconButton>
         </Grid>
-        <Grid item xs={7}>
+        <Grid container item xs={7} justifyContent='flex-start'>
           <TextField
             id="standard-basic"
             value={ name }
             onChange={ handleNameChange }
             variant="outlined"
             style={{'backgroundColor': 'rgb(200, 200, 200)'}}
+            fullWidth
           />
         </Grid>
-        <Grid item xs={4}>
-          <FormControl variant="outlined" className={ classes.textFieldTittleType }>
+        <Grid item xs={4} justifyContent='flex-start' style={{paddingLeft: '10px'}}>
+          <FormControl variant="outlined" fullWidth>
             <Select
               labelId="demo-simple-select-outlined-label"
               name='style'
@@ -276,7 +240,7 @@ const Field = (props) => {
         </Grid>
         { style === 'dropdown' ?
           editing ?
-            <Grid container item xs={12} direction='column' style={{padding:'5px'}}>
+            <Grid container item xs={12} direction='column'>
               {defaultValue && defaultValue.map((option, index) => {
                 return(
                   <Grid key={`select-field-option-${index}`} item xs={12}>
@@ -343,22 +307,20 @@ const Field = (props) => {
         }
       </Paper>
       <FieldSettingsDialog
-        settingsDialog={settingsDialog}
-        closeSettingsDialog={closeSettingsDialog}
-        checkFavoriteField={checkFavoriteField}
-        checkPrintableField={checkPrintableField}
-        checkPrintPositionField={checkPrintPositionField}
-        changeFieldStatus={changeFieldStatus}
-        active={active}
-        favourite={favourite}
-        printable={printable}
-        printPosition={printPosition}
+        id={ props.id }
+        active={ props.active }
+        favourite={ props.favourite }
+        printable={ props.printable }
+        printPosition={ props.printPosition }
+        settingsDialog={ settingsDialog }
+        openSettingsDialog={ openSettingsDialog }
+        updateProceduresTemplateTabFieldMutation={ updateProceduresTemplateTabFieldMutation }
       />
       <DeleteFieldDialog
-        deleteDialog={deleteDialog}
-        closeDeleteDialog={closeDeleteDialog}
-        deleteFieldClick={deleteFieldClick}
-        fieldName={name}
+        deleteDialog={ deleteDialog }
+        openDeleteDialog={ openDeleteDialog }
+        deleteFieldClick={ deleteFieldClick }
+        fieldName={ name }
       />
     </Grid>
   )

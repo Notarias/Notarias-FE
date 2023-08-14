@@ -1,58 +1,41 @@
-import React, { useState }                            from 'react';
+import React, { useState, useEffect }                 from 'react';
 import Grid                                           from '@material-ui/core/Grid';
-import TextField                                      from '@material-ui/core/TextField';
-import Button                                         from '@material-ui/core/Button';
-import DeleteForeverIcon                              from '@material-ui/icons/DeleteForever';
-import FormControlLabel                               from '@material-ui/core/FormControlLabel';
-import Checkbox                                       from '@material-ui/core/Checkbox';
-import PrintOutlinedIcon                              from '@material-ui/icons/PrintOutlined';
-import PrintIcon                                      from '@material-ui/icons/Print';
-import MonetizationOnOutlinedIcon                     from '@material-ui/icons/MonetizationOnOutlined';
-import MonetizationOnIcon                             from '@material-ui/icons/MonetizationOn';
-import { withStyles }                                 from '@material-ui/core/styles';
-import { styles }                                     from '../styles';
-import Dialog                                         from '@material-ui/core/Dialog';
-import DialogActions                                  from '@material-ui/core/DialogActions';
-import DialogContent                                  from '@material-ui/core/DialogContent';
-import DialogTitle                                    from '@material-ui/core/DialogTitle';
 import Paper                                          from '@material-ui/core/Paper';
-import Typography                                     from '@material-ui/core/Typography';
+import TextField                                      from '@material-ui/core/TextField';
+import InputBase                                      from '@material-ui/core/InputBase';
+import IconButton                                     from '@material-ui/core/IconButton';
+import Chip                                           from '@material-ui/core/Chip';
+import Avatar                                         from '@material-ui/core/Avatar';
+import Badge                                          from '@material-ui/core/Badge';
+import DeleteForeverIcon                              from '@material-ui/icons/DeleteForever';
 import SaveIcon                                       from '@material-ui/icons/Save';
 import CreateIcon                                     from '@material-ui/icons/Create';
+import SettingsIcon                                   from '@material-ui/icons/Settings';
+import { withStyles }                                 from '@material-ui/core/styles';
+import { styles }                                     from '../styles';
 import { useMutation }                                from '@apollo/client';
 import { UPDATE_BUDGETING_TEMPLATE_TAB_FIELD }        from '../queries_and_mutations/queries'
 import { DESTROY_BUDGETING_TEMPLATE_TAB_FIELD }       from '../queries_and_mutations/queries'
 import { GET_BUDGETING_TEMPLATE_TAB_FIELDS }          from '../queries_and_mutations/queries'
-import RadioButtonUncheckedIcon                       from '@material-ui/icons/RadioButtonUnchecked';
-import RadioButtonCheckedIcon                         from '@material-ui/icons/RadioButtonChecked';
-import Chip                                           from '@material-ui/core/Chip';
-import Avatar                                         from '@material-ui/core/Avatar';
-import CategoriesSelectableList                       from './categories_selectable_list'
 import { GLOBAL_MESSAGE }                             from '../../../../../resolvers/queries';
 import client                                         from '../../../../../apollo';
-import Badge                                          from '@material-ui/core/Badge';
-import TaxedFields                                     from './taxed_fields'
-
+import TaxedFields                                    from './taxed_fields'
+import CategoryDialog                                 from './category_dialog';
+import FieldSettingsDialog                            from './field_settings_dialog';
+import DeleteFieldDialog                              from './delete_field_dialog';
 
 const TaxField = (props) => {
 
-  const { classes, currentTab } = props
-
-  const [open, setOpen] = useState(false);
-  const [field]         = useState(props.field)
-  const [categoryListOpen, setCategoryListOpen] = useState(false);
-  const [categoriesToSave, setCategoriesToSave] = useState([])
-  const [printableDialog, setPrintableDialog] = useState(false);
-  const [calculableDialog, setCalculableDialog] = useState(false);
-  const [openDialog, setOpenDialog] = useState(false);
-  const [editing, setEditing]       = useState(true);
-  const [error, setError]           = useState(false);
-  const [name, setName]             = useState()
-  const [active, setActive]         = useState(false);
-  const [printable, setPrintable] = useState(false);
-  const [calculable, setCalculable] = useState(false);
-  const [categories, setCategories] = useState([]);
+  const { classes, id, currentTab, field } = props
+  const [deleteDialog, setDeleteDialog] = useState(false);
+  const [categoryDialog, setCategoryDialog] = useState(false);
+  const [settingsDialog, setSettingsDialog] = useState(false);
+  const [editing, setEditing] = useState(true);
+  const [name, setName] = useState(props.name)
+  const [categories, setCategories] = useState(props.categories);
+  const [error, setError] = useState(false);
   const inputsList = ["name"]
+  const [categoriesToSave, setCategoriesToSave] = useState(props.categories || [])
 
   const [updateBudgetingTemplateTabFieldMutation] =
     useMutation(
@@ -74,11 +57,23 @@ const TaxField = (props) => {
         update(store, cacheData) {
           setError(false)
           setEditing(true)
-          setCategoryListOpen(false)
+          setCategoryDialog(false)
         },
         refetchQueries: [{
           query: GET_BUDGETING_TEMPLATE_TAB_FIELDS,
           variables: { "id": currentTab && currentTab.id },
+        }],
+        awaitRefetchQueries: true
+      }
+    )
+
+  const [destroyBudgetingTemplateTabFieldMutation] =
+    useMutation(
+      DESTROY_BUDGETING_TEMPLATE_TAB_FIELD, 
+      {
+        refetchQueries: [{
+          query: GET_BUDGETING_TEMPLATE_TAB_FIELDS,
+          variables: { "id": currentTab.id },
         }],
         awaitRefetchQueries: true
       }
@@ -103,97 +98,33 @@ const TaxField = (props) => {
     setError(errorsList) 
   }
 
-  React.useEffect(() => {
-    if(field) {
-      setCategories(field.categories)
-      setName(field.name)
-      setActive(field.active)
-      setPrintable(field.printable)
-      setCalculable(field.calculable)
-    }
-  }, [field && field.id])
+  useEffect(() => {
+    setCategories(props.categories)
+  }, [props.categories])
 
   const updateField = (event) => {
-    updateBudgetingTemplateTabFieldMutation({ variables: { id: field.id, name: name}})
+    updateBudgetingTemplateTabFieldMutation({ variables: { id: id, name: name}})
   }
 
   const updateFieldCategories = (event) => {
-    updateBudgetingTemplateTabFieldMutation({ variables: { id: field.id, categoriesIds: categoriesSavedIds() }})
+    updateBudgetingTemplateTabFieldMutation({ variables: { id: id, categoriesIds: categoriesSavedIds() }})
   }
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const onClickOpenCategoryList = () => {
-    setCategoryListOpen(true);
-  }
-
-  const handleCloseCategoryList = () => {
-    setCategoryListOpen(false);
-  };
-
-  const openPrintableDialog = () => {
-    setPrintableDialog(true);
-  }
-
-  const closePrintableDialog = () => {
-    setPrintableDialog(false);
-  }
-
-  const openCalculableDialog = () => {
-    setCalculableDialog(true);
-  }
-
-  const closeCalculableDialog = () => {
-    setCalculableDialog(false);
-  }
-
-  const handleClickOpenDialog = () => {
-    setOpenDialog(true);
-  }
-
-  const handleCloseDialog = () => {
-    setOpenDialog(false);
-  };
-
-  const changeFieldStatus = (event) => {
-    updateBudgetingTemplateTabFieldMutation({ variables: { id: field.id, active: !active}})
-    setActive(!active)
-    setOpenDialog(false);
-  }
-
-  const checkPrintableField = (event) => {
-    updateBudgetingTemplateTabFieldMutation({ variables: { id: field.id, printable: !printable }})
-    setPrintable(!printable);
-    setPrintableDialog(false);
-  }
-
-  const checkCalculableField = (event) => {
-    updateBudgetingTemplateTabFieldMutation({ variables: { id: field.id, calculable: !calculable }})
-    setCalculable(!calculable);
-    setCalculableDialog(false);
-  }
-
-  const [destroyBudgetingTemplateTabFieldMutation] =
-    useMutation(
-      DESTROY_BUDGETING_TEMPLATE_TAB_FIELD, 
-      {
-        refetchQueries: [{
-          query: GET_BUDGETING_TEMPLATE_TAB_FIELDS,
-          variables: { "id": currentTab && currentTab.id },
-        }],
-        awaitRefetchQueries: true
-      }
-    )
 
   const deleteFieldClick = () => {
-    destroyBudgetingTemplateTabFieldMutation({ variables: { id: field.id } })
-    setOpen(false);
+    destroyBudgetingTemplateTabFieldMutation({ variables: { id: id }})
+    setDeleteDialog(false);
+  }
+
+  const openDeleteDialog = () => {
+    setDeleteDialog(!deleteDialog);
+  };
+
+  const openCategoryList = () => {
+    setCategoryDialog(!categoryDialog);
+  }
+
+  const openSettingsDialog = () => {
+    setSettingsDialog(!settingsDialog)
   }
 
   const editField = () => {
@@ -202,26 +133,27 @@ const TaxField = (props) => {
 
   const handleNameChange = (event) => {
     setName(event.target.value);
-  };
-
-  const statusField = () => { 
-    return active ? "Desactivar" : "Activar"
-  }
+  }; 
 
   const renderTextField = () => {
     return(
       <>
         <Grid container item xs={1} alignItems="center" justifyContent="center">
-          <Button
+          <IconButton
             onClick={ editField }
           >
             <CreateIcon/>
-          </Button>
+          </IconButton>
         </Grid>
-        <Grid container item xs={5}>
-          <Typography className={ classes.texPlainTittleName }>
-            { name }
-          </Typography>
+        <Grid container item xs={6}>
+          <InputBase
+            value={ name }
+            readOnly={true}
+            inputProps={{ 'aria-label': 'naked' }}
+            variant="outlined"
+            fullWidth
+            style={{paddingLeft: '5px', paddingTop:'12px', paddingBottom:'12px'}}
+          />
         </Grid>
       </>
     )
@@ -231,21 +163,22 @@ const TaxField = (props) => {
     return(
       <>
         <Grid container item xs={1} alignItems="center" justifyContent="center">
-          <Button
+          <IconButton
             onClick={ updateField }
           >
             <SaveIcon />
-          </Button>
+          </IconButton>
         </Grid>
-        <Grid container item xs={5}>
+        <Grid container item xs={6}>
           <TextField 
             id="standard-basic" 
-            label="Nombre del campo"
-            className={ classes.textInputTittleName }
             value={ name }
             onChange={ handleNameChange }
+            variant="outlined"
+            style={{'backgroundColor': 'rgb(200, 200, 200)'}}
+            fullWidth
             error={ !!error["name"] && true }
-            helperText={error["name"] || " "}
+            helperText={error["name"] || ""}
             errorskey={ "name" }
             name='name'
           />
@@ -264,9 +197,9 @@ const TaxField = (props) => {
   }
 
   return (
-    <Grid container item alignItems="flex-start" justifyContent="flex-start" className={ classes.fielPaddingBottom }>
-      <Paper className={classes.fieldPaper}>
-        <Grid container item className={ classes.fieldHeightRow }>
+    <Grid id='fields-rows' container item xs={12} direction='column' justifyContent="center" style={{padding:'5px'}}>
+      <Paper style={{padding:'5px'}}>
+        <Grid container>
           { editing ? renderTextField() : renderInputField() }
           <Grid container alignItems="center" justifyContent="center" item xs={1}>
             {field.taxableSelector === 'tariff' ?
@@ -275,181 +208,61 @@ const TaxField = (props) => {
                 color='primary'
               />
             :
-              <Badge classes={{badge: classes.badgeGreenColor}} overlap="circular" badgeContent={field && field.defaultValue + "%"}>
-                <div ></div>
-              </Badge>
+              <Badge classes={{badge: classes.badgeGreenColor}} overlap="circular" badgeContent={field && field.defaultValue + "%"}/>
             }
           </Grid>
-          <Grid container direction="column"  alignItems="center" justifyContent="center" item xs={1}>
+          <Grid container direction="column"  alignItems="center" justifyContent="center" item xs={2}>
             <Chip
               avatar={<Avatar>{ categoriesToShow() }</Avatar>}
               label={ ` categorias` }
               color={ categories.length > 0 ? "primary" : "default" }
-              onClick={ onClickOpenCategoryList }
+              onClick={ openCategoryList }
             />
-            <Dialog
-              open={categoryListOpen}
-              onClose={handleCloseCategoryList}
-            >
-              <DialogTitle>
-                Selecciona una o varias Categorias
-              </DialogTitle>
-              <DialogContent>
-                <CategoriesSelectableList
-                  CategoriesSelectableList={ CategoriesSelectableList }
-                  setCategoriesToSave={ setCategoriesToSave }
-                  categoriesToSave={ categoriesToSave }
-                  categories={ categories }
-                />
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={ handleCloseCategoryList }> Cancelar </Button>
-                <Button onClick={ updateFieldCategories }> Aceptar </Button>
-              </DialogActions>
-            </Dialog>
           </Grid>
 
-          <Grid container item xs={1} alignItems="center" justifyContent="center">
-            <Grid item>
-              <FormControlLabel
-                control={<Checkbox 
-                  color="secundary"
-                  icon={<PrintOutlinedIcon />} 
-                  checkedIcon={<PrintIcon />} 
-                  name="printable"
-                  checked={ printable }
-                />}
-                label=" "
-                className={ classes.formControlPadding }
-                onChange={ openPrintableDialog }
-              />
-            </Grid>
-            <Dialog
-              open={printableDialog}
-              onClose={closePrintableDialog}
-              aria-labelledby="print-aletrt"
-              aria-describedby="print-alert-dialog"
-            >
-              <DialogTitle id="favorite-alert">
-                { printable === true ? "No imprimir" : "Agregar a formulario de impresión"}
-              </DialogTitle>
-              <DialogContent>
-                { printable === true ? "Este campo dejará de aparecer en el formato de impresión" : "Se marcará este campo para aparecer en el formulario de impresión"}
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={ closePrintableDialog } color="secondary">
-                  Cancelar
-                </Button>
-                <Button autoFocus onClick={ checkPrintableField } variant="contained">
-                  { printable ? "Quitar" : "Añadir"}
-                </Button>
-              </DialogActions>
-            </Dialog>
-          </Grid>
-
-          <Grid container item xs={1} alignItems="center" justifyContent="center">
-            <Grid item>
-              <FormControlLabel
-                control={<Checkbox 
-                  color="primary"
-                  icon={<MonetizationOnOutlinedIcon />} 
-                  checkedIcon={<MonetizationOnIcon />} 
-                  name="calculable"
-                  checked={ calculable }
-                />}
-                label=" "
-                className={ classes.formControlPadding }
-                onChange={ openCalculableDialog }
-              />
-            </Grid>
-            <Dialog
-              open={calculableDialog}
-              onClose={closeCalculableDialog}
-              aria-labelledby="print-aletrt"
-              aria-describedby="print-alert-dialog"
-            >
-              <DialogTitle id="favorite-alert">
-                { calculable === true ? "Omitir en los calculos del presupuesto" : "Agregar a los calculos del presupuesto"}
-              </DialogTitle>
-              <DialogContent>
-                { calculable === true ? "Este campo dejará de calcularse en el presupuesto" : "Este campo agregara a los calculos del presupuesto"}
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={ closeCalculableDialog } color="secondary">
-                  Cancelar
-                </Button>
-                <Button autoFocus onClick={ checkCalculableField } variant="contained">
-                  { calculable ? "Quitar" : "Añadir"}
-                </Button>
-              </DialogActions>
-            </Dialog>
-          </Grid>
-
-          <Grid container direction="column"  alignItems="center" justifyContent="center" item xs={1} onClick={ handleClickOpenDialog }>
-            {
-            active ?
-              <Button>
-                <RadioButtonCheckedIcon className={classes.radioButtonActiveGreen}/>
-              </Button>
-            :
-              <Button>
-                <RadioButtonUncheckedIcon color="secondary" className={ classes.defaultIcon }/>
-              </Button>
-            }
-          </Grid>
-          <Dialog
-            open={ openDialog }
-            onClose={ handleCloseDialog }
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-          >
-            <DialogTitle id="alert-dialog-title"> Deseas {statusField()}</DialogTitle>
-            <DialogContent>
-              Realmente deseas { statusField() }
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={ handleCloseDialog } color="secondary">
-                Cancelar
-              </Button>
-              <Button
-                color="primary"
-                autoFocus
-                onClick={ changeFieldStatus }
-              >
-                { statusField() }
-              </Button>
-            </DialogActions>
-          </Dialog>
           <Grid container direction="column"  alignItems="center" justifyContent="center" item xs={1}>
-            <Button onClick={ handleClickOpen }>
+            <IconButton onClick={ openSettingsDialog }>
+              <SettingsIcon/>
+            </IconButton>
+          </Grid>
+
+          <Grid container direction="column"  alignItems="center" justifyContent="center" item xs={1}>
+            <IconButton onClick={ openDeleteDialog } color='secondary'>
               <DeleteForeverIcon/>
-            </Button>
-            <Dialog
-              open={open}
-              onClose={handleClose}
-              aria-labelledby="alert-dialog-title"
-              aria-describedby="alert-dialog-description"
-            >
-              <DialogTitle id="alert-dialog-title">{"Eliminar campo"}</DialogTitle>
-              <DialogContent>
-                Se eliminara de manera permantente el campo: 
-                <Typography variant="subtitle2" className={ classes.texPlainTittleName }>
-                  {name}
-                </Typography>
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={ handleClose } color="secondary">
-                  Cancelar
-                </Button>
-                <Button color="primary" autoFocus onClick={ deleteFieldClick }>
-                  Borrar
-                </Button>
-              </DialogActions>
-            </Dialog>
+            </IconButton>
           </Grid>
         </Grid>
       </Paper>
       { field && <TaxedFields parentField={field}/> }
+
+      
+      <CategoryDialog
+        categoryDialog={ categoryDialog }
+        categories={ categories }
+        categoriesToSave={ categoriesToSave }
+        setCategoriesToSave={ setCategoriesToSave }
+        updateFieldCategories={ updateFieldCategories }
+        openCategoryList={ openCategoryList }
+      />
+
+      <FieldSettingsDialog
+        id={ field.id }
+        active={ props.active }
+        printable={ props.printable }
+        calculable={ props.calculable }
+        settingsDialog={ settingsDialog }
+        openSettingsDialog={ openSettingsDialog }
+        updateBudgetingTemplateTabFieldMutation={ updateBudgetingTemplateTabFieldMutation }
+      />
+
+      <DeleteFieldDialog
+        fieldName={ name }
+        deleteDialog={ deleteDialog }
+        setDeleteDialog= { setDeleteDialog }
+        openDeleteDialog={ openDeleteDialog }
+        deleteFieldClick= { deleteFieldClick }
+      />
+
     </Grid>
   )
 }

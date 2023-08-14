@@ -40,6 +40,12 @@ const FieldList = (props) => {
                   key={ field.id + "-field"}
                   arrayIndex={ index }
                   removeFromList={ removeFromList }
+                  name={ field.name || "" }
+                  categories={ field.categories || [] }
+                  id={ field.id || " " }
+                  active={ field.active }
+                  printable={ field.printable }
+                  calculable={field.calculable }
                   currentTab={ currentTab }
                   field={ field }
                 />

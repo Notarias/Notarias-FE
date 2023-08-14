@@ -85,6 +85,13 @@ export default (props) => {
     return(fieldValue && fieldValue.value === newValue)
   }
 
+  
+  const formatValue = (value) => {
+    let valueByOne = (value * 1.0)
+
+    return((valueByOne / 100).toFixed(2))
+  }
+
   return(
     <Grid container item xs={8} direction="row">
       <Grid container item xs={9}>
@@ -100,9 +107,13 @@ export default (props) => {
           xs={9}
         >
           <Typography align='left'>
-            <Link href="#" onClick={handleClickOpen}>
-              { fieldValue && fieldValue.value ? value : "Agregar Información" }
-            </Link>
+            {field && field.fieldType ?
+              `$ ${fieldValue && fieldValue.value ? formatValue(value) : "Agregar Información" }`
+            :
+              <Link href="#" onClick={handleClickOpen}>
+                {`$ ${fieldValue && fieldValue.value ? formatValue(value) : "Agregar Información" }`}
+              </Link>
+            }
           </Typography>
           <Dialog open={open} onClose={handleClose} fullWidth>
             <DialogTitle>

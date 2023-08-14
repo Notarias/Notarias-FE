@@ -35,7 +35,7 @@ function intersection(a, b) {
   return a.filter((value) => b.indexOf(value) !== -1);
 }
 
-const categoryFieldButton = (props) => {
+const CategoryFieldButton = (props) => {
   const classes = useStyles();
   const { categoriesToSave, setCategoriesToSave} = props
   const [checked, setChecked] = React.useState([]);
@@ -180,4 +180,4 @@ const categoryFieldButton = (props) => {
   );
 }
 
-export default  (categoryFieldButton);
+export default  CategoryFieldButton;
