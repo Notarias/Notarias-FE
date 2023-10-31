@@ -30,7 +30,7 @@ const payableTooltipText = (totalPayable) => {
 }
 
 const FieldValue = (props) => {
-  const { classes, budget, field: templateField } = props
+  const { classes, budget, field: templateField, tabId } = props
 
   const [pristine, setPristine] = useState(false);
   const [initialFieldValue, setInitialFieldValue] = useState(0);
@@ -109,6 +109,7 @@ const FieldValue = (props) => {
             currentId={ data && data.budgetFieldValue}
             setChangeInputStatus={setChangeInputStatus}
             haveId={data && data.budgetFieldValue ? data.budgetFieldValue.id : "s/n"}
+            tabId={tabId}
           />
         </Grid>
         <Grid item xs={3}>

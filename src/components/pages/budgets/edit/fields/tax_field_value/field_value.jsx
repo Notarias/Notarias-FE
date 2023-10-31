@@ -136,74 +136,74 @@ const FieldValue = (props) => {
           </Tooltip>
         </Grid>
         <Grid container item xs={2} direction='row' justifyContent="flex-start" alignItems="center">
-        <Grid item xs={3}>
-          {/* <SaveButton
-            budget={budget}
-            templateField={templateField}
-            pristine={pristine}
-            setPristine={setPristine}
-            budgetFieldValue={budgetFieldValue}
-            value={value}
-            editingValue={editingValue}
-            setEditingValue={setEditingValue}
-            setEditing={setEditing}
-          /> */}
-        </Grid>
-        <Grid item xs={3}>
-          <GenericDropdownMenu>
-            <MenuItem key="1-pago">
-              {
-                budgetFieldValue &&
-                  <Payment
-                    value={value}
-                    totalPayable={totalPayable}
-                    budget={budget}
-                    budgetFieldValue={budgetFieldValue}
-                    field={templateField}
-                  />
+          <Grid item xs={3}>
+            {/* <SaveButton
+              budget={budget}
+              templateField={templateField}
+              pristine={pristine}
+              setPristine={setPristine}
+              budgetFieldValue={budgetFieldValue}
+              value={value}
+              editingValue={editingValue}
+              setEditingValue={setEditingValue}
+              setEditing={setEditing}
+            /> */}
+          </Grid>
+          <Grid item xs={3}>
+            <GenericDropdownMenu>
+              <MenuItem key="1-pago">
+                {
+                  budgetFieldValue &&
+                    <Payment
+                      value={value}
+                      totalPayable={totalPayable}
+                      budget={budget}
+                      budgetFieldValue={budgetFieldValue}
+                      field={templateField}
+                    />
+                }
+              </MenuItem>
+              <MenuItem key="2-pago">
+                {
+                  budgetFieldValue &&
+                    <PaymentList
+                      budget={budget}
+                      totalPayable={totalPayable}
+                      value={value}
+                      budgetFieldValue={budgetFieldValue}
+                      field={templateField}
+                    />
+                }
+              </MenuItem>
+              <MenuItem key="activar-desactivar">
+                { 
+                  budgetFieldValue &&
+                    <ActiveSwitch
+                      refetch={refetch}
+                      budgetFieldValue={budgetFieldValue}
+                      templateField={templateField}
+                      budget={budget}/> 
+                }
+              </MenuItem>
+            </GenericDropdownMenu>
+          </Grid>
+          <Grid item xs={3}>
+            <IconButton  color="primary" onClick={handleExpandTaxedFields}>
+              <ExpandMoreIcon/>
+            </IconButton>
+          </Grid>
+          <Grid container item xs={3} justifyContent='flex-end' style={{paddingRight: "20px"}}>
+              {!field.calculable?
+                <Tooltip title="Campo no calculable" >
+                  <Avatar className={classes.avatarSizeSmall}>
+                    <MoneyOffIcon/>
+                  </Avatar>
+                </Tooltip>
+              :
+                ""
               }
-            </MenuItem>
-            <MenuItem key="2-pago">
-              {
-                budgetFieldValue &&
-                  <PaymentList
-                    budget={budget}
-                    totalPayable={totalPayable}
-                    value={value}
-                    budgetFieldValue={budgetFieldValue}
-                    field={templateField}
-                  />
-              }
-            </MenuItem>
-            <MenuItem key="activar-desactivar">
-              { 
-                budgetFieldValue &&
-                  <ActiveSwitch
-                    refetch={refetch}
-                    budgetFieldValue={budgetFieldValue}
-                    templateField={templateField}
-                    budget={budget}/> 
-              }
-            </MenuItem>
-          </GenericDropdownMenu>
+          </Grid>
         </Grid>
-        <Grid item xs={3}>
-          <IconButton  color="primary" onClick={handleExpandTaxedFields}>
-            <ExpandMoreIcon/>
-          </IconButton>
-        </Grid>
-        <Grid container item xs={3} justifyContent='flex-end' style={{paddingRight: "20px"}}>
-            {!field.calculable?
-              <Tooltip title="Campo no calculable" >
-                <Avatar className={classes.avatarSizeSmall}>
-                  <MoneyOffIcon/>
-                </Avatar>
-              </Tooltip>
-            :
-              ""
-            }
-        </Grid>
-      </Grid>
       </Grid>
       <Grid item key={`taxed-fields-${budget.id}`}>
         <TaxedFields budget={budget} templateField={templateField} expandTaxedFields={expandTaxedFields} setExpandTaxedFields={setExpandTaxedFields}/>
