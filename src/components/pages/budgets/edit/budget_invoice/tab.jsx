@@ -24,7 +24,7 @@ export default (props) => {
   );
 
   const { data: totalsData } = useQuery(
-    GET_BUDGETING_TAB_TOTALS, { variables: { id: tab.id, budgetId: budget.id } }
+    GET_BUDGETING_TAB_TOTALS, { variables: { id: tab.id, budgetId: budget.id }, fetchPolicy: 'no-cache' }
   )
 
   useEffect(() => {

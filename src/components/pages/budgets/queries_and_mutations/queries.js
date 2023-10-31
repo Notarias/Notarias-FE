@@ -720,6 +720,18 @@ export const GET_BUDGET_TOTALS = gql`
   }
 `
 
+export const GET_CREDIT_TOTAL = gql`
+  query budgetTotals(
+    $id: ID!
+  ){
+    budgetTotals(
+      id: $id
+    ){
+      totalCredit
+    }
+  }
+`
+
 export const GET_CREDIT_PAYMENTS = gql`
   query creditPayments(
     $budgetId: ID!

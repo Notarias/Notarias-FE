@@ -1,17 +1,18 @@
-import React, { useState }           from 'react';
-import Button                        from '@material-ui/core/Button';
-import SaveIcon                      from '@material-ui/icons/Save';
-import { useMutation }               from '@apollo/client';
-import { UPDATE_BUDGET_FIELD_VALUE } from '../../../queries_and_mutations/queries'
-import { CREATE_BUDGET_FIELD_VALUE } from '../../../queries_and_mutations/queries'
-import { GET_BUDGET_FIELD_VALUE }    from '../../../queries_and_mutations/queries'
-import { GET_BUDGET }                from '../../../queries_and_mutations/queries'
-import { GET_BUDGET_TOTALS }         from '../../../queries_and_mutations/queries'
-import Dialog                        from '@material-ui/core/Dialog';
-import DialogActions                 from '@material-ui/core/DialogActions';
-import DialogContent                 from '@material-ui/core/DialogContent';
-import DialogTitle                   from '@material-ui/core/DialogTitle';
-import { GET_BUDGETS_AUDITLOG }      from '../../../queries_and_mutations/queries';
+import React, { useState }               from 'react';
+import Button                            from '@material-ui/core/Button';
+import SaveIcon                          from '@material-ui/icons/Save';
+import { useMutation }                   from '@apollo/client';
+import { UPDATE_BUDGET_FIELD_VALUE }     from '../../../queries_and_mutations/queries'
+import { CREATE_BUDGET_FIELD_VALUE }     from '../../../queries_and_mutations/queries'
+import { GET_BUDGET_FIELD_VALUE }        from '../../../queries_and_mutations/queries'
+import { GET_BUDGET }                    from '../../../queries_and_mutations/queries'
+import { GET_BUDGET_TOTALS }             from '../../../queries_and_mutations/queries'
+import { GET_BUDGETING_TAB_TOTALS }      from '../../../queries_and_mutations/queries';
+import Dialog                            from '@material-ui/core/Dialog';
+import DialogActions                     from '@material-ui/core/DialogActions';
+import DialogContent                     from '@material-ui/core/DialogContent';
+import DialogTitle                       from '@material-ui/core/DialogTitle';
+import { GET_BUDGETS_AUDITLOG }          from '../../../queries_and_mutations/queries';
 import { BUDGET_TAXED_FIELDS_FOR_FIELD } from '../../../queries_and_mutations/queries';
 
 const buildRefetchQueries = (field, budget) => {
@@ -50,7 +51,8 @@ const AddFieldValue = (props) => {
     setPristine, 
     currentId, 
     setChangeInputStatus,
-    initialFieldValue
+    initialFieldValue,
+    tabId
   } = props
   const [open, setOpen] = useState(false);
   
@@ -122,11 +124,15 @@ const AddFieldValue = (props) => {
         },
         {
           query: GET_BUDGET,
-          variables: {"id": budget.id }
+          variables: { "id": budget.id }
         },
         {
           query: GET_BUDGETS_AUDITLOG,
           variables: { "budgetId": budget.id }
+        },
+        {
+          query: GET_BUDGETING_TAB_TOTALS,
+          variables: { "id": tabId, "budgetId": budget.id }
         },
         {
           query: GET_BUDGET_TOTALS,
