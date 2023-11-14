@@ -22,6 +22,7 @@ import { CREATE_PAYMENT }                   from '../../../queries_and_mutations
 import { GET_BUDGET_FIELD_VALUE }           from '../../../queries_and_mutations/queries';
 import { GET_BUDGET_TOTALS }                from '../../../queries_and_mutations/queries';
 import { GET_PAYMENTS }                     from '../../../queries_and_mutations/queries';
+import { GET_BUDGETING_TAB_TOTALS }         from '../../../queries_and_mutations/queries';
 import { GET_BUDGETS_AUDITLOG }             from '../../../queries_and_mutations/queries';
 import { GLOBAL_MESSAGE }                   from '../../../../../../resolvers/queries';
 import client                               from '../../../../../../apollo';
@@ -68,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Payment = (props) => {
-  const { totalPayable, budget, fieldValueId, fieldId } = props
+  const { totalPayable, budget, fieldValueId, fieldId, tabId } = props
   const [notePayment, setNotePayment] = useState("");
   const [valuePayment, setValuePayment] = useState(0);
   const [pristine, setPristine] = useState(true);
@@ -94,20 +95,24 @@ const Payment = (props) => {
       },
       refetchQueries: [
         {
-        query: GET_BUDGET_FIELD_VALUE,
-          variables: { "budgetingTemplateFieldId": fieldId , "budgetId": budget.id }
+          query: GET_BUDGET_FIELD_VALUE,
+          variables: { budgetingTemplateFieldId: fieldId , budgetId: budget.id }
         },
         {
           query: GET_PAYMENTS,
-          variables: { "fieldValueId": fieldValueId }
+          variables: { fieldValueId: fieldValueId }
         },
         {
           query: GET_BUDGET_TOTALS,
-          variables: { "id": budget.id }
+          variables: { id: budget.id }
+        },
+        {
+          query: GET_BUDGETING_TAB_TOTALS,
+          variables: { id: tabId, budgetId: budget.id }
         },
         {
           query: GET_BUDGETS_AUDITLOG,  
-            variables: {"budgetId": budget.id }
+            variables: {budgetId: budget.id }
         }
       ],
       awaitRefetchQueries: true
@@ -232,6 +237,7 @@ const Payment = (props) => {
                 error={ !!error["total"] && true }
                 helperText={ error["total"] || "Cantidad"}
                 errorskey={ "total" }
+                defaultValue={totalPayable}
                 required
                 id="margin-normal"
                 margin="normal"

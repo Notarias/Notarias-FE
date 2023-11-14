@@ -121,6 +121,7 @@ const FieldValue = (props) => {
                 budget={budget}
                 fieldValueId={ data && data.budgetFieldValue ? data.budgetFieldValue.id : ""}
                 fieldId={field.id}
+                tabId={tabId}
               />
             </MenuItem>
             <MenuItem key="2-pago">

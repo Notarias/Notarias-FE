@@ -488,6 +488,8 @@ export const GET_BUDGETING_TAB_TOTALS = gql`
       total
       totalPayable
       totalPaid
+      totalPaidTab
+      totalDebt
     }
   }
 `
