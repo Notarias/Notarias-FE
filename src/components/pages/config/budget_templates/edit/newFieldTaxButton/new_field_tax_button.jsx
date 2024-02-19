@@ -28,6 +28,7 @@ const NewFieldTaxButton = (props) => {
   const [taxableSelector, setTaxableSelector] = useState("")
   const [pristine, setPristine] = useState(true)
   const [allOptionsMarked, setAllOptionsMarked] = useState(false)
+  const [tariffSelect, setTariffSelect]    = useState(false);
 
   const handleClose = () => {
     setOpen(false)
@@ -83,7 +84,8 @@ const NewFieldTaxButton = (props) => {
             "defaultValue": defaultValue ,
             "taxedFieldsIds": taxedFieldsIds,
             "operator": operator,
-            "taxableSelector": taxableSelector 
+            "taxableSelector": taxableSelector,
+            "tariff": tariffSelect
           }
       }
     )
@@ -98,6 +100,13 @@ const NewFieldTaxButton = (props) => {
       }
     } else {
       if(operator.length && taxableSelector.length && (fieldName && fieldName.length) && defaultValue && taxedFieldsIds.length) {
+        setAllOptionsMarked(true)
+      } else {
+        setAllOptionsMarked(false)
+      }
+    }
+    if(tariffSelect) {
+      if((fieldName && fieldName.length) && taxedFieldsIds.length) {
         setAllOptionsMarked(true)
       } else {
         setAllOptionsMarked(false)
@@ -156,6 +165,8 @@ const NewFieldTaxButton = (props) => {
               taxableSelector={taxableSelector}
               setTaxableSelector={setTaxableSelector}
               setPristine={setPristine}
+              tariffSelect={tariffSelect}
+              setTariffSelect={setTariffSelect}
             />
           </DialogContent>
           <Divider/>
