@@ -258,7 +258,9 @@ export const styles = theme => {
       marginRight: "5px"
     },
     operatorMenu: {
-      width: "80%",
+      width: "100%",
+      paddingLeft: "10px",
+      paddingRight: "10px",
     },
     selectOperatorMenu: {
       pfontSize: "16px"

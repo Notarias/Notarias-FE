@@ -96,18 +96,18 @@ const TariffTaxFieldSelector = (props) => {
 
   return(
     <>
-      <Grid container item xs={5} alignItems="center" justifyContent="flex-start">
-        <TextField
-          onChange={ changeSearch }
-          size="small"
-          id="search_field"
-          label="Buscar campo"
-          variant="outlined"
-          className={classes.textFieldSearch}
-        />
-      </Grid>
+      <Grid container direction="row" item xs={12} alignItems="center" justifyContent="center">
+        <Grid container item xs={5}>
+          <TextField
+            onChange={ changeSearch }
+            size="small"
+            id="search_field"
+            label="Buscar campo"
+            variant="outlined"
+            className={classes.textFieldSearch}
+          />
+        </Grid>
 
-      <Grid container direction="row" item xs={12}>
         <Divider/>
         <Grid container item xs={12} direction="row" alignItems="center"  justifyContent="center" className={classes.gridSearchField}>
           {taxesTariffList('Choices', searchList)}

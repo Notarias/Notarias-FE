@@ -377,7 +377,8 @@ export const CREATE_TAX_FIELD = gql`
     $defaultValue: Int,
     $taxedFieldsIds: [ID!]!,
     $operator: String!,
-    $taxableSelector: String!
+    $taxableSelector: String!,
+    $tariff: Boolean!
   ){
     createTaxField(input :{
       name: $name,
@@ -385,7 +386,8 @@ export const CREATE_TAX_FIELD = gql`
       defaultValue: $defaultValue,
       taxedFieldsIds: $taxedFieldsIds,
       operator: $operator,
-      taxableSelector: $taxableSelector
+      taxableSelector: $taxableSelector,
+      tariff: $tariff
       }
     ){
       fieldTax{
@@ -397,6 +399,7 @@ export const CREATE_TAX_FIELD = gql`
         id
         name
         operator
+        tariff
         categories{
           id
           name
