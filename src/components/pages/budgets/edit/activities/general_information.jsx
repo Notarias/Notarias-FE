@@ -221,6 +221,7 @@ export default (props) => {
           </Grid>
           <ProceedingNumber budget={budget}/>
           <WritingNumber budget={budget}/>
+          <BudgetTypeSelector budget={budget}/>
         </>
       }
     </Grid>

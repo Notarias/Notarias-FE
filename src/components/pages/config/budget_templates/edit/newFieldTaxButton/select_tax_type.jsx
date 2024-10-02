@@ -119,20 +119,11 @@ const SelectTaxType = (props) => {
           />
         </Grid>
       </Grid>
-
-      {tariffSelect ?
-        <TariffTaxFieldSelector
-          templateData={templateData}
-          setTaxedFieldsIds={setTaxedFieldsIds}
-          setPristine={setPristine}
-        />
-      :
-        <TaxFieldsSelector
-          templateData={templateData}
-          setTaxedFieldsIds={setTaxedFieldsIds}
-          setPristine={setPristine}
-        />
-      }
+      <TaxFieldsSelector
+        templateData={templateData}
+        setTaxedFieldsIds={setTaxedFieldsIds}
+        setPristine={setPristine}
+      />
     </>
   )
 }

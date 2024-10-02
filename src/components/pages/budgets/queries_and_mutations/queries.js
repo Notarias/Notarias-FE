@@ -192,6 +192,15 @@ export const GET_BUDGETS = gql`
   }
 `
 
+export const GET_BUDGETING_BUDGET_TYPES = gql`
+  query budgetingBudgetTypes{
+    budgetingBudgetTypes{
+      id
+      name
+    }
+}
+`
+
 export const GET_PROCEDURES_TEMPLATES_QUICK_LIST = gql`
   query proceduresTemplatesQuickList{
     proceduresTemplatesQuickList{
