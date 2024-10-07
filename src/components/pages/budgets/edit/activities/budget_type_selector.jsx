@@ -6,25 +6,63 @@ import FormControl                        from '@material-ui/core/FormControl';
 import MenuItem                           from '@material-ui/core/MenuItem';
 import ListItemText                       from '@material-ui/core/ListItemText';
 import Select                             from '@material-ui/core/Select';
-import { useQuery }                       from '@apollo/client';
-import { GET_BUDGETING_BUDGET_TYPES }     from '../../queries_and_mutations/queries';
+import { useMutation }                    from '@apollo/client';
+import { SAVE_BUDGET_TYPE, GET_BUDGET }   from '../../queries_and_mutations/queries';
+import { GLOBAL_MESSAGE }                 from '../../../../../resolvers/queries';
+import client                             from '../../../../../apollo';
 
 const BudgetTypeSelector = (props) => {
+  const { budget, budgetTypeList } = props
 
-  const [budgetTypeList, setBudgetTypeList] = useState();
-  const [budgetTypeSelected, setBudgetTypeSelected] = useState();
-  
-  const { data } = useQuery(
-    GET_BUDGETING_BUDGET_TYPES
-  );
+  const [budgetTypeSelected, setBudgetTypeSelected] = useState(!!budget.budgetingBudgetType ? budget.budgetingBudgetType.id : '');
 
-  useEffect( () => {
-    if(data && data.budgetingBudgetTypes){
-      setBudgetTypeList(data && data.budgetingBudgetTypes);
-  }}, [data]);
+  const [saveBudgetType] =
+  useMutation(
+    SAVE_BUDGET_TYPE,
+    {
+      onError(apolloError) {
+        client.writeQuery({
+          query: GLOBAL_MESSAGE,
+          data: {
+            globalMessage: {
+              message: "Ocurrió un error",
+              type: "error",
+              __typename: "globalMessage"
+            }
+          }
+        })
+      },
+      onCompleted(cacheData) {
+        client.writeQuery({
+          query: GLOBAL_MESSAGE,
+          data: {
+            globalMessage: {
+              message: "Cambio guardado con exito",
+              type: "success",
+              __typename: "globalMessage"
+            }
+          }
+        })
+      },
+      refetchQueries: [
+        {
+          query: GET_BUDGET,
+          variables: { id: budget.id } 
+        },
+      ],
+      awaitRefetchQueries: true
+    }
+  )
 
   const handleChange = (event) => {
+    console.log(event.target)
     setBudgetTypeSelected(event.target.value);
+    saveBudgetType({
+      variables:{
+        "id": budget.id,
+        "budgetingBudgetTipeId": event.target.value
+      }
+    })
   };
 
   return(
@@ -35,21 +73,23 @@ const BudgetTypeSelector = (props) => {
         </Grid>
       </Hidden>
       <Grid container item xs>
-        <FormControl fullWidth inputProps={{ 'aria-label': 'naked' }}>
+        <FormControl fullWidth>
           <Select
+            displayEmpty
             fullWidth
+            disableUnderline
             value={budgetTypeSelected}
             onChange={handleChange}
           >
-            <MenuItem key={'budget-type'} value={0}>
+            <MenuItem key={'budget-type'} value={""}>
               <ListItemText>
                 <Typography noWrap align='left' style={{ padding: '10px', textTransform: 'uppercase' }}>
                   <strong>Seleccione una Opcion</strong>
                 </Typography>
               </ListItemText>
             </MenuItem>
-            { budgetTypeList && budgetTypeList.map((type, i) => (
-              <MenuItem key={`budget-type-${i}`} value={type.name}>
+            {budgetTypeList.map((type, i) => (
+              <MenuItem key={`budget-type-${i}`} value={type.id}>
                 <ListItemText>
                   <Typography noWrap align='left' style={{ padding: '10px', textTransform: 'uppercase' }}>
                     <strong>{ type.name }</strong>
