@@ -351,27 +351,31 @@ query budget(
         id
         name
         version
-      },
+      }
+      budgetingBudgetType{
+        id
+        name
+      }
       client {
         firstName
         lastName
         rfc
         curp
         id
-      },
+      }
       attorney {
         firstName
         lastName
         rfc
         curp
         id
-      },
+      }
       proceduresTemplate{
         active
         name
         id
         version
-      },
+      }
       procedures {
         id
         serialNumber
@@ -980,6 +984,7 @@ export const UPDATE_BUDGET = gql`
     $id: ID!,
     $clientId: ID,
     $proceduresTemplateId: ID,
+    $budgetingBudgetTipeId: ID,
     $budgetingTemplateId: ID,
     $asigneeId: ID,
     $completedAt: ISO8601DateTime
@@ -987,8 +992,9 @@ export const UPDATE_BUDGET = gql`
     updateBudget(input :{
       id: $id
       clientId: $clientId
-      budgetingTemplateId: $budgetingTemplateId
       proceduresTemplateId: $proceduresTemplateId
+      budgetingTemplateId: $budgetingTemplateId
+      budgetingBudgetTypeId: $budgetingBudgetTypeId
       asigneeId: $asigneeId
       completedAt: $completedAt
       }
@@ -1027,6 +1033,10 @@ export const UPDATE_BUDGET = gql`
           name
           serialNumber
         }
+        budgetingBudgetType{
+          id
+          name
+        }
         client{
           firstName
           lastName
@@ -1046,6 +1056,24 @@ export const UPDATE_BUDGET = gql`
       }
     }
   }
+`
+export const SAVE_BUDGET_TYPE = gql`
+  mutation updateBudget(
+    $id: ID!,
+    $budgetingBudgetTipeId: ID,
+  ){
+    updateBudget(input :{
+      id: $id
+      budgetingBudgetTypeId: $budgetingBudgetTipeId
+    }){
+      budget{
+        budgetingBudgetType{
+          id
+          name
+        }
+      }
+    }
+}
 `
 
 export const GET_BUDGETS_AUDITLOG = gql`

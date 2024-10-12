@@ -1,31 +1,45 @@
-import React, {useState}           from 'react';
-import Skeleton                    from '@material-ui/lab/Skeleton';
-import Grid                        from '@material-ui/core/Grid';
-import Hidden                      from '@material-ui/core/Hidden';
-import Typography                  from '@material-ui/core/Typography';
-import Divider                     from '@material-ui/core/Divider';
-import IconButton                  from '@material-ui/core/IconButton';
-import Button                      from '@material-ui/core/Button';
-import Print                       from '@material-ui/icons/Print';
-import VisibilityIcon              from '@material-ui/icons/Visibility';
-import Tooltip                     from '@material-ui/core/Tooltip';
-import OpenInNewIcon               from '@material-ui/icons/OpenInNew';
-import { Link }                    from 'react-router-dom';
-import AsigneesList                from '../asignees_list';
-import Reporter                    from '../reporter';
-import BudgetActionsMenu           from './budget_actions_menu';
-import BudgetFileUploader          from './budget_file_uploader';
-import { BASE_URI }                from '../../../../../apollo';
-import ProceedingNumber            from './proceeding_number';
-import WritingNumber               from './writing_number';
-import CompleteBudgetButton        from './complete_budget_button';
+import React, { useState, useEffect}    from 'react';
+import Skeleton                         from '@material-ui/lab/Skeleton';
+import Grid                             from '@material-ui/core/Grid';
+import Hidden                           from '@material-ui/core/Hidden';
+import Typography                       from '@material-ui/core/Typography';
+import Divider                          from '@material-ui/core/Divider';
+import IconButton                       from '@material-ui/core/IconButton';
+import Button                           from '@material-ui/core/Button';
+import Print                            from '@material-ui/icons/Print';
+import VisibilityIcon                   from '@material-ui/icons/Visibility';
+import Tooltip                          from '@material-ui/core/Tooltip';
+import OpenInNewIcon                    from '@material-ui/icons/OpenInNew';
+import { Link }                         from 'react-router-dom';
+import { BASE_URI }                     from '../../../../../apollo';
+import { useQuery }                     from '@apollo/client';
+import { GET_BUDGETING_BUDGET_TYPES }   from '../../queries_and_mutations/queries';
+import AsigneesList                     from '../asignees_list';
+import Reporter                         from '../reporter';
+import BudgetActionsMenu                from './budget_actions_menu';
+import BudgetFileUploader               from './budget_file_uploader';
+import ProceedingNumber                 from './proceeding_number';
+import WritingNumber                    from './writing_number';
+import BudgetTypeSelector               from './budget_type_selector';
+import CompleteBudgetButton             from './complete_budget_button';
 
 export default (props) => {
 
   const { budget, loadingBudget } = props
 
   const [array] = useState([1,2,3,4,5,6,7,8,9])
+  const [budgetTypeList, setBudgetTypeList] = useState('');
   const procedure = budget.procedures[budget.procedures.length - 1]
+
+  const { data } = useQuery(
+    GET_BUDGETING_BUDGET_TYPES
+  );
+
+  useEffect( () => {
+    if(data && data.budgetingBudgetTypes){
+      setBudgetTypeList(data && data.budgetingBudgetTypes);
+    }
+  }, [data]);
 
   return(
     <Grid container item alignItems="center">
@@ -221,7 +235,7 @@ export default (props) => {
           </Grid>
           <ProceedingNumber budget={budget}/>
           <WritingNumber budget={budget}/>
-          <BudgetTypeSelector budget={budget}/>
+          { budgetTypeList.length && <BudgetTypeSelector budget={budget} budgetTypeList={budgetTypeList}/> }
         </>
       }
     </Grid>
