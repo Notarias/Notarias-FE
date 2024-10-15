@@ -113,10 +113,10 @@ const AsigneesList = (props) => {
 
   const assingUser = (event) => {
     updateBudget({
-       variables:{
+      variables:{
         "id": budget.id ,
         "asigneeId": assigneToMutation.id ,
-       }
+      }
     })
   }
 

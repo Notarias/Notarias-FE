@@ -22,6 +22,7 @@ import ProceedingNumber                 from './proceeding_number';
 import WritingNumber                    from './writing_number';
 import BudgetTypeSelector               from './budget_type_selector';
 import CompleteBudgetButton             from './complete_budget_button';
+import StartProcedureButton             from './start_procedure_button';
 
 export default (props) => {
 
@@ -103,6 +104,9 @@ export default (props) => {
               </Grid>
               <Grid item>
                 <BudgetFileUploader budget={budget}/>
+              </Grid>
+              <Grid item>
+                <StartProcedureButton budget={budget} procedure={procedure}/>
               </Grid>
               <Grid item>
                 <CompleteBudgetButton budget={budget}/>
@@ -229,7 +233,11 @@ export default (props) => {
             </Hidden>
             <Grid item xs>
               <Typography noWrap align='left' style={{ padding: '10px', textTransform: 'uppercase' }}>
-                <strong>{ procedure && procedure.serialNumber.toString().padStart(10, "0") }</strong>
+                { procedure && procedure.serialNumber ?
+                  <strong>{ procedure.serialNumber.toString().padStart(10, "0") }</strong>
+                :
+                  <strong>Sin Iniciar</strong>
+                }
               </Typography>
             </Grid>
           </Grid>

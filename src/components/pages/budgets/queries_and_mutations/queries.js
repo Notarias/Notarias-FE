@@ -381,6 +381,7 @@ query budget(
         serialNumber
         writingNumber
         proceedingNumber
+        maxSerialNumber
         proceduresTemplate{
           name
           id
@@ -1215,7 +1216,8 @@ export const UPDATE_PROCEDURE = gql`
     $proceedingNumber: String,
     $writingNumber: String,
     $completedAt: ISO8601DateTime,
-  ){
+    $serialNumber: Int,
+  ){                              
     updateProcedure (
       input:{
         id: $id
@@ -1224,6 +1226,7 @@ export const UPDATE_PROCEDURE = gql`
         proceedingNumber: $proceedingNumber
         writingNumber: $writingNumber
         completedAt: $completedAt
+        serialNumber: $serialNumber
       }
     ){
       procedure {

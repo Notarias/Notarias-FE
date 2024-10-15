@@ -1,4 +1,4 @@
-import React, { useState, useEffect }     from 'react';
+import React, { useState }                from 'react';
 import Grid                               from '@material-ui/core/Grid';
 import Hidden                             from '@material-ui/core/Hidden';
 import Typography                         from '@material-ui/core/Typography';
@@ -55,7 +55,6 @@ const BudgetTypeSelector = (props) => {
   )
 
   const handleChange = (event) => {
-    console.log(event.target)
     setBudgetTypeSelected(event.target.value);
     saveBudgetType({
       variables:{

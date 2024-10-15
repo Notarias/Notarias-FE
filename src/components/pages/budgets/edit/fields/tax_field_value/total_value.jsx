@@ -1,9 +1,21 @@
-import React, { useEffect, useRef }           from 'react';
-import Grid                                   from '@material-ui/core/Grid';
-import Chip                                   from '@material-ui/core/Chip';
-import AttachMoneyIcon                        from '@material-ui/icons/AttachMoney';
-import NumberFormat                           from 'react-number-format';
-import PropTypes                              from 'prop-types';
+import React, { useState, useEffect, useRef }   from 'react';
+import Grid                                     from '@material-ui/core/Grid';
+import Chip                                     from '@material-ui/core/Chip';
+import Dialog                                   from '@material-ui/core/Dialog';
+import DialogActions                            from '@material-ui/core/DialogActions';
+import DialogContent                            from '@material-ui/core/DialogContent';
+import DialogTitle                              from '@material-ui/core/DialogTitle';
+import TextField                                from '@material-ui/core/TextField';
+import Button                                   from '@material-ui/core/Button';
+import InputAdornment                           from '@material-ui/core/InputAdornment';
+import AttachMoneyIcon                          from '@material-ui/icons/AttachMoney';
+import EditIcon                                 from '@material-ui/icons/Edit';
+import NumberFormat                             from 'react-number-format';
+import PropTypes                                from 'prop-types';
+import { useMutation }                          from '@apollo/client';
+import { UPDATE_BUDGET_FIELD_VALUE }            from '../../../queries_and_mutations/queries';
+import { GLOBAL_MESSAGE }                       from '../../../../../../resolvers/queries';
+import client                                   from '../../../../../../apollo';
 function NumberFormatCustom(props) {
   const { inputRef, onChange, ...other } = props;
 
@@ -73,12 +85,56 @@ const TotalValue = (props) => {
   //   setPristine(true)
   //   setEditing(true)
   // }
+  const [editTaxModal, setEditTaxModal] = useState(false)
+  const [saveButtonStatus, setSaveButtonStatus] = useState(true)
+  const [taxValue, setTaxValue] = useState(0)
 
   useEffect(() => {
     if(editing && pristine) {
       inputRef.current.lastChild.focus()
     }
   }, [editing, pristine])
+
+  const [updateBudgetFieldValue] =
+    useMutation(
+      UPDATE_BUDGET_FIELD_VALUE,
+      {
+        onError(apolloError) {
+          client.writeQuery({
+            query: GLOBAL_MESSAGE,
+            data: {
+              globalMessage: {
+                message: "Ocurrió un error",
+                type: "error",
+                __typename: "globalMessage"
+              }
+            }
+          })
+        },
+        onCompleted(cacheData) {
+          client.writeQuery({
+            query: GLOBAL_MESSAGE,
+            data: {
+              globalMessage: {
+                message: "Cambio guardado con exito",
+                type: "success",
+                __typename: "globalMessage"
+              }
+            }
+          })
+        }
+      }
+    )
+
+  const saveTaxValue = () => {
+    updateBudgetFieldValue({
+      variables:{
+        "id": budgetFieldValue.id,
+        "value": parseInt(taxValue) * 100
+      }
+    })
+    setEditTaxModal(!editTaxModal)
+  }
 
   const inferOperatorAdornment = () => {
     if(templateField.operator === 'percentile') {
@@ -91,19 +147,62 @@ const TotalValue = (props) => {
     return((value * 1.0) / 100).toFixed(2)
   }
 
+  const editTaxModalState = () => {
+    setEditTaxModal(!editTaxModal)
+  }
+
+  const taxValueChange = (event) => {
+    setTaxValue(event.target.value);
+    setSaveButtonStatus(false)
+  }
+
   const loadChip = () => {
     return(
-      <Chip
-        icon={<AttachMoneyIcon/>}
-        label={`${formatValue(budgetFieldValue.value)}`}
-      />
+      <>
+        <Chip onClick={editTaxModalState}
+          icon={<AttachMoneyIcon/>}
+          label={`${formatValue(budgetFieldValue.value)}`}
+          onDelete={editTaxModalState}
+          deleteIcon={<EditIcon />}
+
+        />
+        <Dialog open={editTaxModal} onClose={editTaxModalState}>
+          <DialogTitle>
+            Ingrese el monto deseado
+          </DialogTitle>
+          <DialogContent>
+            <TextField
+                onChange={taxValueChange}
+                label="Impuesto"
+                id="margin-normal"
+                margin="normal"
+                required
+                InputProps={{
+                  inputComponent: NumberFormatCustom,
+                  startAdornment: <InputAdornment position="start">$</InputAdornment>
+                }}
+              />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={editTaxModalState}>
+              Cancelar
+            </Button>
+            <Button
+              onClick={saveTaxValue}
+              disabled={saveButtonStatus}
+            >
+              Guardar
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </>
     )
   }
 
   return(
     <Grid container item>
       <Grid container item direction="row" justifyContent="flex-end">
-        <Grid item container spacing={1}>
+        <Grid item container spacing={5}>
           <Grid item>
             {templateField.operator === "percentile" ?
               <Chip label={`${inferOperatorAdornment()}`} variant="outlined" color='secondary' />
@@ -111,7 +210,7 @@ const TotalValue = (props) => {
               <></>
             }
           </Grid>
-          <Grid item>
+          <Grid item >
             {budgetFieldValue && loadChip()}
           </Grid>
         </Grid>

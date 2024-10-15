@@ -297,6 +297,7 @@ query procedure(
       serialNumber
       proceedingNumber
       writingNumber
+      maxSerialNumber
       completedAt
       client{
         firstName
